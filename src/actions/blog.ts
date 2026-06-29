@@ -2,14 +2,15 @@
 
 import { supabase } from '@/lib/supabase'
 
-export async function getBlogPosts(limit = 20) {
+export async function getBlogPosts(limit = 20, language = 'hr') {
   if (!supabase) return []
 
   const { data, error } = await supabase
     .from('blog_posts')
-    .select('id, title, slug, excerpt, published_at')
-    .eq('published', true)
-    .order('published_at', { ascending: false })
+    .select('id, title, slug, excerpt, created_at, language')
+    .eq('is_published', true)
+    .eq('language', language)
+    .order('created_at', { ascending: false })
     .limit(limit)
 
   if (error) {

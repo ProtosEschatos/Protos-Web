@@ -11,6 +11,7 @@ import CustomCursor from '@/components/ui/CustomCursor'
 import CookieBanner from '@/components/ui/CookieBanner'
 import LenisProvider from '@/components/providers/LenisProvider'
 import Analytics from '@/components/providers/Analytics'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import { locales, type Locale } from '@/i18n'
 import { ogImage, organizationJsonLd, siteUrl } from '@/lib/seo'
 
@@ -86,6 +87,7 @@ export default async function LocaleLayout({
             <main>{children}</main>
             <Footer />
             <CookieBanner />
+            <SpeedInsights />
           </LenisProvider>
         </NextIntlClientProvider>
       </body>

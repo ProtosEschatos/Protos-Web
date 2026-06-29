@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import MobileMenu from './MobileMenu'
 
 const languages = [
   { code: 'hr', flag: '\u{1F1ED}\u{1F1F7}', label: 'Hrvatski' },
@@ -189,33 +190,7 @@ export default function Header() {
       </header>
 
       {/* Mobile Menu */}
-      <div className={`fixed inset-0 bg-[var(--dark)] z-40 transition-transform duration-700 ease-[cubic-bezier(0.76,0,0.24,1)] lg:hidden ${mobileOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-        <div className="max-w-lg mx-auto px-6 h-full flex flex-col justify-center">
-          <nav className="space-y-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className="block text-5xl sm:text-7xl font-extrabold text-[var(--light)] hover:text-[var(--primary)] transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
-            <Link
-              href="/kontakt"
-              onClick={() => setMobileOpen(false)}
-              className="block text-5xl sm:text-7xl font-extrabold gradient-text"
-            >
-              Kontakt
-            </Link>
-          </nav>
-          <div className="mt-16 text-[var(--light-muted)]">
-            <p className="text-sm">contact@protos-design.net</p>
-            <p className="text-sm">+385 97 604 39 41</p>
-          </div>
-        </div>
-      </div>
+      <MobileMenu isOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
     </>
   )
 }

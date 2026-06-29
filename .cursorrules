@@ -1,0 +1,120 @@
+# Protos Web — Cursor AI Rules
+# =============================
+# This file defines strict coding standards for Cursor AI assistant.
+# All code generation MUST follow these rules without exception.
+
+## Project Stack
+- **Framework**: Next.js 14 (App Router) with `src/` directory
+- **Language**: TypeScript (strict mode)
+- **Styling**: Tailwind CSS with CSS custom properties
+- **Animations**: Framer Motion, GSAP (with cleanup in useEffect)
+- **3D**: React Three Fiber (`@react-three/fiber`, `@react-three/drei`) — NOT vanilla Three.js
+- **Smooth Scroll**: `@studio-freight/lenis` (via LenisProvider)
+- **i18n**: `next-intl` (5 locales: hr, en, de, it, es)
+- **Icons**: `lucide-react` + FontAwesome CDN
+- **Backend**: Supabase (placeholder — do NOT implement backend logic)
+
+## File Structure Rules
+- All pages go in `src/app/[locale]/`
+- All components go in `src/components/` with subdirs: `layout/`, `sections/`, `three/`, `ui/`, `providers/`
+- All lib/utils go in `src/lib/`
+- All i18n messages go in `src/messages/{locale}.json`
+- API routes go in `src/app/api/`
+
+## Component Rules
+1. **Always use `'use client'`** for components that use:
+   - React hooks (useState, useEffect, useRef, etc.)
+   - Framer Motion animations
+   - Browser APIs (window, document, localStorage)
+   - Three.js / R3F components
+   - Event handlers
+
+2. **Three.js components MUST**:
+   - Use `@react-three/fiber` and `@react-three/drei` — NEVER vanilla Three.js
+   - Be dynamically imported with `next/dynamic` and `{ ssr: false }`
+   - Be wrapped in `<Canvas>` from `@react-three/fiber`
+   - Include `<Suspense>` fallback for loading states
+
+3. **GSAP usage MUST**:
+   - Import inside `useEffect` or at component top
+   - Register plugins: `gsap.registerPlugin(ScrollTrigger)`
+   - Clean up in useEffect return: `ScrollTrigger.getAll().forEach(t => t.kill())`
+   - Use refs for DOM targets, never query selectors
+
+4. **Framer Motion usage MUST**:
+   - Use shared variants from `@/lib/animations` when possible
+   - Use `whileInView` with `viewport={{ once: true }}` for scroll animations
+   - Use `AnimatePresence` for enter/exit animations
+   - Keep transition durations between 0.3s–0.8s for UI, up to 1.2s for hero elements
+
+## Styling Rules
+1. **Use Tailwind classes** as primary styling method
+2. **CSS custom properties** (from globals.css) for theme colors:
+   - `var(--primary)` = #ff6600
+   - `var(--secondary)` = #8b5cf6
+   - `var(--accent)` = #06b6d4
+   - `var(--dark)` = #0a0a1a
+   - `var(--dark-card)` = #0f0f2a
+   - `var(--light)` = #e8e8f0
+   - `var(--light-muted)` = #8888aa
+3. **Gradients**: Use `var(--gradient-primary)`, `var(--gradient-hero)`, `var(--gradient-cta)`
+4. **Border radius**: Use Tailwind rounded classes (rounded-xl, rounded-2xl, rounded-full)
+5. **Dark theme only** — do NOT add light mode styles
+
+## Naming Conventions
+- **Components**: PascalCase (e.g., `HeroCanvas.tsx`, `MagneticButton.tsx`)
+- **Pages**: `page.tsx` inside route folders
+- **Utilities/Hooks**: camelCase (e.g., `useScrollProgress.ts`)
+- **CSS classes**: Tailwind utility-first, custom classes use kebab-case
+- **i18n keys**: dot.notation (e.g., `nav.home`, `hero.title`)
+
+## Performance Rules
+1. **Dynamic imports** for heavy components (Three.js, charts, maps):
+   ```tsx
+   const HeroCanvas = dynamic(() => import('@/components/three/HeroCanvas'), {
+     ssr: false,
+     loading: () => <div className="w-full h-full bg-dark" />,
+   })
+   ```
+2. **Image optimization**: Always use `next/image` with proper width/height/alt
+3. **Font optimization**: Use `next/font/google` for Inter
+4. **Lazy loading**: Use `loading="lazy"` for below-fold images
+5. **Memoization**: Use `useMemo`/`useCallback` for expensive computations in R3F
+
+## Backend Rules (PLACEHOLDER)
+- API routes in `src/app/api/` return mock/placeholder data
+- Supabase client in `src/lib/supabase.ts` is commented out
+- Do NOT implement real database queries
+- Do NOT implement real authentication
+- Mark all backend code with `// TODO: Wire up Supabase` comments
+
+## i18n Rules
+- Default locale: `hr` (Croatian)
+- All user-facing text MUST use `useTranslations()` hook
+- Translation keys go in all 5 locale files
+- Route segments stay in Croatian (e.g., `/proces`, `/o-meni`, `/usluge`, `/kontakt`)
+- Language selector must show all 5 languages with flag emojis
+
+## Accessibility Rules
+- All images must have `alt` text
+- All buttons must have `aria-label` if no visible text
+- All interactive elements must be keyboard-accessible
+- Use semantic HTML (`<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<footer>`)
+- Color contrast must meet WCAG AA standards
+
+## Git Rules
+- Commit messages in English, imperative mood
+- Prefix: `feat:`, `fix:`, `refactor:`, `style:`, `chore:`, `docs:`
+- One logical change per commit
+- Never commit `node_modules/`, `.next/`, `.env`, `.env.local`
+
+## FORBIDDEN
+- ❌ Do NOT use vanilla Three.js — only React Three Fiber
+- ❌ Do NOT use `pages/` router — only App Router with `src/app/`
+- ❌ Do NOT use CSS modules or styled-components — only Tailwind + CSS vars
+- ❌ Do NOT add light mode — dark theme only
+- ❌ Do NOT implement real backend logic — placeholders only
+- ❌ Do NOT use `any` type — always type properly
+- ❌ Do NOT use inline styles unless absolutely necessary (use Tailwind)
+- ❌ Do NOT create files outside the defined folder structure
+- ❌ Do NOT remove existing working features when adding new ones

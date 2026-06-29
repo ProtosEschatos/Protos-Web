@@ -145,16 +145,44 @@ src/
 
 ## Important Notes
 
-1. **Supabase is live** — blog and contact form use remote DB (`laqnnzavwbojntfiqmxj`). Portfolio CMS wiring is still pending.
+1. **Supabase is live** — blog, contact form, and portfolio use remote DB (`laqnnzavwbojntfiqmxj`).
 2. **Route segments are in Croatian**: `/proces`, `/o-meni`, `/usluge`, `/kontakt`
 3. **3D components use React Three Fiber** — NOT vanilla Three.js
 4. **Dark theme only** — no light mode
 5. **All Three.js components are dynamically imported** with `ssr: false`
 6. **Performance** — R3F canvases use `next/dynamic` with `ssr: false`; production responses use `compress: true` in `next.config.js`; Inter loads with `display: swap`. Run Lighthouse against a production build (`npm run build && npm start`) for audit scores.
 
+## Environment Variables — Where Things Live
+
+Secrets are **not** duplicated everywhere on purpose. Each platform reads only what it needs:
+
+| Location | Purpose | What goes here |
+|----------|---------|----------------|
+| **`.env.local`** (local dev, gitignored) | Your machine only | Copy from `.env.example` — never commit |
+| **Vercel** | Production/preview builds + runtime | All `NEXT_PUBLIC_*` + server keys the Next.js app uses |
+| **GitHub Secrets** | GitHub Actions workflows only | `SUPABASE_URL` + `KEEP_ALIVE_SECRET` (keep-alive cron) |
+| **Supabase Edge Secrets** | Edge functions only | `KEEP_ALIVE_SECRET`, Resend, Stripe, etc. |
+
+**Why not one `.env` for everything?** `.env` files must never be pushed to git (security). Vercel injects vars at deploy time. GitHub and Supabase run separate services that never read Vercel's config.
+
+**Do GitHub secrets need `NEXT_PUBLIC_SUPABASE_URL`?** No — the site reads that from Vercel. GitHub only needs the base URL for the keep-alive curl (`SUPABASE_URL`, same host without `NEXT_PUBLIC_` prefix).
+
+### Vercel — required for the live site
+
+- `NEXT_PUBLIC_SITE_URL` = `https://www.protosweb.eu`
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+
+Optional later: `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`, `NEXT_PUBLIC_GA_ID`
+
+### Vercel — safe to remove (unused by current code)
+
+Stripe, Resend, Brevo, Sentry, Telegram, `DATABASE_URL` — leftovers from older setup; they do not break anything if left in place.
+
 ## Supabase Keep-Alive
 
-Free-tier Supabase projects pause after inactivity. A GitHub Actions cron (`.github/workflows/supabase-keep-alive.yml`) pings the `keep-alive` edge function every 3 days.
+Free-tier Supabase projects pause after ~7 days of inactivity. A GitHub Actions cron (`.github/workflows/supabase-keep-alive.yml`) pings the `keep-alive` edge function **every 10 minutes**.
 
 **One-time setup:**
 
@@ -165,3 +193,7 @@ Free-tier Supabase projects pause after inactivity. A GitHub Actions cron (`.git
    - `KEEP_ALIVE_SECRET` = same value as step 2
 
 `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are auto-injected into edge functions by Supabase.
+
+## Vercel Build Warnings
+
+Yellow `npm warn deprecated` lines during `npm install` (e.g. `eslint@8`, `glob@7`, `three-mesh-bvh`) come from **transitive dependencies** — not errors. The build still succeeds. Safe to ignore until a planned Next.js / ESLint major upgrade. Do not force-upgrade Three.js or ESLint without testing the 3D showcase.

@@ -155,6 +155,28 @@
     "accept": "Accept",
     "decline": "Decline"
   },
+  "showcase": {
+    "loaderTitle": "🚀 Space Station",
+    "loaderSubtitle": "Portfolio Gallery",
+    "instructionsTitle": "🌌 Space Gallery",
+    "instructionsSubtitle": "Explore our space station as an astronaut",
+    "start": "Start exploring",
+    "move": "Move",
+    "details": "Details",
+    "menuLabel": "Menu",
+    "viewProject": "View project",
+    "back": "Back",
+    "space": "🚀 Space",
+    "station": "Station",
+    "project1_title": "Bodulica Shop",
+    "project1_desc": "E-commerce handmade products — payments, CMS, custom design.",
+    "project2_title": "Zeus Trading",
+    "project2_desc": "Trading dashboard — WebSocket, real-time data, charting.",
+    "project3_title": "Cosmic Blueprint",
+    "project3_desc": "Astrology platform — 3D visualization, birth chart.",
+    "project4_title": "Protos Web",
+    "project4_desc": "Own SPA — GSAP, Three.js, Supabase backend."
+  },
   "metadata": {
     "home": { "title": "We Turn Visitors Into Customers", "description": "Professional web design agency from Zagreb." },
     "about": { "title": "About Me", "description": "Full Stack Developer & Web Designer from Zagreb." },

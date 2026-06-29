@@ -12,11 +12,15 @@ import CookieBanner from '@/components/ui/CookieBanner'
 import LenisProvider from '@/components/providers/LenisProvider'
 import Analytics from '@/components/providers/Analytics'
 import { locales, type Locale } from '@/i18n'
+import { ogImage, organizationJsonLd, siteUrl } from '@/lib/seo'
 
-const inter = Inter({ subsets: ['latin', 'latin-ext'] })
+const inter = Inter({
+  subsets: ['latin', 'latin-ext'],
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://protosweb.eu'),
+  metadataBase: new URL(siteUrl),
   title: {
     default: 'Protos Web — We Turn Visitors Into Customers',
     template: '%s | Protos Web',
@@ -27,7 +31,15 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'hr_HR',
     siteName: 'Protos Web',
-    images: [{ url: '/og-image.svg', width: 1200, height: 630, alt: 'Protos Web' }],
+    url: siteUrl,
+    images: [ogImage],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Protos Web — We Turn Visitors Into Customers',
+    description:
+      'Professional web design agency from Zagreb. Modern, fast and visually stunning websites that turn visitors into customers.',
+    images: [ogImage.url],
   },
   icons: {
     icon: '/favicon.svg',
@@ -61,6 +73,10 @@ export default async function LocaleLayout({
         />
       </head>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         <NextIntlClientProvider messages={messages}>
           <LenisProvider>
             <Analytics />

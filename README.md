@@ -133,11 +133,11 @@ src/
 
 ### Future Enhancements
 - [ ] Design refinements (user will provide updates)
-- [ ] SEO metadata per page
-- [ ] OpenGraph images
-- [ ] Sitemap generation
-- [ ] Analytics integration
-- [ ] Performance optimization (lighthouse audit)
+- [x] SEO metadata per page
+- [x] OpenGraph images
+- [x] Sitemap generation
+- [x] Analytics integration
+- [x] Performance optimization (lighthouse audit)
 
 ## Important Notes
 
@@ -146,3 +146,4 @@ src/
 3. **3D components use React Three Fiber** — NOT vanilla Three.js
 4. **Dark theme only** — no light mode
 5. **All Three.js components are dynamically imported** with `ssr: false`
+6. **Performance** — R3F canvases use `next/dynamic` with `ssr: false`; production responses use `compress: true` in `next.config.js`; Inter loads with `display: swap`. Run Lighthouse against a production build (`npm run build && npm start`) for audit scores.

@@ -95,7 +95,17 @@
     "showcaseTitle": "3D Portfolio Showcase",
     "showcaseText": "Istrazite nase radove u interaktivnoj 3D galeriji.",
     "showcaseCta": "Udi u showcase",
-    "viewProject": "Pogledaj projekt"
+    "viewProject": "Pogledaj projekt",
+    "empty": "Jos nema projekata za prikaz."
+  },
+  "portfolioPage": {
+    "label": "PORTFOLIO",
+    "title": "Digitalna",
+    "titleHighlight": "inspiracija",
+    "subtitle": "Web stranice koje nas inspiriraju i standardi kvalitete koje tezimo",
+    "showcaseTitle": "3D Portfolio Showcase",
+    "showcaseText": "Istrazite nase projekte kroz imerzivno 3D iskustvo",
+    "showcaseCta": "OTVORI GALERIJU"
   },
   "blog": {
     "label": "BLOG",

@@ -131,9 +131,9 @@ src/
 - [x] Supabase client connection
 - [x] Blog data from Supabase (`blog_posts` table, 80 posts)
 - [x] Contact form submission to Supabase (`submit_contact` RPC)
-- [ ] Portfolio data from Supabase
+- [x] Portfolio data from Supabase
 - [ ] Authentication (if needed)
-- [ ] Supabase keep-alive edge function + GitHub cron
+- [x] Supabase keep-alive edge function + GitHub cron workflow
 
 ### Future Enhancements
 - [ ] Design refinements (user will provide updates)
@@ -151,3 +151,17 @@ src/
 4. **Dark theme only** — no light mode
 5. **All Three.js components are dynamically imported** with `ssr: false`
 6. **Performance** — R3F canvases use `next/dynamic` with `ssr: false`; production responses use `compress: true` in `next.config.js`; Inter loads with `display: swap`. Run Lighthouse against a production build (`npm run build && npm start`) for audit scores.
+
+## Supabase Keep-Alive
+
+Free-tier Supabase projects pause after inactivity. A GitHub Actions cron (`.github/workflows/supabase-keep-alive.yml`) pings the `keep-alive` edge function every 3 days.
+
+**One-time setup:**
+
+1. Deploy the function: `supabase functions deploy keep-alive --project-ref laqnnzavwbojntfiqmxj`
+2. Set Supabase Edge Function secret `KEEP_ALIVE_SECRET` (random string)
+3. Add GitHub repo secrets:
+   - `SUPABASE_URL` = `https://laqnnzavwbojntfiqmxj.supabase.co`
+   - `KEEP_ALIVE_SECRET` = same value as step 2
+
+`SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are auto-injected into edge functions by Supabase.

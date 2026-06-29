@@ -95,7 +95,17 @@
     "showcaseTitle": "3D Portfolio Showcase",
     "showcaseText": "Entdecken Sie unsere Arbeit in einer interaktiven 3D-Galerie.",
     "showcaseCta": "Showcase betreten",
-    "viewProject": "Projekt ansehen"
+    "viewProject": "Projekt ansehen",
+    "empty": "Noch keine Projekte vorhanden."
+  },
+  "portfolioPage": {
+    "label": "PORTFOLIO",
+    "title": "Digitale",
+    "titleHighlight": "Inspiration",
+    "subtitle": "Websites, die uns inspirieren, und Qualitatsstandards, die wir anstreben",
+    "showcaseTitle": "3D Portfolio Showcase",
+    "showcaseText": "Entdecken Sie unsere Projekte in einem immersiven 3D-Erlebnis",
+    "showcaseCta": "GALERIE OFFNEN"
   },
   "blog": {
     "label": "BLOG",

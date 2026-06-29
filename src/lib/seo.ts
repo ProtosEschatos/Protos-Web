@@ -1,7 +1,14 @@
 import type { Metadata } from 'next'
-import type { Locale } from '@/i18n'
+import { locales, defaultLocale, type Locale } from '@/i18n'
 
-export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://protosweb.eu'
+const DEFAULT_SITE_URL = 'https://www.protosweb.eu'
+
+export function normalizeSiteUrl(url?: string): string {
+  const raw = (url || DEFAULT_SITE_URL).trim().replace(/\/+$/, '')
+  return raw || DEFAULT_SITE_URL
+}
+
+export const siteUrl = normalizeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL)
 
 export const ogImage = {
   url: '/og-image.svg',
@@ -18,6 +25,20 @@ const openGraphLocale: Record<Locale, string> = {
   es: 'es_ES',
 }
 
+/** Build a locale-aware path (no domain), respecting localePrefix: as-needed */
+export function buildLocalePath(locale: string, path = ''): string {
+  const safeLocale = (locales.includes(locale as Locale) ? locale : defaultLocale) as Locale
+  const prefix = safeLocale === defaultLocale ? '' : `/${safeLocale}`
+  return `${prefix}${path}`
+}
+
+/** Full absolute URL for a locale + path */
+export function buildLocaleUrl(locale: string, path = ''): string {
+  const localePath = buildLocalePath(locale, path)
+  if (!localePath) return siteUrl
+  return `${siteUrl}${localePath}`
+}
+
 type PageMetadataInput = {
   title: string
   description: string
@@ -32,30 +53,89 @@ export function buildPageMetadata({
   locale,
   path = '',
 }: PageMetadataInput): Metadata {
-  const safeLocale = (locale in openGraphLocale ? locale : 'hr') as Locale
-  const prefix = safeLocale === 'hr' ? '' : `/${safeLocale}`
-  const canonicalPath = `${prefix}${path}`
+  const safeLocale = (locale in openGraphLocale ? locale : defaultLocale) as Locale
+  const canonical = buildLocaleUrl(safeLocale, path)
+
+  const languages: Record<string, string> = {}
+  for (const loc of locales) {
+    languages[loc] = buildLocaleUrl(loc, path)
+  }
+  languages['x-default'] = buildLocaleUrl(defaultLocale, path)
+
+  const alternateLocales = locales
+    .filter((loc) => loc !== safeLocale)
+    .map((loc) => openGraphLocale[loc as Locale])
 
   return {
     title,
     description,
     alternates: {
-      canonical: `${siteUrl}${canonicalPath || '/'}`,
+      canonical,
+      languages,
     },
     openGraph: {
       title,
       description,
       type: 'website',
       locale: openGraphLocale[safeLocale],
+      alternateLocale: alternateLocales,
       siteName: 'Protos Web',
-      url: `${siteUrl}${canonicalPath || '/'}`,
+      url: canonical,
       images: [ogImage],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: [ogImage.url],
+      images: [`${siteUrl}${ogImage.url}`],
+    },
+  }
+}
+
+export function buildBlogPostMetadata({
+  title,
+  description,
+  locale,
+  slug,
+}: {
+  title: string
+  description: string
+  locale: string
+  slug: string
+}): Metadata {
+  return buildPageMetadata({
+    title,
+    description,
+    locale,
+    path: `/blog/${slug}`,
+  })
+}
+
+export function blogPostingJsonLd(post: {
+  title: string
+  description: string
+  slug: string
+  locale: string
+  createdAt: string
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.description,
+    datePublished: post.createdAt,
+    url: buildLocaleUrl(post.locale, `/blog/${post.slug}`),
+    author: {
+      '@type': 'Organization',
+      name: 'Protos Web',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Protos Web',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteUrl}/favicon.svg`,
+      },
     },
   }
 }

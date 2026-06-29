@@ -40,7 +40,11 @@
       { "title": "SEO i marketing", "text": "Optimizacija za pretrazivace i digitalne marketing strategije za bolju vidljivost." },
       { "title": "AI i automatizacija", "text": "Pametne integracije ukljucujuci AI chatbotove, sustave rezervacija i automatizirane procese." },
       { "title": "Odrzavanje", "text": "Kontinuirana podrska, azuriranja, sigurnosne zakrpe i nadzor performansi." }
-    ]
+    ],
+    "pageSubtitle": "Profesionalna web rjesenja prilagodena vasim poslovnim potrebama. Od koncepta do lansiranja i dalje.",
+    "ctaTitle": "Spremni zapoceti projekt?",
+    "ctaText": "Besplatna konzultacija i ponuda — bez obveza.",
+    "ctaButton": "Zatrazi ponudu"
   },
   "process": {
     "label": "PROCES",
@@ -58,6 +62,32 @@
       { "title": "Dugorocna podrska", "text": "Ostajemo s vama i nakon lansiranja." }
     ]
   },
+  "processPage": {
+    "label": "PROCES",
+    "title": "Kako",
+    "titleHighlight": "radimo",
+    "subtitle": "Transparentan proces od prvog kontakta do lansiranja. Svaki korak je jasan, mjerljiv i prilagoden vasim potrebama.",
+    "cta": "Kontakt",
+    "steps": [
+      { "num": "01", "title": "Otkrivanje", "text": "Upoznajemo vas posao, ciljeve i ciljnu publiku." },
+      { "num": "02", "title": "Dizajn", "text": "Wireframeovi i vizualni dizajn prilagodeni vasem brendu." },
+      { "num": "03", "title": "Razvoj", "text": "Cist kod, moderni stack, pristup usmjeren na performanse." },
+      { "num": "04", "title": "Lansiranje", "text": "Testiranje, implementacija i kontinuirana podrska." }
+    ],
+    "features": [
+      { "title": "Brza isporuka", "text": "Vecina projekata isporucena u 2-4 tjedna." },
+      { "title": "Transparentne cijene", "text": "Jasne ponude bez skrivenih troskova." },
+      { "title": "Dugorocna podrska", "text": "Ostajemo s vama i nakon lansiranja." }
+    ],
+    "stats": [
+      { "value": "5+", "label": "Godina iskustva" },
+      { "value": "30+", "label": "Zavrsenih projekata" },
+      { "value": "1", "label": "Cross web app u razvoju" },
+      { "value": "100%", "label": "Custom kod, bez gotovih tema" }
+    ],
+    "technologiesTitle": "Tehnologije",
+    "technologies": ["Next.js", "TypeScript", "Three.js", "Tailwind CSS", "Framer Motion", "Supabase", "Stripe", "Drizzle ORM", "Cloudflare", "Linux / DevOps"]
+  },
   "portfolio": {
     "label": "PORTFOLIO",
     "title": "Odabrani",
@@ -72,7 +102,8 @@
     "title": "Web Akademija",
     "subtitle": "Besplatni vodicima o web prisutnosti za poduzetnike",
     "readMore": "Citaj vise",
-    "viewAll": "Pogledaj sve clanke"
+    "viewAll": "Pogledaj sve clanke",
+    "empty": "Jos nema objavljenih clanaka."
   },
   "contact": {
     "label": "KONTAKT",

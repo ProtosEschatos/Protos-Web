@@ -12,7 +12,7 @@
 - **Smooth Scroll**: `@studio-freight/lenis` (via LenisProvider)
 - **i18n**: `next-intl` (5 locales: hr, en, de, it, es)
 - **Icons**: `lucide-react` + FontAwesome CDN
-- **Backend**: Supabase (placeholder — do NOT implement backend logic)
+- **Backend**: Supabase (blog + contact wired; portfolio CMS pending)
 
 ## File Structure Rules
 - All pages go in `src/app/[locale]/`
@@ -82,11 +82,11 @@
 5. **Memoization**: Use `useMemo`/`useCallback` for expensive computations in R3F
 
 ## Backend Rules (PLACEHOLDER)
-- API routes in `src/app/api/` return mock/placeholder data
-- Supabase client in `src/lib/supabase.ts` is commented out
+- API routes in `src/app/api/` — contact and blog use Supabase server actions
+- Supabase client in `src/lib/supabase.ts` — active when env vars are set
 - Do NOT implement real database queries
 - Do NOT implement real authentication
-- Mark all backend code with `// TODO: Wire up Supabase` comments
+- Live schema managed via Supabase MCP/CLI — see `supabase/migrations/README.md`
 
 ## i18n Rules
 - Default locale: `hr` (Croatian)
@@ -113,7 +113,7 @@
 - ❌ Do NOT use `pages/` router — only App Router with `src/app/`
 - ❌ Do NOT use CSS modules or styled-components — only Tailwind + CSS vars
 - ❌ Do NOT add light mode — dark theme only
-- ❌ Do NOT implement real backend logic — placeholders only
+- ❌ Do NOT add new SQL migrations without coordinating with live remote schema
 - ❌ Do NOT use `any` type — always type properly
 - ❌ Do NOT use inline styles unless absolutely necessary (use Tailwind)
 - ❌ Do NOT create files outside the defined folder structure

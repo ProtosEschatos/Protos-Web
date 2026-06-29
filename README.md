@@ -35,7 +35,8 @@ src/
 │   │   ├── portfolio/page.tsx # Portfolio page
 │   │   ├── portfolio-showcase/page.tsx # R3F 3D space gallery
 │   │   ├── usluge/page.tsx    # Services page
-│   │   ├── blog/page.tsx      # Blog page (16 articles)
+│   │   ├── blog/page.tsx      # Blog listing (Supabase)
+│   │   ├── blog/[slug]/page.tsx # Blog post detail
 │   │   └── kontakt/page.tsx   # Contact page
 │   └── api/
 │       ├── contact/route.ts   # POST placeholder
@@ -62,7 +63,7 @@ src/
 │       └── CookieBanner.tsx   # Cookie consent
 ├── lib/
 │   ├── animations.ts         # Shared Framer Motion variants
-│   └── supabase.ts           # Supabase client placeholder
+│   └── supabase.ts           # Supabase client (anon + service role)
 ├── messages/
 │   ├── hr.json               # Croatian translations
 │   ├── en.json               # English translations
@@ -114,22 +115,25 @@ src/
 - [x] Process page with R3F ProcessCanvas
 - [x] Portfolio section with showcase banner → /portfolio-showcase
 - [x] Portfolio Showcase — full R3F 3D space gallery (WASD movement, E interact, ESC menu)
-- [x] Blog section (preview) + full blog page (16 articles)
+- [x] Blog section (preview) + full blog page from Supabase
+- [x] Blog post detail pages (`/blog/[slug]`) with markdown content
 - [x] Contact section with form
 - [x] About page with bio, goals, Support Balkans
 - [x] Services page
 - [x] Contact page
-- [x] API routes (placeholder): POST /api/contact, GET /api/blog
+- [x] API routes: POST /api/contact, GET /api/blog
 - [x] i18n with next-intl (5 languages)
+- [x] hreflang alternates + dynamic sitemap with blog posts
 - [x] All config files (tailwind, next, tsconfig, postcss, middleware, i18n)
 - [x] .cursorrules for Cursor AI
 
-### Backend (Placeholder — Wire Up Later)
-- [ ] Supabase client connection
-- [ ] Blog data from Supabase
-- [ ] Contact form submission to Supabase
+### Backend
+- [x] Supabase client connection
+- [x] Blog data from Supabase (`blog_posts` table, 80 posts)
+- [x] Contact form submission to Supabase (`submit_contact` RPC)
 - [ ] Portfolio data from Supabase
 - [ ] Authentication (if needed)
+- [ ] Supabase keep-alive edge function + GitHub cron
 
 ### Future Enhancements
 - [ ] Design refinements (user will provide updates)
@@ -141,7 +145,7 @@ src/
 
 ## Important Notes
 
-1. **Backend is placeholder** — all API routes return mock data. Wire up Supabase later.
+1. **Supabase is live** — blog and contact form use remote DB (`laqnnzavwbojntfiqmxj`). Portfolio CMS wiring is still pending.
 2. **Route segments are in Croatian**: `/proces`, `/o-meni`, `/usluge`, `/kontakt`
 3. **3D components use React Three Fiber** — NOT vanilla Three.js
 4. **Dark theme only** — no light mode

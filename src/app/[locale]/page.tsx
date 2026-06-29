@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { getBlogPosts } from '@/actions/blog'
 import { buildPageMetadata } from '@/lib/seo'
 import Hero from '@/components/sections/Hero'
 import Services from '@/components/sections/Services'
@@ -21,14 +22,17 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
   })
 }
 
-export default function HomePage() {
+export default async function HomePage({ params: { locale } }: Props) {
+  setRequestLocale(locale)
+  const blogPosts = await getBlogPosts(3, locale)
+
   return (
     <>
       <Hero />
       <Process />
       <Portfolio />
       <Services />
-      <Blog />
+      <Blog posts={blogPosts} locale={locale} />
       <Contact />
     </>
   )

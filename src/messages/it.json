@@ -40,7 +40,11 @@
       { "title": "SEO e marketing", "text": "Ottimizzazione motori di ricerca e strategie di marketing digitale." },
       { "title": "AI e automazione", "text": "Integrazioni smart con chatbot AI, prenotazioni e workflow intelligenti." },
       { "title": "Manutenzione", "text": "Supporto continuo, aggiornamenti, patch di sicurezza e monitoraggio." }
-    ]
+    ],
+    "pageSubtitle": "Soluzioni web professionali su misura per le tue esigenze. Dal concept al lancio e oltre.",
+    "ctaTitle": "Pronto a iniziare il tuo progetto?",
+    "ctaText": "Consulenza e preventivo gratuiti — senza impegno.",
+    "ctaButton": "Richiedi preventivo"
   },
   "process": {
     "label": "PROCESSO",
@@ -58,6 +62,32 @@
       { "title": "Supporto a lungo termine", "text": "Restiamo con te dopo il lancio." }
     ]
   },
+  "processPage": {
+    "label": "PROCESSO",
+    "title": "Come",
+    "titleHighlight": "lavoriamo",
+    "subtitle": "Un processo trasparente dal primo contatto al lancio. Ogni passo e chiaro, misurabile e su misura.",
+    "cta": "Contatto",
+    "steps": [
+      { "num": "01", "title": "Scoperta", "text": "Conosciamo il tuo business, obiettivi e pubblico target." },
+      { "num": "02", "title": "Design", "text": "Wireframe e design visivo su misura per il tuo brand." },
+      { "num": "03", "title": "Sviluppo", "text": "Codice pulito, stack moderno, approccio performance-first." },
+      { "num": "04", "title": "Lancio", "text": "Testing, deployment e supporto continuo." }
+    ],
+    "features": [
+      { "title": "Consegna rapida", "text": "La maggior parte dei progetti in 2-4 settimane." },
+      { "title": "Prezzi trasparenti", "text": "Preventivi chiari senza costi nascosti." },
+      { "title": "Supporto a lungo termine", "text": "Restiamo con te dopo il lancio." }
+    ],
+    "stats": [
+      { "value": "5+", "label": "Anni di esperienza" },
+      { "value": "30+", "label": "Progetti completati" },
+      { "value": "1", "label": "Cross web app in sviluppo" },
+      { "value": "100%", "label": "Codice custom, zero temi predefiniti" }
+    ],
+    "technologiesTitle": "Tecnologie",
+    "technologies": ["Next.js", "TypeScript", "Three.js", "Tailwind CSS", "Framer Motion", "Supabase", "Stripe", "Drizzle ORM", "Cloudflare", "Linux / DevOps"]
+  },
   "portfolio": {
     "label": "PORTFOLIO",
     "title": "Progetti",
@@ -72,7 +102,8 @@
     "title": "Web Academy",
     "subtitle": "Guide gratuite sulla presenza web per imprenditori",
     "readMore": "Leggi di piu",
-    "viewAll": "Vedi tutti gli articoli"
+    "viewAll": "Vedi tutti gli articoli",
+    "empty": "Nessun articolo pubblicato ancora."
   },
   "contact": {
     "label": "CONTATTO",

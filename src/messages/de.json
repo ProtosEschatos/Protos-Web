@@ -40,7 +40,11 @@
       { "title": "SEO & Marketing", "text": "Suchmaschinenoptimierung und digitale Marketingstrategien fur mehr Sichtbarkeit." },
       { "title": "KI & Automatisierung", "text": "Smarte Integrationen inklusive KI-Chatbots, Buchungssysteme und Workflows." },
       { "title": "Wartung", "text": "Laufender Support, Updates, Sicherheitspatches und Performance-Monitoring." }
-    ]
+    ],
+    "pageSubtitle": "Professionelle Weblosungen fur Ihre Geschaftsanforderungen. Von der Idee bis zum Launch und daruber hinaus.",
+    "ctaTitle": "Bereit, Ihr Projekt zu starten?",
+    "ctaText": "Kostenlose Beratung und Angebot — unverbindlich.",
+    "ctaButton": "Angebot anfordern"
   },
   "process": {
     "label": "PROZESS",
@@ -58,6 +62,32 @@
       { "title": "Langfristiger Support", "text": "Wir bleiben nach dem Launch an Ihrer Seite." }
     ]
   },
+  "processPage": {
+    "label": "PROZESS",
+    "title": "Wie wir",
+    "titleHighlight": "arbeiten",
+    "subtitle": "Ein transparenter Prozess vom Erstkontakt bis zum Launch. Jeder Schritt ist klar, messbar und auf Ihre Bedurfnisse zugeschnitten.",
+    "cta": "Kontakt",
+    "steps": [
+      { "num": "01", "title": "Analyse", "text": "Wir lernen Ihr Geschaft, Ziele und Zielgruppe kennen." },
+      { "num": "02", "title": "Design", "text": "Wireframes und visuelles Design passend zu Ihrer Marke." },
+      { "num": "03", "title": "Entwicklung", "text": "Sauberer Code, moderner Stack, Performance-first." },
+      { "num": "04", "title": "Launch", "text": "Testing, Deployment und laufender Support." }
+    ],
+    "features": [
+      { "title": "Schnelle Lieferung", "text": "Die meisten Projekte in 2-4 Wochen." },
+      { "title": "Transparente Preise", "text": "Klare Angebote ohne versteckte Kosten." },
+      { "title": "Langfristiger Support", "text": "Wir bleiben nach dem Launch an Ihrer Seite." }
+    ],
+    "stats": [
+      { "value": "5+", "label": "Jahre Erfahrung" },
+      { "value": "30+", "label": "Abgeschlossene Projekte" },
+      { "value": "1", "label": "Cross Web App in Entwicklung" },
+      { "value": "100%", "label": "Custom Code, keine vorgefertigten Themes" }
+    ],
+    "technologiesTitle": "Technologien",
+    "technologies": ["Next.js", "TypeScript", "Three.js", "Tailwind CSS", "Framer Motion", "Supabase", "Stripe", "Drizzle ORM", "Cloudflare", "Linux / DevOps"]
+  },
   "portfolio": {
     "label": "PORTFOLIO",
     "title": "Ausgewahlte",
@@ -72,7 +102,8 @@
     "title": "Web Academy",
     "subtitle": "Kostenlose Leitfaden zur Web-Praesenz fur Unternehmer",
     "readMore": "Weiterlesen",
-    "viewAll": "Alle Artikel ansehen"
+    "viewAll": "Alle Artikel ansehen",
+    "empty": "Noch keine Artikel veroffentlicht."
   },
   "contact": {
     "label": "KONTAKT",

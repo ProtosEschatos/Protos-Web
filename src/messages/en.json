@@ -40,7 +40,11 @@
       { "title": "SEO & Marketing", "text": "Search engine optimization and digital marketing strategies to increase your online visibility." },
       { "title": "AI & Scheduling", "text": "Smart integrations including AI chatbots, automated booking systems, and intelligent workflows." },
       { "title": "Maintenance", "text": "Ongoing support, updates, security patches, and performance monitoring to keep your site running smoothly." }
-    ]
+    ],
+    "pageSubtitle": "Professional web solutions tailored to your business needs. From concept to launch and beyond.",
+    "ctaTitle": "Ready to start your project?",
+    "ctaText": "Get a free consultation and quote — no strings attached.",
+    "ctaButton": "Get a Quote"
   },
   "process": {
     "label": "PROCESS",
@@ -58,6 +62,32 @@
       { "title": "Long-term support", "text": "We stay with you after launch." }
     ]
   },
+  "processPage": {
+    "label": "OUR PROCESS",
+    "title": "How",
+    "titleHighlight": "we work",
+    "subtitle": "A transparent process from first contact to launch. Every step is clear, measurable, and tailored to your needs.",
+    "cta": "Contact",
+    "steps": [
+      { "num": "01", "title": "Discovery", "text": "We learn about your business, goals, and target audience." },
+      { "num": "02", "title": "Design", "text": "Wireframes and visual design tailored to your brand." },
+      { "num": "03", "title": "Development", "text": "Clean code, modern stack, performance-first approach." },
+      { "num": "04", "title": "Launch", "text": "Testing, deployment, and ongoing support." }
+    ],
+    "features": [
+      { "title": "Fast delivery", "text": "Most projects delivered within 2-4 weeks." },
+      { "title": "Transparent pricing", "text": "Clear quotes with no hidden costs." },
+      { "title": "Long-term support", "text": "We stay with you after launch." }
+    ],
+    "stats": [
+      { "value": "5+", "label": "Years of experience" },
+      { "value": "30+", "label": "Completed projects" },
+      { "value": "1", "label": "Cross web app in development" },
+      { "value": "100%", "label": "Custom code, zero pre-made themes" }
+    ],
+    "technologiesTitle": "Technologies",
+    "technologies": ["Next.js", "TypeScript", "Three.js", "Tailwind CSS", "Framer Motion", "Supabase", "Stripe", "Drizzle ORM", "Cloudflare", "Linux / DevOps"]
+  },
   "portfolio": {
     "label": "PORTFOLIO",
     "title": "Selected",
@@ -72,7 +102,8 @@
     "title": "Web Academy",
     "subtitle": "Free guides on web presence for entrepreneurs",
     "readMore": "Read more",
-    "viewAll": "View all articles"
+    "viewAll": "View all articles",
+    "empty": "No articles published yet."
   },
   "contact": {
     "label": "CONTACT",

@@ -40,7 +40,11 @@
       { "title": "SEO y marketing", "text": "Optimizacion para buscadores y estrategias de marketing digital." },
       { "title": "IA y automatizacion", "text": "Integraciones inteligentes con chatbots IA, reservas y flujos automatizados." },
       { "title": "Mantenimiento", "text": "Soporte continuo, actualizaciones, parches de seguridad y monitoreo." }
-    ]
+    ],
+    "pageSubtitle": "Soluciones web profesionales adaptadas a tu negocio. Del concepto al lanzamiento y mas alla.",
+    "ctaTitle": "Listo para empezar tu proyecto?",
+    "ctaText": "Consulta y presupuesto gratuitos — sin compromiso.",
+    "ctaButton": "Solicitar presupuesto"
   },
   "process": {
     "label": "PROCESO",
@@ -58,6 +62,32 @@
       { "title": "Soporte a largo plazo", "text": "Seguimos contigo despues del lanzamiento." }
     ]
   },
+  "processPage": {
+    "label": "PROCESO",
+    "title": "Como",
+    "titleHighlight": "trabajamos",
+    "subtitle": "Un proceso transparente desde el primer contacto hasta el lanzamiento. Cada paso es claro, medible y adaptado a tus necesidades.",
+    "cta": "Contacto",
+    "steps": [
+      { "num": "01", "title": "Descubrimiento", "text": "Conocemos tu negocio, objetivos y audiencia." },
+      { "num": "02", "title": "Diseno", "text": "Wireframes y diseno visual adaptado a tu marca." },
+      { "num": "03", "title": "Desarrollo", "text": "Codigo limpio, stack moderno, enfoque en rendimiento." },
+      { "num": "04", "title": "Lanzamiento", "text": "Pruebas, despliegue y soporte continuo." }
+    ],
+    "features": [
+      { "title": "Entrega rapida", "text": "La mayoria de proyectos en 2-4 semanas." },
+      { "title": "Precios transparentes", "text": "Presupuestos claros sin costes ocultos." },
+      { "title": "Soporte a largo plazo", "text": "Seguimos contigo despues del lanzamiento." }
+    ],
+    "stats": [
+      { "value": "5+", "label": "Anos de experiencia" },
+      { "value": "30+", "label": "Proyectos completados" },
+      { "value": "1", "label": "Cross web app en desarrollo" },
+      { "value": "100%", "label": "Codigo custom, cero temas prefabricados" }
+    ],
+    "technologiesTitle": "Tecnologias",
+    "technologies": ["Next.js", "TypeScript", "Three.js", "Tailwind CSS", "Framer Motion", "Supabase", "Stripe", "Drizzle ORM", "Cloudflare", "Linux / DevOps"]
+  },
   "portfolio": {
     "label": "PORTFOLIO",
     "title": "Proyectos",
@@ -72,7 +102,8 @@
     "title": "Web Academy",
     "subtitle": "Guias gratuitas sobre presencia web para emprendedores",
     "readMore": "Leer mas",
-    "viewAll": "Ver todos los articulos"
+    "viewAll": "Ver todos los articulos",
+    "empty": "Aun no hay articulos publicados."
   },
   "contact": {
     "label": "CONTACTO",

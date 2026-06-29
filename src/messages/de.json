@@ -1,0 +1,26 @@
+{
+  "nav": {
+    "home": "START",
+    "about": "UBER UNS",
+    "process": "PROZESS",
+    "portfolio": "PORTFOLIO",
+    "services": "LEISTUNGEN",
+    "blog": "BLOG",
+    "contact": "KONTAKT"
+  },
+  "hero": {
+    "label": "SCHNELL. FUR IHR GESCHAFT",
+    "title_line1": "Wir verwandeln",
+    "title_line2": "Besucher in",
+    "title_line3": "Kunden.",
+    "subtitle": "Schnelle, leichte und robuste Websites, die fur Sie arbeiten. Alles an einem Ort.",
+    "cta_primary": "Projekt starten",
+    "cta_secondary": "Portfolio ansehen"
+  },
+  "footer": {
+    "brand_desc": "Professionelle Webdesign-Agentur. Wir verwandeln Ihre Vision in digitale Realitat, die verkauft.",
+    "causes_title": "Unterstutzen Sie Projekte, die den digitalen Balkan verandern",
+    "copyright": "2025 Protos Web. Alle Rechte vorbehalten.",
+    "made_with": "Mit Liebe in Zagreb, Kroatien gemacht"
+  }
+}

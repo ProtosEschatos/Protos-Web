@@ -1,0 +1,26 @@
+{
+  "nav": {
+    "home": "INICIO",
+    "about": "SOBRE MI",
+    "process": "PROCESO",
+    "portfolio": "PORTFOLIO",
+    "services": "SERVICIOS",
+    "blog": "BLOG",
+    "contact": "CONTACTO"
+  },
+  "hero": {
+    "label": "RAPIDO. PARA TU NEGOCIO",
+    "title_line1": "Convertimos",
+    "title_line2": "visitantes en",
+    "title_line3": "clientes.",
+    "subtitle": "Sitios web rapidos, ligeros y robustos que trabajan para ti. Todo en un solo lugar.",
+    "cta_primary": "Iniciar proyecto",
+    "cta_secondary": "Ver portfolio"
+  },
+  "footer": {
+    "brand_desc": "Agencia profesional de diseno web. Convertimos tu vision en realidad digital que vende.",
+    "causes_title": "Apoya proyectos que cambian los Balcanes digitales",
+    "copyright": "2025 Protos Web. Todos los derechos reservados.",
+    "made_with": "Hecho con amor en Zagreb, Croacia"
+  }
+}

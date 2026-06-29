@@ -1,0 +1,26 @@
+{
+  "nav": {
+    "home": "HOME",
+    "about": "CHI SIAMO",
+    "process": "PROCESSO",
+    "portfolio": "PORTFOLIO",
+    "services": "SERVIZI",
+    "blog": "BLOG",
+    "contact": "CONTATTO"
+  },
+  "hero": {
+    "label": "VELOCE. PER IL TUO BUSINESS",
+    "title_line1": "Trasformiamo",
+    "title_line2": "i visitatori in",
+    "title_line3": "clienti.",
+    "subtitle": "Siti web veloci, leggeri e robusti che lavorano per te. Tutto in un unico posto.",
+    "cta_primary": "Inizia il progetto",
+    "cta_secondary": "Vedi portfolio"
+  },
+  "footer": {
+    "brand_desc": "Agenzia professionale di web design. Trasformiamo la tua visione in realta digitale che vende.",
+    "causes_title": "Sostieni i progetti che cambiano i Balcani digitali",
+    "copyright": "2025 Protos Web. Tutti i diritti riservati.",
+    "made_with": "Fatto con amore a Zagabria, Croazia"
+  }
+}

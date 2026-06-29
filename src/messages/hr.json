@@ -1,0 +1,26 @@
+{
+  "nav": {
+    "home": "POCETNA",
+    "about": "O MENI",
+    "process": "PROCES",
+    "portfolio": "PORTFOLIO",
+    "services": "USLUGE",
+    "blog": "BLOG",
+    "contact": "KONTAKT"
+  },
+  "hero": {
+    "label": "BRZO. ZA VAS POSAO",
+    "title_line1": "Pretvaramo",
+    "title_line2": "posjetitelje u",
+    "title_line3": "kupce.",
+    "subtitle": "Brze, lagane i robusne web stranice koje rade za vas. Sve na jednom mjestu.",
+    "cta_primary": "Zapocni projekt",
+    "cta_secondary": "Pogledaj portfolio"
+  },
+  "footer": {
+    "brand_desc": "Profesionalna agencija za web dizajn. Pretvaramo vasu viziju u digitalnu stvarnost koja prodaje.",
+    "causes_title": "Podrzite projekte koji mijenjaju digitalni Balkan",
+    "copyright": "2025 Protos Web. Sva prava pridrzana.",
+    "made_with": "Napravljeno s ljubavlju u Zagrebu, Hrvatska"
+  }
+}

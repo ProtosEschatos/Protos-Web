@@ -1,0 +1,26 @@
+{
+  "nav": {
+    "home": "HOME",
+    "about": "ABOUT",
+    "process": "PROCESS",
+    "portfolio": "PORTFOLIO",
+    "services": "SERVICES",
+    "blog": "BLOG",
+    "contact": "CONTACT"
+  },
+  "hero": {
+    "label": "FAST. FOR YOUR BUSINESS",
+    "title_line1": "We Turn",
+    "title_line2": "visitors into",
+    "title_line3": "customers.",
+    "subtitle": "Fast, lightweight, and robust websites that work for you. All in one place.",
+    "cta_primary": "Start build",
+    "cta_secondary": "View Portfolio"
+  },
+  "footer": {
+    "brand_desc": "Professional web design agency. We turn your vision into digital reality that sells.",
+    "causes_title": "Podrzite projekte koji mijenjaju digitalni Balkan",
+    "copyright": "2025 Protos Web. All rights reserved.",
+    "made_with": "Made with love in Zagreb, Croatia"
+  }
+}

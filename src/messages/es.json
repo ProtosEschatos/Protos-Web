@@ -8,6 +8,12 @@
     "blog": "BLOG",
     "contact": "CONTACTO"
   },
+  "header": {
+    "brand": "Protos Web",
+    "cta": "SOLICITAR PRESUPUESTO",
+    "cycleTheme": "Cambiar tema",
+    "menu": "Menu"
+  },
   "hero": {
     "label": "RAPIDO. PARA TU NEGOCIO",
     "title_line1": "Convertimos",
@@ -15,12 +21,107 @@
     "title_line3": "clientes.",
     "subtitle": "Sitios web rapidos, ligeros y robustos que trabajan para ti. Todo en un solo lugar.",
     "cta_primary": "Iniciar proyecto",
-    "cta_secondary": "Ver portfolio"
+    "cta_secondary": "Ver portfolio",
+    "stats": {
+      "projects": { "value": "50", "suffix": "+", "label": "Proyectos entregados" },
+      "satisfaction": { "value": "98", "suffix": "%", "label": "Satisfaccion del cliente" },
+      "languages": { "value": "5", "suffix": " idiomas", "label": "Soporte multilingue" },
+      "webgl": { "value": "3D & WebGL", "suffix": "", "label": "Experiencias interactivas" }
+    }
+  },
+  "services": {
+    "label": "SERVICIOS",
+    "title": "Lo que",
+    "titleHighlight": "ofrecemos",
+    "items": [
+      { "title": "Soluciones web personalizadas", "text": "Sitios a medida con tecnologias modernas, optimizados para rendimiento y conversiones." },
+      { "title": "Diseno UI/UX", "text": "Interfaces hermosas e intuitivas disenadas pensando en el recorrido del usuario." },
+      { "title": "E-Commerce y apps web", "text": "Tiendas online y aplicaciones web con pagos e inventario." },
+      { "title": "SEO y marketing", "text": "Optimizacion para buscadores y estrategias de marketing digital." },
+      { "title": "IA y automatizacion", "text": "Integraciones inteligentes con chatbots IA, reservas y flujos automatizados." },
+      { "title": "Mantenimiento", "text": "Soporte continuo, actualizaciones, parches de seguridad y monitoreo." }
+    ]
+  },
+  "process": {
+    "label": "PROCESO",
+    "title": "Como",
+    "titleHighlight": "trabajamos",
+    "steps": [
+      { "num": "01", "title": "Descubrimiento", "text": "Conocemos tu negocio, objetivos y audiencia." },
+      { "num": "02", "title": "Diseno", "text": "Wireframes y diseno visual adaptado a tu marca." },
+      { "num": "03", "title": "Desarrollo", "text": "Codigo limpio, stack moderno, enfoque en rendimiento." },
+      { "num": "04", "title": "Lanzamiento", "text": "Pruebas, despliegue y soporte continuo." }
+    ],
+    "features": [
+      { "title": "Entrega rapida", "text": "La mayoria de proyectos en 2-4 semanas." },
+      { "title": "Precios transparentes", "text": "Presupuestos claros sin costes ocultos." },
+      { "title": "Soporte a largo plazo", "text": "Seguimos contigo despues del lanzamiento." }
+    ]
+  },
+  "portfolio": {
+    "label": "PORTFOLIO",
+    "title": "Proyectos",
+    "titleHighlight": "seleccionados",
+    "showcaseTitle": "3D Portfolio Showcase",
+    "showcaseText": "Explora nuestro trabajo en una galeria 3D interactiva.",
+    "showcaseCta": "Entrar al showcase",
+    "viewProject": "Ver proyecto"
+  },
+  "blog": {
+    "label": "BLOG",
+    "title": "Web Academy",
+    "subtitle": "Guias gratuitas sobre presencia web para emprendedores",
+    "readMore": "Leer mas",
+    "viewAll": "Ver todos los articulos"
+  },
+  "contact": {
+    "label": "CONTACTO",
+    "title": "Tienes un proyecto?",
+    "titleLine2": "Hablemos.",
+    "email": "Email",
+    "phone": "Telefono",
+    "location": "Ubicacion",
+    "locationValue": "Zagreb, Croacia",
+    "name": "Nombre",
+    "namePlaceholder": "Tu nombre",
+    "emailPlaceholder": "tu@email.com",
+    "service": "Servicio",
+    "servicePlaceholder": "Selecciona un servicio",
+    "message": "Mensaje",
+    "messagePlaceholder": "Cuentanos sobre tu proyecto...",
+    "submit": "Enviar mensaje",
+    "sending": "Enviando...",
+    "success": "Mensaje enviado! Te responderemos pronto.",
+    "error": "Algo salio mal. Intentalo de nuevo.",
+    "serviceOptions": ["Sitio personalizado", "E-Commerce", "Aplicacion web", "Diseno UI/UX", "SEO y Marketing", "Mantenimiento"]
   },
   "footer": {
     "brand_desc": "Agencia profesional de diseno web. Convertimos tu vision en realidad digital que vende.",
+    "links": "Enlaces",
+    "legal": "Legal",
+    "privacy": "Privacidad",
+    "terms": "Terminos",
+    "cookies": "Cookies",
     "causes_title": "Apoya proyectos que cambian los Balcanes digitales",
+    "cause_antiScam": "Anti-estafa",
+    "cause_education": "Educacion",
+    "cause_platforms": "Plataformas",
     "copyright": "2025 Protos Web. Todos los derechos reservados.",
     "made_with": "Hecho con amor en Zagreb, Croacia"
+  },
+  "cookie": {
+    "text": "Usamos cookies para mejorar tu experiencia. Al continuar visitando este sitio aceptas nuestro uso de cookies.",
+    "accept": "Aceptar",
+    "decline": "Rechazar"
+  },
+  "metadata": {
+    "home": { "title": "Convertimos visitantes en clientes", "description": "Agencia profesional de diseno web de Zagreb." },
+    "about": { "title": "Sobre mi", "description": "Full Stack Developer y Web Designer de Zagreb." },
+    "process": { "title": "Nuestro proceso", "description": "Como construimos soluciones web modernas." },
+    "portfolio": { "title": "Portfolio", "description": "Proyectos seleccionados y casos de estudio." },
+    "showcase": { "title": "3D Portfolio Showcase", "description": "Galeria 3D interactiva." },
+    "services": { "title": "Servicios", "description": "Diseno web, desarrollo, SEO y mas." },
+    "blog": { "title": "Blog", "description": "Guias gratuitas sobre presencia web." },
+    "contact": { "title": "Contacto", "description": "Contactanos para tu proximo proyecto." }
   }
 }

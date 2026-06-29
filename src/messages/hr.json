@@ -8,6 +8,12 @@
     "blog": "BLOG",
     "contact": "KONTAKT"
   },
+  "header": {
+    "brand": "Protos Web",
+    "cta": "ZATRAZI PONUDU",
+    "cycleTheme": "Promijeni temu",
+    "menu": "Izbornik"
+  },
   "hero": {
     "label": "BRZO. ZA VAS POSAO",
     "title_line1": "Pretvaramo",
@@ -15,12 +21,107 @@
     "title_line3": "kupce.",
     "subtitle": "Brze, lagane i robusne web stranice koje rade za vas. Sve na jednom mjestu.",
     "cta_primary": "Zapocni projekt",
-    "cta_secondary": "Pogledaj portfolio"
+    "cta_secondary": "Pogledaj portfolio",
+    "stats": {
+      "projects": { "value": "50", "suffix": "+", "label": "Isporucenih projekata" },
+      "satisfaction": { "value": "98", "suffix": "%", "label": "Zadovoljstvo klijenata" },
+      "languages": { "value": "5", "suffix": " jezika", "label": "Visjezicna podrska" },
+      "webgl": { "value": "3D & WebGL", "suffix": "", "label": "Interaktivna iskustva" }
+    }
+  },
+  "services": {
+    "label": "USLUGE",
+    "title": "Sto",
+    "titleHighlight": "nudimo",
+    "items": [
+      { "title": "Prilagodena web rjesenja", "text": "Web stranice izradene po mjeri s modernim tehnologijama, optimizirane za performanse i konverzije." },
+      { "title": "UI/UX dizajn", "text": "Prekrasna, intuitivna sucelja dizajnirana s fokusom na korisnicko iskustvo." },
+      { "title": "E-trgovina i web aplikacije", "text": "Online trgovine i web aplikacije s integracijom placanja i upravljanjem zalihama." },
+      { "title": "SEO i marketing", "text": "Optimizacija za pretrazivace i digitalne marketing strategije za bolju vidljivost." },
+      { "title": "AI i automatizacija", "text": "Pametne integracije ukljucujuci AI chatbotove, sustave rezervacija i automatizirane procese." },
+      { "title": "Odrzavanje", "text": "Kontinuirana podrska, azuriranja, sigurnosne zakrpe i nadzor performansi." }
+    ]
+  },
+  "process": {
+    "label": "PROCES",
+    "title": "Kako",
+    "titleHighlight": "radimo",
+    "steps": [
+      { "num": "01", "title": "Otkrivanje", "text": "Upoznajemo vas posao, ciljeve i ciljnu publiku." },
+      { "num": "02", "title": "Dizajn", "text": "Wireframeovi i vizualni dizajn prilagodeni vasem brendu." },
+      { "num": "03", "title": "Razvoj", "text": "Cist kod, moderni stack, pristup usmjeren na performanse." },
+      { "num": "04", "title": "Lansiranje", "text": "Testiranje, implementacija i kontinuirana podrska." }
+    ],
+    "features": [
+      { "title": "Brza isporuka", "text": "Vecina projekata isporucena u 2-4 tjedna." },
+      { "title": "Transparentne cijene", "text": "Jasne ponude bez skrivenih troskova." },
+      { "title": "Dugorocna podrska", "text": "Ostajemo s vama i nakon lansiranja." }
+    ]
+  },
+  "portfolio": {
+    "label": "PORTFOLIO",
+    "title": "Odabrani",
+    "titleHighlight": "projekti",
+    "showcaseTitle": "3D Portfolio Showcase",
+    "showcaseText": "Istrazite nase radove u interaktivnoj 3D galeriji.",
+    "showcaseCta": "Udi u showcase",
+    "viewProject": "Pogledaj projekt"
+  },
+  "blog": {
+    "label": "BLOG",
+    "title": "Web Akademija",
+    "subtitle": "Besplatni vodicima o web prisutnosti za poduzetnike",
+    "readMore": "Citaj vise",
+    "viewAll": "Pogledaj sve clanke"
+  },
+  "contact": {
+    "label": "KONTAKT",
+    "title": "Imate projekt?",
+    "titleLine2": "Razgovarajmo.",
+    "email": "Email",
+    "phone": "Telefon",
+    "location": "Lokacija",
+    "locationValue": "Zagreb, Hrvatska",
+    "name": "Ime",
+    "namePlaceholder": "Vase ime",
+    "emailPlaceholder": "vas@email.com",
+    "service": "Usluga",
+    "servicePlaceholder": "Odaberite uslugu",
+    "message": "Poruka",
+    "messagePlaceholder": "Recite nam o svom projektu...",
+    "submit": "Posalji poruku",
+    "sending": "Saljem...",
+    "success": "Poruka poslana! Javit cemo vam se uskoro.",
+    "error": "Nesto je poslo po krivu. Pokusajte ponovo.",
+    "serviceOptions": ["Prilagodena web stranica", "E-trgovina", "Web aplikacija", "UI/UX dizajn", "SEO i marketing", "Odrzavanje"]
   },
   "footer": {
     "brand_desc": "Profesionalna agencija za web dizajn. Pretvaramo vasu viziju u digitalnu stvarnost koja prodaje.",
+    "links": "Linkovi",
+    "legal": "Pravno",
+    "privacy": "Privatnost",
+    "terms": "Uvjeti",
+    "cookies": "Kolacici",
     "causes_title": "Podrzite projekte koji mijenjaju digitalni Balkan",
+    "cause_antiScam": "Anti-scam",
+    "cause_education": "Edukacija",
+    "cause_platforms": "Platforme",
     "copyright": "2025 Protos Web. Sva prava pridrzana.",
     "made_with": "Napravljeno s ljubavlju u Zagrebu, Hrvatska"
+  },
+  "cookie": {
+    "text": "Koristimo kolacice kako bismo poboljsali vase iskustvo. Nastavkom posjeta ove stranice prihvacate nasu upotrebu kolacica.",
+    "accept": "Prihvati",
+    "decline": "Odbij"
+  },
+  "metadata": {
+    "home": { "title": "Pretvaramo posjetitelje u kupce", "description": "Profesionalna agencija za web dizajn iz Zagreba." },
+    "about": { "title": "O meni", "description": "Full Stack Developer i Web Designer iz Zagreba." },
+    "process": { "title": "Nas proces", "description": "Kako gradimo moderna web rjesenja." },
+    "portfolio": { "title": "Portfolio", "description": "Odabrani projekti i studije slucaja." },
+    "showcase": { "title": "3D Portfolio Showcase", "description": "Interaktivna 3D galerija." },
+    "services": { "title": "Usluge", "description": "Web dizajn, razvoj, SEO i vise." },
+    "blog": { "title": "Blog", "description": "Besplatni vodicima o web prisutnosti za poduzetnike." },
+    "contact": { "title": "Kontakt", "description": "Javite nam se za vas sljedeci projekt." }
   }
 }

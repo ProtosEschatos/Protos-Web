@@ -1,12 +1,18 @@
 {
   "nav": {
     "home": "HOME",
-    "about": "CHI SIAMO",
+    "about": "CHI SONO",
     "process": "PROCESSO",
     "portfolio": "PORTFOLIO",
     "services": "SERVIZI",
     "blog": "BLOG",
     "contact": "CONTATTO"
+  },
+  "header": {
+    "brand": "Protos Web",
+    "cta": "RICHIEDI PREVENTIVO",
+    "cycleTheme": "Cambia tema",
+    "menu": "Menu"
   },
   "hero": {
     "label": "VELOCE. PER IL TUO BUSINESS",
@@ -14,13 +20,108 @@
     "title_line2": "i visitatori in",
     "title_line3": "clienti.",
     "subtitle": "Siti web veloci, leggeri e robusti che lavorano per te. Tutto in un unico posto.",
-    "cta_primary": "Inizia il progetto",
-    "cta_secondary": "Vedi portfolio"
+    "cta_primary": "Inizia progetto",
+    "cta_secondary": "Vedi portfolio",
+    "stats": {
+      "projects": { "value": "50", "suffix": "+", "label": "Progetti consegnati" },
+      "satisfaction": { "value": "98", "suffix": "%", "label": "Soddisfazione clienti" },
+      "languages": { "value": "5", "suffix": " lingue", "label": "Supporto multilingue" },
+      "webgl": { "value": "3D & WebGL", "suffix": "", "label": "Esperienze interattive" }
+    }
+  },
+  "services": {
+    "label": "SERVIZI",
+    "title": "Cosa",
+    "titleHighlight": "offriamo",
+    "items": [
+      { "title": "Soluzioni web personalizzate", "text": "Siti su misura con tecnologie moderne, ottimizzati per performance e conversioni." },
+      { "title": "Design UI/UX", "text": "Interfacce belle e intuitive progettate pensando al percorso utente." },
+      { "title": "E-Commerce e web app", "text": "Negozi online e applicazioni web con pagamenti e gestione inventario." },
+      { "title": "SEO e marketing", "text": "Ottimizzazione motori di ricerca e strategie di marketing digitale." },
+      { "title": "AI e automazione", "text": "Integrazioni smart con chatbot AI, prenotazioni e workflow intelligenti." },
+      { "title": "Manutenzione", "text": "Supporto continuo, aggiornamenti, patch di sicurezza e monitoraggio." }
+    ]
+  },
+  "process": {
+    "label": "PROCESSO",
+    "title": "Come",
+    "titleHighlight": "lavoriamo",
+    "steps": [
+      { "num": "01", "title": "Scoperta", "text": "Conosciamo il tuo business, obiettivi e pubblico target." },
+      { "num": "02", "title": "Design", "text": "Wireframe e design visivo su misura per il tuo brand." },
+      { "num": "03", "title": "Sviluppo", "text": "Codice pulito, stack moderno, approccio performance-first." },
+      { "num": "04", "title": "Lancio", "text": "Testing, deployment e supporto continuo." }
+    ],
+    "features": [
+      { "title": "Consegna rapida", "text": "La maggior parte dei progetti in 2-4 settimane." },
+      { "title": "Prezzi trasparenti", "text": "Preventivi chiari senza costi nascosti." },
+      { "title": "Supporto a lungo termine", "text": "Restiamo con te dopo il lancio." }
+    ]
+  },
+  "portfolio": {
+    "label": "PORTFOLIO",
+    "title": "Progetti",
+    "titleHighlight": "selezionati",
+    "showcaseTitle": "3D Portfolio Showcase",
+    "showcaseText": "Esplora il nostro lavoro in una galleria 3D interattiva.",
+    "showcaseCta": "Entra nello showcase",
+    "viewProject": "Vedi progetto"
+  },
+  "blog": {
+    "label": "BLOG",
+    "title": "Web Academy",
+    "subtitle": "Guide gratuite sulla presenza web per imprenditori",
+    "readMore": "Leggi di piu",
+    "viewAll": "Vedi tutti gli articoli"
+  },
+  "contact": {
+    "label": "CONTATTO",
+    "title": "Hai un progetto?",
+    "titleLine2": "Parliamone.",
+    "email": "Email",
+    "phone": "Telefono",
+    "location": "Posizione",
+    "locationValue": "Zagabria, Croazia",
+    "name": "Nome",
+    "namePlaceholder": "Il tuo nome",
+    "emailPlaceholder": "tua@email.com",
+    "service": "Servizio",
+    "servicePlaceholder": "Seleziona un servizio",
+    "message": "Messaggio",
+    "messagePlaceholder": "Raccontaci del tuo progetto...",
+    "submit": "Invia messaggio",
+    "sending": "Invio in corso...",
+    "success": "Messaggio inviato! Ti risponderemo presto.",
+    "error": "Qualcosa e andato storto. Riprova.",
+    "serviceOptions": ["Sito personalizzato", "E-Commerce", "Applicazione web", "Design UI/UX", "SEO e Marketing", "Manutenzione"]
   },
   "footer": {
     "brand_desc": "Agenzia professionale di web design. Trasformiamo la tua visione in realta digitale che vende.",
-    "causes_title": "Sostieni i progetti che cambiano i Balcani digitali",
+    "links": "Link",
+    "legal": "Legale",
+    "privacy": "Privacy",
+    "terms": "Termini",
+    "cookies": "Cookie",
+    "causes_title": "Sostieni progetti che cambiano i Balcani digitali",
+    "cause_antiScam": "Anti-truffa",
+    "cause_education": "Educazione",
+    "cause_platforms": "Piattaforme",
     "copyright": "2025 Protos Web. Tutti i diritti riservati.",
     "made_with": "Fatto con amore a Zagabria, Croazia"
+  },
+  "cookie": {
+    "text": "Utilizziamo i cookie per migliorare la tua esperienza. Continuando la visita accetti l'uso dei cookie.",
+    "accept": "Accetta",
+    "decline": "Rifiuta"
+  },
+  "metadata": {
+    "home": { "title": "Trasformiamo i visitatori in clienti", "description": "Agenzia professionale di web design da Zagabria." },
+    "about": { "title": "Chi sono", "description": "Full Stack Developer e Web Designer da Zagabria." },
+    "process": { "title": "Il nostro processo", "description": "Come costruiamo soluzioni web moderne." },
+    "portfolio": { "title": "Portfolio", "description": "Progetti selezionati e case study." },
+    "showcase": { "title": "3D Portfolio Showcase", "description": "Galleria 3D interattiva." },
+    "services": { "title": "Servizi", "description": "Web design, sviluppo, SEO e altro." },
+    "blog": { "title": "Blog", "description": "Guide gratuite sulla presenza web." },
+    "contact": { "title": "Contatto", "description": "Contattaci per il tuo prossimo progetto." }
   }
 }

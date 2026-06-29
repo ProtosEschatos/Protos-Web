@@ -1,15 +1,16 @@
 'use client'
 
-import Link from 'next/link'
+import { useTranslations } from 'next-intl'
+import { Link } from '@/routing'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/o-meni', label: 'About' },
-  { href: '/proces', label: 'Process' },
-  { href: '/portfolio', label: 'Portfolio' },
-  { href: '/usluge', label: 'Services' },
-  { href: '/blog', label: 'Blog' },
+  { href: '/', key: 'home' as const },
+  { href: '/o-meni', key: 'about' as const },
+  { href: '/proces', key: 'process' as const },
+  { href: '/portfolio', key: 'portfolio' as const },
+  { href: '/usluge', key: 'services' as const },
+  { href: '/blog', key: 'blog' as const },
 ]
 
 const linkVariant = {
@@ -28,6 +29,8 @@ interface MobileMenuProps {
 }
 
 export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
+  const t = useTranslations('nav')
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -54,7 +57,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                     onClick={onClose}
                     className="block text-5xl sm:text-7xl font-extrabold text-[var(--light)] hover:text-[var(--primary)] transition-colors duration-300"
                   >
-                    {link.label}
+                    {t(link.key)}
                   </Link>
                 </motion.div>
               ))}
@@ -70,7 +73,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   onClick={onClose}
                   className="block text-5xl sm:text-7xl font-extrabold gradient-text"
                 >
-                  Kontakt
+                  {t('contact')}
                 </Link>
               </motion.div>
             </nav>

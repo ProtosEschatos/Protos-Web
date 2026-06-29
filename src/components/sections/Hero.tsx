@@ -1,18 +1,11 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
-import Link from 'next/link'
+import { useTranslations } from 'next-intl'
+import { Link } from '@/routing'
 import dynamic from 'next/dynamic'
 
 const HeroCanvas = dynamic(() => import('../three/HeroCanvas'), { ssr: false })
-
-const stats = [
-  { value: '50', suffix: '+', label: 'Projects delivered', orange: true },
-  { value: '98', suffix: '%', label: 'Client satisfaction', orange: true },
-  { value: '5', suffix: ' jezika', label: 'Multilingual support', orange: false },
-  { value: '3D & WebGL', suffix: '', label: 'Interactive experiences', orange: false },
-]
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -24,12 +17,17 @@ const fadeUp = {
 }
 
 export default function Hero() {
+  const t = useTranslations('hero')
+  const stats = [
+    { ...t.raw('stats.projects'), orange: true },
+    { ...t.raw('stats.satisfaction'), orange: true },
+    { ...t.raw('stats.languages'), orange: false },
+    { ...t.raw('stats.webgl'), orange: false },
+  ] as Array<{ value: string; suffix: string; label: string; orange: boolean }>
+
   return (
     <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
-      {/* Background */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_50%,rgba(255,102,0,0.08)_0%,transparent_60%),radial-gradient(ellipse_at_80%_20%,rgba(139,92,246,0.06)_0%,transparent_50%),radial-gradient(ellipse_at_50%_80%,rgba(6,182,212,0.04)_0%,transparent_50%)]" />
-
-      {/* Stars */}
       <div
         className="absolute inset-0 animate-[twinkle_8s_ease-in-out_infinite_alternate]"
         style={{
@@ -43,61 +41,34 @@ export default function Hero() {
             radial-gradient(1px 1px at 85% 15%, rgba(255,255,255,0.35), transparent),
             radial-gradient(1px 1px at 45% 45%, rgba(255,255,255,0.25), transparent),
             radial-gradient(1px 1px at 60% 75%, rgba(255,255,255,0.3), transparent)
-          `
+          `,
         }}
       />
-
-      {/* 3D Canvas (background) */}
       <div className="absolute inset-0 z-0">
         <HeroCanvas />
       </div>
 
       <div className="container mx-auto px-6 relative z-10 max-w-[1200px]">
         <div className="max-w-[700px]">
-          <motion.p
-            custom={0} initial="hidden" animate="visible" variants={fadeUp}
-            className="text-[0.7rem] font-semibold tracking-[0.25em] uppercase text-[var(--light-muted)] mb-5 flex items-center gap-2 before:content-[''] before:w-6 before:h-px before:bg-[var(--primary)]"
-          >
-            FAST. FOR YOUR BUSINESS
+          <motion.p custom={0} initial="hidden" animate="visible" variants={fadeUp} className="text-[0.7rem] font-semibold tracking-[0.25em] uppercase text-[var(--light-muted)] mb-5 flex items-center gap-2 before:content-[''] before:w-6 before:h-px before:bg-[var(--primary)]">
+            {t('label')}
           </motion.p>
-
-          <motion.h1
-            custom={1} initial="hidden" animate="visible" variants={fadeUp}
-            className="text-[clamp(2.8rem,6vw,5rem)] font-extrabold leading-[1.05] mb-6"
-          >
-            We Turn<br />visitors into<br />
-            <span className="gradient-text">customers.</span>
+          <motion.h1 custom={1} initial="hidden" animate="visible" variants={fadeUp} className="text-[clamp(2.8rem,6vw,5rem)] font-extrabold leading-[1.05] mb-6">
+            {t('title_line1')}<br />{t('title_line2')}<br />
+            <span className="gradient-text">{t('title_line3')}</span>
           </motion.h1>
-
-          <motion.p
-            custom={2} initial="hidden" animate="visible" variants={fadeUp}
-            className="text-base text-[var(--light-muted)] mb-9 leading-7 max-w-[520px]"
-          >
-            Fast, lightweight, and robust websites that work for you. All in one place.
+          <motion.p custom={2} initial="hidden" animate="visible" variants={fadeUp} className="text-base text-[var(--light-muted)] mb-9 leading-7 max-w-[520px]">
+            {t('subtitle')}
           </motion.p>
-
-          <motion.div
-            custom={3} initial="hidden" animate="visible" variants={fadeUp}
-            className="flex gap-4 flex-wrap mb-16"
-          >
-            <Link
-              href="/kontakt"
-              className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-to-r from-[var(--primary)] to-[#ff8800] text-white text-xs font-semibold uppercase tracking-wider hover:-translate-y-0.5 hover:shadow-[0_8px_25px_var(--primary-glow)] transition-all duration-300"
-            >
-              Start build <i className="fas fa-arrow-right text-[0.75rem]" />
+          <motion.div custom={3} initial="hidden" animate="visible" variants={fadeUp} className="flex gap-4 flex-wrap mb-16">
+            <Link href="/kontakt" className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-to-r from-[var(--primary)] to-[#ff8800] text-white text-xs font-semibold uppercase tracking-wider hover:-translate-y-0.5 hover:shadow-[0_8px_25px_var(--primary-glow)] transition-all duration-300">
+              {t('cta_primary')} <i className="fas fa-arrow-right text-[0.75rem]" />
             </Link>
-            <Link
-              href="/portfolio"
-              className="inline-flex items-center gap-2 px-7 py-3 rounded-full border border-[var(--border-card)] text-[var(--light)] text-xs font-semibold uppercase tracking-wider hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all duration-300"
-            >
-              View Portfolio <i className="fas fa-arrow-right text-[0.75rem]" />
+            <Link href="/portfolio" className="inline-flex items-center gap-2 px-7 py-3 rounded-full border border-[var(--border-card)] text-[var(--light)] text-xs font-semibold uppercase tracking-wider hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all duration-300">
+              {t('cta_secondary')} <i className="fas fa-arrow-right text-[0.75rem]" />
             </Link>
           </motion.div>
-
-          <motion.div
-            custom={4} initial="hidden" animate="visible" variants={fadeUp}
-            className="flex gap-10 flex-wrap"
-          >
+          <motion.div custom={4} initial="hidden" animate="visible" variants={fadeUp} className="flex gap-10 flex-wrap">
             {stats.map((s, i) => (
               <div key={i} className="text-center">
                 <div className="text-2xl font-bold text-[var(--light)] mb-1">

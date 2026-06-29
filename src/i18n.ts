@@ -1,14 +1,10 @@
 import { getRequestConfig } from 'next-intl/server'
-import { notFound } from 'next/navigation'
+import { routing } from './routing'
 
-// Supported locales
-export const locales = ['hr', 'en', 'de', 'it', 'es'] as const
+export const locales = routing.locales
 export type Locale = (typeof locales)[number]
+export const defaultLocale = routing.defaultLocale
 
-// Default locale
-export const defaultLocale: Locale = 'hr'
-
-// Locale labels for UI
 export const localeLabels: Record<Locale, string> = {
   hr: 'Hrvatski',
   en: 'English',
@@ -17,7 +13,6 @@ export const localeLabels: Record<Locale, string> = {
   es: 'Español',
 }
 
-// Locale flags for UI
 export const localeFlags: Record<Locale, string> = {
   hr: '\u{1F1ED}\u{1F1F7}',
   en: '\u{1F1EC}\u{1F1E7}',
@@ -26,11 +21,15 @@ export const localeFlags: Record<Locale, string> = {
   es: '\u{1F1EA}\u{1F1F8}',
 }
 
-export default getRequestConfig(async ({ locale }) => {
-  // Validate that the incoming locale is valid
-  if (!locales.includes(locale as Locale)) notFound()
+export default getRequestConfig(async ({ requestLocale }) => {
+  let locale = await requestLocale
+
+  if (!locale || !routing.locales.includes(locale as Locale)) {
+    locale = routing.defaultLocale
+  }
 
   return {
+    locale,
     messages: (await import(`./messages/${locale}.json`)).default,
   }
 })

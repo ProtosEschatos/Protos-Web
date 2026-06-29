@@ -1,0 +1,29 @@
+'use server'
+
+import { supabase } from '@/lib/supabase'
+
+export async function submitContact(data: {
+  name: string
+  email: string
+  service: string
+  message: string
+}) {
+  if (!supabase) {
+    console.log('Contact submission (Supabase not configured):', data)
+    return { success: true }
+  }
+
+  const { error } = await supabase.rpc('submit_contact', {
+    p_name: data.name,
+    p_email: data.email,
+    p_service: data.service || null,
+    p_message: data.message,
+  })
+
+  if (error) {
+    console.error('submit_contact error:', error)
+    return { success: false, error: error.message }
+  }
+
+  return { success: true }
+}

@@ -8,6 +8,12 @@
     "blog": "BLOG",
     "contact": "KONTAKT"
   },
+  "header": {
+    "brand": "Protos Web",
+    "cta": "ANGEBOT ANFORDERN",
+    "cycleTheme": "Theme wechseln",
+    "menu": "Menu"
+  },
   "hero": {
     "label": "SCHNELL. FUR IHR GESCHAFT",
     "title_line1": "Wir verwandeln",
@@ -15,12 +21,107 @@
     "title_line3": "Kunden.",
     "subtitle": "Schnelle, leichte und robuste Websites, die fur Sie arbeiten. Alles an einem Ort.",
     "cta_primary": "Projekt starten",
-    "cta_secondary": "Portfolio ansehen"
+    "cta_secondary": "Portfolio ansehen",
+    "stats": {
+      "projects": { "value": "50", "suffix": "+", "label": "Gelieferte Projekte" },
+      "satisfaction": { "value": "98", "suffix": "%", "label": "Kundenzufriedenheit" },
+      "languages": { "value": "5", "suffix": " Sprachen", "label": "Mehrsprachige Unterstutzung" },
+      "webgl": { "value": "3D & WebGL", "suffix": "", "label": "Interaktive Erlebnisse" }
+    }
+  },
+  "services": {
+    "label": "LEISTUNGEN",
+    "title": "Was wir",
+    "titleHighlight": "bieten",
+    "items": [
+      { "title": "Individuelle Weblosungen", "text": "Massgeschneiderte Websites mit modernen Technologien, optimiert fur Performance und Conversions." },
+      { "title": "UI/UX Design", "text": "Schone, intuitive Oberflachen mit Fokus auf die User Journey." },
+      { "title": "E-Commerce & Web-Apps", "text": "Online-Shops und Webanwendungen mit Zahlungsintegration und Bestandsverwaltung." },
+      { "title": "SEO & Marketing", "text": "Suchmaschinenoptimierung und digitale Marketingstrategien fur mehr Sichtbarkeit." },
+      { "title": "KI & Automatisierung", "text": "Smarte Integrationen inklusive KI-Chatbots, Buchungssysteme und Workflows." },
+      { "title": "Wartung", "text": "Laufender Support, Updates, Sicherheitspatches und Performance-Monitoring." }
+    ]
+  },
+  "process": {
+    "label": "PROZESS",
+    "title": "Wie wir",
+    "titleHighlight": "arbeiten",
+    "steps": [
+      { "num": "01", "title": "Analyse", "text": "Wir lernen Ihr Geschaft, Ziele und Zielgruppe kennen." },
+      { "num": "02", "title": "Design", "text": "Wireframes und visuelles Design passend zu Ihrer Marke." },
+      { "num": "03", "title": "Entwicklung", "text": "Sauberer Code, moderner Stack, Performance-first." },
+      { "num": "04", "title": "Launch", "text": "Testing, Deployment und laufender Support." }
+    ],
+    "features": [
+      { "title": "Schnelle Lieferung", "text": "Die meisten Projekte in 2-4 Wochen." },
+      { "title": "Transparente Preise", "text": "Klare Angebote ohne versteckte Kosten." },
+      { "title": "Langfristiger Support", "text": "Wir bleiben nach dem Launch an Ihrer Seite." }
+    ]
+  },
+  "portfolio": {
+    "label": "PORTFOLIO",
+    "title": "Ausgewahlte",
+    "titleHighlight": "Projekte",
+    "showcaseTitle": "3D Portfolio Showcase",
+    "showcaseText": "Entdecken Sie unsere Arbeit in einer interaktiven 3D-Galerie.",
+    "showcaseCta": "Showcase betreten",
+    "viewProject": "Projekt ansehen"
+  },
+  "blog": {
+    "label": "BLOG",
+    "title": "Web Academy",
+    "subtitle": "Kostenlose Leitfaden zur Web-Praesenz fur Unternehmer",
+    "readMore": "Weiterlesen",
+    "viewAll": "Alle Artikel ansehen"
+  },
+  "contact": {
+    "label": "KONTAKT",
+    "title": "Haben Sie ein Projekt?",
+    "titleLine2": "Lassen Sie uns sprechen.",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "location": "Standort",
+    "locationValue": "Zagreb, Kroatien",
+    "name": "Name",
+    "namePlaceholder": "Ihr Name",
+    "emailPlaceholder": "ihre@email.com",
+    "service": "Leistung",
+    "servicePlaceholder": "Leistung auswahlen",
+    "message": "Nachricht",
+    "messagePlaceholder": "Erzahlen Sie uns von Ihrem Projekt...",
+    "submit": "Nachricht senden",
+    "sending": "Wird gesendet...",
+    "success": "Nachricht gesendet! Wir melden uns bald.",
+    "error": "Etwas ist schiefgelaufen. Bitte erneut versuchen.",
+    "serviceOptions": ["Individuelle Website", "E-Commerce", "Webanwendung", "UI/UX Design", "SEO & Marketing", "Wartung"]
   },
   "footer": {
     "brand_desc": "Professionelle Webdesign-Agentur. Wir verwandeln Ihre Vision in digitale Realitat, die verkauft.",
+    "links": "Links",
+    "legal": "Rechtliches",
+    "privacy": "Datenschutz",
+    "terms": "AGB",
+    "cookies": "Cookies",
     "causes_title": "Unterstutzen Sie Projekte, die den digitalen Balkan verandern",
+    "cause_antiScam": "Anti-Betrug",
+    "cause_education": "Bildung",
+    "cause_platforms": "Plattformen",
     "copyright": "2025 Protos Web. Alle Rechte vorbehalten.",
-    "made_with": "Mit Liebe in Zagreb, Kroatien gemacht"
+    "made_with": "Mit Liebe gemacht in Zagreb, Kroatien"
+  },
+  "cookie": {
+    "text": "Wir verwenden Cookies, um Ihr Erlebnis zu verbessern. Durch den weiteren Besuch stimmen Sie der Cookie-Nutzung zu.",
+    "accept": "Akzeptieren",
+    "decline": "Ablehnen"
+  },
+  "metadata": {
+    "home": { "title": "Wir verwandeln Besucher in Kunden", "description": "Professionelle Webdesign-Agentur aus Zagreb." },
+    "about": { "title": "Uber mich", "description": "Full Stack Developer & Web Designer aus Zagreb." },
+    "process": { "title": "Unser Prozess", "description": "Wie wir moderne Weblosungen bauen." },
+    "portfolio": { "title": "Portfolio", "description": "Ausgewahlte Projekte und Fallstudien." },
+    "showcase": { "title": "3D Portfolio Showcase", "description": "Interaktive 3D-Galerie." },
+    "services": { "title": "Leistungen", "description": "Webdesign, Entwicklung, SEO und mehr." },
+    "blog": { "title": "Blog", "description": "Kostenlose Leitfaden zur Web-Praesenz." },
+    "contact": { "title": "Kontakt", "description": "Kontaktieren Sie uns fur Ihr nachstes Projekt." }
   }
 }

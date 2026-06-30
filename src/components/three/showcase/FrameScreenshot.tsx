@@ -1,50 +1,98 @@
 'use client'
 
-import { Suspense } from 'react'
-import { useTexture } from '@react-three/drei'
+import { useEffect, useState } from 'react'
 import * as THREE from 'three'
 
 function HoloFallback({ width, height, z, color }: { width: number; height: number; z: number; color: number }) {
   return (
     <group position={[0, 0, z]}>
-      <mesh>
+      <mesh renderOrder={12}>
         <planeGeometry args={[width, height]} />
-        <meshBasicMaterial color={0x020617} />
+        <meshBasicMaterial color={0x0f172a} />
       </mesh>
-      <mesh position={[0, 0, 0.001]}>
-        <planeGeometry args={[width * 0.9, height * 0.12]} />
-        <meshBasicMaterial color={color} transparent opacity={0.35} />
+      <mesh position={[0, height * 0.38, 0.002]} renderOrder={13}>
+        <planeGeometry args={[width * 0.22, width * 0.22]} />
+        <meshBasicMaterial color={color} transparent opacity={0.9} />
       </mesh>
-      <mesh position={[0, height * 0.22, 0.001]}>
-        <planeGeometry args={[width * 0.75, height * 0.55]} />
-        <meshBasicMaterial color={color} transparent opacity={0.12} />
+      <mesh position={[0, height * 0.18, 0.002]} renderOrder={13}>
+        <planeGeometry args={[width * 0.88, height * 0.08]} />
+        <meshBasicMaterial color={color} transparent opacity={0.45} />
+      </mesh>
+      <mesh position={[0, -height * 0.08, 0.002]} renderOrder={13}>
+        <planeGeometry args={[width * 0.82, height * 0.55]} />
+        <meshBasicMaterial color={color} transparent opacity={0.18} />
       </mesh>
     </group>
   )
 }
 
 function ScreenshotPlane({
-  imageUrl,
+  texture,
   width,
   height,
   z,
 }: {
-  imageUrl: string
+  texture: THREE.Texture
   width: number
   height: number
   z: number
 }) {
-  const texture = useTexture(imageUrl)
-  texture.colorSpace = THREE.SRGBColorSpace
-  texture.minFilter = THREE.LinearFilter
-  texture.magFilter = THREE.LinearFilter
-
   return (
-    <mesh position={[0, 0, z]}>
+    <mesh position={[0, 0, z]} renderOrder={12}>
       <planeGeometry args={[width, height]} />
       <meshBasicMaterial map={texture} toneMapped={false} />
     </mesh>
   )
+}
+
+function useSafeTexture(imageUrl: string | null) {
+  const [texture, setTexture] = useState<THREE.Texture | null>(null)
+  const [failed, setFailed] = useState(!imageUrl)
+
+  useEffect(() => {
+    if (!imageUrl) {
+      setTexture(null)
+      setFailed(true)
+      return
+    }
+
+    let cancelled = false
+    setFailed(false)
+    setTexture(null)
+
+    const loader = new THREE.TextureLoader()
+    loader.setCrossOrigin('anonymous')
+    loader.load(
+      imageUrl,
+      (loaded) => {
+        if (cancelled) {
+          loaded.dispose()
+          return
+        }
+        loaded.colorSpace = THREE.SRGBColorSpace
+        loaded.minFilter = THREE.LinearFilter
+        loaded.magFilter = THREE.LinearFilter
+        setTexture(loaded)
+        setFailed(false)
+      },
+      undefined,
+      () => {
+        if (!cancelled) setFailed(true)
+      },
+    )
+
+    return () => {
+      cancelled = true
+    }
+  }, [imageUrl])
+
+  useEffect(() => {
+    return () => {
+      texture?.dispose()
+    }
+  }, [texture])
+
+  return { texture, failed, loading: !!imageUrl && !texture && !failed }
 }
 
 export function FrameScreenshot({
@@ -60,13 +108,15 @@ export function FrameScreenshot({
   z: number
   fallbackColor: number
 }) {
-  if (!imageUrl) {
+  const { texture, failed, loading } = useSafeTexture(imageUrl)
+
+  if (!imageUrl || failed) {
     return <HoloFallback width={width} height={height} z={z} color={fallbackColor} />
   }
 
-  return (
-    <Suspense fallback={<HoloFallback width={width} height={height} z={z} color={fallbackColor} />}>
-      <ScreenshotPlane imageUrl={imageUrl} width={width} height={height} z={z} />
-    </Suspense>
-  )
+  if (loading || !texture) {
+    return <HoloFallback width={width} height={height} z={z} color={fallbackColor} />
+  }
+
+  return <ScreenshotPlane texture={texture} width={width} height={height} z={z} />
 }

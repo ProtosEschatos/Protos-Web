@@ -9,10 +9,10 @@ export const SHOWCASE_CONFIG = {
 } as const
 
 export const PROJECT_LINKS = [
-  { color: 0x6366f1, link: 'https://bodulica.shop' },
-  { color: 0x06b6d4, link: 'https://zeustrading.online' },
-  { color: 0xf59e0b, link: 'https://cosmic-blueprint.net' },
-  { color: 0x818cf8, link: 'https://www.protosweb.eu' },
+  { color: 0x6366f1, link: 'https://bodulica.shop', screenshot: '/showcase/mobile-bodulica.jpg' },
+  { color: 0x06b6d4, link: 'https://zeustrading.online', screenshot: '/showcase/mobile-zeustrading.jpg' },
+  { color: 0xf59e0b, link: 'https://cosmic-blueprint.net', screenshot: '/showcase/mobile-cosmic-blueprint.jpg' },
+  { color: 0x818cf8, link: 'https://www.protosweb.eu', screenshot: '/showcase/mobile-protosweb.jpg' },
 ] as const
 
 export const INITIAL_CHARACTER_HEADING = 0

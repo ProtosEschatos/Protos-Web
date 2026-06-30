@@ -8,7 +8,7 @@ import { Link } from '@/routing'
 import { PROJECT_LINKS, SHOWCASE_CONFIG, getFrameMarkers, type ShowcaseProject } from './showcase/constants'
 import { ShowcaseScene } from './showcase/GalleryScene'
 import type { PortfolioItem } from '@/actions/portfolio'
-import { getProjectScreenshotUrl, normalizeProjectUrl } from '@/lib/showcase-screenshots'
+import { normalizeProjectUrl } from '@/lib/showcase-screenshots'
 
 type Phase = 'loading' | 'intro' | 'playing'
 
@@ -30,7 +30,7 @@ function buildShowcaseProjects(
       link: meta.link,
       title: dbItem?.title ?? t(`project${index + 1}_title`),
       description: dbItem?.description ?? t(`project${index + 1}_desc`),
-      imageUrl: dbItem?.image_url ?? getProjectScreenshotUrl(meta.link),
+      imageUrl: dbItem?.image_url ?? meta.screenshot,
     }
   })
 }

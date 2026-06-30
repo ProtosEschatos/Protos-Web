@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
   const shotUrl =
     viewport === 'desktop'
       ? `https://image.thum.io/get/width/800/crop/600/noanimate/${parsed.href}`
-      : `https://image.thum.io/get/width/390/crop/844/noanimate/${parsed.href}`
+      : `https://image.thum.io/get/viewportWidth/390/viewportHeight/844/noanimate/${parsed.href}`
 
   try {
     const upstream = await fetch(shotUrl, {

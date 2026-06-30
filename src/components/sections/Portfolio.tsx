@@ -16,7 +16,7 @@ export default function Portfolio({ items }: Props) {
   const t = useTranslations('portfolio')
 
   return (
-    <section className="py-24">
+    <section className="py-24 cosmic-section">
       <div className="max-w-[1200px] mx-auto px-6 text-center">
         <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[var(--primary)] mb-3">{t('label')}</p>
         <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-tight mb-5">

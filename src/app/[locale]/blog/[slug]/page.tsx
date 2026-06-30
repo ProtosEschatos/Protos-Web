@@ -59,6 +59,7 @@ export default async function BlogPostPage({ params: { locale, slug } }: Props) 
             <i className="fas fa-arrow-left" /> {t('viewAll')}
           </Link>
 
+          <div className="cosmic-panel rounded-3xl p-8 md:p-10">
           <div className="flex items-center gap-1.5 text-xs text-[var(--primary)] mb-4">
             <i className="fas fa-calendar" /> {formatDate(post.created_at, locale)}
           </div>
@@ -74,6 +75,7 @@ export default async function BlogPostPage({ params: { locale, slug } }: Props) 
           ) : null}
 
           {post.content ? <BlogPostContent content={post.content} /> : null}
+          </div>
         </div>
       </article>
     </>

@@ -41,7 +41,7 @@ export default function Contact() {
   }
 
   return (
-    <section className="py-24 relative overflow-hidden">
+    <section className="py-24 relative overflow-hidden cosmic-section">
       <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary)]/[0.06] via-[var(--secondary)]/[0.06] to-[var(--accent)]/[0.06]" />
       <div className="max-w-[1200px] mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
@@ -65,7 +65,7 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }} className="bg-[var(--dark-card)] border border-[var(--border-card)] rounded-3xl p-10">
+          <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }} className="cosmic-panel rounded-3xl p-10">
             {!submitted ? (
               <form onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">

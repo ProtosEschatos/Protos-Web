@@ -47,7 +47,7 @@ export default function BlogGrid({ posts, locale }: Props) {
         >
           <Link
             href={`/blog/${p.slug}`}
-            className="bg-[var(--dark-card)] border border-[var(--border-card)] rounded-2xl p-7 flex flex-col h-full hover:border-[var(--primary)]/20 hover:-translate-y-1 transition-all duration-300 group"
+            className="cosmic-panel rounded-2xl p-7 flex flex-col h-full hover:border-[var(--primary)]/20 hover:-translate-y-1 transition-all duration-300 group"
           >
             <div className="flex items-center gap-1.5 text-xs text-[var(--primary)] mb-3">
               <i className="fas fa-calendar" /> {formatDate(p.created_at, locale)}

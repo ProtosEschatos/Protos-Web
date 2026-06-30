@@ -42,7 +42,7 @@ export default function PortfolioGrid({ items }: Props) {
           whileInView="visible"
           viewport={{ once: true, margin: '-50px' }}
           variants={cardVariant}
-          className="bg-[var(--dark-card)] border border-[var(--border-card)] rounded-2xl overflow-hidden hover:-translate-y-1.5 hover:shadow-[0_4px_24px_rgba(0,0,0,0.3)] transition-all duration-300"
+          className="cosmic-panel rounded-2xl overflow-hidden hover:-translate-y-1.5 hover:shadow-[0_4px_24px_rgba(0,0,0,0.3)] transition-all duration-300"
         >
           {p.image_url ? (
             // eslint-disable-next-line @next/next/no-img-element

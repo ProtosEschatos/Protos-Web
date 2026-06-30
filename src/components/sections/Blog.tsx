@@ -31,7 +31,7 @@ export default function Blog({ posts, locale }: Props) {
   const t = useTranslations('blog')
 
   return (
-    <section className="py-24">
+    <section className="py-24 cosmic-section">
       <div className="max-w-[1200px] mx-auto px-6 text-center">
         <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[var(--primary)] mb-3">{t('label')}</p>
         <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-tight mb-5">{t('title')}</h2>
@@ -48,7 +48,7 @@ export default function Blog({ posts, locale }: Props) {
             >
               <Link
                 href={`/blog/${p.slug}`}
-                className="bg-[var(--dark-card)] border border-[var(--border-card)] rounded-2xl p-7 text-left flex flex-col h-full hover:border-[var(--primary)]/20 hover:-translate-y-1 transition-all duration-300 group"
+                className="cosmic-panel rounded-2xl p-7 text-left flex flex-col h-full hover:border-[var(--primary)]/20 hover:-translate-y-1 transition-all duration-300 group"
               >
                 <div className="flex items-center gap-1.5 text-xs text-[var(--primary)] mb-3">
                   <i className="fas fa-calendar" />

@@ -26,7 +26,7 @@ export default function Services() {
   const items = t.raw('items') as Array<{ title: string; text: string }>
 
   return (
-    <section className="py-24 bg-[var(--dark-surface)] border-t border-b border-white/[0.06]">
+    <section className="cosmic-section py-24 border-t border-b border-white/[0.06]">
       <div className="max-w-[1200px] mx-auto px-6 text-center">
         <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[var(--primary)] mb-3">{t('label')}</p>
         <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-tight mb-5">
@@ -41,7 +41,7 @@ export default function Services() {
               whileInView="visible"
               viewport={{ once: true, margin: '-50px' }}
               variants={cardVariant}
-              className="bg-[var(--dark-card)] border border-[var(--border-card)] rounded-2xl p-8 flex gap-5 hover:border-[var(--primary)]/20 hover:-translate-y-1 transition-all duration-300"
+              className="cosmic-panel rounded-2xl p-8 flex gap-5 hover:border-[var(--primary)]/20 hover:-translate-y-1 transition-all duration-300"
             >
               <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-lg shrink-0 ${colorMap[colors[i]]}`}>
                 <i className={icons[i]} />

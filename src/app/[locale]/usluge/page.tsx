@@ -25,9 +25,7 @@ export default function ServicesPage() {
 
   return (
     <>
-      <section className="pt-36 pb-16 text-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,102,0,0.08)_0%,transparent_60%),radial-gradient(ellipse_at_80%_30%,rgba(139,92,246,0.06)_0%,transparent_50%)]" />
-        <div className="absolute inset-0 animate-[twinkle_8s_ease-in-out_infinite_alternate]" style={{ backgroundImage: `radial-gradient(1px 1px at 10% 20%,rgba(255,255,255,0.4),transparent),radial-gradient(1px 1px at 50% 10%,rgba(255,255,255,0.5),transparent),radial-gradient(1px 1px at 90% 80%,rgba(255,255,255,0.4),transparent)` }} />
+      <section className="pt-36 pb-16 text-center relative overflow-hidden cosmic-hero-band">
         <div className="max-w-[1200px] mx-auto px-6 relative z-10">
           <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[var(--primary)] mb-3">{t('label')}</p>
           <h1 className="text-[clamp(2.5rem,6vw,4rem)] font-extrabold leading-tight mb-5">
@@ -42,7 +40,7 @@ export default function ServicesPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {items.map((s, i) => (
               <motion.div key={s.title} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-                className="bg-[var(--dark-card)] border border-[var(--border-card)] rounded-2xl p-8 flex gap-5 hover:border-[var(--primary)]/20 hover:-translate-y-1 transition-all duration-300">
+                className="cosmic-panel rounded-2xl p-8 flex gap-5 hover:border-[var(--primary)]/20 hover:-translate-y-1 transition-all duration-300">
                 <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-lg shrink-0 ${colors[i]}`}>
                   <i className={icons[i]} />
                 </div>

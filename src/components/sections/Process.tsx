@@ -27,7 +27,7 @@ export default function Process() {
   const features = t.raw('features') as Array<{ title: string; text: string }>
 
   return (
-    <section className="py-24 bg-[var(--dark-surface)] border-t border-b border-white/[0.06]">
+    <section className="cosmic-section py-24 border-t border-b border-white/[0.06]">
       <div className="max-w-[1200px] mx-auto px-6 text-center">
         <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-tight mb-10">
           {t('title')} <span className="gradient-text">{t('titleHighlight')}</span>
@@ -42,7 +42,7 @@ export default function Process() {
               whileInView="visible"
               viewport={{ once: true, margin: '-50px' }}
               variants={cardVariant}
-              className="bg-[var(--dark-card)] border border-[var(--border-card)] rounded-2xl p-7 hover:border-[var(--primary)]/30 hover:-translate-y-1 transition-all duration-300 text-left"
+              className="cosmic-panel rounded-2xl p-7 hover:border-[var(--primary)]/30 hover:-translate-y-1 transition-all duration-300 text-left"
             >
               <div className="text-4xl font-extrabold gradient-text mb-4 leading-none">{s.num}</div>
               <h3 className="text-base font-bold text-[var(--light)] mb-2">{s.title}</h3>
@@ -60,7 +60,7 @@ export default function Process() {
               whileInView="visible"
               viewport={{ once: true }}
               variants={cardVariant}
-              className="bg-[var(--dark-card)] border border-[var(--border-card)] rounded-3xl p-8 text-center hover:border-[var(--primary)]/20 hover:-translate-y-1 transition-all duration-300"
+              className="cosmic-panel rounded-3xl p-8 text-center hover:border-[var(--primary)]/20 hover:-translate-y-1 transition-all duration-300"
             >
               <div className={`w-14 h-14 rounded-full mx-auto mb-4 flex items-center justify-center text-xl ${colorMap[featureColors[i]]}`}>
                 <i className={featureIcons[i]} />

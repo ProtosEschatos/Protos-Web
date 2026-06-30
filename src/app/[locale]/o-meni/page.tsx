@@ -32,8 +32,7 @@ export default function AboutPage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-36 pb-10 text-center relative overflow-hidden">
-        <div className="absolute top-0 left-0 right-0 h-[400px] bg-gradient-to-b from-[var(--primary)]/[0.08] to-transparent border-b border-[var(--primary)]/10" />
+      <section className="pt-36 pb-10 text-center relative overflow-hidden cosmic-hero-band">
         <div className="max-w-[1200px] mx-auto px-6 relative z-10">
           <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[var(--primary)] mb-3">ABOUT ME</p>
           <h1 className="text-[clamp(2.2rem,5vw,3.5rem)] font-extrabold leading-tight mb-5">
@@ -85,7 +84,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {goals.map((g, i) => (
               <motion.div key={g.title} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-                className="bg-[var(--dark-card)] border border-[var(--border-card)] rounded-2xl p-8 text-center hover:-translate-y-1 transition-all duration-300">
+                className="cosmic-panel rounded-2xl p-8 text-center hover:-translate-y-1 transition-all duration-300">
                 <div className="text-3xl mb-4">{g.emoji}</div>
                 <h3 className="text-base font-bold text-[var(--light)] mb-2">{g.title}</h3>
                 <p className="text-sm text-[var(--light-muted)] leading-relaxed">{g.text}</p>
@@ -96,7 +95,7 @@ export default function AboutPage() {
       </section>
 
       {/* Support Balkans */}
-      <section className="py-24 bg-[var(--dark-surface)] border-t border-b border-white/[0.06] text-center">
+      <section className="cosmic-section py-24 border-t border-b border-white/[0.06] text-center">
         <div className="max-w-[1200px] mx-auto px-6">
           <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[var(--primary)] mb-3">SUPPORT</p>
           <h2 className="text-[clamp(2rem,5vw,3rem)] font-extrabold leading-tight mb-5">
@@ -108,7 +107,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {supportCards.map((c, i) => (
               <motion.div key={c.title} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-                className="bg-[var(--dark-card)] border border-[var(--border-card)] rounded-2xl p-7 flex flex-col text-left">
+                className="cosmic-panel rounded-2xl p-7 flex flex-col text-left">
                 <div className="text-3xl mb-4">{c.emoji}</div>
                 <h3 className="text-base font-bold mb-2">{c.title}</h3>
                 <p className="text-sm text-[var(--light-muted)] leading-relaxed flex-1 mb-5">{c.text}</p>

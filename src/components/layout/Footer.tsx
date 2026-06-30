@@ -31,7 +31,7 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="bg-[var(--dark-surface)] border-t border-white/[0.06] pt-16">
+    <footer className="cosmic-section border-t border-white/[0.06] pt-16">
       <div className="max-w-[1200px] mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-12 mb-12">
           <div>

@@ -7,9 +7,10 @@
 - **Framework**: Next.js 14 (App Router) with `src/` directory
 - **Language**: TypeScript (strict mode)
 - **Styling**: Tailwind CSS with CSS custom properties
-- **Animations**: Framer Motion, GSAP (with cleanup in useEffect)
+- **Animations**: Framer Motion only (shared variants in `@/lib/animations`) — GSAP is NOT installed
 - **3D**: React Three Fiber (`@react-three/fiber`, `@react-three/drei`) — NOT vanilla Three.js
-- **Smooth Scroll**: `@studio-freight/lenis` (via LenisProvider)
+- **Smooth Scroll**: `lenis` (via LenisProvider)
+- **DOM + Canvas layers**: see `.cursor/rules/dom-canvas-layers.mdc` — mandatory for any UI/3D work
 - **i18n**: `next-intl` (5 locales: hr, en, de, it, es)
 - **Icons**: `lucide-react` + FontAwesome CDN
 - **Backend**: Supabase (blog + contact wired; portfolio CMS pending)
@@ -35,11 +36,11 @@
    - Be wrapped in `<Canvas>` from `@react-three/fiber`
    - Include `<Suspense>` fallback for loading states
 
-3. **GSAP usage MUST**:
-   - Import inside `useEffect` or at component top
-   - Register plugins: `gsap.registerPlugin(ScrollTrigger)`
-   - Clean up in useEffect return: `ScrollTrigger.getAll().forEach(t => t.kill())`
-   - Use refs for DOM targets, never query selectors
+3. **DOM + Canvas layers MUST** (full spec in `.cursor/rules/dom-canvas-layers.mdc`):
+   - Site pages: `HeroCanvas` fixed background only; content in DOM above it
+   - Showcase: fullscreen Canvas; NO Header/Footer/SiteBackground (handled in `AppChrome`)
+   - One showcase phase visible at a time (`loading` | `intro` | `playing`)
+   - 3D objects in Canvas; never fake 3D with CSS transforms for showcase frames
 
 4. **Framer Motion usage MUST**:
    - Use shared variants from `@/lib/animations` when possible
@@ -109,6 +110,9 @@
 - Never commit `node_modules/`, `.next/`, `.env`, `.env.local`
 
 ## FORBIDDEN
+- ❌ Do NOT mix site chrome (Header/Footer/PageLoader/SiteBackground) into portfolio-showcase
+- ❌ Do NOT stack multiple `fixed inset-0` overlays on showcase or site
+- ❌ Do NOT use GSAP (not in stack) unless user explicitly adds it to package.json
 - ❌ Do NOT use vanilla Three.js — only React Three Fiber
 - ❌ Do NOT use `pages/` router — only App Router with `src/app/`
 - ❌ Do NOT use CSS modules or styled-components — only Tailwind + CSS vars

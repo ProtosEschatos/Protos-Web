@@ -1,4 +1,4 @@
-// Shared GSAP / Framer Motion animation configs
+// Shared Framer Motion animation variants
 
 export const fadeUp = {
   hidden: { opacity: 0, y: 30 },

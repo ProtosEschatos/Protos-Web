@@ -28,7 +28,11 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Host not allowed' }, { status: 403 })
   }
 
-  const shotUrl = `https://image.thum.io/get/width/800/crop/600/noanimate/${parsed.href}`
+  const viewport = request.nextUrl.searchParams.get('viewport') ?? 'mobile'
+  const shotUrl =
+    viewport === 'desktop'
+      ? `https://image.thum.io/get/width/800/crop/600/noanimate/${parsed.href}`
+      : `https://image.thum.io/get/width/390/crop/844/noanimate/${parsed.href}`
 
   try {
     const upstream = await fetch(shotUrl, {

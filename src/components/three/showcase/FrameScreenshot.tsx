@@ -6,10 +6,20 @@ import * as THREE from 'three'
 
 function HoloFallback({ width, height, z, color }: { width: number; height: number; z: number; color: number }) {
   return (
-    <mesh position={[0, 0, z]}>
-      <planeGeometry args={[width, height]} />
-      <meshBasicMaterial color={color} transparent opacity={0.15} />
-    </mesh>
+    <group position={[0, 0, z]}>
+      <mesh>
+        <planeGeometry args={[width, height]} />
+        <meshBasicMaterial color={0x020617} />
+      </mesh>
+      <mesh position={[0, 0, 0.001]}>
+        <planeGeometry args={[width * 0.9, height * 0.12]} />
+        <meshBasicMaterial color={color} transparent opacity={0.35} />
+      </mesh>
+      <mesh position={[0, height * 0.22, 0.001]}>
+        <planeGeometry args={[width * 0.75, height * 0.55]} />
+        <meshBasicMaterial color={color} transparent opacity={0.12} />
+      </mesh>
+    </group>
   )
 }
 

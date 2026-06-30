@@ -21,6 +21,7 @@ export const AstronautCharacter = forwardRef<THREE.Group | null>(function Astron
 
   return (
     <group ref={groupRef}>
+      <group rotation={[0, Math.PI, 0]}>
       <mesh position={[0, 1.6, 0]} scale={[1, 0.95, 0.9]} castShadow>
         <sphereGeometry args={[0.55, 32, 32]} />
         <meshStandardMaterial color={0xffffff} roughness={0.3} metalness={0.1} />
@@ -125,6 +126,7 @@ export const AstronautCharacter = forwardRef<THREE.Group | null>(function Astron
         <cylinderGeometry args={[0.1, 0.12, 0.25, 12]} />
         <meshStandardMaterial {...suitMat} />
       </mesh>
+      </group>
     </group>
   )
 })

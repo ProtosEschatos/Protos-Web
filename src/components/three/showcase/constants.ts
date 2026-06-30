@@ -12,10 +12,10 @@ export const PROJECT_LINKS = [
   { color: 0x6366f1, link: 'https://bodulica.shop' },
   { color: 0x06b6d4, link: 'https://zeustrading.online' },
   { color: 0xf59e0b, link: 'https://cosmic-blueprint.net' },
-  { color: 0x818cf8, link: 'https://protosweb.eu' },
+  { color: 0x818cf8, link: 'https://www.protosweb.eu' },
 ] as const
 
-export const INITIAL_CHARACTER_HEADING = Math.PI
+export const INITIAL_CHARACTER_HEADING = 0
 
 export type ShowcaseProject = {
   title: string

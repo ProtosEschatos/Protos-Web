@@ -103,12 +103,29 @@ function PortfolioWallText() {
   )
 }
 
+function WindowFrameBar({
+  position,
+  size,
+}: {
+  position: [number, number, number]
+  size: [number, number, number]
+}) {
+  return (
+    <mesh position={position} castShadow>
+      <boxGeometry args={size} />
+      <meshStandardMaterial color={0x94a3b8} metalness={0.55} roughness={0.35} />
+    </mesh>
+  )
+}
+
 function ProjectFrame({ project, index }: { project: ShowcaseProject; index: number }) {
   const groupRef = useRef<THREE.Group>(null)
-  const fw = 2.5
-  const fh = 3.2
-  const fd = 0.15
-  const bw = 0.12
+  const viewW = 1.42
+  const viewH = 2.88
+  const frameW = 0.11
+  const depth = 0.22
+  const outerW = viewW + frameW * 2
+  const outerH = viewH + frameW * 2
   const edgeColors = [0x6366f1, 0x06b6d4, 0xf59e0b, 0x818cf8]
   const edgeColor = edgeColors[index % edgeColors.length]
 
@@ -116,42 +133,74 @@ function ProjectFrame({ project, index }: { project: ShowcaseProject; index: num
   const row = Math.floor(index / 2)
   const startZ = -SHOWCASE_CONFIG.galleryLength / 2 + 6
   const z = startZ + row * SHOWCASE_CONFIG.frameSpacing
-  const x = side * (SHOWCASE_CONFIG.galleryWidth / 2 - 0.3)
-  const y = SHOWCASE_CONFIG.galleryHeight * 0.45
+  const x = side * (SHOWCASE_CONFIG.galleryWidth / 2 - 0.28)
+  const y = SHOWCASE_CONFIG.galleryHeight * 0.46
 
   useFrame((state) => {
     if (groupRef.current) {
-      groupRef.current.position.y = y + Math.sin(state.clock.elapsedTime + index) * 0.02
+      groupRef.current.position.y = y + Math.sin(state.clock.elapsedTime + index) * 0.015
     }
   })
 
   return (
     <>
       <group ref={groupRef} position={[x, y, z]} rotation={[0, side * Math.PI / 2, 0]}>
-        <mesh castShadow>
-          <boxGeometry args={[fw + bw * 2, fh + bw * 2, fd]} />
-          <meshStandardMaterial color={0x334155} metalness={0.7} roughness={0.3} />
+        <mesh position={[0, 0, -depth * 0.45]}>
+          <boxGeometry args={[outerW + 0.35, outerH + 0.35, depth * 0.9]} />
+          <meshStandardMaterial color={0x1e293b} roughness={0.85} metalness={0.15} />
         </mesh>
-        <mesh position={[0, fh / 2 + bw, fd / 2 + 0.01]}>
-          <planeGeometry args={[fw + bw * 2, 0.05]} />
-          <meshBasicMaterial color={edgeColor} transparent opacity={0.8} />
+
+        <mesh position={[0, 0, -depth * 0.05]}>
+          <boxGeometry args={[outerW + 0.08, outerH + 0.08, depth * 0.55]} />
+          <meshStandardMaterial color={0x0b1120} roughness={0.95} metalness={0.05} />
         </mesh>
-        <mesh position={[0, -fh / 2 - bw, fd / 2 + 0.01]}>
-          <planeGeometry args={[fw + bw * 2, 0.05]} />
-          <meshBasicMaterial color={edgeColor} transparent opacity={0.8} />
+
+        <WindowFrameBar position={[0, outerH / 2 - frameW / 2, depth * 0.12]} size={[outerW, frameW, depth]} />
+        <WindowFrameBar position={[0, -outerH / 2 + frameW / 2, depth * 0.12]} size={[outerW, frameW, depth]} />
+        <WindowFrameBar position={[-outerW / 2 + frameW / 2, 0, depth * 0.12]} size={[frameW, viewH, depth]} />
+        <WindowFrameBar position={[outerW / 2 - frameW / 2, 0, depth * 0.12]} size={[frameW, viewH, depth]} />
+
+        <mesh position={[0, -outerH / 2 - 0.06, depth * 0.2]}>
+          <boxGeometry args={[outerW + 0.22, 0.1, depth * 0.75]} />
+          <meshStandardMaterial color={0x64748b} metalness={0.45} roughness={0.5} />
         </mesh>
-        <mesh position={[0, 0, fd / 2 + 0.01]}>
-          <planeGeometry args={[fw, fh]} />
-          <meshStandardMaterial color={0x0f172a} roughness={0.2} metalness={0.5} />
+
+        <mesh position={[0, 0, depth * 0.1]}>
+          <planeGeometry args={[viewW, viewH]} />
+          <meshStandardMaterial color={0x020617} roughness={0.3} metalness={0.2} />
         </mesh>
+
         <FrameScreenshot
           imageUrl={project.imageUrl}
-          width={fw * 0.92}
-          height={fh * 0.88}
-          z={fd / 2 + 0.025}
+          width={viewW * 0.96}
+          height={viewH * 0.96}
+          z={depth * 0.11}
           fallbackColor={edgeColor}
         />
-        <spotLight position={[0, 2, 2]} angle={0.5} penumbra={0.5} intensity={0.6} color={edgeColor} />
+
+        <mesh position={[0, 0, depth * 0.125]}>
+          <planeGeometry args={[viewW * 0.96, viewH * 0.96]} />
+          <meshPhysicalMaterial
+            color={0xa5c4ff}
+            transparent
+            opacity={0.08}
+            roughness={0.05}
+            metalness={0.1}
+            transmission={0.15}
+            thickness={0.02}
+          />
+        </mesh>
+
+        <mesh position={[0, outerH / 2 - frameW / 2 + 0.02, depth * 0.14]}>
+          <boxGeometry args={[outerW - 0.04, 0.025, 0.04]} />
+          <meshBasicMaterial color={edgeColor} transparent opacity={0.85} />
+        </mesh>
+        <mesh position={[0, -outerH / 2 + frameW / 2 - 0.02, depth * 0.14]}>
+          <boxGeometry args={[outerW - 0.04, 0.025, 0.04]} />
+          <meshBasicMaterial color={edgeColor} transparent opacity={0.85} />
+        </mesh>
+
+        <spotLight position={[0, 1.2, 1.4]} angle={0.45} penumbra={0.6} intensity={0.75} color={edgeColor} distance={6} />
       </group>
 
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[side * (SHOWCASE_CONFIG.galleryWidth / 2 - 2.5), 0.02, z]}>

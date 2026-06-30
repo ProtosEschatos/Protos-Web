@@ -4,14 +4,9 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import '@/styles/globals.css'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
-import PageLoader from '@/components/ui/PageLoader'
-import CustomCursor from '@/components/ui/CustomCursor'
-import CookieBanner from '@/components/ui/CookieBanner'
+import AppChrome from '@/components/layout/AppChrome'
 import LenisProvider from '@/components/providers/LenisProvider'
 import Analytics from '@/components/providers/Analytics'
-import SiteShell from '@/components/ui/SiteShell'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { locales, type Locale } from '@/i18n'
 import { ogImage, organizationJsonLd, siteUrl } from '@/lib/seo'
@@ -82,14 +77,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <LenisProvider>
             <Analytics />
-            <PageLoader />
-            <CustomCursor />
-            <Header />
-            <main>
-              <SiteShell>{children}</SiteShell>
-            </main>
-            <Footer />
-            <CookieBanner />
+            <AppChrome>{children}</AppChrome>
             <SpeedInsights />
           </LenisProvider>
         </NextIntlClientProvider>

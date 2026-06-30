@@ -104,6 +104,13 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
   const minimapRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [])
+
+  useEffect(() => {
     const interval = setInterval(() => {
       setProgress((p) => {
         const next = p + Math.random() * 15
@@ -172,7 +179,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
       </div>
 
       {phase === 'loading' && (
-        <div className="fixed inset-0 z-[1000] flex flex-col items-center justify-center bg-[#0a0a1a] transition-opacity duration-700">
+        <div className="fixed inset-0 z-[300] flex flex-col items-center justify-center bg-[#0a0a1a]">
           <div className="loader-title mb-4 text-5xl font-bold bg-gradient-to-br from-[#6366f1] to-[#06b6d4] bg-clip-text text-transparent">
             {t('loaderTitle')}
           </div>
@@ -191,7 +198,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
       )}
 
       {phase === 'intro' && (
-        <div className="fixed inset-0 z-[150] flex items-center justify-center bg-black/90">
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/90">
           <div className="max-w-lg px-8 text-center">
             <h1 className="mb-4 text-4xl font-bold bg-gradient-to-br from-[#6366f1] to-[#06b6d4] bg-clip-text text-transparent">
               {t('instructionsTitle')}
@@ -237,7 +244,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
         </div>
       )}
 
-      {phase !== 'loading' && (
+      {phase === 'playing' && (
         <>
           <div className="pointer-events-none fixed left-1/2 top-1/2 z-10 h-5 w-5 -translate-x-1/2 -translate-y-1/2 before:absolute before:left-1/2 before:top-0 before:h-full before:w-0.5 before:-translate-x-1/2 before:bg-white/50 after:absolute after:left-0 after:top-1/2 after:h-0.5 after:w-full after:-translate-y-1/2 after:bg-white/50" />
 
@@ -310,7 +317,8 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
         </>
       )}
 
-      <header className="fixed left-0 right-0 top-0 z-[100] flex items-center justify-between bg-gradient-to-b from-black/80 to-transparent p-6">
+      {(phase === 'intro' || phase === 'playing') && (
+        <header className="fixed left-0 right-0 top-0 z-[100] flex items-center justify-between bg-gradient-to-b from-black/80 to-transparent p-6">
         <Link href="/" className="flex items-center gap-3 text-white">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#6366f1] to-[#06b6d4] text-lg font-bold">
             P
@@ -328,9 +336,10 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
           ← {t('back')}
         </Link>
       </header>
+      )}
 
-      {showMenu && (
-        <div className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-black/95">
+      {showMenu && phase === 'playing' && (
+        <div className="fixed inset-0 z-[250] flex flex-col items-center justify-center bg-black/95">
           <button type="button" onClick={() => setShowMenu(false)} className="absolute right-8 top-8 text-3xl text-white hover:text-[#6366f1]">
             ×
           </button>

@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from 'next-intl'
 import { Link, usePathname, useRouter } from '@/routing'
 import { localeLabels, localeFlags, locales, type Locale } from '@/i18n'
 import MobileMenu from './MobileMenu'
+import ProtosEclipseLogo from '@/components/ui/ProtosEclipseLogo'
 
 const themes = ['night', 'day', 'pro'] as const
 type Theme = (typeof themes)[number]
@@ -90,11 +91,8 @@ export default function Header() {
       >
         <div className="max-w-[1400px] mx-auto px-6">
           <div className="flex items-center justify-between h-20">
-            <Link href="/" className="flex items-center gap-2.5 font-bold text-lg text-[var(--light)]">
-              <svg viewBox="0 0 36 36" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="18" cy="18" r="17" fill="#0d0d1a" stroke="#FF8800" strokeWidth="1.5" />
-                <path d="M18,1 A17,17 0 0,1 18,35 A17,17 0 0,0 18,1" fill="#FF6600" />
-              </svg>
+            <Link href="/" className="flex items-center gap-2.5 font-bold text-lg text-[var(--light)] group">
+              <ProtosEclipseLogo size={36} className="transition-transform duration-300 group-hover:scale-105" />
               <span className="hidden sm:block">{th('brand')}</span>
             </Link>
 

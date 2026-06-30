@@ -7,8 +7,33 @@ import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
 import { PROJECT_LINKS, SHOWCASE_CONFIG, getFrameMarkers, type ShowcaseProject } from './showcase/constants'
 import { ShowcaseScene } from './showcase/GalleryScene'
+import type { PortfolioItem } from '@/actions/portfolio'
+import { getProjectScreenshotUrl, normalizeProjectUrl } from '@/lib/showcase-screenshots'
 
 type Phase = 'loading' | 'intro' | 'playing'
+
+type SpaceGalleryProps = {
+  portfolioItems?: PortfolioItem[]
+}
+
+function buildShowcaseProjects(
+  t: (key: string) => string,
+  portfolioItems: PortfolioItem[],
+): ShowcaseProject[] {
+  return PROJECT_LINKS.map((meta, index) => {
+    const dbItem = portfolioItems.find(
+      (item) => item.project_url && normalizeProjectUrl(item.project_url) === normalizeProjectUrl(meta.link),
+    )
+
+    return {
+      color: meta.color,
+      link: meta.link,
+      title: dbItem?.title ?? t(`project${index + 1}_title`),
+      description: dbItem?.description ?? t(`project${index + 1}_desc`),
+      imageUrl: dbItem?.image_url ?? getProjectScreenshotUrl(meta.link),
+    }
+  })
+}
 
 function drawMinimap(
   canvas: HTMLCanvasElement | null,
@@ -58,18 +83,13 @@ function drawMinimap(
   ctx.stroke()
 }
 
-export function SpaceGallery() {
+export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
   const t = useTranslations('showcase')
   const tNav = useTranslations('nav')
 
   const projects = useMemo<ShowcaseProject[]>(
-    () =>
-      PROJECT_LINKS.map((meta, index) => ({
-        ...meta,
-        title: t(`project${index + 1}_title`),
-        description: t(`project${index + 1}_desc`),
-      })),
-    [t],
+    () => buildShowcaseProjects(t, portfolioItems),
+    [t, portfolioItems],
   )
 
   const frameMarkers = useMemo(() => getFrameMarkers(), [])
@@ -227,6 +247,12 @@ export function SpaceGallery() {
             }`}
           >
             <h3 className="mb-2 text-xl text-[#6366f1]">{nearestProject?.title}</h3>
+            {nearestProject?.imageUrl && phase === 'playing' && (
+              <div className="mb-3 overflow-hidden rounded-lg border border-white/10">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={nearestProject.imageUrl} alt={nearestProject.title} className="h-28 w-full object-cover object-top" />
+              </div>
+            )}
             <p className="mb-4 text-sm text-[#94a3b8]">{nearestProject?.description}</p>
             <a
               href={nearestProject?.link || '#'}

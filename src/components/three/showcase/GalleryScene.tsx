@@ -1,10 +1,11 @@
 'use client'
 
-import { useMemo, useRef } from 'react'
+import { useMemo, useRef, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
-import { SHOWCASE_CONFIG, type ShowcaseProject, initCharacterPosition } from './constants'
+import { SHOWCASE_CONFIG, INITIAL_CHARACTER_HEADING, type ShowcaseProject } from './constants'
 import { AstronautCharacter, animateAstronautWalk, resetAstronautPose } from './AstronautCharacter'
+import { FrameScreenshot } from './FrameScreenshot'
 
 const LETTER_BLOCKS = [
   [
@@ -143,10 +144,13 @@ function ProjectFrame({ project, index }: { project: ShowcaseProject; index: num
           <planeGeometry args={[fw, fh]} />
           <meshStandardMaterial color={0x0f172a} roughness={0.2} metalness={0.5} />
         </mesh>
-        <mesh position={[0, 0, fd / 2 + 0.02]}>
-          <planeGeometry args={[fw * 0.8, fh * 0.75]} />
-          <meshBasicMaterial color={edgeColor} transparent opacity={0.15} />
-        </mesh>
+        <FrameScreenshot
+          imageUrl={project.imageUrl}
+          width={fw * 0.92}
+          height={fh * 0.88}
+          z={fd / 2 + 0.025}
+          fallbackColor={edgeColor}
+        />
         <spotLight position={[0, 2, 2]} angle={0.5} penumbra={0.5} intensity={0.6} color={edgeColor} />
       </group>
 
@@ -286,6 +290,7 @@ type SceneProps = {
 
 export function ShowcaseScene({ projects, isPlaying, keys, characterRef, onCharacterMove, onNearestProject }: SceneProps) {
   const walkPhase = useRef(0)
+  const headingRef = useRef(INITIAL_CHARACTER_HEADING)
   const yAxis = useMemo(() => new THREE.Vector3(0, 1, 0), [])
   const moveDir = useMemo(() => new THREE.Vector3(), [])
   const framePositions = useMemo(
@@ -299,6 +304,13 @@ export function ShowcaseScene({ projects, isPlaying, keys, characterRef, onChara
     [projects],
   )
 
+  useEffect(() => {
+    if (characterRef.current) {
+      headingRef.current = INITIAL_CHARACTER_HEADING
+      characterRef.current.quaternion.setFromAxisAngle(yAxis, headingRef.current)
+    }
+  }, [characterRef, yAxis])
+
   useFrame(({ camera }) => {
     const character = characterRef.current
     if (!character) return
@@ -306,6 +318,17 @@ export function ShowcaseScene({ projects, isPlaying, keys, characterRef, onChara
     if (isPlaying) {
       let moving = false
       const { moveSpeed, turnSpeed, galleryLength, galleryWidth } = SHOWCASE_CONFIG
+
+      if (keys.current['KeyA'] || keys.current['ArrowLeft']) {
+        headingRef.current += turnSpeed
+        moving = true
+      }
+      if (keys.current['KeyD'] || keys.current['ArrowRight']) {
+        headingRef.current -= turnSpeed
+        moving = true
+      }
+
+      character.quaternion.setFromAxisAngle(yAxis, headingRef.current)
 
       if (keys.current['KeyW'] || keys.current['ArrowUp']) {
         moveDir.set(0, 0, -moveSpeed)
@@ -319,16 +342,6 @@ export function ShowcaseScene({ projects, isPlaying, keys, characterRef, onChara
         character.position.add(moveDir)
         moving = true
       }
-      if (keys.current['KeyA'] || keys.current['ArrowLeft']) {
-        character.rotation.y += turnSpeed
-        moving = true
-      }
-      if (keys.current['KeyD'] || keys.current['ArrowRight']) {
-        character.rotation.y -= turnSpeed
-        moving = true
-      }
-
-      character.quaternion.setFromAxisAngle(yAxis, character.rotation.y)
 
       const margin = 1.5
       character.position.x = Math.max(-galleryWidth / 2 + margin, Math.min(galleryWidth / 2 - margin, character.position.x))
@@ -351,13 +364,15 @@ export function ShowcaseScene({ projects, isPlaying, keys, characterRef, onChara
         }
       })
       onNearestProject(closestDist < 4 ? closest : null)
+    } else {
+      character.quaternion.setFromAxisAngle(yAxis, headingRef.current)
     }
 
     const offset = new THREE.Vector3(0, 4, 6)
     offset.applyQuaternion(character.quaternion)
     camera.position.copy(character.position).add(offset)
     camera.lookAt(character.position.x, character.position.y + 1.5, character.position.z)
-    onCharacterMove(character.position.clone(), character.rotation.y)
+    onCharacterMove(character.position.clone(), headingRef.current)
   })
 
   return (

@@ -15,11 +15,14 @@ export const PROJECT_LINKS = [
   { color: 0x818cf8, link: 'https://protosweb.eu' },
 ] as const
 
+export const INITIAL_CHARACTER_HEADING = Math.PI
+
 export type ShowcaseProject = {
   title: string
   description: string
   color: number
   link: string
+  imageUrl: string | null
 }
 
 export type FrameMarker = {
@@ -28,9 +31,9 @@ export type FrameMarker = {
   color: number
 }
 
-export function initCharacterPosition(group: import('three').Group) {
+export function initCharacterPosition(group: import('three').Group, heading = INITIAL_CHARACTER_HEADING) {
   group.position.set(0, 0, SHOWCASE_CONFIG.galleryLength / 2 - 3)
-  group.rotation.y = Math.PI
+  group.rotation.set(0, heading, 0, 'YXZ')
 }
 
 export function getFrameMarkers(): FrameMarker[] {

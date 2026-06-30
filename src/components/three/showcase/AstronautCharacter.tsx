@@ -2,7 +2,7 @@
 
 import { forwardRef, useImperativeHandle, useRef, useEffect } from 'react'
 import * as THREE from 'three'
-import { initCharacterPosition } from './constants'
+import { initCharacterPosition, INITIAL_CHARACTER_HEADING } from './constants'
 
 export const AstronautCharacter = forwardRef<THREE.Group | null>(function AstronautCharacter(_, ref) {
   const groupRef = useRef<THREE.Group>(null)
@@ -10,7 +10,7 @@ export const AstronautCharacter = forwardRef<THREE.Group | null>(function Astron
   useImperativeHandle(ref, () => groupRef.current as THREE.Group)
 
   useEffect(() => {
-    if (groupRef.current) initCharacterPosition(groupRef.current)
+    if (groupRef.current) initCharacterPosition(groupRef.current, INITIAL_CHARACTER_HEADING)
   }, [])
 
   const suitMat = { color: 0xf5f5f5, roughness: 0.5, metalness: 0.1 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useMemo, useEffect, useCallback } from 'react'
+import { useState, useRef, useMemo, useEffect, useCallback, memo } from 'react'
 import { Canvas } from '@react-three/fiber'
 import * as THREE from 'three'
 import { useTranslations } from 'next-intl'
@@ -83,6 +83,44 @@ function drawMinimap(
   ctx.stroke()
 }
 
+type ShowcaseCanvasLayerProps = {
+  projects: ShowcaseProject[]
+  isPlaying: boolean
+  keys: React.MutableRefObject<Record<string, boolean>>
+  characterRef: React.RefObject<THREE.Group | null>
+  onCharacterMove: (pos: THREE.Vector3, rotationY: number) => void
+  onNearestProject: (project: ShowcaseProject | null) => void
+}
+
+const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
+  projects,
+  isPlaying,
+  keys,
+  characterRef,
+  onCharacterMove,
+  onNearestProject,
+}: ShowcaseCanvasLayerProps) {
+  return (
+    <div className="absolute inset-0 z-[1]">
+      <Canvas
+        shadows
+        camera={{ fov: 75, near: 0.1, far: 1000 }}
+        gl={{ antialias: true }}
+        dpr={[1, 1.5]}
+      >
+        <ShowcaseScene
+          projects={projects}
+          isPlaying={isPlaying}
+          keys={keys}
+          characterRef={characterRef}
+          onCharacterMove={onCharacterMove}
+          onNearestProject={onNearestProject}
+        />
+      </Canvas>
+    </div>
+  )
+})
+
 export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
   const t = useTranslations('showcase')
   const tNav = useTranslations('nav')
@@ -163,20 +201,20 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
     [frameMarkers],
   )
 
+  const handleNearestProject = useCallback((project: ShowcaseProject | null) => {
+    setNearestProject(project)
+  }, [])
+
   return (
     <div className="fixed inset-0 bg-black">
-      <div className="absolute inset-0 z-[1]">
-        <Canvas shadows camera={{ fov: 75, near: 0.1, far: 1000 }} gl={{ antialias: true }}>
-          <ShowcaseScene
-            projects={projects}
-            isPlaying={phase === 'playing'}
-            keys={keys}
-            characterRef={characterRef}
-            onCharacterMove={handleCharacterMove}
-            onNearestProject={setNearestProject}
-          />
-        </Canvas>
-      </div>
+      <ShowcaseCanvasLayer
+        projects={projects}
+        isPlaying={phase === 'playing'}
+        keys={keys}
+        characterRef={characterRef}
+        onCharacterMove={handleCharacterMove}
+        onNearestProject={handleNearestProject}
+      />
 
       {phase === 'loading' && (
         <div className="fixed inset-0 z-[300] flex flex-col items-center justify-center bg-[#0a0a1a]">

@@ -44,6 +44,7 @@ z-0      black backdrop
 4. **Pointer events** — fixed backgrounds: `pointer-events-none`; HUD buttons: normal pointer events.
 5. **Textures** — prefer static files in `public/showcase/`; use safe loader with fallback (no Suspense-only `useTexture` without error path).
 6. **3D content** — windows, frames, screenshots = Three.js meshes/planes, not HTML/CSS 3D divs.
+7. **useFrame** — never call React `setState` every frame; use refs and only notify parent when values change.
 
 ## DOM animation limits
 

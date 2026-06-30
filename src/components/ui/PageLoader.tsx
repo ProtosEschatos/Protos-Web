@@ -3,16 +3,25 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
+const SESSION_KEY = 'protos-page-loaded'
+
 export default function PageLoader() {
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(() => {
+    if (typeof window === 'undefined') return true
+    return sessionStorage.getItem(SESSION_KEY) !== '1'
+  })
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
+    if (!loading) return
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval)
-          setTimeout(() => setLoading(false), 400)
+          setTimeout(() => {
+            sessionStorage.setItem(SESSION_KEY, '1')
+            setLoading(false)
+          }, 400)
           return 100
         }
         return prev + Math.random() * 15 + 5
@@ -30,7 +39,6 @@ export default function PageLoader() {
           transition={{ duration: 0.8, ease: 'easeInOut' }}
           className="fixed inset-0 z-[9999] bg-[var(--dark)] flex flex-col items-center justify-center"
         >
-          {/* Eclipse animation */}
           <div className="relative w-24 h-24 mb-8">
             <motion.div
               className="absolute inset-0 rounded-full border-2 border-[var(--primary)]"
@@ -52,7 +60,6 @@ export default function PageLoader() {
           <h2 className="text-2xl font-bold gradient-text mb-2">Protos Web</h2>
           <p className="text-sm text-[var(--light-muted)] tracking-[0.2em] uppercase mb-6">Loading experience</p>
 
-          {/* Progress bar */}
           <div className="w-48 h-1 bg-white/10 rounded-full overflow-hidden">
             <motion.div
               className="h-full rounded-full bg-gradient-to-r from-[var(--primary)] via-[var(--secondary)] to-[var(--accent)]"

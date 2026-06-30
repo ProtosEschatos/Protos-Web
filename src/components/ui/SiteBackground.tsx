@@ -2,7 +2,10 @@
 
 import dynamic from 'next/dynamic'
 
-const HeroCanvas = dynamic(() => import('@/components/three/HeroCanvas'), { ssr: false })
+const HeroCanvas = dynamic(() => import('@/components/three/HeroCanvas'), {
+  ssr: false,
+  loading: () => null,
+})
 
 const TWINKLE_BG = `
   radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.4), transparent),

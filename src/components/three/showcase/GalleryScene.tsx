@@ -332,8 +332,10 @@ type SceneProps = {
 export function ShowcaseScene({ projects, isPlaying, keys, characterRef, onCharacterMove, onNearestProject }: SceneProps) {
   const walkPhase = useRef(0)
   const headingRef = useRef(INITIAL_CHARACTER_HEADING)
+  const lastNearestLinkRef = useRef<string | null>(null)
   const yAxis = useMemo(() => new THREE.Vector3(0, 1, 0), [])
   const moveDir = useMemo(() => new THREE.Vector3(), [])
+  const charPos = useMemo(() => new THREE.Vector3(), [])
   const framePositions = useMemo(
     () =>
       projects.map((project, index) => {
@@ -395,17 +397,26 @@ export function ShowcaseScene({ projects, isPlaying, keys, characterRef, onChara
         resetAstronautPose(character)
       }
 
-      let closest: ShowcaseProject | null = null
-      let closestDist = Infinity
-      framePositions.forEach(({ project, pos }) => {
+      let nearestProject: ShowcaseProject | null = null
+      let nearestDist = Infinity
+      for (const { project, pos } of framePositions) {
         const dist = character.position.distanceTo(pos)
-        if (dist < 5 && dist < closestDist) {
-          closestDist = dist
-          closest = project
+        if (dist < 5 && dist < nearestDist) {
+          nearestDist = dist
+          nearestProject = project
         }
-      })
-      onNearestProject(closestDist < 4 ? closest : null)
+      }
+      const activeProject = nearestDist < 4 ? nearestProject : null
+      const nextLink = activeProject?.link ?? null
+      if (nextLink !== lastNearestLinkRef.current) {
+        lastNearestLinkRef.current = nextLink
+        onNearestProject(activeProject)
+      }
     } else {
+      if (lastNearestLinkRef.current !== null) {
+        lastNearestLinkRef.current = null
+        onNearestProject(null)
+      }
       character.quaternion.setFromAxisAngle(yAxis, headingRef.current)
     }
 
@@ -413,7 +424,8 @@ export function ShowcaseScene({ projects, isPlaying, keys, characterRef, onChara
     offset.applyQuaternion(character.quaternion)
     camera.position.copy(character.position).add(offset)
     camera.lookAt(character.position.x, character.position.y + 1.5, character.position.z)
-    onCharacterMove(character.position.clone(), headingRef.current)
+    charPos.copy(character.position)
+    onCharacterMove(charPos, headingRef.current)
   })
 
   return (

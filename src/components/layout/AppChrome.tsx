@@ -13,7 +13,7 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
   const isShowcase = pathname.includes('portfolio-showcase')
 
   if (isShowcase) {
-    return <main className="relative">{children}</main>
+    return <main className="relative min-h-0 overflow-hidden">{children}</main>
   }
 
   return (
@@ -21,7 +21,7 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
       <PageLoader />
       <CustomCursor />
       <Header />
-      <main>
+      <main className="relative">
         <SiteShell>{children}</SiteShell>
       </main>
       <Footer />

@@ -65,6 +65,7 @@ export default function HeroCanvas() {
       camera={{ position: [0, 0, 7], fov: 60 }}
       style={{ background: 'transparent' }}
       gl={{ alpha: true, antialias: true }}
+      dpr={[1, 1.5]}
     >
       <ambientLight intensity={0.3} />
       <Stars radius={50} depth={80} count={3000} factor={3} saturation={0} fade speed={1} />

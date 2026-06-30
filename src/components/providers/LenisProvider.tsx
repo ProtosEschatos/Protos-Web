@@ -2,9 +2,15 @@
 
 import { useEffect } from 'react'
 import Lenis from 'lenis'
+import { usePathname } from '@/routing'
 
 export default function LenisProvider({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname()
+  const isShowcase = pathname.includes('portfolio-showcase')
+
   useEffect(() => {
+    if (isShowcase) return
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -22,7 +28,7 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
       cancelAnimationFrame(frame)
       lenis.destroy()
     }
-  }, [])
+  }, [isShowcase])
 
   return <>{children}</>
 }

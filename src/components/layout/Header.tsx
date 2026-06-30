@@ -91,9 +91,11 @@ export default function Header() {
       >
         <div className="max-w-[1400px] mx-auto px-6">
           <div className="flex items-center justify-between h-20">
-            <Link href="/" className="flex items-center gap-2.5 font-bold text-lg text-[var(--light)]">
-              <ProtosEclipseLogo size={36} />
-              <span className="hidden sm:block">{th('brand')}</span>
+            <Link href="/" className="group/logo flex items-center gap-2.5 font-bold text-lg text-[var(--light)]">
+              <ProtosEclipseLogo size={36} className="group-hover/logo:drop-shadow-[0_0_10px_rgba(255,136,0,0.55)]" />
+              <span className="hidden sm:block transition-colors duration-300 group-hover/logo:text-[#ffb347]">
+                {th('brand')}
+              </span>
             </Link>
 
             <nav className="hidden lg:flex items-center gap-9">

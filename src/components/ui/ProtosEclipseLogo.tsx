@@ -1,75 +1,49 @@
 'use client'
 
 import { motion, useReducedMotion } from 'framer-motion'
+import { useId } from 'react'
 
 interface ProtosEclipseLogoProps {
   size?: number
   className?: string
 }
 
+const ECLIPSE_PATH = 'M18,1 A17,17 0 0,1 18,35 A17,17 0 0,0 18,1'
+
 export default function ProtosEclipseLogo({ size = 36, className = '' }: ProtosEclipseLogoProps) {
   const reduceMotion = useReducedMotion()
-  const disc = Math.round(size * (34 / 36))
-  const inset = (size - disc) / 2
-  const moonOffset = -Math.round(size * 0.19)
+  const uid = useId().replace(/:/g, '')
+  const glowFilter = `eclipse-glow-${uid}`
 
   return (
-    <div
-      className={`relative shrink-0 ${className}`}
-      style={{ width: size, height: size }}
+    <svg
+      viewBox="0 0 36 36"
+      width={size}
+      height={size}
+      xmlns="http://www.w3.org/2000/svg"
+      className={`shrink-0 ${className}`}
       aria-hidden
     >
-      <motion.div
-        className="pointer-events-none absolute rounded-full"
-        style={{
-          inset: inset - 2,
-          background:
-            'radial-gradient(circle at 72% 50%, rgba(255,190,80,0.95) 0%, rgba(255,120,0,0.55) 28%, rgba(255,80,0,0.2) 48%, transparent 68%)',
-        }}
-        animate={
-          reduceMotion
-            ? undefined
-            : { opacity: [0.55, 1, 0.55], scale: [0.96, 1.06, 0.96] }
-        }
-        transition={{ duration: 2.6, repeat: Infinity, ease: 'easeInOut' }}
+      <defs>
+        <filter id={glowFilter} x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="2.2" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+
+      <motion.path
+        d={ECLIPSE_PATH}
+        fill="#FF8800"
+        filter={`url(#${glowFilter})`}
+        animate={reduceMotion ? undefined : { opacity: [0.35, 0.95, 0.35] }}
+        transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
       />
 
-      <div
-        className="absolute rounded-full overflow-hidden"
-        style={{ inset }}
-      >
-        <div
-          className="absolute inset-0 rounded-full"
-          style={{
-            background:
-              'radial-gradient(circle at 40% 38%, #fff6b0 0%, #ffd54a 32%, #ff8800 68%, #ff6600 100%)',
-          }}
-        />
-        <div
-          className="absolute inset-0 rounded-full"
-          style={{
-            background: 'radial-gradient(circle at 30% 32%, #1c1c34 0%, #101024 55%, #0d0d1a 100%)',
-            transform: `translateX(${moonOffset}px)`,
-          }}
-        />
-      </div>
-
-      <motion.div
-        className="pointer-events-none absolute rounded-full border-[1.5px] border-[#FF8800]"
-        style={{ inset: 0, boxSizing: 'border-box' }}
-        animate={
-          reduceMotion
-            ? undefined
-            : {
-                boxShadow: [
-                  '0 0 0 0 rgba(255,136,0,0)',
-                  '0 0 8px 1px rgba(255,136,0,0.45)',
-                  '0 0 0 0 rgba(255,136,0,0)',
-                ],
-              }
-        }
-        transition={{ duration: 2.6, repeat: Infinity, ease: 'easeInOut' }}
-      />
-    </div>
+      <circle cx="18" cy="18" r="17" fill="#0d0d1a" stroke="#FF8800" strokeWidth="1.5" />
+      <path d={ECLIPSE_PATH} fill="#FF6600" />
+    </svg>
   )
 }

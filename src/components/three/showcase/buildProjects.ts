@@ -16,7 +16,7 @@ export function buildShowcaseProjects(
       link: meta.link,
       title: dbItem?.title ?? t(`project${index + 1}_title`),
       description: dbItem?.description ?? t(`project${index + 1}_desc`),
-      imageUrl: dbItem?.image_url ?? meta.screenshot,
+      imageUrl: meta.screenshot,
     }
   })
 }

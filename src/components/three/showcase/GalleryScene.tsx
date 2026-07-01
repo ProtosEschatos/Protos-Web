@@ -120,10 +120,10 @@ function WindowFrameBar({
 
 function ProjectFrame({ project, index }: { project: ShowcaseProject; index: number }) {
   const groupRef = useRef<THREE.Group>(null)
-  const viewW = 1.35
-  const viewH = 2.75
-  const frameW = 0.12
-  const depth = 0.18
+  const viewW = 1.4
+  const viewH = 2.8
+  const frameW = 0.1
+  const depth = 0.1
   const outerW = viewW + frameW * 2
   const outerH = viewH + frameW * 2
   const edgeColors = [0x6366f1, 0x06b6d4, 0xf59e0b, 0x818cf8]
@@ -133,66 +133,63 @@ function ProjectFrame({ project, index }: { project: ShowcaseProject; index: num
   const row = Math.floor(index / 2)
   const startZ = -SHOWCASE_CONFIG.galleryLength / 2 + 6
   const z = startZ + row * SHOWCASE_CONFIG.frameSpacing
-  const x = side * (SHOWCASE_CONFIG.galleryWidth / 2 - 0.05)
-  const y = 2.55
+  const wallX = side * (SHOWCASE_CONFIG.galleryWidth / 2)
+  const x = wallX - side * 0.22
+  const y = 2.45
+  const faceRotation = side * (Math.PI / 2)
 
   useFrame((state) => {
     if (groupRef.current) {
-      groupRef.current.position.y = y + Math.sin(state.clock.elapsedTime + index) * 0.012
+      groupRef.current.position.y = y + Math.sin(state.clock.elapsedTime + index) * 0.01
     }
   })
 
   return (
     <>
-      <group ref={groupRef} position={[x, y, z]} rotation={[0, side * Math.PI / 2, 0]} renderOrder={8}>
-        <mesh position={[0, 0, -depth * 0.35]} renderOrder={8}>
-          <boxGeometry args={[outerW + 0.28, outerH + 0.28, depth * 0.75]} />
-          <meshStandardMaterial color={0x1e293b} roughness={0.85} metalness={0.15} />
+      <group ref={groupRef} position={[x, y, z]} rotation={[0, faceRotation, 0]} renderOrder={10}>
+        <mesh position={[0, 0, -depth * 0.5]} renderOrder={10}>
+          <boxGeometry args={[outerW + 0.08, outerH + 0.08, depth]} />
+          <meshStandardMaterial color={0x334155} metalness={0.6} roughness={0.35} />
         </mesh>
 
-        <mesh position={[0, 0, -depth * 0.08]} renderOrder={9}>
-          <boxGeometry args={[outerW + 0.06, outerH + 0.06, depth * 0.45]} />
-          <meshStandardMaterial color={0x020617} roughness={0.95} metalness={0.05} />
-        </mesh>
-
-        <WindowFrameBar position={[0, outerH / 2 - frameW / 2, depth * 0.08]} size={[outerW, frameW, depth * 0.85]} />
-        <WindowFrameBar position={[0, -outerH / 2 + frameW / 2, depth * 0.08]} size={[outerW, frameW, depth * 0.85]} />
-        <WindowFrameBar position={[-outerW / 2 + frameW / 2, 0, depth * 0.08]} size={[frameW, viewH, depth * 0.85]} />
-        <WindowFrameBar position={[outerW / 2 - frameW / 2, 0, depth * 0.08]} size={[frameW, viewH, depth * 0.85]} />
-
-        <mesh position={[0, -outerH / 2 - 0.05, depth * 0.12]} renderOrder={9}>
-          <boxGeometry args={[outerW + 0.18, 0.08, depth * 0.65]} />
-          <meshStandardMaterial color={0x64748b} metalness={0.45} roughness={0.5} />
-        </mesh>
-
-        <mesh position={[0, 0, depth * 0.06]} renderOrder={10}>
+        <mesh position={[0, 0, 0.001]} renderOrder={11}>
           <planeGeometry args={[viewW, viewH]} />
-          <meshStandardMaterial color={0x0f172a} roughness={0.3} metalness={0.2} />
+          <meshStandardMaterial color={0x020617} roughness={0.4} metalness={0.2} />
         </mesh>
 
         <FrameScreenshot
           imageUrl={project.imageUrl}
-          width={viewW * 0.96}
-          height={viewH * 0.96}
-          z={depth * 0.07}
+          width={viewW * 0.94}
+          height={viewH * 0.94}
+          z={0.012}
           fallbackColor={edgeColor}
         />
 
-        <mesh position={[0, 0, depth * 0.085]} renderOrder={14}>
-          <planeGeometry args={[viewW * 0.96, viewH * 0.96]} />
-          <meshBasicMaterial color={0xc7d9ff} transparent opacity={0.06} depthWrite={false} />
+        <WindowFrameBar position={[0, outerH / 2 - frameW / 2, depth * 0.15]} size={[outerW, frameW, depth * 0.5]} />
+        <WindowFrameBar position={[0, -outerH / 2 + frameW / 2, depth * 0.15]} size={[outerW, frameW, depth * 0.5]} />
+        <WindowFrameBar position={[-outerW / 2 + frameW / 2, 0, depth * 0.15]} size={[frameW, viewH, depth * 0.5]} />
+        <WindowFrameBar position={[outerW / 2 - frameW / 2, 0, depth * 0.15]} size={[frameW, viewH, depth * 0.5]} />
+
+        <mesh position={[0, -outerH / 2 - 0.04, depth * 0.12]} renderOrder={12}>
+          <boxGeometry args={[outerW + 0.12, 0.06, depth * 0.45]} />
+          <meshStandardMaterial color={0x64748b} metalness={0.5} roughness={0.45} />
         </mesh>
 
-        <mesh position={[0, outerH / 2 - frameW / 2 + 0.015, depth * 0.09]} renderOrder={15}>
-          <boxGeometry args={[outerW - 0.04, 0.02, 0.03]} />
-          <meshBasicMaterial color={edgeColor} transparent opacity={0.9} />
-        </mesh>
-        <mesh position={[0, -outerH / 2 + frameW / 2 - 0.015, depth * 0.09]} renderOrder={15}>
-          <boxGeometry args={[outerW - 0.04, 0.02, 0.03]} />
-          <meshBasicMaterial color={edgeColor} transparent opacity={0.9} />
+        <mesh position={[0, 0, 0.018]} renderOrder={14}>
+          <planeGeometry args={[viewW * 0.94, viewH * 0.94]} />
+          <meshBasicMaterial color={0xc7d9ff} transparent opacity={0.07} depthWrite={false} side={THREE.DoubleSide} />
         </mesh>
 
-        <pointLight position={[0, 0.4, 0.55]} color={edgeColor} intensity={0.9} distance={4} decay={2} />
+        <mesh position={[0, outerH / 2 - frameW / 2 + 0.01, depth * 0.22]} renderOrder={15}>
+          <boxGeometry args={[outerW - 0.02, 0.018, 0.025]} />
+          <meshBasicMaterial color={edgeColor} transparent opacity={0.95} />
+        </mesh>
+        <mesh position={[0, -outerH / 2 + frameW / 2 - 0.01, depth * 0.22]} renderOrder={15}>
+          <boxGeometry args={[outerW - 0.02, 0.018, 0.025]} />
+          <meshBasicMaterial color={edgeColor} transparent opacity={0.95} />
+        </mesh>
+
+        <pointLight position={[0, 0.2, 0.35]} color={edgeColor} intensity={1.1} distance={5} decay={2} />
       </group>
 
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[side * (SHOWCASE_CONFIG.galleryWidth / 2 - 2.5), 0.02, z]}>

@@ -398,7 +398,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
             </button>
           </div>
 
-          <div className="fixed bottom-4 right-4 z-20 h-[88px] w-[130px] overflow-hidden rounded-lg border border-white/20 bg-black/80 md:bottom-8 md:right-8 md:h-[100px] md:w-[150px]">
+          <div className="fixed bottom-4 left-4 z-20 h-[88px] w-[130px] overflow-hidden rounded-lg border border-white/20 bg-black/80 md:bottom-8 md:left-8 md:h-[100px] md:w-[150px]">
             <canvas ref={minimapRef} width={150} height={100} className="h-full w-full" />
           </div>
         </>

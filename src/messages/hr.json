@@ -167,7 +167,7 @@
     "moveHint": "ili strelice za kretanje",
     "interactHint": "za interakciju sa slikom",
     "menuHint": "za otvaranje menija",
-    "touchMoveHint": "Na mobitelu koristi joystick lijevo dolje za kretanje",
+    "touchMoveHint": "Na mobitelu koristi joystick dolje desno za kretanje",
     "start": "Zapocni razgledavanje",
     "move": "Kretanje",
     "details": "Detalji",

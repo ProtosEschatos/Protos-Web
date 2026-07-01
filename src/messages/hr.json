@@ -179,6 +179,12 @@
     "menuHint": "za otvaranje menija",
     "touchMoveHint": "Na mobitelu koristi joystick dolje desno za kretanje",
     "start": "Zapocni razgledavanje",
+    "enter": "Ulaz",
+    "cookieModalTitle": "Potrebna suglasnost za kolacice",
+    "cookieModalLegalPrefix": "Procitajte nase",
+    "cookieModalTerms": "Uvjete koristenja",
+    "cookieModalLegalAnd": "i",
+    "cookieModalPrivacy": "Pravila privatnosti",
     "move": "Kretanje",
     "details": "Detalji",
     "menuLabel": "Menu",
@@ -200,6 +206,17 @@
     "webglContextLostDesc": "Graficka kartica je privremeno oslobodila 3D prikaz. Mozete nastaviti pregledavati projekte ili pokusati ponovo.",
     "webglRetry": "Pokusaj ponovo 3D",
     "webglViewPortfolio": "Pogledaj cijeli portfolio"
+  },
+  "legalPages": {
+    "privacyTitle": "Pravila privatnosti",
+    "privacyDescription": "Kako Protos Web postupa s vasim osobnim podacima.",
+    "privacyBody": "Protos Web postuje vasu privatnost. Prikupljamo samo podatke potrebne za rad ove stranice, odgovore na upite i poboljsanje usluga.\n\nNe prodajemo osobne podatke trecim stranama. Analitika i kolacici koriste se samo uz vasu suglasnost gdje je to potrebno.\n\nZa pitanja o podacima kontaktirajte nas na contact@protos-design.net.",
+    "termsTitle": "Uvjeti koristenja",
+    "termsDescription": "Uvjeti koristenja web stranice i usluga Protos Web.",
+    "termsBody": "Koristenjem ove stranice prihvacate ove uvjete. Sadrzaj, branding i kod na stranici vlasnistvo su Protos Web osim ako nije drugacije navedeno.\n\nPortfolio demo i showcase iskustva sluze za prezentaciju. Vanjski linkovi projekata vode na stranice trecih strana s vlastitim uvjetima.\n\nUvjete mozemo azurirati; nastavak koristenja nakon promjena znaci prihvacanje novih uvjeta.",
+    "cookiesTitle": "Pravila o kolacicima",
+    "cookiesDescription": "Kako Protos Web koristi kolacice i slicne tehnologije.",
+    "cookiesBody": "Koristimo nužne kolacice za osnovno funkcioniranje stranice te, uz vasu suglasnost, analiticke kolacice za razumijevanje posjeta.\n\nNebitne kolacice mozete prihvatiti ili odbiti putem bannera ili modala pri ulasku u showcase. Odabir se sprema lokalno u pregledniku.\n\nKolacice mozete obrisati u postavkama preglednika."
   },
   "metadata": {
     "home": { "title": "Pretvaramo posjetitelje u kupce", "description": "Profesionalna agencija za web dizajn iz Zagreba." },

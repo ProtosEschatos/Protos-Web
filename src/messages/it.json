@@ -179,6 +179,12 @@
     "menuHint": "per aprire il menu",
     "touchMoveHint": "Su mobile usa il joystick in basso a destra per muoverti",
     "start": "Inizia esplorazione",
+    "enter": "Enter",
+    "cookieModalTitle": "Consenso cookie richiesto",
+    "cookieModalLegalPrefix": "Leggi i nostri",
+    "cookieModalTerms": "Termini di servizio",
+    "cookieModalLegalAnd": "e",
+    "cookieModalPrivacy": "Informativa sulla privacy",
     "move": "Movimento",
     "details": "Dettagli",
     "menuLabel": "Menu",
@@ -200,6 +206,17 @@
     "webglContextLostDesc": "La GPU ha rilasciato temporaneamente la vista 3D. Esplora i progetti sotto o riprova la 3D.",
     "webglRetry": "Riprova 3D",
     "webglViewPortfolio": "Vedi portfolio completo"
+  },
+  "legalPages": {
+    "privacyTitle": "Informativa sulla privacy",
+    "privacyDescription": "Come Protos Web tratta i tuoi dati personali.",
+    "privacyBody": "Protos Web rispetta la tua privacy. Raccogliamo solo i dati necessari per il funzionamento del sito, le richieste di contatto e il miglioramento dei servizi.\n\nNon vendiamo dati personali a terzi. Analytics e cookie sono usati solo con il tuo consenso dove richiesto.\n\nDomande: contact@protos-design.net.",
+    "termsTitle": "Termini di servizio",
+    "termsDescription": "Termini per l'uso del sito Protos Web.",
+    "termsBody": "Usando questo sito accetti questi termini. Contenuti e codice sono di proprieta di Protos Web salvo diversa indicazione.\n\nLe demo portfolio servono a scopo dimostrativo. I link esterni seguono termini propri.\n\nI termini possono essere aggiornati.",
+    "cookiesTitle": "Policy sui cookie",
+    "cookiesDescription": "Come Protos Web usa i cookie.",
+    "cookiesBody": "Usiamo cookie essenziali e, con consenso, cookie analitici.\n\nLa scelta e salvata localmente nel browser.\n\nPuoi cancellare i cookie dalle impostazioni del browser."
   },
   "metadata": {
     "home": { "title": "Trasformiamo i visitatori in clienti", "description": "Agenzia professionale di web design da Zagabria." },

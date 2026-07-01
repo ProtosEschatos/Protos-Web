@@ -179,6 +179,12 @@
     "menuHint": "zum Offnen des Menus",
     "touchMoveHint": "Auf dem Handy den Joystick unten rechts zum Bewegen nutzen",
     "start": "Erkundung starten",
+    "enter": "Enter",
+    "cookieModalTitle": "Cookie-Zustimmung erforderlich",
+    "cookieModalLegalPrefix": "Lesen Sie unsere",
+    "cookieModalTerms": "Nutzungsbedingungen",
+    "cookieModalLegalAnd": "und",
+    "cookieModalPrivacy": "Datenschutzerklarung",
     "move": "Bewegung",
     "details": "Details",
     "menuLabel": "Menu",
@@ -200,6 +206,17 @@
     "webglContextLostDesc": "Die GPU hat die 3D-Ansicht vorubergehend freigegeben. Durchsuchen Sie die Projekte unten oder versuchen Sie 3D erneut.",
     "webglRetry": "3D erneut versuchen",
     "webglViewPortfolio": "Ganzes Portfolio ansehen"
+  },
+  "legalPages": {
+    "privacyTitle": "Datenschutzerklarung",
+    "privacyDescription": "Wie Protos Web mit Ihren personenbezogenen Daten umgeht.",
+    "privacyBody": "Protos Web respektiert Ihre Privatsphare. Wir erheben nur Daten, die fur den Betrieb dieser Website, Kontaktanfragen und Serviceverbesserungen erforderlich sind.\n\nWir verkaufen keine personenbezogenen Daten an Dritte. Analyse und Cookies werden nur mit Ihrer Zustimmung verwendet, wo erforderlich.\n\nFragen: contact@protos-design.net.",
+    "termsTitle": "Nutzungsbedingungen",
+    "termsDescription": "Bedingungen fur die Nutzung der Protos Web Website.",
+    "termsBody": "Mit der Nutzung dieser Website akzeptieren Sie diese Bedingungen. Inhalte und Code gehoren Protos Web, sofern nicht anders angegeben.\n\nPortfolio-Demos dienen der Prasentation. Externe Projektlinks unterliegen eigenen Bedingungen.\n\nAnderungen konnen jederzeit erfolgen.",
+    "cookiesTitle": "Cookie-Richtlinie",
+    "cookiesDescription": "Wie Protos Web Cookies verwendet.",
+    "cookiesBody": "Wir verwenden notwendige Cookies fur Grundfunktionen und mit Zustimmung Analyse-Cookies.\n\nIhre Wahl wird lokal im Browser gespeichert.\n\nCookies konnen jederzeit in den Browser-Einstellungen geloscht werden."
   },
   "metadata": {
     "home": { "title": "Wir verwandeln Besucher in Kunden", "description": "Professionelle Webdesign-Agentur aus Zagreb." },

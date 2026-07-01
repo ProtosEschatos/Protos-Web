@@ -3,7 +3,7 @@ import { getAllBlogSlugs } from '@/actions/blog'
 import { locales, defaultLocale } from '@/i18n'
 import { buildLocaleUrl } from '@/lib/seo'
 
-const paths = ['', '/o-meni', '/proces', '/portfolio', '/portfolio-showcase', '/usluge', '/blog', '/kontakt']
+const paths = ['', '/o-meni', '/proces', '/portfolio', '/portfolio-showcase', '/usluge', '/blog', '/kontakt', '/privacy', '/terms', '/cookies']
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = []

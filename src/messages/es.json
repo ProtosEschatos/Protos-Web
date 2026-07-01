@@ -179,6 +179,12 @@
     "menuHint": "para abrir el menu",
     "touchMoveHint": "En movil usa el joystick abajo a la derecha para moverte",
     "start": "Comenzar exploracion",
+    "enter": "Enter",
+    "cookieModalTitle": "Se requiere consentimiento de cookies",
+    "cookieModalLegalPrefix": "Lee nuestros",
+    "cookieModalTerms": "Terminos de servicio",
+    "cookieModalLegalAnd": "y",
+    "cookieModalPrivacy": "Politica de privacidad",
     "move": "Movimiento",
     "details": "Detalles",
     "menuLabel": "Menu",
@@ -200,6 +206,17 @@
     "webglContextLostDesc": "La GPU libero temporalmente la vista 3D. Explora los proyectos abajo o intenta 3D de nuevo.",
     "webglRetry": "Intentar 3D de nuevo",
     "webglViewPortfolio": "Ver portfolio completo"
+  },
+  "legalPages": {
+    "privacyTitle": "Politica de privacidad",
+    "privacyDescription": "Como Protos Web trata tus datos personales.",
+    "privacyBody": "Protos Web respeta tu privacidad. Solo recopilamos datos necesarios para operar el sitio, responder consultas y mejorar servicios.\n\nNo vendemos datos personales a terceros. Analytics y cookies se usan solo con tu consentimiento cuando es necesario.\n\nPreguntas: contact@protos-design.net.",
+    "termsTitle": "Terminos de servicio",
+    "termsDescription": "Terminos de uso del sitio Protos Web.",
+    "termsBody": "Al usar este sitio aceptas estos terminos. Contenido y codigo pertenecen a Protos Web salvo indicacion contraria.\n\nLas demos portfolio son demostrativas. Enlaces externos tienen sus propios terminos.\n\nLos terminos pueden actualizarse.",
+    "cookiesTitle": "Politica de cookies",
+    "cookiesDescription": "Como Protos Web usa cookies.",
+    "cookiesBody": "Usamos cookies esenciales y, con consentimiento, cookies analiticas.\n\nTu eleccion se guarda localmente en el navegador.\n\nPuedes borrar cookies en la configuracion del navegador."
   },
   "metadata": {
     "home": { "title": "Convertimos visitantes en clientes", "description": "Agencia profesional de diseno web de Zagreb." },

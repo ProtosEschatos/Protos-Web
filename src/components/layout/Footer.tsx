@@ -20,9 +20,9 @@ export default function Footer() {
   const th = useTranslations('header')
 
   const legalLinks = [
-    { href: '#', label: t('privacy') },
-    { href: '#', label: t('terms') },
-    { href: '#', label: t('cookies') },
+    { href: '/privacy', label: t('privacy') },
+    { href: '/terms', label: t('terms') },
+    { href: '/cookies', label: t('cookies') },
   ]
 
   const causes = [

@@ -44,8 +44,12 @@ export default function PageBackgroundCanvas({ routeKey }: PageBackgroundCanvasP
 
   useEffect(() => {
     setSupported(isWebGLAvailable())
-    setIsMobile(window.matchMedia('(max-width: 767px)').matches)
+    const mq = window.matchMedia('(max-width: 767px)')
+    const updateMobile = () => setIsMobile(mq.matches)
+    updateMobile()
+    mq.addEventListener('change', updateMobile)
     setMounted(true)
+    return () => mq.removeEventListener('change', updateMobile)
   }, [])
 
   if (!mounted) {

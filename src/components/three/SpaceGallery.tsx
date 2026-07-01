@@ -153,6 +153,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
   const touchInput = useRef<TouchInput>(INITIAL_TOUCH_INPUT)
   const characterRef = useRef<THREE.Group>(null)
   const minimapRef = useRef<HTMLCanvasElement>(null)
+  const loadingIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   useEffect(() => {
     setWebglReady(isWebGLAvailable())
@@ -168,18 +169,28 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
   useEffect(() => {
     if (phase !== 'loading') return
 
-    const interval = setInterval(() => {
+    loadingIntervalRef.current = setInterval(() => {
       setProgress((p) => {
+        if (p >= 100) return 100
         const next = p + Math.random() * 12 + 4
         if (next >= 100) {
           setShowEnter(true)
-          return 0
+          if (loadingIntervalRef.current) {
+            clearInterval(loadingIntervalRef.current)
+            loadingIntervalRef.current = null
+          }
+          return 100
         }
         return next
       })
     }, 180)
 
-    return () => clearInterval(interval)
+    return () => {
+      if (loadingIntervalRef.current) {
+        clearInterval(loadingIntervalRef.current)
+        loadingIntervalRef.current = null
+      }
+    }
   }, [phase])
 
   const handleEnter = useCallback(() => {

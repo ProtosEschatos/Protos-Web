@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
+import { useShowcaseViewport } from '@/lib/showcase-viewport'
 
 const LOADING_BG = '/showcase/loading-bg.jpg'
 
@@ -13,9 +14,10 @@ type ShowcaseLoadingScreenProps = {
 
 export function ShowcaseLoadingScreen({ progress, showEnter = false, onEnter }: ShowcaseLoadingScreenProps) {
   const t = useTranslations('showcase')
+  const viewport = useShowcaseViewport()
 
   return (
-    <div className="fixed inset-0 z-[300] flex flex-col items-center justify-end overflow-hidden pb-16 md:pb-20">
+    <div className="fixed inset-0 z-[300] flex flex-col items-center justify-end overflow-hidden pb-[max(4rem,env(safe-area-inset-bottom))] md:pb-20">
       <Image
         src={LOADING_BG}
         alt=""
@@ -31,7 +33,9 @@ export function ShowcaseLoadingScreen({ progress, showEnter = false, onEnter }: 
         <div className="loader-title mb-2 text-3xl font-bold tracking-wide text-cyan-300 drop-shadow-[0_0_24px_rgba(34,211,238,0.45)] md:text-4xl">
           {t('loaderTitle')}
         </div>
-        <div className="mb-8 text-xs uppercase tracking-[0.35em] text-cyan-100/70 md:text-sm">{t('loaderSubtitle')}</div>
+        <div className="mb-8 text-xs uppercase tracking-[0.2em] text-cyan-100/70 sm:tracking-[0.35em] md:text-sm">
+          {t('loaderSubtitle')}
+        </div>
 
         <div className="h-1.5 w-56 overflow-hidden rounded-full border border-cyan-400/20 bg-black/50 backdrop-blur-sm md:w-64">
           <div
@@ -48,6 +52,8 @@ export function ShowcaseLoadingScreen({ progress, showEnter = false, onEnter }: 
           >
             {t('enter')}
           </button>
+        ) : viewport === 'mobile' ? (
+          <p className="mt-8 text-xs text-cyan-100/60 md:text-sm">{t('touchMoveHint')}</p>
         ) : (
           <p className="mt-8 text-xs text-cyan-100/60 md:text-sm">
             {t('loaderTipPrefix')} <span className="font-semibold text-cyan-300">WASD</span> {t('loaderTipOr')}{' '}

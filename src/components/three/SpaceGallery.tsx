@@ -9,11 +9,8 @@ import { ShowcaseScene } from './showcase/GalleryScene'
 import { buildShowcaseProjects } from './showcase/buildProjects'
 import { ShowcaseFallback } from './showcase/ShowcaseFallback'
 import { ShowcaseBootLoader } from './showcase/ShowcaseBootLoader'
-import { ShowcaseLoadingScreen } from './showcase/ShowcaseLoadingScreen'
-import { ShowcaseCookieModal } from './showcase/ShowcaseCookieModal'
 import { ShowcaseJoystick } from './showcase/ShowcaseJoystick'
 import { SafeCanvas } from '@/components/three/SafeCanvas'
-import { hasCookieConsent } from '@/lib/cookie-consent'
 import { isWebGLAvailable } from '@/lib/webgl'
 import {
   INITIAL_TOUCH_INPUT,
@@ -143,8 +140,6 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
   const [canvasKey, setCanvasKey] = useState(0)
   const [phase, setPhase] = useState<Phase>('loading')
   const [progress, setProgress] = useState(0)
-  const [showEnter, setShowEnter] = useState(false)
-  const [showCookieModal, setShowCookieModal] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
   const [nearestProject, setNearestProject] = useState<ShowcaseProject | null>(null)
   const [activeKeys, setActiveKeys] = useState({ w: false, a: false, s: false, d: false })
@@ -153,7 +148,6 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
   const touchInput = useRef<TouchInput>(INITIAL_TOUCH_INPUT)
   const characterRef = useRef<THREE.Group>(null)
   const minimapRef = useRef<HTMLCanvasElement>(null)
-  const loadingIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   useEffect(() => {
     setWebglReady(isWebGLAvailable())
@@ -167,43 +161,18 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
   }, [])
 
   useEffect(() => {
-    if (phase !== 'loading') return
-
-    loadingIntervalRef.current = setInterval(() => {
+    const interval = setInterval(() => {
       setProgress((p) => {
-        if (p >= 100) return 100
-        const next = p + Math.random() * 12 + 4
+        const next = p + Math.random() * 15
         if (next >= 100) {
-          setShowEnter(true)
-          if (loadingIntervalRef.current) {
-            clearInterval(loadingIntervalRef.current)
-            loadingIntervalRef.current = null
-          }
+          clearInterval(interval)
+          setTimeout(() => setPhase('intro'), 500)
           return 100
         }
         return next
       })
-    }, 180)
-
-    return () => {
-      if (loadingIntervalRef.current) {
-        clearInterval(loadingIntervalRef.current)
-        loadingIntervalRef.current = null
-      }
-    }
-  }, [phase])
-
-  const handleEnter = useCallback(() => {
-    if (hasCookieConsent()) {
-      setPhase('intro')
-      return
-    }
-    setShowCookieModal(true)
-  }, [])
-
-  const handleCookieAccepted = useCallback(() => {
-    setShowCookieModal(false)
-    setPhase('intro')
+    }, 200)
+    return () => clearInterval(interval)
   }, [])
 
   useEffect(() => {
@@ -288,14 +257,23 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
       />
 
       {phase === 'loading' && (
-        <ShowcaseLoadingScreen progress={progress} showEnter={showEnter} onEnter={handleEnter} />
+        <div className="fixed inset-0 z-[300] flex flex-col items-center justify-center bg-[#0a0a1a]">
+          <div className="loader-title mb-4 text-5xl font-bold bg-gradient-to-br from-[#6366f1] to-[#06b6d4] bg-clip-text text-transparent">
+            {t('loaderTitle')}
+          </div>
+          <div className="mb-8 text-sm uppercase tracking-[0.3em] text-[#94a3b8]">{t('loaderSubtitle')}</div>
+          <div className="h-1 w-48 overflow-hidden rounded-full bg-white/10">
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-[#6366f1] via-[#06b6d4] to-[#f59e0b] transition-all duration-300"
+              style={{ width: `${Math.min(progress, 100)}%` }}
+            />
+          </div>
+          <p className="mt-8 text-sm text-[#94a3b8]">
+            {t('loaderTipPrefix')} <span className="font-semibold text-[#6366f1]">WASD</span> {t('loaderTipOr')}{' '}
+            <span className="font-semibold text-[#06b6d4]">{t('loaderTipArrows')}</span> {t('loaderTipSuffix')}
+          </p>
+        </div>
       )}
-
-      <ShowcaseCookieModal
-        open={showCookieModal}
-        onAccepted={handleCookieAccepted}
-        onClose={() => setShowCookieModal(false)}
-      />
 
       {phase === 'intro' && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/90">

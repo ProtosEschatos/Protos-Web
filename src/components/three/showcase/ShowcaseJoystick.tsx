@@ -7,8 +7,8 @@ type ShowcaseJoystickProps = {
   touchInput: React.MutableRefObject<TouchInput>
 }
 
-const OUTER = 112
-const KNOB = 46
+const OUTER = 123
+const KNOB = 51
 const MAX_RADIUS = (OUTER - KNOB) / 2 - 4
 
 export function ShowcaseJoystick({ touchInput }: ShowcaseJoystickProps) {
@@ -75,7 +75,7 @@ export function ShowcaseJoystick({ touchInput }: ShowcaseJoystickProps) {
   return (
     <div
       ref={baseRef}
-      className="fixed bottom-24 left-[62%] z-30 touch-none select-none md:hidden"
+      className="fixed bottom-24 left-[56%] z-30 touch-none select-none md:hidden"
       style={{ width: OUTER, height: OUTER }}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}

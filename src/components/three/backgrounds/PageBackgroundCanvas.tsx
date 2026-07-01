@@ -48,7 +48,7 @@ export default function PageBackgroundCanvas({ routeKey }: PageBackgroundCanvasP
   }
 
   return (
-    <div className="absolute inset-0 opacity-75" aria-hidden>
+    <div className="absolute inset-0 h-full w-full" aria-hidden>
       <Background isMobile={isMobile} />
     </div>
   )

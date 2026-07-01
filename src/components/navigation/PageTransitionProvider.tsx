@@ -18,6 +18,8 @@ import {
 
 type TransitionPhase = 'idle' | 'exit' | 'loading' | 'enter'
 
+export type { TransitionPhase }
+
 type PageTransitionContextValue = {
   isTransitioning: boolean
   phase: TransitionPhase

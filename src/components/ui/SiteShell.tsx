@@ -6,7 +6,7 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
   return (
     <>
       <SiteBackground />
-      <div className="relative z-[1] cosmic-site">{children}</div>
+      <div className="relative z-[1] isolate cosmic-site">{children}</div>
     </>
   )
 }

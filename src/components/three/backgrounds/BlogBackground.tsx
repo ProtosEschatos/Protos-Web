@@ -3,7 +3,7 @@
 import { useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
-import { SafeCanvas } from '@/components/three/SafeCanvas'
+import AmbientBackgroundShell from '@/components/three/backgrounds/AmbientBackgroundShell'
 import type { PageBackgroundProps } from '@/lib/site-background-routes'
 
 function DataStreams({ count, isMobile }: { count: number; isMobile: boolean }) {
@@ -14,24 +14,25 @@ function DataStreams({ count, isMobile }: { count: number; isMobile: boolean }) 
     const col = new Float32Array(count * 3)
     const spd = new Float32Array(count)
     for (let i = 0; i < count; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 16
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 10
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 6
-      spd[i] = 0.008 + Math.random() * 0.02
+      pos[i * 3] = (Math.random() - 0.5) * 24
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 16
+      pos[i * 3 + 2] = -6 - Math.random() * 8
+      spd[i] = 0.004 + Math.random() * 0.012
       col[i * 3] = 1
-      col[i * 3 + 1] = 0.4 + Math.random() * 0.3
-      col[i * 3 + 2] = 0.1 + Math.random() * 0.2
+      col[i * 3 + 1] = 0.4 + Math.random() * 0.25
+      col[i * 3 + 2] = 0.08 + Math.random() * 0.12
     }
     return { positions: pos, colors: col, speeds: spd }
   }, [count])
 
-  useFrame(() => {
+  useFrame((state) => {
     if (!pointsRef.current) return
     const attr = pointsRef.current.geometry.attributes.position as THREE.BufferAttribute
     for (let i = 0; i < count; i++) {
       let y = attr.getY(i) + speeds[i]
-      if (y > 5) y = -5
+      if (y > 8) y = -8
       attr.setY(i, y)
+      attr.setX(i, attr.getX(i) + Math.sin(state.clock.elapsedTime * 0.2 + i) * 0.0008)
     }
     attr.needsUpdate = true
   })
@@ -42,22 +43,22 @@ function DataStreams({ count, isMobile }: { count: number; isMobile: boolean }) 
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
         <bufferAttribute attach="attributes-color" args={[colors, 3]} />
       </bufferGeometry>
-      <pointsMaterial size={isMobile ? 0.025 : 0.035} vertexColors transparent opacity={0.65} sizeAttenuation />
+      <pointsMaterial
+        size={isMobile ? 0.012 : 0.018}
+        vertexColors
+        transparent
+        opacity={0.28}
+        sizeAttenuation
+        depthWrite={false}
+      />
     </points>
   )
 }
 
 export default function BlogBackground({ isMobile = false }: PageBackgroundProps) {
   return (
-    <SafeCanvas
-      camera={{ position: [0, 0, 7], fov: 55 }}
-      style={{ background: 'transparent' }}
-      gl={{ alpha: true }}
-      dpr={isMobile ? [1, 1.25] : [1, 1.5]}
-      fallback={null}
-    >
-      <ambientLight intensity={0.2} />
-      <DataStreams count={isMobile ? 80 : 160} isMobile={isMobile} />
-    </SafeCanvas>
+    <AmbientBackgroundShell isMobile={isMobile}>
+      <DataStreams count={isMobile ? 100 : 200} isMobile={isMobile} />
+    </AmbientBackgroundShell>
   )
 }

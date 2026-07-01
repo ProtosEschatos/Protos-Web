@@ -2,108 +2,111 @@
 
 import { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { Float, MeshDistortMaterial } from '@react-three/drei'
 import * as THREE from 'three'
-import { SafeCanvas } from '@/components/three/SafeCanvas'
+import AmbientBackgroundShell from '@/components/three/backgrounds/AmbientBackgroundShell'
 import type { PageBackgroundProps } from '@/lib/site-background-routes'
 
-function ProcessSphere({ color, position, speed }: { color: string; position: [number, number, number]; speed: number }) {
-  const meshRef = useRef<THREE.Mesh>(null)
+const NODES = [
+  { x: -4, y: 1.2, z: -4, color: '#ff6600', speed: 0.35 },
+  { x: -1.5, y: -0.8, z: -6, color: '#8b5cf6', speed: 0.5 },
+  { x: 1.5, y: 0.6, z: -5, color: '#06b6d4', speed: 0.42 },
+  { x: 4, y: -1, z: -7, color: '#ff8800', speed: 0.28 },
+  { x: 0, y: 2, z: -8, color: '#818cf8', speed: 0.38 },
+]
+
+function ProcessNode({
+  x,
+  y,
+  z,
+  color,
+  speed,
+}: {
+  x: number
+  y: number
+  z: number
+  color: string
+  speed: number
+}) {
+  const ref = useRef<THREE.Mesh>(null)
 
   useFrame((state) => {
-    if (!meshRef.current) return
-    meshRef.current.rotation.x = state.clock.elapsedTime * speed * 0.3
-    meshRef.current.rotation.y = state.clock.elapsedTime * speed * 0.2
+    if (!ref.current) return
+    const t = state.clock.elapsedTime
+    ref.current.rotation.x = t * speed * 0.25
+    ref.current.rotation.y = t * speed * 0.18
+    ref.current.position.y = y + Math.sin(t * 0.4 + x) * 0.15
   })
 
   return (
-    <Float speed={2} floatIntensity={0.5} rotationIntensity={0.3}>
-      <mesh ref={meshRef} position={position}>
-        <icosahedronGeometry args={[1, 4]} />
-        <MeshDistortMaterial color={color} transparent opacity={0.15} wireframe distort={0.3} speed={2} />
-      </mesh>
-    </Float>
+    <mesh ref={ref} position={[x, y, z]}>
+      <icosahedronGeometry args={[0.55, 2]} />
+      <meshBasicMaterial color={color} wireframe transparent opacity={0.12} depthWrite={false} />
+    </mesh>
   )
 }
 
 function ConnectingLines() {
-  const linesRef = useRef<THREE.LineSegments>(null)
-
+  const ref = useRef<THREE.LineSegments>(null)
   const geometry = useMemo(() => {
-    const points: number[] = []
-    const positions = [
-      [-3, 0, 0],
-      [-1, 0, 0],
-      [1, 0, 0],
-      [3, 0, 0],
-    ]
-    for (let i = 0; i < positions.length - 1; i++) {
-      points.push(...positions[i], ...positions[i + 1])
+    const pts: number[] = []
+    for (let i = 0; i < NODES.length - 1; i++) {
+      pts.push(NODES[i].x, NODES[i].y, NODES[i].z, NODES[i + 1].x, NODES[i + 1].y, NODES[i + 1].z)
     }
     const geo = new THREE.BufferGeometry()
-    geo.setAttribute('position', new THREE.Float32BufferAttribute(points, 3))
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3))
     return geo
   }, [])
 
   useFrame((state) => {
-    if (!linesRef.current) return
-    const mat = linesRef.current.material as THREE.LineBasicMaterial
-    mat.opacity = 0.2 + Math.sin(state.clock.elapsedTime) * 0.1
+    if (!ref.current) return
+    const mat = ref.current.material as THREE.LineBasicMaterial
+    mat.opacity = 0.08 + Math.sin(state.clock.elapsedTime * 0.8) * 0.04
   })
 
   return (
-    <lineSegments ref={linesRef} geometry={geometry}>
-      <lineBasicMaterial color="#8b5cf6" transparent opacity={0.3} />
+    <lineSegments ref={ref} geometry={geometry}>
+      <lineBasicMaterial color="#8b5cf6" transparent opacity={0.1} depthWrite={false} />
     </lineSegments>
   )
 }
 
-function FloatingParticles({ count }: { count: number }) {
-  const meshRef = useRef<THREE.Points>(null)
-
+function AmbientDust({ count }: { count: number }) {
+  const ref = useRef<THREE.Points>(null)
   const positions = useMemo(() => {
     const pos = new Float32Array(count * 3)
     for (let i = 0; i < count; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 14
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 8
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 8
+      pos[i * 3] = (Math.random() - 0.5) * 22
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 14
+      pos[i * 3 + 2] = -4 - Math.random() * 10
     }
     return pos
   }, [count])
 
   useFrame((state) => {
-    if (!meshRef.current) return
-    meshRef.current.rotation.y = state.clock.elapsedTime * 0.02
+    if (!ref.current) return
+    ref.current.rotation.y = state.clock.elapsedTime * 0.015
   })
 
   return (
-    <points ref={meshRef}>
+    <points ref={ref}>
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial size={0.02} color="#8b5cf6" transparent opacity={0.5} sizeAttenuation />
+      <pointsMaterial size={0.01} color="#8b5cf6" transparent opacity={0.2} sizeAttenuation depthWrite={false} />
     </points>
   )
 }
 
 export default function ProcessBackground({ isMobile = false }: PageBackgroundProps) {
+  const nodes = isMobile ? NODES.slice(0, 3) : NODES
+
   return (
-    <SafeCanvas
-      camera={{ position: [0, 0, 6], fov: 50 }}
-      style={{ background: 'transparent' }}
-      gl={{ alpha: true }}
-      dpr={isMobile ? [1, 1.25] : [1, 1.5]}
-      fallback={null}
-    >
-      <ambientLight intensity={0.2} />
-      <pointLight position={[5, 5, 5]} intensity={0.5} color="#ff6600" />
-      <pointLight position={[-5, -5, 5]} intensity={0.3} color="#8b5cf6" />
-      <ProcessSphere color="#ff6600" position={[-3, 0, 0]} speed={0.5} />
-      <ProcessSphere color="#8b5cf6" position={[-1, 0, 0]} speed={0.7} />
-      <ProcessSphere color="#06b6d4" position={[1, 0, 0]} speed={0.6} />
-      <ProcessSphere color="#ff8800" position={[3, 0, 0]} speed={0.4} />
+    <AmbientBackgroundShell isMobile={isMobile}>
+      {nodes.map((n) => (
+        <ProcessNode key={`${n.x}-${n.z}`} {...n} />
+      ))}
       <ConnectingLines />
-      <FloatingParticles count={isMobile ? 50 : 100} />
-    </SafeCanvas>
+      <AmbientDust count={isMobile ? 40 : 80} />
+    </AmbientBackgroundShell>
   )
 }

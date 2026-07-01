@@ -9,8 +9,15 @@ import { ShowcaseScene } from './showcase/GalleryScene'
 import { buildShowcaseProjects } from './showcase/buildProjects'
 import { ShowcaseFallback } from './showcase/ShowcaseFallback'
 import { ShowcaseBootLoader } from './showcase/ShowcaseBootLoader'
+import { ShowcaseJoystick } from './showcase/ShowcaseJoystick'
 import { SafeCanvas } from '@/components/three/SafeCanvas'
 import { isWebGLAvailable } from '@/lib/webgl'
+import {
+  INITIAL_TOUCH_INPUT,
+  useShowcaseViewport,
+  useTouchControlsEnabled,
+  type TouchInput,
+} from '@/lib/showcase-viewport'
 import type { PortfolioItem } from '@/actions/portfolio'
 
 type Phase = 'loading' | 'intro' | 'playing'
@@ -70,7 +77,9 @@ function drawMinimap(
 type ShowcaseCanvasLayerProps = {
   projects: ShowcaseProject[]
   isPlaying: boolean
+  viewport: import('@/lib/showcase-viewport').ShowcaseViewport
   keys: React.MutableRefObject<Record<string, boolean>>
+  touchInput: React.MutableRefObject<TouchInput>
   characterRef: React.RefObject<THREE.Group | null>
   onCharacterMove: (pos: THREE.Vector3, rotationY: number) => void
   onNearestProject: (project: ShowcaseProject | null) => void
@@ -81,7 +90,9 @@ type ShowcaseCanvasLayerProps = {
 const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
   projects,
   isPlaying,
+  viewport,
   keys,
+  touchInput,
   characterRef,
   onCharacterMove,
   onNearestProject,
@@ -100,7 +111,9 @@ const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
         <ShowcaseScene
           projects={projects}
           isPlaying={isPlaying}
+          viewport={viewport}
           keys={keys}
+          touchInput={touchInput}
           characterRef={characterRef}
           onCharacterMove={onCharacterMove}
           onNearestProject={onNearestProject}
@@ -113,10 +126,12 @@ const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
 export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
   const t = useTranslations('showcase')
   const tNav = useTranslations('nav')
+  const viewport = useShowcaseViewport()
+  const touchControlsEnabled = useTouchControlsEnabled()
 
   const projects = useMemo<ShowcaseProject[]>(
-    () => buildShowcaseProjects(t, portfolioItems),
-    [t, portfolioItems],
+    () => buildShowcaseProjects(t, portfolioItems, viewport),
+    [t, portfolioItems, viewport],
   )
 
   const frameMarkers = useMemo(() => getFrameMarkers(), [])
@@ -130,6 +145,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
   const [activeKeys, setActiveKeys] = useState({ w: false, a: false, s: false, d: false })
 
   const keys = useRef<Record<string, boolean>>({})
+  const touchInput = useRef<TouchInput>(INITIAL_TOUCH_INPUT)
   const characterRef = useRef<THREE.Group>(null)
   const minimapRef = useRef<HTMLCanvasElement>(null)
 
@@ -230,7 +246,9 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
       <ShowcaseCanvasLayer
         projects={projects}
         isPlaying={phase === 'playing'}
+        viewport={viewport}
         keys={keys}
+        touchInput={touchInput}
         characterRef={characterRef}
         onCharacterMove={handleCharacterMove}
         onNearestProject={handleNearestProject}
@@ -291,6 +309,9 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
                 </div>
                 <span className="text-[#94a3b8]">{t('menuHint')}</span>
               </div>
+              {touchControlsEnabled && (
+                <p className="text-sm text-[#6366f1] md:hidden">{t('touchMoveHint')}</p>
+              )}
             </div>
 
             <button
@@ -307,6 +328,8 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
       {phase === 'playing' && (
         <>
           <div className="pointer-events-none fixed left-1/2 top-1/2 z-10 h-5 w-5 -translate-x-1/2 -translate-y-1/2 before:absolute before:left-1/2 before:top-0 before:h-full before:w-0.5 before:-translate-x-1/2 before:bg-white/50 after:absolute after:left-0 after:top-1/2 after:h-0.5 after:w-full after:-translate-y-1/2 after:bg-white/50" />
+
+          {touchControlsEnabled && <ShowcaseJoystick touchInput={touchInput} />}
 
           <div
             className={`fixed bottom-32 left-1/2 z-20 max-w-md -translate-x-1/2 rounded-2xl border border-[#6366f1] bg-black/90 px-8 py-6 text-center backdrop-blur-md transition-all duration-300 ${
@@ -335,7 +358,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
             </a>
           </div>
 
-          <div className="fixed bottom-8 left-1/2 z-20 flex -translate-x-1/2 items-center gap-8 rounded-2xl border border-white/10 bg-black/80 px-8 py-4 backdrop-blur-md">
+          <div className="fixed bottom-8 left-1/2 z-20 hidden -translate-x-1/2 items-center gap-8 rounded-2xl border border-white/10 bg-black/80 px-8 py-4 backdrop-blur-md md:flex">
             <div className="flex flex-col items-center gap-2">
               <div className="flex flex-col items-center gap-1">
                 <div className={`flex h-9 w-9 items-center justify-center rounded-lg border text-xs ${activeKeys.w ? 'border-[#6366f1] bg-[#6366f1]' : 'border-white/20 bg-white/10'}`}>
@@ -375,7 +398,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
             </button>
           </div>
 
-          <div className="fixed bottom-8 right-8 z-20 h-[100px] w-[150px] overflow-hidden rounded-lg border border-white/20 bg-black/80">
+          <div className="fixed bottom-4 right-4 z-20 h-[88px] w-[130px] overflow-hidden rounded-lg border border-white/20 bg-black/80 md:bottom-8 md:right-8 md:h-[100px] md:w-[150px]">
             <canvas ref={minimapRef} width={150} height={100} className="h-full w-full" />
           </div>
         </>

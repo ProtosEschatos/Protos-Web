@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
+import { useShowcaseViewport } from '@/lib/showcase-viewport'
 import type { ShowcaseProject } from './constants'
 
 const edgeColors = ['#6366f1', '#06b6d4', '#f59e0b', '#818cf8']
@@ -15,6 +16,8 @@ type ShowcaseFallbackProps = {
 export function ShowcaseFallback({ projects, reason = 'unsupported', onRetry }: ShowcaseFallbackProps) {
   const t = useTranslations('showcase')
   const tNav = useTranslations('nav')
+  const viewport = useShowcaseViewport()
+  const isDesktop = viewport === 'desktop'
 
   return (
     <div className="fixed inset-0 overflow-y-auto bg-[#0a0a1a]">
@@ -67,13 +70,13 @@ export function ShowcaseFallback({ projects, reason = 'unsupported', onRetry }: 
                 style={{ borderColor: `${edge}44` }}
               >
                 {project.imageUrl && (
-                  <div className="relative mx-auto w-[55%] pt-6">
+                  <div className={`relative mx-auto pt-6 ${isDesktop ? 'w-full' : 'w-[55%]'}`}>
                     <div className="overflow-hidden rounded-2xl border border-white/10 shadow-[0_0_40px_rgba(99,102,241,0.15)]">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={project.imageUrl}
                         alt={project.title}
-                        className="aspect-[195/422] w-full object-cover object-top"
+                        className={`w-full object-cover object-top ${isDesktop ? 'aspect-video' : 'aspect-[195/422]'}`}
                       />
                     </div>
                   </div>

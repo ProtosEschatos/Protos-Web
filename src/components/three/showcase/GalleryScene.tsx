@@ -4,6 +4,9 @@ import { useMemo, useRef, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { SHOWCASE_CONFIG, INITIAL_CHARACTER_HEADING, getFrameTransform, type ShowcaseProject } from './constants'
+import { getFrameDimensions } from './frameDimensions'
+import type { ShowcaseViewport } from '@/lib/showcase-viewport'
+import type { TouchInput } from '@/lib/showcase-viewport'
 import { AstronautCharacter, animateAstronautWalk, resetAstronautPose } from './AstronautCharacter'
 import { FrameScreenshot } from './FrameScreenshot'
 
@@ -118,28 +121,34 @@ function WindowFrameBar({
   )
 }
 
-function ProjectFrame({ project, index }: { project: ShowcaseProject; index: number }) {
+function ProjectFrame({
+  project,
+  index,
+  viewport,
+}: {
+  project: ShowcaseProject
+  index: number
+  viewport: ShowcaseViewport
+}) {
   const groupRef = useRef<THREE.Group>(null)
-  const viewW = 1.4
-  const viewH = 2.8
-  const frameW = 0.1
-  const depth = 0.1
+  const { viewW, viewH, frameW, depth, centerY } = getFrameDimensions(viewport)
   const outerW = viewW + frameW * 2
   const outerH = viewH + frameW * 2
   const edgeColors = [0x6366f1, 0x06b6d4, 0xf59e0b, 0x818cf8]
   const edgeColor = edgeColors[index % edgeColors.length]
 
-  const { x, y, z, rotationY, floorX } = getFrameTransform(index)
+  const { x, z, rotationY, floorX } = getFrameTransform(index, centerY)
+  const baseY = centerY
 
   useFrame((state) => {
     if (groupRef.current) {
-      groupRef.current.position.y = y + Math.sin(state.clock.elapsedTime + index) * 0.01
+      groupRef.current.position.y = baseY + Math.sin(state.clock.elapsedTime + index) * 0.01
     }
   })
 
   return (
     <>
-      <group ref={groupRef} position={[x, y, z]} rotation={[0, rotationY, 0]} renderOrder={10}>
+      <group ref={groupRef} position={[x, baseY, z]} rotation={[0, rotationY, 0]} renderOrder={10}>
         <mesh position={[0, 0, -depth * 0.5]} renderOrder={10}>
           <boxGeometry args={[outerW + 0.08, outerH + 0.08, depth]} />
           <meshStandardMaterial color={0x334155} metalness={0.6} roughness={0.35} />
@@ -324,13 +333,24 @@ function GalleryLighting() {
 type SceneProps = {
   projects: ShowcaseProject[]
   isPlaying: boolean
+  viewport: ShowcaseViewport
   keys: React.MutableRefObject<Record<string, boolean>>
+  touchInput: React.MutableRefObject<TouchInput>
   characterRef: React.RefObject<THREE.Group | null>
   onCharacterMove: (pos: THREE.Vector3, rotationY: number) => void
   onNearestProject: (project: ShowcaseProject | null) => void
 }
 
-export function ShowcaseScene({ projects, isPlaying, keys, characterRef, onCharacterMove, onNearestProject }: SceneProps) {
+export function ShowcaseScene({
+  projects,
+  isPlaying,
+  viewport,
+  keys,
+  touchInput,
+  characterRef,
+  onCharacterMove,
+  onNearestProject,
+}: SceneProps) {
   const walkPhase = useRef(0)
   const headingRef = useRef(INITIAL_CHARACTER_HEADING)
   const lastNearestLinkRef = useRef<string | null>(null)
@@ -340,10 +360,11 @@ export function ShowcaseScene({ projects, isPlaying, keys, characterRef, onChara
   const framePositions = useMemo(
     () =>
       projects.map((project, index) => {
-        const { x, z, y } = getFrameTransform(index)
-        return { project, pos: new THREE.Vector3(x, y * 0.35, z) }
+        const { centerY } = getFrameDimensions(viewport)
+        const { x, z } = getFrameTransform(index, centerY)
+        return { project, pos: new THREE.Vector3(x, centerY * 0.35, z) }
       }),
-    [projects],
+    [projects, viewport],
   )
 
   useEffect(() => {
@@ -360,26 +381,38 @@ export function ShowcaseScene({ projects, isPlaying, keys, characterRef, onChara
     if (isPlaying) {
       let moving = false
       const { moveSpeed, turnSpeed, galleryLength, galleryWidth } = SHOWCASE_CONFIG
+      const touch = touchInput.current
+      const deadZone = 0.14
 
-      if (keys.current['KeyA'] || keys.current['ArrowLeft']) {
-        headingRef.current += turnSpeed
+      const turnLeft = keys.current['KeyA'] || keys.current['ArrowLeft'] || (touch.active && touch.x < -deadZone)
+      const turnRight = keys.current['KeyD'] || keys.current['ArrowRight'] || (touch.active && touch.x > deadZone)
+      const moveForward = keys.current['KeyW'] || keys.current['ArrowUp'] || (touch.active && touch.y < -deadZone)
+      const moveBack = keys.current['KeyS'] || keys.current['ArrowDown'] || (touch.active && touch.y > deadZone)
+
+      if (turnLeft) {
+        const intensity = touch.active && touch.x < -deadZone ? Math.min(1, Math.abs(touch.x)) : 1
+        headingRef.current += turnSpeed * intensity
         moving = true
       }
-      if (keys.current['KeyD'] || keys.current['ArrowRight']) {
-        headingRef.current -= turnSpeed
+      if (turnRight) {
+        const intensity = touch.active && touch.x > deadZone ? Math.min(1, Math.abs(touch.x)) : 1
+        headingRef.current -= turnSpeed * intensity
         moving = true
       }
 
       character.quaternion.setFromAxisAngle(yAxis, headingRef.current)
 
-      if (keys.current['KeyW'] || keys.current['ArrowUp']) {
-        moveDir.set(0, 0, -moveSpeed)
+      if (moveForward) {
+        const intensity =
+          touch.active && touch.y < -deadZone ? Math.min(1, Math.abs(touch.y)) : 1
+        moveDir.set(0, 0, -moveSpeed * intensity)
         moveDir.applyQuaternion(character.quaternion)
         character.position.add(moveDir)
         moving = true
       }
-      if (keys.current['KeyS'] || keys.current['ArrowDown']) {
-        moveDir.set(0, 0, moveSpeed)
+      if (moveBack) {
+        const intensity = touch.active && touch.y > deadZone ? Math.min(1, Math.abs(touch.y)) : 1
+        moveDir.set(0, 0, moveSpeed * intensity)
         moveDir.applyQuaternion(character.quaternion)
         character.position.add(moveDir)
         moving = true
@@ -436,7 +469,7 @@ export function ShowcaseScene({ projects, isPlaying, keys, characterRef, onChara
       <GalleryShell />
       <PortfolioWallText />
       {projects.map((project, index) => (
-        <ProjectFrame key={project.link} project={project} index={index} />
+        <ProjectFrame key={`${project.link}-${viewport}`} project={project} index={index} viewport={viewport} />
       ))}
       <AstronautCharacter ref={characterRef} />
     </>

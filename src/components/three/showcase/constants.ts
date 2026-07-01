@@ -9,10 +9,30 @@ export const SHOWCASE_CONFIG = {
 } as const
 
 export const PROJECT_LINKS = [
-  { color: 0x6366f1, link: 'https://bodulica.shop', screenshot: '/showcase/mobile-bodulica.jpg' },
-  { color: 0x06b6d4, link: 'https://zeustrading.online', screenshot: '/showcase/mobile-zeustrading.jpg' },
-  { color: 0xf59e0b, link: 'https://cosmic-blueprint.net', screenshot: '/showcase/mobile-cosmic-blueprint.jpg' },
-  { color: 0x818cf8, link: 'https://www.protosweb.eu', screenshot: '/showcase/mobile-protosweb.jpg' },
+  {
+    color: 0x6366f1,
+    link: 'https://bodulica.shop',
+    screenshotMobile: '/showcase/mobile-bodulica.jpg',
+    screenshotDesktop: '/showcase/desktop-bodulica.jpg',
+  },
+  {
+    color: 0x06b6d4,
+    link: 'https://zeustrading.online',
+    screenshotMobile: '/showcase/mobile-zeustrading.jpg',
+    screenshotDesktop: '/showcase/desktop-zeustrading.jpg',
+  },
+  {
+    color: 0xf59e0b,
+    link: 'https://cosmic-blueprint.net',
+    screenshotMobile: '/showcase/mobile-cosmic-blueprint.jpg',
+    screenshotDesktop: '/showcase/desktop-cosmic-blueprint.jpg',
+  },
+  {
+    color: 0x818cf8,
+    link: 'https://www.protosweb.eu',
+    screenshotMobile: '/showcase/mobile-protosweb.jpg',
+    screenshotDesktop: '/showcase/desktop-protosweb.jpg',
+  },
 ] as const
 
 export const INITIAL_CHARACTER_HEADING = 0
@@ -45,7 +65,7 @@ export type FrameTransform = {
   floorX: number
 }
 
-export function getFrameTransform(index: number): FrameTransform {
+export function getFrameTransform(index: number, centerY = 2.45): FrameTransform {
   const { galleryLength, galleryWidth, frameSpacing } = SHOWCASE_CONFIG
   const side = index % 2 === 0 ? -1 : 1
   const row = Math.floor(index / 2)
@@ -56,9 +76,8 @@ export function getFrameTransform(index: number): FrameTransform {
   return {
     side,
     x,
-    y: 2.45,
+    y: centerY,
     z,
-    // Plane default faces +Z; rotate so the window faces the room center.
     rotationY: side === -1 ? Math.PI / 2 : -Math.PI / 2,
     floorX: side * (galleryWidth / 2 - 2.5),
   }

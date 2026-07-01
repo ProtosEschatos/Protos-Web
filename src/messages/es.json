@@ -167,6 +167,7 @@
     "moveHint": "o flechas para moverte",
     "interactHint": "para interactuar con la imagen",
     "menuHint": "para abrir el menu",
+    "touchMoveHint": "En movil usa el joystick abajo a la izquierda para moverte",
     "start": "Comenzar exploracion",
     "move": "Movimiento",
     "details": "Detalles",

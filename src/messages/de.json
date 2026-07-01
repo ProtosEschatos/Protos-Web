@@ -136,6 +136,16 @@
     "error": "Etwas ist schiefgelaufen. Bitte erneut versuchen.",
     "serviceOptions": ["Individuelle Website", "E-Commerce", "Webanwendung", "UI/UX Design", "SEO & Marketing", "Wartung"]
   },
+  "transition": {
+    "loading": "Laden...",
+    "toHome": "Startseite",
+    "toAbout": "Uber mich",
+    "toProcess": "Prozess",
+    "toPortfolio": "Portfolio",
+    "toServices": "Leistungen",
+    "toBlog": "Blog",
+    "toContact": "Kontakt"
+  },
   "footer": {
     "brand_desc": "Professionelle Webdesign-Agentur. Wir verwandeln Ihre Vision in digitale Realitat, die verkauft.",
     "links": "Links",

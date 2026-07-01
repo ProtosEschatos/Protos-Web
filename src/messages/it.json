@@ -136,6 +136,16 @@
     "error": "Qualcosa e andato storto. Riprova.",
     "serviceOptions": ["Sito personalizzato", "E-Commerce", "Applicazione web", "Design UI/UX", "SEO e Marketing", "Manutenzione"]
   },
+  "transition": {
+    "loading": "Caricamento...",
+    "toHome": "Home",
+    "toAbout": "Chi sono",
+    "toProcess": "Processo",
+    "toPortfolio": "Portfolio",
+    "toServices": "Servizi",
+    "toBlog": "Blog",
+    "toContact": "Contatto"
+  },
   "footer": {
     "brand_desc": "Agenzia professionale di web design. Trasformiamo la tua visione in realta digitale che vende.",
     "links": "Link",

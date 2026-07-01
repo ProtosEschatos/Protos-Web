@@ -136,6 +136,16 @@
     "error": "Something went wrong. Please try again.",
     "serviceOptions": ["Custom Website", "E-Commerce", "Web Application", "UI/UX Design", "SEO & Marketing", "Maintenance"]
   },
+  "transition": {
+    "loading": "Loading...",
+    "toHome": "Home",
+    "toAbout": "About",
+    "toProcess": "Process",
+    "toPortfolio": "Portfolio",
+    "toServices": "Services",
+    "toBlog": "Blog",
+    "toContact": "Contact"
+  },
   "footer": {
     "brand_desc": "Professional web design agency. We turn your vision into digital reality that sells.",
     "links": "Links",

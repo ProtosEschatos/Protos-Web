@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
-import { Link, usePathname, useRouter } from '@/routing'
+import { usePathname, useRouter } from '@/routing'
+import TransitionLink from '@/components/navigation/TransitionLink'
 import { localeLabels, localeFlags, locales, type Locale } from '@/i18n'
 import MobileMenu from './MobileMenu'
 import ProtosEclipseLogo from '@/components/ui/ProtosEclipseLogo'
@@ -91,16 +92,16 @@ export default function Header() {
       >
         <div className="max-w-[1400px] mx-auto px-6">
           <div className="flex items-center justify-between h-20">
-            <Link href="/" className="group/logo flex items-center gap-2.5 font-bold text-lg text-[var(--light)]">
+            <TransitionLink href="/" className="group/logo flex items-center gap-2.5 font-bold text-lg text-[var(--light)]">
               <ProtosEclipseLogo size={36} className="group-hover/logo:drop-shadow-[0_0_10px_rgba(255,136,0,0.55)]" />
               <span className="hidden sm:block transition-colors duration-300 group-hover/logo:text-[#ffb347]">
                 {th('brand')}
               </span>
-            </Link>
+            </TransitionLink>
 
             <nav className="hidden lg:flex items-center gap-9">
               {navLinks.map((link) => (
-                <Link
+                <TransitionLink
                   key={link.href}
                   href={link.href}
                   className={`text-xs font-medium uppercase tracking-[0.1em] transition-colors duration-300 relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:bg-[var(--primary)] after:transition-all after:duration-300 ${
@@ -110,7 +111,7 @@ export default function Header() {
                   }`}
                 >
                   {t(link.key)}
-                </Link>
+                </TransitionLink>
               ))}
             </nav>
 
@@ -148,12 +149,12 @@ export default function Header() {
                 {themeIcons[theme]}
               </button>
 
-              <Link
+              <TransitionLink
                 href="/kontakt"
                 className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-to-r from-[var(--primary)] to-[#ff8800] text-white text-xs font-semibold uppercase tracking-wider hover:-translate-y-0.5 hover:shadow-[0_8px_25px_var(--primary-glow)] transition-all duration-300"
               >
                 {th('cta')}
-              </Link>
+              </TransitionLink>
             </div>
 
             <div className="flex items-center gap-2 lg:hidden">

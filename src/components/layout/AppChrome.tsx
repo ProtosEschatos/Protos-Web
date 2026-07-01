@@ -7,6 +7,8 @@ import PageLoader from '@/components/ui/PageLoader'
 import CustomCursor from '@/components/ui/CustomCursor'
 import CookieBanner from '@/components/ui/CookieBanner'
 import SiteShell from '@/components/ui/SiteShell'
+import { PageTransitionProvider } from '@/components/navigation/PageTransitionProvider'
+import PageTransitionOverlay from '@/components/navigation/PageTransitionOverlay'
 
 export default function AppChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
@@ -17,8 +19,9 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <>
+    <PageTransitionProvider>
       <PageLoader />
+      <PageTransitionOverlay />
       <CustomCursor />
       <Header />
       <main className="relative">
@@ -26,6 +29,6 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
       </main>
       <Footer />
       <CookieBanner />
-    </>
+    </PageTransitionProvider>
   )
 }

@@ -136,6 +136,16 @@
     "error": "Algo salio mal. Intentalo de nuevo.",
     "serviceOptions": ["Sitio personalizado", "E-Commerce", "Aplicacion web", "Diseno UI/UX", "SEO y Marketing", "Mantenimiento"]
   },
+  "transition": {
+    "loading": "Cargando...",
+    "toHome": "Inicio",
+    "toAbout": "Sobre mi",
+    "toProcess": "Proceso",
+    "toPortfolio": "Portfolio",
+    "toServices": "Servicios",
+    "toBlog": "Blog",
+    "toContact": "Contacto"
+  },
   "footer": {
     "brand_desc": "Agencia profesional de diseno web. Convertimos tu vision en realidad digital que vende.",
     "links": "Enlaces",

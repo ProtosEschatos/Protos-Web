@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Link } from '@/routing'
+import TransitionLink from '@/components/navigation/TransitionLink'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const navLinks = [
@@ -52,13 +52,13 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   exit="exit"
                   variants={linkVariant}
                 >
-                  <Link
+                  <TransitionLink
                     href={link.href}
                     onClick={onClose}
                     className="block text-5xl sm:text-7xl font-extrabold text-[var(--light)] hover:text-[var(--primary)] transition-colors duration-300"
                   >
                     {t(link.key)}
-                  </Link>
+                  </TransitionLink>
                 </motion.div>
               ))}
               <motion.div
@@ -68,13 +68,13 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 exit="exit"
                 variants={linkVariant}
               >
-                <Link
+                <TransitionLink
                   href="/kontakt"
                   onClick={onClose}
                   className="block text-5xl sm:text-7xl font-extrabold gradient-text"
                 >
                   {t('contact')}
-                </Link>
+                </TransitionLink>
               </motion.div>
             </nav>
 

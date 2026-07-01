@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
+import TransitionLink from '@/components/navigation/TransitionLink'
 
 const footerLinks = [
   { href: '/', key: 'home' as const },
@@ -35,13 +36,13 @@ export default function Footer() {
       <div className="max-w-[1200px] mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-12 mb-12">
           <div>
-            <Link href="/" className="inline-flex items-center gap-2.5 font-bold text-lg text-[var(--light)] mb-1">
+            <TransitionLink href="/" className="inline-flex items-center gap-2.5 font-bold text-lg text-[var(--light)] mb-1">
               <svg viewBox="0 0 32 32" width="28" height="28" xmlns="http://www.w3.org/2000/svg">
                 <rect width="32" height="32" rx="8" fill="#8b5cf6" />
                 <text x="50%" y="55%" dominantBaseline="middle" textAnchor="middle" fill="#fff" fontWeight="800" fontSize="18" fontFamily="Inter,sans-serif">P</text>
               </svg>
               <span>{th('brand')}</span>
-            </Link>
+            </TransitionLink>
             <p className="text-sm text-[var(--light-muted)] leading-7 mt-4 max-w-[340px]">
               {t('brand_desc')}
             </p>
@@ -67,9 +68,9 @@ export default function Footer() {
             <h4 className="font-bold mb-5">{t('links')}</h4>
             <div className="flex flex-col gap-3">
               {footerLinks.map((l) => (
-                <Link key={l.href} href={l.href} className="text-sm text-[var(--light-muted)] hover:text-[var(--primary)] transition-colors duration-300">
+                <TransitionLink key={l.href} href={l.href} className="text-sm text-[var(--light-muted)] hover:text-[var(--primary)] transition-colors duration-300">
                   {tn(l.key)}
-                </Link>
+                </TransitionLink>
               ))}
             </div>
           </div>

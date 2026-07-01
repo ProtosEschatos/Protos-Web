@@ -136,6 +136,16 @@
     "error": "Nesto je poslo po krivu. Pokusajte ponovo.",
     "serviceOptions": ["Prilagodena web stranica", "E-trgovina", "Web aplikacija", "UI/UX dizajn", "SEO i marketing", "Odrzavanje"]
   },
+  "transition": {
+    "loading": "Ucitavam...",
+    "toHome": "Pocetna",
+    "toAbout": "O meni",
+    "toProcess": "Proces",
+    "toPortfolio": "Portfolio",
+    "toServices": "Usluge",
+    "toBlog": "Blog",
+    "toContact": "Kontakt"
+  },
   "footer": {
     "brand_desc": "Profesionalna agencija za web dizajn. Pretvaramo vasu viziju u digitalnu stvarnost koja prodaje.",
     "links": "Linkovi",

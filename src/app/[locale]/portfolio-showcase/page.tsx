@@ -1,6 +1,15 @@
+import dynamic from 'next/dynamic'
 import { getPortfolioItems } from '@/actions/portfolio'
-import { SpaceGallery } from '@/components/three/SpaceGallery'
+import { ShowcaseBootLoader } from '@/components/three/showcase/ShowcaseBootLoader'
 import { setRequestLocale } from 'next-intl/server'
+
+const SpaceGallery = dynamic(
+  () => import('@/components/three/SpaceGallery').then((mod) => ({ default: mod.SpaceGallery })),
+  {
+    ssr: false,
+    loading: () => <ShowcaseBootLoader />,
+  },
+)
 
 type Props = { params: { locale: string } }
 

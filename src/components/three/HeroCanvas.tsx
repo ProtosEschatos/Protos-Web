@@ -1,9 +1,10 @@
 'use client'
 
 import { useRef, useMemo } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { useFrame } from '@react-three/fiber'
 import { Float, Stars } from '@react-three/drei'
 import * as THREE from 'three'
+import { SafeCanvas } from '@/components/three/SafeCanvas'
 
 function ParticleSphere() {
   const meshRef = useRef<THREE.Points>(null)
@@ -61,15 +62,15 @@ function ParticleSphere() {
 
 export default function HeroCanvas() {
   return (
-    <Canvas
+    <SafeCanvas
       camera={{ position: [0, 0, 7], fov: 60 }}
       style={{ background: 'transparent' }}
-      gl={{ alpha: true, antialias: true }}
-      dpr={[1, 1.5]}
+      gl={{ alpha: true }}
+      fallback={null}
     >
       <ambientLight intensity={0.3} />
       <Stars radius={50} depth={80} count={3000} factor={3} saturation={0} fade speed={1} />
       <ParticleSphere />
-    </Canvas>
+    </SafeCanvas>
   )
 }

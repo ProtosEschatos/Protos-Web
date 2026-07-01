@@ -78,3 +78,4 @@ Do not invent new `fixed inset-0` layers without removing or gating an existing 
 - ❌ Multiple fullscreen `fixed inset-0` overlays active together
 - ❌ `useTexture` / API screenshots as sole path with no static fallback
 - ❌ `meshPhysicalMaterial` transmission on showcase without testing WebGL fallback
+- ❌ 3D routes without WebGL fallback UI (`ShowcaseFallback`) and `SafeCanvas` wrapper

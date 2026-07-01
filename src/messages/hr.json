@@ -182,7 +182,13 @@
     "project3_title": "Cosmic Blueprint",
     "project3_desc": "Astroloska platforma — 3D vizualizacija, birth chart.",
     "project4_title": "Protos Web",
-    "project4_desc": "Vlastita SPA — GSAP, Three.js, Supabase backend."
+    "project4_desc": "Vlastita stranica — Next.js, Three.js, Supabase backend.",
+    "webglUnsupportedTitle": "Portfolio galerija",
+    "webglUnsupportedDesc": "3D prikaz nije dostupan u ovom pregledniku, ali svi projekti su u potpunosti dostupni ispod.",
+    "webglContextLostTitle": "3D prikaz je pauziran",
+    "webglContextLostDesc": "Graficka kartica je privremeno oslobodila 3D prikaz. Mozete nastaviti pregledavati projekte ili pokusati ponovo.",
+    "webglRetry": "Pokusaj ponovo 3D",
+    "webglViewPortfolio": "Pogledaj cijeli portfolio"
   },
   "metadata": {
     "home": { "title": "Pretvaramo posjetitelje u kupce", "description": "Profesionalna agencija za web dizajn iz Zagreba." },

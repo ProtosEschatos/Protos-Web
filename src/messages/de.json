@@ -182,7 +182,13 @@
     "project3_title": "Cosmic Blueprint",
     "project3_desc": "Astrologie-Plattform — 3D-Visualisierung, Geburtshoroskop.",
     "project4_title": "Protos Web",
-    "project4_desc": "Eigene SPA — GSAP, Three.js, Supabase Backend."
+    "project4_desc": "Eigene Website — Next.js, Three.js, Supabase Backend.",
+    "webglUnsupportedTitle": "Portfolio-Galerie",
+    "webglUnsupportedDesc": "Die 3D-Ansicht ist in diesem Browser nicht verfugbar, aber alle Projekte sind unten vollstandig zuganglich.",
+    "webglContextLostTitle": "3D-Ansicht pausiert",
+    "webglContextLostDesc": "Die GPU hat die 3D-Ansicht vorubergehend freigegeben. Durchsuchen Sie die Projekte unten oder versuchen Sie 3D erneut.",
+    "webglRetry": "3D erneut versuchen",
+    "webglViewPortfolio": "Ganzes Portfolio ansehen"
   },
   "metadata": {
     "home": { "title": "Wir verwandeln Besucher in Kunden", "description": "Professionelle Webdesign-Agentur aus Zagreb." },

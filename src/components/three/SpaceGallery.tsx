@@ -1,38 +1,22 @@
 'use client'
 
 import { useState, useRef, useMemo, useEffect, useCallback, memo } from 'react'
-import { Canvas } from '@react-three/fiber'
 import * as THREE from 'three'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
-import { PROJECT_LINKS, SHOWCASE_CONFIG, getFrameMarkers, type ShowcaseProject } from './showcase/constants'
+import { SHOWCASE_CONFIG, getFrameMarkers, type ShowcaseProject } from './showcase/constants'
 import { ShowcaseScene } from './showcase/GalleryScene'
+import { buildShowcaseProjects } from './showcase/buildProjects'
+import { ShowcaseFallback } from './showcase/ShowcaseFallback'
+import { ShowcaseBootLoader } from './showcase/ShowcaseBootLoader'
+import { SafeCanvas } from '@/components/three/SafeCanvas'
+import { isWebGLAvailable } from '@/lib/webgl'
 import type { PortfolioItem } from '@/actions/portfolio'
-import { normalizeProjectUrl } from '@/lib/showcase-screenshots'
 
 type Phase = 'loading' | 'intro' | 'playing'
 
 type SpaceGalleryProps = {
   portfolioItems?: PortfolioItem[]
-}
-
-function buildShowcaseProjects(
-  t: (key: string) => string,
-  portfolioItems: PortfolioItem[],
-): ShowcaseProject[] {
-  return PROJECT_LINKS.map((meta, index) => {
-    const dbItem = portfolioItems.find(
-      (item) => item.project_url && normalizeProjectUrl(item.project_url) === normalizeProjectUrl(meta.link),
-    )
-
-    return {
-      color: meta.color,
-      link: meta.link,
-      title: dbItem?.title ?? t(`project${index + 1}_title`),
-      description: dbItem?.description ?? t(`project${index + 1}_desc`),
-      imageUrl: dbItem?.image_url ?? meta.screenshot,
-    }
-  })
 }
 
 function drawMinimap(
@@ -90,6 +74,8 @@ type ShowcaseCanvasLayerProps = {
   characterRef: React.RefObject<THREE.Group | null>
   onCharacterMove: (pos: THREE.Vector3, rotationY: number) => void
   onNearestProject: (project: ShowcaseProject | null) => void
+  mountKey: number
+  onContextLost: () => void
 }
 
 const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
@@ -99,14 +85,17 @@ const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
   characterRef,
   onCharacterMove,
   onNearestProject,
+  mountKey,
+  onContextLost,
 }: ShowcaseCanvasLayerProps) {
   return (
     <div className="absolute inset-0 z-[1]">
-      <Canvas
+      <SafeCanvas
+        mountKey={mountKey}
         shadows
         camera={{ fov: 75, near: 0.1, far: 1000 }}
-        gl={{ antialias: true }}
-        dpr={[1, 1.5]}
+        onContextLost={onContextLost}
+        fallback={null}
       >
         <ShowcaseScene
           projects={projects}
@@ -116,7 +105,7 @@ const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
           onCharacterMove={onCharacterMove}
           onNearestProject={onNearestProject}
         />
-      </Canvas>
+      </SafeCanvas>
     </div>
   )
 })
@@ -131,6 +120,9 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
   )
 
   const frameMarkers = useMemo(() => getFrameMarkers(), [])
+  const [webglReady, setWebglReady] = useState<boolean | null>(null)
+  const [contextLost, setContextLost] = useState(false)
+  const [canvasKey, setCanvasKey] = useState(0)
   const [phase, setPhase] = useState<Phase>('loading')
   const [progress, setProgress] = useState(0)
   const [showMenu, setShowMenu] = useState(false)
@@ -140,6 +132,10 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
   const keys = useRef<Record<string, boolean>>({})
   const characterRef = useRef<THREE.Group>(null)
   const minimapRef = useRef<HTMLCanvasElement>(null)
+
+  useEffect(() => {
+    setWebglReady(isWebGLAvailable())
+  }, [])
 
   useEffect(() => {
     document.body.style.overflow = 'hidden'
@@ -205,6 +201,30 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
     setNearestProject(project)
   }, [])
 
+  const handleContextLost = useCallback(() => {
+    setContextLost(true)
+  }, [])
+
+  const handleRetryWebGL = useCallback(() => {
+    setContextLost(false)
+    setCanvasKey((key) => key + 1)
+    setPhase('intro')
+    setProgress(100)
+    setShowMenu(false)
+  }, [])
+
+  if (webglReady === null) {
+    return <ShowcaseBootLoader />
+  }
+
+  if (webglReady === false) {
+    return <ShowcaseFallback projects={projects} reason="unsupported" />
+  }
+
+  if (contextLost) {
+    return <ShowcaseFallback projects={projects} reason="lost" onRetry={handleRetryWebGL} />
+  }
+
   return (
     <div className="fixed inset-0 bg-black">
       <ShowcaseCanvasLayer
@@ -214,6 +234,8 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
         characterRef={characterRef}
         onCharacterMove={handleCharacterMove}
         onNearestProject={handleNearestProject}
+        mountKey={canvasKey}
+        onContextLost={handleContextLost}
       />
 
       {phase === 'loading' && (

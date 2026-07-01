@@ -1,9 +1,10 @@
 'use client'
 
 import { useRef, useMemo } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { useFrame } from '@react-three/fiber'
 import { Float, MeshDistortMaterial } from '@react-three/drei'
 import * as THREE from 'three'
+import { SafeCanvas } from '@/components/three/SafeCanvas'
 
 function ProcessSphere({ color, position, speed }: { color: string; position: [number, number, number]; speed: number }) {
   const meshRef = useRef<THREE.Mesh>(null)
@@ -96,10 +97,11 @@ function FloatingParticles() {
 
 export default function ProcessCanvas() {
   return (
-    <Canvas
+    <SafeCanvas
       camera={{ position: [0, 0, 6], fov: 50 }}
       style={{ background: 'transparent' }}
-      gl={{ alpha: true, antialias: true }}
+      gl={{ alpha: true }}
+      fallback={null}
     >
       <ambientLight intensity={0.2} />
       <pointLight position={[5, 5, 5]} intensity={0.5} color="#ff6600" />
@@ -112,6 +114,6 @@ export default function ProcessCanvas() {
 
       <ConnectingLines />
       <FloatingParticles />
-    </Canvas>
+    </SafeCanvas>
   )
 }

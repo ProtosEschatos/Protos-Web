@@ -3,7 +3,7 @@
 import { useMemo, useRef, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
-import { SHOWCASE_CONFIG, INITIAL_CHARACTER_HEADING, type ShowcaseProject } from './constants'
+import { SHOWCASE_CONFIG, INITIAL_CHARACTER_HEADING, getFrameTransform, type ShowcaseProject } from './constants'
 import { AstronautCharacter, animateAstronautWalk, resetAstronautPose } from './AstronautCharacter'
 import { FrameScreenshot } from './FrameScreenshot'
 
@@ -129,14 +129,7 @@ function ProjectFrame({ project, index }: { project: ShowcaseProject; index: num
   const edgeColors = [0x6366f1, 0x06b6d4, 0xf59e0b, 0x818cf8]
   const edgeColor = edgeColors[index % edgeColors.length]
 
-  const side = index % 2 === 0 ? -1 : 1
-  const row = Math.floor(index / 2)
-  const startZ = -SHOWCASE_CONFIG.galleryLength / 2 + 6
-  const z = startZ + row * SHOWCASE_CONFIG.frameSpacing
-  const wallX = side * (SHOWCASE_CONFIG.galleryWidth / 2)
-  const x = wallX - side * 0.22
-  const y = 2.45
-  const faceRotation = side * (Math.PI / 2)
+  const { x, y, z, rotationY, floorX } = getFrameTransform(index)
 
   useFrame((state) => {
     if (groupRef.current) {
@@ -146,7 +139,7 @@ function ProjectFrame({ project, index }: { project: ShowcaseProject; index: num
 
   return (
     <>
-      <group ref={groupRef} position={[x, y, z]} rotation={[0, faceRotation, 0]} renderOrder={10}>
+      <group ref={groupRef} position={[x, y, z]} rotation={[0, rotationY, 0]} renderOrder={10}>
         <mesh position={[0, 0, -depth * 0.5]} renderOrder={10}>
           <boxGeometry args={[outerW + 0.08, outerH + 0.08, depth]} />
           <meshStandardMaterial color={0x334155} metalness={0.6} roughness={0.35} />
@@ -192,11 +185,11 @@ function ProjectFrame({ project, index }: { project: ShowcaseProject; index: num
         <pointLight position={[0, 0.2, 0.35]} color={edgeColor} intensity={1.1} distance={5} decay={2} />
       </group>
 
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[side * (SHOWCASE_CONFIG.galleryWidth / 2 - 2.5), 0.02, z]}>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[floorX, 0.02, z]}>
         <ringGeometry args={[0.8, 1.2, 32]} />
         <meshBasicMaterial color={project.color} transparent opacity={0.4} side={THREE.DoubleSide} />
       </mesh>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[side * (SHOWCASE_CONFIG.galleryWidth / 2 - 2.5), 0.015, z]}>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[floorX, 0.015, z]}>
         <circleGeometry args={[0.6, 32]} />
         <meshBasicMaterial color={0x06b6d4} transparent opacity={0.2} />
       </mesh>
@@ -259,6 +252,17 @@ function GalleryShell() {
         <mesh key={i} position={pos} rotation={rot} receiveShadow>
           <planeGeometry args={i < 2 ? [galleryLength, galleryHeight] : [galleryWidth, galleryHeight]} />
           <meshStandardMaterial color={0x1e293b} roughness={0.6} metalness={0.4} />
+        </mesh>
+      ))}
+
+      {([-1, 1] as const).map((side) => (
+        <mesh
+          key={`inner-${side}`}
+          position={[side * (galleryWidth / 2 - 0.02), galleryHeight / 2, 0]}
+          rotation={[0, side === -1 ? Math.PI / 2 : -Math.PI / 2, 0]}
+        >
+          <planeGeometry args={[galleryLength, galleryHeight]} />
+          <meshStandardMaterial color={0x141c2e} roughness={0.75} metalness={0.25} />
         </mesh>
       ))}
 
@@ -336,10 +340,8 @@ export function ShowcaseScene({ projects, isPlaying, keys, characterRef, onChara
   const framePositions = useMemo(
     () =>
       projects.map((project, index) => {
-        const side = index % 2 === 0 ? -1 : 1
-        const row = Math.floor(index / 2)
-        const z = -SHOWCASE_CONFIG.galleryLength / 2 + 6 + row * SHOWCASE_CONFIG.frameSpacing
-        return { project, pos: new THREE.Vector3(side * (SHOWCASE_CONFIG.galleryWidth / 2 - 2), 0, z) }
+        const { x, z, y } = getFrameTransform(index)
+        return { project, pos: new THREE.Vector3(x, y * 0.35, z) }
       }),
     [projects],
   )

@@ -40,7 +40,7 @@ function ScreenshotPlane({
   return (
     <mesh position={[0, 0, z]} renderOrder={12}>
       <planeGeometry args={[width, height]} />
-      <meshBasicMaterial map={texture} toneMapped={false} side={THREE.DoubleSide} />
+      <meshBasicMaterial map={texture} toneMapped={false} />
     </mesh>
   )
 }

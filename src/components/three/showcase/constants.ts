@@ -36,15 +36,39 @@ export function initCharacterPosition(group: import('three').Group, heading = IN
   group.rotation.set(0, heading, 0, 'YXZ')
 }
 
-export function getFrameMarkers(): FrameMarker[] {
+export type FrameTransform = {
+  side: number
+  x: number
+  y: number
+  z: number
+  rotationY: number
+  floorX: number
+}
+
+export function getFrameTransform(index: number): FrameTransform {
   const { galleryLength, galleryWidth, frameSpacing } = SHOWCASE_CONFIG
+  const side = index % 2 === 0 ? -1 : 1
+  const row = Math.floor(index / 2)
   const startZ = -galleryLength / 2 + 6
+  const z = startZ + row * frameSpacing
+  const inset = 0.25
+  const x = side * (galleryWidth / 2 - inset)
+  return {
+    side,
+    x,
+    y: 2.45,
+    z,
+    // Plane default faces +Z; rotate so the window faces the room center.
+    rotationY: side === -1 ? Math.PI / 2 : -Math.PI / 2,
+    floorX: side * (galleryWidth / 2 - 2.5),
+  }
+}
+
+export function getFrameMarkers(): FrameMarker[] {
   return PROJECT_LINKS.map((meta, index) => {
-    const side = index % 2 === 0 ? -1 : 1
-    const row = Math.floor(index / 2)
-    const z = startZ + row * frameSpacing
+    const { x, z, floorX } = getFrameTransform(index)
     return {
-      x: side * (galleryWidth / 2 - 2),
+      x: floorX,
       z,
       color: meta.color,
     }

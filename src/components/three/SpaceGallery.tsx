@@ -315,9 +315,13 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
           >
             <h3 className="mb-2 text-xl text-[#6366f1]">{nearestProject?.title}</h3>
             {nearestProject?.imageUrl && phase === 'playing' && (
-              <div className="mb-3 overflow-hidden rounded-lg border border-white/10">
+              <div className="mb-3 overflow-hidden rounded-lg border border-white/10 bg-[#0f172a]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={nearestProject.imageUrl} alt={nearestProject.title} className="h-28 w-full object-cover object-top" />
+                <img
+                  src={nearestProject.imageUrl}
+                  alt={nearestProject.title}
+                  className="mx-auto h-36 w-auto max-w-full object-contain object-top"
+                />
               </div>
             )}
             <p className="mb-4 text-sm text-[#94a3b8]">{nearestProject?.description}</p>

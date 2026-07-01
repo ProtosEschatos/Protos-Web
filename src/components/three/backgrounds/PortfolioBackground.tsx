@@ -53,7 +53,7 @@ function DistantFrame({
       ].map(([px, py, fw, fh], i) => (
         <mesh key={i} position={[px, py, 0]}>
           <planeGeometry args={[fw, fh]} />
-          <meshBasicMaterial color={color} transparent opacity={0.14} depthWrite={false} />
+          <meshBasicMaterial color={color} transparent opacity={0.38} depthWrite={false} />
         </mesh>
       ))}
     </group>

@@ -39,7 +39,7 @@ function HexField({ rows, cols }: { rows: number; cols: number }) {
           <meshBasicMaterial
             color={h.i % 3 === 0 ? '#06b6d4' : h.i % 3 === 1 ? '#8b5cf6' : '#ff6600'}
             transparent
-            opacity={0.08 + (h.i % 4) * 0.02}
+            opacity={0.22 + (h.i % 4) * 0.04}
             depthWrite={false}
           />
         </mesh>

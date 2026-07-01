@@ -44,10 +44,10 @@ function DataStreams({ count, isMobile }: { count: number; isMobile: boolean }) 
         <bufferAttribute attach="attributes-color" args={[colors, 3]} />
       </bufferGeometry>
       <pointsMaterial
-        size={isMobile ? 0.012 : 0.018}
+        size={isMobile ? 0.018 : 0.028}
         vertexColors
         transparent
-        opacity={0.28}
+        opacity={0.55}
         sizeAttenuation
         depthWrite={false}
       />

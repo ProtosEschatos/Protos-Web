@@ -40,7 +40,7 @@ function ProcessNode({
   return (
     <mesh ref={ref} position={[x, y, z]}>
       <icosahedronGeometry args={[0.55, 2]} />
-      <meshBasicMaterial color={color} wireframe transparent opacity={0.12} depthWrite={false} />
+      <meshBasicMaterial color={color} wireframe transparent opacity={0.28} depthWrite={false} />
     </mesh>
   )
 }
@@ -65,7 +65,7 @@ function ConnectingLines() {
 
   return (
     <lineSegments ref={ref} geometry={geometry}>
-      <lineBasicMaterial color="#8b5cf6" transparent opacity={0.1} depthWrite={false} />
+      <lineBasicMaterial color="#8b5cf6" transparent opacity={0.28} depthWrite={false} />
     </lineSegments>
   )
 }
@@ -92,7 +92,7 @@ function AmbientDust({ count }: { count: number }) {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial size={0.01} color="#8b5cf6" transparent opacity={0.2} sizeAttenuation depthWrite={false} />
+      <pointsMaterial size={0.015} color="#8b5cf6" transparent opacity={0.42} sizeAttenuation depthWrite={false} />
     </points>
   )
 }

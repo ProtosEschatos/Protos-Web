@@ -15,7 +15,7 @@ function RadarPulse({ delay, color, z }: { delay: number; color: string; z: numb
     const scale = 0.8 + t * 2.2
     ref.current.scale.set(scale, scale, 1)
     const mat = ref.current.material as THREE.MeshBasicMaterial
-    mat.opacity = Math.max(0, 0.16 - t * 0.035)
+    mat.opacity = Math.max(0, 0.32 - t * 0.07)
   })
 
   return (
@@ -37,7 +37,7 @@ function SweepLine() {
   return (
     <mesh ref={ref} position={[0, 0, -7]}>
       <planeGeometry args={[0.02, 12]} />
-      <meshBasicMaterial color="#06b6d4" transparent opacity={0.08} depthWrite={false} />
+      <meshBasicMaterial color="#06b6d4" transparent opacity={0.45} depthWrite={false} />
     </mesh>
   )
 }

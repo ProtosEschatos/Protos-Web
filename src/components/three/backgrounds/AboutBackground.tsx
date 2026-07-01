@@ -30,7 +30,7 @@ function OrbitRing({
   return (
     <mesh ref={ref} rotation={rotation} position={[0, 0, z]}>
       <torusGeometry args={[radius, 0.008, 6, 96]} />
-      <meshBasicMaterial color={color} transparent opacity={0.18} depthWrite={false} />
+      <meshBasicMaterial color={color} transparent opacity={0.42} depthWrite={false} />
     </mesh>
   )
 }
@@ -54,7 +54,7 @@ function ConstellationNodes({ count }: { count: number }) {
             position={[Math.cos(angle) * r, Math.sin(angle * 1.4) * 1.2, Math.sin(angle) * r - 2]}
           >
             <sphereGeometry args={[0.025, 6, 6]} />
-            <meshBasicMaterial color={i % 2 === 0 ? '#8b5cf6' : '#06b6d4'} transparent opacity={0.35} depthWrite={false} />
+            <meshBasicMaterial color={i % 2 === 0 ? '#8b5cf6' : '#06b6d4'} transparent opacity={0.62} depthWrite={false} />
           </mesh>
         )
       })}

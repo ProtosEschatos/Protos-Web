@@ -29,9 +29,9 @@ type PageTransitionContextValue = {
 
 const PageTransitionContext = createContext<PageTransitionContextValue | null>(null)
 
-const EXIT_MS = 1200
-const LOADING_MS = 600
-const ENTER_MS = 1000
+const EXIT_MS = 1300
+const LOADING_MS = 900
+const ENTER_MS = 1100
 
 function sleep(ms: number) {
   return new Promise<void>((resolve) => {

@@ -38,7 +38,7 @@ function DistantParticleSphere({ isMobile }: { isMobile: boolean }) {
 
   return (
     <points ref={meshRef} geometry={geometry}>
-      <pointsMaterial size={0.012} vertexColors transparent opacity={0.35} sizeAttenuation depthWrite={false} />
+      <pointsMaterial size={0.018} vertexColors transparent opacity={0.72} sizeAttenuation depthWrite={false} />
     </points>
   )
 }

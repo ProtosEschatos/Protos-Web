@@ -83,6 +83,7 @@ export function SafeCanvas({
     <Canvas
       key={mountKey}
       dpr={dpr}
+      className="pointer-events-none"
       gl={{
         alpha: true,
         antialias: true,

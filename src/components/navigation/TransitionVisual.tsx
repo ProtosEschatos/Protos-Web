@@ -13,7 +13,7 @@ type TransitionVisualProps = {
 function StarsVisual({ primary, secondary, phase }: { primary: string; secondary: string; phase: TransitionPhase }) {
   return (
     <>
-      {Array.from({ length: 40 }).map((_, i) => (
+      {Array.from({ length: 24 }).map((_, i) => (
         <motion.span
           key={i}
           className="absolute rounded-full"
@@ -25,11 +25,11 @@ function StarsVisual({ primary, secondary, phase }: { primary: string; secondary
             background: i % 2 === 0 ? primary : secondary,
           }}
           animate={{
-            opacity: phase === 'enter' ? 0 : [0.2, 1, 0.3],
-            scale: phase === 'exit' || phase === 'loading' ? [0, 2.5, 1] : 0,
-            y: phase === 'loading' ? -120 - i * 3 : 0,
+            opacity: phase === 'enter' ? 0 : phase === 'loading' ? 0.7 : 0.35,
+            scale: phase === 'exit' ? [0, 1.5, 1] : phase === 'enter' ? 0 : 1,
+            y: phase === 'loading' ? -40 - i * 2 : 0,
           }}
-          transition={{ duration: 1.2, delay: i * 0.02, repeat: phase === 'loading' ? Infinity : 0, repeatDelay: 0.5 }}
+          transition={{ duration: 0.9, delay: i * 0.02 }}
         />
       ))}
     </>
@@ -46,14 +46,14 @@ function RingsVisual({ primary, secondary, phase }: { primary: string; secondary
           style={{ borderColor: i % 2 === 0 ? primary : secondary }}
           initial={{ width: 40, height: 40, x: '-50%', y: '-50%', opacity: 0 }}
           animate={{
-            width: phase === 'enter' ? 20 : 80 + i * 120,
-            height: phase === 'enter' ? 20 : 80 + i * 120,
+            width: phase === 'enter' ? 40 : 80 + i * 100,
+            height: phase === 'enter' ? 40 : 80 + i * 100,
             x: '-50%',
             y: '-50%',
             opacity: phase === 'enter' ? 0 : 0.35 - i * 0.06,
-            rotate: phase === 'loading' ? 360 : 0,
+            rotate: phase === 'loading' ? 180 + i * 20 : 0,
           }}
-          transition={{ duration: phase === 'loading' ? 2 : 1, repeat: phase === 'loading' ? Infinity : 0, ease: 'linear' }}
+          transition={{ duration: 1.2, ease: 'easeInOut' }}
         />
       ))}
     </>
@@ -155,7 +155,7 @@ function LinesVisual({ primary, accent, phase }: { primary: string; accent: stri
             scaleY: phase === 'exit' || phase === 'loading' ? [0.2, 1, 0.4] : 0,
             y: phase === 'loading' ? ['-10%', '10%', '-10%'] : 0,
           }}
-          transition={{ duration: 1.4, delay: i * 0.04, repeat: phase === 'loading' ? Infinity : 0 }}
+          transition={{ duration: 1.4, delay: i * 0.04 }}
         />
       ))}
     </>
@@ -177,14 +177,14 @@ function WavesVisual({ primary, secondary, phase }: { primary: string; secondary
             y: '-50%',
             opacity: phase === 'enter' ? 0 : [0.5, 0.1],
           }}
-          transition={{ duration: 1.6, delay: i * 0.25, repeat: phase === 'loading' ? Infinity : 0 }}
+          transition={{ duration: 1.6, delay: i * 0.25 }}
         />
       ))}
       <motion.div
         className="absolute left-1/2 top-1/2 h-1/2 w-0.5 origin-bottom"
         style={{ background: `linear-gradient(to top, transparent, ${primary})` }}
-        animate={{ rotate: phase === 'loading' ? 360 : 0, opacity: phase === 'enter' ? 0 : 0.5 }}
-        transition={{ rotate: { duration: 2, repeat: Infinity, ease: 'linear' }, opacity: { duration: 0.5 } }}
+        animate={{ rotate: phase === 'loading' ? 180 : 0, opacity: phase === 'enter' ? 0 : 0.5 }}
+        transition={{ duration: 1.2, ease: 'easeInOut' }}
       />
     </>
   )

@@ -1,12 +1,5 @@
 'use client'
 
-import SiteBackground from '@/components/ui/SiteBackground'
-
 export default function SiteShell({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      <SiteBackground />
-      <div className="relative z-[1] isolate cosmic-site">{children}</div>
-    </>
-  )
+  return <div className="relative cosmic-site">{children}</div>
 }

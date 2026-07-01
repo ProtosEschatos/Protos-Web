@@ -21,16 +21,16 @@ export default function SiteBackground() {
   const routeKey = getBackgroundKey(pathname)
 
   return (
-    <div className="fixed inset-0 -z-10 pointer-events-none isolate" aria-hidden>
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_50%,rgba(255,102,0,0.08)_0%,transparent_60%),radial-gradient(ellipse_at_80%_20%,rgba(139,92,246,0.06)_0%,transparent_50%),radial-gradient(ellipse_at_50%_80%,rgba(6,182,212,0.04)_0%,transparent_50%)]" />
+    <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden>
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_20%_50%,rgba(255,102,0,0.08)_0%,transparent_60%),radial-gradient(ellipse_at_80%_20%,rgba(139,92,246,0.06)_0%,transparent_50%),radial-gradient(ellipse_at_50%_80%,rgba(6,182,212,0.04)_0%,transparent_50%)]" />
       <div
-        className="absolute inset-0 animate-[twinkle_8s_ease-in-out_infinite_alternate] opacity-80"
+        className="pointer-events-none absolute inset-0 animate-[twinkle_8s_ease-in-out_infinite_alternate] opacity-80"
         style={{ backgroundImage: TWINKLE_BG }}
       />
-      <div className="absolute inset-0 opacity-[0.38] saturate-[0.85]">
+      <div className="pointer-events-none absolute inset-0 opacity-[0.38] saturate-[0.85] [&_canvas]:pointer-events-none">
         <PageBackgroundCanvas routeKey={routeKey} />
       </div>
-      <div className="absolute inset-0 bg-gradient-to-b from-[var(--dark)]/30 via-transparent to-[var(--dark)]/90" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[var(--dark)]/30 via-transparent to-[var(--dark)]/90" />
     </div>
   )
 }

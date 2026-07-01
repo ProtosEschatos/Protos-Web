@@ -39,6 +39,10 @@ function sleep(ms: number) {
   })
 }
 
+function unlockScroll() {
+  document.body.style.overflow = ''
+}
+
 export function PageTransitionProvider({ children }: { children: ReactNode }) {
   const router = useRouter()
   const pathname = usePathname()
@@ -58,26 +62,34 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
       setPhase('exit')
       document.body.style.overflow = 'hidden'
 
-      await sleep(EXIT_MS)
-      setPhase('loading')
-      router.push(href)
-      window.scrollTo(0, 0)
+      try {
+        await sleep(EXIT_MS)
+        setPhase('loading')
+        router.push(href)
+        window.scrollTo(0, 0)
 
-      await sleep(LOADING_MS)
-      setPhase('enter')
+        await sleep(LOADING_MS)
+        setPhase('enter')
 
-      await sleep(ENTER_MS)
-      setPhase('idle')
-      setDestinationKey(null)
-      document.body.style.overflow = ''
-      runningRef.current = false
+        await sleep(ENTER_MS)
+        setPhase('idle')
+        setDestinationKey(null)
+      } finally {
+        unlockScroll()
+        runningRef.current = false
+      }
     },
     [pathname, router],
   )
 
   useEffect(() => {
+    unlockScroll()
+    return () => unlockScroll()
+  }, [])
+
+  useEffect(() => {
     if (phase === 'idle') {
-      document.body.style.overflow = ''
+      unlockScroll()
     }
   }, [phase])
 

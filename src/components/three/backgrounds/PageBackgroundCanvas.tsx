@@ -4,6 +4,7 @@ import type { ComponentType } from 'react'
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { isWebGLAvailable } from '@/lib/webgl'
+import { BackgroundErrorBoundary } from '@/components/three/backgrounds/BackgroundErrorBoundary'
 import {
   BACKGROUND_FALLBACKS,
   type BackgroundRouteKey,
@@ -24,6 +25,16 @@ type PageBackgroundCanvasProps = {
   routeKey: BackgroundRouteKey
 }
 
+function CssFallback({ routeKey }: { routeKey: BackgroundRouteKey }) {
+  return (
+    <div
+      className="pointer-events-none absolute inset-0 opacity-70"
+      style={{ background: BACKGROUND_FALLBACKS[routeKey] }}
+      aria-hidden
+    />
+  )
+}
+
 export default function PageBackgroundCanvas({ routeKey }: PageBackgroundCanvasProps) {
   const [mounted, setMounted] = useState(false)
   const [supported, setSupported] = useState(false)
@@ -37,19 +48,19 @@ export default function PageBackgroundCanvas({ routeKey }: PageBackgroundCanvasP
     setMounted(true)
   }, [])
 
-  const fallbackStyle = { background: BACKGROUND_FALLBACKS[routeKey] }
-
   if (!mounted) {
-    return <div className="absolute inset-0 opacity-60" style={fallbackStyle} aria-hidden />
+    return <CssFallback routeKey={routeKey} />
   }
 
   if (!supported) {
-    return <div className="absolute inset-0 opacity-70" style={fallbackStyle} aria-hidden />
+    return <CssFallback routeKey={routeKey} />
   }
 
   return (
-    <div className="absolute inset-0 h-full w-full" aria-hidden>
-      <Background isMobile={isMobile} />
+    <div className="pointer-events-none absolute inset-0 h-full w-full [&_canvas]:pointer-events-none">
+      <BackgroundErrorBoundary fallback={<CssFallback routeKey={routeKey} />}>
+        <Background isMobile={isMobile} />
+      </BackgroundErrorBoundary>
     </div>
   )
 }

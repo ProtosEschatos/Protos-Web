@@ -7,110 +7,133 @@ import gsap from 'gsap'
 import { saveCookiePreferences } from '@/lib/cookie-consent'
 import { buildLocalePath } from '@/lib/seo'
 
-export const BOOT_SESSION_KEY = 'protos-boot-gate-v6'
+export const BOOT_SESSION_KEY = 'protos-boot-gate-v7'
 export const BOOT_COMPLETE_EVENT = 'protos-boot-complete'
-const BOOT_BASE = '/loader/boot-bg-base.jpg'
+const BOOT_BG = '/loader/boot-bg.jpg'
 
-type ImageJellyfishSpec = {
-  id: string
-  src: string
-  left: number
-  top: number
-  width: number
-  height: number
-  driftX: number
-  driftY: number
-  rotate: number
-  duration: number
-  delay: number
-  pulse: number
-}
-
-const IMAGE_JELLYFISH: ImageJellyfishSpec[] = [
-  { id: 'jf-1', src: '/loader/jf-1.png', left: 2, top: 2, width: 20, height: 28, driftX: 36, driftY: 22, rotate: 6, duration: 11, delay: 0, pulse: 0.07 },
-  { id: 'jf-2', src: '/loader/jf-2.png', left: 18, top: 30, width: 32, height: 62, driftX: 52, driftY: 38, rotate: 5, duration: 16, delay: 0.8, pulse: 0.09 },
-  { id: 'jf-3', src: '/loader/jf-3.png', left: 48, top: 42, width: 18, height: 28, driftX: 40, driftY: 26, rotate: 8, duration: 10, delay: 2.2, pulse: 0.06 },
-  { id: 'jf-4', src: '/loader/jf-4.png', left: 62, top: 2, width: 28, height: 32, driftX: -44, driftY: 24, rotate: 7, duration: 13, delay: 1.4, pulse: 0.08 },
-  { id: 'jf-5', src: '/loader/jf-5.png', left: 10, top: 28, width: 16, height: 22, driftX: 30, driftY: 20, rotate: 6, duration: 9, delay: 3, pulse: 0.06 },
-  { id: 'jf-6', src: '/loader/jf-6.png', left: 72, top: 55, width: 22, height: 30, driftX: -38, driftY: 28, rotate: 9, duration: 12, delay: 2.6, pulse: 0.07 },
+/** Soft bioluminescent pulses aligned to jellyfish in the artwork */
+const JELLY_GLOWS = [
+  { left: 11, top: 7, size: 22, delay: 0, duration: 3.2 },
+  { left: 34, top: 48, size: 34, delay: 0.6, duration: 4.1 },
+  { left: 56, top: 40, size: 16, delay: 1.2, duration: 2.8 },
+  { left: 74, top: 8, size: 24, delay: 0.3, duration: 3.6 },
+  { left: 16, top: 34, size: 14, delay: 1.8, duration: 3.0 },
+  { left: 78, top: 58, size: 18, delay: 2.1, duration: 3.4 },
 ]
 
-function BootBackgroundStage({ active }: { active: boolean }) {
-  const stageRef = useRef<HTMLDivElement>(null)
+function BootLiveBackground({ active }: { active: boolean }) {
+  const rootRef = useRef<HTMLDivElement>(null)
 
   useLayoutEffect(() => {
-    if (!active || !stageRef.current) return
+    if (!active || !rootRef.current) return
 
     const ctx = gsap.context(() => {
-      IMAGE_JELLYFISH.forEach((spec) => {
-        const el = stageRef.current!.querySelector<HTMLElement>(`[data-jf-id="${spec.id}"]`)
-        if (!el) return
+      const bg = rootRef.current!.querySelector<HTMLElement>('[data-boot-bg]')
+      const rays = rootRef.current!.querySelector<HTMLElement>('[data-boot-rays]')
+      const particles = rootRef.current!.querySelectorAll<HTMLElement>('[data-boot-particle]')
+      const glows = rootRef.current!.querySelectorAll<HTMLElement>('[data-boot-glow]')
 
-        gsap.set(el, { x: 0, y: 0, rotate: 0, force3D: true, transformOrigin: '50% 18%' })
+      if (bg) {
+        gsap.set(bg, { scale: 1.04, force3D: true, transformOrigin: '50% 45%' })
+        gsap.to(bg, {
+          x: -18,
+          y: -12,
+          scale: 1.09,
+          duration: 22,
+          ease: 'sine.inOut',
+          repeat: -1,
+          yoyo: true,
+        })
+      }
 
+      if (rays) {
+        gsap.to(rays, {
+          opacity: 0.55,
+          y: 12,
+          duration: 5.5,
+          ease: 'sine.inOut',
+          repeat: -1,
+          yoyo: true,
+        })
+      }
+
+      glows.forEach((el, i) => {
+        const spec = JELLY_GLOWS[i]
+        if (!spec) return
         gsap.to(el, {
-          x: spec.driftX,
-          y: -spec.driftY,
-          rotate: spec.rotate,
+          scale: 1.18,
+          opacity: 0.85,
           duration: spec.duration,
           ease: 'sine.inOut',
           repeat: -1,
           yoyo: true,
           delay: spec.delay,
         })
+      })
 
+      particles.forEach((el, i) => {
+        gsap.set(el, { y: 0, opacity: 0.15 + (i % 5) * 0.08 })
         gsap.to(el, {
-          scaleY: 1 + spec.pulse,
-          scaleX: 1 - spec.pulse * 0.35,
-          duration: 0.55,
-          ease: 'power2.inOut',
+          y: -120 - (i % 4) * 40,
+          x: `random(-30, 30)`,
+          opacity: 0,
+          duration: 6 + (i % 6),
+          ease: 'none',
           repeat: -1,
-          yoyo: true,
-          delay: spec.delay * 0.4,
-        })
-
-        gsap.to(el, {
-          filter: 'brightness(1.12)',
-          duration: 1.8,
-          ease: 'sine.inOut',
-          repeat: -1,
-          yoyo: true,
-          delay: spec.delay,
+          delay: i * 0.35,
         })
       })
-    }, stageRef)
+    }, rootRef)
 
     return () => ctx.revert()
   }, [active])
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
+    <div ref={rootRef} className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
+      <div className="absolute inset-0 bg-[#020818]" />
       <div
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+        data-boot-bg
+        className="absolute inset-0 bg-cover bg-center will-change-transform"
+        style={{ backgroundImage: `url(${BOOT_BG})` }}
+      />
+      <div
+        data-boot-rays
+        className="absolute inset-x-0 top-0 h-[55%] opacity-40 will-change-transform"
         style={{
-          width: 'max(100vw, 177.78vh)',
-          height: 'max(100vh, 56.25vw)',
+          background:
+            'linear-gradient(180deg, rgba(186,230,253,0.22) 0%, rgba(34,211,238,0.08) 35%, transparent 100%)',
         }}
-      >
-        <div ref={stageRef} className="relative h-full w-full bg-cover bg-center" style={{ backgroundImage: `url(${BOOT_BASE})` }}>
-          {IMAGE_JELLYFISH.map((spec) => (
-            <div
-              key={spec.id}
-              data-jf-id={spec.id}
-              className="absolute will-change-transform"
-              style={{
-                left: `${spec.left}%`,
-                top: `${spec.top}%`,
-                width: `${spec.width}%`,
-                height: `${spec.height}%`,
-              }}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={spec.src} alt="" className="h-full w-full object-contain object-left-top" draggable={false} />
-            </div>
-          ))}
-        </div>
-      </div>
+      />
+      {JELLY_GLOWS.map((g, i) => (
+        <div
+          key={i}
+          data-boot-glow
+          className="absolute rounded-full opacity-50 will-change-transform mix-blend-screen blur-2xl"
+          style={{
+            left: `${g.left}%`,
+            top: `${g.top}%`,
+            width: `${g.size}vmin`,
+            height: `${g.size}vmin`,
+            transform: 'translate(-50%, -50%)',
+            background: 'radial-gradient(circle, rgba(103,232,249,0.55) 0%, rgba(34,211,238,0.15) 45%, transparent 70%)',
+          }}
+        />
+      ))}
+      {Array.from({ length: 24 }).map((_, i) => (
+        <div
+          key={i}
+          data-boot-particle
+          className="absolute rounded-full bg-cyan-200/80 will-change-transform"
+          style={{
+            left: `${4 + ((i * 17) % 92)}%`,
+            top: `${55 + ((i * 11) % 40)}%`,
+            width: i % 3 === 0 ? 3 : 2,
+            height: i % 3 === 0 ? 3 : 2,
+            boxShadow: '0 0 6px rgba(103,232,249,0.8)',
+          }}
+        />
+      ))}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020818]/35" />
     </div>
   )
 }
@@ -132,13 +155,14 @@ export default function PageLoader() {
 
   useEffect(() => {
     if (!loading) return
-    ;[BOOT_BASE, ...IMAGE_JELLYFISH.map((j) => j.src)].forEach((href) => {
-      const link = document.createElement('link')
-      link.rel = 'preload'
-      link.as = 'image'
-      link.href = href
-      document.head.appendChild(link)
-    })
+    const link = document.createElement('link')
+    link.rel = 'preload'
+    link.as = 'image'
+    link.href = BOOT_BG
+    document.head.appendChild(link)
+    return () => {
+      if (link.parentNode) link.parentNode.removeChild(link)
+    }
   }, [loading])
 
   useEffect(() => {
@@ -189,11 +213,7 @@ export default function PageLoader() {
           transition={{ duration: 0.8, ease: 'easeInOut' }}
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden bg-[#020818]"
         >
-          <BootBackgroundStage active={loading} />
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute inset-0 bg-[#020818]/10" />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020818]/40" />
-          </div>
+          <BootLiveBackground active={loading} />
 
           <div className="relative z-10 flex flex-col items-center justify-center">
             <div className="relative w-24 h-24 mb-8">

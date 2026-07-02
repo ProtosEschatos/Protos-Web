@@ -142,6 +142,7 @@ export default function PageLoader() {
             className="pointer-events-none absolute inset-0 z-[5] flex items-center justify-center overflow-hidden"
             aria-hidden
           >
+            <div className="absolute h-[540px] w-[min(94vw,460px)] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(2,8,24,0.82)_0%,rgba(2,8,24,0.45)_48%,transparent_76%)]" />
             <motion.div
               className="absolute h-[520px] w-[min(92vw,440px)] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(186,230,253,0.55)_0%,rgba(125,211,252,0.28)_42%,transparent_72%)] blur-3xl"
               animate={{ scale: [1, 1.06, 1], opacity: [0.72, 0.92, 0.72] }}
@@ -154,9 +155,13 @@ export default function PageLoader() {
             />
           </div>
 
-          <div className="relative z-10 flex flex-col items-center justify-center px-8 py-10">
+          <div className="relative z-10 flex flex-col items-center justify-center px-10 py-12 min-w-[min(92vw,320px)]">
             <div
-              className="pointer-events-none absolute inset-0 -z-10 rounded-[2rem] bg-sky-200/[0.07] shadow-[0_0_80px_rgba(125,211,252,0.35)] backdrop-blur-[2px]"
+              className="pointer-events-none absolute inset-0 -z-10 rounded-3xl border border-sky-200/25 bg-[#020818]/82 backdrop-blur-md shadow-[0_0_48px_rgba(125,211,252,0.35),0_16px_48px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.1)]"
+              aria-hidden
+            />
+            <div
+              className="pointer-events-none absolute inset-3 -z-10 rounded-[1.35rem] bg-[radial-gradient(ellipse_at_center,rgba(186,230,253,0.28)_0%,transparent_68%)]"
               aria-hidden
             />
             <div className="relative w-24 h-24 mb-8">
@@ -177,10 +182,17 @@ export default function PageLoader() {
               />
             </div>
 
-            <h2 className="text-2xl font-bold gradient-text mb-2">Protos Web</h2>
-            <p className="text-sm text-[var(--light-muted)] tracking-[0.2em] uppercase mb-6">{t('subtitle')}</p>
+            <h2
+              className="text-2xl font-extrabold gradient-text mb-2 drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)]"
+              style={{ filter: 'drop-shadow(0 0 18px rgba(125,211,252,0.45))' }}
+            >
+              Protos Web
+            </h2>
+            <p className="text-sm font-semibold text-sky-50 tracking-[0.2em] uppercase mb-6 drop-shadow-[0_1px_10px_rgba(0,0,0,0.95)]">
+              {t('subtitle')}
+            </p>
 
-            <div className="w-48 h-1 bg-white/10 rounded-full overflow-hidden mb-6">
+            <div className="w-52 h-1.5 bg-black/45 border border-white/15 rounded-full overflow-hidden mb-6 shadow-inner">
               <motion.div
                 className="h-full rounded-full bg-gradient-to-r from-[var(--primary)] via-[var(--secondary)] to-[var(--accent)]"
                 initial={{ width: '0%' }}
@@ -197,7 +209,7 @@ export default function PageLoader() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
                   onClick={handleEnter}
-                  className="px-10 py-3 rounded-full border border-[var(--primary)]/60 bg-[var(--primary)]/10 text-[var(--light)] text-sm font-semibold tracking-[0.25em] uppercase hover:bg-[var(--primary)]/20 hover:border-[var(--primary)] transition-all duration-300 shadow-[0_0_24px_rgba(255,102,0,0.25)]"
+                  className="px-10 py-3 rounded-full border border-sky-200/50 bg-[#020818]/85 backdrop-blur-sm text-white text-sm font-bold tracking-[0.25em] uppercase hover:bg-sky-950/90 hover:border-sky-100/60 transition-all duration-300 shadow-[0_0_28px_rgba(125,211,252,0.45),0_4px_20px_rgba(0,0,0,0.55)]"
                 >
                   {t('enter')}
                 </motion.button>

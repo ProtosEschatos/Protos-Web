@@ -21,7 +21,3 @@ export const SHOWCASE_STORAGE = {
   environment: 'environment/synthwave-room.jpg',
   project: (slug: string, viewport: 'mobile' | 'desktop') => `projects/${viewport}-${slug}.jpg`,
 } as const
-
-export function useShowcaseAssetUrl(storagePath: string, localPath: string) {
-  return getShowcaseStorageUrl(storagePath)
-}

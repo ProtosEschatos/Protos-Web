@@ -1,16 +1,16 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { Suspense, useEffect, useMemo, useRef } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useTexture } from '@react-three/drei'
 import * as THREE from 'three'
 import { SHOWCASE_CONFIG } from './constants'
-import { getShowcaseStorageUrl, SHOWCASE_STORAGE } from '@/lib/showcase-storage'
 
 const LOOP = 10
 const GRID_SCROLL = 22
-const SKY_RADIUS = 360
-const SKY_HEIGHT = 230
+const SKY_RADIUS = 420
+const SKY_HEIGHT = 240
+const LOCAL_PANORAMA = '/showcase/environment/synthwave-360-panorama.jpg'
 
 const GRID_VERT = `
   varying vec3 vWorldPos;
@@ -52,80 +52,16 @@ const GRID_FRAG = `
   }
 `
 
-
-function PanoramaSky360({ url }: { url: string }) {
-  const texture = useTexture(url)
+function PanoramaSky360() {
+  const texture = useTexture(LOCAL_PANORAMA)
   texture.colorSpace = THREE.SRGBColorSpace
-  const { horizonZ } = SHOWCASE_CONFIG
 
   return (
-    <mesh position={[0, SKY_HEIGHT * 0.42, horizonZ + 38]} renderOrder={-20}>
+    <mesh position={[0, SKY_HEIGHT * 0.5, 0]} renderOrder={-20}>
       <cylinderGeometry args={[SKY_RADIUS, SKY_RADIUS, SKY_HEIGHT, 96, 1, true]} />
       <meshBasicMaterial map={texture} side={THREE.BackSide} depthWrite={false} toneMapped={false} />
     </mesh>
   )
-}
-
-function EquirectFallbackSky({ url }: { url: string }) {
-  const texture = useTexture(url)
-  texture.mapping = THREE.EquirectangularReflectionMapping
-  texture.colorSpace = THREE.SRGBColorSpace
-
-  return (
-    <mesh scale={[-380, 380, 380]} renderOrder={-20}>
-      <sphereGeometry args={[1, 64, 32]} />
-      <meshBasicMaterial map={texture} side={THREE.BackSide} depthWrite={false} toneMapped={false} />
-    </mesh>
-  )
-}
-
-function Skybox360() {
-  const primary = getShowcaseStorageUrl(SHOWCASE_STORAGE.environment360)
-  const equirectPrimary = getShowcaseStorageUrl(SHOWCASE_STORAGE.environmentEquirect)
-  const panoramaFallback = '/showcase/environment/synthwave-360-panorama.jpg'
-  const equirectFallback = '/showcase/environment/synthwave-360-equirect.jpg'
-  const [mode, setMode] = useState<'loading' | 'panorama' | 'equirect'>('loading')
-  const [url, setUrl] = useState<string | null>(null)
-
-  useEffect(() => {
-    let cancelled = false
-    const tryUrl = async (candidate: string) => {
-      try {
-        const res = await fetch(candidate, { method: 'HEAD' })
-        return res.ok ? candidate : null
-      } catch {
-        return null
-      }
-    }
-
-    void (async () => {
-      const panorama =
-        (await tryUrl(primary)) ??
-        (await tryUrl(panoramaFallback))
-      if (cancelled) return
-      if (panorama) {
-        setMode('panorama')
-        setUrl(panorama)
-        return
-      }
-      const equirect =
-        (await tryUrl(equirectPrimary)) ??
-        (await tryUrl(equirectFallback))
-      if (cancelled) return
-      if (equirect) {
-        setMode('equirect')
-        setUrl(equirect)
-      }
-    })()
-
-    return () => {
-      cancelled = true
-    }
-  }, [primary, equirectPrimary, panoramaFallback, equirectFallback])
-
-  if (!url || mode === 'loading') return null
-  if (mode === 'equirect') return <EquirectFallbackSky url={url} />
-  return <PanoramaSky360 url={url} />
 }
 
 function SynthwaveFloor() {
@@ -166,10 +102,14 @@ export function SynthwaveRoom() {
   const { scene } = useThree()
 
   useEffect(() => {
+    useTexture.preload(LOCAL_PANORAMA)
+  }, [])
+
+  useEffect(() => {
     const prevBg = scene.background
     const prevFog = scene.fog
-    scene.background = null
-    scene.fog = new THREE.FogExp2(0x1a0038, 0.006)
+    scene.background = new THREE.Color(0x120028)
+    scene.fog = new THREE.FogExp2(0x120028, 0.0035)
     return () => {
       scene.background = prevBg
       scene.fog = prevFog
@@ -178,21 +118,25 @@ export function SynthwaveRoom() {
 
   return (
     <group name="SynthwaveEnvironment360">
-      <Skybox360 />
+      <Suspense fallback={null}>
+        <PanoramaSky360 />
+      </Suspense>
       <SynthwaveFloor />
     </group>
   )
 }
 
 export function SynthwaveLighting() {
-  const { horizonZ, pathWidth } = SHOWCASE_CONFIG
+  const { pathWidth } = SHOWCASE_CONFIG
   return (
     <>
       <ambientLight color={0x8844aa} intensity={0.55} />
       <hemisphereLight args={[0xff66bb, 0x120028, 0.35]} />
-      <pointLight position={[0, 10, horizonZ + 6]} color={0xff8833} intensity={1.8} distance={140} decay={1.1} />
+      <pointLight position={[0, 10, -20]} color={0xff8833} intensity={1.8} distance={140} decay={1.1} />
       <pointLight position={[-pathWidth * 0.8, 4, 0]} color={0x00eeff} intensity={0.55} distance={55} />
       <pointLight position={[pathWidth * 0.8, 4, 0]} color={0xff0099} intensity={0.55} distance={55} />
     </>
   )
 }
+
+useTexture.preload(LOCAL_PANORAMA)

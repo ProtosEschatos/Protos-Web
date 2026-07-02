@@ -11,9 +11,6 @@ export function getCookiePreferences(): CookiePreferences | null {
   if (typeof window === 'undefined') return null
   const raw = localStorage.getItem(COOKIE_STORAGE_KEY)
   if (!raw) return null
-  if (raw === 'accepted') {
-    return { essential: true, analytics: false, acceptedAt: '' }
-  }
   try {
     const parsed = JSON.parse(raw) as CookiePreferences
     if (parsed?.essential) return parsed

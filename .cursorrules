@@ -7,12 +7,12 @@
 - **Framework**: Next.js 14 (App Router) with `src/` directory
 - **Language**: TypeScript (strict mode)
 - **Styling**: Tailwind CSS with CSS custom properties
-- **Animations**: Framer Motion only (shared variants in `@/lib/animations`) — GSAP is NOT installed
+- **Animations**: Framer Motion only — GSAP is NOT installed
 - **3D**: React Three Fiber (`@react-three/fiber`, `@react-three/drei`) — NOT vanilla Three.js
 - **Smooth Scroll**: `lenis` (via LenisProvider)
 - **DOM + Canvas layers**: see `.cursor/rules/dom-canvas-layers.mdc` — mandatory for any UI/3D work
 - **i18n**: `next-intl` (5 locales: hr, en, de, it, es)
-- **Icons**: `lucide-react` + FontAwesome CDN
+- **Icons**: `lucide-react` only (no Font Awesome, no icon CDN)
 - **Backend**: Supabase (blog, contact, portfolio, edge functions; see `supabase/functions/README.md`)
 
 ## File Structure Rules
@@ -43,7 +43,6 @@
    - 3D objects in Canvas; never fake 3D with CSS transforms for showcase frames
 
 4. **Framer Motion usage MUST**:
-   - Use shared variants from `@/lib/animations` when possible
    - Use `whileInView` with `viewport={{ once: true }}` for scroll animations
    - Use `AnimatePresence` for enter/exit animations
    - Keep transition durations between 0.3s–0.8s for UI, up to 1.2s for hero elements
@@ -58,12 +57,12 @@
    - `var(--dark-card)` = #0f0f2a
    - `var(--light)` = #e8e8f0
    - `var(--light-muted)` = #8888aa
-3. **Gradients**: Use `var(--gradient-primary)`, `var(--gradient-hero)`, `var(--gradient-cta)`
+3. **Gradients**: Use `var(--gradient-hero)` or Tailwind `bg-gradient-to-*` with CSS vars
 4. **Border radius**: Use Tailwind rounded classes (rounded-xl, rounded-2xl, rounded-full)
 5. **Dark theme only** — do NOT add light mode styles
 
 ## Naming Conventions
-- **Components**: PascalCase (e.g., `PageLoader.tsx`, `MagneticButton.tsx`)
+- **Components**: PascalCase (e.g., `PageLoader.tsx`, `TransitionLink.tsx`)
 - **Pages**: `page.tsx` inside route folders
 - **Utilities/Hooks**: camelCase (e.g., `useScrollProgress.ts`)
 - **CSS classes**: Tailwind utility-first, custom classes use kebab-case
@@ -82,11 +81,11 @@
 4. **Lazy loading**: Use `loading="lazy"` for below-fold images
 5. **Memoization**: Use `useMemo`/`useCallback` for expensive computations in R3F
 
-## Backend Rules (PLACEHOLDER)
-- API routes in `src/app/api/` — contact and blog use Supabase server actions
-- Supabase client in `src/lib/supabase.ts` — active when env vars are set
-- Do NOT implement real database queries
-- Do NOT implement real authentication
+## Backend Rules
+- API routes in `src/app/api/` — contact, blog, subscribe
+- Server actions in `src/actions/` — Supabase reads/writes when env vars are set
+- Supabase client in `src/lib/supabase.ts`
+- Edge functions in `supabase/functions/` — see `supabase/functions/README.md`
 - Live schema managed via Supabase MCP/CLI — see `supabase/migrations/README.md`
 
 ## i18n Rules

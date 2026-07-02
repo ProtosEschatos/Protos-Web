@@ -54,6 +54,9 @@ Thumbs.db
 # wrangler (legacy)
 .wrangler
 
+# local scrape/cache tooling
+.firecrawl/
+
 # logs
 logs/
 *.log

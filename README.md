@@ -110,7 +110,7 @@ src/
 - [x] Footer with brand, links, legal, social, Balkans causes
 - [x] PageLoader with cyber background, progress gate, and boot cookie modal
 - [x] CustomCursor with dot + follower
-- [x] Lucide React icons (no Font Awesome CDN)
+- [x] Lucide React icons
 - [x] CookieBanner with localStorage persistence
 - [x] Hero section with per-route R3F background via SiteBackground
 - [x] Services section (6 cards)

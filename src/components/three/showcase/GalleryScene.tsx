@@ -9,7 +9,7 @@ import type { ShowcaseViewport } from '@/lib/showcase-viewport'
 import type { TouchInput } from '@/lib/showcase-viewport'
 import { AstronautCharacter, animateAstronautWalk, resetAstronautPose } from './AstronautCharacter'
 import { FrameScreenshot } from './FrameScreenshot'
-import { SynthwaveEnvironment, SynthwaveLighting } from './SynthwaveEnvironment'
+import { RetrowaveEnvironment, RetrowaveLighting } from './retrowave/RetrowaveEnvironment'
 
 function WindowFrameBar({
   position,
@@ -243,8 +243,8 @@ export function ShowcaseScene({
 
   return (
     <>
-      <SynthwaveLighting />
-      <SynthwaveEnvironment />
+      <RetrowaveLighting />
+      <RetrowaveEnvironment />
       {projects.map((project, index) => (
         <ProjectFrame key={`${project.link}-${viewport}`} project={project} index={index} viewport={viewport} />
       ))}

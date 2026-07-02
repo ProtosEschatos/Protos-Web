@@ -10,7 +10,6 @@ import { buildShowcaseProjects } from './showcase/buildProjects'
 import { ShowcaseFallback } from './showcase/ShowcaseFallback'
 import { ShowcaseBootLoader } from './showcase/ShowcaseBootLoader'
 import { ShowcaseJoystick } from './showcase/ShowcaseJoystick'
-import { ShowcaseSkyBackdrop } from './showcase/ShowcaseSkyBackdrop'
 import { SafeCanvas } from '@/components/three/SafeCanvas'
 import { isWebGLAvailable } from '@/lib/webgl'
 import {
@@ -57,7 +56,7 @@ const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
       <SafeCanvas
         mountKey={mountKey}
         camera={{ fov: 70, near: 0.1, far: 1000 }}
-        gl={{ toneMapping: THREE.NoToneMapping, alpha: true }}
+        gl={{ toneMapping: THREE.NoToneMapping }}
         onContextLost={onContextLost}
         fallback={null}
       >
@@ -99,10 +98,9 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
   const keys = useRef<Record<string, boolean>>({})
   const touchInput = useRef<TouchInput>(INITIAL_TOUCH_INPUT)
   const characterRef = useRef<THREE.Group>(null)
-  const parallaxRef = useRef(0)
 
-  const handleCharacterMove = useCallback((pos: THREE.Vector3) => {
-    parallaxRef.current = pos.z
+  const handleCharacterMove = useCallback((_pos: THREE.Vector3) => {
+    /* road scroll driven by shader time */
   }, [])
 
   useEffect(() => {
@@ -191,8 +189,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
   }
 
   return (
-    <div className="fixed inset-0 bg-[#060010]">
-      {(phase === 'intro' || phase === 'playing') && <ShowcaseSkyBackdrop parallaxRef={parallaxRef} />}
+    <div className="fixed inset-0 bg-[#ffaa44]">
       <ShowcaseCanvasLayer
         projects={projects}
         isPlaying={phase === 'playing'}

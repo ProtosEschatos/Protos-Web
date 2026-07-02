@@ -8,7 +8,6 @@ export const SHOWCASE_CONFIG = {
   frameSpacing: 14,
   characterHeight: 2,
   horizonZ: -58,
-  sunY: 11,
 } as const
 
 export const PROJECT_LINKS = [

@@ -1,5 +1,3 @@
-import type { ComponentType } from 'react'
-
 export type BackgroundRouteKey =
   | 'home'
   | 'about'
@@ -47,25 +45,4 @@ export const BACKGROUND_FALLBACKS: Record<BackgroundRouteKey, string> = {
   services: 'radial-gradient(ellipse at 55% 50%, rgba(6,182,212,0.12) 0%, transparent 55%)',
   blog: 'radial-gradient(ellipse at 45% 40%, rgba(255,136,0,0.1) 0%, transparent 50%), radial-gradient(ellipse at 65% 60%, rgba(139,92,246,0.08) 0%, transparent 50%)',
   contact: 'radial-gradient(ellipse at 50% 50%, rgba(6,182,212,0.14) 0%, transparent 60%)',
-}
-
-type BackgroundModule = { default: ComponentType<PageBackgroundProps> }
-
-export function loadBackground(key: BackgroundRouteKey): () => Promise<BackgroundModule> {
-  switch (key) {
-    case 'home':
-      return () => import('@/components/three/backgrounds/HomeBackground')
-    case 'about':
-      return () => import('@/components/three/backgrounds/AboutBackground')
-    case 'process':
-      return () => import('@/components/three/backgrounds/ProcessBackground')
-    case 'portfolio':
-      return () => import('@/components/three/backgrounds/PortfolioBackground')
-    case 'services':
-      return () => import('@/components/three/backgrounds/ServicesBackground')
-    case 'blog':
-      return () => import('@/components/three/backgrounds/BlogBackground')
-    case 'contact':
-      return () => import('@/components/three/backgrounds/ContactBackground')
-  }
 }

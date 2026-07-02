@@ -24,7 +24,6 @@ function collectFiles(dir, prefix = '') {
       let storagePath = rel
       if (!rel.includes('/')) {
         if (/^(desktop|mobile)-/i.test(name)) storagePath = `projects/${name}`
-        else if (/^synthwave-/i.test(name)) storagePath = `environment/${name}`
         else storagePath = `projects/${name}`
       }
       entries.push({ full, storagePath })
@@ -33,9 +32,7 @@ function collectFiles(dir, prefix = '') {
   return entries
 }
 
-const files = collectFiles(showcaseDir).filter(
-  (f) => f.storagePath !== 'environment/synthwave-360-sheet.jpg' && f.storagePath !== 'synthwave-360-sheet.jpg',
-)
+const files = collectFiles(showcaseDir)
 
 for (const { full, storagePath } of files) {
   const body = readFileSync(full)

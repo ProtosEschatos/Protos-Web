@@ -31,14 +31,17 @@ Deno.serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
     )
 
+    const siteId =
+      (record.site_id as string | undefined) ?? '4a0e4171-2f08-4969-b9e5-1ea222e298d7'
+
     const { error } = await supabase.from('subscribers').upsert(
       {
         email,
         language,
         source,
-        site_id: record.site_id ?? null,
+        site_id: siteId,
       },
-      { onConflict: 'email,site_id' },
+      { onConflict: 'site_id,email' },
     )
 
     if (error) throw error

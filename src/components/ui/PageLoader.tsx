@@ -1,76 +1,73 @@
 'use client'
 
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useTranslations } from 'next-intl'
-import { Link } from '@/routing'
-import { acceptCookieConsent } from '@/lib/cookie-consent'
+import { useTranslations, useLocale } from 'next-intl'
+import { saveCookiePreferences } from '@/lib/cookie-consent'
+import { buildLocalePath } from '@/lib/seo'
 
-const SESSION_KEY = 'protos-boot-gate-v4'
+const SESSION_KEY = 'protos-boot-gate-v5'
 const BOOT_BG = '/loader/boot-bg.jpg'
 
-function AuroraCanvas() {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
+type JellyfishSpec = {
+  id: string
+  w: number
+  left: string
+  top: string
+  pathX: number[]
+  pathY: number[]
+  duration: number
+}
 
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
+const JELLYFISH: JellyfishSpec[] = [
+  { id: 'a', w: 88, left: '6%', top: '12%', pathX: [0, 90, 160, 70, 0], pathY: [0, 50, 120, 180, 40], duration: 28 },
+  { id: 'b', w: 110, left: '68%', top: '6%', pathX: [0, -120, -200, -80, 0], pathY: [0, 80, 40, 140, 20], duration: 34 },
+  { id: 'c', w: 64, left: '40%', top: '22%', pathX: [0, -60, 40, 100, 0], pathY: [0, -40, 30, 90, 0], duration: 22 },
+  { id: 'd', w: 76, left: '18%', top: '55%', pathX: [0, 140, 220, 100, 0], pathY: [0, -70, 20, -40, 0], duration: 30 },
+  { id: 'e', w: 92, left: '78%', top: '48%', pathX: [0, -100, -180, -40, 0], pathY: [0, 60, -30, 80, 0], duration: 26 },
+  { id: 'f', w: 52, left: '52%', top: '68%', pathX: [0, 80, -50, 60, 0], pathY: [0, -50, -90, -20, 0], duration: 20 },
+]
 
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
-
-    let raf = 0
-    let t = 0
-
-    const resize = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-    }
-
-    const draw = () => {
-      t += 0.008
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-      for (let i = 0; i < 4; i++) {
-        const yBase = canvas.height * (0.25 + i * 0.14)
-        ctx.beginPath()
-        for (let x = 0; x <= canvas.width; x += 12) {
-          const y =
-            yBase +
-            Math.sin(x * 0.004 + t * (1.2 + i * 0.25)) * 36 +
-            Math.sin(x * 0.009 - t * 0.8) * 18
-          if (x === 0) ctx.moveTo(x, y)
-          else ctx.lineTo(x, y)
-        }
-        const grad = ctx.createLinearGradient(0, yBase - 60, canvas.width, yBase + 60)
-        grad.addColorStop(0, 'rgba(16, 185, 129, 0)')
-        grad.addColorStop(0.45, `rgba(52, 211, 153, ${0.08 + i * 0.02})`)
-        grad.addColorStop(0.7, `rgba(139, 92, 246, ${0.06 + i * 0.015})`)
-        grad.addColorStop(1, 'rgba(16, 185, 129, 0)')
-        ctx.strokeStyle = grad
-        ctx.lineWidth = 28 + i * 6
-        ctx.lineCap = 'round'
-        ctx.stroke()
-      }
-
-      raf = requestAnimationFrame(draw)
-    }
-
-    resize()
-    draw()
-    window.addEventListener('resize', resize)
-    return () => {
-      cancelAnimationFrame(raf)
-      window.removeEventListener('resize', resize)
-    }
-  }, [])
-
-  return <canvas ref={canvasRef} className="absolute inset-0 h-full w-full opacity-50 mix-blend-screen" aria-hidden />
+function JellyfishSprite({ spec }: { spec: JellyfishSpec }) {
+  const gradId = `jf-${spec.id}`
+  return (
+    <motion.div
+      className="absolute pointer-events-none"
+      style={{ left: spec.left, top: spec.top, width: spec.w }}
+      animate={{ x: spec.pathX, y: spec.pathY, rotate: [0, 6, -5, 3, 0] }}
+      transition={{ duration: spec.duration, repeat: Infinity, ease: 'easeInOut' }}
+      aria-hidden
+    >
+      <svg viewBox="0 0 100 130" className="w-full h-auto drop-shadow-[0_0_18px_rgba(34,211,238,0.55)]">
+        <defs>
+          <radialGradient id={gradId} cx="50%" cy="35%" r="55%">
+            <stop offset="0%" stopColor="#a5f3fc" stopOpacity="0.95" />
+            <stop offset="55%" stopColor="#22d3ee" stopOpacity="0.65" />
+            <stop offset="100%" stopColor="#0891b2" stopOpacity="0" />
+          </radialGradient>
+        </defs>
+        <ellipse cx="50" cy="32" rx="36" ry="26" fill={`url(#${gradId})`} />
+        {[22, 34, 50, 66, 78].map((x, i) => (
+          <path
+            key={x}
+            d={`M${x} 52 Q${x + (i % 2 === 0 ? 6 : -6)} 88 ${x + (i % 2 === 0 ? -4 : 4)} 125`}
+            stroke="rgba(103,232,249,0.55)"
+            strokeWidth="1.8"
+            fill="none"
+          />
+        ))}
+      </svg>
+    </motion.div>
+  )
 }
 
 export default function PageLoader() {
   const t = useTranslations('loader')
+  const locale = useLocale()
+  const termsHref = buildLocalePath(locale, '/terms')
+  const privacyHref = buildLocalePath(locale, '/privacy')
+  const cookiesHref = buildLocalePath(locale, '/cookies')
   const [loading, setLoading] = useState(() => {
     if (typeof window === 'undefined') return true
     return sessionStorage.getItem(SESSION_KEY) !== '1'
@@ -78,10 +75,10 @@ export default function PageLoader() {
   const [progress, setProgress] = useState(0)
   const [readyToEnter, setReadyToEnter] = useState(false)
   const [showCookieModal, setShowCookieModal] = useState(false)
+  const [analyticsOptIn, setAnalyticsOptIn] = useState(false)
 
   useEffect(() => {
     if (!loading) return
-
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
@@ -92,7 +89,6 @@ export default function PageLoader() {
         return Math.min(prev + Math.random() * 12 + 4, 100)
       })
     }, 120)
-
     return () => clearInterval(interval)
   }, [loading])
 
@@ -128,21 +124,21 @@ export default function PageLoader() {
           transition={{ duration: 0.8, ease: 'easeInOut' }}
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden"
         >
-          {/* Animated aurora — behind loader, pointer-events none */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <motion.div
-              className="absolute inset-0 scale-110"
-              animate={{ scale: [1.05, 1.14, 1.05], x: [0, -24, 12, 0], y: [0, -18, 8, 0] }}
-              transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
+              className="absolute inset-0 scale-105"
+              animate={{ scale: [1.03, 1.08, 1.03], x: [0, -12, 8, 0], y: [0, -8, 6, 0] }}
+              transition={{ duration: 24, repeat: Infinity, ease: 'easeInOut' }}
             >
               <Image src={BOOT_BG} alt="" fill priority className="object-cover object-center" sizes="100vw" aria-hidden />
             </motion.div>
-            <AuroraCanvas />
-            <div className="absolute inset-0 bg-[var(--dark)]/25" />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--dark)]/45" />
+            {JELLYFISH.map((spec) => (
+              <JellyfishSprite key={spec.id} spec={spec} />
+            ))}
+            <div className="absolute inset-0 bg-[#020818]/20" />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020818]/50" />
           </div>
 
-          {/* Original loader UI — on top */}
           <div className="relative z-10 flex flex-col items-center justify-center">
             <div className="relative w-24 h-24 mb-8">
               <motion.div
@@ -190,40 +186,82 @@ export default function PageLoader() {
             </AnimatePresence>
           </div>
 
-          {/* Cookie modal — same file, no extra component */}
           <AnimatePresence>
             {showCookieModal && (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="absolute inset-0 z-20 flex items-center justify-center bg-black/50 backdrop-blur-sm px-6"
+                className="absolute inset-0 z-20 flex items-center justify-center bg-black/55 backdrop-blur-sm px-6"
               >
                 <motion.div
                   initial={{ scale: 0.95, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0.95, opacity: 0 }}
-                  className="cosmic-panel max-w-md w-full rounded-2xl border border-[var(--primary)]/30 p-8 shadow-2xl"
+                  className="cosmic-panel max-w-md w-full max-h-[90vh] overflow-y-auto rounded-2xl border border-cyan-400/25 p-8 shadow-2xl"
                 >
-                  <h3 className="text-lg font-bold text-[var(--light)] mb-3">{t('cookieModalTitle')}</h3>
-                  <p className="text-sm text-[var(--light-muted)] leading-relaxed mb-6">
-                    {t('cookieModalLegalPrefix')}{' '}
-                    <Link href="/terms" className="text-[var(--primary)] hover:underline">
+                  <h3 className="text-lg font-bold text-[var(--light)] mb-2">{t('cookieModalTitle')}</h3>
+                  <p className="text-sm text-[var(--light-muted)] leading-relaxed mb-5">
+                    {t('cookieModalIntro')}{' '}
+                    <a
+                      href={termsHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-cyan-300 underline underline-offset-2 hover:text-cyan-200"
+                    >
                       {t('cookieModalTerms')}
-                    </Link>{' '}
-                    {t('cookieModalLegalAnd')}{' '}
-                    <Link href="/privacy" className="text-[var(--primary)] hover:underline">
+                    </a>
+                    {', '}
+                    <a
+                      href={privacyHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-cyan-300 underline underline-offset-2 hover:text-cyan-200"
+                    >
                       {t('cookieModalPrivacy')}
-                    </Link>
+                    </a>
+                    {' '}
+                    {t('cookieModalLegalAnd')}{' '}
+                    <a
+                      href={cookiesHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-cyan-300 underline underline-offset-2 hover:text-cyan-200"
+                    >
+                      {t('cookieModalCookies')}
+                    </a>
                     .
                   </p>
+
+                  <div className="space-y-3 mb-6">
+                    <label className="flex gap-3 items-start rounded-xl border border-white/10 bg-white/5 p-4 opacity-90">
+                      <input type="checkbox" checked disabled className="mt-1 accent-cyan-400" />
+                      <span>
+                        <span className="block text-sm font-semibold text-[var(--light)]">{t('cookieEssentialLabel')}</span>
+                        <span className="block text-xs text-[var(--light-muted)] mt-1 leading-relaxed">{t('cookieEssentialDesc')}</span>
+                      </span>
+                    </label>
+                    <label className="flex gap-3 items-start rounded-xl border border-cyan-400/20 bg-cyan-500/5 p-4 cursor-pointer hover:border-cyan-400/40 transition-colors">
+                      <input
+                        type="checkbox"
+                        checked={analyticsOptIn}
+                        onChange={(e) => setAnalyticsOptIn(e.target.checked)}
+                        className="mt-1 accent-cyan-400"
+                      />
+                      <span>
+                        <span className="block text-sm font-semibold text-[var(--light)]">{t('cookieAnalyticsLabel')}</span>
+                        <span className="block text-xs text-[var(--light-muted)] mt-1 leading-relaxed">{t('cookieAnalyticsDesc')}</span>
+                      </span>
+                    </label>
+                  </div>
+
                   <button
                     type="button"
                     onClick={() => {
-                      acceptCookieConsent()
+                      saveCookiePreferences(analyticsOptIn)
                       finishBoot()
                     }}
-                    className="w-full px-6 py-3 rounded-full bg-gradient-to-r from-[var(--primary)] to-[#ff8800] text-white text-sm font-semibold hover:-translate-y-0.5 transition-all duration-300"
+                    className="w-full px-6 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-emerald-500 text-white text-sm font-semibold hover:-translate-y-0.5 transition-all duration-300"
                   >
                     {t('cookieModalAccept')}
                   </button>

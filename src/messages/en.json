@@ -169,10 +169,15 @@
     "subtitle": "Loading experience",
     "enter": "Enter",
     "cookieModalTitle": "Cookie consent required",
-    "cookieModalLegalPrefix": "Read our",
+    "cookieModalIntro": "To enter the site you must accept essential cookies. Optional cookies can be selected below. Read our",
     "cookieModalTerms": "Terms of Service",
     "cookieModalLegalAnd": "and",
     "cookieModalPrivacy": "Privacy Policy",
+    "cookieModalCookies": "Cookie Policy",
+    "cookieEssentialLabel": "Essential cookies",
+    "cookieEssentialDesc": "Required for the site to work, security, and remembering your settings. Always active.",
+    "cookieAnalyticsLabel": "Analytics cookies (optional)",
+    "cookieAnalyticsDesc": "Help us understand how the site is used so we can improve it.",
     "cookieModalAccept": "Accept and enter"
   },
   "cookie": {

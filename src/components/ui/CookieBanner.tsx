@@ -3,22 +3,21 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations } from 'next-intl'
-import { acceptCookieConsent, COOKIE_STORAGE_KEY } from '@/lib/cookie-consent'
+import { saveCookiePreferences, hasCookieConsent } from '@/lib/cookie-consent'
 
 export default function CookieBanner() {
   const t = useTranslations('cookie')
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    const accepted = localStorage.getItem(COOKIE_STORAGE_KEY)
-    if (!accepted) {
+    if (!hasCookieConsent()) {
       const timer = setTimeout(() => setVisible(true), 2000)
       return () => clearTimeout(timer)
     }
   }, [])
 
   const accept = () => {
-    acceptCookieConsent()
+    saveCookiePreferences(false)
     setVisible(false)
   }
 

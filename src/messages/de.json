@@ -169,10 +169,15 @@
     "subtitle": "Erlebnis wird geladen",
     "enter": "Enter",
     "cookieModalTitle": "Cookie-Zustimmung erforderlich",
-    "cookieModalLegalPrefix": "Lesen Sie unsere",
+    "cookieModalIntro": "Zum Betreten der Website muessen Sie essenzielle Cookies akzeptieren. Optionale Cookies koennen Sie unten auswaehlen. Lesen Sie unsere",
     "cookieModalTerms": "Nutzungsbedingungen",
     "cookieModalLegalAnd": "und",
-    "cookieModalPrivacy": "Datenschutzerklarung",
+    "cookieModalPrivacy": "Datenschutzerklaerung",
+    "cookieModalCookies": "Cookie-Richtlinie",
+    "cookieEssentialLabel": "Essenzielle Cookies",
+    "cookieEssentialDesc": "Erforderlich fuer den Betrieb der Website, Sicherheit und das Speichern Ihrer Einstellungen. Immer aktiv.",
+    "cookieAnalyticsLabel": "Analyse-Cookies (optional)",
+    "cookieAnalyticsDesc": "Helfen uns zu verstehen, wie die Website genutzt wird, damit wir sie verbessern koennen.",
     "cookieModalAccept": "Akzeptieren und eintreten"
   },
   "cookie": {

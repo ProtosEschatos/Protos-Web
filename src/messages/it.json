@@ -169,10 +169,15 @@
     "subtitle": "Caricamento esperienza",
     "enter": "Enter",
     "cookieModalTitle": "Consenso cookie richiesto",
-    "cookieModalLegalPrefix": "Leggi i nostri",
+    "cookieModalIntro": "Per entrare nel sito devi accettare i cookie essenziali. I cookie opzionali possono essere selezionati sotto. Leggi i nostri",
     "cookieModalTerms": "Termini di servizio",
     "cookieModalLegalAnd": "e",
     "cookieModalPrivacy": "Informativa sulla privacy",
+    "cookieModalCookies": "Informativa sui cookie",
+    "cookieEssentialLabel": "Cookie essenziali",
+    "cookieEssentialDesc": "Necessari per il funzionamento del sito, la sicurezza e il salvataggio delle impostazioni. Sempre attivi.",
+    "cookieAnalyticsLabel": "Cookie analitici (opzionali)",
+    "cookieAnalyticsDesc": "Ci aiutano a capire come viene utilizzato il sito per migliorarlo.",
     "cookieModalAccept": "Accetta e entra"
   },
   "cookie": {

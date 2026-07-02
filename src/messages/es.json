@@ -169,10 +169,15 @@
     "subtitle": "Cargando experiencia",
     "enter": "Enter",
     "cookieModalTitle": "Se requiere consentimiento de cookies",
-    "cookieModalLegalPrefix": "Lee nuestros",
+    "cookieModalIntro": "Para entrar al sitio debes aceptar las cookies esenciales. Las opcionales puedes seleccionarlas abajo. Lee nuestros",
     "cookieModalTerms": "Terminos de servicio",
     "cookieModalLegalAnd": "y",
     "cookieModalPrivacy": "Politica de privacidad",
+    "cookieModalCookies": "Politica de cookies",
+    "cookieEssentialLabel": "Cookies esenciales",
+    "cookieEssentialDesc": "Necesarias para el funcionamiento del sitio, la seguridad y recordar tus ajustes. Siempre activas.",
+    "cookieAnalyticsLabel": "Cookies analiticas (opcionales)",
+    "cookieAnalyticsDesc": "Nos ayudan a entender como se usa el sitio para mejorarlo.",
     "cookieModalAccept": "Aceptar y entrar"
   },
   "cookie": {

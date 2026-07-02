@@ -169,10 +169,15 @@
     "subtitle": "Ucitavanje iskustva",
     "enter": "Ulaz",
     "cookieModalTitle": "Potrebna suglasnost za kolacice",
-    "cookieModalLegalPrefix": "Procitajte nase",
+    "cookieModalIntro": "Za ulazak na stranicu morate prihvatiti obavezne kolacice. Opcionalne mozete odabrati ispod. Procitajte nase",
     "cookieModalTerms": "Uvjete koristenja",
     "cookieModalLegalAnd": "i",
     "cookieModalPrivacy": "Pravila privatnosti",
+    "cookieModalCookies": "Pravila o kolacicima",
+    "cookieEssentialLabel": "Obavezni kolacici",
+    "cookieEssentialDesc": "Potrebni za rad stranice, sigurnost i pamcenje vasih postavki. Uvijek su aktivni.",
+    "cookieAnalyticsLabel": "Analiticki kolacici (opcionalno)",
+    "cookieAnalyticsDesc": "Pomazu nam razumjeti kako se stranica koristi kako bismo je poboljsali.",
     "cookieModalAccept": "Prihvati i udi"
   },
   "cookie": {

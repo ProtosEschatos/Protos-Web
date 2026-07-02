@@ -1,138 +1,108 @@
 'use client'
 
-import { useState, useEffect, useLayoutEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations, useLocale } from 'next-intl'
-import gsap from 'gsap'
 import { saveCookiePreferences } from '@/lib/cookie-consent'
 import { buildLocalePath } from '@/lib/seo'
 
-export const BOOT_SESSION_KEY = 'protos-boot-gate-v7'
+export const BOOT_SESSION_KEY = 'protos-boot-gate-v8'
 export const BOOT_COMPLETE_EVENT = 'protos-boot-complete'
-const BOOT_BG = '/loader/boot-bg.jpg'
+const BOOT_VIDEO = '/loader/boot-bg.mp4'
+const BOOT_POSTER = '/loader/boot-bg.jpg'
+const LOOP_CROSSFADE_SEC = 1.1
 
-/** Soft bioluminescent pulses aligned to jellyfish in the artwork */
-const JELLY_GLOWS = [
-  { left: 11, top: 7, size: 22, delay: 0, duration: 3.2 },
-  { left: 34, top: 48, size: 34, delay: 0.6, duration: 4.1 },
-  { left: 56, top: 40, size: 16, delay: 1.2, duration: 2.8 },
-  { left: 74, top: 8, size: 24, delay: 0.3, duration: 3.6 },
-  { left: 16, top: 34, size: 14, delay: 1.8, duration: 3.0 },
-  { left: 78, top: 58, size: 18, delay: 2.1, duration: 3.4 },
-]
+function BootVideoBackground({ active }: { active: boolean }) {
+  const videoARef = useRef<HTMLVideoElement>(null)
+  const videoBRef = useRef<HTMLVideoElement>(null)
+  const leadingIsARef = useRef(true)
+  const crossfadingRef = useRef(false)
 
-function BootLiveBackground({ active }: { active: boolean }) {
-  const rootRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (!active) return
 
-  useLayoutEffect(() => {
-    if (!active || !rootRef.current) return
+    const videoA = videoARef.current
+    const videoB = videoBRef.current
+    if (!videoA || !videoB) return
 
-    const ctx = gsap.context(() => {
-      const bg = rootRef.current!.querySelector<HTMLElement>('[data-boot-bg]')
-      const rays = rootRef.current!.querySelector<HTMLElement>('[data-boot-rays]')
-      const particles = rootRef.current!.querySelectorAll<HTMLElement>('[data-boot-particle]')
-      const glows = rootRef.current!.querySelectorAll<HTMLElement>('[data-boot-glow]')
+    const getLeading = () => (leadingIsARef.current ? videoA : videoB)
+    const getTrailing = () => (leadingIsARef.current ? videoB : videoA)
 
-      if (bg) {
-        gsap.set(bg, { scale: 1.04, force3D: true, transformOrigin: '50% 45%' })
-        gsap.to(bg, {
-          x: -18,
-          y: -12,
-          scale: 1.09,
-          duration: 22,
-          ease: 'sine.inOut',
-          repeat: -1,
-          yoyo: true,
-        })
+    const resetVideo = (video: HTMLVideoElement) => {
+      video.pause()
+      video.currentTime = 0
+      video.style.opacity = '0'
+    }
+
+    const startCrossfade = () => {
+      if (crossfadingRef.current) return
+
+      const leading = getLeading()
+      const trailing = getTrailing()
+      const duration = leading.duration
+      if (!duration || duration <= LOOP_CROSSFADE_SEC * 2) return
+
+      crossfadingRef.current = true
+      trailing.currentTime = 0
+      void trailing.play()
+
+      trailing.style.transition = `opacity ${LOOP_CROSSFADE_SEC}s ease-in-out`
+      leading.style.transition = `opacity ${LOOP_CROSSFADE_SEC}s ease-in-out`
+      trailing.style.opacity = '1'
+      leading.style.opacity = '0'
+
+      window.setTimeout(() => {
+        resetVideo(leading)
+        leadingIsARef.current = !leadingIsARef.current
+        crossfadingRef.current = false
+      }, LOOP_CROSSFADE_SEC * 1000)
+    }
+
+    const onTimeUpdate = (event: Event) => {
+      const target = event.target as HTMLVideoElement
+      const leading = getLeading()
+      if (target !== leading || crossfadingRef.current) return
+
+      const duration = leading.duration
+      if (duration && leading.currentTime >= duration - LOOP_CROSSFADE_SEC) {
+        startCrossfade()
       }
+    }
 
-      if (rays) {
-        gsap.to(rays, {
-          opacity: 0.55,
-          y: 12,
-          duration: 5.5,
-          ease: 'sine.inOut',
-          repeat: -1,
-          yoyo: true,
-        })
+    for (const video of [videoA, videoB]) {
+      video.muted = true
+      video.playsInline = true
+      video.setAttribute('playsinline', '')
+      video.setAttribute('webkit-playsinline', '')
+      video.preload = 'auto'
+      video.addEventListener('timeupdate', onTimeUpdate)
+    }
+
+    videoA.style.opacity = '1'
+    videoB.style.opacity = '0'
+
+    const playLeading = () => {
+      void getLeading().play().catch(() => {})
+    }
+
+    if (videoA.readyState >= 1) playLeading()
+    else videoA.addEventListener('loadedmetadata', playLeading, { once: true })
+
+    return () => {
+      for (const video of [videoA, videoB]) {
+        video.removeEventListener('timeupdate', onTimeUpdate)
+        video.pause()
       }
-
-      glows.forEach((el, i) => {
-        const spec = JELLY_GLOWS[i]
-        if (!spec) return
-        gsap.to(el, {
-          scale: 1.18,
-          opacity: 0.85,
-          duration: spec.duration,
-          ease: 'sine.inOut',
-          repeat: -1,
-          yoyo: true,
-          delay: spec.delay,
-        })
-      })
-
-      particles.forEach((el, i) => {
-        gsap.set(el, { y: 0, opacity: 0.15 + (i % 5) * 0.08 })
-        gsap.to(el, {
-          y: -120 - (i % 4) * 40,
-          x: `random(-30, 30)`,
-          opacity: 0,
-          duration: 6 + (i % 6),
-          ease: 'none',
-          repeat: -1,
-          delay: i * 0.35,
-        })
-      })
-    }, rootRef)
-
-    return () => ctx.revert()
+      crossfadingRef.current = false
+    }
   }, [active])
 
+  const videoClass = 'absolute inset-0 h-full w-full object-cover will-change-[opacity]'
+
   return (
-    <div ref={rootRef} className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
-      <div className="absolute inset-0 bg-[#020818]" />
-      <div
-        data-boot-bg
-        className="absolute inset-0 bg-cover bg-center will-change-transform"
-        style={{ backgroundImage: `url(${BOOT_BG})` }}
-      />
-      <div
-        data-boot-rays
-        className="absolute inset-x-0 top-0 h-[55%] opacity-40 will-change-transform"
-        style={{
-          background:
-            'linear-gradient(180deg, rgba(186,230,253,0.22) 0%, rgba(34,211,238,0.08) 35%, transparent 100%)',
-        }}
-      />
-      {JELLY_GLOWS.map((g, i) => (
-        <div
-          key={i}
-          data-boot-glow
-          className="absolute rounded-full opacity-50 will-change-transform mix-blend-screen blur-2xl"
-          style={{
-            left: `${g.left}%`,
-            top: `${g.top}%`,
-            width: `${g.size}vmin`,
-            height: `${g.size}vmin`,
-            transform: 'translate(-50%, -50%)',
-            background: 'radial-gradient(circle, rgba(103,232,249,0.55) 0%, rgba(34,211,238,0.15) 45%, transparent 70%)',
-          }}
-        />
-      ))}
-      {Array.from({ length: 24 }).map((_, i) => (
-        <div
-          key={i}
-          data-boot-particle
-          className="absolute rounded-full bg-cyan-200/80 will-change-transform"
-          style={{
-            left: `${4 + ((i * 17) % 92)}%`,
-            top: `${55 + ((i * 11) % 40)}%`,
-            width: i % 3 === 0 ? 3 : 2,
-            height: i % 3 === 0 ? 3 : 2,
-            boxShadow: '0 0 6px rgba(103,232,249,0.8)',
-          }}
-        />
-      ))}
+    <div className="absolute inset-0 overflow-hidden bg-[#020818] pointer-events-none" aria-hidden>
+      <video ref={videoARef} src={BOOT_VIDEO} poster={BOOT_POSTER} className={videoClass} />
+      <video ref={videoBRef} src={BOOT_VIDEO} className={videoClass} aria-hidden />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020818]/35" />
     </div>
   )
@@ -157,8 +127,8 @@ export default function PageLoader() {
     if (!loading) return
     const link = document.createElement('link')
     link.rel = 'preload'
-    link.as = 'image'
-    link.href = BOOT_BG
+    link.as = 'video'
+    link.href = BOOT_VIDEO
     document.head.appendChild(link)
     return () => {
       if (link.parentNode) link.parentNode.removeChild(link)
@@ -213,7 +183,7 @@ export default function PageLoader() {
           transition={{ duration: 0.8, ease: 'easeInOut' }}
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden bg-[#020818]"
         >
-          <BootLiveBackground active={loading} />
+          <BootVideoBackground active={loading} />
 
           <div className="relative z-10 flex flex-col items-center justify-center">
             <div className="relative w-24 h-24 mb-8">

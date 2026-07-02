@@ -138,7 +138,27 @@ export default function PageLoader() {
         >
           <BootVideoBackground active={loading} />
 
-          <div className="relative z-10 flex flex-col items-center justify-center">
+          <div
+            className="pointer-events-none absolute inset-0 z-[5] flex items-center justify-center overflow-hidden"
+            aria-hidden
+          >
+            <motion.div
+              className="absolute h-[520px] w-[min(92vw,440px)] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(186,230,253,0.55)_0%,rgba(125,211,252,0.28)_42%,transparent_72%)] blur-3xl"
+              animate={{ scale: [1, 1.06, 1], opacity: [0.72, 0.92, 0.72] }}
+              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+            />
+            <motion.div
+              className="absolute h-[380px] w-[min(78vw,360px)] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(224,242,254,0.4)_0%,rgba(147,197,253,0.18)_50%,transparent_75%)] blur-2xl"
+              animate={{ scale: [1.04, 0.96, 1.04], opacity: [0.45, 0.65, 0.45] }}
+              transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+            />
+          </div>
+
+          <div className="relative z-10 flex flex-col items-center justify-center px-8 py-10">
+            <div
+              className="pointer-events-none absolute inset-0 -z-10 rounded-[2rem] bg-sky-200/[0.07] shadow-[0_0_80px_rgba(125,211,252,0.35)] backdrop-blur-[2px]"
+              aria-hidden
+            />
             <div className="relative w-24 h-24 mb-8">
               <motion.div
                 className="absolute inset-0 rounded-full border-2 border-[var(--primary)]"

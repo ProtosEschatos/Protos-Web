@@ -6,6 +6,7 @@ import { usePathname, useRouter } from '@/routing'
 import TransitionLink from '@/components/navigation/TransitionLink'
 import { localeLabels, localeFlags, locales, type Locale } from '@/i18n'
 import MobileMenu from './MobileMenu'
+import { ChevronDown, Globe } from 'lucide-react'
 import ProtosEclipseLogo from '@/components/ui/ProtosEclipseLogo'
 
 const themes = ['night', 'day', 'pro'] as const
@@ -121,9 +122,9 @@ export default function Header() {
                   onClick={() => setLangOpen(!langOpen)}
                   className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[var(--dark-card)]/50 hover:bg-[var(--dark-card)] border border-[var(--primary)]/20 hover:border-[var(--primary)]/40 transition-all duration-300"
                 >
-                  <i className="fas fa-globe text-[var(--primary)] text-sm" />
+                  <Globe className="w-3.5 h-3.5 text-[var(--primary)]" />
                   <span className="text-sm font-medium text-[var(--light)]">{locale.toUpperCase()}</span>
-                  <i className={`fas fa-chevron-down text-xs text-[var(--light-muted)] transition-transform duration-300 ${langOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-3 h-3 text-[var(--light-muted)] transition-transform duration-300 ${langOpen ? 'rotate-180' : ''}`} />
                 </button>
                 <div className={`absolute top-full right-0 mt-2 w-40 bg-[var(--dark-card)] border border-[var(--primary)]/20 rounded-xl shadow-2xl overflow-hidden transition-all duration-300 z-50 ${langOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
                   {locales.map((code) => (

@@ -63,12 +63,6 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} className={inter.className}>
-      <head>
-        <link
-          href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css"
-          rel="stylesheet"
-        />
-      </head>
       <body>
         <script
           type="application/ld+json"

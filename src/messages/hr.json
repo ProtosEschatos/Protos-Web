@@ -221,6 +221,53 @@
     "webglRetry": "Pokusaj ponovo 3D",
     "webglViewPortfolio": "Pogledaj cijeli portfolio"
   },
+  "aboutPage": {
+    "label": "O MENI",
+    "heroTitleLine1": "Gradimo digitalna",
+    "heroTitleHighlight": "rjesenja koja rastu",
+    "heroTitleLine2": "zajedno sa Vama.",
+    "heroSubtitle": "Full Stack Developer i Web Designer iz Zagreba. Stvaram moderna, brza i vizualno impresivna web rjesenja koja pretvaraju posjetitelje u kupce.",
+    "whoTitle": "Tko sam",
+    "bio1": "Full Stack Developer iz Zagreba s 5 godina iskustva u izradi modernih web rjesenja. Suradujem s poduzetnicima i tvrtkama sirom Hrvatske i Europe — od brzih landing stranica do slozenih custom platformi, web trgovina i CRM sustava.",
+    "bio2": "Sve gradim po mjeri — bez gotovih tema, bez kompromisa u kvaliteti. Svaki projekt pocinje od nule, prilagoden tocno vasim potrebama i ciljevima.",
+    "bio3": "Interesi: Full stack razvoj, Cross platform web, 3D web iskustva, Gradnja platformi, Web dizajn, Cyber sigurnost.",
+    "bio4": "Cilj: Pomoci lokalnim i europskim poduzecima pronaci pravo web rjesenje — bez nepotrebne slozenosti, s modernim suceljem.",
+    "guideLink": "Besplatni vodiči o web prisutnosti za poduzetnike",
+    "infoTitle": "Info",
+    "infoLabels": {
+      "name": "IME",
+      "location": "LOKACIJA",
+      "experience": "ISKUSTVO",
+      "email": "EMAIL",
+      "phone": "TELEFON",
+      "languages": "JEZICI"
+    },
+    "infoValues": {
+      "name": "Dario Imsilovic",
+      "location": "Zagreb, Hrvatska",
+      "experience": "5 godina",
+      "email": "contact@protos-design.net",
+      "phone": "+385 97 604 39 41",
+      "languages": "Hrvatski, Engleski, Deutsch (osnovno)"
+    },
+    "goalsTitle": "Ciljevi",
+    "goals": [
+      { "title": "Europsko trziste", "text": "Aktivno siri poslovanje na EU klijente kroz visejezicnu ponudu i poznavanje europskih standarda — GDPR, pristupacnost, lokalizacija." },
+      { "title": "Custom platforme", "text": "Gradnja SaaS i custom CRM rjesenja za nise kojima na lokalnom trzistu jos nedostaje dobro digitalno rjesenje." },
+      { "title": "Cyber sigurnost", "text": "Integracija sigurnosnih standarda u svaki projekt — svaka stranica koja obraduje podatke mora biti zasticena." }
+    ],
+    "supportLabel": "PODRska",
+    "supportTitle": "Projekti koji mijenjaju",
+    "supportTitleHighlight": "digitalne Balkane",
+    "supportSubtitle": "Svaka donacija doprinosi razvoju platforme za zastitu od internetskih prijevara i gradnji slobodnijeg digitalnog prostora za nasu regiju.",
+    "supportCards": [
+      { "title": "Oprema za edukaciju o cyber sigurnosti", "text": "Pomozite nam nabaviti server, laptop i softver za besplatnu online edukaciju o cyber sigurnosti — za sve koji zele nauciti kako se zastititi online.", "target": "10.000", "btnText": "Podrzi edukaciju", "progress": 5 },
+      { "title": "Besplatna digitalna edukacija", "text": "Financirajte besplatne HR video tutoriale i vodiče o web razvoju, AI alatima i digitalnoj sigurnosti.", "target": "10.000", "btnText": "Podrzi edukaciju", "progress": 3 },
+      { "title": "Regionalne digitalne platforme", "text": "Gradnja open source alternativa globalnim platformama — napravljeno za Balkan, od Balkana.", "target": "20.000", "btnText": "Ulozi u regiju", "progress": 2 }
+    ],
+    "currencyZero": "0 €",
+    "currencyOf": "od {target} €"
+  },
   "legalPages": {
     "privacyTitle": "Pravila privatnosti",
     "privacyDescription": "Kako Protos Web postupa s vasim osobnim podacima.",

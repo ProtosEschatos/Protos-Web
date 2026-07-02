@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
+import { SERVICE_ICONS } from '@/lib/section-icons'
 
 const colorMap: Record<string, string> = {
   primary: 'bg-[var(--primary)]/15 text-[var(--primary)]',
@@ -10,7 +11,6 @@ const colorMap: Record<string, string> = {
 }
 
 const colors = ['primary', 'secondary', 'accent', 'primary', 'secondary', 'accent']
-const icons = ['fas fa-code', 'fas fa-palette', 'fas fa-shopping-cart', 'fas fa-search', 'fas fa-robot', 'fas fa-wrench']
 
 const cardVariant = {
   hidden: { opacity: 0, y: 30 },
@@ -44,7 +44,10 @@ export default function Services() {
               className="cosmic-panel rounded-2xl p-8 flex gap-5 hover:border-[var(--primary)]/20 hover:-translate-y-1 transition-all duration-300"
             >
               <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-lg shrink-0 ${colorMap[colors[i]]}`}>
-                <i className={icons[i]} />
+                {(() => {
+                  const Icon = SERVICE_ICONS[i]
+                  return <Icon className="w-5 h-5" />
+                })()}
               </div>
               <div>
                 <h3 className="text-base font-bold text-[var(--light)] mb-2">{s.title}</h3>

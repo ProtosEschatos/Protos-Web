@@ -62,10 +62,10 @@ src/
 │       ├── SiteBackground.tsx # Route-aware background wrapper
 │       ├── PageBackgroundCanvas.tsx
 │       ├── CustomCursor.tsx   # Dot + follower cursor
-│       ├── MagneticButton.tsx # Magnetic hover effect
 │       └── CookieBanner.tsx   # Cookie consent
 ├── lib/
-│   ├── animations.ts         # Shared Framer Motion variants
+│   ├── section-icons.tsx      # Shared Lucide icons for services/process
+│   ├── social-links.ts        # Social profile URLs
 │   └── supabase.ts           # Supabase client (anon + service role)
 ├── messages/
 │   ├── hr.json               # Croatian translations
@@ -110,7 +110,7 @@ src/
 - [x] Footer with brand, links, legal, social, Balkans causes
 - [x] PageLoader with cyber background, progress gate, and boot cookie modal
 - [x] CustomCursor with dot + follower
-- [x] MagneticButton component
+- [x] Lucide React icons (no Font Awesome CDN)
 - [x] CookieBanner with localStorage persistence
 - [x] Hero section with per-route R3F background via SiteBackground
 - [x] Services section (6 cards)

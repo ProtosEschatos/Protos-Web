@@ -1,4 +1,5 @@
 export const COOKIE_STORAGE_KEY = 'protos-cookies'
+export const COOKIE_CONSENT_EVENT = 'protos-cookie-consent-updated'
 
 export type CookiePreferences = {
   essential: true
@@ -29,13 +30,11 @@ export function saveCookiePreferences(analytics: boolean): void {
     acceptedAt: new Date().toISOString(),
   }
   localStorage.setItem(COOKIE_STORAGE_KEY, JSON.stringify(prefs))
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent(COOKIE_CONSENT_EVENT))
+  }
 }
 
 export function hasCookieConsent(): boolean {
   return getCookiePreferences() !== null
-}
-
-/** @deprecated use saveCookiePreferences */
-export function acceptCookieConsent(): void {
-  saveCookiePreferences(false)
 }

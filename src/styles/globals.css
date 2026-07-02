@@ -19,9 +19,7 @@
   --secondary-glow: rgba(139, 92, 246, 0.3);
   --accent: #06b6d4;
   --accent-glow: rgba(6, 182, 212, 0.3);
-  --gradient-primary: linear-gradient(135deg, #ff6600, #ff8800);
   --gradient-hero: linear-gradient(135deg, #ff6600, #8b5cf6, #06b6d4);
-  --gradient-cta: linear-gradient(135deg, #8b5cf6, #06b6d4);
   --border-subtle: rgba(255, 255, 255, 0.06);
   --border-card: rgba(255, 255, 255, 0.08);
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
@@ -70,12 +68,6 @@ ul, ol { list-style: none; }
 @keyframes twinkle {
   0% { opacity: 0.6; }
   100% { opacity: 1; }
-}
-
-/* Progress bar shimmer */
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
 }
 
 @layer components {

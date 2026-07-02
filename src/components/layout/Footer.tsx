@@ -4,6 +4,7 @@ import { useState, FormEvent } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { Link } from '@/routing'
 import TransitionLink from '@/components/navigation/TransitionLink'
+import SocialLinks from '@/components/ui/SocialLinks'
 
 const footerLinks = [
   { href: '/', key: 'home' as const },
@@ -99,22 +100,7 @@ export default function Footer() {
               )}
             </form>
 
-            <div className="flex gap-3 mt-6">
-              {[
-                { icon: 'fab fa-facebook-f', label: 'Facebook' },
-                { icon: 'fab fa-instagram', label: 'Instagram' },
-                { icon: 'fas fa-envelope', label: 'Email' },
-              ].map((s) => (
-                <a
-                  key={s.label}
-                  href="#"
-                  aria-label={s.label}
-                  className="w-10 h-10 rounded-xl bg-[var(--dark-card)] border border-[var(--border-card)] flex items-center justify-center text-[var(--light-muted)] text-sm hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all duration-300"
-                >
-                  <i className={s.icon} />
-                </a>
-              ))}
-            </div>
+            <SocialLinks className="flex gap-3 mt-6" />
           </div>
 
           <div>

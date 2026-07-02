@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
+import { Calendar } from 'lucide-react'
 import type { BlogPost } from '@/actions/blog'
 
 const fadeUp = {
@@ -50,7 +51,7 @@ export default function BlogGrid({ posts, locale }: Props) {
             className="cosmic-panel rounded-2xl p-7 flex flex-col h-full hover:border-[var(--primary)]/20 hover:-translate-y-1 transition-all duration-300 group"
           >
             <div className="flex items-center gap-1.5 text-xs text-[var(--primary)] mb-3">
-              <i className="fas fa-calendar" /> {formatDate(p.created_at, locale)}
+              <Calendar className="w-3.5 h-3.5" /> {formatDate(p.created_at, locale)}
             </div>
             <h3 className="text-base font-bold text-[var(--light)] mb-2.5 leading-snug group-hover:text-[var(--primary)] transition-colors duration-300">
               {p.title}

@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
+import { ArrowRight, Calendar } from 'lucide-react'
 import type { BlogPost } from '@/actions/blog'
 
 const cardVariant = {
@@ -51,7 +52,7 @@ export default function Blog({ posts, locale }: Props) {
                 className="cosmic-panel rounded-2xl p-7 text-left flex flex-col h-full hover:border-[var(--primary)]/20 hover:-translate-y-1 transition-all duration-300 group"
               >
                 <div className="flex items-center gap-1.5 text-xs text-[var(--primary)] mb-3">
-                  <i className="fas fa-calendar" />
+                  <Calendar className="w-3.5 h-3.5" />
                   {formatDate(p.created_at, locale)}
                 </div>
                 <h3 className="text-base font-bold text-[var(--light)] mb-2.5 leading-snug group-hover:text-[var(--primary)] transition-colors duration-300">
@@ -64,7 +65,7 @@ export default function Blog({ posts, locale }: Props) {
         </div>
         <div className="mt-10">
           <Link href="/blog" className="inline-flex items-center gap-2 px-7 py-3 rounded-full border border-[var(--border-card)] text-[var(--light)] text-xs font-semibold uppercase tracking-wider hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all duration-300">
-            {t('viewAll')} <i className="fas fa-arrow-right text-[0.75rem]" />
+            {t('viewAll')} <ArrowRight className="w-3 h-3" />
           </Link>
         </div>
       </div>

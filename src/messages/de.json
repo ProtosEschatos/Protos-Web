@@ -23,10 +23,26 @@
     "cta_primary": "Projekt starten",
     "cta_secondary": "Portfolio ansehen",
     "stats": {
-      "projects": { "value": "50", "suffix": "+", "label": "Gelieferte Projekte" },
-      "satisfaction": { "value": "98", "suffix": "%", "label": "Kundenzufriedenheit" },
-      "languages": { "value": "5", "suffix": " Sprachen", "label": "Mehrsprachige Unterstutzung" },
-      "webgl": { "value": "3D & WebGL", "suffix": "", "label": "Interaktive Erlebnisse" }
+      "projects": {
+        "value": "50",
+        "suffix": "+",
+        "label": "Gelieferte Projekte"
+      },
+      "satisfaction": {
+        "value": "98",
+        "suffix": "%",
+        "label": "Kundenzufriedenheit"
+      },
+      "languages": {
+        "value": "5",
+        "suffix": " Sprachen",
+        "label": "Mehrsprachige Unterstutzung"
+      },
+      "webgl": {
+        "value": "3D & WebGL",
+        "suffix": "",
+        "label": "Interaktive Erlebnisse"
+      }
     }
   },
   "services": {
@@ -34,12 +50,30 @@
     "title": "Was wir",
     "titleHighlight": "bieten",
     "items": [
-      { "title": "Individuelle Weblosungen", "text": "Massgeschneiderte Websites mit modernen Technologien, optimiert fur Performance und Conversions." },
-      { "title": "UI/UX Design", "text": "Schone, intuitive Oberflachen mit Fokus auf die User Journey." },
-      { "title": "E-Commerce & Web-Apps", "text": "Online-Shops und Webanwendungen mit Zahlungsintegration und Bestandsverwaltung." },
-      { "title": "SEO & Marketing", "text": "Suchmaschinenoptimierung und digitale Marketingstrategien fur mehr Sichtbarkeit." },
-      { "title": "KI & Automatisierung", "text": "Smarte Integrationen inklusive KI-Chatbots, Buchungssysteme und Workflows." },
-      { "title": "Wartung", "text": "Laufender Support, Updates, Sicherheitspatches und Performance-Monitoring." }
+      {
+        "title": "Individuelle Weblosungen",
+        "text": "Massgeschneiderte Websites mit modernen Technologien, optimiert fur Performance und Conversions."
+      },
+      {
+        "title": "UI/UX Design",
+        "text": "Schone, intuitive Oberflachen mit Fokus auf die User Journey."
+      },
+      {
+        "title": "E-Commerce & Web-Apps",
+        "text": "Online-Shops und Webanwendungen mit Zahlungsintegration und Bestandsverwaltung."
+      },
+      {
+        "title": "SEO & Marketing",
+        "text": "Suchmaschinenoptimierung und digitale Marketingstrategien fur mehr Sichtbarkeit."
+      },
+      {
+        "title": "KI & Automatisierung",
+        "text": "Smarte Integrationen inklusive KI-Chatbots, Buchungssysteme und Workflows."
+      },
+      {
+        "title": "Wartung",
+        "text": "Laufender Support, Updates, Sicherheitspatches und Performance-Monitoring."
+      }
     ],
     "pageSubtitle": "Professionelle Weblosungen fur Ihre Geschaftsanforderungen. Von der Idee bis zum Launch und daruber hinaus.",
     "ctaTitle": "Bereit, Ihr Projekt zu starten?",
@@ -51,15 +85,40 @@
     "title": "Wie wir",
     "titleHighlight": "arbeiten",
     "steps": [
-      { "num": "01", "title": "Analyse", "text": "Wir lernen Ihr Geschaft, Ziele und Zielgruppe kennen." },
-      { "num": "02", "title": "Design", "text": "Wireframes und visuelles Design passend zu Ihrer Marke." },
-      { "num": "03", "title": "Entwicklung", "text": "Sauberer Code, moderner Stack, Performance-first." },
-      { "num": "04", "title": "Launch", "text": "Testing, Deployment und laufender Support." }
+      {
+        "num": "01",
+        "title": "Analyse",
+        "text": "Wir lernen Ihr Geschaft, Ziele und Zielgruppe kennen."
+      },
+      {
+        "num": "02",
+        "title": "Design",
+        "text": "Wireframes und visuelles Design passend zu Ihrer Marke."
+      },
+      {
+        "num": "03",
+        "title": "Entwicklung",
+        "text": "Sauberer Code, moderner Stack, Performance-first."
+      },
+      {
+        "num": "04",
+        "title": "Launch",
+        "text": "Testing, Deployment und laufender Support."
+      }
     ],
     "features": [
-      { "title": "Schnelle Lieferung", "text": "Die meisten Projekte in 2-4 Wochen." },
-      { "title": "Transparente Preise", "text": "Klare Angebote ohne versteckte Kosten." },
-      { "title": "Langfristiger Support", "text": "Wir bleiben nach dem Launch an Ihrer Seite." }
+      {
+        "title": "Schnelle Lieferung",
+        "text": "Die meisten Projekte in 2-4 Wochen."
+      },
+      {
+        "title": "Transparente Preise",
+        "text": "Klare Angebote ohne versteckte Kosten."
+      },
+      {
+        "title": "Langfristiger Support",
+        "text": "Wir bleiben nach dem Launch an Ihrer Seite."
+      }
     ]
   },
   "processPage": {
@@ -69,24 +128,72 @@
     "subtitle": "Ein transparenter Prozess vom Erstkontakt bis zum Launch. Jeder Schritt ist klar, messbar und auf Ihre Bedurfnisse zugeschnitten.",
     "cta": "Kontakt",
     "steps": [
-      { "num": "01", "title": "Analyse", "text": "Wir lernen Ihr Geschaft, Ziele und Zielgruppe kennen." },
-      { "num": "02", "title": "Design", "text": "Wireframes und visuelles Design passend zu Ihrer Marke." },
-      { "num": "03", "title": "Entwicklung", "text": "Sauberer Code, moderner Stack, Performance-first." },
-      { "num": "04", "title": "Launch", "text": "Testing, Deployment und laufender Support." }
+      {
+        "num": "01",
+        "title": "Analyse",
+        "text": "Wir lernen Ihr Geschaft, Ziele und Zielgruppe kennen."
+      },
+      {
+        "num": "02",
+        "title": "Design",
+        "text": "Wireframes und visuelles Design passend zu Ihrer Marke."
+      },
+      {
+        "num": "03",
+        "title": "Entwicklung",
+        "text": "Sauberer Code, moderner Stack, Performance-first."
+      },
+      {
+        "num": "04",
+        "title": "Launch",
+        "text": "Testing, Deployment und laufender Support."
+      }
     ],
     "features": [
-      { "title": "Schnelle Lieferung", "text": "Die meisten Projekte in 2-4 Wochen." },
-      { "title": "Transparente Preise", "text": "Klare Angebote ohne versteckte Kosten." },
-      { "title": "Langfristiger Support", "text": "Wir bleiben nach dem Launch an Ihrer Seite." }
+      {
+        "title": "Schnelle Lieferung",
+        "text": "Die meisten Projekte in 2-4 Wochen."
+      },
+      {
+        "title": "Transparente Preise",
+        "text": "Klare Angebote ohne versteckte Kosten."
+      },
+      {
+        "title": "Langfristiger Support",
+        "text": "Wir bleiben nach dem Launch an Ihrer Seite."
+      }
     ],
     "stats": [
-      { "value": "5+", "label": "Jahre Erfahrung" },
-      { "value": "30+", "label": "Abgeschlossene Projekte" },
-      { "value": "1", "label": "Cross Web App in Entwicklung" },
-      { "value": "100%", "label": "Custom Code, keine vorgefertigten Themes" }
+      {
+        "value": "5+",
+        "label": "Jahre Erfahrung"
+      },
+      {
+        "value": "30+",
+        "label": "Abgeschlossene Projekte"
+      },
+      {
+        "value": "1",
+        "label": "Cross Web App in Entwicklung"
+      },
+      {
+        "value": "100%",
+        "label": "Custom Code, keine vorgefertigten Themes"
+      }
     ],
     "technologiesTitle": "Technologien",
-    "technologies": ["Next.js", "TypeScript", "Three.js", "Tailwind CSS", "Framer Motion", "Supabase", "Stripe", "Drizzle ORM", "Cloudflare", "Linux / DevOps"]
+    "technologies": [
+      "Next.js",
+      "TypeScript",
+      "Three.js",
+      "Tailwind CSS",
+      "Framer Motion",
+      "Supabase",
+      "Stripe",
+      "Drizzle ORM",
+      "Cloudflare",
+      "Linux / DevOps"
+    ]
   },
   "portfolio": {
     "label": "PORTFOLIO",
@@ -134,7 +241,14 @@
     "sending": "Wird gesendet...",
     "success": "Nachricht gesendet! Wir melden uns bald.",
     "error": "Etwas ist schiefgelaufen. Bitte erneut versuchen.",
-    "serviceOptions": ["Individuelle Website", "E-Commerce", "Webanwendung", "UI/UX Design", "SEO & Marketing", "Wartung"]
+    "serviceOptions": [
+      "Individuelle Website",
+      "E-Commerce",
+      "Webanwendung",
+      "UI/UX Design",
+      "SEO & Marketing",
+      "Wartung"
+    ]
   },
   "transition": {
     "loading": "Laden...",
@@ -233,13 +347,111 @@
     "cookiesBody": "Wir verwenden notwendige Cookies fur Grundfunktionen und mit Zustimmung Analyse-Cookies.\n\nIhre Wahl wird lokal im Browser gespeichert.\n\nCookies konnen jederzeit in den Browser-Einstellungen geloscht werden."
   },
   "metadata": {
-    "home": { "title": "Wir verwandeln Besucher in Kunden", "description": "Professionelle Webdesign-Agentur aus Zagreb." },
-    "about": { "title": "Uber mich", "description": "Full Stack Developer & Web Designer aus Zagreb." },
-    "process": { "title": "Unser Prozess", "description": "Wie wir moderne Weblosungen bauen." },
-    "portfolio": { "title": "Portfolio", "description": "Ausgewahlte Projekte und Fallstudien." },
-    "showcase": { "title": "3D Portfolio Showcase", "description": "Interaktive 3D-Galerie." },
-    "services": { "title": "Leistungen", "description": "Webdesign, Entwicklung, SEO und mehr." },
-    "blog": { "title": "Blog", "description": "Kostenlose Leitfaden zur Web-Praesenz." },
-    "contact": { "title": "Kontakt", "description": "Kontaktieren Sie uns fur Ihr nachstes Projekt." }
+    "home": {
+      "title": "Wir verwandeln Besucher in Kunden",
+      "description": "Professionelle Webdesign-Agentur aus Zagreb."
+    },
+    "about": {
+      "title": "Uber mich",
+      "description": "Full Stack Developer & Web Designer aus Zagreb."
+    },
+    "process": {
+      "title": "Unser Prozess",
+      "description": "Wie wir moderne Weblosungen bauen."
+    },
+    "portfolio": {
+      "title": "Portfolio",
+      "description": "Ausgewahlte Projekte und Fallstudien."
+    },
+    "showcase": {
+      "title": "3D Portfolio Showcase",
+      "description": "Interaktive 3D-Galerie."
+    },
+    "services": {
+      "title": "Leistungen",
+      "description": "Webdesign, Entwicklung, SEO und mehr."
+    },
+    "blog": {
+      "title": "Blog",
+      "description": "Kostenlose Leitfaden zur Web-Praesenz."
+    },
+    "contact": {
+      "title": "Kontakt",
+      "description": "Kontaktieren Sie uns fur Ihr nachstes Projekt."
+    }
+  },
+  "aboutPage": {
+    "label": "ABOUT ME",
+    "heroTitleLine1": "We build digital",
+    "heroTitleHighlight": "solutions that grow",
+    "heroTitleLine2": "together with you.",
+    "heroSubtitle": "Full Stack Developer & Web Designer from Zagreb. I create modern, fast and visually stunning websites that turn visitors into customers.",
+    "whoTitle": "Who I am",
+    "bio1": "Full Stack Developer from Zagreb with 5 years of experience building modern web solutions. I work with entrepreneurs and companies across Croatia and Europe — from fast landing pages to complex custom platforms, web shops, and CRM systems.",
+    "bio2": "Everything I build is custom — no pre-made themes, no compromises on quality. Every project starts from scratch, tailored exactly to your needs and goals.",
+    "bio3": "Interests: Full stack development, Cross platform web, 3D web experiences, Platform building, Web design, Cyber security.",
+    "bio4": "Goal: Help local and European businesses find the right web solution — without unnecessary complexity, with a modern interface.",
+    "guideLink": "Free web presence guides for entrepreneurs",
+    "infoTitle": "Info",
+    "infoLabels": {
+      "name": "NAME",
+      "location": "LOCATION",
+      "experience": "EXPERIENCE",
+      "email": "EMAIL",
+      "phone": "PHONE",
+      "languages": "LANGUAGES"
+    },
+    "infoValues": {
+      "name": "Dario Imsilovic",
+      "location": "Zagreb, Croatia",
+      "experience": "5 years",
+      "email": "contact@protos-design.net",
+      "phone": "+385 97 604 39 41",
+      "languages": "Croatian, English, Deutsch (basic)"
+    },
+    "goalsTitle": "Goals",
+    "goals": [
+      {
+        "title": "European market",
+        "text": "Actively expanding to EU clients through multilingual offerings and knowledge of European standards — GDPR, accessibility, localization."
+      },
+      {
+        "title": "Custom platforms",
+        "text": "Building SaaS and custom CRM solutions for niches that still lack a good digital solution in the local market."
+      },
+      {
+        "title": "Cyber security",
+        "text": "Integrating security standards into every project — ensure every website handling data must be protected."
+      }
+    ],
+    "supportLabel": "SUPPORT",
+    "supportTitle": "Projects that change",
+    "supportTitleHighlight": "the digital Balkans",
+    "supportSubtitle": "Every donation contributes to developing a platform for protection against internet fraud and building a freer digital space for our region.",
+    "supportCards": [
+      {
+        "title": "Cyber Security Education Equipment",
+        "text": "Help us acquire a server, laptop and software for free online cyber security education — for everyone who wants to learn how to protect themselves online.",
+        "target": "10,000",
+        "btnText": "Support education",
+        "progress": 5
+      },
+      {
+        "title": "Free Digital Education",
+        "text": "Fund free HR video tutorials and guides on web development, AI tools and digital security.",
+        "target": "10,000",
+        "btnText": "Support education",
+        "progress": 3
+      },
+      {
+        "title": "Regional Digital Platforms",
+        "text": "Building open source alternatives to global platforms — made for the Balkans, by the Balkans.",
+        "target": "20,000",
+        "btnText": "Invest in the region",
+        "progress": 2
+      }
+    ],
+    "currencyZero": "0 €",
+    "currencyOf": "of {target} €"
   }
 }

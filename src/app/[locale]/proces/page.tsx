@@ -3,8 +3,9 @@
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
+import { ArrowRight } from 'lucide-react'
+import { PROCESS_FEATURE_ICONS } from '@/lib/section-icons'
 
-const featureIcons = ['fas fa-bolt', 'fas fa-clock', 'fas fa-shield-halved']
 const featureColors = [
   'bg-[var(--primary)]/15 text-[var(--primary)]',
   'bg-[var(--secondary)]/15 text-[var(--secondary)]',
@@ -57,7 +58,10 @@ export default function ProcessPage() {
               <motion.div key={f.title} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
                 className="cosmic-panel rounded-3xl p-8 text-center hover:-translate-y-1 transition-all duration-300">
                 <div className={`w-14 h-14 rounded-full mx-auto mb-4 flex items-center justify-center text-xl ${featureColors[i]}`}>
-                  <i className={featureIcons[i]} />
+                  {(() => {
+                    const Icon = PROCESS_FEATURE_ICONS[i]
+                    return <Icon className="w-5 h-5" />
+                  })()}
                 </div>
                 <h3 className="text-base font-bold text-[var(--light)] mb-2">{f.title}</h3>
                 <p className="text-sm text-[var(--light-muted)] leading-relaxed">{f.text}</p>
@@ -69,7 +73,7 @@ export default function ProcessPage() {
 
       <section className="text-center pb-16">
         <Link href="/kontakt" className="inline-flex items-center gap-2 px-10 py-4 rounded-full bg-gradient-to-r from-[var(--primary)] to-[#ff8800] text-white text-sm font-semibold uppercase tracking-wider hover:-translate-y-0.5 transition-all duration-300">
-          {t('cta')} <i className="fas fa-arrow-right" />
+          {t('cta')} <ArrowRight className="w-4 h-4" />
         </Link>
       </section>
 

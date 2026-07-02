@@ -16,7 +16,6 @@
     "@vercel/speed-insights": "^2.0.0",
     "framer-motion": "^11.11.0",
     "lenis": "^1.1.18",
-    "leva": "^0.10.1",
     "lucide-react": "^0.454.0",
     "next": "^14.2.15",
     "next-intl": "^3.22.1",

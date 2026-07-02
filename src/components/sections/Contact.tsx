@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
+import { ArrowRight, Mail, MapPin, Phone } from 'lucide-react'
 
 export default function Contact() {
   const t = useTranslations('contact')
@@ -11,9 +12,9 @@ export default function Contact() {
   const serviceOptions = t.raw('serviceOptions') as string[]
 
   const contactInfo = [
-    { icon: 'fas fa-envelope', label: t('email'), value: 'contact@protos-design.net', color: 'bg-[var(--secondary)]/15 text-[var(--secondary)]' },
-    { icon: 'fas fa-phone', label: t('phone'), value: '+385 97 604 39 41', color: 'bg-[var(--accent)]/15 text-[var(--accent)]' },
-    { icon: 'fas fa-location-dot', label: t('location'), value: t('locationValue'), color: 'bg-[var(--primary)]/15 text-[var(--primary)]' },
+    { icon: Mail, label: t('email'), value: 'contact@protos-design.net', color: 'bg-[var(--secondary)]/15 text-[var(--secondary)]' },
+    { icon: Phone, label: t('phone'), value: '+385 97 604 39 41', color: 'bg-[var(--accent)]/15 text-[var(--accent)]' },
+    { icon: MapPin, label: t('location'), value: t('locationValue'), color: 'bg-[var(--primary)]/15 text-[var(--primary)]' },
   ]
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -54,7 +55,7 @@ export default function Contact() {
               {contactInfo.map((c) => (
                 <div key={c.label} className="flex items-center gap-4">
                   <div className={`w-12 h-12 rounded-full flex items-center justify-center text-lg ${c.color}`}>
-                    <i className={c.icon} />
+                    <c.icon className="w-5 h-5" />
                   </div>
                   <div>
                     <div className="text-xs text-[var(--light-muted)] uppercase tracking-wider">{c.label}</div>
@@ -82,7 +83,7 @@ export default function Contact() {
                   <textarea name="message" placeholder={t('messagePlaceholder')} rows={4} className="w-full px-4 py-3.5 rounded-xl border border-[var(--border-card)] bg-white/[0.03] text-[var(--light)] text-sm outline-none focus:border-[var(--primary)] transition-colors resize-y min-h-[120px] placeholder:text-[var(--light-muted)]" />
                 </div>
                 <button type="submit" disabled={loading} className="w-full py-4 rounded-full bg-gradient-to-r from-[var(--secondary)] to-[var(--accent)] text-white text-sm font-semibold tracking-wider flex items-center justify-center gap-2 hover:-translate-y-0.5 hover:shadow-[0_8px_25px_var(--secondary-glow)] transition-all duration-300 disabled:opacity-50">
-                  {loading ? t('sending') : <>{t('submit')} <i className="fas fa-arrow-right" /></>}
+                  {loading ? t('sending') : <>{t('submit')} <ArrowRight className="w-4 h-4" /></>}
                 </button>
               </form>
             ) : (

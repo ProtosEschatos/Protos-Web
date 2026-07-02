@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
+import { ArrowRight } from 'lucide-react'
 import TransitionLink from '@/components/navigation/TransitionLink'
 
 const fadeUp = {
@@ -38,10 +39,10 @@ export default function Hero() {
           </motion.p>
           <motion.div custom={3} initial="hidden" animate="visible" variants={fadeUp} className="flex gap-4 flex-wrap mb-16">
             <TransitionLink href="/kontakt" className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-to-r from-[var(--primary)] to-[#ff8800] text-white text-xs font-semibold uppercase tracking-wider hover:-translate-y-0.5 hover:shadow-[0_8px_25px_var(--primary-glow)] transition-all duration-300">
-              {t('cta_primary')} <i className="fas fa-arrow-right text-[0.75rem]" />
+              {t('cta_primary')} <ArrowRight className="w-3 h-3" />
             </TransitionLink>
             <TransitionLink href="/portfolio" className="inline-flex items-center gap-2 px-7 py-3 rounded-full border border-[var(--border-card)] text-[var(--light)] text-xs font-semibold uppercase tracking-wider hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all duration-300">
-              {t('cta_secondary')} <i className="fas fa-arrow-right text-[0.75rem]" />
+              {t('cta_secondary')} <ArrowRight className="w-3 h-3" />
             </TransitionLink>
           </motion.div>
           <motion.div custom={4} initial="hidden" animate="visible" variants={fadeUp} className="flex gap-10 flex-wrap">

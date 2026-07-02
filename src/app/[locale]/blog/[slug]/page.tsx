@@ -4,6 +4,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { getBlogPostBySlug } from '@/actions/blog'
 import BlogPostContent from '@/components/blog/BlogPostContent'
 import { Link } from '@/routing'
+import { ArrowLeft, Calendar } from 'lucide-react'
 import { buildBlogPostMetadata, blogPostingJsonLd } from '@/lib/seo'
 
 type Props = { params: { locale: string; slug: string } }
@@ -56,12 +57,12 @@ export default async function BlogPostPage({ params: { locale, slug } }: Props) 
             href="/blog"
             className="inline-flex items-center gap-2 text-sm text-[var(--light-muted)] hover:text-[var(--primary)] transition-colors mb-8"
           >
-            <i className="fas fa-arrow-left" /> {t('viewAll')}
+            <ArrowLeft className="w-4 h-4" /> {t('viewAll')}
           </Link>
 
           <div className="cosmic-panel rounded-3xl p-8 md:p-10">
           <div className="flex items-center gap-1.5 text-xs text-[var(--primary)] mb-4">
-            <i className="fas fa-calendar" /> {formatDate(post.created_at, locale)}
+            <Calendar className="w-3.5 h-3.5" /> {formatDate(post.created_at, locale)}
           </div>
 
           <h1 className="text-[clamp(2rem,5vw,3rem)] font-extrabold leading-tight mb-6 text-[var(--light)]">

@@ -3,20 +3,42 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations } from 'next-intl'
-import { saveCookiePreferences, hasCookieConsent } from '@/lib/cookie-consent'
+import { saveCookiePreferences, hasCookieConsent, COOKIE_CONSENT_EVENT } from '@/lib/cookie-consent'
+import { BOOT_COMPLETE_EVENT } from '@/components/ui/PageLoader'
 
 export default function CookieBanner() {
   const t = useTranslations('cookie')
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
+    const maybeShow = () => {
+      if (!hasCookieConsent()) {
+        setVisible(true)
+      } else {
+        setVisible(false)
+      }
+    }
+
     if (!hasCookieConsent()) {
-      const timer = setTimeout(() => setVisible(true), 2000)
-      return () => clearTimeout(timer)
+      const timer = setTimeout(() => {
+        if (!hasCookieConsent()) setVisible(true)
+      }, 2000)
+      window.addEventListener(BOOT_COMPLETE_EVENT, maybeShow)
+      window.addEventListener(COOKIE_CONSENT_EVENT, maybeShow)
+      return () => {
+        clearTimeout(timer)
+        window.removeEventListener(BOOT_COMPLETE_EVENT, maybeShow)
+        window.removeEventListener(COOKIE_CONSENT_EVENT, maybeShow)
+      }
     }
   }, [])
 
   const accept = () => {
+    saveCookiePreferences(false)
+    setVisible(false)
+  }
+
+  const decline = () => {
     saveCookiePreferences(false)
     setVisible(false)
   }
@@ -28,7 +50,7 @@ export default function CookieBanner() {
           <p className="text-sm text-[var(--light-muted)] mb-4 leading-relaxed">{t('text')}</p>
           <div className="flex gap-3">
             <button onClick={accept} className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[var(--primary)] to-[#ff8800] text-white text-sm font-semibold hover:-translate-y-0.5 transition-all duration-300">{t('accept')}</button>
-            <button onClick={() => setVisible(false)} className="px-6 py-2.5 rounded-full border border-[var(--border-card)] text-sm text-[var(--light-muted)] hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all duration-300">{t('decline')}</button>
+            <button onClick={decline} className="px-6 py-2.5 rounded-full border border-[var(--border-card)] text-sm text-[var(--light-muted)] hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all duration-300">{t('decline')}</button>
           </div>
         </motion.div>
       )}

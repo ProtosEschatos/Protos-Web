@@ -1,7 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import { useTranslations } from 'next-intl'
+import { ExternalLink, ImageIcon } from 'lucide-react'
 import type { PortfolioItem } from '@/actions/portfolio'
 
 const tagColors = [
@@ -45,11 +47,18 @@ export default function PortfolioGrid({ items }: Props) {
           className="cosmic-panel rounded-2xl overflow-hidden hover:-translate-y-1.5 hover:shadow-[0_4px_24px_rgba(0,0,0,0.3)] transition-all duration-300"
         >
           {p.image_url ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={p.image_url} alt={p.title} className="w-full aspect-[4/3] object-cover" />
+            <div className="relative w-full aspect-[4/3]">
+              <Image
+                src={p.image_url}
+                alt={p.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 33vw"
+              />
+            </div>
           ) : (
             <div className="w-full aspect-[4/3] bg-gradient-to-br from-[var(--dark-surface)] to-[var(--dark-card-hover)] flex items-center justify-center">
-              <i className="fas fa-image text-3xl text-[var(--light-muted)] opacity-30" />
+              <ImageIcon className="w-8 h-8 text-[var(--light-muted)] opacity-30" />
             </div>
           )}
           <div className="p-5 text-left">
@@ -69,7 +78,7 @@ export default function PortfolioGrid({ items }: Props) {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 mt-3 text-xs font-semibold uppercase tracking-wider text-[var(--primary)] hover:underline"
               >
-                View project <i className="fas fa-arrow-up-right-from-square text-[0.65rem]" />
+                {t('viewProject')} <ExternalLink className="w-3 h-3" />
               </a>
             ) : null}
           </div>

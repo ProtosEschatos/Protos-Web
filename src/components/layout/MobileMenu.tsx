@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 import TransitionLink from '@/components/navigation/TransitionLink'
+import { SocialLinksInline } from '@/components/ui/SocialLinks'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const navLinks = [
@@ -86,11 +87,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             >
               <p className="text-sm">contact@protos-design.net</p>
               <p className="text-sm">+385 97 604 39 41</p>
-              <div className="flex gap-4 mt-6">
-                <a href="#" className="text-[var(--light-muted)] hover:text-[var(--primary)] transition-colors"><i className="fab fa-facebook-f" /></a>
-                <a href="#" className="text-[var(--light-muted)] hover:text-[var(--primary)] transition-colors"><i className="fab fa-instagram" /></a>
-                <a href="#" className="text-[var(--light-muted)] hover:text-[var(--primary)] transition-colors"><i className="fas fa-envelope" /></a>
-              </div>
+              <SocialLinksInline className="flex gap-4 mt-6" />
             </motion.div>
           </div>
         </motion.div>

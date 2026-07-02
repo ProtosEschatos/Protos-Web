@@ -1,73 +1,77 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useTranslations } from 'next-intl'
+import { Link } from '@/routing'
+import { ArrowRight, BookOpen } from 'lucide-react'
 
-const infoItems = [
-  { label: 'NAME', value: 'Dario Imsilovic' },
-  { label: 'LOCATION', value: 'Zagreb, Hrvatska' },
-  { label: 'EXPERIENCE', value: '5 years' },
-  { label: 'EMAIL', value: 'contact@protos-design.net', isLink: true },
-  { label: 'PHONE', value: '+385 97 604 39 41' },
-  { label: 'LANGUAGES', value: 'Croatian, English, Deutsch (basic)' },
-]
-
-const goals = [
-  { emoji: '\u{1F30E}', title: 'European market', text: 'Actively expanding to EU clients through multilingual offerings and knowledge of European standards — GDPR, accessibility, localization.' },
-  { emoji: '\u{1F4BB}', title: 'Custom platforms', text: 'Building SaaS and custom CRM solutions for niches that still lack a good digital solution in the local market.' },
-  { emoji: '\u{1F510}', title: 'Cyber security', text: 'Integrating security standards into every project — ensure every website handling data must be protected.' },
-]
-
-const supportCards = [
-  { emoji: '\u{1F6E1}', title: 'Cyber Security Education Equipment', text: 'Help us acquire a server, laptop and software for free online cyber security education — for everyone who wants to learn how to protect themselves online.', target: '10,000', btnText: 'Support education', btnColor: 'bg-red-500 hover:bg-red-600', progress: 5 },
-  { emoji: '\u{1F4DA}', title: 'Free Digital Education', text: 'Fund free HR video tutorials and guides on web development, AI tools and digital security.', target: '10,000', btnText: 'Support education', btnColor: 'bg-green-500 hover:bg-green-600', progress: 3 },
-  { emoji: '\u{1F310}', title: 'Regional Digital Platforms', text: 'Building open source alternatives to global platforms — made for the Balkans, by the Balkans.', target: '20,000', btnText: 'Invest in the region', btnColor: 'bg-green-500 hover:bg-green-600', progress: 2 },
-]
+const infoKeys = ['name', 'location', 'experience', 'email', 'phone', 'languages'] as const
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
   visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.6 } }),
 }
 
+const goalEmojis = ['\u{1F30E}', '\u{1F4BB}', '\u{1F510}']
+const supportEmojis = ['\u{1F6E1}', '\u{1F4DA}', '\u{1F310}']
+const supportBtnColors = [
+  'bg-red-500 hover:bg-red-600',
+  'bg-green-500 hover:bg-green-600',
+  'bg-green-500 hover:bg-green-600',
+]
+
 export default function AboutPage() {
+  const t = useTranslations('aboutPage')
+  const goals = t.raw('goals') as Array<{ title: string; text: string }>
+  const supportCards = t.raw('supportCards') as Array<{
+    title: string
+    text: string
+    target: string
+    btnText: string
+    progress: number
+  }>
+
   return (
     <>
-      {/* Hero */}
       <section className="pt-36 pb-10 text-center relative overflow-hidden cosmic-hero-band">
         <div className="max-w-[1200px] mx-auto px-6 relative z-10">
-          <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[var(--primary)] mb-3">ABOUT ME</p>
+          <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[var(--primary)] mb-3">{t('label')}</p>
           <h1 className="text-[clamp(2.2rem,5vw,3.5rem)] font-extrabold leading-tight mb-5">
-            Gradimo digitalna<br /><span className="gradient-text">rjesenja koja rastu</span><br />zajedno sa Vama.
+            {t('heroTitleLine1')}<br /><span className="gradient-text">{t('heroTitleHighlight')}</span><br />{t('heroTitleLine2')}
           </h1>
           <p className="text-base text-[var(--light-muted)] max-w-[600px] mx-auto leading-7">
-            Full Stack Developer &amp; Web Designer from Zagreb. I create modern, fast and visually stunning websites that turn visitors into customers.
+            {t('heroSubtitle')}
           </p>
         </div>
       </section>
 
-      {/* Bio + Info */}
       <section className="py-16">
         <div className="max-w-[1200px] mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
-              <h3 className="text-xl font-bold mb-5">Who I am</h3>
+              <h3 className="text-xl font-bold mb-5">{t('whoTitle')}</h3>
               <div className="space-y-4 text-sm text-[var(--light-muted)] leading-7">
-                <p>Full Stack Developer from Zagreb with 5 years of experience building modern web solutions. I work with entrepreneurs and companies across Croatia and Europe — from fast landing pages to complex custom platforms, web shops, and CRM systems.</p>
-                <p>Everything I build is custom — no pre-made themes, no compromises on quality. Every project starts from scratch, tailored exactly to your needs and goals.</p>
-                <p>Interests: Full stack development, Cross platform web, 3D web experiences, Platform building, Web design, Cyber security.</p>
-                <p>Goal: Help local and European businesses find the right web solution — without unnecessary complexity, with a modern interface.</p>
-                <p><a href="#" className="text-[var(--primary)] underline inline-flex items-center gap-1.5"><i className="fas fa-book text-xs" /> Free web presence guides for entrepreneurs &rarr;</a></p>
+                <p>{t('bio1')}</p>
+                <p>{t('bio2')}</p>
+                <p>{t('bio3')}</p>
+                <p>{t('bio4')}</p>
+                <p>
+                  <Link href="/blog" className="text-[var(--primary)] underline inline-flex items-center gap-1.5">
+                    <BookOpen className="w-3.5 h-3.5" /> {t('guideLink')} <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </p>
               </div>
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }}>
-              <h3 className="text-xl font-bold mb-6">Info</h3>
+              <h3 className="text-xl font-bold mb-6">{t('infoTitle')}</h3>
               <div className="flex flex-col gap-5">
-                {infoItems.map((item) => (
-                  <div key={item.label}>
-                    <div className="text-[0.7rem] text-[var(--light-muted)] uppercase tracking-[0.15em] mb-1">{item.label}</div>
-                    {item.isLink ? (
-                      <a href={`mailto:${item.value}`} className="text-base font-semibold text-[var(--primary)]">{item.value}</a>
+                {infoKeys.map((key) => (
+                  <div key={key}>
+                    <div className="text-[0.7rem] text-[var(--light-muted)] uppercase tracking-[0.15em] mb-1">{t(`infoLabels.${key}`)}</div>
+                    {key === 'email' ? (
+                      <a href={`mailto:${t(`infoValues.${key}`)}`} className="text-base font-semibold text-[var(--primary)]">{t(`infoValues.${key}`)}</a>
                     ) : (
-                      <div className="text-base font-semibold text-[var(--light)]">{item.value}</div>
+                      <div className="text-base font-semibold text-[var(--light)]">{t(`infoValues.${key}`)}</div>
                     )}
                   </div>
                 ))}
@@ -77,15 +81,14 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Goals */}
       <section className="py-16 text-center">
         <div className="max-w-[1200px] mx-auto px-6">
-          <h2 className="text-[clamp(2rem,5vw,3rem)] font-extrabold mb-10">Goals</h2>
+          <h2 className="text-[clamp(2rem,5vw,3rem)] font-extrabold mb-10">{t('goalsTitle')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {goals.map((g, i) => (
               <motion.div key={g.title} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
                 className="cosmic-panel rounded-2xl p-8 text-center hover:-translate-y-1 transition-all duration-300">
-                <div className="text-3xl mb-4">{g.emoji}</div>
+                <div className="text-3xl mb-4">{goalEmojis[i]}</div>
                 <h3 className="text-base font-bold text-[var(--light)] mb-2">{g.title}</h3>
                 <p className="text-sm text-[var(--light-muted)] leading-relaxed">{g.text}</p>
               </motion.div>
@@ -94,32 +97,32 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Support Balkans */}
       <section className="cosmic-section py-24 border-t border-b border-white/[0.06] text-center">
         <div className="max-w-[1200px] mx-auto px-6">
-          <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[var(--primary)] mb-3">SUPPORT</p>
+          <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[var(--primary)] mb-3">{t('supportLabel')}</p>
           <h2 className="text-[clamp(2rem,5vw,3rem)] font-extrabold leading-tight mb-5">
-            Projects that change <span className="gradient-text">the digital Balkans</span>
+            {t('supportTitle')} <span className="gradient-text">{t('supportTitleHighlight')}</span>
           </h2>
           <p className="text-base text-[var(--light-muted)] max-w-[600px] mx-auto leading-7 mb-12">
-            Every donation contributes to developing a platform for protection against internet fraud and building a freer digital space for our region.
+            {t('supportSubtitle')}
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {supportCards.map((c, i) => (
               <motion.div key={c.title} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
                 className="cosmic-panel rounded-2xl p-7 flex flex-col text-left">
-                <div className="text-3xl mb-4">{c.emoji}</div>
+                <div className="text-3xl mb-4">{supportEmojis[i]}</div>
                 <h3 className="text-base font-bold mb-2">{c.title}</h3>
                 <p className="text-sm text-[var(--light-muted)] leading-relaxed flex-1 mb-5">{c.text}</p>
                 <div className="flex justify-between text-xs text-[var(--light-muted)] mb-3">
-                  <span>0 &euro;</span><span>of {c.target} &euro;</span>
+                  <span>{t('currencyZero')}</span>
+                  <span>{t('currencyOf', { target: c.target })}</span>
                 </div>
                 <div className="h-1 rounded-full bg-white/[0.08] overflow-hidden mb-5">
                   <div className="h-full rounded-full bg-gradient-to-r from-[var(--primary)] to-[#ff8800]" style={{ width: `${c.progress}%` }} />
                 </div>
-                <a href="#" className={`inline-flex items-center justify-center px-6 py-3 rounded-full text-sm font-semibold text-white transition-all duration-300 ${c.btnColor}`}>
+                <button type="button" disabled aria-disabled="true" className={`inline-flex items-center justify-center px-6 py-3 rounded-full text-sm font-semibold text-white transition-all duration-300 opacity-70 cursor-not-allowed ${supportBtnColors[i]}`}>
                   {c.btnText}
-                </a>
+                </button>
               </motion.div>
             ))}
           </div>

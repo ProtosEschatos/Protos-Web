@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { getPortfolioItems } from '@/actions/portfolio'
 import PortfolioGrid from '@/components/portfolio/PortfolioGrid'
 import { Link } from '@/routing'
+import { ArrowRight, Layers } from 'lucide-react'
 
 type Props = { params: { locale: string } }
 
@@ -28,7 +29,7 @@ export default async function PortfolioPage({ params: { locale } }: Props) {
         <div className="flex gap-12 animate-[marquee_25s_linear_infinite] w-max">
           {[...marqueeItems, ...marqueeItems].map((item, i) => (
             <span key={i} className="text-xl font-bold uppercase tracking-[0.1em] text-white/[0.12] whitespace-nowrap">
-              {item} <span className="mx-4">&bull;</span>
+              {item} <span className="mx-4">•</span>
             </span>
           ))}
         </div>
@@ -41,7 +42,7 @@ export default async function PortfolioPage({ params: { locale } }: Props) {
           <div className="mt-16 bg-gradient-to-r from-[var(--secondary)]/15 to-[var(--accent)]/10 border border-[var(--secondary)]/20 rounded-3xl p-8 sm:px-10 flex flex-col sm:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-5">
               <div className="w-12 h-12 rounded-xl bg-[var(--secondary)]/20 flex items-center justify-center text-[var(--secondary)] text-lg">
-                <i className="fas fa-layer-group" />
+                <Layers className="w-5 h-5" />
               </div>
               <div className="text-left">
                 <span className="inline-block px-2.5 py-0.5 rounded-full bg-green-500/20 text-green-500 text-[0.7rem] font-semibold uppercase mb-1">NEW</span>
@@ -52,7 +53,7 @@ export default async function PortfolioPage({ params: { locale } }: Props) {
             <div className="flex items-center gap-4">
               <span className="text-xs font-semibold tracking-[0.1em] uppercase text-[var(--accent)]">{t('showcaseCta')}</span>
               <Link href="/portfolio-showcase" className="w-11 h-11 rounded-full bg-[var(--primary)] flex items-center justify-center text-white hover:scale-110 transition-transform duration-300">
-                <i className="fas fa-arrow-right" />
+                <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>

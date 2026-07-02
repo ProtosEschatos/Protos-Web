@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
+import { ArrowRight, Layers } from 'lucide-react'
 import type { PortfolioItem } from '@/actions/portfolio'
 import PortfolioGrid from '@/components/portfolio/PortfolioGrid'
 
@@ -27,7 +28,7 @@ export default function Portfolio({ items }: Props) {
           <div className="flex gap-12 animate-[marquee_25s_linear_infinite] w-max">
             {[...marqueeItems, ...marqueeItems].map((item, i) => (
               <span key={i} className="text-xl font-bold uppercase tracking-[0.1em] text-white/[0.12] whitespace-nowrap">
-                {item} {i < marqueeItems.length * 2 - 1 && <span className="mx-4">&bull;</span>}
+                {item} {i < marqueeItems.length * 2 - 1 && <span className="mx-4">•</span>}
               </span>
             ))}
           </div>
@@ -44,7 +45,7 @@ export default function Portfolio({ items }: Props) {
         >
           <div className="flex items-center gap-5">
             <div className="w-12 h-12 rounded-xl bg-[var(--secondary)]/20 flex items-center justify-center text-[var(--secondary)] text-lg">
-              <i className="fas fa-layer-group" />
+              <Layers className="w-5 h-5" />
             </div>
             <div className="text-left">
               <div className="text-lg font-bold text-[var(--light)]">{t('showcaseTitle')}</div>
@@ -54,7 +55,7 @@ export default function Portfolio({ items }: Props) {
           <div className="flex items-center gap-4">
             <span className="text-xs font-semibold tracking-[0.1em] uppercase text-[var(--accent)]">{t('showcaseCta')}</span>
             <Link href="/portfolio-showcase" className="w-11 h-11 rounded-full bg-[var(--primary)] flex items-center justify-center text-white hover:scale-110 transition-transform duration-300" aria-label={t('showcaseCta')}>
-              <i className="fas fa-arrow-right" />
+              <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </motion.div>

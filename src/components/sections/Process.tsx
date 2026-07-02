@@ -2,8 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
-
-const featureIcons = ['fas fa-bolt', 'fas fa-clock', 'fas fa-shield-halved']
+import { PROCESS_FEATURE_ICONS } from '@/lib/section-icons'
 const featureColors = ['primary', 'secondary', 'accent']
 
 const colorMap: Record<string, string> = {
@@ -63,7 +62,10 @@ export default function Process() {
               className="cosmic-panel rounded-3xl p-8 text-center hover:border-[var(--primary)]/20 hover:-translate-y-1 transition-all duration-300"
             >
               <div className={`w-14 h-14 rounded-full mx-auto mb-4 flex items-center justify-center text-xl ${colorMap[featureColors[i]]}`}>
-                <i className={featureIcons[i]} />
+                {(() => {
+                  const Icon = PROCESS_FEATURE_ICONS[i]
+                  return <Icon className="w-5 h-5" />
+                })()}
               </div>
               <h3 className="text-base font-bold text-[var(--light)] mb-2">{f.title}</h3>
               <p className="text-sm text-[var(--light-muted)] leading-relaxed">{f.text}</p>

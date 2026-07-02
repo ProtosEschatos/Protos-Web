@@ -1,23 +1,18 @@
 #!/usr/bin/env node
-import { createClient } from '@supabase/supabase-js'
 import { readFileSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 
 const root = new URL('..', import.meta.url).pathname
 const showcaseDir = join(root, 'public/showcase')
 
-const url = process.env.NEXT_PUBLIC_SUPABASE_URL ?? 'https://laqnnzavwbojntfiqmxj.supabase.co'
-const key =
-  process.env.SUPABASE_SERVICE_ROLE_KEY ??
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ??
-  process.env.SUPABASE_ANON_KEY
+const base = (process.env.NEXT_PUBLIC_SUPABASE_URL ?? process.env.SUPABASE_URL ?? '').replace(/\/$/, '')
+const key = process.env.SUPABASE_SERVICE_ROLE_KEY
 
-if (!key) {
-  console.error('Missing Supabase key (SERVICE_ROLE or ANON)')
+if (!base || !key) {
+  console.error('Missing SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY')
   process.exit(1)
 }
 
-const supabase = createClient(url, key)
 const files = readdirSync(showcaseDir).filter((f) => /\.(jpe?g|png|webp)$/i.test(f))
 
 for (const file of files) {
@@ -25,13 +20,19 @@ for (const file of files) {
   const body = readFileSync(join(showcaseDir, file))
   const contentType = file.endsWith('.png') ? 'image/png' : 'image/jpeg'
 
-  const { error } = await supabase.storage.from('showcase').upload(storagePath, body, {
-    contentType,
-    upsert: true,
+  const res = await fetch(`${base}/storage/v1/object/showcase/${storagePath}`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${key}`,
+      'Content-Type': contentType,
+      'x-upsert': 'true',
+    },
+    body,
   })
 
-  if (error) {
-    console.error(`FAIL ${storagePath}:`, error.message)
+  if (!res.ok) {
+    const text = await res.text()
+    console.error(`FAIL ${storagePath}: ${res.status} ${text}`)
     process.exitCode = 1
   } else {
     console.log(`OK ${storagePath}`)

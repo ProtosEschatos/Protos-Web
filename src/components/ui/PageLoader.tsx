@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useLayoutEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations, useLocale } from 'next-intl'
+import gsap from 'gsap'
 import { saveCookiePreferences } from '@/lib/cookie-consent'
 import { buildLocalePath } from '@/lib/seo'
 
@@ -30,71 +31,136 @@ const JELLYFISH: JellyfishSpec[] = [
   { id: 'g', w: 74, top: '78%', duration: 20, delay: 10, from: 'left', wobble: 30 },
 ]
 
-function JellyfishSprite({ spec }: { spec: JellyfishSpec }) {
-  const gradId = `jf-${spec.id}`
-  const swimRight = spec.from === 'left'
+const TENTACLE_X = [22, 34, 50, 66, 78]
+
+function BootJellyfishLayer({ active }: { active: boolean }) {
+  const layerRef = useRef<HTMLDivElement>(null)
+
+  useLayoutEffect(() => {
+    if (!active || !layerRef.current) return
+
+    const ctx = gsap.context(() => {
+      JELLYFISH.forEach((spec) => {
+        const root = layerRef.current!.querySelector<HTMLElement>(`[data-jf-id="${spec.id}"]`)
+        const body = root?.querySelector<HTMLElement>('[data-jf-body]')
+        const tentacles = root?.querySelector<HTMLElement>('[data-jf-tentacles]')
+        if (!root || !body || !tentacles) return
+
+        const swimRight = spec.from === 'left'
+        const travel = swimRight ? '135vw' : '-135vw'
+
+        gsap.set(root, { x: 0, y: 0, force3D: true })
+        gsap.set(body, { transformOrigin: '50% 28%', force3D: true })
+        gsap.set(tentacles, { transformOrigin: '50px 52px', force3D: true })
+
+        gsap.to(root, {
+          x: travel,
+          duration: spec.duration,
+          ease: 'none',
+          repeat: -1,
+          delay: spec.delay,
+        })
+
+        gsap.to(root, {
+          y: -spec.wobble,
+          duration: spec.duration * 0.28,
+          ease: 'sine.inOut',
+          repeat: -1,
+          yoyo: true,
+          delay: spec.delay,
+        })
+
+        gsap.to(body, {
+          scaleY: 0.68,
+          scaleX: 1.12,
+          rotate: swimRight ? -4 : 4,
+          duration: 0.42,
+          ease: 'power2.inOut',
+          repeat: -1,
+          yoyo: true,
+        })
+
+        gsap.to(tentacles, {
+          rotate: 8,
+          x: 3,
+          duration: 0.35,
+          ease: 'sine.inOut',
+          repeat: -1,
+          yoyo: true,
+        })
+
+        TENTACLE_X.forEach((x, i) => {
+          const tentacle = tentacles.querySelector<SVGPathElement>(`[data-jf-t="${x}"]`)
+          if (!tentacle) return
+          gsap.to(tentacle, {
+            attr: {
+              d: `M${x} 52 Q${x + (i % 2 === 0 ? -8 : 8)} 96 ${x + (i % 2 === 0 ? 8 : -8)} 128`,
+            },
+            duration: 0.45 + i * 0.03,
+            ease: 'sine.inOut',
+            repeat: -1,
+            yoyo: true,
+            delay: i * 0.05,
+          })
+        })
+      })
+    }, layerRef)
+
+    return () => ctx.revert()
+  }, [active])
+
+  if (!active) return null
 
   return (
-    <motion.div
-      className="absolute pointer-events-none will-change-transform"
-      style={{ top: spec.top, width: spec.w, left: swimRight ? '-18vw' : undefined, right: swimRight ? undefined : '-18vw' }}
-      initial={{ x: 0, y: 0 }}
-      animate={{
-        x: swimRight ? ['0vw', '135vw'] : ['0vw', '-135vw'],
-        y: [0, -spec.wobble, spec.wobble * 0.35, -spec.wobble * 0.65, 0],
-      }}
-      transition={{
-        x: { duration: spec.duration, repeat: Infinity, ease: 'linear', delay: spec.delay },
-        y: { duration: spec.duration * 0.28, repeat: Infinity, ease: 'easeInOut', delay: spec.delay },
-      }}
-      aria-hidden
-    >
-      <motion.div
-        animate={{
-          scaleY: [1, 0.68, 1, 0.76, 1],
-          scaleX: [1, 1.12, 1, 1.06, 1],
-          rotate: swimRight ? [2, -4, 3, -2, 2] : [-2, 4, -3, 2, -2],
-        }}
-        transition={{ duration: 0.85, repeat: Infinity, ease: [0.45, 0.05, 0.55, 0.95] }}
-        style={{ transformOrigin: '50% 28%' }}
-      >
-        <svg
-          viewBox="0 0 100 130"
-          className="w-full h-auto drop-shadow-[0_0_18px_rgba(34,211,238,0.55)]"
-          style={{ transform: swimRight ? 'scaleX(1)' : 'scaleX(-1)' }}
-        >
-          <defs>
-            <radialGradient id={gradId} cx="50%" cy="35%" r="55%">
-              <stop offset="0%" stopColor="#a5f3fc" stopOpacity="0.95" />
-              <stop offset="55%" stopColor="#22d3ee" stopOpacity="0.65" />
-              <stop offset="100%" stopColor="#0891b2" stopOpacity="0" />
-            </radialGradient>
-          </defs>
-          <ellipse cx="50" cy="32" rx="36" ry="26" fill={`url(#${gradId})`} />
-          <motion.g
-            animate={{ rotate: [-6, 8, -5, 7, -6], x: [-2, 3, -1, 2, -2] }}
-            transition={{ duration: 0.7, repeat: Infinity, ease: 'easeInOut' }}
-            style={{ transformOrigin: '50px 52px' }}
+    <div ref={layerRef} className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
+      {JELLYFISH.map((spec) => {
+        const swimRight = spec.from === 'left'
+        const gradId = `jf-${spec.id}`
+
+        return (
+          <div
+            key={spec.id}
+            data-jf-id={spec.id}
+            className="absolute will-change-transform"
+            style={{
+              top: spec.top,
+              width: spec.w,
+              left: swimRight ? '-18vw' : undefined,
+              right: swimRight ? undefined : '-18vw',
+            }}
           >
-            {[22, 34, 50, 66, 78].map((x, i) => (
-              <motion.path
-                key={x}
-                d={`M${x} 52 Q${x + (i % 2 === 0 ? 10 : -10)} 92 ${x + (i % 2 === 0 ? -6 : 6)} 128`}
-                stroke="rgba(103,232,249,0.6)"
-                strokeWidth="1.8"
-                fill="none"
-                animate={{ d: [
-                  `M${x} 52 Q${x + (i % 2 === 0 ? 10 : -10)} 92 ${x + (i % 2 === 0 ? -6 : 6)} 128`,
-                  `M${x} 52 Q${x + (i % 2 === 0 ? -8 : 8)} 96 ${x + (i % 2 === 0 ? 8 : -8)} 128`,
-                  `M${x} 52 Q${x + (i % 2 === 0 ? 10 : -10)} 92 ${x + (i % 2 === 0 ? -6 : 6)} 128`,
-                ] }}
-                transition={{ duration: 0.55 + i * 0.04, repeat: Infinity, ease: 'easeInOut' }}
-              />
-            ))}
-          </motion.g>
-        </svg>
-      </motion.div>
-    </motion.div>
+            <div data-jf-body>
+              <svg
+                viewBox="0 0 100 130"
+                className="w-full h-auto drop-shadow-[0_0_18px_rgba(34,211,238,0.55)]"
+                style={{ transform: swimRight ? 'scaleX(1)' : 'scaleX(-1)' }}
+              >
+                <defs>
+                  <radialGradient id={gradId} cx="50%" cy="35%" r="55%">
+                    <stop offset="0%" stopColor="#a5f3fc" stopOpacity="0.95" />
+                    <stop offset="55%" stopColor="#22d3ee" stopOpacity="0.65" />
+                    <stop offset="100%" stopColor="#0891b2" stopOpacity="0" />
+                  </radialGradient>
+                </defs>
+                <ellipse cx="50" cy="32" rx="36" ry="26" fill={`url(#${gradId})`} />
+                <g data-jf-tentacles>
+                  {TENTACLE_X.map((x, i) => (
+                    <path
+                      key={x}
+                      data-jf-t={`${x}`}
+                      d={`M${x} 52 Q${x + (i % 2 === 0 ? 10 : -10)} 92 ${x + (i % 2 === 0 ? -6 : 6)} 128`}
+                      stroke="rgba(103,232,249,0.6)"
+                      strokeWidth="1.8"
+                      fill="none"
+                    />
+                  ))}
+                </g>
+              </svg>
+            </div>
+          </div>
+        )
+      })}
+    </div>
   )
 }
 
@@ -178,10 +244,8 @@ export default function PageLoader() {
             backgroundPosition: 'center',
           }}
         >
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {JELLYFISH.map((spec) => (
-              <JellyfishSprite key={spec.id} spec={spec} />
-            ))}
+          <BootJellyfishLayer active={loading} />
+          <div className="absolute inset-0 pointer-events-none">
             <div className="absolute inset-0 bg-[#020818]/15" />
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020818]/45" />
           </div>

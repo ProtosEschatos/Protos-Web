@@ -182,7 +182,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
   }
 
   return (
-    <div className="fixed inset-0 bg-[#0a0018]">
+    <div className="fixed inset-0 bg-[#0a0a1a]">
       <ShowcaseCanvasLayer
         projects={projects}
         isPlaying={phase === 'playing'}
@@ -197,19 +197,19 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
 
       {phase === 'loading' && (
         <div className="fixed inset-0 z-[300] flex flex-col items-center justify-center bg-[#0a0a1a]">
-          <div className="loader-title mb-4 text-5xl font-bold bg-gradient-to-br from-[#ff0099] to-[#00eaff] bg-clip-text text-transparent">
+          <div className="loader-title mb-4 text-5xl font-bold bg-gradient-to-br from-[#6366f1] to-[#06b6d4] bg-clip-text text-transparent">
             {t('loaderTitle')}
           </div>
           <div className="mb-8 text-sm uppercase tracking-[0.3em] text-[#94a3b8]">{t('loaderSubtitle')}</div>
           <div className="h-1 w-48 overflow-hidden rounded-full bg-white/10">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-[#ff0099] via-[#00eaff] to-[#f59e0b] transition-all duration-300"
+              className="h-full rounded-full bg-gradient-to-r from-[#6366f1] via-[#06b6d4] to-[#f59e0b] transition-all duration-300"
               style={{ width: `${Math.min(progress, 100)}%` }}
             />
           </div>
           <p className="mt-8 text-sm text-[#94a3b8]">
-            {t('loaderTipPrefix')} <span className="font-semibold text-[#ff0099]">WASD</span> {t('loaderTipOr')}{' '}
-            <span className="font-semibold text-[#00eaff]">{t('loaderTipArrows')}</span> {t('loaderTipSuffix')}
+            {t('loaderTipPrefix')} <span className="font-semibold text-[#6366f1]">WASD</span> {t('loaderTipOr')}{' '}
+            <span className="font-semibold text-[#06b6d4]">{t('loaderTipArrows')}</span> {t('loaderTipSuffix')}
           </p>
         </div>
       )}
@@ -217,7 +217,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
       {phase === 'intro' && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/90">
           <div className="max-w-lg px-8 text-center">
-            <h1 className="mb-4 text-4xl font-bold bg-gradient-to-br from-[#ff0099] to-[#00eaff] bg-clip-text text-transparent">
+            <h1 className="mb-4 text-4xl font-bold bg-gradient-to-br from-[#6366f1] to-[#06b6d4] bg-clip-text text-transparent">
               {t('instructionsTitle')}
             </h1>
             <p className="mb-8 text-lg text-[#94a3b8]">{t('instructionsSubtitle')}</p>
@@ -228,7 +228,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
                   {['W', 'A', 'S', 'D'].map((key) => (
                     <div
                       key={key}
-                      className="flex h-12 w-12 items-center justify-center rounded-lg border-2 border-[#ff0099] bg-white/10 text-sm font-semibold"
+                      className="flex h-12 w-12 items-center justify-center rounded-lg border-2 border-[#6366f1] bg-white/10 text-sm font-semibold"
                     >
                       {key}
                     </div>
@@ -237,26 +237,26 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
                 <span className="text-[#94a3b8]">{t('moveHint')}</span>
               </div>
               <div className="flex items-center justify-center gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg border-2 border-[#ff0099] bg-white/10 text-sm font-semibold">
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg border-2 border-[#6366f1] bg-white/10 text-sm font-semibold">
                   E
                 </div>
                 <span className="text-[#94a3b8]">{t('interactHint')}</span>
               </div>
               <div className="flex items-center justify-center gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg border-2 border-[#ff0099] bg-white/10 text-sm font-semibold">
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg border-2 border-[#6366f1] bg-white/10 text-sm font-semibold">
                   ESC
                 </div>
                 <span className="text-[#94a3b8]">{t('menuHint')}</span>
               </div>
               {touchControlsEnabled && (
-                <p className="text-sm text-[#ff0099] md:hidden">{t('touchMoveHint')}</p>
+                <p className="text-sm text-[#6366f1] md:hidden">{t('touchMoveHint')}</p>
               )}
             </div>
 
             <button
               type="button"
               onClick={() => setPhase('playing')}
-              className="rounded-full bg-gradient-to-br from-[#ff0099] to-[#00eaff] px-12 py-4 text-xl font-semibold text-white transition-transform hover:scale-105 hover:shadow-[0_10px_40px_rgba(255,0,153,0.4)]"
+              className="rounded-full bg-gradient-to-br from-[#6366f1] to-[#06b6d4] px-12 py-4 text-xl font-semibold text-white transition-transform hover:scale-105 hover:shadow-[0_10px_40px_rgba(99,102,241,0.4)]"
             >
               ▶ {t('start')}
             </button>
@@ -271,11 +271,11 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
           {touchControlsEnabled && <ShowcaseJoystick touchInput={touchInput} />}
 
           <div
-            className={`fixed bottom-32 left-1/2 z-20 max-w-md -translate-x-1/2 rounded-2xl border border-[#ff0099] bg-black/90 px-8 py-6 text-center backdrop-blur-md transition-all duration-300 ${
+            className={`fixed bottom-32 left-1/2 z-20 max-w-md -translate-x-1/2 rounded-2xl border border-[#6366f1] bg-black/90 px-8 py-6 text-center backdrop-blur-md transition-all duration-300 ${
               nearestProject && phase === 'playing' ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-4 opacity-0'
             }`}
           >
-            <h3 className="mb-2 text-xl text-[#ff0099]">{nearestProject?.title}</h3>
+            <h3 className="mb-2 text-xl text-[#6366f1]">{nearestProject?.title}</h3>
             {nearestProject?.imageUrl && phase === 'playing' && (
               <div className="mb-3 overflow-hidden rounded-lg border border-white/10 bg-[#0f172a]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -291,7 +291,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
               href={nearestProject?.link || '#'}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-[#ff0099] px-5 py-2 text-sm text-white hover:bg-[#00eaff]"
+              className="inline-flex items-center gap-2 rounded-full bg-[#6366f1] px-5 py-2 text-sm text-white hover:bg-[#06b6d4]"
             >
               {t('viewProject')}
             </a>
@@ -300,7 +300,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
           <div className="fixed bottom-8 left-1/2 z-20 hidden -translate-x-1/2 items-center gap-8 rounded-2xl border border-white/10 bg-black/80 px-8 py-4 backdrop-blur-md md:flex">
             <div className="flex flex-col items-center gap-2">
               <div className="flex flex-col items-center gap-1">
-                <div className={`flex h-9 w-9 items-center justify-center rounded-lg border text-xs ${activeKeys.w ? 'border-[#ff0099] bg-[#ff0099]' : 'border-white/20 bg-white/10'}`}>
+                <div className={`flex h-9 w-9 items-center justify-center rounded-lg border text-xs ${activeKeys.w ? 'border-[#6366f1] bg-[#6366f1]' : 'border-white/20 bg-white/10'}`}>
                   ↑
                 </div>
                 <div className="flex gap-1">
@@ -312,7 +312,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
                     <div
                       key={key}
                       className={`flex h-9 w-9 items-center justify-center rounded-lg border text-xs ${
-                        activeKeys[key as keyof typeof activeKeys] ? 'border-[#ff0099] bg-[#ff0099]' : 'border-white/20 bg-white/10'
+                        activeKeys[key as keyof typeof activeKeys] ? 'border-[#6366f1] bg-[#6366f1]' : 'border-white/20 bg-white/10'
                       }`}
                     >
                       {label}
@@ -343,18 +343,18 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
       {(phase === 'intro' || phase === 'playing') && (
         <header className="fixed left-0 right-0 top-0 z-[100] flex items-center justify-between bg-gradient-to-b from-black/80 to-transparent p-6">
         <Link href="/" className="flex items-center gap-3 text-white">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#ff0099] to-[#00eaff] text-lg font-bold">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#6366f1] to-[#06b6d4] text-lg font-bold">
             P
           </div>
           <span className="font-semibold">Protos Web</span>
         </Link>
         <div className="absolute left-1/2 hidden -translate-x-1/2 text-2xl font-bold tracking-widest md:block">
-          <span className="bg-gradient-to-br from-[#ff0099] to-[#00eaff] bg-clip-text text-transparent">{t('headerAccent')}</span>{' '}
-          <span className="text-white">{t('headerTitle')}</span>
+          <span className="bg-gradient-to-br from-[#6366f1] to-[#06b6d4] bg-clip-text text-transparent">{t('space')}</span>{' '}
+          <span className="text-white">{t('station')}</span>
         </div>
         <Link
           href="/portfolio"
-          className="flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3 text-sm text-white transition-all hover:border-[#ff0099] hover:bg-[#ff0099]"
+          className="flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3 text-sm text-white transition-all hover:border-[#6366f1] hover:bg-[#6366f1]"
         >
           ← {t('back')}
         </Link>
@@ -363,21 +363,21 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
 
       {showMenu && phase === 'playing' && (
         <div className="fixed inset-0 z-[250] flex flex-col items-center justify-center bg-black/95">
-          <button type="button" onClick={() => setShowMenu(false)} className="absolute right-8 top-8 text-3xl text-white hover:text-[#ff0099]">
+          <button type="button" onClick={() => setShowMenu(false)} className="absolute right-8 top-8 text-3xl text-white hover:text-[#6366f1]">
             ×
           </button>
-          <h2 className="mb-12 text-4xl font-bold bg-gradient-to-br from-[#ff0099] to-[#00eaff] bg-clip-text text-transparent">{t('menuLabel')}</h2>
+          <h2 className="mb-12 text-4xl font-bold bg-gradient-to-br from-[#6366f1] to-[#06b6d4] bg-clip-text text-transparent">{t('menuLabel')}</h2>
           <nav className="flex flex-col gap-6 text-center text-2xl">
-            <Link href="/" className="text-[#94a3b8] hover:text-[#ff0099]">
+            <Link href="/" className="text-[#94a3b8] hover:text-[#6366f1]">
               {tNav('home')}
             </Link>
-            <Link href="/usluge" className="text-[#94a3b8] hover:text-[#ff0099]">
+            <Link href="/usluge" className="text-[#94a3b8] hover:text-[#6366f1]">
               {tNav('services')}
             </Link>
-            <Link href="/portfolio" className="text-[#94a3b8] hover:text-[#ff0099]">
+            <Link href="/portfolio" className="text-[#94a3b8] hover:text-[#6366f1]">
               {tNav('portfolio')}
             </Link>
-            <Link href="/kontakt" className="text-[#94a3b8] hover:text-[#ff0099]">
+            <Link href="/kontakt" className="text-[#94a3b8] hover:text-[#6366f1]">
               {tNav('contact')}
             </Link>
           </nav>

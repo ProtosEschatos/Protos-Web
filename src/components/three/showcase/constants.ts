@@ -5,8 +5,9 @@ export const SHOWCASE_CONFIG = {
   pathWidth: 18,
   frameSpacing: 14,
   characterHeight: 2,
-  horizonZ: -52,
-  sunY: 14,
+  horizonZ: -58,
+  sunY: 11,
+  sunRadius: 34,
 } as const
 
 export const PROJECT_LINKS = [

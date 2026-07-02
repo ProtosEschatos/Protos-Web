@@ -53,8 +53,8 @@ const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
     <div className="absolute inset-0 z-[1]">
       <SafeCanvas
         mountKey={mountKey}
-        shadows
-        camera={{ fov: 75, near: 0.1, far: 1000 }}
+        camera={{ fov: 70, near: 0.1, far: 1000 }}
+        gl={{ toneMapping: THREE.NoToneMapping }}
         onContextLost={onContextLost}
         fallback={null}
       >

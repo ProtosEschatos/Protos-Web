@@ -238,8 +238,8 @@ export function ShowcaseScene({
 
   return (
     <>
-      <color attach="background" args={['#120028']} />
-      <fog attach="fog" args={['#1a0038', 25, 95]} />
+      <color attach="background" args={['#0a0018']} />
+      <fog attach="fog" args={['#1a0038', 45, 130]} />
       <SynthwaveLighting />
       <SynthwaveEnvironment />
       {projects.map((project, index) => (

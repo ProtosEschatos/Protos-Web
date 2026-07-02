@@ -2,168 +2,145 @@
 
 import { useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { Float } from '@react-three/drei'
+import { Billboard, Float } from '@react-three/drei'
 import * as THREE from 'three'
 import { SHOWCASE_CONFIG } from './constants'
+import { createPalmTexture, createStarField, createSunTexture } from './synthwaveTextures'
+
+const GRID_LOOP_SECONDS = 10
+const GRID_CELL = 1 / 0.11
 
 const GRID_VERTEX = `
   varying vec3 vWorldPos;
   void main() {
-    vec4 worldPosition = modelMatrix * vec4(position, 1.0);
-    vWorldPos = worldPosition.xyz;
+    vec4 wp = modelMatrix * vec4(position, 1.0);
+    vWorldPos = wp.xyz;
     gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
   }
 `
 
-const GRID_LOOP_SECONDS = 10
-const GRID_SCROLL_RANGE = 24
-
 const GRID_FRAGMENT = `
   varying vec3 vWorldPos;
   uniform float uScroll;
+  uniform float uHorizonZ;
 
   void main() {
-    float z = vWorldPos.z;
     float x = vWorldPos.x;
+    float z = vWorldPos.z;
 
-    float depth = max(0.8, -z + 36.0);
-    float persp = 1.0 / (depth * 0.06);
+    float depth = max(0.35, z - uHorizonZ);
+    float animZ = z - uScroll;
 
-    float zAnim = depth + uScroll;
-    float cellZ = abs(fract(zAnim * 0.22) - 0.5);
-    float cellX = abs(fract(x * persp * 0.55) - 0.5);
+    float mag = abs(fract(animZ * 0.11) - 0.5);
+    mag = 1.0 - smoothstep(0.0, 0.018, mag);
 
-    float lineZ = 1.0 - smoothstep(0.0, 0.04, cellZ);
-    float lineX = 1.0 - smoothstep(0.0, 0.04, cellX);
+    float persp = 14.0 / depth;
+    float cyan = abs(fract(x * persp) - 0.5);
+    cyan = 1.0 - smoothstep(0.0, 0.014, cyan);
 
-    float fade = clamp(depth * 0.04, 0.0, 1.0) * clamp(1.0 - depth * 0.006, 0.0, 1.0);
+    float horizonFade = smoothstep(0.0, 6.0, depth);
+    float farFade = 1.0 - smoothstep(95.0, 160.0, depth);
+    float sideFade = 1.0 - smoothstep(28.0, 55.0, abs(x));
+    float fade = horizonFade * farFade * sideFade;
 
-    vec3 base = vec3(0.02, 0.0, 0.07);
-    vec3 magenta = vec3(1.0, 0.05, 0.65);
-    vec3 cyan = vec3(0.05, 0.95, 1.0);
-
+    vec3 base = vec3(0.006, 0.0, 0.028);
     vec3 col = base;
-    col += magenta * lineX * fade * 1.25;
-    col += cyan * lineZ * fade * 1.25;
+    col += vec3(1.0, 0.06, 0.78) * mag * fade * 2.1;
+    col += vec3(0.08, 0.98, 1.0) * cyan * fade * 2.0;
 
-    float horizonGlow = exp(-abs(z + 48.0) * 0.05) * 0.4;
-    col += vec3(1.0, 0.35, 0.55) * horizonGlow;
+    float horizonGlow = exp(-abs(z - uHorizonZ - 1.5) * 0.22);
+    col += vec3(1.0, 0.35, 0.62) * horizonGlow * 0.45;
+    col += vec3(1.0, 0.55, 0.2) * horizonGlow * 0.12;
 
     gl_FragColor = vec4(col, 1.0);
   }
 `
 
-function createSunTexture() {
-  const canvas = document.createElement('canvas')
-  canvas.width = 512
-  canvas.height = 512
-  const ctx = canvas.getContext('2d')
-  if (!ctx) return null
-
-  const grad = ctx.createLinearGradient(0, 0, 0, 512)
-  grad.addColorStop(0, '#ffb347')
-  grad.addColorStop(0.45, '#ff6b9d')
-  grad.addColorStop(1, '#ff8800')
-  ctx.fillStyle = grad
-  ctx.beginPath()
-  ctx.arc(256, 280, 210, 0, Math.PI * 2)
-  ctx.fill()
-
-  ctx.fillStyle = '#0d0020'
-  for (let y = 300; y < 512; y += 10) {
-    ctx.fillRect(46, y, 420, 5)
-  }
-
-  const texture = new THREE.CanvasTexture(canvas)
-  texture.colorSpace = THREE.SRGBColorSpace
-  return texture
-}
-
 function SynthwaveGrid() {
   const materialRef = useRef<THREE.ShaderMaterial>(null)
+  const { horizonZ } = SHOWCASE_CONFIG
 
   const uniforms = useMemo(
     () => ({
       uScroll: { value: 0 },
+      uHorizonZ: { value: horizonZ },
     }),
-    [],
+    [horizonZ],
   )
 
   useFrame((state) => {
-    if (materialRef.current) {
-      const loopT = (state.clock.elapsedTime % GRID_LOOP_SECONDS) / GRID_LOOP_SECONDS
-      materialRef.current.uniforms.uScroll.value = loopT * GRID_SCROLL_RANGE
-    }
+    if (!materialRef.current) return
+    const loop = (state.clock.elapsedTime % GRID_LOOP_SECONDS) / GRID_LOOP_SECONDS
+    materialRef.current.uniforms.uScroll.value = loop * GRID_CELL
   })
 
   return (
-    <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow position={[0, 0.001, 0]}>
-      <planeGeometry args={[420, 420, 1, 1]} />
-      <shaderMaterial
-        ref={materialRef}
-        uniforms={uniforms}
-        vertexShader={GRID_VERTEX}
-        fragmentShader={GRID_FRAGMENT}
-      />
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
+      <planeGeometry args={[500, 500, 1, 1]} />
+      <shaderMaterial ref={materialRef} uniforms={uniforms} vertexShader={GRID_VERTEX} fragmentShader={GRID_FRAGMENT} />
     </mesh>
   )
 }
 
 function SynthwaveSun() {
   const texture = useMemo(() => createSunTexture(), [])
-  const { horizonZ, sunY } = SHOWCASE_CONFIG
+  const { horizonZ, sunY, sunRadius } = SHOWCASE_CONFIG
 
   return (
     <group position={[0, sunY, horizonZ]}>
-      <mesh renderOrder={-2}>
-        <circleGeometry args={[16, 64]} />
-        <meshBasicMaterial map={texture} transparent toneMapped={false} depthWrite={false} />
-      </mesh>
-      <mesh position={[0, 0, 0.5]} renderOrder={-3}>
-        <circleGeometry args={[22, 64]} />
-        <meshBasicMaterial color={0xff66aa} transparent opacity={0.12} depthWrite={false} />
-      </mesh>
-    </group>
-  )
-}
-
-function PalmSilhouette({ position }: { position: [number, number, number] }) {
-  return (
-    <group position={position}>
-      <mesh position={[0, 2.5, 0]}>
-        <cylinderGeometry args={[0.18, 0.35, 5, 6]} />
-        <meshBasicMaterial color={0x000000} />
-      </mesh>
-      {[
-        { rot: [0.4, 0, 0.5] as [number, number, number], pos: [0, 4.8, 0] as [number, number, number] },
-        { rot: [0.5, 0.8, 0.2] as [number, number, number], pos: [0, 4.6, 0] as [number, number, number] },
-        { rot: [0.45, -0.9, -0.3] as [number, number, number], pos: [0, 4.7, 0] as [number, number, number] },
-        { rot: [0.35, 0.3, -0.8] as [number, number, number], pos: [0, 4.5, 0] as [number, number, number] },
-      ].map((leaf, i) => (
-        <mesh key={i} position={leaf.pos} rotation={leaf.rot}>
-          <boxGeometry args={[0.12, 2.8, 0.35]} />
-          <meshBasicMaterial color={0x000000} />
+      <Billboard follow lockX={false} lockY={false} lockZ={false}>
+        <mesh renderOrder={-5}>
+          <circleGeometry args={[sunRadius * 1.55, 96]} />
+          <meshBasicMaterial color={0xff3399} transparent opacity={0.14} depthWrite={false} toneMapped={false} />
         </mesh>
-      ))}
+        <mesh renderOrder={-4}>
+          <circleGeometry args={[sunRadius * 1.25, 96]} />
+          <meshBasicMaterial color={0xff8800} transparent opacity={0.2} depthWrite={false} toneMapped={false} />
+        </mesh>
+        <mesh renderOrder={-3}>
+          <circleGeometry args={[sunRadius, 96]} />
+          <meshBasicMaterial map={texture ?? undefined} transparent toneMapped={false} depthWrite={false} />
+        </mesh>
+      </Billboard>
     </group>
   )
 }
 
-function PalmRows() {
-  const { pathLength, pathWidth } = SHOWCASE_CONFIG
+function PalmRow() {
+  const texture = useMemo(() => createPalmTexture(), [])
+  const { pathLength, pathWidth, horizonZ } = SHOWCASE_CONFIG
+
   const palms = useMemo(() => {
-    const items: Array<[number, number, number]> = []
-    for (let z = pathLength / 2 - 4; z >= -pathLength / 2 + 4; z -= 7) {
-      items.push([-pathWidth / 2 - 3.5, 0, z])
-      items.push([pathWidth / 2 + 3.5, 0, z + 3.5])
+    const items: Array<{ x: number; z: number; scale: number }> = []
+    const startZ = pathLength / 2 - 2
+    const endZ = horizonZ + 8
+    for (let z = startZ; z >= endZ; z -= 5.5) {
+      const depthT = (z - horizonZ) / (startZ - horizonZ)
+      const scale = 0.35 + depthT * 2.4
+      items.push({ x: -(pathWidth / 2 + 4.5), z, scale })
+      items.push({ x: pathWidth / 2 + 4.5, z: z - 2.75, scale: scale * 0.92 })
     }
     return items
-  }, [pathLength, pathWidth])
+  }, [pathLength, pathWidth, horizonZ])
+
+  if (!texture) return null
 
   return (
     <>
-      {palms.map((pos, i) => (
-        <PalmSilhouette key={i} position={pos} />
+      {palms.map((palm, i) => (
+        <Billboard key={i} position={[palm.x, palm.scale * 4.2, palm.z]} follow lockX={false} lockY lockZ={false}>
+          <mesh renderOrder={-1}>
+            <planeGeometry args={[palm.scale * 2.2, palm.scale * 5.5]} />
+            <meshBasicMaterial
+              map={texture}
+              transparent
+              alphaTest={0.02}
+              depthWrite={false}
+              toneMapped={false}
+              side={THREE.DoubleSide}
+            />
+          </mesh>
+        </Billboard>
       ))}
     </>
   )
@@ -172,28 +149,32 @@ function PalmRows() {
 function WireframeMountains() {
   const { horizonZ, pathWidth } = SHOWCASE_CONFIG
 
-  const peaks = useMemo(
-    () => [
-      { x: -pathWidth * 1.2, z: horizonZ + 8, h: 10, w: 14 },
-      { x: -pathWidth * 0.5, z: horizonZ + 4, h: 14, w: 18 },
-      { x: pathWidth * 0.6, z: horizonZ + 6, h: 12, w: 16 },
-      { x: pathWidth * 1.3, z: horizonZ + 10, h: 9, w: 13 },
-    ],
-    [horizonZ, pathWidth],
-  )
+  const mountains = useMemo(() => {
+    const peaks = [
+      { x: -pathWidth * 1.45, z: horizonZ + 14, h: 16, w: 22 },
+      { x: -pathWidth * 0.75, z: horizonZ + 8, h: 22, w: 28 },
+      { x: -pathWidth * 0.15, z: horizonZ + 11, h: 18, w: 24 },
+      { x: pathWidth * 0.35, z: horizonZ + 9, h: 20, w: 26 },
+      { x: pathWidth * 1.05, z: horizonZ + 13, h: 17, w: 23 },
+      { x: pathWidth * 1.65, z: horizonZ + 16, h: 14, w: 20 },
+    ]
+
+    return peaks.map((peak) => {
+      const geo = new THREE.ConeGeometry(peak.w * 0.5, peak.h, 4, 1)
+      return { peak, geo, edges: new THREE.EdgesGeometry(geo) }
+    })
+  }, [horizonZ, pathWidth])
 
   return (
     <>
-      {peaks.map((peak, i) => (
-        <group key={i} position={[peak.x, peak.h * 0.35, peak.z]}>
-          <mesh>
-            <coneGeometry args={[peak.w * 0.5, peak.h, 4, 1]} />
-            <meshBasicMaterial color={0x120028} wireframe transparent opacity={0.85} />
+      {mountains.map(({ peak, geo, edges }, i) => (
+        <group key={i} position={[peak.x, peak.h * 0.42, peak.z]}>
+          <mesh geometry={geo}>
+            <meshBasicMaterial color={0x080018} transparent opacity={0.95} depthWrite={false} />
           </mesh>
-          <mesh scale={[1.02, 1.02, 1.02]}>
-            <coneGeometry args={[peak.w * 0.5, peak.h, 4, 1]} />
-            <meshBasicMaterial color={0x00eaff} wireframe transparent opacity={0.35} />
-          </mesh>
+          <lineSegments geometry={edges} renderOrder={1}>
+            <lineBasicMaterial color={0x00eeff} transparent opacity={0.85} toneMapped={false} />
+          </lineSegments>
         </group>
       ))}
     </>
@@ -201,35 +182,52 @@ function WireframeMountains() {
 }
 
 function FloatingShapes() {
+  const groupRef = useRef<THREE.Group>(null)
+
   const shapes = useMemo(
     () => [
-      { pos: [-6, 5, -8] as [number, number, number], geo: 'box' as const, size: 1.2, color: 0xff0099 },
-      { pos: [7, 7, -18] as [number, number, number], geo: 'tetra' as const, size: 1.4, color: 0x00eaff },
-      { pos: [-8, 6, -28] as [number, number, number], geo: 'ico' as const, size: 1.1, color: 0xff0099 },
-      { pos: [5, 8, -38] as [number, number, number], geo: 'box' as const, size: 1.5, color: 0x00eaff },
-      { pos: [-4, 9, -48] as [number, number, number], geo: 'tetra' as const, size: 1.3, color: 0xff0099 },
+      { pos: [-7, 6, -6] as [number, number, number], geo: 'box' as const, size: 1.6, color: 0xff0099 },
+      { pos: [8, 8, -14] as [number, number, number], geo: 'tetra' as const, size: 1.8, color: 0x00eeff },
+      { pos: [-9, 7, -24] as [number, number, number], geo: 'ico' as const, size: 1.5, color: 0xff0099 },
+      { pos: [6, 9, -34] as [number, number, number], geo: 'box' as const, size: 2.0, color: 0x00eeff },
+      { pos: [-5, 10, -44] as [number, number, number], geo: 'tetra' as const, size: 1.7, color: 0xff0099 },
+      { pos: [10, 6, -52] as [number, number, number], geo: 'ico' as const, size: 1.4, color: 0x00eeff },
     ],
     [],
   )
 
+  useFrame((state) => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y = state.clock.elapsedTime * 0.04
+    }
+  })
+
   return (
-    <>
+    <group ref={groupRef}>
       {shapes.map((shape, i) => (
-        <Float key={i} speed={1.2} rotationIntensity={0.4} floatIntensity={0.6}>
+        <Float key={i} speed={1.4} rotationIntensity={0.55} floatIntensity={0.75}>
           <mesh position={shape.pos}>
             {shape.geo === 'box' && <boxGeometry args={[shape.size, shape.size, shape.size]} />}
             {shape.geo === 'tetra' && <tetrahedronGeometry args={[shape.size, 0]} />}
             {shape.geo === 'ico' && <icosahedronGeometry args={[shape.size, 0]} />}
-            <meshBasicMaterial color={shape.color} wireframe transparent opacity={0.75} />
+            <meshBasicMaterial color={shape.color} wireframe transparent opacity={0.9} toneMapped={false} />
+          </mesh>
+          <mesh position={shape.pos} scale={0.55}>
+            {shape.geo === 'box' && <boxGeometry args={[shape.size, shape.size, shape.size]} />}
+            {shape.geo === 'tetra' && <tetrahedronGeometry args={[shape.size, 0]} />}
+            {shape.geo === 'ico' && <icosahedronGeometry args={[shape.size, 0]} />}
+            <meshBasicMaterial color={shape.color} transparent opacity={0.18} toneMapped={false} />
           </mesh>
         </Float>
       ))}
-    </>
+    </group>
   )
 }
 
-function SynthwaveSkyDome() {
-  const material = useMemo(
+function SynthwaveSky() {
+  const starPositions = useMemo(() => createStarField(), [])
+
+  const skyMaterial = useMemo(
     () =>
       new THREE.ShaderMaterial({
         side: THREE.BackSide,
@@ -246,10 +244,10 @@ function SynthwaveSkyDome() {
           varying vec3 vPos;
           void main() {
             float h = clamp(vPos.y * 0.5 + 0.5, 0.0, 1.0);
-            vec3 top = vec3(0.07, 0.0, 0.18);
-            vec3 mid = vec3(0.35, 0.05, 0.45);
-            vec3 horizon = vec3(1.0, 0.35, 0.55);
-            vec3 col = mix(mix(top, mid, smoothstep(0.0, 0.55, h)), horizon, smoothstep(0.45, 1.0, h));
+            vec3 zenith = vec3(0.04, 0.0, 0.14);
+            vec3 mid = vec3(0.28, 0.04, 0.42);
+            vec3 dusk = vec3(0.95, 0.28, 0.52);
+            vec3 col = mix(mix(zenith, mid, smoothstep(0.0, 0.62, h)), dusk, smoothstep(0.38, 0.92, h));
             gl_FragColor = vec4(col, 1.0);
           }
         `,
@@ -258,8 +256,26 @@ function SynthwaveSkyDome() {
   )
 
   return (
-    <mesh scale={[500, 500, 500]} material={material}>
-      <sphereGeometry args={[1, 32, 32]} />
+    <>
+      <mesh scale={[480, 480, 480]} material={skyMaterial}>
+        <sphereGeometry args={[1, 48, 48]} />
+      </mesh>
+      <points renderOrder={-6}>
+        <bufferGeometry>
+          <bufferAttribute attach="attributes-position" args={[starPositions, 3]} />
+        </bufferGeometry>
+        <pointsMaterial color={0xffffff} size={0.9} transparent opacity={0.75} sizeAttenuation toneMapped={false} />
+      </points>
+    </>
+  )
+}
+
+function HorizonGlow() {
+  const { horizonZ } = SHOWCASE_CONFIG
+  return (
+    <mesh position={[0, 0.02, horizonZ + 1]} rotation={[-Math.PI / 2, 0, 0]} renderOrder={-2}>
+      <planeGeometry args={[120, 8]} />
+      <meshBasicMaterial color={0xff4488} transparent opacity={0.22} depthWrite={false} toneMapped={false} />
     </mesh>
   )
 }
@@ -269,12 +285,12 @@ export function SynthwaveLighting() {
 
   return (
     <>
-      <ambientLight color={0x4a2060} intensity={0.55} />
-      <hemisphereLight args={[0xff66aa, 0x120028, 0.45]} />
-      <directionalLight position={[0, 20, horizonZ + 10]} intensity={0.35} color={0xff8800} />
-      <pointLight position={[0, 8, 0]} color={0xff0099} intensity={0.5} distance={40} />
-      <pointLight position={[-pathWidth, 3, -pathLength / 4]} color={0x00eaff} intensity={0.35} distance={35} />
-      <pointLight position={[pathWidth, 3, -pathLength / 4]} color={0xff0099} intensity={0.35} distance={35} />
+      <ambientLight color={0x552266} intensity={0.35} />
+      <hemisphereLight args={[0xff66aa, 0x120028, 0.55]} />
+      <directionalLight position={[0, 30, horizonZ + 20]} intensity={0.45} color={0xff9933} />
+      <pointLight position={[0, 12, horizonZ + 15]} color={0xff6600} intensity={1.2} distance={120} decay={1.2} />
+      <pointLight position={[-pathWidth, 4, -pathLength * 0.15]} color={0x00eeff} intensity={0.55} distance={50} />
+      <pointLight position={[pathWidth, 4, -pathLength * 0.15]} color={0xff0099} intensity={0.55} distance={50} />
     </>
   )
 }
@@ -282,11 +298,12 @@ export function SynthwaveLighting() {
 export function SynthwaveEnvironment() {
   return (
     <group>
-      <SynthwaveSkyDome />
+      <SynthwaveSky />
       <SynthwaveGrid />
+      <HorizonGlow />
       <SynthwaveSun />
       <WireframeMountains />
-      <PalmRows />
+      <PalmRow />
       <FloatingShapes />
     </group>
   )

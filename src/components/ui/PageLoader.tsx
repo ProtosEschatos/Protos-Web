@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
-import { acceptCookieConsent, COOKIE_STORAGE_KEY } from '@/lib/cookie-consent'
+import { acceptCookieConsent } from '@/lib/cookie-consent'
 
 const SESSION_KEY = 'protos-boot-gate-v4'
 const BOOT_BG = '/loader/boot-bg.jpg'
@@ -104,12 +104,8 @@ export default function PageLoader() {
 
   const handleEnter = useCallback(() => {
     if (!readyToEnter) return
-    if (typeof window !== 'undefined' && localStorage.getItem(COOKIE_STORAGE_KEY) === 'accepted') {
-      finishBoot()
-    } else {
-      setShowCookieModal(true)
-    }
-  }, [readyToEnter, finishBoot])
+    setShowCookieModal(true)
+  }, [readyToEnter])
 
   useEffect(() => {
     if (!loading || !readyToEnter || showCookieModal) return

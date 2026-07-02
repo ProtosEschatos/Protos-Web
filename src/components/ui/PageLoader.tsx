@@ -6,104 +6,49 @@ import { useTranslations, useLocale } from 'next-intl'
 import { saveCookiePreferences } from '@/lib/cookie-consent'
 import { buildLocalePath } from '@/lib/seo'
 
-export const BOOT_SESSION_KEY = 'protos-boot-gate-v9'
+export const BOOT_SESSION_KEY = 'protos-boot-gate-v10'
 export const BOOT_COMPLETE_EVENT = 'protos-boot-complete'
 const BOOT_VIDEO = '/loader/boot-bg.mp4'
-const BOOT_POSTER = '/loader/boot-bg.jpg'
-const LOOP_CROSSFADE_SEC = 1.1
 
 function BootVideoBackground({ active }: { active: boolean }) {
-  const videoARef = useRef<HTMLVideoElement>(null)
-  const videoBRef = useRef<HTMLVideoElement>(null)
-  const leadingIsARef = useRef(true)
-  const crossfadingRef = useRef(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
     if (!active) return
+    const video = videoRef.current
+    if (!video) return
 
-    const videoA = videoARef.current
-    const videoB = videoBRef.current
-    if (!videoA || !videoB) return
+    video.muted = true
+    video.playsInline = true
+    video.loop = true
+    video.setAttribute('playsinline', '')
+    video.setAttribute('webkit-playsinline', '')
 
-    const getLeading = () => (leadingIsARef.current ? videoA : videoB)
-    const getTrailing = () => (leadingIsARef.current ? videoB : videoA)
-
-    const resetVideo = (video: HTMLVideoElement) => {
-      video.pause()
-      video.currentTime = 0
-      video.style.opacity = '0'
+    const play = () => {
+      void video.play().catch(() => {})
     }
 
-    const startCrossfade = () => {
-      if (crossfadingRef.current) return
-
-      const leading = getLeading()
-      const trailing = getTrailing()
-      const duration = leading.duration
-      if (!duration || duration <= LOOP_CROSSFADE_SEC * 2) return
-
-      crossfadingRef.current = true
-      trailing.currentTime = 0
-      void trailing.play()
-
-      trailing.style.transition = `opacity ${LOOP_CROSSFADE_SEC}s ease-in-out`
-      leading.style.transition = `opacity ${LOOP_CROSSFADE_SEC}s ease-in-out`
-      trailing.style.opacity = '1'
-      leading.style.opacity = '0'
-
-      window.setTimeout(() => {
-        resetVideo(leading)
-        leadingIsARef.current = !leadingIsARef.current
-        crossfadingRef.current = false
-      }, LOOP_CROSSFADE_SEC * 1000)
-    }
-
-    const onTimeUpdate = (event: Event) => {
-      const target = event.target as HTMLVideoElement
-      const leading = getLeading()
-      if (target !== leading || crossfadingRef.current) return
-
-      const duration = leading.duration
-      if (duration && leading.currentTime >= duration - LOOP_CROSSFADE_SEC) {
-        startCrossfade()
-      }
-    }
-
-    for (const video of [videoA, videoB]) {
-      video.muted = true
-      video.playsInline = true
-      video.setAttribute('playsinline', '')
-      video.setAttribute('webkit-playsinline', '')
-      video.preload = 'auto'
-      video.addEventListener('timeupdate', onTimeUpdate)
-    }
-
-    videoA.style.opacity = '1'
-    videoB.style.opacity = '0'
-
-    const playLeading = () => {
-      void getLeading().play().catch(() => {})
-    }
-
-    if (videoA.readyState >= 1) playLeading()
-    else videoA.addEventListener('loadedmetadata', playLeading, { once: true })
+    if (video.readyState >= 2) play()
+    else video.addEventListener('canplay', play, { once: true })
 
     return () => {
-      for (const video of [videoA, videoB]) {
-        video.removeEventListener('timeupdate', onTimeUpdate)
-        video.pause()
-      }
-      crossfadingRef.current = false
+      video.removeEventListener('canplay', play)
+      video.pause()
     }
   }, [active])
 
-  const videoClass = 'absolute inset-0 h-full w-full object-cover will-change-[opacity]'
-
   return (
     <div className="absolute inset-0 overflow-hidden bg-[#020818] pointer-events-none" aria-hidden>
-      <video ref={videoARef} src={BOOT_VIDEO} poster={BOOT_POSTER} className={videoClass} />
-      <video ref={videoBRef} src={BOOT_VIDEO} className={videoClass} aria-hidden />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020818]/35" />
+      <video
+        ref={videoRef}
+        src={BOOT_VIDEO}
+        className="absolute inset-0 h-full w-full object-cover"
+        preload="auto"
+        muted
+        playsInline
+        loop
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020818]/30" />
     </div>
   )
 }

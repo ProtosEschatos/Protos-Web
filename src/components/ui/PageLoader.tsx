@@ -7,159 +7,110 @@ import gsap from 'gsap'
 import { saveCookiePreferences } from '@/lib/cookie-consent'
 import { buildLocalePath } from '@/lib/seo'
 
-export const BOOT_SESSION_KEY = 'protos-boot-gate-v5'
+export const BOOT_SESSION_KEY = 'protos-boot-gate-v6'
 export const BOOT_COMPLETE_EVENT = 'protos-boot-complete'
-const BOOT_BG = '/loader/boot-bg.jpg'
+const BOOT_BASE = '/loader/boot-bg-base.jpg'
 
-type JellyfishSpec = {
+type ImageJellyfishSpec = {
   id: string
-  w: number
-  top: string
+  src: string
+  left: number
+  top: number
+  width: number
+  height: number
+  driftX: number
+  driftY: number
+  rotate: number
   duration: number
   delay: number
-  from: 'left' | 'right'
-  wobble: number
+  pulse: number
 }
 
-const JELLYFISH: JellyfishSpec[] = [
-  { id: 'a', w: 92, top: '14%', duration: 19, delay: 0, from: 'left', wobble: 36 },
-  { id: 'b', w: 118, top: '6%', duration: 24, delay: 3, from: 'right', wobble: 48 },
-  { id: 'c', w: 68, top: '28%', duration: 16, delay: 6, from: 'left', wobble: 28 },
-  { id: 'd', w: 84, top: '52%', duration: 21, delay: 2, from: 'right', wobble: 40 },
-  { id: 'e', w: 96, top: '44%', duration: 18, delay: 8, from: 'left', wobble: 32 },
-  { id: 'f', w: 58, top: '68%', duration: 14, delay: 5, from: 'right', wobble: 24 },
-  { id: 'g', w: 74, top: '78%', duration: 20, delay: 10, from: 'left', wobble: 30 },
+const IMAGE_JELLYFISH: ImageJellyfishSpec[] = [
+  { id: 'jf-1', src: '/loader/jf-1.png', left: 2, top: 2, width: 20, height: 28, driftX: 36, driftY: 22, rotate: 6, duration: 11, delay: 0, pulse: 0.07 },
+  { id: 'jf-2', src: '/loader/jf-2.png', left: 18, top: 30, width: 32, height: 62, driftX: 52, driftY: 38, rotate: 5, duration: 16, delay: 0.8, pulse: 0.09 },
+  { id: 'jf-3', src: '/loader/jf-3.png', left: 48, top: 42, width: 18, height: 28, driftX: 40, driftY: 26, rotate: 8, duration: 10, delay: 2.2, pulse: 0.06 },
+  { id: 'jf-4', src: '/loader/jf-4.png', left: 62, top: 2, width: 28, height: 32, driftX: -44, driftY: 24, rotate: 7, duration: 13, delay: 1.4, pulse: 0.08 },
+  { id: 'jf-5', src: '/loader/jf-5.png', left: 10, top: 28, width: 16, height: 22, driftX: 30, driftY: 20, rotate: 6, duration: 9, delay: 3, pulse: 0.06 },
+  { id: 'jf-6', src: '/loader/jf-6.png', left: 72, top: 55, width: 22, height: 30, driftX: -38, driftY: 28, rotate: 9, duration: 12, delay: 2.6, pulse: 0.07 },
 ]
 
-const TENTACLE_X = [22, 34, 50, 66, 78]
-
-function BootJellyfishLayer({ active }: { active: boolean }) {
-  const layerRef = useRef<HTMLDivElement>(null)
+function BootBackgroundStage({ active }: { active: boolean }) {
+  const stageRef = useRef<HTMLDivElement>(null)
 
   useLayoutEffect(() => {
-    if (!active || !layerRef.current) return
+    if (!active || !stageRef.current) return
 
     const ctx = gsap.context(() => {
-      JELLYFISH.forEach((spec) => {
-        const root = layerRef.current!.querySelector<HTMLElement>(`[data-jf-id="${spec.id}"]`)
-        const body = root?.querySelector<HTMLElement>('[data-jf-body]')
-        const tentacles = root?.querySelector<HTMLElement>('[data-jf-tentacles]')
-        if (!root || !body || !tentacles) return
+      IMAGE_JELLYFISH.forEach((spec) => {
+        const el = stageRef.current!.querySelector<HTMLElement>(`[data-jf-id="${spec.id}"]`)
+        if (!el) return
 
-        const swimRight = spec.from === 'left'
-        const travel = swimRight ? '135vw' : '-135vw'
+        gsap.set(el, { x: 0, y: 0, rotate: 0, force3D: true, transformOrigin: '50% 18%' })
 
-        gsap.set(root, { x: 0, y: 0, force3D: true })
-        gsap.set(body, { transformOrigin: '50% 28%', force3D: true })
-        gsap.set(tentacles, { transformOrigin: '50px 52px', force3D: true })
-
-        gsap.to(root, {
-          x: travel,
+        gsap.to(el, {
+          x: spec.driftX,
+          y: -spec.driftY,
+          rotate: spec.rotate,
           duration: spec.duration,
-          ease: 'none',
-          repeat: -1,
-          delay: spec.delay,
-        })
-
-        gsap.to(root, {
-          y: -spec.wobble,
-          duration: spec.duration * 0.28,
           ease: 'sine.inOut',
           repeat: -1,
           yoyo: true,
           delay: spec.delay,
         })
 
-        gsap.to(body, {
-          scaleY: 0.68,
-          scaleX: 1.12,
-          rotate: swimRight ? -4 : 4,
-          duration: 0.42,
+        gsap.to(el, {
+          scaleY: 1 + spec.pulse,
+          scaleX: 1 - spec.pulse * 0.35,
+          duration: 0.55,
           ease: 'power2.inOut',
           repeat: -1,
           yoyo: true,
+          delay: spec.delay * 0.4,
         })
 
-        gsap.to(tentacles, {
-          rotate: 8,
-          x: 3,
-          duration: 0.35,
+        gsap.to(el, {
+          filter: 'brightness(1.12)',
+          duration: 1.8,
           ease: 'sine.inOut',
           repeat: -1,
           yoyo: true,
-        })
-
-        TENTACLE_X.forEach((x, i) => {
-          const tentacle = tentacles.querySelector<SVGPathElement>(`[data-jf-t="${x}"]`)
-          if (!tentacle) return
-          gsap.to(tentacle, {
-            attr: {
-              d: `M${x} 52 Q${x + (i % 2 === 0 ? -8 : 8)} 96 ${x + (i % 2 === 0 ? 8 : -8)} 128`,
-            },
-            duration: 0.45 + i * 0.03,
-            ease: 'sine.inOut',
-            repeat: -1,
-            yoyo: true,
-            delay: i * 0.05,
-          })
+          delay: spec.delay,
         })
       })
-    }, layerRef)
+    }, stageRef)
 
     return () => ctx.revert()
   }, [active])
 
-  if (!active) return null
-
   return (
-    <div ref={layerRef} className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
-      {JELLYFISH.map((spec) => {
-        const swimRight = spec.from === 'left'
-        const gradId = `jf-${spec.id}`
-
-        return (
-          <div
-            key={spec.id}
-            data-jf-id={spec.id}
-            className="absolute will-change-transform"
-            style={{
-              top: spec.top,
-              width: spec.w,
-              left: swimRight ? '-18vw' : undefined,
-              right: swimRight ? undefined : '-18vw',
-            }}
-          >
-            <div data-jf-body>
-              <svg
-                viewBox="0 0 100 130"
-                className="w-full h-auto drop-shadow-[0_0_18px_rgba(34,211,238,0.55)]"
-                style={{ transform: swimRight ? 'scaleX(1)' : 'scaleX(-1)' }}
-              >
-                <defs>
-                  <radialGradient id={gradId} cx="50%" cy="35%" r="55%">
-                    <stop offset="0%" stopColor="#a5f3fc" stopOpacity="0.95" />
-                    <stop offset="55%" stopColor="#22d3ee" stopOpacity="0.65" />
-                    <stop offset="100%" stopColor="#0891b2" stopOpacity="0" />
-                  </radialGradient>
-                </defs>
-                <ellipse cx="50" cy="32" rx="36" ry="26" fill={`url(#${gradId})`} />
-                <g data-jf-tentacles>
-                  {TENTACLE_X.map((x, i) => (
-                    <path
-                      key={x}
-                      data-jf-t={`${x}`}
-                      d={`M${x} 52 Q${x + (i % 2 === 0 ? 10 : -10)} 92 ${x + (i % 2 === 0 ? -6 : 6)} 128`}
-                      stroke="rgba(103,232,249,0.6)"
-                      strokeWidth="1.8"
-                      fill="none"
-                    />
-                  ))}
-                </g>
-              </svg>
+    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
+      <div
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+        style={{
+          width: 'max(100vw, 177.78vh)',
+          height: 'max(100vh, 56.25vw)',
+        }}
+      >
+        <div ref={stageRef} className="relative h-full w-full bg-cover bg-center" style={{ backgroundImage: `url(${BOOT_BASE})` }}>
+          {IMAGE_JELLYFISH.map((spec) => (
+            <div
+              key={spec.id}
+              data-jf-id={spec.id}
+              className="absolute will-change-transform"
+              style={{
+                left: `${spec.left}%`,
+                top: `${spec.top}%`,
+                width: `${spec.width}%`,
+                height: `${spec.height}%`,
+              }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={spec.src} alt="" className="h-full w-full object-contain object-left-top" draggable={false} />
             </div>
-          </div>
-        )
-      })}
+          ))}
+        </div>
+      </div>
     </div>
   )
 }
@@ -181,14 +132,13 @@ export default function PageLoader() {
 
   useEffect(() => {
     if (!loading) return
-    const link = document.createElement('link')
-    link.rel = 'preload'
-    link.as = 'image'
-    link.href = BOOT_BG
-    document.head.appendChild(link)
-    return () => {
-      if (link.parentNode) link.parentNode.removeChild(link)
-    }
+    ;[BOOT_BASE, ...IMAGE_JELLYFISH.map((j) => j.src)].forEach((href) => {
+      const link = document.createElement('link')
+      link.rel = 'preload'
+      link.as = 'image'
+      link.href = href
+      document.head.appendChild(link)
+    })
   }, [loading])
 
   useEffect(() => {
@@ -238,16 +188,11 @@ export default function PageLoader() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: 'easeInOut' }}
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden bg-[#020818]"
-          style={{
-            backgroundImage: `url(${BOOT_BG})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
         >
-          <BootJellyfishLayer active={loading} />
+          <BootBackgroundStage active={loading} />
           <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute inset-0 bg-[#020818]/15" />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020818]/45" />
+            <div className="absolute inset-0 bg-[#020818]/10" />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020818]/40" />
           </div>
 
           <div className="relative z-10 flex flex-col items-center justify-center">

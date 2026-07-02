@@ -68,10 +68,14 @@ export default async function LocaleLayout({
       <head>
         <link rel="preload" href={BOOT_VIDEO} as="fetch" type="video/mp4" crossOrigin="anonymous" />
       </head>
-      <body>
+      <body style={{ backgroundColor: '#020818' }}>
         <Script id="boot-gate-init" strategy="beforeInteractive">
           {BOOT_GATE_INIT_SCRIPT}
         </Script>
+        <div id="boot-ssr-veil" aria-hidden suppressHydrationWarning>
+          <div className="boot-ssr-spinner" />
+          <p className="boot-ssr-title">Protos Web</p>
+        </div>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}

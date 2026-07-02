@@ -38,9 +38,43 @@ html.boot-pending body {
   overflow: hidden !important;
 }
 
-html.boot-pending #site-main-chrome {
-  visibility: hidden !important;
-  pointer-events: none !important;
+html.boot-complete #boot-ssr-veil {
+  display: none !important;
+}
+
+#boot-ssr-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 99998;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #020818;
+  pointer-events: none;
+}
+
+#boot-ssr-veil .boot-ssr-spinner {
+  width: 4rem;
+  height: 4rem;
+  margin-bottom: 1.5rem;
+  border-radius: 9999px;
+  border: 2px solid #ff6600;
+  border-top-color: transparent;
+  animation: boot-ssr-spin 1s linear infinite;
+}
+
+#boot-ssr-veil .boot-ssr-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ff6600, #8b5cf6, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes boot-ssr-spin {
+  to { transform: rotate(360deg); }
 }
 
 body {

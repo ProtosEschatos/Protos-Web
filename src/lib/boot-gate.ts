@@ -16,7 +16,13 @@ export function setBootPending(): void {
 export function clearBootPending(): void {
   if (typeof document === 'undefined') return
   document.documentElement.classList.remove('boot-pending')
+  document.documentElement.classList.add('boot-complete')
+}
+
+export function removeBootSsrVeil(): void {
+  if (typeof document === 'undefined') return
+  document.getElementById('boot-ssr-veil')?.remove()
 }
 
 /** Inline script for layout — must stay in sync with BOOT_SESSION_KEY */
-export const BOOT_GATE_INIT_SCRIPT = `(function(){try{var k='${BOOT_SESSION_KEY}';if(sessionStorage.getItem(k)!=='1'){document.documentElement.classList.add('boot-pending');}}catch(e){document.documentElement.classList.add('boot-pending');}})();`
+export const BOOT_GATE_INIT_SCRIPT = `(function(){try{var k='${BOOT_SESSION_KEY}';if(sessionStorage.getItem(k)==='1'){document.documentElement.classList.add('boot-complete');}else{document.documentElement.classList.add('boot-pending');}}catch(e){document.documentElement.classList.add('boot-pending');}})();`

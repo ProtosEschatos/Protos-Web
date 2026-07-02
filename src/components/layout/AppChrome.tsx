@@ -22,19 +22,17 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
   return (
     <PageTransitionProvider>
       <PageLoader />
-      <div id="site-main-chrome">
-        <SiteBackground />
-        <PageTransitionOverlay />
-        <CustomCursor />
-        <Header />
-        <main className="relative z-[1]">
-          <SiteShell>{children}</SiteShell>
-        </main>
-        <div className="relative z-[1]">
-          <Footer />
-        </div>
-        <CookieBanner />
+      <SiteBackground />
+      <PageTransitionOverlay />
+      <CustomCursor />
+      <Header />
+      <main className="relative z-[1]">
+        <SiteShell>{children}</SiteShell>
+      </main>
+      <div className="relative z-[1]">
+        <Footer />
       </div>
+      <CookieBanner />
     </PageTransitionProvider>
   )
 }

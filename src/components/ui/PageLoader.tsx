@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useLayoutEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations, useLocale } from 'next-intl'
 import { saveCookiePreferences } from '@/lib/cookie-consent'
@@ -12,19 +12,16 @@ import {
   BOOT_BG,
   clearBootPending,
   setBootPending,
+  removeBootSsrVeil,
 } from '@/lib/boot-gate'
 
 export { BOOT_SESSION_KEY, BOOT_COMPLETE_EVENT } from '@/lib/boot-gate'
 
 function BootVideoBackground({ active }: { active: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const [videoReady, setVideoReady] = useState(false)
 
   useEffect(() => {
-    if (!active) {
-      setVideoReady(false)
-      return
-    }
+    if (!active) return
     const video = videoRef.current
     if (!video) return
 
@@ -38,21 +35,12 @@ function BootVideoBackground({ active }: { active: boolean }) {
       void video.play().catch(() => {})
     }
 
-    const onReady = () => setVideoReady(true)
-
-    if (video.readyState >= 3) {
-      onReady()
-      play()
-    } else {
-      video.addEventListener('canplaythrough', onReady, { once: true })
-      video.addEventListener('canplay', play, { once: true })
-    }
+    if (video.readyState >= 2) play()
+    else video.addEventListener('canplay', play, { once: true })
 
     return () => {
-      video.removeEventListener('canplaythrough', onReady)
       video.removeEventListener('canplay', play)
       video.pause()
-      setVideoReady(false)
     }
   }, [active])
 
@@ -61,9 +49,7 @@ function BootVideoBackground({ active }: { active: boolean }) {
       <video
         ref={videoRef}
         src={BOOT_VIDEO}
-        className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-700 ease-out will-change-transform [transform:translateZ(0)_scale(1.02)] ${
-          videoReady ? 'opacity-100' : 'opacity-0'
-        }`}
+        className="absolute inset-0 h-full w-full object-cover object-center [transform:translateZ(0)_scale(1.02)]"
         preload="auto"
         autoPlay
         muted
@@ -90,12 +76,13 @@ export default function PageLoader() {
   const [showCookieModal, setShowCookieModal] = useState(false)
   const [analyticsOptIn, setAnalyticsOptIn] = useState(false)
 
+  useLayoutEffect(() => {
+    if (loading) removeBootSsrVeil()
+  }, [loading])
+
   useEffect(() => {
-    if (loading) {
-      setBootPending()
-    } else {
-      clearBootPending()
-    }
+    if (loading) setBootPending()
+    else clearBootPending()
   }, [loading])
 
   useEffect(() => {
@@ -145,7 +132,7 @@ export default function PageLoader() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: 'easeInOut' }}
-          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden"
+          className="fixed inset-0 z-[99999] flex flex-col items-center justify-center overflow-hidden"
           style={{ backgroundColor: BOOT_BG }}
           data-boot-layer
         >

@@ -13,7 +13,7 @@ alwaysApply: true
 
 | Zone | Route | Canvas | DOM allowed |
 |------|-------|--------|-------------|
-| **Site** | all except showcase | `SiteBackground` → `HeroCanvas` (fixed, behind) | Header, Footer, sections, forms, Framer Motion |
+| **Site** | all except showcase | `SiteBackground` → `PageBackgroundCanvas` / `three/backgrounds/*` (fixed, behind) | Header, Footer, sections, forms, Framer Motion |
 | **Showcase** | `/portfolio-showcase` | fullscreen `SpaceGallery` Canvas | loader / intro / playing HUD only — NO site chrome |
 | **3D files** | `src/components/three/**` | meshes, lights, textures | never put page layout here |
 
@@ -23,7 +23,7 @@ alwaysApply: true
 z-top    DOM content (scroll) — text, cards, nav
          SiteShell cosmic-site wrapper
 z-mid    optional CSS gradients (pointer-events-none)
-z-back   HeroCanvas (fixed, pointer-events-none, ssr: false)
+z-back   SiteBackground / PageBackgroundCanvas (fixed, pointer-events-none, ssr: false)
 ```
 
 ## Layer stack (showcase)
@@ -68,7 +68,7 @@ Do not invent new `fixed inset-0` layers without removing or gating an existing 
 ## When adding a feature — ask first
 
 - **Needs SEO, forms, links, i18n?** → DOM in `sections/` or `[locale]/`.
-- **Needs 3D spatial presence?** → R3F in `three/showcase/` or `HeroCanvas`.
+- **Needs 3D spatial presence?** → R3F in `three/showcase/` or `three/backgrounds/*` via `SiteBackground`.
 - **Needs overlay on 3D?** → minimal DOM in `SpaceGallery`, one phase, no site Header/Footer.
 
 ## Forbidden (caused past breakages)

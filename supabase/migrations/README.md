@@ -16,3 +16,17 @@ Live database schema for project `laqnnzavwbojntfiqmxj` is managed via **Supabas
 | 20260623064551 | 2026-06-23 06:45:51 |
 
 To inspect the current list: `supabase link --project-ref laqnnzavwbojntfiqmxj` then `supabase migration list --linked`.
+
+## Contact emails (database webhook)
+
+Contact form submissions insert into `contacts` via RPC `submit_contact`. Admin and auto-reply emails are handled by the `submit-form` edge function.
+
+**One-time setup** in Supabase Dashboard → Database → Webhooks:
+
+| Field | Value |
+|-------|-------|
+| Table | `public.contacts` |
+| Events | `INSERT` |
+| URL / Function | `submit-form` |
+
+See [`../functions/README.md`](../functions/README.md) for edge function secrets and deploy details.

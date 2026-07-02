@@ -158,7 +158,22 @@
     "cause_education": "Education",
     "cause_platforms": "Platforms",
     "copyright": "2025 Protos Web. All rights reserved.",
-    "made_with": "Made with love in Zagreb, Croatia"
+    "made_with": "Made with love in Zagreb, Croatia",
+    "newsletter_title": "Newsletter",
+    "newsletter_placeholder": "Your email address",
+    "newsletter_submit": "Subscribe",
+    "newsletter_success": "Successfully subscribed!",
+    "newsletter_error": "Subscription failed. Please try again."
+  },
+  "loader": {
+    "subtitle": "Loading experience",
+    "enter": "Enter",
+    "cookieModalTitle": "Cookie consent required",
+    "cookieModalLegalPrefix": "Read our",
+    "cookieModalTerms": "Terms of Service",
+    "cookieModalLegalAnd": "and",
+    "cookieModalPrivacy": "Privacy Policy",
+    "cookieModalAccept": "Accept and enter"
   },
   "cookie": {
     "text": "We use cookies to improve your experience. By continuing to visit this site you agree to our use of cookies.",
@@ -179,12 +194,6 @@
     "menuHint": "to open the menu",
     "touchMoveHint": "On mobile, use the joystick at the bottom right to move",
     "start": "Start exploring",
-    "enter": "Enter",
-    "cookieModalTitle": "Cookie consent required",
-    "cookieModalLegalPrefix": "Read our",
-    "cookieModalTerms": "Terms of Service",
-    "cookieModalLegalAnd": "and",
-    "cookieModalPrivacy": "Privacy Policy",
     "move": "Move",
     "details": "Details",
     "menuLabel": "Menu",

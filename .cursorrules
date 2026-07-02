@@ -13,7 +13,7 @@
 - **DOM + Canvas layers**: see `.cursor/rules/dom-canvas-layers.mdc` — mandatory for any UI/3D work
 - **i18n**: `next-intl` (5 locales: hr, en, de, it, es)
 - **Icons**: `lucide-react` + FontAwesome CDN
-- **Backend**: Supabase (blog + contact wired; portfolio CMS pending)
+- **Backend**: Supabase (blog, contact, portfolio, edge functions; see `supabase/functions/README.md`)
 
 ## File Structure Rules
 - All pages go in `src/app/[locale]/`
@@ -37,7 +37,7 @@
    - Include `<Suspense>` fallback for loading states
 
 3. **DOM + Canvas layers MUST** (full spec in `.cursor/rules/dom-canvas-layers.mdc`):
-   - Site pages: `HeroCanvas` fixed background only; content in DOM above it
+   - Site pages: `SiteBackground` → `PageBackgroundCanvas` / per-route backgrounds in `three/backgrounds/` (fixed, behind)
    - Showcase: fullscreen Canvas; NO Header/Footer/SiteBackground (handled in `AppChrome`)
    - One showcase phase visible at a time (`loading` | `intro` | `playing`)
    - 3D objects in Canvas; never fake 3D with CSS transforms for showcase frames
@@ -63,7 +63,7 @@
 5. **Dark theme only** — do NOT add light mode styles
 
 ## Naming Conventions
-- **Components**: PascalCase (e.g., `HeroCanvas.tsx`, `MagneticButton.tsx`)
+- **Components**: PascalCase (e.g., `PageLoader.tsx`, `MagneticButton.tsx`)
 - **Pages**: `page.tsx` inside route folders
 - **Utilities/Hooks**: camelCase (e.g., `useScrollProgress.ts`)
 - **CSS classes**: Tailwind utility-first, custom classes use kebab-case
@@ -72,7 +72,7 @@
 ## Performance Rules
 1. **Dynamic imports** for heavy components (Three.js, charts, maps):
    ```tsx
-   const HeroCanvas = dynamic(() => import('@/components/three/HeroCanvas'), {
+   const HomeBackground = dynamic(() => import('@/components/three/backgrounds/HomeBackground'), {
      ssr: false,
      loading: () => <div className="w-full h-full bg-dark" />,
    })

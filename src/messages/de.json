@@ -158,7 +158,22 @@
     "cause_education": "Bildung",
     "cause_platforms": "Plattformen",
     "copyright": "2025 Protos Web. Alle Rechte vorbehalten.",
-    "made_with": "Mit Liebe gemacht in Zagreb, Kroatien"
+    "made_with": "Mit Liebe gemacht in Zagreb, Kroatien",
+    "newsletter_title": "Newsletter",
+    "newsletter_placeholder": "Ihre E-Mail-Adresse",
+    "newsletter_submit": "Abonnieren",
+    "newsletter_success": "Erfolgreich abonniert!",
+    "newsletter_error": "Abonnement fehlgeschlagen. Bitte erneut versuchen."
+  },
+  "loader": {
+    "subtitle": "Erlebnis wird geladen",
+    "enter": "Enter",
+    "cookieModalTitle": "Cookie-Zustimmung erforderlich",
+    "cookieModalLegalPrefix": "Lesen Sie unsere",
+    "cookieModalTerms": "Nutzungsbedingungen",
+    "cookieModalLegalAnd": "und",
+    "cookieModalPrivacy": "Datenschutzerklarung",
+    "cookieModalAccept": "Akzeptieren und eintreten"
   },
   "cookie": {
     "text": "Wir verwenden Cookies, um Ihr Erlebnis zu verbessern. Durch den weiteren Besuch stimmen Sie der Cookie-Nutzung zu.",
@@ -179,12 +194,6 @@
     "menuHint": "zum Offnen des Menus",
     "touchMoveHint": "Auf dem Handy den Joystick unten rechts zum Bewegen nutzen",
     "start": "Erkundung starten",
-    "enter": "Enter",
-    "cookieModalTitle": "Cookie-Zustimmung erforderlich",
-    "cookieModalLegalPrefix": "Lesen Sie unsere",
-    "cookieModalTerms": "Nutzungsbedingungen",
-    "cookieModalLegalAnd": "und",
-    "cookieModalPrivacy": "Datenschutzerklarung",
     "move": "Bewegung",
     "details": "Details",
     "menuLabel": "Menu",

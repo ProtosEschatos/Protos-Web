@@ -158,7 +158,22 @@
     "cause_education": "Educazione",
     "cause_platforms": "Piattaforme",
     "copyright": "2025 Protos Web. Tutti i diritti riservati.",
-    "made_with": "Fatto con amore a Zagabria, Croazia"
+    "made_with": "Fatto con amore a Zagabria, Croazia",
+    "newsletter_title": "Newsletter",
+    "newsletter_placeholder": "Il tuo indirizzo email",
+    "newsletter_submit": "Iscriviti",
+    "newsletter_success": "Iscrizione completata!",
+    "newsletter_error": "Iscrizione non riuscita. Riprova."
+  },
+  "loader": {
+    "subtitle": "Caricamento esperienza",
+    "enter": "Enter",
+    "cookieModalTitle": "Consenso cookie richiesto",
+    "cookieModalLegalPrefix": "Leggi i nostri",
+    "cookieModalTerms": "Termini di servizio",
+    "cookieModalLegalAnd": "e",
+    "cookieModalPrivacy": "Informativa sulla privacy",
+    "cookieModalAccept": "Accetta e entra"
   },
   "cookie": {
     "text": "Utilizziamo i cookie per migliorare la tua esperienza. Continuando la visita accetti l'uso dei cookie.",
@@ -179,12 +194,6 @@
     "menuHint": "per aprire il menu",
     "touchMoveHint": "Su mobile usa il joystick in basso a destra per muoverti",
     "start": "Inizia esplorazione",
-    "enter": "Enter",
-    "cookieModalTitle": "Consenso cookie richiesto",
-    "cookieModalLegalPrefix": "Leggi i nostri",
-    "cookieModalTerms": "Termini di servizio",
-    "cookieModalLegalAnd": "e",
-    "cookieModalPrivacy": "Informativa sulla privacy",
     "move": "Movimento",
     "details": "Dettagli",
     "menuLabel": "Menu",

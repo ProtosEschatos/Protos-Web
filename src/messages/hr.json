@@ -158,7 +158,22 @@
     "cause_education": "Edukacija",
     "cause_platforms": "Platforme",
     "copyright": "2025 Protos Web. Sva prava pridrzana.",
-    "made_with": "Napravljeno s ljubavlju u Zagrebu, Hrvatska"
+    "made_with": "Napravljeno s ljubavlju u Zagrebu, Hrvatska",
+    "newsletter_title": "Pretplata na novosti",
+    "newsletter_placeholder": "Vasa email adresa",
+    "newsletter_submit": "Pretplati se",
+    "newsletter_success": "Uspjesno ste se pretplatili!",
+    "newsletter_error": "Pretplata nije uspjela. Pokusajte ponovo."
+  },
+  "loader": {
+    "subtitle": "Ucitavanje iskustva",
+    "enter": "Ulaz",
+    "cookieModalTitle": "Potrebna suglasnost za kolacice",
+    "cookieModalLegalPrefix": "Procitajte nase",
+    "cookieModalTerms": "Uvjete koristenja",
+    "cookieModalLegalAnd": "i",
+    "cookieModalPrivacy": "Pravila privatnosti",
+    "cookieModalAccept": "Prihvati i udi"
   },
   "cookie": {
     "text": "Koristimo kolacice kako bismo poboljsali vase iskustvo. Nastavkom posjeta ove stranice prihvacate nasu upotrebu kolacica.",
@@ -179,12 +194,6 @@
     "menuHint": "za otvaranje menija",
     "touchMoveHint": "Na mobitelu koristi joystick dolje desno za kretanje",
     "start": "Zapocni razgledavanje",
-    "enter": "Ulaz",
-    "cookieModalTitle": "Potrebna suglasnost za kolacice",
-    "cookieModalLegalPrefix": "Procitajte nase",
-    "cookieModalTerms": "Uvjete koristenja",
-    "cookieModalLegalAnd": "i",
-    "cookieModalPrivacy": "Pravila privatnosti",
     "move": "Kretanje",
     "details": "Detalji",
     "menuLabel": "Menu",

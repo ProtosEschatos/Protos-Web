@@ -1,6 +1,7 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
+import { useState, FormEvent } from 'react'
+import { useTranslations, useLocale } from 'next-intl'
 import { Link } from '@/routing'
 import TransitionLink from '@/components/navigation/TransitionLink'
 
@@ -18,6 +19,9 @@ export default function Footer() {
   const t = useTranslations('footer')
   const tn = useTranslations('nav')
   const th = useTranslations('header')
+  const locale = useLocale()
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
 
   const legalLinks = [
     { href: '/privacy', label: t('privacy') },
@@ -30,6 +34,24 @@ export default function Footer() {
     { label: t('cause_education'), color: 'bg-[var(--primary)]' },
     { label: t('cause_platforms'), color: 'bg-[var(--accent)]' },
   ]
+
+  const handleSubscribe = async (e: FormEvent) => {
+    e.preventDefault()
+    if (!email.trim()) return
+
+    setStatus('loading')
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, language: locale }),
+      })
+      setStatus(res.ok ? 'success' : 'error')
+      if (res.ok) setEmail('')
+    } catch {
+      setStatus('error')
+    }
+  }
 
   return (
     <footer className="cosmic-section border-t border-white/[0.06] pt-16">
@@ -46,6 +68,37 @@ export default function Footer() {
             <p className="text-sm text-[var(--light-muted)] leading-7 mt-4 max-w-[340px]">
               {t('brand_desc')}
             </p>
+
+            <form onSubmit={handleSubscribe} className="mt-6 max-w-[340px]">
+              <p className="text-sm font-semibold text-[var(--light)] mb-2">{t('newsletter_title')}</p>
+              <div className="flex gap-2">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value)
+                    if (status !== 'idle') setStatus('idle')
+                  }}
+                  placeholder={t('newsletter_placeholder')}
+                  required
+                  className="flex-1 min-w-0 px-4 py-2.5 rounded-xl bg-[var(--dark-card)] border border-[var(--border-card)] text-sm text-[var(--light)] placeholder:text-[var(--light-muted)] focus:outline-none focus:border-[var(--primary)] transition-colors"
+                />
+                <button
+                  type="submit"
+                  disabled={status === 'loading'}
+                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[var(--primary)] to-[#ff8800] text-white text-sm font-semibold whitespace-nowrap hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-60"
+                >
+                  {status === 'loading' ? '…' : t('newsletter_submit')}
+                </button>
+              </div>
+              {status === 'success' && (
+                <p className="text-xs text-[var(--accent)] mt-2">{t('newsletter_success')}</p>
+              )}
+              {status === 'error' && (
+                <p className="text-xs text-red-400 mt-2">{t('newsletter_error')}</p>
+              )}
+            </form>
+
             <div className="flex gap-3 mt-6">
               {[
                 { icon: 'fab fa-facebook-f', label: 'Facebook' },

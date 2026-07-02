@@ -1,0 +1,161 @@
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+}
+
+interface ContactData {
+  name: string
+  email: string
+  phone: string | null
+  service: string | null
+  message: string
+  language: string
+}
+
+serve(async (req) => {
+  console.log('[submit-form] Incoming request:', req.method, req.url)
+
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders })
+  }
+
+  try {
+    let data: ContactData
+    let source = 'unknown'
+
+    const rawBody = await req.text()
+    console.log('[submit-form] Raw body length:', rawBody.length)
+
+    const body = JSON.parse(rawBody)
+
+    if (body.type === 'INSERT' && body.record) {
+      data = body.record as ContactData
+      source = 'webhook'
+    } else {
+      data = body as ContactData
+      source = 'direct'
+    }
+
+    const { name, email, phone, service, message } = data
+
+    if (!name || !email || !message) {
+      return new Response(JSON.stringify({ error: 'Nedostaju obavezna polja' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
+    }
+
+    const resendKey = Deno.env.get('RESEND_API_KEY') || ''
+    const brevoKey = Deno.env.get('BREVO_API_KEY') || ''
+    const contactEmail = Deno.env.get('CONTACT_EMAIL') || 'contact@protosweb.eu'
+    const fromEmail = Deno.env.get('RESEND_FROM_EMAIL') || 'contact@protosweb.eu'
+
+    console.log('[submit-form] Source:', source, '| Name:', name, '| Email:', email)
+
+    const promises: Promise<unknown>[] = []
+
+    if (resendKey) {
+      promises.push(
+        fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${resendKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            from: `Protos Web <${fromEmail}>`,
+            to: [contactEmail],
+            subject: `Nova upita — ${name} (${service || 'nije navedeno'})`,
+            html: adminHtml(name, email, phone, service, message),
+          }),
+        }),
+      )
+
+      promises.push(
+        fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${resendKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            from: `Dario | Protos Web <${fromEmail}>`,
+            to: [email],
+            subject: 'Hvala na upitu — odgovoriti ćemo uskoro',
+            html: autoReplyHtml(name, message),
+          }),
+        }),
+      )
+    }
+
+    if (brevoKey) {
+      promises.push(
+        fetch('https://api.brevo.com/v3/smtp/email', {
+          method: 'POST',
+          headers: {
+            'api-key': brevoKey,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            sender: { name: 'Protos Web', email: fromEmail },
+            to: [{ email: contactEmail, name: 'Protos Web' }],
+            subject: `Nova upita — ${name} (${service || 'nije navedeno'})`,
+            htmlContent: adminHtml(name, email, phone, service, message),
+          }),
+        }),
+      )
+    }
+
+    await Promise.allSettled(promises)
+
+    return new Response(JSON.stringify({ success: true, message: 'Poruka poslana!' }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    })
+  } catch (error) {
+    console.error('[submit-form] ERROR:', error)
+    return new Response(JSON.stringify({ error: 'Greška pri slanju' }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    })
+  }
+})
+
+function adminHtml(
+  name: string,
+  email: string,
+  phone: string | null,
+  service: string | null,
+  message: string,
+) {
+  return `
+    <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;color:#1a1a1a">
+      <h2 style="color:#6366f1;margin-bottom:24px">Nova upita — Protos Web</h2>
+      <table style="width:100%;border-collapse:collapse">
+        <tr><td style="padding:8px 12px;background:#f5f5f5;font-weight:bold;width:120px">Ime:</td><td style="padding:8px 12px">${name}</td></tr>
+        <tr><td style="padding:8px 12px;background:#f5f5f5;font-weight:bold">Email:</td><td style="padding:8px 12px"><a href="mailto:${email}" style="color:#6366f1">${email}</a></td></tr>
+        ${phone ? `<tr><td style="padding:8px 12px;background:#f5f5f5;font-weight:bold">Telefon:</td><td style="padding:8px 12px"><a href="tel:${phone}" style="color:#6366f1">${phone}</a></td></tr>` : ''}
+        ${service ? `<tr><td style="padding:8px 12px;background:#f5f5f5;font-weight:bold">Usluga:</td><td style="padding:8px 12px">${service}</td></tr>` : ''}
+      </table>
+      <h3 style="margin-top:24px;color:#6366f1">Poruka:</h3>
+      <p style="padding:16px;background:#f9f9f9;border-left:4px solid #6366f1;font-size:15px;line-height:1.6">${message.replace(/\n/g, '<br>')}</p>
+    </div>
+  `
+}
+
+function autoReplyHtml(name: string, message: string) {
+  return `
+    <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;color:#1a1a1a">
+      <h2 style="color:#6366f1">Pozdrav ${name},</h2>
+      <p style="font-size:16px;line-height:1.7">Hvala na upitu! Primili smo vašu poruku i odgovoriti ćemo u roku od 24 sata.</p>
+      <h3 style="margin-top:24px;color:#6366f1">Vaš upit:</h3>
+      <p style="padding:16px;background:#f9f9f9;border-left:4px solid #6366f1;font-size:15px;line-height:1.6">${message.replace(/\n/g, '<br>')}</p>
+      <p style="margin-top:32px;font-size:15px;line-height:1.7">
+        Srdačan pozdrav,<br>
+        <strong>Dario Imsirović</strong><br>
+        Protos Web
+      </p>
+    </div>
+  `
+}

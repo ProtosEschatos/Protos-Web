@@ -3,7 +3,7 @@
 ## Project Overview
 - **Name**: Protos Web
 - **Goal**: Complete agency website migrated from vanilla HTML/CSS/JS to Next.js 14 App Router
-- **Stack**: Next.js 14, TypeScript, Tailwind CSS, Framer Motion, React Three Fiber, GSAP, Lenis, next-intl
+- **Stack**: Next.js 14, TypeScript, Tailwind CSS, Framer Motion, React Three Fiber, Lenis, next-intl
 - **Languages**: Croatian (hr, default), English (en), German (de), Italian (it), Spanish (es)
 
 ## Setup
@@ -39,8 +39,9 @@ src/
 │   │   ├── blog/[slug]/page.tsx # Blog post detail
 │   │   └── kontakt/page.tsx   # Contact page
 │   └── api/
-│       ├── contact/route.ts   # POST placeholder
-│       └── blog/route.ts      # GET placeholder
+│       ├── contact/route.ts   # POST contact form → Supabase RPC
+│       ├── subscribe/route.ts # POST newsletter → subscribe edge fn
+│       └── blog/route.ts      # GET blog API
 ├── components/
 │   ├── layout/
 │   │   ├── Header.tsx         # Navigation, lang selector, theme cycler
@@ -54,10 +55,12 @@ src/
 │   │   ├── Blog.tsx           # 3 preview cards
 │   │   └── Contact.tsx        # Form + contact info
 │   ├── three/
-│   │   ├── HeroCanvas.tsx     # R3F Stars + ParticleSphere
-│   │   └── ProcessCanvas.tsx  # R3F distort spheres + particles
+│   │   ├── backgrounds/       # Per-route R3F backgrounds (Home, Process, etc.)
+│   │   └── showcase/          # SpaceGallery 3D room only
 │   └── ui/
-│       ├── PageLoader.tsx     # Eclipse animation loader
+│       ├── PageLoader.tsx     # Cyber boot gate + cookie modal
+│       ├── SiteBackground.tsx # Route-aware background wrapper
+│       ├── PageBackgroundCanvas.tsx
 │       ├── CustomCursor.tsx   # Dot + follower cursor
 │       ├── MagneticButton.tsx # Magnetic hover effect
 │       └── CookieBanner.tsx   # Cookie consent
@@ -105,14 +108,14 @@ src/
 - [x] Header with desktop nav, language selector (5 langs), theme cycler, CTA, hamburger
 - [x] MobileMenu with Framer Motion slide-in animation
 - [x] Footer with brand, links, legal, social, Balkans causes
-- [x] PageLoader with eclipse animation
+- [x] PageLoader with cyber background, progress gate, and boot cookie modal
 - [x] CustomCursor with dot + follower
 - [x] MagneticButton component
 - [x] CookieBanner with localStorage persistence
-- [x] Hero section with R3F HeroCanvas (Stars + ParticleSphere)
+- [x] Hero section with per-route R3F background via SiteBackground
 - [x] Services section (6 cards)
 - [x] Process section (4 steps + 3 feature cards)
-- [x] Process page with R3F ProcessCanvas
+- [x] Process page with ProcessBackground via SiteBackground
 - [x] Portfolio section with showcase banner → /portfolio-showcase
 - [x] Portfolio Showcase — full R3F 3D space gallery (WASD movement, E interact, ESC menu)
 - [x] Blog section (preview) + full blog page from Supabase
@@ -130,10 +133,11 @@ src/
 ### Backend
 - [x] Supabase client connection
 - [x] Blog data from Supabase (`blog_posts` table, 80 posts)
-- [x] Contact form submission to Supabase (`submit_contact` RPC)
+- [x] Contact form submission to Supabase (`submit_contact` RPC) + `submit-form` edge fn emails via DB webhook
+- [x] Newsletter signup via `/api/subscribe` → `subscribe` edge fn
 - [x] Portfolio data from Supabase
-- [ ] Authentication (if needed)
-- [x] Supabase keep-alive edge function + GitHub cron workflow
+- [x] Supabase edge functions in repo: `keep-alive`, `submit-form`, `subscribe`, `content`
+- [x] GitHub workflows: CI, keep-alive cron, edge function deploy, security audit, Dependabot
 
 ### Future Enhancements
 - [ ] Design refinements (user will provide updates)
@@ -160,8 +164,8 @@ Secrets are **not** duplicated everywhere on purpose. Each platform reads only w
 |----------|---------|----------------|
 | **`.env.local`** (local dev, gitignored) | Your machine only | Copy from `.env.example` — never commit |
 | **Vercel** | Production/preview builds + runtime | All `NEXT_PUBLIC_*` + server keys the Next.js app uses |
-| **GitHub Secrets** | GitHub Actions workflows only | `SUPABASE_URL` + `KEEP_ALIVE_SECRET` (keep-alive cron) |
-| **Supabase Edge Secrets** | Edge functions only | `KEEP_ALIVE_SECRET`, Resend, Stripe, etc. |
+| **GitHub Secrets** | GitHub Actions workflows only | `SUPABASE_URL`, `KEEP_ALIVE_SECRET`, `SUPABASE_ACCESS_TOKEN`, `SUPABASE_PROJECT_REF` |
+| **Supabase Edge Secrets** | Edge functions only | `KEEP_ALIVE_SECRET`, `RESEND_API_KEY`, `CONTACT_EMAIL`, `RESEND_FROM_EMAIL`, `BREVO_API_KEY` (optional) |
 
 **Why not one `.env` for everything?** `.env` files must never be pushed to git (security). Vercel injects vars at deploy time. GitHub and Supabase run separate services that never read Vercel's config.
 
@@ -179,6 +183,12 @@ Optional later: `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`, `NEXT_PUBLIC_GA_ID`
 ### Vercel — safe to remove (unused by current code)
 
 Stripe, Resend, Brevo, Sentry, Telegram, `DATABASE_URL` — leftovers from older setup; they do not break anything if left in place.
+
+## Supabase Edge Functions
+
+See [`supabase/functions/README.md`](supabase/functions/README.md) for deploy, secrets, and the contact-form database webhook setup.
+
+Functions deploy automatically on push to `main` when `supabase/functions/**` changes (requires GitHub secrets `SUPABASE_ACCESS_TOKEN` and `SUPABASE_PROJECT_REF`).
 
 ## Supabase Keep-Alive
 

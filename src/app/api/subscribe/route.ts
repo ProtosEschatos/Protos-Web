@@ -1,0 +1,38 @@
+import { NextResponse } from 'next/server'
+
+export async function POST(request: Request) {
+  const body = await request.json()
+  const email = typeof body.email === 'string' ? body.email.trim() : ''
+  const language = typeof body.language === 'string' ? body.language : 'hr'
+
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return NextResponse.json({ success: false, message: 'Invalid email' }, { status: 400 })
+  }
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+  if (!supabaseUrl || !anonKey) {
+    return NextResponse.json({ success: false, message: 'Not configured' }, { status: 503 })
+  }
+
+  const response = await fetch(`${supabaseUrl}/functions/v1/subscribe`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${anonKey}`,
+    },
+    body: JSON.stringify({ email, language, source: 'website' }),
+  })
+
+  const data = await response.json().catch(() => ({}))
+
+  if (!response.ok) {
+    return NextResponse.json(
+      { success: false, message: data.error || 'Subscribe failed' },
+      { status: response.status },
+    )
+  }
+
+  return NextResponse.json({ success: true })
+}

@@ -9,9 +9,9 @@ import type { ShowcaseViewport } from '@/lib/showcase-viewport'
 import type { TouchInput } from '@/lib/showcase-viewport'
 import { AstronautCharacter, animateAstronautWalk, resetAstronautPose } from './AstronautCharacter'
 import { FrameScreenshot } from './FrameScreenshot'
-import { RetrowaveEnvironment, RetrowaveLighting } from './retrowave/RetrowaveEnvironment'
+import { SynthwaveRoom, SynthwaveLighting } from './SynthwaveRoom'
 
-function WindowFrameBar({
+function NeonFrameBar({
   position,
   size,
 }: {
@@ -42,7 +42,7 @@ function ProjectFrame({
   const edgeColors = [0xff0099, 0x00eaff, 0xff8800, 0xff66cc]
   const edgeColor = project.color ?? edgeColors[index % edgeColors.length]
 
-  const { x, z, rotationY, floorX } = getFrameTransform(index, centerY)
+  const { x, z, rotationY } = getFrameTransform(index, centerY)
   const baseY = centerY
 
   useFrame((state) => {
@@ -72,10 +72,10 @@ function ProjectFrame({
           fallbackColor={edgeColor}
         />
 
-        <WindowFrameBar position={[0, outerH / 2 - frameW / 2, depth * 0.15]} size={[outerW, frameW, depth * 0.5]} />
-        <WindowFrameBar position={[0, -outerH / 2 + frameW / 2, depth * 0.15]} size={[outerW, frameW, depth * 0.5]} />
-        <WindowFrameBar position={[-outerW / 2 + frameW / 2, 0, depth * 0.15]} size={[frameW, viewH, depth * 0.5]} />
-        <WindowFrameBar position={[outerW / 2 - frameW / 2, 0, depth * 0.15]} size={[frameW, viewH, depth * 0.5]} />
+        <NeonFrameBar position={[0, outerH / 2 - frameW / 2, depth * 0.15]} size={[outerW, frameW, depth * 0.5]} />
+        <NeonFrameBar position={[0, -outerH / 2 + frameW / 2, depth * 0.15]} size={[outerW, frameW, depth * 0.5]} />
+        <NeonFrameBar position={[-outerW / 2 + frameW / 2, 0, depth * 0.15]} size={[frameW, viewH, depth * 0.5]} />
+        <NeonFrameBar position={[outerW / 2 - frameW / 2, 0, depth * 0.15]} size={[frameW, viewH, depth * 0.5]} />
 
         <mesh position={[0, -outerH / 2 - 0.04, depth * 0.12]} renderOrder={12}>
           <boxGeometry args={[outerW + 0.12, 0.06, depth * 0.45]} />
@@ -98,15 +98,6 @@ function ProjectFrame({
 
         <pointLight position={[0, 0.2, 0.35]} color={edgeColor} intensity={1.4} distance={6} decay={2} />
       </group>
-
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[floorX, 0.02, z]}>
-        <ringGeometry args={[0.8, 1.2, 32]} />
-        <meshBasicMaterial color={project.color} transparent opacity={0.45} side={THREE.DoubleSide} />
-      </mesh>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[floorX, 0.015, z]}>
-        <circleGeometry args={[0.6, 32]} />
-        <meshBasicMaterial color={0x00eaff} transparent opacity={0.2} />
-      </mesh>
     </>
   )
 }
@@ -118,7 +109,6 @@ type SceneProps = {
   keys: React.MutableRefObject<Record<string, boolean>>
   touchInput: React.MutableRefObject<TouchInput>
   characterRef: React.RefObject<THREE.Group | null>
-  onCharacterMove: (pos: THREE.Vector3) => void
   onNearestProject: (project: ShowcaseProject | null) => void
 }
 
@@ -129,7 +119,6 @@ export function ShowcaseScene({
   keys,
   touchInput,
   characterRef,
-  onCharacterMove,
   onNearestProject,
 }: SceneProps) {
   const walkPhase = useRef(0)
@@ -137,7 +126,6 @@ export function ShowcaseScene({
   const lastNearestLinkRef = useRef<string | null>(null)
   const yAxis = useMemo(() => new THREE.Vector3(0, 1, 0), [])
   const moveDir = useMemo(() => new THREE.Vector3(), [])
-  const charPos = useMemo(() => new THREE.Vector3(), [])
   const framePositions = useMemo(
     () =>
       projects.map((project, index) => {
@@ -233,18 +221,16 @@ export function ShowcaseScene({
       character.quaternion.setFromAxisAngle(yAxis, headingRef.current)
     }
 
-    const offset = new THREE.Vector3(0, 4, 6)
+    const offset = new THREE.Vector3(0, 3.2, 7.5)
     offset.applyQuaternion(character.quaternion)
     camera.position.copy(character.position).add(offset)
     camera.lookAt(character.position.x, character.position.y + 1.5, character.position.z)
-    charPos.copy(character.position)
-    onCharacterMove(charPos)
   })
 
   return (
     <>
-      <RetrowaveLighting />
-      <RetrowaveEnvironment />
+      <SynthwaveLighting />
+      <SynthwaveRoom />
       {projects.map((project, index) => (
         <ProjectFrame key={`${project.link}-${viewport}`} project={project} index={index} viewport={viewport} />
       ))}

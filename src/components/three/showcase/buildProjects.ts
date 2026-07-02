@@ -1,6 +1,6 @@
 import type { PortfolioItem } from '@/actions/portfolio'
 import type { ShowcaseViewport } from '@/lib/showcase-viewport'
-import { normalizeProjectUrl } from '@/lib/showcase-screenshots'
+import { normalizeProjectUrl } from '@/lib/showcase-utils'
 import { PROJECT_LINKS, type ShowcaseProject } from './constants'
 
 export function buildShowcaseProjects(

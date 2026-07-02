@@ -7,7 +7,6 @@ export const SHOWCASE_CONFIG = {
   characterHeight: 2,
   horizonZ: -58,
   sunY: 11,
-  sunRadius: 34,
 } as const
 
 export const PROJECT_LINKS = [
@@ -53,7 +52,6 @@ export type FrameTransform = {
   y: number
   z: number
   rotationY: number
-  floorX: number
 }
 
 export function initCharacterPosition(group: import('three').Group, heading = INITIAL_CHARACTER_HEADING) {
@@ -74,6 +72,5 @@ export function getFrameTransform(index: number, centerY = 3.2): FrameTransform 
     y: centerY,
     z,
     rotationY: side === -1 ? Math.PI / 2 : -Math.PI / 2,
-    floorX: side * (pathWidth / 2 - 1.5),
   }
 }

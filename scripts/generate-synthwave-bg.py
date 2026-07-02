@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate synthwave horizon backdrop for portfolio showcase."""
+"""Synthwave sky + horizon backdrop (no grid — grid is animated in WebGL)."""
 
 from __future__ import annotations
 
@@ -9,149 +9,134 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw
 
-W = 4096
-H = 2048
+W = 3840
+H = 2160
 OUT = Path(__file__).resolve().parents[1] / "public" / "showcase" / "synthwave-bg.jpg"
+HORIZON = int(H * 0.52)
 
 
 def lerp(a: float, b: float, t: float) -> float:
     return a + (b - a) * t
 
 
-def lerp_color(c1: tuple[int, int, int], c2: tuple[int, int, int], t: float) -> tuple[int, int, int]:
-    return (
-        int(lerp(c1[0], c2[0], t)),
-        int(lerp(c1[1], c2[1], t)),
-        int(lerp(c1[2], c2[2], t)),
-    )
+def lerp3(a: tuple[int, int, int], b: tuple[int, int, int], t: float) -> tuple[int, int, int]:
+    return (int(lerp(a[0], b[0], t)), int(lerp(a[1], b[1], t)), int(lerp(a[2], b[2], t)))
 
 
-def draw_sky(img: Image.Image) -> None:
+def sky(img: Image.Image) -> None:
     px = img.load()
-    zenith = (10, 0, 36)
-    mid = (72, 10, 112)
-    dusk = (242, 72, 132)
-    horizon = (255, 140, 80)
-    for y in range(H):
-        t = y / (H - 1)
+    for y in range(HORIZON):
+        t = y / max(1, HORIZON - 1)
         if t < 0.55:
-            c = lerp_color(zenith, mid, t / 0.55)
-        elif t < 0.78:
-            c = lerp_color(mid, dusk, (t - 0.55) / 0.23)
+            c = lerp3((8, 0, 28), (48, 8, 88), t / 0.55)
         else:
-            c = lerp_color(dusk, horizon, (t - 0.78) / 0.22)
+            c = lerp3((48, 8, 88), (255, 96, 148), (t - 0.55) / 0.45)
         for x in range(W):
             px[x, y] = c
 
 
-def draw_stars(draw: ImageDraw.ImageDraw) -> None:
-    random.seed(42)
-    for _ in range(900):
+def fade_bottom(img: Image.Image) -> None:
+    px = img.load()
+    for y in range(HORIZON, H):
+        t = (y - HORIZON) / (H - HORIZON)
+        for x in range(W):
+            r, g, b = px[x, HORIZON - 1]
+            f = 1.0 - t**1.6
+            px[x, y] = (int(r * f * 0.15), int(g * f * 0.08), int(b * f * 0.2))
+
+
+def stars(draw: ImageDraw.ImageDraw) -> None:
+    random.seed(7)
+    for _ in range(1200):
         x = random.randint(0, W - 1)
-        y = random.randint(0, int(H * 0.62))
-        r = random.choice([1, 1, 1, 2])
-        alpha = random.randint(120, 255)
-        draw.ellipse((x - r, y - r, x + r, y + r), fill=(255, 255, 255, alpha))
+        y = random.randint(0, int(HORIZON * 0.88))
+        s = random.choice([1, 1, 2])
+        a = random.randint(140, 255)
+        draw.ellipse((x - s, y - s, x + s, y + s), fill=(255, 255, 255, a))
 
 
-def draw_mountain(draw: ImageDraw.ImageDraw, cx: int, base_y: int, width: int, height: int) -> None:
-    left = cx - width // 2
-    right = cx + width // 2
-    top = base_y - height
-    fill = (8, 0, 24)
-    outline = (0, 238, 255)
-    draw.polygon([(left, base_y), (cx, top), (right, base_y)], fill=fill)
-    draw.line([(left, base_y), (cx, top), (right, base_y)], fill=outline, width=3)
+def mountain(draw: ImageDraw.ImageDraw, cx: int, w: int, h: int) -> None:
+    left, right = cx - w // 2, cx + w // 2
+    top = HORIZON - h
+    draw.polygon([(left, HORIZON), (cx, top), (right, HORIZON)], fill=(6, 0, 18))
+    draw.line([(left, HORIZON), (cx, top), (right, HORIZON)], fill=(0, 235, 255), width=max(2, w // 40))
 
 
-def draw_palm(draw: ImageDraw.ImageDraw, x: int, base_y: int, scale: float) -> None:
-    trunk_w = max(4, int(14 * scale))
-    trunk_h = int(120 * scale)
-    top_y = base_y - trunk_h
-    draw.rounded_rectangle(
-        (x - trunk_w // 2, top_y, x + trunk_w // 2, base_y),
-        radius=max(2, int(4 * scale)),
-        fill=(0, 0, 0),
-    )
-    frond_len = int(90 * scale)
-    for angle in (-140, -95, -55, -15, 25, 65, 110, 155):
-        rad = math.radians(angle)
-        ex = x + int(math.cos(rad) * frond_len)
-        ey = top_y + int(math.sin(rad) * frond_len * 0.55)
-        draw.line([(x, top_y), (ex, ey)], fill=(0, 0, 0), width=max(3, int(8 * scale)))
+def mountains(draw: ImageDraw.ImageDraw) -> None:
+    specs = [
+        (int(W * 0.11), 340, 420),
+        (int(W * 0.26), 420, 520),
+        (int(W * 0.41), 360, 460),
+        (int(W * 0.59), 380, 480),
+        (int(W * 0.74), 320, 430),
+        (int(W * 0.89), 280, 380),
+    ]
+    for cx, w, h in specs:
+        mountain(draw, cx, w, h)
 
 
-def draw_sun(img: Image.Image) -> None:
+def sun(img: Image.Image) -> None:
     draw = ImageDraw.Draw(img, "RGBA")
-    cx, cy = W // 2, int(H * 0.72)
-    radius = int(H * 0.28)
+    cx, cy = W // 2, HORIZON + int(H * 0.02)
+    r = int(H * 0.22)
 
-    for r in range(radius + 80, radius, -4):
-        t = (r - radius) / 80
-        color = (255, int(120 + 80 * t), int(40 + 80 * t), int(30 + 40 * (1 - t)))
-        draw.ellipse((cx - r, cy - r, cx + r, cy + r), fill=color)
+    for ring in range(r + 120, r, -3):
+        t = (ring - r) / 120
+        draw.ellipse(
+            (cx - ring, cy - ring, cx + ring, cy + ring),
+            fill=(255, int(100 + 80 * t), int(40 + 60 * t), int(35 * (1 - t))),
+        )
 
-    for y in range(cy - radius, cy + radius):
-        t = (y - (cy - radius)) / (radius * 2)
+    for y in range(cy - r, cy + r):
+        t = (y - (cy - r)) / (2 * r)
         if t < 0.5:
-            c = lerp_color((255, 230, 102), (255, 154, 60), t / 0.5)
+            c = lerp3((255, 236, 120), (255, 148, 48), t / 0.5)
         else:
-            c = lerp_color((255, 154, 60), (255, 77, 157), (t - 0.5) / 0.5)
-        for x in range(cx - radius, cx + radius):
-            if (x - cx) ** 2 + (y - cy) ** 2 <= radius**2:
+            c = lerp3((255, 148, 48), (255, 72, 150), (t - 0.5) / 0.5)
+        for x in range(cx - r, cx + r):
+            if (x - cx) ** 2 + (y - cy) ** 2 <= r * r:
                 img.putpixel((x, y), c)
 
-    for y in range(cy + int(radius * 0.05), cy + radius, 12):
-        draw.rectangle((cx - radius, y, cx + radius, y + 6), fill=(11, 0, 24))
-
-
-def draw_mountains(draw: ImageDraw.ImageDraw) -> None:
-    base_y = int(H * 0.74)
-    specs = [
-        (int(W * 0.12), 180, 260),
-        (int(W * 0.28), 240, 320),
-        (int(W * 0.42), 200, 280),
-        (int(W * 0.58), 220, 300),
-        (int(W * 0.72), 190, 270),
-        (int(W * 0.88), 160, 230),
-    ]
-    for cx, width, height in specs:
-        draw_mountain(draw, cx, base_y, width, height)
-
-
-def draw_palm_rows(draw: ImageDraw.ImageDraw) -> None:
-    base_y = int(H * 0.98)
-    for i in range(18):
-        t = i / 17
-        scale = 0.35 + (1 - t) * 1.65
-        x_left = int(W * (0.02 + t * 0.22))
-        x_right = W - x_left
-        draw_palm(draw, x_left, base_y, scale)
-        draw_palm(draw, x_right, base_y, scale * 0.95)
-
-
-def draw_horizon_glow(img: Image.Image) -> None:
     draw = ImageDraw.Draw(img, "RGBA")
-    cx = W // 2
-    cy = int(H * 0.74)
-    for r in range(500, 0, -2):
-        alpha = int(18 * (1 - r / 500))
-        draw.ellipse((cx - r, cy - r, cx + r, cy + r), fill=(255, 80, 160, alpha))
+    for y in range(cy + int(r * 0.08), cy + r, 16):
+        draw.rectangle((cx - r, y, cx + r, y + 8), fill=(8, 0, 20))
+
+
+def palm(draw: ImageDraw.ImageDraw, x: int, base: int, scale: float) -> None:
+    tw = max(6, int(22 * scale))
+    th = int(180 * scale)
+    top = base - th
+    draw.rounded_rectangle((x - tw // 2, top, x + tw // 2, base), radius=int(8 * scale), fill=(0, 0, 0))
+    for deg in (-150, -115, -78, -42, -8, 28, 62, 98, 132, 168):
+        rad = math.radians(deg)
+        lx = x + int(math.cos(rad) * 130 * scale)
+        ly = top + int(math.sin(rad) * 70 * scale)
+        draw.line([(x, top), (lx, ly)], fill=(0, 0, 0), width=max(4, int(14 * scale)))
+
+
+def palm_rows(draw: ImageDraw.ImageDraw) -> None:
+    base = HORIZON + int(H * 0.06)
+    for i in range(14):
+        t = i / 13
+        scale = 0.55 + (1 - t) * 2.2
+        xl = int(W * (0.02 + t * 0.24))
+        xr = W - xl
+        palm(draw, xl, base, scale)
+        palm(draw, xr, base, scale * 0.94)
 
 
 def main() -> None:
     OUT.parent.mkdir(parents=True, exist_ok=True)
     img = Image.new("RGB", (W, H), (0, 0, 0))
-    draw_sky(img)
+    sky(img)
     draw = ImageDraw.Draw(img, "RGBA")
-    draw_stars(draw)
-    draw_mountains(draw)
-    draw_horizon_glow(img)
-    draw_sun(img)
+    stars(draw)
+    mountains(draw)
+    sun(img)
     draw = ImageDraw.Draw(img, "RGBA")
-    draw_palm_rows(draw)
-
-    img.save(OUT, "JPEG", quality=94, optimize=True, progressive=True)
+    palm_rows(draw)
+    fade_bottom(img)
+    img.save(OUT, "JPEG", quality=95, optimize=True, progressive=True)
     print(f"Wrote {OUT} ({OUT.stat().st_size // 1024} KB)")
 
 

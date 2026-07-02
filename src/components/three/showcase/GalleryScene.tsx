@@ -118,6 +118,7 @@ type SceneProps = {
   keys: React.MutableRefObject<Record<string, boolean>>
   touchInput: React.MutableRefObject<TouchInput>
   characterRef: React.RefObject<THREE.Group | null>
+  onCharacterMove: (pos: THREE.Vector3) => void
   onNearestProject: (project: ShowcaseProject | null) => void
 }
 
@@ -128,6 +129,7 @@ export function ShowcaseScene({
   keys,
   touchInput,
   characterRef,
+  onCharacterMove,
   onNearestProject,
 }: SceneProps) {
   const walkPhase = useRef(0)
@@ -135,6 +137,7 @@ export function ShowcaseScene({
   const lastNearestLinkRef = useRef<string | null>(null)
   const yAxis = useMemo(() => new THREE.Vector3(0, 1, 0), [])
   const moveDir = useMemo(() => new THREE.Vector3(), [])
+  const charPos = useMemo(() => new THREE.Vector3(), [])
   const framePositions = useMemo(
     () =>
       projects.map((project, index) => {
@@ -234,12 +237,12 @@ export function ShowcaseScene({
     offset.applyQuaternion(character.quaternion)
     camera.position.copy(character.position).add(offset)
     camera.lookAt(character.position.x, character.position.y + 1.5, character.position.z)
+    charPos.copy(character.position)
+    onCharacterMove(charPos)
   })
 
   return (
     <>
-      <color attach="background" args={['#060010']} />
-      <fog attach="fog" args={['#120028', 55, 150]} />
       <SynthwaveLighting />
       <SynthwaveEnvironment />
       {projects.map((project, index) => (

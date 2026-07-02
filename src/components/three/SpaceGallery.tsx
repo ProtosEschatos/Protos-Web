@@ -10,6 +10,7 @@ import { buildShowcaseProjects } from './showcase/buildProjects'
 import { ShowcaseFallback } from './showcase/ShowcaseFallback'
 import { ShowcaseBootLoader } from './showcase/ShowcaseBootLoader'
 import { ShowcaseJoystick } from './showcase/ShowcaseJoystick'
+import { ShowcaseSkyBackdrop } from './showcase/ShowcaseSkyBackdrop'
 import { SafeCanvas } from '@/components/three/SafeCanvas'
 import { isWebGLAvailable } from '@/lib/webgl'
 import {
@@ -33,6 +34,7 @@ type ShowcaseCanvasLayerProps = {
   keys: React.MutableRefObject<Record<string, boolean>>
   touchInput: React.MutableRefObject<TouchInput>
   characterRef: React.RefObject<THREE.Group | null>
+  onCharacterMove: (pos: THREE.Vector3) => void
   onNearestProject: (project: ShowcaseProject | null) => void
   mountKey: number
   onContextLost: () => void
@@ -45,6 +47,7 @@ const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
   keys,
   touchInput,
   characterRef,
+  onCharacterMove,
   onNearestProject,
   mountKey,
   onContextLost,
@@ -54,7 +57,7 @@ const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
       <SafeCanvas
         mountKey={mountKey}
         camera={{ fov: 70, near: 0.1, far: 1000 }}
-        gl={{ toneMapping: THREE.NoToneMapping }}
+        gl={{ toneMapping: THREE.NoToneMapping, alpha: true }}
         onContextLost={onContextLost}
         fallback={null}
       >
@@ -65,6 +68,7 @@ const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
           keys={keys}
           touchInput={touchInput}
           characterRef={characterRef}
+          onCharacterMove={onCharacterMove}
           onNearestProject={onNearestProject}
         />
       </SafeCanvas>
@@ -95,6 +99,11 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
   const keys = useRef<Record<string, boolean>>({})
   const touchInput = useRef<TouchInput>(INITIAL_TOUCH_INPUT)
   const characterRef = useRef<THREE.Group>(null)
+  const parallaxRef = useRef(0)
+
+  const handleCharacterMove = useCallback((pos: THREE.Vector3) => {
+    parallaxRef.current = pos.z
+  }, [])
 
   useEffect(() => {
     setWebglReady(isWebGLAvailable())
@@ -182,7 +191,8 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
   }
 
   return (
-    <div className="fixed inset-0 bg-black">
+    <div className="fixed inset-0 bg-[#060010]">
+      {(phase === 'intro' || phase === 'playing') && <ShowcaseSkyBackdrop parallaxRef={parallaxRef} />}
       <ShowcaseCanvasLayer
         projects={projects}
         isPlaying={phase === 'playing'}
@@ -190,6 +200,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
         keys={keys}
         touchInput={touchInput}
         characterRef={characterRef}
+        onCharacterMove={handleCharacterMove}
         onNearestProject={handleNearestProject}
         mountKey={canvasKey}
         onContextLost={handleContextLost}

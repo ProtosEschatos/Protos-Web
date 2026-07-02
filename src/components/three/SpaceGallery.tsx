@@ -4,7 +4,7 @@ import { useState, useRef, useMemo, useEffect, useCallback, memo } from 'react'
 import * as THREE from 'three'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
-import { SHOWCASE_CONFIG, getFrameMarkers, type ShowcaseProject } from './showcase/constants'
+import { type ShowcaseProject } from './showcase/constants'
 import { ShowcaseScene } from './showcase/GalleryScene'
 import { buildShowcaseProjects } from './showcase/buildProjects'
 import { ShowcaseFallback } from './showcase/ShowcaseFallback'
@@ -26,54 +26,6 @@ type SpaceGalleryProps = {
   portfolioItems?: PortfolioItem[]
 }
 
-function drawMinimap(
-  canvas: HTMLCanvasElement | null,
-  charX: number,
-  charZ: number,
-  rotationY: number,
-  markers: ReturnType<typeof getFrameMarkers>,
-) {
-  const ctx = canvas?.getContext('2d')
-  if (!ctx) return
-
-  const { galleryLength, galleryWidth } = SHOWCASE_CONFIG
-  const scaleX = 150 / galleryWidth
-  const scaleZ = 100 / galleryLength
-
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.8)'
-  ctx.fillRect(0, 0, 150, 100)
-
-  ctx.strokeStyle = 'rgba(99, 102, 241, 0.5)'
-  ctx.lineWidth = 2
-  ctx.strokeRect(5, 5, 140, 90)
-
-  markers.forEach((marker) => {
-    const x = (marker.x + galleryWidth / 2) * scaleX
-    const z = (marker.z + galleryLength / 2) * scaleZ
-    ctx.fillStyle = `#${marker.color.toString(16).padStart(6, '0')}`
-    ctx.beginPath()
-    ctx.arc(x, z, 4, 0, Math.PI * 2)
-    ctx.fill()
-  })
-
-  const px = (charX + galleryWidth / 2) * scaleX
-  const pz = (charZ + galleryLength / 2) * scaleZ
-
-  ctx.fillStyle = '#6366f1'
-  ctx.beginPath()
-  ctx.arc(px, pz, 6, 0, Math.PI * 2)
-  ctx.fill()
-
-  const dirX = Math.sin(rotationY)
-  const dirZ = Math.cos(rotationY)
-  ctx.strokeStyle = '#ffffff'
-  ctx.lineWidth = 2
-  ctx.beginPath()
-  ctx.moveTo(px, pz)
-  ctx.lineTo(px + dirX * 10, pz - dirZ * 10)
-  ctx.stroke()
-}
-
 type ShowcaseCanvasLayerProps = {
   projects: ShowcaseProject[]
   isPlaying: boolean
@@ -81,7 +33,6 @@ type ShowcaseCanvasLayerProps = {
   keys: React.MutableRefObject<Record<string, boolean>>
   touchInput: React.MutableRefObject<TouchInput>
   characterRef: React.RefObject<THREE.Group | null>
-  onCharacterMove: (pos: THREE.Vector3, rotationY: number) => void
   onNearestProject: (project: ShowcaseProject | null) => void
   mountKey: number
   onContextLost: () => void
@@ -94,7 +45,6 @@ const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
   keys,
   touchInput,
   characterRef,
-  onCharacterMove,
   onNearestProject,
   mountKey,
   onContextLost,
@@ -115,7 +65,6 @@ const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
           keys={keys}
           touchInput={touchInput}
           characterRef={characterRef}
-          onCharacterMove={onCharacterMove}
           onNearestProject={onNearestProject}
         />
       </SafeCanvas>
@@ -134,7 +83,6 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
     [t, portfolioItems, viewport],
   )
 
-  const frameMarkers = useMemo(() => getFrameMarkers(), [])
   const [webglReady, setWebglReady] = useState<boolean | null>(null)
   const [contextLost, setContextLost] = useState(false)
   const [canvasKey, setCanvasKey] = useState(0)
@@ -147,7 +95,6 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
   const keys = useRef<Record<string, boolean>>({})
   const touchInput = useRef<TouchInput>(INITIAL_TOUCH_INPUT)
   const characterRef = useRef<THREE.Group>(null)
-  const minimapRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
     setWebglReady(isWebGLAvailable())
@@ -206,13 +153,6 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
     }
   }, [nearestProject, phase])
 
-  const handleCharacterMove = useCallback(
-    (pos: THREE.Vector3, rotationY: number) => {
-      drawMinimap(minimapRef.current, pos.x, pos.z, rotationY, frameMarkers)
-    },
-    [frameMarkers],
-  )
-
   const handleNearestProject = useCallback((project: ShowcaseProject | null) => {
     setNearestProject(project)
   }, [])
@@ -250,7 +190,6 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
         keys={keys}
         touchInput={touchInput}
         characterRef={characterRef}
-        onCharacterMove={handleCharacterMove}
         onNearestProject={handleNearestProject}
         mountKey={canvasKey}
         onContextLost={handleContextLost}
@@ -327,7 +266,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
 
       {phase === 'playing' && (
         <>
-          <div className="pointer-events-none fixed left-1/2 top-1/2 z-10 h-5 w-5 -translate-x-1/2 -translate-y-1/2 before:absolute before:left-1/2 before:top-0 before:h-full before:w-0.5 before:-translate-x-1/2 before:bg-white/50 after:absolute after:left-0 after:top-1/2 after:h-0.5 after:w-full after:-translate-y-1/2 after:bg-white/50" />
+          <div className="pointer-events-none fixed left-1/2 top-1/2 z-10 hidden h-5 w-5 -translate-x-1/2 -translate-y-1/2 before:absolute before:left-1/2 before:top-0 before:h-full before:w-0.5 before:-translate-x-1/2 before:bg-white/50 after:absolute after:left-0 after:top-1/2 after:h-0.5 after:w-full after:-translate-y-1/2 after:bg-white/50 md:block" />
 
           {touchControlsEnabled && <ShowcaseJoystick touchInput={touchInput} />}
 
@@ -398,9 +337,6 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
             </button>
           </div>
 
-          <div className="fixed bottom-4 left-4 z-20 h-[88px] w-[130px] overflow-hidden rounded-lg border border-white/20 bg-black/80 md:bottom-8 md:left-8 md:h-[100px] md:w-[150px]">
-            <canvas ref={minimapRef} width={150} height={100} className="h-full w-full" />
-          </div>
         </>
       )}
 

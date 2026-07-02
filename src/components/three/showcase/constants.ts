@@ -1,34 +1,35 @@
 export const SHOWCASE_CONFIG = {
   moveSpeed: 0.35,
   turnSpeed: 0.05,
-  galleryLength: 24,
-  galleryWidth: 12,
-  galleryHeight: 10,
-  frameSpacing: 8,
+  pathLength: 72,
+  pathWidth: 18,
+  frameSpacing: 14,
   characterHeight: 2,
+  horizonZ: -52,
+  sunY: 14,
 } as const
 
 export const PROJECT_LINKS = [
   {
-    color: 0x6366f1,
+    color: 0xff0099,
     link: 'https://bodulica.shop',
     screenshotMobile: '/showcase/mobile-bodulica.jpg',
     screenshotDesktop: '/showcase/desktop-bodulica.jpg',
   },
   {
-    color: 0x06b6d4,
+    color: 0x00eaff,
     link: 'https://zeustrading.online',
     screenshotMobile: '/showcase/mobile-zeustrading.jpg',
     screenshotDesktop: '/showcase/desktop-zeustrading.jpg',
   },
   {
-    color: 0xf59e0b,
+    color: 0xff8800,
     link: 'https://cosmic-blueprint.net',
     screenshotMobile: '/showcase/mobile-cosmic-blueprint.jpg',
     screenshotDesktop: '/showcase/desktop-cosmic-blueprint.jpg',
   },
   {
-    color: 0x818cf8,
+    color: 0xff66cc,
     link: 'https://www.protosweb.eu',
     screenshotMobile: '/showcase/mobile-protosweb.jpg',
     screenshotDesktop: '/showcase/desktop-protosweb.jpg',
@@ -45,17 +46,6 @@ export type ShowcaseProject = {
   imageUrl: string | null
 }
 
-export type FrameMarker = {
-  x: number
-  z: number
-  color: number
-}
-
-export function initCharacterPosition(group: import('three').Group, heading = INITIAL_CHARACTER_HEADING) {
-  group.position.set(0, 0, SHOWCASE_CONFIG.galleryLength / 2 - 3)
-  group.rotation.set(0, heading, 0, 'YXZ')
-}
-
 export type FrameTransform = {
   side: number
   x: number
@@ -65,31 +55,24 @@ export type FrameTransform = {
   floorX: number
 }
 
-export function getFrameTransform(index: number, centerY = 2.45): FrameTransform {
-  const { galleryLength, galleryWidth, frameSpacing } = SHOWCASE_CONFIG
+export function initCharacterPosition(group: import('three').Group, heading = INITIAL_CHARACTER_HEADING) {
+  group.position.set(0, 0, SHOWCASE_CONFIG.pathLength / 2 - 4)
+  group.rotation.set(0, heading, 0, 'YXZ')
+}
+
+export function getFrameTransform(index: number, centerY = 3.2): FrameTransform {
+  const { pathLength, pathWidth, frameSpacing } = SHOWCASE_CONFIG
   const side = index % 2 === 0 ? -1 : 1
   const row = Math.floor(index / 2)
-  const startZ = -galleryLength / 2 + 6
-  const z = startZ + row * frameSpacing
-  const inset = 0.25
-  const x = side * (galleryWidth / 2 - inset)
+  const startZ = pathLength / 2 - 10
+  const z = startZ - row * frameSpacing
+  const x = side * (pathWidth / 2 + 3.5)
   return {
     side,
     x,
     y: centerY,
     z,
     rotationY: side === -1 ? Math.PI / 2 : -Math.PI / 2,
-    floorX: side * (galleryWidth / 2 - 2.5),
+    floorX: side * (pathWidth / 2 - 1.5),
   }
-}
-
-export function getFrameMarkers(): FrameMarker[] {
-  return PROJECT_LINKS.map((meta, index) => {
-    const { x, z, floorX } = getFrameTransform(index)
-    return {
-      x: floorX,
-      z,
-      color: meta.color,
-    }
-  })
 }

@@ -25,22 +25,22 @@ export default function BootCookieModal({ open, onAccept }: Props) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="absolute inset-0 z-20 flex items-center justify-center bg-[var(--dark)]/70 backdrop-blur-sm px-6"
+          className="absolute inset-0 z-20 flex items-center justify-center bg-black/60 backdrop-blur-sm px-6"
         >
           <motion.div
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
-            className="cosmic-panel rounded-2xl p-8 max-w-md w-full shadow-2xl border border-[var(--primary)]/30"
+            className="max-w-md w-full rounded-2xl border border-cyan-400/25 bg-black/75 p-8 shadow-[0_0_40px_rgba(34,211,238,0.12)] backdrop-blur-md"
           >
-            <h3 className="text-lg font-bold text-[var(--light)] mb-3">{t('cookieModalTitle')}</h3>
-            <p className="text-sm text-[var(--light-muted)] leading-relaxed mb-6">
+            <h3 className="text-lg font-bold text-cyan-50 mb-3">{t('cookieModalTitle')}</h3>
+            <p className="text-sm text-cyan-100/70 leading-relaxed mb-6">
               {t('cookieModalLegalPrefix')}{' '}
-              <Link href="/terms" className="text-[var(--primary)] hover:underline">
+              <Link href="/terms" className="text-emerald-300 hover:underline">
                 {t('cookieModalTerms')}
               </Link>{' '}
               {t('cookieModalLegalAnd')}{' '}
-              <Link href="/privacy" className="text-[var(--primary)] hover:underline">
+              <Link href="/privacy" className="text-emerald-300 hover:underline">
                 {t('cookieModalPrivacy')}
               </Link>
               .
@@ -48,7 +48,7 @@ export default function BootCookieModal({ open, onAccept }: Props) {
             <button
               type="button"
               onClick={handleAccept}
-              className="w-full px-6 py-3 rounded-full bg-gradient-to-r from-[var(--primary)] to-[#ff8800] text-white text-sm font-semibold hover:-translate-y-0.5 transition-all duration-300"
+              className="w-full rounded-full border border-cyan-300/40 bg-cyan-500/15 px-6 py-3 text-sm font-semibold text-cyan-50 transition-all hover:bg-cyan-400/25 hover:border-cyan-200/50"
             >
               {t('cookieModalAccept')}
             </button>

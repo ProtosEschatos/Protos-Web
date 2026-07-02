@@ -3,11 +3,11 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations } from 'next-intl'
-import PageLoaderCyberBackground from '@/components/ui/PageLoaderCyberBackground'
+import PageLoaderBackground from '@/components/ui/PageLoaderBackground'
 import BootCookieModal from '@/components/ui/BootCookieModal'
 import { COOKIE_STORAGE_KEY } from '@/lib/cookie-consent'
 
-const SESSION_KEY = 'protos-page-loaded'
+const SESSION_KEY = 'protos-boot-gate-v3'
 
 export default function PageLoader() {
   const t = useTranslations('loader')
@@ -76,39 +76,16 @@ export default function PageLoader() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: 'easeInOut' }}
-          className="fixed inset-0 z-[9999] bg-[var(--dark)] flex flex-col items-center justify-center overflow-hidden"
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-end overflow-hidden pb-[max(4rem,env(safe-area-inset-bottom))] md:pb-24"
         >
-          <PageLoaderCyberBackground />
+          <PageLoaderBackground />
 
-          <div className="relative z-10 flex flex-col items-center justify-center">
-            <div className="relative w-24 h-24 mb-8">
+          <div className="relative z-10 flex w-full max-w-lg flex-col items-center px-6">
+            <div className="h-1.5 w-56 overflow-hidden rounded-full border border-emerald-400/20 bg-black/40 backdrop-blur-sm md:w-64">
               <motion.div
-                className="absolute inset-0 rounded-full border-2 border-[var(--primary)]"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-              />
-              <motion.div
-                className="absolute inset-2 rounded-full border-2 border-[var(--secondary)] border-t-transparent"
-                animate={{ rotate: -360 }}
-                transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-              />
-              <motion.div
-                className="absolute inset-4 rounded-full bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)]"
-                animate={{ scale: [0.8, 1.1, 0.8] }}
-                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-              />
-            </div>
-
-            <h2 className="text-2xl font-bold gradient-text mb-2">Protos Web</h2>
-            <p className="text-sm text-[var(--light-muted)] tracking-[0.2em] uppercase mb-6">
-              {t('subtitle')}
-            </p>
-
-            <div className="w-48 h-1 bg-white/10 rounded-full overflow-hidden mb-6">
-              <motion.div
-                className="h-full rounded-full bg-gradient-to-r from-[var(--primary)] via-[var(--secondary)] to-[var(--accent)]"
-                initial={{ width: '0%' }}
-                animate={{ width: `${Math.min(progress, 100)}%` }}
+                className="h-full w-full origin-left rounded-full bg-gradient-to-r from-emerald-400 via-cyan-400 to-violet-400 shadow-[0_0_16px_rgba(52,211,153,0.5)]"
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: Math.min(progress, 100) / 100 }}
                 transition={{ duration: 0.3 }}
               />
             </div>
@@ -121,7 +98,7 @@ export default function PageLoader() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
                   onClick={handleEnter}
-                  className="px-10 py-3 rounded-full border border-[var(--primary)]/60 bg-[var(--primary)]/10 text-[var(--light)] text-sm font-semibold tracking-[0.25em] uppercase hover:bg-[var(--primary)]/20 hover:border-[var(--primary)] transition-all duration-300 shadow-[0_0_24px_rgba(255,102,0,0.25)]"
+                  className="mt-10 rounded-full border border-cyan-300/40 bg-cyan-500/10 px-10 py-3.5 text-sm font-semibold uppercase tracking-[0.25em] text-cyan-50 shadow-[0_0_30px_rgba(34,211,238,0.2)] backdrop-blur-md transition-all hover:scale-105 hover:border-cyan-200/60 hover:bg-cyan-400/15 hover:shadow-[0_0_40px_rgba(34,211,238,0.35)]"
                 >
                   {t('enter')}
                 </motion.button>

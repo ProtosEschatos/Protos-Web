@@ -1,10 +1,11 @@
 'use client'
 
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
-import { Billboard, Float } from '@react-three/drei'
+import { Billboard, Float, useTexture } from '@react-three/drei'
 import * as THREE from 'three'
 import { SHOWCASE_CONFIG } from './constants'
+import { getShowcaseStorageUrl, SHOWCASE_STORAGE } from '@/lib/showcase-storage'
 import { createPalmSilhouetteTexture, createStarPositions, createSunTexture } from './synthwaveTextures'
 
 const LOOP = 10
@@ -52,6 +53,42 @@ const GRID_FRAG = `
     gl_FragColor = vec4(col, 1.0);
   }
 `
+
+function SupabaseEnvironmentPlane({ url }: { url: string }) {
+  const texture = useTexture(url)
+  texture.colorSpace = THREE.SRGBColorSpace
+  const { horizonZ } = SHOWCASE_CONFIG
+
+  return (
+    <mesh position={[0, 14, horizonZ - 8]} renderOrder={-11}>
+      <planeGeometry args={[140, 78]} />
+      <meshBasicMaterial map={texture} toneMapped={false} depthWrite={false} />
+    </mesh>
+  )
+}
+
+function SupabaseEnvironmentBackdrop() {
+  const primary = getShowcaseStorageUrl(SHOWCASE_STORAGE.environment)
+  const fallback = '/showcase/synthwave-room.jpg'
+  const [url, setUrl] = useState<string | null>(null)
+
+  useEffect(() => {
+    let cancelled = false
+    fetch(primary, { method: 'HEAD' })
+      .then((res) => {
+        if (!cancelled) setUrl(res.ok ? primary : fallback)
+      })
+      .catch(() => {
+        if (!cancelled) setUrl(fallback)
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [primary, fallback])
+
+  if (!url) return null
+  return <SupabaseEnvironmentPlane url={url} />
+}
 
 function SynthwaveSky() {
   const stars = useMemo(() => createStarPositions(), [])
@@ -265,6 +302,7 @@ export function SynthwaveRoom() {
 
   return (
     <group name="SynthwaveEnvironment">
+      <SupabaseEnvironmentBackdrop />
       <SynthwaveSky />
       <SynthwaveSun />
       <WireframeMountains />

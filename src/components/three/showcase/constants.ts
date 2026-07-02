@@ -1,3 +1,5 @@
+import { getShowcaseStorageUrl, SHOWCASE_STORAGE } from '@/lib/showcase-storage'
+
 export const SHOWCASE_CONFIG = {
   moveSpeed: 0.35,
   turnSpeed: 0.05,
@@ -13,26 +15,26 @@ export const PROJECT_LINKS = [
   {
     color: 0xff0099,
     link: 'https://bodulica.shop',
-    screenshotMobile: '/showcase/mobile-bodulica.jpg',
-    screenshotDesktop: '/showcase/desktop-bodulica.jpg',
+    screenshotMobile: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('bodulica', 'mobile')),
+    screenshotDesktop: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('bodulica', 'desktop')),
   },
   {
     color: 0x00eaff,
     link: 'https://zeustrading.online',
-    screenshotMobile: '/showcase/mobile-zeustrading.jpg',
-    screenshotDesktop: '/showcase/desktop-zeustrading.jpg',
+    screenshotMobile: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('zeustrading', 'mobile')),
+    screenshotDesktop: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('zeustrading', 'desktop')),
   },
   {
     color: 0xff8800,
     link: 'https://cosmic-blueprint.net',
-    screenshotMobile: '/showcase/mobile-cosmic-blueprint.jpg',
-    screenshotDesktop: '/showcase/desktop-cosmic-blueprint.jpg',
+    screenshotMobile: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('cosmic-blueprint', 'mobile')),
+    screenshotDesktop: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('cosmic-blueprint', 'desktop')),
   },
   {
     color: 0xff66cc,
-    link: 'https://www.protosweb.eu',
-    screenshotMobile: '/showcase/mobile-protosweb.jpg',
-    screenshotDesktop: '/showcase/desktop-protosweb.jpg',
+    link: 'https://protosweb.eu',
+    screenshotMobile: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('protosweb', 'mobile')),
+    screenshotDesktop: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('protosweb', 'desktop')),
   },
 ] as const
 

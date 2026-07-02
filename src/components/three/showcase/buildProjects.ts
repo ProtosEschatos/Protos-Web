@@ -13,7 +13,8 @@ export function buildShowcaseProjects(
       (item) => item.project_url && normalizeProjectUrl(item.project_url) === normalizeProjectUrl(meta.link),
     )
 
-    const imageUrl = viewport === 'desktop' ? meta.screenshotDesktop : meta.screenshotMobile
+    const fallback = viewport === 'desktop' ? meta.screenshotDesktop : meta.screenshotMobile
+    const imageUrl = dbItem?.image_url ?? fallback
 
     return {
       color: meta.color,

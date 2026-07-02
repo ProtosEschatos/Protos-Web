@@ -1,8 +1,10 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { usePathname } from '@/routing'
 import { getBackgroundKey } from '@/lib/site-background-routes'
 import PageBackgroundCanvas from '@/components/three/backgrounds/PageBackgroundCanvas'
+import { BOOT_COMPLETE_EVENT, BOOT_SESSION_KEY } from '@/components/ui/PageLoader'
 
 const TWINKLE_BG = `
   radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.4), transparent),
@@ -16,9 +18,24 @@ const TWINKLE_BG = `
   radial-gradient(1px 1px at 60% 75%, rgba(255,255,255,0.3), transparent)
 `
 
+function isBootComplete(): boolean {
+  if (typeof window === 'undefined') return false
+  return sessionStorage.getItem(BOOT_SESSION_KEY) === '1'
+}
+
 export default function SiteBackground() {
   const pathname = usePathname()
   const routeKey = getBackgroundKey(pathname)
+  const [bootDone, setBootDone] = useState(false)
+
+  useEffect(() => {
+    const sync = () => setBootDone(isBootComplete())
+    sync()
+    window.addEventListener(BOOT_COMPLETE_EVENT, sync)
+    return () => window.removeEventListener(BOOT_COMPLETE_EVENT, sync)
+  }, [])
+
+  if (!bootDone) return null
 
   return (
     <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden>

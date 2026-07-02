@@ -1,63 +1,99 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations, useLocale } from 'next-intl'
 import { saveCookiePreferences } from '@/lib/cookie-consent'
 import { buildLocalePath } from '@/lib/seo'
 
-const SESSION_KEY = 'protos-boot-gate-v5'
+export const BOOT_SESSION_KEY = 'protos-boot-gate-v5'
+export const BOOT_COMPLETE_EVENT = 'protos-boot-complete'
 const BOOT_BG = '/loader/boot-bg.jpg'
 
 type JellyfishSpec = {
   id: string
   w: number
-  left: string
   top: string
-  pathX: number[]
-  pathY: number[]
   duration: number
+  delay: number
+  from: 'left' | 'right'
+  wobble: number
 }
 
 const JELLYFISH: JellyfishSpec[] = [
-  { id: 'a', w: 88, left: '6%', top: '12%', pathX: [0, 90, 160, 70, 0], pathY: [0, 50, 120, 180, 40], duration: 28 },
-  { id: 'b', w: 110, left: '68%', top: '6%', pathX: [0, -120, -200, -80, 0], pathY: [0, 80, 40, 140, 20], duration: 34 },
-  { id: 'c', w: 64, left: '40%', top: '22%', pathX: [0, -60, 40, 100, 0], pathY: [0, -40, 30, 90, 0], duration: 22 },
-  { id: 'd', w: 76, left: '18%', top: '55%', pathX: [0, 140, 220, 100, 0], pathY: [0, -70, 20, -40, 0], duration: 30 },
-  { id: 'e', w: 92, left: '78%', top: '48%', pathX: [0, -100, -180, -40, 0], pathY: [0, 60, -30, 80, 0], duration: 26 },
-  { id: 'f', w: 52, left: '52%', top: '68%', pathX: [0, 80, -50, 60, 0], pathY: [0, -50, -90, -20, 0], duration: 20 },
+  { id: 'a', w: 92, top: '14%', duration: 19, delay: 0, from: 'left', wobble: 36 },
+  { id: 'b', w: 118, top: '6%', duration: 24, delay: 3, from: 'right', wobble: 48 },
+  { id: 'c', w: 68, top: '28%', duration: 16, delay: 6, from: 'left', wobble: 28 },
+  { id: 'd', w: 84, top: '52%', duration: 21, delay: 2, from: 'right', wobble: 40 },
+  { id: 'e', w: 96, top: '44%', duration: 18, delay: 8, from: 'left', wobble: 32 },
+  { id: 'f', w: 58, top: '68%', duration: 14, delay: 5, from: 'right', wobble: 24 },
+  { id: 'g', w: 74, top: '78%', duration: 20, delay: 10, from: 'left', wobble: 30 },
 ]
 
 function JellyfishSprite({ spec }: { spec: JellyfishSpec }) {
   const gradId = `jf-${spec.id}`
+  const swimRight = spec.from === 'left'
+
   return (
     <motion.div
-      className="absolute pointer-events-none"
-      style={{ left: spec.left, top: spec.top, width: spec.w }}
-      animate={{ x: spec.pathX, y: spec.pathY, rotate: [0, 6, -5, 3, 0] }}
-      transition={{ duration: spec.duration, repeat: Infinity, ease: 'easeInOut' }}
+      className="absolute pointer-events-none will-change-transform"
+      style={{ top: spec.top, width: spec.w, left: swimRight ? '-18vw' : undefined, right: swimRight ? undefined : '-18vw' }}
+      initial={{ x: 0, y: 0 }}
+      animate={{
+        x: swimRight ? ['0vw', '135vw'] : ['0vw', '-135vw'],
+        y: [0, -spec.wobble, spec.wobble * 0.35, -spec.wobble * 0.65, 0],
+      }}
+      transition={{
+        x: { duration: spec.duration, repeat: Infinity, ease: 'linear', delay: spec.delay },
+        y: { duration: spec.duration * 0.28, repeat: Infinity, ease: 'easeInOut', delay: spec.delay },
+      }}
       aria-hidden
     >
-      <svg viewBox="0 0 100 130" className="w-full h-auto drop-shadow-[0_0_18px_rgba(34,211,238,0.55)]">
-        <defs>
-          <radialGradient id={gradId} cx="50%" cy="35%" r="55%">
-            <stop offset="0%" stopColor="#a5f3fc" stopOpacity="0.95" />
-            <stop offset="55%" stopColor="#22d3ee" stopOpacity="0.65" />
-            <stop offset="100%" stopColor="#0891b2" stopOpacity="0" />
-          </radialGradient>
-        </defs>
-        <ellipse cx="50" cy="32" rx="36" ry="26" fill={`url(#${gradId})`} />
-        {[22, 34, 50, 66, 78].map((x, i) => (
-          <path
-            key={x}
-            d={`M${x} 52 Q${x + (i % 2 === 0 ? 6 : -6)} 88 ${x + (i % 2 === 0 ? -4 : 4)} 125`}
-            stroke="rgba(103,232,249,0.55)"
-            strokeWidth="1.8"
-            fill="none"
-          />
-        ))}
-      </svg>
+      <motion.div
+        animate={{
+          scaleY: [1, 0.68, 1, 0.76, 1],
+          scaleX: [1, 1.12, 1, 1.06, 1],
+          rotate: swimRight ? [2, -4, 3, -2, 2] : [-2, 4, -3, 2, -2],
+        }}
+        transition={{ duration: 0.85, repeat: Infinity, ease: [0.45, 0.05, 0.55, 0.95] }}
+        style={{ transformOrigin: '50% 28%' }}
+      >
+        <svg
+          viewBox="0 0 100 130"
+          className="w-full h-auto drop-shadow-[0_0_18px_rgba(34,211,238,0.55)]"
+          style={{ transform: swimRight ? 'scaleX(1)' : 'scaleX(-1)' }}
+        >
+          <defs>
+            <radialGradient id={gradId} cx="50%" cy="35%" r="55%">
+              <stop offset="0%" stopColor="#a5f3fc" stopOpacity="0.95" />
+              <stop offset="55%" stopColor="#22d3ee" stopOpacity="0.65" />
+              <stop offset="100%" stopColor="#0891b2" stopOpacity="0" />
+            </radialGradient>
+          </defs>
+          <ellipse cx="50" cy="32" rx="36" ry="26" fill={`url(#${gradId})`} />
+          <motion.g
+            animate={{ rotate: [-6, 8, -5, 7, -6], x: [-2, 3, -1, 2, -2] }}
+            transition={{ duration: 0.7, repeat: Infinity, ease: 'easeInOut' }}
+            style={{ transformOrigin: '50px 52px' }}
+          >
+            {[22, 34, 50, 66, 78].map((x, i) => (
+              <motion.path
+                key={x}
+                d={`M${x} 52 Q${x + (i % 2 === 0 ? 10 : -10)} 92 ${x + (i % 2 === 0 ? -6 : 6)} 128`}
+                stroke="rgba(103,232,249,0.6)"
+                strokeWidth="1.8"
+                fill="none"
+                animate={{ d: [
+                  `M${x} 52 Q${x + (i % 2 === 0 ? 10 : -10)} 92 ${x + (i % 2 === 0 ? -6 : 6)} 128`,
+                  `M${x} 52 Q${x + (i % 2 === 0 ? -8 : 8)} 96 ${x + (i % 2 === 0 ? 8 : -8)} 128`,
+                  `M${x} 52 Q${x + (i % 2 === 0 ? 10 : -10)} 92 ${x + (i % 2 === 0 ? -6 : 6)} 128`,
+                ] }}
+                transition={{ duration: 0.55 + i * 0.04, repeat: Infinity, ease: 'easeInOut' }}
+              />
+            ))}
+          </motion.g>
+        </svg>
+      </motion.div>
     </motion.div>
   )
 }
@@ -70,12 +106,24 @@ export default function PageLoader() {
   const cookiesHref = buildLocalePath(locale, '/cookies')
   const [loading, setLoading] = useState(() => {
     if (typeof window === 'undefined') return true
-    return sessionStorage.getItem(SESSION_KEY) !== '1'
+    return sessionStorage.getItem(BOOT_SESSION_KEY) !== '1'
   })
   const [progress, setProgress] = useState(0)
   const [readyToEnter, setReadyToEnter] = useState(false)
   const [showCookieModal, setShowCookieModal] = useState(false)
   const [analyticsOptIn, setAnalyticsOptIn] = useState(false)
+
+  useEffect(() => {
+    if (!loading) return
+    const link = document.createElement('link')
+    link.rel = 'preload'
+    link.as = 'image'
+    link.href = BOOT_BG
+    document.head.appendChild(link)
+    return () => {
+      if (link.parentNode) link.parentNode.removeChild(link)
+    }
+  }, [loading])
 
   useEffect(() => {
     if (!loading) return
@@ -93,7 +141,8 @@ export default function PageLoader() {
   }, [loading])
 
   const finishBoot = useCallback(() => {
-    sessionStorage.setItem(SESSION_KEY, '1')
+    sessionStorage.setItem(BOOT_SESSION_KEY, '1')
+    window.dispatchEvent(new Event(BOOT_COMPLETE_EVENT))
     setShowCookieModal(false)
     setLoading(false)
   }, [])
@@ -122,21 +171,19 @@ export default function PageLoader() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: 'easeInOut' }}
-          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden"
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden bg-[#020818]"
+          style={{
+            backgroundImage: `url(${BOOT_BG})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
         >
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <motion.div
-              className="absolute inset-0 scale-105"
-              animate={{ scale: [1.03, 1.08, 1.03], x: [0, -12, 8, 0], y: [0, -8, 6, 0] }}
-              transition={{ duration: 24, repeat: Infinity, ease: 'easeInOut' }}
-            >
-              <Image src={BOOT_BG} alt="" fill priority className="object-cover object-center" sizes="100vw" aria-hidden />
-            </motion.div>
             {JELLYFISH.map((spec) => (
               <JellyfishSprite key={spec.id} spec={spec} />
             ))}
-            <div className="absolute inset-0 bg-[#020818]/20" />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020818]/50" />
+            <div className="absolute inset-0 bg-[#020818]/15" />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020818]/45" />
           </div>
 
           <div className="relative z-10 flex flex-col items-center justify-center">

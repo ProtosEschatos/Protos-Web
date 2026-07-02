@@ -6,7 +6,7 @@ import { useTranslations, useLocale } from 'next-intl'
 import { saveCookiePreferences } from '@/lib/cookie-consent'
 import { buildLocalePath } from '@/lib/seo'
 
-export const BOOT_SESSION_KEY = 'protos-boot-gate-v8'
+export const BOOT_SESSION_KEY = 'protos-boot-gate-v9'
 export const BOOT_COMPLETE_EVENT = 'protos-boot-complete'
 const BOOT_VIDEO = '/loader/boot-bg.mp4'
 const BOOT_POSTER = '/loader/boot-bg.jpg'

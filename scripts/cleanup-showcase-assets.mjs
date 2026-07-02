@@ -30,6 +30,10 @@ async function deletePath(storagePath) {
 
   if (!res.ok) {
     const text = await res.text()
+    if (res.status === 400 && text.includes('not_found')) {
+      console.log(`SKIP ${storagePath} (not found)`)
+      return
+    }
     console.error(`FAIL ${storagePath}: ${res.status} ${text}`)
     process.exitCode = 1
     return

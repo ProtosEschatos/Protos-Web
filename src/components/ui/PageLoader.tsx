@@ -5,16 +5,26 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations, useLocale } from 'next-intl'
 import { saveCookiePreferences } from '@/lib/cookie-consent'
 import { buildLocalePath } from '@/lib/seo'
+import {
+  BOOT_SESSION_KEY,
+  BOOT_COMPLETE_EVENT,
+  BOOT_VIDEO,
+  BOOT_BG,
+  clearBootPending,
+  setBootPending,
+} from '@/lib/boot-gate'
 
-export const BOOT_SESSION_KEY = 'protos-boot-gate-v10'
-export const BOOT_COMPLETE_EVENT = 'protos-boot-complete'
-const BOOT_VIDEO = '/loader/boot-bg.mp4'
+export { BOOT_SESSION_KEY, BOOT_COMPLETE_EVENT } from '@/lib/boot-gate'
 
 function BootVideoBackground({ active }: { active: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [videoReady, setVideoReady] = useState(false)
 
   useEffect(() => {
-    if (!active) return
+    if (!active) {
+      setVideoReady(false)
+      return
+    }
     const video = videoRef.current
     if (!video) return
 
@@ -28,27 +38,39 @@ function BootVideoBackground({ active }: { active: boolean }) {
       void video.play().catch(() => {})
     }
 
-    if (video.readyState >= 2) play()
-    else video.addEventListener('canplay', play, { once: true })
+    const onReady = () => setVideoReady(true)
+
+    if (video.readyState >= 3) {
+      onReady()
+      play()
+    } else {
+      video.addEventListener('canplaythrough', onReady, { once: true })
+      video.addEventListener('canplay', play, { once: true })
+    }
 
     return () => {
+      video.removeEventListener('canplaythrough', onReady)
       video.removeEventListener('canplay', play)
       video.pause()
+      setVideoReady(false)
     }
   }, [active])
 
   return (
-    <div className="absolute inset-0 overflow-hidden bg-[#020818] pointer-events-none" aria-hidden>
+    <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ backgroundColor: BOOT_BG }} aria-hidden>
       <video
         ref={videoRef}
         src={BOOT_VIDEO}
-        className="absolute inset-0 h-full w-full object-cover"
+        className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-700 ease-out will-change-transform [transform:translateZ(0)_scale(1.02)] ${
+          videoReady ? 'opacity-100' : 'opacity-0'
+        }`}
         preload="auto"
+        autoPlay
         muted
         playsInline
         loop
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020818]/30" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020818]/30 pointer-events-none" />
     </div>
   )
 }
@@ -69,14 +91,10 @@ export default function PageLoader() {
   const [analyticsOptIn, setAnalyticsOptIn] = useState(false)
 
   useEffect(() => {
-    if (!loading) return
-    const link = document.createElement('link')
-    link.rel = 'preload'
-    link.as = 'video'
-    link.href = BOOT_VIDEO
-    document.head.appendChild(link)
-    return () => {
-      if (link.parentNode) link.parentNode.removeChild(link)
+    if (loading) {
+      setBootPending()
+    } else {
+      clearBootPending()
     }
   }, [loading])
 
@@ -97,6 +115,7 @@ export default function PageLoader() {
 
   const finishBoot = useCallback(() => {
     sessionStorage.setItem(BOOT_SESSION_KEY, '1')
+    clearBootPending()
     window.dispatchEvent(new Event(BOOT_COMPLETE_EVENT))
     setShowCookieModal(false)
     setLoading(false)
@@ -126,7 +145,9 @@ export default function PageLoader() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: 'easeInOut' }}
-          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden bg-[#020818]"
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden"
+          style={{ backgroundColor: BOOT_BG }}
+          data-boot-layer
         >
           <BootVideoBackground active={loading} />
 

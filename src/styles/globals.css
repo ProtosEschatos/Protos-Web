@@ -32,6 +32,17 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
+html.boot-pending,
+html.boot-pending body {
+  background-color: #020818 !important;
+  overflow: hidden !important;
+}
+
+html.boot-pending #site-main-chrome {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
 body {
   font-family: var(--font-sans);
   background: var(--dark);

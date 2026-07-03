@@ -84,10 +84,10 @@ export function ShowcaseJoystick({ touchInput }: ShowcaseJoystickProps) {
       aria-label="Move character"
       role="application"
     >
-      <div className="absolute inset-0 rounded-full border border-white/15 bg-black/45 backdrop-blur-md shadow-[0_0_24px_rgba(255,0,153,0.2)]" />
+      <div className="absolute inset-0 rounded-full border border-white/15 bg-black/45 backdrop-blur-md shadow-[0_0_24px_rgba(99,102,241,0.2)]" />
       <div
         ref={knobRef}
-        className="absolute left-1/2 top-1/2 rounded-full border-2 border-[#ff0099]/70 bg-gradient-to-br from-[#ff0099]/90 to-[#00eaff]/80 shadow-lg"
+        className="absolute left-1/2 top-1/2 rounded-full border-2 border-[#6366f1]/70 bg-gradient-to-br from-[#6366f1]/90 to-[#06b6d4]/80 shadow-lg"
         style={{ width: KNOB, height: KNOB, transform: 'translate(-50%, -50%)' }}
       />
     </div>

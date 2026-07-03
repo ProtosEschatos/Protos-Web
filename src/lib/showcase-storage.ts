@@ -1,7 +1,6 @@
 const BUCKET = 'showcase'
 
 function localFallback(path: string): string {
-  if (path.startsWith('environment/')) return `/showcase/${path}`
   const name = path.split('/').pop() ?? path
   return `/showcase/${name}`
 }

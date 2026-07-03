@@ -1,9 +1,9 @@
 # Protos-Web — Project Memory
 
-> **Last updated:** 2026-07-02  
+> **Last updated:** 2026-07-04  
 > **Live:** https://www.protosweb.eu  
 > **Repo:** `ProtosEschatos/Protos-Web`  
-> **Latest commit:** `2766de1` — *Restore original space station portfolio showcase environment.*
+> **Latest commit:** `main` @ space station restore + cleanup
 
 ---
 

@@ -47,12 +47,6 @@ export type ShowcaseProject = {
   imageUrl: string | null
 }
 
-export type FrameMarker = {
-  x: number
-  z: number
-  color: number
-}
-
 export function initCharacterPosition(group: import('three').Group, heading = INITIAL_CHARACTER_HEADING) {
   group.position.set(0, 0, SHOWCASE_CONFIG.galleryLength / 2 - 3)
   group.rotation.set(0, heading, 0, 'YXZ')
@@ -83,15 +77,4 @@ export function getFrameTransform(index: number, centerY = 2.45): FrameTransform
     rotationY: side === -1 ? Math.PI / 2 : -Math.PI / 2,
     floorX: side * (galleryWidth / 2 - 2.5),
   }
-}
-
-export function getFrameMarkers(): FrameMarker[] {
-  return PROJECT_LINKS.map((meta, index) => {
-    const { z, floorX } = getFrameTransform(index)
-    return {
-      x: floorX,
-      z,
-      color: meta.color,
-    }
-  })
 }

@@ -28,7 +28,7 @@ type PageBackgroundCanvasProps = {
 function CssFallback({ routeKey }: { routeKey: BackgroundRouteKey }) {
   return (
     <div
-      className="pointer-events-none absolute inset-0 opacity-70"
+      className="pointer-events-none absolute inset-0 opacity-85"
       style={{ background: BACKGROUND_FALLBACKS[routeKey] }}
       aria-hidden
     />

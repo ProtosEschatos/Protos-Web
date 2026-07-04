@@ -38,7 +38,9 @@ html.boot-pending:not(.boot-complete) body {
   overflow: hidden !important;
 }
 
-html.boot-complete body {
+html.boot-complete body,
+html.boot-complete .site-body {
+  background: transparent !important;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -82,9 +84,10 @@ html.boot-complete #boot-ssr-veil {
   to { transform: rotate(360deg); }
 }
 
-body {
+body,
+.site-body {
   font-family: var(--font-sans);
-  background: var(--dark);
+  background: #020818;
   color: var(--light);
   line-height: 1.6;
   overflow-x: hidden;

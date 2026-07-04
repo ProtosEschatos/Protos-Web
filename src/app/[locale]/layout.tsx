@@ -68,7 +68,7 @@ export default async function LocaleLayout({
       <head>
         <link rel="preload" href={BOOT_VIDEO} as="fetch" type="video/mp4" crossOrigin="anonymous" />
       </head>
-      <body style={{ backgroundColor: '#020818' }}>
+      <body className="site-body">
         <Script id="boot-gate-init" strategy="beforeInteractive">
           {BOOT_GATE_INIT_SCRIPT}
         </Script>

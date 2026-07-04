@@ -34,16 +34,17 @@ export default function SiteBackground() {
   if (!bootDone) return null
 
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden>
+    <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden>
+      <div className="absolute inset-0 bg-[var(--dark)]" />
       <RouteAmbientLayer routeKey={routeKey} />
       <div
         className="pointer-events-none absolute inset-0 animate-[twinkle_8s_ease-in-out_infinite_alternate] opacity-90"
         style={{ backgroundImage: TWINKLE_BG }}
       />
-      <div className="pointer-events-none absolute inset-0 opacity-[0.92] saturate-[1.15] [&_canvas]:pointer-events-none">
+      <div className="pointer-events-none absolute inset-0 opacity-[0.95] saturate-[1.2] [&_canvas]:pointer-events-none">
         <PageBackgroundCanvas key={routeKey} routeKey={routeKey} />
       </div>
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[var(--dark)]/10 via-transparent to-[var(--dark)]/55" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[var(--dark)]/5 via-transparent to-[var(--dark)]/35" />
     </div>
   )
 }

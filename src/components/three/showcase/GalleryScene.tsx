@@ -216,8 +216,8 @@ function BackdropPlane() {
   }, [texture])
 
   return (
-    <mesh position={[0, 35, -135]}>
-      <planeGeometry args={[190, 95]} />
+    <mesh position={[0, 50, -260]}>
+      <planeGeometry args={[360, 180]} />
       <meshBasicMaterial map={texture} fog={false} depthWrite={false} />
     </mesh>
   )
@@ -225,7 +225,7 @@ function BackdropPlane() {
 
 function SideBillboards({ side }: { side: -1 | 1 }) {
   const texture = useTexture(side === -1 ? '/textures/city-strip.png' : '/textures/desert-strip.png')
-  const zPositions = useMemo(() => [-7, -27, -47, -67], [])
+  const zPositions = useMemo(() => [-15, -55, -95, -135], [])
 
   useMemo(() => {
     texture.colorSpace = THREE.SRGBColorSpace
@@ -393,7 +393,7 @@ function Palms() {
   const { galleryLength, galleryWidth } = SHOWCASE_CONFIG
   const palms = useMemo(() => {
     const list: { x: number; z: number; scale: number }[] = []
-    for (let z = galleryLength / 2 - 5; z > -galleryLength / 2; z -= 10) {
+    for (let z = galleryLength / 2 - 8; z > -galleryLength / 2; z -= 18) {
       const scale = 0.72 + ((Math.abs(Math.round(z)) % 5) * 0.04)
       list.push({ x: -galleryWidth / 2 - 1.5, z, scale })
       list.push({ x: galleryWidth / 2 + 1.5, z, scale: scale + 0.06 })
@@ -413,7 +413,7 @@ function Palms() {
 function FloatingWireShapes() {
   const shapes = useMemo(
     () =>
-      Array.from({ length: 14 }).map((_, i) => {
+      Array.from({ length: 10 }).map((_, i) => {
         const side = i % 2 === 0 ? -1 : 1
         return {
           geometry:
@@ -423,7 +423,7 @@ function FloatingWireShapes() {
                 ? new THREE.OctahedronGeometry(0.9)
                 : new THREE.TetrahedronGeometry(1.1),
           color: [0xff2fd6, 0x22d3ee, 0xffffff][i % 3],
-          position: new THREE.Vector3(side * (2 + (i % 4) * 0.7), 4 + (i % 5), -8 - i * 5.5),
+          position: new THREE.Vector3(side * (2.5 + (i % 4) * 0.9), 4 + (i % 5), -18 - i * 13),
           spinX: (i % 2 === 0 ? 1 : -1) * 0.006,
           spinY: (i % 3 === 0 ? -1 : 1) * 0.008,
           phase: i * 0.7,

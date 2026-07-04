@@ -45,8 +45,8 @@ function FollowCamera({ playerRef }: FollowCameraProps) {
   useFrame(() => {
     if (!playerRef.current) return;
     const p = playerRef.current.position;
-    targetPos.current.set(p.x, p.y + 5.5, p.z + 11);
-    lookAtPos.current.set(p.x, p.y + 0.8, p.z);
+    targetPos.current.set(p.x, p.y + 5, p.z + 13);
+    lookAtPos.current.set(p.x, p.y + 1.5, p.z - 10);
     camera.position.lerp(targetPos.current, 0.07);
     camera.lookAt(lookAtPos.current);
   });
@@ -163,27 +163,29 @@ function RetroSun() {
 
 // ─── NEONSKI GRAD ────────────────────────────────────────────────────────────
 function CyberBuildings() {
-  // Lijeva strana — gust grad (bliže igraču za dramatičan efekt)
+  // Lijeva strana — skyline na horizontu, daleko od igrača
   const leftBuildings = [
-    { p: [-12, 10, -16] as [number,number,number], s: [4,  20, 4]  as [number,number,number], c: '#ff00aa' },
-    { p: [-9,  7,  -12] as [number,number,number], s: [3,  14, 3]  as [number,number,number], c: '#00e5ff' },
-    { p: [-17, 13, -20] as [number,number,number], s: [5,  26, 4]  as [number,number,number], c: '#8b5cf6' },
-    { p: [-7,  5,  -10] as [number,number,number], s: [2.5,10, 2.5] as [number,number,number], c: '#ff6600' },
-    { p: [-22, 16, -26] as [number,number,number], s: [6,  32, 5]  as [number,number,number], c: '#ff0066' },
-    { p: [-14, 9,  -18] as [number,number,number], s: [3.5,18, 3]  as [number,number,number], c: '#00ffcc' },
-    { p: [-26, 11, -24] as [number,number,number], s: [4.5,22, 4]  as [number,number,number], c: '#cc00ff' },
-    { p: [-6,  4,  -8]  as [number,number,number], s: [2,  8,  2]  as [number,number,number], c: '#ff4400' },
-    { p: [-31, 14, -30] as [number,number,number], s: [5,  28, 4.5] as [number,number,number], c: '#ff00ff' },
-    { p: [-19, 8,  -22] as [number,number,number], s: [3,  16, 3]  as [number,number,number], c: '#4400ff' },
+    { p: [-16, 12, -50] as [number,number,number], s: [5,  24, 4]  as [number,number,number], c: '#ff00aa' },
+    { p: [-22, 15, -58] as [number,number,number], s: [6,  30, 5]  as [number,number,number], c: '#8b5cf6' },
+    { p: [-12, 10, -46] as [number,number,number], s: [4,  20, 4]  as [number,number,number], c: '#00e5ff' },
+    { p: [-28, 13, -62] as [number,number,number], s: [5,  26, 4]  as [number,number,number], c: '#ff0066' },
+    { p: [-9,  8,  -42] as [number,number,number], s: [3,  16, 3]  as [number,number,number], c: '#ff6600' },
+    { p: [-34, 11, -66] as [number,number,number], s: [5,  22, 4]  as [number,number,number], c: '#cc00ff' },
+    { p: [-18, 9,  -54] as [number,number,number], s: [4,  18, 4]  as [number,number,number], c: '#00ffcc' },
+    { p: [-7,  6,  -38] as [number,number,number], s: [2.5,12, 2.5] as [number,number,number], c: '#ff4400' },
+    { p: [-40, 14, -70] as [number,number,number], s: [6,  28, 5]  as [number,number,number], c: '#ff00ff' },
+    { p: [-25, 10, -56] as [number,number,number], s: [4,  20, 3.5] as [number,number,number], c: '#4400ff' },
+    { p: [-14, 7,  -48] as [number,number,number], s: [3,  14, 3]  as [number,number,number], c: '#ff2288' },
+    { p: [-46, 12, -74] as [number,number,number], s: [5,  24, 4.5] as [number,number,number], c: '#6600ff' },
   ];
 
-  // Desna strana — niži siluetni grad u pozadini
+  // Desna strana — tamna silueta u dalekoj pozadini
   const rightBuildings = [
-    { p: [14,  6, -40] as [number,number,number], s: [3.5,12, 3]  as [number,number,number], c: '#330066' },
-    { p: [20,  8, -46] as [number,number,number], s: [4,  16, 3.5] as [number,number,number], c: '#220055' },
-    { p: [26,  7, -44] as [number,number,number], s: [3,  14, 3]  as [number,number,number], c: '#440088' },
-    { p: [10,  5, -38] as [number,number,number], s: [2.5,10, 2.5] as [number,number,number], c: '#220044' },
-    { p: [32,  9, -50] as [number,number,number], s: [4,  18, 4]  as [number,number,number], c: '#330077' },
+    { p: [18,  7, -68] as [number,number,number], s: [4,  14, 4]  as [number,number,number], c: '#220044' },
+    { p: [26,  9, -74] as [number,number,number], s: [5,  18, 4]  as [number,number,number], c: '#330066' },
+    { p: [34,  8, -72] as [number,number,number], s: [4,  16, 4]  as [number,number,number], c: '#220055' },
+    { p: [14,  6, -64] as [number,number,number], s: [3,  12, 3]  as [number,number,number], c: '#110033' },
+    { p: [40, 10, -78] as [number,number,number], s: [5,  20, 4]  as [number,number,number], c: '#440088' },
   ];
 
   const all = [...leftBuildings, ...rightBuildings];
@@ -193,13 +195,13 @@ function CyberBuildings() {
     <group>
       {all.map((b, i) => {
         const isLeft = i < leftCount;
-        const emissive = isLeft ? 0.35 : 0.08;
-        const wireOpacity = isLeft ? 0.8 : 0.25;
+        const emissive = isLeft ? 0.28 : 0.05;
+        const wireOpacity = isLeft ? 0.9 : 0.2;
         return (
           <group key={i}>
             <mesh position={b.p}>
               <boxGeometry args={b.s} />
-              <meshStandardMaterial color="#06001a" emissive={b.c} emissiveIntensity={emissive} />
+              <meshStandardMaterial color="#04000e" emissive={b.c} emissiveIntensity={emissive} />
             </mesh>
             <mesh position={b.p}>
               <boxGeometry args={[b.s[0]+0.1, b.s[1]+0.1, b.s[2]+0.1]} />
@@ -211,15 +213,12 @@ function CyberBuildings() {
                 <meshBasicMaterial color={b.c} />
               </mesh>
             )}
-            {isLeft && (
-              <pointLight position={[b.p[0], b.p[1] + b.s[1]/2, b.p[2]]} color={b.c} intensity={1.5} distance={15} />
-            )}
           </group>
         );
       })}
-      <pointLight position={[-14, 18, -18]} color="#ff00aa" intensity={5} distance={35} />
-      <pointLight position={[-24, 22, -26]} color="#8b5cf6" intensity={5} distance={40} />
-      <pointLight position={[-10, 12, -14]} color="#00e5ff" intensity={3} distance={25} />
+      <pointLight position={[-20, 20, -55]} color="#ff00aa" intensity={6} distance={50} />
+      <pointLight position={[-30, 25, -65]} color="#8b5cf6" intensity={6} distance={60} />
+      <pointLight position={[-14, 15, -48]} color="#00e5ff" intensity={4} distance={40} />
     </group>
   );
 }
@@ -227,13 +226,14 @@ function CyberBuildings() {
 // ─── NEONSKI ZNAKOVI ──────────────────────────────────────────────────────────
 function NeonSigns() {
   const signs = [
-    { pos: [-11, 6, -14]  as [number,number,number], text: 'ARCADE',   color: '#ff00aa' },
-    { pos: [-8,  4, -10]  as [number,number,number], text: 'RAMEN',    color: '#ff6600' },
-    { pos: [-18, 9, -20]  as [number,number,number], text: '電気街',    color: '#00e5ff' },
-    { pos: [-15, 5, -16]  as [number,number,number], text: 'TECHNO',   color: '#8b5cf6' },
-    { pos: [-24, 11, -26] as [number,number,number], text: '未来',      color: '#ff00cc' },
-    { pos: [-20, 7, -22]  as [number,number,number], text: 'NEON CITY', color: '#00ffcc' },
-    { pos: [-13, 8, -18]  as [number,number,number], text: 'ネオン',    color: '#ff4488' },
+    { pos: [-10, 8,  -44] as [number,number,number], text: 'ARCADE',    color: '#ff00aa' },
+    { pos: [-8,  5,  -40] as [number,number,number], text: 'RAMEN',     color: '#ff6600' },
+    { pos: [-20, 11, -54] as [number,number,number], text: '電気街',     color: '#00e5ff' },
+    { pos: [-16, 6,  -48] as [number,number,number], text: 'TECHNO',    color: '#8b5cf6' },
+    { pos: [-26, 13, -62] as [number,number,number], text: '未来',       color: '#ff00cc' },
+    { pos: [-22, 8,  -56] as [number,number,number], text: 'NEON CITY', color: '#00ffcc' },
+    { pos: [-14, 9,  -50] as [number,number,number], text: 'ネオン',     color: '#ff4488' },
+    { pos: [-30, 12, -66] as [number,number,number], text: 'CYBER',     color: '#ff00ff' },
   ];
 
   return (
@@ -252,9 +252,13 @@ function NeonSigns() {
 // ─── SILUETE PALMI ────────────────────────────────────────────────────────────
 function Palms() {
   const palmPositions: [number, number, number][] = [
-    [-6, 0, -12], [-4, 0, -16], [-8, 0, -20],
-    [-3, 0, -8],  [3, 0, -10],  [5, 0, -14],
-    [7, 0, -18],  [-11, 0, -18],
+    // Lijevi red uz cestu
+    [-4, 0, -8],  [-5, 0, -16], [-5, 0, -24], [-6, 0, -32], [-7, 0, -40], [-8, 0, -48],
+    // Desni red uz cestu
+    [4,  0, -8],  [5,  0, -16], [5,  0, -24], [6,  0, -32], [7,  0, -40], [8,  0, -48],
+    // Extra raspršene
+    [-11, 0, -20], [-12, 0, -36], [10, 0, -22], [11, 0, -38],
+    [-3, 0, -12],  [3, 0, -12],
   ];
 
   return (
@@ -288,13 +292,15 @@ function Palms() {
 // ─── PLUTAJUĆI WIREFRAME OBJEKTI ──────────────────────────────────────────────
 function FloatingObjects() {
   const objects = [
-    { pos: [6, 4, -18] as [number,number,number],   type: 'box', color: '#06b6d4', size: 0.9 },
-    { pos: [-2, 5, -22] as [number,number,number],  type: 'box', color: '#8b5cf6', size: 0.7 },
-    { pos: [10, 3, -14] as [number,number,number],  type: 'ico', color: '#06b6d4', size: 0.8 },
-    { pos: [4, 6, -30] as [number,number,number],   type: 'box', color: '#ff00aa', size: 1.1 },
-    { pos: [-5, 7, -28] as [number,number,number],  type: 'ico', color: '#8b5cf6', size: 0.6 },
-    { pos: [14, 5, -20] as [number,number,number],  type: 'pyr', color: '#06b6d4', size: 0.7 },
-    { pos: [8, 4, -35] as [number,number,number],   type: 'box', color: '#ff6600', size: 0.85 },
+    { pos: [8,  11, -20] as [number,number,number], type: 'box', color: '#06b6d4', size: 1.1 },
+    { pos: [-3, 13, -26] as [number,number,number], type: 'ico', color: '#8b5cf6', size: 0.9 },
+    { pos: [12, 10, -18] as [number,number,number], type: 'ico', color: '#06b6d4', size: 1.0 },
+    { pos: [5,  15, -34] as [number,number,number], type: 'box', color: '#ff00aa', size: 1.3 },
+    { pos: [-6, 12, -30] as [number,number,number], type: 'ico', color: '#8b5cf6', size: 0.8 },
+    { pos: [15, 9,  -22] as [number,number,number], type: 'pyr', color: '#06b6d4', size: 0.9 },
+    { pos: [9,  14, -40] as [number,number,number], type: 'box', color: '#ff6600', size: 1.0 },
+    { pos: [-8, 16, -38] as [number,number,number], type: 'ico', color: '#ff00cc', size: 0.7 },
+    { pos: [3,  10, -16] as [number,number,number], type: 'pyr', color: '#00e5ff', size: 0.8 },
   ];
 
   return (
@@ -477,10 +483,11 @@ function Astronaut({ playerRef, keysRef }: PlayerProps) {
 // ─── WIREFRAME PLANINE ────────────────────────────────────────────────────────
 function WireframeMountains() {
   const peaks: [number, number, number][] = [
-    [18, 0, -38], [25, 0, -44], [32, 0, -40],
-    [15, 0, -46], [28, 0, -50], [22, 0, -34],
+    [22, 0, -60], [32, 0, -68], [42, 0, -64],
+    [18, 0, -56], [38, 0, -74], [28, 0, -62],
+    [50, 0, -80], [45, 0, -72], [35, 0, -78],
   ];
-  const heights = [8, 11, 7, 13, 9, 6];
+  const heights = [12, 16, 11, 9, 18, 14, 20, 13, 15];
 
   return (
     <group>
@@ -510,8 +517,8 @@ function ProjectFrame({ item, index }: { item: PortfolioItem; index: number }) {
   const color = FRAME_COLORS[index % FRAME_COLORS.length];
   const texture = useTexture(item.image_url ?? 'https://placehold.co/400x300/0a001a/ff00aa.jpg');
   const side = index % 2 === 0 ? -1 : 1;
-  const z = -10 - Math.floor(index / 2) * 12;
-  const x = side * 7;
+  const z = -14 - Math.floor(index / 2) * 16;
+  const x = side * 6;
   const rotY = side * (-Math.PI / 2);
 
   return (
@@ -577,10 +584,10 @@ function Scene({ playerRef, keysRef, items }: SceneProps) {
   return (
     <>
       <color attach="background" args={['#0d0022']} />
-      <fog attach="fog" args={['#1a003a', 35, 130]} />
-      <ambientLight intensity={0.18} color="#3a0066" />
-      <directionalLight position={[0, 20, -20]} intensity={0.6} color="#ff4488" />
-      <directionalLight position={[-20, 10, 0]} intensity={0.3} color="#8b5cf6" />
+      <fog attach="fog" args={['#1a003a', 55, 200]} />
+      <ambientLight intensity={0.2} color="#3a0066" />
+      <directionalLight position={[0, 30, -40]} intensity={0.8} color="#ff4488" />
+      <directionalLight position={[-30, 15, -50]} intensity={0.4} color="#8b5cf6" />
       <FollowCamera playerRef={playerRef} />
       <SkyPlane />
       <NeonGrid playerRef={playerRef} />
@@ -671,7 +678,7 @@ export default function RetrowaveRoom({ items = [] }: { items?: PortfolioItem[] 
   return (
     <div className="relative w-full h-screen bg-[#06000f] overflow-hidden">
       <Canvas
-        camera={{ position: [0, 5.5, 11], fov: 68, near: 0.1, far: 300 }}
+        camera={{ position: [0, 5, 13], fov: 75, near: 0.1, far: 400 }}
         gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.1 }}
       >
         <Suspense fallback={null}>

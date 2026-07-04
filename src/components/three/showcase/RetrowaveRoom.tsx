@@ -367,7 +367,7 @@ function ProjectFrames({ items }: { items: PortfolioItem[] }) {
   return (
     <>
       {items.map((item, i) => (
-        <ErrorBoundary key={item.id} fallback={null as unknown as React.ReactElement}>
+        <ErrorBoundary key={item.id} fallback={<></>}>
           <Suspense fallback={null}>
             <ProjectFrame item={item} index={i} />
           </Suspense>
@@ -393,9 +393,11 @@ function Scene({ playerRef, keysRef, items }: SceneProps) {
       <directionalLight position={[0, 30, -40]} intensity={0.8} color="#ff4488" />
       <directionalLight position={[-30, 15, -50]} intensity={0.4} color="#8b5cf6" />
       <FollowCamera playerRef={playerRef} />
-      <Suspense fallback={null}>
-        <SceneBackground />
-      </Suspense>
+      <ErrorBoundary fallback={<></>}>
+        <Suspense fallback={null}>
+          <SceneBackground />
+        </Suspense>
+      </ErrorBoundary>
       <NeonGrid playerRef={playerRef} />
       <FloatingObjects />
       <ProjectFrames items={items} />

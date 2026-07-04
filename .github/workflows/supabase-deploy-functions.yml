@@ -23,7 +23,7 @@ jobs:
 
       - name: Deploy all edge functions
         run: |
-          for fn in keep-alive submit-form subscribe content; do
+          for fn in keep-alive submit-form subscribe; do
             echo "Deploying $fn..."
             supabase functions deploy "$fn" --project-ref "$SUPABASE_PROJECT_REF"
           done

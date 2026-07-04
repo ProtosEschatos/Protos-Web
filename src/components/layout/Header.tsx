@@ -9,15 +9,6 @@ import MobileMenu from './MobileMenu'
 import { ChevronDown, Globe } from 'lucide-react'
 import ProtosEclipseLogo from '@/components/ui/ProtosEclipseLogo'
 
-const themes = ['night', 'day', 'pro'] as const
-type Theme = (typeof themes)[number]
-
-const themeIcons: Record<Theme, string> = {
-  night: '\u263E',
-  day: '\u2600',
-  pro: '\u25C9',
-}
-
 const navLinks = [
   { href: '/', key: 'home' as const },
   { href: '/o-meni', key: 'about' as const },
@@ -37,7 +28,6 @@ export default function Header() {
 
   const [langOpen, setLangOpen] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [theme, setTheme] = useState<Theme>('night')
   const [scrolled, setScrolled] = useState(false)
 
   const langRef = useRef<HTMLDivElement>(null)
@@ -63,25 +53,9 @@ export default function Header() {
     return () => { document.body.style.overflow = '' }
   }, [mobileOpen])
 
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('protos-theme') as Theme | null
-    if (savedTheme && themes.includes(savedTheme)) {
-      setTheme(savedTheme)
-      document.documentElement.setAttribute('data-theme', savedTheme)
-    }
-  }, [])
-
   const handleLangSelect = (code: Locale) => {
     router.replace(pathname, { locale: code })
     setLangOpen(false)
-  }
-
-  const handleThemeCycle = () => {
-    const idx = themes.indexOf(theme)
-    const next = themes[(idx + 1) % themes.length]
-    setTheme(next)
-    localStorage.setItem('protos-theme', next)
-    document.documentElement.setAttribute('data-theme', next)
   }
 
   return (
@@ -142,14 +116,6 @@ export default function Header() {
                 </div>
               </div>
 
-              <button
-                onClick={handleThemeCycle}
-                className="w-[42px] h-[42px] rounded-xl bg-[var(--dark-card)]/50 hover:bg-[var(--dark-card)] border border-[var(--primary)]/20 hover:border-[var(--primary)]/40 flex items-center justify-center transition-all duration-300 text-xl"
-                aria-label={th('cycleTheme')}
-              >
-                {themeIcons[theme]}
-              </button>
-
               <TransitionLink
                 href="/kontakt"
                 className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-to-r from-[var(--primary)] to-[#ff8800] text-white text-xs font-semibold uppercase tracking-wider hover:-translate-y-0.5 hover:shadow-[0_8px_25px_var(--primary-glow)] transition-all duration-300"
@@ -159,9 +125,6 @@ export default function Header() {
             </div>
 
             <div className="flex items-center gap-2 lg:hidden">
-              <button onClick={handleThemeCycle} className="w-10 h-10 rounded-lg bg-[var(--dark-card)]/50 border border-[var(--primary)]/20 flex items-center justify-center text-lg" aria-label={th('cycleTheme')}>
-                {themeIcons[theme]}
-              </button>
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
                 className="w-12 h-12 flex flex-col items-center justify-center gap-[6px] p-2"

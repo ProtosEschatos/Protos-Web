@@ -11,7 +11,6 @@
   "header": {
     "brand": "Protos Web",
     "cta": "ANGEBOT ANFORDERN",
-    "cycleTheme": "Theme wechseln",
     "menu": "Menu"
   },
   "hero": {
@@ -271,7 +270,7 @@
     "cause_antiScam": "Anti-Betrug",
     "cause_education": "Bildung",
     "cause_platforms": "Plattformen",
-    "copyright": "2025 Protos Web. Alle Rechte vorbehalten.",
+    "copyright": "2026 Protos Web. Alle Rechte vorbehalten.",
     "made_with": "Mit Liebe gemacht in Zagreb, Kroatien",
     "newsletter_title": "Newsletter",
     "newsletter_placeholder": "Ihre E-Mail-Adresse",
@@ -381,77 +380,77 @@
     }
   },
   "aboutPage": {
-    "label": "ABOUT ME",
-    "heroTitleLine1": "We build digital",
-    "heroTitleHighlight": "solutions that grow",
-    "heroTitleLine2": "together with you.",
-    "heroSubtitle": "Full Stack Developer & Web Designer from Zagreb. I create modern, fast and visually stunning websites that turn visitors into customers.",
-    "whoTitle": "Who I am",
-    "bio1": "Full Stack Developer from Zagreb with 5 years of experience building modern web solutions. I work with entrepreneurs and companies across Croatia and Europe — from fast landing pages to complex custom platforms, web shops, and CRM systems.",
-    "bio2": "Everything I build is custom — no pre-made themes, no compromises on quality. Every project starts from scratch, tailored exactly to your needs and goals.",
-    "bio3": "Interests: Full stack development, Cross platform web, 3D web experiences, Platform building, Web design, Cyber security.",
-    "bio4": "Goal: Help local and European businesses find the right web solution — without unnecessary complexity, with a modern interface.",
-    "guideLink": "Free web presence guides for entrepreneurs",
+    "label": "ÜBER MICH",
+    "heroTitleLine1": "Wir bauen digitale",
+    "heroTitleHighlight": "Lösungen, die mit Ihnen wachsen",
+    "heroTitleLine2": "und sich weiterentwickeln.",
+    "heroSubtitle": "Full Stack Developer & Web Designer aus Zagreb. Ich erstelle moderne, schnelle und visuell beeindruckende Websites, die Besucher in Kunden verwandeln.",
+    "whoTitle": "Wer ich bin",
+    "bio1": "Full Stack Developer aus Zagreb mit 5 Jahren Erfahrung im Aufbau moderner Web-Lösungen. Ich arbeite mit Unternehmern und Firmen in Kroatien und Europa — von schnellen Landing Pages bis zu komplexen Custom-Plattformen, Webshops und CRM-Systemen.",
+    "bio2": "Alles wird individuell entwickelt — ohne vorgefertigte Themes, ohne Kompromisse bei der Qualität. Jedes Projekt beginnt bei null und wird genau auf Ihre Bedürfnisse und Ziele zugeschnitten.",
+    "bio3": "Interessen: Full Stack Entwicklung, Cross-Platform Web, 3D Web-Erlebnisse, Plattform-Entwicklung, Webdesign, Cyber Security.",
+    "bio4": "Ziel: Lokalen und europäischen Unternehmen helfen, die richtige Web-Lösung zu finden — ohne unnötige Komplexität, mit modernem Interface.",
+    "guideLink": "Kostenlose Leitfäden zur Web-Präsenz für Unternehmer",
     "infoTitle": "Info",
     "infoLabels": {
       "name": "NAME",
-      "location": "LOCATION",
-      "experience": "EXPERIENCE",
-      "email": "EMAIL",
-      "phone": "PHONE",
-      "languages": "LANGUAGES"
+      "location": "STANDORT",
+      "experience": "ERFAHRUNG",
+      "email": "E-MAIL",
+      "phone": "TELEFON",
+      "languages": "SPRACHEN"
     },
     "infoValues": {
-      "name": "Dario Imsilovic",
-      "location": "Zagreb, Croatia",
-      "experience": "5 years",
+      "name": "Dario Imsirović",
+      "location": "Zagreb, Kroatien",
+      "experience": "5 Jahre",
       "email": "contact@protos-design.net",
       "phone": "+385 97 604 39 41",
-      "languages": "Croatian, English, Deutsch (basic)"
+      "languages": "Kroatisch, Englisch, Deutsch (Grundkenntnisse)"
     },
-    "goalsTitle": "Goals",
+    "goalsTitle": "Ziele",
     "goals": [
       {
-        "title": "European market",
-        "text": "Actively expanding to EU clients through multilingual offerings and knowledge of European standards — GDPR, accessibility, localization."
+        "title": "Europäischer Markt",
+        "text": "Aktive Expansion zu EU-Kunden durch mehrsprachige Angebote und Kenntnis europäischer Standards — DSGVO, Barrierefreiheit, Lokalisierung."
       },
       {
-        "title": "Custom platforms",
-        "text": "Building SaaS and custom CRM solutions for niches that still lack a good digital solution in the local market."
+        "title": "Custom Plattformen",
+        "text": "Entwicklung von SaaS- und Custom-CRM-Lösungen für Nischen, denen auf dem lokalen Markt noch eine gute digitale Lösung fehlt."
       },
       {
-        "title": "Cyber security",
-        "text": "Integrating security standards into every project — ensure every website handling data must be protected."
+        "title": "Cyber Security",
+        "text": "Integration von Sicherheitsstandards in jedes Projekt — jede Website, die Daten verarbeitet, muss geschützt sein."
       }
     ],
-    "supportLabel": "SUPPORT",
-    "supportTitle": "Projects that change",
-    "supportTitleHighlight": "the digital Balkans",
-    "supportSubtitle": "Every donation contributes to developing a platform for protection against internet fraud and building a freer digital space for our region.",
+    "supportLabel": "UNTERSTÜTZUNG",
+    "supportTitle": "Projekte, die den",
+    "supportTitleHighlight": "digitalen Balkan verändern",
+    "supportSubtitle": "Jede Spende trägt zur Entwicklung einer Plattform zum Schutz vor Internetbetrug und zum Aufbau eines freieren digitalen Raums für unsere Region bei.",
     "supportCards": [
       {
-        "title": "Cyber Security Education Equipment",
-        "text": "Help us acquire a server, laptop and software for free online cyber security education — for everyone who wants to learn how to protect themselves online.",
-        "target": "10,000",
-        "btnText": "Support education",
+        "title": "Ausstattung für Cyber-Security-Schulungen",
+        "text": "Helfen Sie uns, Server, Laptop und Software für kostenlose Online-Schulungen zur Cyber Security zu beschaffen.",
+        "target": "10.000",
+        "btnText": "Bildung unterstützen",
         "progress": 5
       },
       {
-        "title": "Free Digital Education",
-        "text": "Fund free HR video tutorials and guides on web development, AI tools and digital security.",
-        "target": "10,000",
-        "btnText": "Support education",
+        "title": "Kostenlose digitale Bildung",
+        "text": "Finanzieren Sie kostenlose Video-Tutorials und Leitfäden zu Webentwicklung, KI-Tools und digitaler Sicherheit.",
+        "target": "10.000",
+        "btnText": "Bildung unterstützen",
         "progress": 3
       },
       {
-        "title": "Regional Digital Platforms",
-        "text": "Building open source alternatives to global platforms — made for the Balkans, by the Balkans.",
-        "target": "20,000",
-        "btnText": "Invest in the region",
+        "title": "Regionale digitale Plattformen",
+        "text": "Open-Source-Alternativen zu globalen Plattformen — gemacht für den Balkan, vom Balkan.",
+        "target": "20.000",
+        "btnText": "In die Region investieren",
         "progress": 2
       }
     ],
     "currencyZero": "0 €",
-    "currencyOf": "of {target} €"
+    "currencyOf": "von {target} €"
   }
 }

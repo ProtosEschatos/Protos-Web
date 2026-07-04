@@ -29,8 +29,8 @@ export function ShowcaseFallback({ projects, reason = 'unsupported', onRetry }: 
           <span className="font-semibold">Protos Web</span>
         </Link>
         <div className="absolute left-1/2 hidden -translate-x-1/2 text-xl font-bold tracking-widest md:block">
-          <span className="bg-gradient-to-br from-[#ff0099] to-[#00eaff] bg-clip-text text-transparent">{t('headerAccent')}</span>{' '}
-          <span className="text-white">{t('headerTitle')}</span>
+          <span className="bg-gradient-to-br from-[#ff0099] to-[#00eaff] bg-clip-text text-transparent">{t('space')}</span>{' '}
+          <span className="text-white">{t('station')}</span>
         </div>
         <Link
           href="/portfolio"

@@ -10,8 +10,8 @@ export async function submitContact(data: {
   language?: string
 }) {
   if (!supabase) {
-    console.log('Contact submission (Supabase not configured):', data)
-    return { success: true }
+    console.error('Contact submission failed: Supabase not configured')
+    return { success: false, error: 'Contact form is not configured' }
   }
 
   const { error } = await supabase.rpc('submit_contact', {

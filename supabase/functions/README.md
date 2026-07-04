@@ -7,7 +7,6 @@ Project ref: `laqnnzavwbojntfiqmxj`
 | `keep-alive` | GitHub cron (`supabase-keep-alive.yml`) | Ping DB to prevent free-tier pause |
 | `submit-form` | Database webhook on `contacts` INSERT | Admin + auto-reply emails (Resend/Brevo) |
 | `subscribe` | `POST /api/subscribe` from site footer | Newsletter signup + welcome email |
-| `content` | Direct HTTP (`?type=services&lang=hr`) | Cached CMS API for DB-backed content |
 
 ## Deploy
 
@@ -26,7 +25,7 @@ Set in Supabase Dashboard → Edge Functions → Secrets:
 |--------|---------|
 | `KEEP_ALIVE_SECRET` | `keep-alive` |
 | `SUPABASE_URL` | all |
-| `SUPABASE_SERVICE_ROLE_KEY` | `subscribe`, `content`, `keep-alive` |
+| `SUPABASE_SERVICE_ROLE_KEY` | `subscribe`, `keep-alive` |
 | `RESEND_API_KEY` | `submit-form`, `subscribe` |
 | `RESEND_FROM_EMAIL` | `submit-form` |
 | `CONTACT_EMAIL` | `submit-form` |
@@ -48,12 +47,4 @@ Or HTTP URL:
 
 `https://laqnnzavwbojntfiqmxj.supabase.co/functions/v1/submit-form`
 
-The function accepts webhook payloads (`body.type === 'INSERT' && body.record`).
-
-## Content API (future CMS)
-
-Blog and portfolio already use Next.js server actions. The `content` function is the unified read API for other tables (`services`, `process`, `pricing`, etc.) when migrating off i18n JSON.
-
-Example:
-
-`GET /functions/v1/content?type=services&lang=hr`
+The function accepts webhook payloads only (`body.type === 'INSERT' && body.record`).

@@ -136,7 +136,7 @@ src/
 - [x] Contact form submission to Supabase (`submit_contact` RPC) + `submit-form` edge fn emails via DB webhook
 - [x] Newsletter signup via `/api/subscribe` → `subscribe` edge fn
 - [x] Portfolio data from Supabase
-- [x] Supabase edge functions in repo: `keep-alive`, `submit-form`, `subscribe`, `content`
+- [x] Supabase edge functions in repo: `keep-alive`, `submit-form`, `subscribe`
 - [x] GitHub workflows: CI, keep-alive cron, edge function deploy, security audit, Dependabot
 
 ### Future Enhancements

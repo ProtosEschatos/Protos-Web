@@ -34,8 +34,10 @@ serve(async (req) => {
       data = body.record as ContactData
       source = 'webhook'
     } else {
-      data = body as ContactData
-      source = 'direct'
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
     }
 
     const { name, email, phone, service, message } = data
@@ -49,8 +51,8 @@ serve(async (req) => {
 
     const resendKey = Deno.env.get('RESEND_API_KEY') || ''
     const brevoKey = Deno.env.get('BREVO_API_KEY') || ''
-    const contactEmail = Deno.env.get('CONTACT_EMAIL') || 'contact@protosweb.eu'
-    const fromEmail = Deno.env.get('RESEND_FROM_EMAIL') || 'contact@protosweb.eu'
+    const contactEmail = Deno.env.get('CONTACT_EMAIL') || 'contact@protos-design.net'
+    const fromEmail = Deno.env.get('RESEND_FROM_EMAIL') || 'contact@protos-design.net'
 
     console.log('[submit-form] Source:', source, '| Name:', name, '| Email:', email)
 
@@ -122,6 +124,15 @@ serve(async (req) => {
   }
 })
 
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
 function adminHtml(
   name: string,
   email: string,
@@ -129,28 +140,37 @@ function adminHtml(
   service: string | null,
   message: string,
 ) {
+  const safeName = escapeHtml(name)
+  const safeEmail = escapeHtml(email)
+  const safePhone = phone ? escapeHtml(phone) : null
+  const safeService = service ? escapeHtml(service) : null
+  const safeMessage = escapeHtml(message).replace(/\n/g, '<br>')
+
   return `
     <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;color:#1a1a1a">
       <h2 style="color:#6366f1;margin-bottom:24px">Nova upita — Protos Web</h2>
       <table style="width:100%;border-collapse:collapse">
-        <tr><td style="padding:8px 12px;background:#f5f5f5;font-weight:bold;width:120px">Ime:</td><td style="padding:8px 12px">${name}</td></tr>
-        <tr><td style="padding:8px 12px;background:#f5f5f5;font-weight:bold">Email:</td><td style="padding:8px 12px"><a href="mailto:${email}" style="color:#6366f1">${email}</a></td></tr>
-        ${phone ? `<tr><td style="padding:8px 12px;background:#f5f5f5;font-weight:bold">Telefon:</td><td style="padding:8px 12px"><a href="tel:${phone}" style="color:#6366f1">${phone}</a></td></tr>` : ''}
-        ${service ? `<tr><td style="padding:8px 12px;background:#f5f5f5;font-weight:bold">Usluga:</td><td style="padding:8px 12px">${service}</td></tr>` : ''}
+        <tr><td style="padding:8px 12px;background:#f5f5f5;font-weight:bold;width:120px">Ime:</td><td style="padding:8px 12px">${safeName}</td></tr>
+        <tr><td style="padding:8px 12px;background:#f5f5f5;font-weight:bold">Email:</td><td style="padding:8px 12px"><a href="mailto:${safeEmail}" style="color:#6366f1">${safeEmail}</a></td></tr>
+        ${safePhone ? `<tr><td style="padding:8px 12px;background:#f5f5f5;font-weight:bold">Telefon:</td><td style="padding:8px 12px"><a href="tel:${safePhone}" style="color:#6366f1">${safePhone}</a></td></tr>` : ''}
+        ${safeService ? `<tr><td style="padding:8px 12px;background:#f5f5f5;font-weight:bold">Usluga:</td><td style="padding:8px 12px">${safeService}</td></tr>` : ''}
       </table>
       <h3 style="margin-top:24px;color:#6366f1">Poruka:</h3>
-      <p style="padding:16px;background:#f9f9f9;border-left:4px solid #6366f1;font-size:15px;line-height:1.6">${message.replace(/\n/g, '<br>')}</p>
+      <p style="padding:16px;background:#f9f9f9;border-left:4px solid #6366f1;font-size:15px;line-height:1.6">${safeMessage}</p>
     </div>
   `
 }
 
 function autoReplyHtml(name: string, message: string) {
+  const safeName = escapeHtml(name)
+  const safeMessage = escapeHtml(message).replace(/\n/g, '<br>')
+
   return `
     <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;color:#1a1a1a">
-      <h2 style="color:#6366f1">Pozdrav ${name},</h2>
+      <h2 style="color:#6366f1">Pozdrav ${safeName},</h2>
       <p style="font-size:16px;line-height:1.7">Hvala na upitu! Primili smo vašu poruku i odgovoriti ćemo u roku od 24 sata.</p>
       <h3 style="margin-top:24px;color:#6366f1">Vaš upit:</h3>
-      <p style="padding:16px;background:#f9f9f9;border-left:4px solid #6366f1;font-size:15px;line-height:1.6">${message.replace(/\n/g, '<br>')}</p>
+      <p style="padding:16px;background:#f9f9f9;border-left:4px solid #6366f1;font-size:15px;line-height:1.6">${safeMessage}</p>
       <p style="margin-top:32px;font-size:15px;line-height:1.7">
         Srdačan pozdrav,<br>
         <strong>Dario Imsirović</strong><br>

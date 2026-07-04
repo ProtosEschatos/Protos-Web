@@ -11,7 +11,6 @@
   "header": {
     "brand": "Protos Web",
     "cta": "GET A QUOTE",
-    "cycleTheme": "Cycle theme",
     "menu": "Menu"
   },
   "hero": {
@@ -157,7 +156,7 @@
     "cause_antiScam": "Anti-scam",
     "cause_education": "Education",
     "cause_platforms": "Platforms",
-    "copyright": "2025 Protos Web. All rights reserved.",
+    "copyright": "2026 Protos Web. All rights reserved.",
     "made_with": "Made with love in Zagreb, Croatia",
     "newsletter_title": "Newsletter",
     "newsletter_placeholder": "Your email address",
@@ -243,7 +242,7 @@
       "languages": "LANGUAGES"
     },
     "infoValues": {
-      "name": "Dario Imsilovic",
+      "name": "Dario Imsirović",
       "location": "Zagreb, Croatia",
       "experience": "5 years",
       "email": "contact@protos-design.net",

@@ -55,7 +55,7 @@ Deno.serve(async (req) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          from: 'Dario | Protos Web <contact@protosweb.eu>',
+          from: 'Dario | Protos Web <contact@protos-design.net>',
           to: [email],
           subject: 'Dobrodošli — Protos Web novosti',
           html: `

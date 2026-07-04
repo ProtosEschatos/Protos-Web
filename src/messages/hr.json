@@ -11,7 +11,6 @@
   "header": {
     "brand": "Protos Web",
     "cta": "ZATRAZI PONUDU",
-    "cycleTheme": "Promijeni temu",
     "menu": "Izbornik"
   },
   "hero": {
@@ -157,7 +156,7 @@
     "cause_antiScam": "Anti-scam",
     "cause_education": "Edukacija",
     "cause_platforms": "Platforme",
-    "copyright": "2025 Protos Web. Sva prava pridrzana.",
+    "copyright": "2026 Protos Web. Sva prava pridrzana.",
     "made_with": "Napravljeno s ljubavlju u Zagrebu, Hrvatska",
     "newsletter_title": "Pretplata na novosti",
     "newsletter_placeholder": "Vasa email adresa",
@@ -243,7 +242,7 @@
       "languages": "JEZICI"
     },
     "infoValues": {
-      "name": "Dario Imsilovic",
+      "name": "Dario Imsirović",
       "location": "Zagreb, Hrvatska",
       "experience": "5 godina",
       "email": "contact@protos-design.net",

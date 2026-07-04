@@ -80,7 +80,7 @@ export default function Contact() {
                   </select>
                 </div>
                 <div className="mb-6">
-                  <textarea name="message" placeholder={t('messagePlaceholder')} rows={4} className="w-full px-4 py-3.5 rounded-xl border border-[var(--border-card)] bg-white/[0.03] text-[var(--light)] text-sm outline-none focus:border-[var(--primary)] transition-colors resize-y min-h-[120px] placeholder:text-[var(--light-muted)]" />
+                  <textarea name="message" required placeholder={t('messagePlaceholder')} rows={4} className="w-full px-4 py-3.5 rounded-xl border border-[var(--border-card)] bg-white/[0.03] text-[var(--light)] text-sm outline-none focus:border-[var(--primary)] transition-colors resize-y min-h-[120px] placeholder:text-[var(--light-muted)]" />
                 </div>
                 <button type="submit" disabled={loading} className="w-full py-4 rounded-full bg-gradient-to-r from-[var(--secondary)] to-[var(--accent)] text-white text-sm font-semibold tracking-wider flex items-center justify-center gap-2 hover:-translate-y-0.5 hover:shadow-[0_8px_25px_var(--secondary-glow)] transition-all duration-300 disabled:opacity-50">
                   {loading ? t('sending') : <>{t('submit')} <ArrowRight className="w-4 h-4" /></>}

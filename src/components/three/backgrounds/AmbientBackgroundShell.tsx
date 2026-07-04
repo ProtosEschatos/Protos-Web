@@ -14,6 +14,7 @@ type AmbientBackgroundShellProps = PageBackgroundProps & {
   fogFar?: number
   fogColor?: string
   glowColor?: string
+  showGlow?: boolean
 }
 
 function AmbientSceneGroup({ children }: { children: ReactNode }) {
@@ -69,6 +70,7 @@ export default function AmbientBackgroundShell({
   fogFar = 92,
   fogColor = '#0a0a1a',
   glowColor = '#ff6600',
+  showGlow = true,
 }: AmbientBackgroundShellProps) {
   return (
     <SafeCanvas
@@ -86,10 +88,10 @@ export default function AmbientBackgroundShell({
       fallback={null}
     >
       <fog attach="fog" args={[fogColor, fogNear, fogFar]} />
-      <ambientLight intensity={0.72} />
-      <pointLight position={[4, 3, 6]} intensity={0.55} color={glowColor} />
+      <ambientLight intensity={showGlow ? 0.72 : 0.45} />
+      {showGlow ? <pointLight position={[4, 3, 6]} intensity={0.55} color={glowColor} /> : null}
       <AmbientSceneGroup>
-        <RouteGlow color={glowColor} />
+        {showGlow ? <RouteGlow color={glowColor} /> : null}
         {children}
       </AmbientSceneGroup>
     </SafeCanvas>

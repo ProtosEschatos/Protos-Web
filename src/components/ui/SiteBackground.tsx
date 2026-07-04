@@ -35,10 +35,12 @@ export default function SiteBackground() {
   return (
     <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden>
       <div className="absolute inset-0 bg-[var(--dark)]" />
-      <div
-        className="pointer-events-none absolute inset-0 opacity-100"
-        style={{ background: BACKGROUND_FALLBACKS[routeKey] }}
-      />
+      {routeKey !== 'home' ? (
+        <div
+          className="pointer-events-none absolute inset-0 opacity-100"
+          style={{ background: BACKGROUND_FALLBACKS[routeKey] }}
+        />
+      ) : null}
       <div
         className="pointer-events-none absolute inset-0 animate-[twinkle_8s_ease-in-out_infinite_alternate] opacity-90"
         style={{ backgroundImage: TWINKLE_BG }}

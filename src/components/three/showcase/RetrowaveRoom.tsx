@@ -2,7 +2,7 @@
 
 import { useRef, useEffect, useCallback, Suspense } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Stars, Float, Billboard, Text } from '@react-three/drei';
+import { Stars, Float, Billboard, Text, useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 
 // ─── TIPOVI ──────────────────────────────────────────────────────────────────
@@ -94,74 +94,132 @@ function NeonGrid({ playerRef }: GridProps) {
   );
 }
 
+// ─── NEBO (SKY GRADIENT) ─────────────────────────────────────────────────────
+function SkyPlane() {
+  return (
+    <group>
+      {/* Gornji dio neba — tamno ljubičasto */}
+      <mesh position={[0, 30, -90]} rotation={[0.18, 0, 0]}>
+        <planeGeometry args={[300, 80]} />
+        <meshBasicMaterial color="#0d0030" />
+      </mesh>
+      {/* Srednji prijelaz — ljubičasto-roza */}
+      <mesh position={[0, 8, -88]} rotation={[0.12, 0, 0]}>
+        <planeGeometry args={[300, 40]} />
+        <meshBasicMaterial color="#3d0060" transparent opacity={0.85} />
+      </mesh>
+      {/* Donji horizont — tamno-roza */}
+      <mesh position={[0, 1, -86]} rotation={[0.05, 0, 0]}>
+        <planeGeometry args={[300, 20]} />
+        <meshBasicMaterial color="#6b0040" transparent opacity={0.7} />
+      </mesh>
+    </group>
+  );
+}
+
 // ─── RETRO SUNCE ─────────────────────────────────────────────────────────────
 function RetroSun() {
   return (
-    <group position={[0, 9, -55]}>
-      <mesh>
-        <circleGeometry args={[10, 64]} />
-        <meshBasicMaterial color="#ff4488" />
+    <group position={[0, 18, -65]}>
+      {/* Narančasto-žuto sjajanje iza sunca */}
+      <mesh position={[0, 0, -1]}>
+        <circleGeometry args={[28, 64]} />
+        <meshBasicMaterial color="#ff4400" transparent opacity={0.12} />
       </mesh>
-      {Array.from({ length: 9 }, (_, i) => (
-        <mesh key={i} position={[0, -3 + i * 0.7, 0.01]}>
-          <planeGeometry args={[20, 0.22]} />
+      <mesh position={[0, 0, -0.5]}>
+        <circleGeometry args={[22, 64]} />
+        <meshBasicMaterial color="#ff6600" transparent opacity={0.2} />
+      </mesh>
+      {/* Glavni disk sunca — gradijent od žuto-narančaste do roza */}
+      <mesh>
+        <circleGeometry args={[16, 64]} />
+        <meshBasicMaterial color="#ff6622" />
+      </mesh>
+      <mesh position={[0, 4, 0.01]}>
+        <circleGeometry args={[14, 64]} />
+        <meshBasicMaterial color="#ff3366" />
+      </mesh>
+      <mesh position={[0, 8, 0.02]}>
+        <circleGeometry args={[11, 64]} />
+        <meshBasicMaterial color="#ff2266" />
+      </mesh>
+      {/* Horizontalne linije koje sijeku sunce (retrowave efekt) */}
+      {Array.from({ length: 14 }, (_, i) => (
+        <mesh key={i} position={[0, -8 + i * 1.15, 0.03]}>
+          <planeGeometry args={[32, 0.28 + i * 0.04]} />
           <meshBasicMaterial color="#0d0020" />
         </mesh>
       ))}
-      <mesh position={[0, -6, -0.5]}>
-        <planeGeometry args={[30, 8]} />
-        <meshBasicMaterial color="#ff6600" transparent opacity={0.25} />
+      {/* Prsten oko sunca */}
+      <mesh position={[0, 0, -0.1]}>
+        <ringGeometry args={[16, 20, 64]} />
+        <meshBasicMaterial color="#ff1155" transparent opacity={0.15} />
       </mesh>
-      <mesh>
-        <ringGeometry args={[10, 12.5, 64]} />
-        <meshBasicMaterial color="#ff2266" transparent opacity={0.12} />
-      </mesh>
-      <pointLight color="#ff4488" intensity={4} distance={120} />
-      <pointLight color="#ff6600" intensity={2} distance={80} position={[0, -8, 0]} />
+      <pointLight color="#ff4488" intensity={8} distance={200} />
+      <pointLight color="#ff6600" intensity={4} distance={150} position={[0, -10, 0]} />
     </group>
   );
 }
 
 // ─── NEONSKI GRAD ────────────────────────────────────────────────────────────
 function CyberBuildings() {
-  const buildings = [
-    { p: [-18, 7, -30] as [number,number,number], s: [3.5, 14, 3] as [number,number,number], c: '#ff00aa' },
-    { p: [-14, 5, -26] as [number,number,number], s: [2.8, 10, 2.5] as [number,number,number], c: '#00e5ff' },
-    { p: [-23, 9, -34] as [number,number,number], s: [4.5, 18, 3.5] as [number,number,number], c: '#8b5cf6' },
-    { p: [-10, 4, -22] as [number,number,number], s: [2.2, 8, 2] as [number,number,number], c: '#ff6600' },
-    { p: [-28, 11, -38] as [number,number,number], s: [5, 22, 4] as [number,number,number], c: '#ff0066' },
-    { p: [-19, 6, -24] as [number,number,number], s: [2.5, 12, 2.5] as [number,number,number], c: '#00ffcc' },
-    { p: [-32, 8, -32] as [number,number,number], s: [4, 16, 3.5] as [number,number,number], c: '#cc00ff' },
-    { p: [-8,  3, -20] as [number,number,number], s: [2, 6, 2] as [number,number,number], c: '#ff4400' },
-    { p: [16,  5, -42] as [number,number,number], s: [3, 10, 3] as [number,number,number], c: '#4400ff' },
-    { p: [22,  7, -46] as [number,number,number], s: [4, 14, 3] as [number,number,number], c: '#220066' },
-    { p: [28,  6, -44] as [number,number,number], s: [3, 12, 3] as [number,number,number], c: '#330088' },
-    { p: [12,  4, -40] as [number,number,number], s: [2.5, 8, 2.5] as [number,number,number], c: '#110044' },
+  // Lijeva strana — gust grad (bliže igraču za dramatičan efekt)
+  const leftBuildings = [
+    { p: [-12, 10, -16] as [number,number,number], s: [4,  20, 4]  as [number,number,number], c: '#ff00aa' },
+    { p: [-9,  7,  -12] as [number,number,number], s: [3,  14, 3]  as [number,number,number], c: '#00e5ff' },
+    { p: [-17, 13, -20] as [number,number,number], s: [5,  26, 4]  as [number,number,number], c: '#8b5cf6' },
+    { p: [-7,  5,  -10] as [number,number,number], s: [2.5,10, 2.5] as [number,number,number], c: '#ff6600' },
+    { p: [-22, 16, -26] as [number,number,number], s: [6,  32, 5]  as [number,number,number], c: '#ff0066' },
+    { p: [-14, 9,  -18] as [number,number,number], s: [3.5,18, 3]  as [number,number,number], c: '#00ffcc' },
+    { p: [-26, 11, -24] as [number,number,number], s: [4.5,22, 4]  as [number,number,number], c: '#cc00ff' },
+    { p: [-6,  4,  -8]  as [number,number,number], s: [2,  8,  2]  as [number,number,number], c: '#ff4400' },
+    { p: [-31, 14, -30] as [number,number,number], s: [5,  28, 4.5] as [number,number,number], c: '#ff00ff' },
+    { p: [-19, 8,  -22] as [number,number,number], s: [3,  16, 3]  as [number,number,number], c: '#4400ff' },
   ];
+
+  // Desna strana — niži siluetni grad u pozadini
+  const rightBuildings = [
+    { p: [14,  6, -40] as [number,number,number], s: [3.5,12, 3]  as [number,number,number], c: '#330066' },
+    { p: [20,  8, -46] as [number,number,number], s: [4,  16, 3.5] as [number,number,number], c: '#220055' },
+    { p: [26,  7, -44] as [number,number,number], s: [3,  14, 3]  as [number,number,number], c: '#440088' },
+    { p: [10,  5, -38] as [number,number,number], s: [2.5,10, 2.5] as [number,number,number], c: '#220044' },
+    { p: [32,  9, -50] as [number,number,number], s: [4,  18, 4]  as [number,number,number], c: '#330077' },
+  ];
+
+  const all = [...leftBuildings, ...rightBuildings];
+  const leftCount = leftBuildings.length;
 
   return (
     <group>
-      {buildings.map((b, i) => (
-        <group key={i}>
-          <mesh position={b.p}>
-            <boxGeometry args={b.s} />
-            <meshStandardMaterial color="#0a0020" emissive={b.c} emissiveIntensity={i < 8 ? 0.18 : 0.06} />
-          </mesh>
-          <mesh position={b.p}>
-            <boxGeometry args={[b.s[0] + 0.08, b.s[1] + 0.08, b.s[2] + 0.08]} />
-            <meshBasicMaterial color={b.c} wireframe transparent opacity={i < 8 ? 0.6 : 0.2} />
-          </mesh>
-          {i < 8 && (
-            <mesh position={[b.p[0], b.p[1] + b.s[1] / 2 + 0.05, b.p[2]]}>
-              <boxGeometry args={[b.s[0] + 0.1, 0.1, b.s[2] + 0.1]} />
-              <meshBasicMaterial color={b.c} />
+      {all.map((b, i) => {
+        const isLeft = i < leftCount;
+        const emissive = isLeft ? 0.35 : 0.08;
+        const wireOpacity = isLeft ? 0.8 : 0.25;
+        return (
+          <group key={i}>
+            <mesh position={b.p}>
+              <boxGeometry args={b.s} />
+              <meshStandardMaterial color="#06001a" emissive={b.c} emissiveIntensity={emissive} />
             </mesh>
-          )}
-        </group>
-      ))}
-      <pointLight position={[-18, 12, -28]} color="#ff00aa" intensity={3} distance={25} />
-      <pointLight position={[-28, 15, -36]} color="#8b5cf6" intensity={3} distance={30} />
-      <pointLight position={[-12, 8, -22]}  color="#00e5ff" intensity={2} distance={20} />
+            <mesh position={b.p}>
+              <boxGeometry args={[b.s[0]+0.1, b.s[1]+0.1, b.s[2]+0.1]} />
+              <meshBasicMaterial color={b.c} wireframe transparent opacity={wireOpacity} />
+            </mesh>
+            {isLeft && (
+              <mesh position={[b.p[0], b.p[1] + b.s[1]/2 + 0.06, b.p[2]]}>
+                <boxGeometry args={[b.s[0]+0.12, 0.12, b.s[2]+0.12]} />
+                <meshBasicMaterial color={b.c} />
+              </mesh>
+            )}
+            {isLeft && (
+              <pointLight position={[b.p[0], b.p[1] + b.s[1]/2, b.p[2]]} color={b.c} intensity={1.5} distance={15} />
+            )}
+          </group>
+        );
+      })}
+      <pointLight position={[-14, 18, -18]} color="#ff00aa" intensity={5} distance={35} />
+      <pointLight position={[-24, 22, -26]} color="#8b5cf6" intensity={5} distance={40} />
+      <pointLight position={[-10, 12, -14]} color="#00e5ff" intensity={3} distance={25} />
     </group>
   );
 }
@@ -169,11 +227,13 @@ function CyberBuildings() {
 // ─── NEONSKI ZNAKOVI ──────────────────────────────────────────────────────────
 function NeonSigns() {
   const signs = [
-    { pos: [-16, 5, -22] as [number,number,number], text: 'ARCADE', color: '#ff00aa' },
-    { pos: [-12, 3.5, -20] as [number,number,number], text: 'RAMEN', color: '#ff6600' },
-    { pos: [-22, 7, -28] as [number,number,number], text: '電気街', color: '#00e5ff' },
-    { pos: [-19, 4, -24] as [number,number,number], text: 'TECHNO', color: '#8b5cf6' },
-    { pos: [-26, 9, -32] as [number,number,number], text: '未来', color: '#ff00cc' },
+    { pos: [-11, 6, -14]  as [number,number,number], text: 'ARCADE',   color: '#ff00aa' },
+    { pos: [-8,  4, -10]  as [number,number,number], text: 'RAMEN',    color: '#ff6600' },
+    { pos: [-18, 9, -20]  as [number,number,number], text: '電気街',    color: '#00e5ff' },
+    { pos: [-15, 5, -16]  as [number,number,number], text: 'TECHNO',   color: '#8b5cf6' },
+    { pos: [-24, 11, -26] as [number,number,number], text: '未来',      color: '#ff00cc' },
+    { pos: [-20, 7, -22]  as [number,number,number], text: 'NEON CITY', color: '#00ffcc' },
+    { pos: [-13, 8, -18]  as [number,number,number], text: 'ネオン',    color: '#ff4488' },
   ];
 
   return (
@@ -434,18 +494,95 @@ function WireframeMountains() {
   );
 }
 
+// ─── PORTFOLIO BILLBOARD ──────────────────────────────────────────────────────
+export interface PortfolioItem {
+  id: string;
+  title: string;
+  tag: string | null;
+  description: string | null;
+  image_url: string | null;
+  project_url: string | null;
+}
+
+const FRAME_COLORS = ['#ff00aa', '#00e5ff', '#8b5cf6', '#ff6600'];
+
+function ProjectFrame({ item, index }: { item: PortfolioItem; index: number }) {
+  const color = FRAME_COLORS[index % FRAME_COLORS.length];
+  const texture = useTexture(item.image_url ?? 'https://placehold.co/400x300/0a001a/ff00aa.jpg');
+  const side = index % 2 === 0 ? -1 : 1;
+  const z = -10 - Math.floor(index / 2) * 12;
+  const x = side * 7;
+  const rotY = side * (-Math.PI / 2);
+
+  return (
+    <group position={[x, 2.5, z]} rotation={[0, rotY, 0]}>
+      {/* Okvir */}
+      <mesh>
+        <boxGeometry args={[3.8, 4.8, 0.14]} />
+        <meshStandardMaterial color="#080018" emissive={color} emissiveIntensity={0.12} metalness={0.6} roughness={0.4} />
+      </mesh>
+      {/* Slika projekta */}
+      <mesh position={[0, 0.5, 0.08]}>
+        <planeGeometry args={[3.2, 3.2]} />
+        <meshBasicMaterial map={texture} />
+      </mesh>
+      {/* Naslov */}
+      <Billboard position={[0, -1.6, 0.12]}>
+        <Text fontSize={0.32} color={color} anchorX="center" anchorY="middle" outlineWidth={0.025} outlineColor="#000000">
+          {item.title}
+        </Text>
+      </Billboard>
+      {/* Tag */}
+      <Billboard position={[0, -2.0, 0.12]}>
+        <Text fontSize={0.2} color="#aaaacc" anchorX="center" anchorY="middle">
+          {item.tag ?? ''}
+        </Text>
+      </Billboard>
+      {/* Gornja i donja neon linija */}
+      <mesh position={[0,  2.4, 0.08]}><boxGeometry args={[3.8, 0.07, 0.01]} /><meshBasicMaterial color={color} /></mesh>
+      <mesh position={[0, -2.4, 0.08]}><boxGeometry args={[3.8, 0.07, 0.01]} /><meshBasicMaterial color={color} /></mesh>
+      <mesh position={[ 1.9, 0, 0.08]}><boxGeometry args={[0.07, 4.8, 0.01]} /><meshBasicMaterial color={color} /></mesh>
+      <mesh position={[-1.9, 0, 0.08]}><boxGeometry args={[0.07, 4.8, 0.01]} /><meshBasicMaterial color={color} /></mesh>
+      {/* Neon osvjetljenje */}
+      <pointLight color={color} intensity={3} distance={12} />
+      {/* Floor marker */}
+      <mesh position={[0, -2.5 - 2.5 * (side < 0 ? 0 : 0), 0]} rotation={[-Math.PI/2, 0, 0]}>
+        <ringGeometry args={[1.0, 1.5, 32]} />
+        <meshBasicMaterial color={color} transparent opacity={0.35} side={THREE.DoubleSide} />
+      </mesh>
+    </group>
+  );
+}
+
+function ProjectFrames({ items }: { items: PortfolioItem[] }) {
+  return (
+    <>
+      {items.map((item, i) => (
+        <Suspense key={item.id} fallback={null}>
+          <ProjectFrame item={item} index={i} />
+        </Suspense>
+      ))}
+    </>
+  );
+}
+
 // ─── SCENA ────────────────────────────────────────────────────────────────────
 interface SceneProps {
   playerRef: React.RefObject<THREE.Group>;
   keysRef: React.RefObject<KeysRef>;
+  items: PortfolioItem[];
 }
 
-function Scene({ playerRef, keysRef }: SceneProps) {
+function Scene({ playerRef, keysRef, items }: SceneProps) {
   return (
     <>
-      <ambientLight intensity={0.06} color="#1a0040" />
-      <directionalLight position={[0, 20, -20]} intensity={0.4} color="#ff4488" />
+      <color attach="background" args={['#0d0022']} />
+      <fog attach="fog" args={['#1a003a', 35, 130]} />
+      <ambientLight intensity={0.18} color="#3a0066" />
+      <directionalLight position={[0, 20, -20]} intensity={0.6} color="#ff4488" />
+      <directionalLight position={[-20, 10, 0]} intensity={0.3} color="#8b5cf6" />
       <FollowCamera playerRef={playerRef} />
+      <SkyPlane />
       <NeonGrid playerRef={playerRef} />
       <RetroSun />
       <CyberBuildings />
@@ -453,8 +590,9 @@ function Scene({ playerRef, keysRef }: SceneProps) {
       <Palms />
       <FloatingObjects />
       <WireframeMountains />
+      <ProjectFrames items={items} />
       <Astronaut playerRef={playerRef} keysRef={keysRef} />
-      <Stars radius={120} depth={60} count={6000} factor={4} saturation={0.6} fade speed={0.4} />
+      <Stars radius={100} depth={50} count={5000} factor={5} saturation={0.8} fade speed={0.3} />
     </>
   );
 }
@@ -509,7 +647,7 @@ function TouchJoystick({ keysRef }: { keysRef: React.RefObject<KeysRef> }) {
 }
 
 // ─── GLAVNI EXPORT ────────────────────────────────────────────────────────────
-export default function RetrowaveRoom() {
+export default function RetrowaveRoom({ items = [] }: { items?: PortfolioItem[] }) {
   const playerRef = useRef<THREE.Group>(null!);
   const keysRef = useRef<KeysRef>({
     ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false,
@@ -537,7 +675,7 @@ export default function RetrowaveRoom() {
         gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.1 }}
       >
         <Suspense fallback={null}>
-          <Scene playerRef={playerRef} keysRef={keysRef} />
+          <Scene playerRef={playerRef} keysRef={keysRef} items={items} />
         </Suspense>
       </Canvas>
 

@@ -59,7 +59,7 @@ export type FrameMarker = {
 }
 
 export function initCharacterPosition(group: import('three').Group, heading = INITIAL_CHARACTER_HEADING) {
-  group.position.set(0, 0, SHOWCASE_CONFIG.galleryLength / 2 - 3)
+  group.position.set(0, 0, 6)
   group.rotation.set(0, heading, 0, 'YXZ')
 }
 

@@ -347,7 +347,7 @@ function SynthwaveGround() {
 
 function NeonGate() {
   const { galleryLength, galleryWidth } = SHOWCASE_CONFIG
-  const z = -galleryLength / 2 + 5
+  const z = -galleryLength + 10
 
   return (
     <group position={[0, 0, z]}>
@@ -401,7 +401,7 @@ function Palms() {
   const { galleryLength, galleryWidth } = SHOWCASE_CONFIG
   const palms = useMemo(() => {
     const list: { x: number; z: number; scale: number }[] = []
-    for (let z = galleryLength / 2 - 8; z > -galleryLength / 2; z -= 18) {
+    for (let z = 6; z > -galleryLength + 12; z -= 18) {
       const scale = 0.72 + ((Math.abs(Math.round(z)) % 5) * 0.04)
       list.push({ x: -galleryWidth / 2 - 1.5, z, scale })
       list.push({ x: galleryWidth / 2 + 1.5, z, scale: scale + 0.06 })
@@ -615,7 +615,7 @@ export function ShowcaseScene({
 
       const margin = 1.5
       character.position.x = Math.max(-galleryWidth / 2 + margin, Math.min(galleryWidth / 2 - margin, character.position.x))
-      character.position.z = Math.max(-galleryLength / 2 + margin, Math.min(galleryLength / 2 - margin, character.position.z))
+      character.position.z = Math.max(-galleryLength + 12, Math.min(6, character.position.z))
 
       if (moving) {
         walkPhase.current += dt * 9

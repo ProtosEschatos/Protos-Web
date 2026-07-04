@@ -8,11 +8,16 @@ if (!base || !key) {
   process.exit(1)
 }
 
-/** Obsolete assets removed from the repo — delete from Supabase too. */
+/** Obsolete assets removed from the repo — delete from Supabase on every upgrade. */
 const OBSOLETE_PATHS = [
   'environment/synthwave-room.jpg',
   'environment/synthwave-360-equirect.jpg',
+  'environment/synthwave-360-panorama-stitched.jpg',
+  'environment/synthwave-360-cylinder.jpg',
   'synthwave-room.jpg',
+  'synthwave-360-sheet.jpg',
+  'synthwave-360-equirect.jpg',
+  'synthwave-360-panorama.jpg',
 ]
 
 async function deletePath(storagePath) {

@@ -9,8 +9,7 @@ import { SHOWCASE_CONFIG } from './constants'
 
 const LOOP = 10
 const GRID_SCROLL = 22
-const SKY_RADIUS = 420
-const SKY_HEIGHT = 240
+const SKY_RADIUS = 500
 const HORIZON_Y = 3.5
 const PANORAMA_URL = getShowcaseStorageUrl(SHOWCASE_STORAGE.environment360)
 
@@ -42,7 +41,7 @@ const GRID_FRAG = `
 
     float fade = smoothstep(0.0, 5.0, depth) * (1.0 - smoothstep(85.0, 140.0, depth));
     fade *= 1.0 - smoothstep(10.0, 20.0, abs(x));
-    fade *= 0.82;
+    fade *= 0.45;
 
     vec3 base = vec3(0.035, 0.0, 0.11);
     vec3 col = base;
@@ -53,16 +52,13 @@ const GRID_FRAG = `
   }
 `
 
-function PanoramaCylinder() {
+function PanoramaSphere() {
   const texture = useTexture(PANORAMA_URL)
   texture.colorSpace = THREE.SRGBColorSpace
-  texture.wrapS = THREE.RepeatWrapping
-  texture.repeat.x = -1
-  texture.offset.x = 1
 
   return (
-    <mesh position={[0, HORIZON_Y, 0]} rotation={[0, Math.PI, 0]} renderOrder={-20}>
-      <cylinderGeometry args={[SKY_RADIUS, SKY_RADIUS, SKY_HEIGHT, 96, 1, true]} />
+    <mesh position={[0, HORIZON_Y, 0]} rotation={[0, Math.PI / 2, 0]} renderOrder={-20}>
+      <sphereGeometry args={[SKY_RADIUS, 64, 32]} />
       <meshBasicMaterial map={texture} side={THREE.BackSide} depthWrite={false} toneMapped={false} />
     </mesh>
   )
@@ -111,7 +107,7 @@ export function SynthwaveEnvironment() {
     const prevBg = scene.background
     const prevFog = scene.fog
     scene.background = new THREE.Color(0x120028)
-    scene.fog = new THREE.FogExp2(0x120028, 0.0035)
+    scene.fog = new THREE.FogExp2(0x120028, 0.0012)
     return () => {
       scene.background = prevBg
       scene.fog = prevFog
@@ -121,7 +117,7 @@ export function SynthwaveEnvironment() {
   return (
     <group name="SynthwaveEnvironment360">
       <Suspense fallback={null}>
-        <PanoramaCylinder />
+        <PanoramaSphere />
       </Suspense>
       <SynthwaveGridFloor />
     </group>

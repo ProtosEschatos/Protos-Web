@@ -12,7 +12,7 @@
 **Odlučeno:** Space station zamijenjen **Synthwave 360° okolinom** iz concept sheeta (`synthwave-360-sheet.jpg`).
 
 **Trenutno stanje:**
-- 360° cylinder panorama (4 panela: right | back | left | front) + animirani grid pod
+- 360° equirect sphere panorama (top-half strip iz sheeta) + animirani grid pod
 - Astronaut, WASD/joystick movement, portfolio frameovi uz cestu
 - Playwright e2e snima 4 smjera (`npm run test:e2e:showcase`)
 - Portfolio screenshoti preko **Supabase Storage** (+ lokalni fallback)
@@ -44,7 +44,7 @@
 | `src/app/[locale]/portfolio-showcase/page.tsx` | Dynamic import `SpaceGallery` |
 | `src/components/three/SpaceGallery.tsx` | Phase UI: loading → intro → playing |
 | `src/components/three/showcase/GalleryScene.tsx` | Astronaut + movement + portfolio frames |
-| `src/components/three/showcase/SynthwaveEnvironment.tsx` | Cylinder panorama + grid floor + lighting |
+| `src/components/three/showcase/SynthwaveEnvironment.tsx` | Equirect sphere + grid floor + lighting |
 | `src/components/three/showcase/constants.ts` | Outdoor path, frame pozicije, project linkovi |
 | `src/components/three/showcase/buildProjects.ts` | Spaja i18n + DB `portfolio_items` + screenshot URL |
 | `src/lib/showcase-storage.ts` | Supabase public URL helper |
@@ -67,7 +67,7 @@
 | Desno (+X) | RIGHT — Neon Diner, palme |
 | Nazad (+Z) | BACK — GATEWAY 360, globe diagram |
 
-**Cylinder UV:** `[right, back, left, front]` + `rotation Y = π` + horizontal flip za BackSide.
+**Cylinder UV:** equirect top-half strip na sferi, `rotation Y = π/2` (N 0° = naprijed -Z).
 
 **Konfiguracija** (`SHOWCASE_CONFIG`):
 - `pathLength: 72`, `pathWidth: 18`
@@ -99,7 +99,7 @@ npm run test:e2e:showcase          # 4 view screenshots
 - `npm run build:synthwave-panorama` — generira panoramu iz sheeta
 - `npm run upload:showcase-assets` — upload iz `public/showcase/` → Supabase
 - `npm run cleanup:showcase-assets` — briše legacy pathove
-- GitHub Action: `.github/workflows/upload-showcase-assets.yml` (manual dispatch)
+- GitHub Action: `.github/workflows/upload-showcase-assets.yml` (auto na push `main` kad se showcase asseti promijene; cleanup pa upload)
 
 ---
 
@@ -107,7 +107,7 @@ npm run test:e2e:showcase          # 4 view screenshots
 
 **Environment:**
 - `environment/synthwave-360-sheet.jpg` (master, 1536×1024)
-- `environment/synthwave-360-panorama.jpg` (2048×512, built)
+- `environment/synthwave-360-panorama.jpg` (1536×512 equirect, built)
 - `environment/refs/{front,left,right,back}.jpg`
 
 **Project screenshoti (8 JPG):** `desktop-*`, `mobile-*` za 4 projekta.

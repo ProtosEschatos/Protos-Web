@@ -1,13 +1,12 @@
 #!/usr/bin/env node
 /**
- * Builds 360° cylinder panorama + reference panels from synthwave-360-sheet.jpg
+ * Builds equirectangular panorama from synthwave-360-sheet.jpg
  *
  * Sheet layout (1536×1024):
- *   Top half:    LEFT (0–512) | CENTER FRONT (512–1024) | RIGHT (1024–1536)
- *   Bottom half: BACK gateway centered (512–1024)
+ *   Top half:    full 360° equirectangular scene (N at center, E right, W left, S at edges)
+ *   Bottom half: technical overlay (globe diagram) — NOT used as scene
  *
- * Cylinder UV order for Three.js (heading 0 = -Z forward):
- *   [right, back, left, front]
+ * Output: top-half strip used directly as equirect texture on sphere
  */
 import sharp from 'sharp'
 import { mkdir } from 'node:fs/promises'
@@ -23,48 +22,36 @@ const meta = await sharp(sheetPath).metadata()
 const w = meta.width ?? 1536
 const h = meta.height ?? 1024
 const half = Math.floor(h / 2)
-const third = Math.floor(w / 3)
+const sliceW = Math.floor(w * 0.22)
 
-const panels = {
-  left: { left: 0, top: 0, width: third, height: half },
-  front: { left: third, top: 0, width: third, height: half },
-  right: { left: third * 2, top: 0, width: w - third * 2, height: half },
-  back: { left: third, top: half, width: third, height: half },
+/** Longitude centers in equirect strip: N=0.5, E=0.75, S=1.0/0.0, W=0.25 */
+const refCenters = {
+  front: 0.5,
+  right: 0.75,
+  left: 0.25,
+  back: 1.0,
 }
 
 await mkdir(refsDir, { recursive: true })
 
-for (const [name, region] of Object.entries(panels)) {
-  await sharp(sheetPath).extract(region).jpeg({ quality: 92 }).toFile(join(refsDir, `${name}.jpg`))
-  console.log(`ref ${name}: ${region.width}x${region.height}`)
-}
-
-// Stitch panorama: right | back | left | front
-const order = ['right', 'back', 'left', 'front']
-const panelBuffers = await Promise.all(
-  order.map((name) => sharp(sheetPath).extract(panels[name]).toBuffer()),
-)
-
-const panelW = third
-const panoramaH = half
-let composite = sharp({
-  create: {
-    width: panelW * 4,
-    height: panoramaH,
-    channels: 3,
-    background: { r: 10, g: 0, b: 30 },
-  },
-})
-
-composite = composite.composite(
-  panelBuffers.map((input, i) => ({
-    input,
-    left: i * panelW,
-    top: 0,
-  })),
-)
+const equirectBuffer = await sharp(sheetPath)
+  .extract({ left: 0, top: 0, width: w, height: half })
+  .toBuffer()
 
 const panoramaPath = join(envDir, 'synthwave-360-panorama.jpg')
-await composite.jpeg({ quality: 92 }).toFile(panoramaPath)
-console.log(`panorama: ${panelW * 4}x${panoramaH} -> ${panoramaPath}`)
+await sharp(equirectBuffer).jpeg({ quality: 92 }).toFile(panoramaPath)
+console.log(`equirect panorama: ${w}x${half} -> ${panoramaPath}`)
+
+for (const [name, center] of Object.entries(refCenters)) {
+  let left = Math.floor(center * w - sliceW / 2)
+  if (name === 'back') left = w - sliceW
+  left = Math.max(0, Math.min(w - sliceW, left))
+
+  await sharp(equirectBuffer)
+    .extract({ left, top: 0, width: sliceW, height: half })
+    .jpeg({ quality: 92 })
+    .toFile(join(refsDir, `${name}.jpg`))
+  console.log(`ref ${name}: center=${center} left=${left} ${sliceW}x${half}`)
+}
+
 console.log('Done.')

@@ -207,7 +207,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
               style={{ width: `${Math.min(progress, 100)}%` }}
             />
           </div>
-          <p className="mt-8 text-sm text-[#94a3b8]">
+          <p className="mt-8 hidden text-sm text-[#94a3b8] md:block">
             {t('loaderTipPrefix')} <span className="font-semibold text-[#6366f1]">WASD</span> {t('loaderTipOr')}{' '}
             <span className="font-semibold text-[#06b6d4]">{t('loaderTipArrows')}</span> {t('loaderTipSuffix')}
           </p>
@@ -223,7 +223,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
             <p className="mb-8 text-lg text-[#94a3b8]">{t('instructionsSubtitle')}</p>
 
             <div className="mb-8 flex flex-col gap-6">
-              <div className="flex items-center justify-center gap-4">
+              <div className="hidden items-center justify-center gap-4 md:flex">
                 <div className="flex gap-2">
                   {['W', 'A', 'S', 'D'].map((key) => (
                     <div
@@ -236,13 +236,13 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
                 </div>
                 <span className="text-[#94a3b8]">{t('moveHint')}</span>
               </div>
-              <div className="flex items-center justify-center gap-4">
+              <div className="hidden items-center justify-center gap-4 md:flex">
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg border-2 border-[#6366f1] bg-white/10 text-sm font-semibold">
                   E
                 </div>
                 <span className="text-[#94a3b8]">{t('interactHint')}</span>
               </div>
-              <div className="flex items-center justify-center gap-4">
+              <div className="hidden items-center justify-center gap-4 md:flex">
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg border-2 border-[#6366f1] bg-white/10 text-sm font-semibold">
                   ESC
                 </div>

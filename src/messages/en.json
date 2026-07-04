@@ -196,7 +196,7 @@
     "moveHint": "or arrow keys to move",
     "interactHint": "to interact with the artwork",
     "menuHint": "to open the menu",
-    "touchMoveHint": "On mobile, use the joystick at the bottom right to move",
+    "touchMoveHint": "On mobile, use the joystick at the bottom to move",
     "start": "Start exploring",
     "move": "Move",
     "details": "Details",

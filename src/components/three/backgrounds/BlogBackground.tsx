@@ -5,7 +5,7 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import AmbientBackgroundShell from '@/components/three/backgrounds/AmbientBackgroundShell'
 import type { PageBackgroundProps } from '@/lib/site-background-routes'
-import { BACKGROUND_FOG } from '@/lib/site-background-routes'
+import { BACKGROUND_FOG, BACKGROUND_GLOW } from '@/lib/site-background-routes'
 
 function DataStreams({ count, isMobile }: { count: number; isMobile: boolean }) {
   const pointsRef = useRef<THREE.Points>(null)
@@ -110,7 +110,7 @@ function BlogScanLine() {
 
 export default function BlogBackground({ isMobile = false }: PageBackgroundProps) {
   return (
-    <AmbientBackgroundShell isMobile={isMobile} fogColor={BACKGROUND_FOG.blog}>
+    <AmbientBackgroundShell isMobile={isMobile} fogColor={BACKGROUND_FOG.blog} glowColor={BACKGROUND_GLOW.blog}>
       <BlogScanLine />
       <DataStreams count={isMobile ? 100 : 200} isMobile={isMobile} />
     </AmbientBackgroundShell>

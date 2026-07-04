@@ -6,7 +6,7 @@ import * as THREE from 'three'
 import AmbientBackgroundShell from '@/components/three/backgrounds/AmbientBackgroundShell'
 import { pulseOpacity, pulseScale, staggerPhase } from '@/components/three/backgrounds/live-utils'
 import type { PageBackgroundProps } from '@/lib/site-background-routes'
-import { BACKGROUND_FOG } from '@/lib/site-background-routes'
+import { BACKGROUND_FOG, BACKGROUND_GLOW } from '@/lib/site-background-routes'
 
 function OrbitRing({
   radius,
@@ -164,7 +164,7 @@ function AboutCore() {
 
 export default function AboutBackground({ isMobile = false }: PageBackgroundProps) {
   return (
-    <AmbientBackgroundShell isMobile={isMobile} fogColor={BACKGROUND_FOG.about}>
+    <AmbientBackgroundShell isMobile={isMobile} fogColor={BACKGROUND_FOG.about} glowColor={BACKGROUND_GLOW.about}>
       <AboutCore />
       <OrbitRing radius={4.5} color="#8b5cf6" speed={0.06} rotation={[Math.PI / 2.8, 0, 0]} z={-3} />
       <group rotation={[Math.PI / 2.8, 0, 0]} position={[0, 0, -3]}>

@@ -6,7 +6,7 @@ import * as THREE from 'three'
 import AmbientBackgroundShell from '@/components/three/backgrounds/AmbientBackgroundShell'
 import { pulseOpacity, rippleWave } from '@/components/three/backgrounds/live-utils'
 import type { PageBackgroundProps } from '@/lib/site-background-routes'
-import { BACKGROUND_FOG } from '@/lib/site-background-routes'
+import { BACKGROUND_FOG, BACKGROUND_GLOW } from '@/lib/site-background-routes'
 
 const COLORS = ['#06b6d4', '#8b5cf6', '#ff6600'] as const
 
@@ -87,7 +87,7 @@ function HexField({ rows, cols }: { rows: number; cols: number }) {
 
 export default function ServicesBackground({ isMobile = false }: PageBackgroundProps) {
   return (
-    <AmbientBackgroundShell isMobile={isMobile} fogColor={BACKGROUND_FOG.services}>
+    <AmbientBackgroundShell isMobile={isMobile} fogColor={BACKGROUND_FOG.services} glowColor={BACKGROUND_GLOW.services}>
       <HexField rows={isMobile ? 6 : 9} cols={isMobile ? 7 : 11} />
     </AmbientBackgroundShell>
   )

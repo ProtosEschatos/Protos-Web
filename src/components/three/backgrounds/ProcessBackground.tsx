@@ -6,7 +6,7 @@ import * as THREE from 'three'
 import AmbientBackgroundShell from '@/components/three/backgrounds/AmbientBackgroundShell'
 import { lerpAlongPath, pulseOpacity, type Vec3 } from '@/components/three/backgrounds/live-utils'
 import type { PageBackgroundProps } from '@/lib/site-background-routes'
-import { BACKGROUND_FOG } from '@/lib/site-background-routes'
+import { BACKGROUND_FOG, BACKGROUND_GLOW } from '@/lib/site-background-routes'
 
 const NODES = [
   { x: -4, y: 1.2, z: -4, color: '#ff6600', speed: 0.35 },
@@ -176,7 +176,7 @@ export default function ProcessBackground({ isMobile = false }: PageBackgroundPr
   const nodes = isMobile ? NODES.slice(0, 3) : NODES
 
   return (
-    <AmbientBackgroundShell isMobile={isMobile} fogColor={BACKGROUND_FOG.process}>
+    <AmbientBackgroundShell isMobile={isMobile} fogColor={BACKGROUND_FOG.process} glowColor={BACKGROUND_GLOW.process}>
       {nodes.map((n, i) => (
         <ProcessNode key={`${n.x}-${n.z}`} {...n} index={i} nodeCount={nodes.length} />
       ))}

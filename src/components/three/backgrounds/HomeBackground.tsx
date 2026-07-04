@@ -7,7 +7,7 @@ import * as THREE from 'three'
 import AmbientBackgroundShell from '@/components/three/backgrounds/AmbientBackgroundShell'
 import { pulseOpacity } from '@/components/three/backgrounds/live-utils'
 import type { PageBackgroundProps } from '@/lib/site-background-routes'
-import { BACKGROUND_FOG } from '@/lib/site-background-routes'
+import { BACKGROUND_FOG, BACKGROUND_GLOW } from '@/lib/site-background-routes'
 
 function DistantParticleSphere({ isMobile }: { isMobile: boolean }) {
   const meshRef = useRef<THREE.Points>(null)
@@ -54,13 +54,13 @@ function NebulaPulse() {
     const scale = 1 + Math.sin(t * 0.15) * 0.15
     ref.current.scale.set(scale, scale, 1)
     const mat = ref.current.material as THREE.MeshBasicMaterial
-    mat.opacity = pulseOpacity(t * 0.2, 0, 0.04, 0.12)
+    mat.opacity = pulseOpacity(t * 0.2, 0, 0.12, 0.32)
   })
 
   return (
     <mesh ref={ref} position={[2, 1, -12]}>
       <circleGeometry args={[6, 32]} />
-      <meshBasicMaterial color="#8b5cf6" transparent opacity={0.08} depthWrite={false} />
+      <meshBasicMaterial color="#8b5cf6" transparent opacity={0.22} depthWrite={false} />
     </mesh>
   )
 }
@@ -129,21 +129,21 @@ function HomeSolarRing() {
     const t = state.clock.elapsedTime
     ref.current.rotation.z = t * 0.08
     const mat = ref.current.material as THREE.MeshBasicMaterial
-    mat.opacity = pulseOpacity(t * 0.35, 0, 0.06, 0.18)
+    mat.opacity = pulseOpacity(t * 0.35, 0, 0.14, 0.38)
   })
 
   return (
     <mesh ref={ref} position={[0, 0, -10]}>
       <ringGeometry args={[3.5, 3.65, 64]} />
-      <meshBasicMaterial color="#ff8800" transparent opacity={0.12} side={THREE.DoubleSide} depthWrite={false} />
+      <meshBasicMaterial color="#ff8800" transparent opacity={0.28} side={THREE.DoubleSide} depthWrite={false} />
     </mesh>
   )
 }
 
 export default function HomeBackground({ isMobile = false }: PageBackgroundProps) {
   return (
-    <AmbientBackgroundShell isMobile={isMobile} fogColor={BACKGROUND_FOG.home}>
-      <Stars radius={90} depth={60} count={isMobile ? 1200 : 2200} factor={2.2} saturation={0} fade speed={0.35} />
+    <AmbientBackgroundShell isMobile={isMobile} fogColor={BACKGROUND_FOG.home} glowColor={BACKGROUND_GLOW.home}>
+      <Stars radius={90} depth={60} count={isMobile ? 1400 : 2600} factor={2.8} saturation={0} fade speed={0.55} />
       <NebulaPulse />
       <HomeSolarRing />
       <DistantParticleSphere isMobile={isMobile} />

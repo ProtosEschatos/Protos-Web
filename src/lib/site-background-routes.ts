@@ -37,14 +37,24 @@ export function getBackgroundKey(pathname: string): BackgroundRouteKey {
   return 'home'
 }
 
+export const BACKGROUND_GLOW: Record<BackgroundRouteKey, string> = {
+  home: '#ff6600',
+  about: '#a78bfa',
+  process: '#ff8800',
+  portfolio: '#6366f1',
+  services: '#22d3ee',
+  blog: '#f59e0b',
+  contact: '#06b6d4',
+}
+
 export const BACKGROUND_FALLBACKS: Record<BackgroundRouteKey, string> = {
-  home: 'radial-gradient(ellipse at 50% 40%, rgba(255,102,0,0.16) 0%, transparent 55%)',
-  about: 'radial-gradient(ellipse at 40% 50%, rgba(139,92,246,0.18) 0%, transparent 55%), radial-gradient(ellipse at 70% 30%, rgba(6,182,212,0.12) 0%, transparent 50%)',
-  process: 'radial-gradient(ellipse at 30% 50%, rgba(255,102,0,0.16) 0%, transparent 55%), radial-gradient(ellipse at 70% 50%, rgba(139,92,246,0.16) 0%, transparent 55%)',
-  portfolio: 'radial-gradient(ellipse at 50% 45%, rgba(99,102,241,0.2) 0%, transparent 60%)',
-  services: 'radial-gradient(ellipse at 55% 50%, rgba(6,182,212,0.18) 0%, transparent 55%)',
-  blog: 'radial-gradient(ellipse at 45% 40%, rgba(255,136,0,0.14) 0%, transparent 50%), radial-gradient(ellipse at 65% 60%, rgba(139,92,246,0.12) 0%, transparent 50%)',
-  contact: 'radial-gradient(ellipse at 50% 50%, rgba(6,182,212,0.2) 0%, transparent 60%)',
+  home: 'radial-gradient(ellipse at 50% 35%, rgba(255,102,0,0.35) 0%, transparent 58%), radial-gradient(ellipse at 80% 70%, rgba(139,92,246,0.22) 0%, transparent 52%)',
+  about: 'radial-gradient(ellipse at 35% 45%, rgba(139,92,246,0.38) 0%, transparent 58%), radial-gradient(ellipse at 72% 28%, rgba(6,182,212,0.28) 0%, transparent 52%)',
+  process: 'radial-gradient(ellipse at 28% 50%, rgba(255,102,0,0.34) 0%, transparent 55%), radial-gradient(ellipse at 72% 48%, rgba(139,92,246,0.32) 0%, transparent 55%)',
+  portfolio: 'radial-gradient(ellipse at 50% 42%, rgba(99,102,241,0.38) 0%, transparent 62%)',
+  services: 'radial-gradient(ellipse at 55% 48%, rgba(6,182,212,0.36) 0%, transparent 58%)',
+  blog: 'radial-gradient(ellipse at 42% 38%, rgba(255,136,0,0.32) 0%, transparent 52%), radial-gradient(ellipse at 68% 62%, rgba(139,92,246,0.26) 0%, transparent 52%)',
+  contact: 'radial-gradient(ellipse at 50% 48%, rgba(6,182,212,0.4) 0%, transparent 62%)',
 }
 
 export type AmbientBlob = {

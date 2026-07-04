@@ -11,6 +11,7 @@ type AmbientBackgroundShellProps = PageBackgroundProps & {
   cameraZ?: number
   fogNear?: number
   fogFar?: number
+  fogColor?: string
 }
 
 function AmbientSceneGroup({ children }: { children: ReactNode }) {
@@ -20,9 +21,9 @@ function AmbientSceneGroup({ children }: { children: ReactNode }) {
     if (!groupRef.current) return
     const scrollY = typeof window !== 'undefined' ? window.scrollY : 0
     const t = state.clock.elapsedTime
-    groupRef.current.rotation.y = t * 0.018 + scrollY * 0.00008
-    groupRef.current.rotation.x = Math.sin(t * 0.01) * 0.05
-    groupRef.current.position.y = -scrollY * 0.00035
+    groupRef.current.rotation.y = t * 0.028 + scrollY * 0.00012
+    groupRef.current.rotation.x = Math.sin(t * 0.012) * 0.06
+    groupRef.current.position.y = -scrollY * 0.00045
   })
 
   return (
@@ -38,6 +39,7 @@ export default function AmbientBackgroundShell({
   cameraZ = 14,
   fogNear = 22,
   fogFar = 55,
+  fogColor = '#0a0a1a',
 }: AmbientBackgroundShellProps) {
   return (
     <SafeCanvas
@@ -54,7 +56,7 @@ export default function AmbientBackgroundShell({
       dpr={isMobile ? [1, 1.2] : [1, 1.4]}
       fallback={null}
     >
-      <fog attach="fog" args={['#0a0a1a', fogNear, fogFar]} />
+      <fog attach="fog" args={[fogColor, fogNear, fogFar]} />
       <ambientLight intensity={0.45} />
       <AmbientSceneGroup>{children}</AmbientSceneGroup>
     </SafeCanvas>

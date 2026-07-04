@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { usePathname } from '@/routing'
 import { getBackgroundKey } from '@/lib/site-background-routes'
 import PageBackgroundCanvas from '@/components/three/backgrounds/PageBackgroundCanvas'
+import RouteAmbientLayer from '@/components/ui/RouteAmbientLayer'
 import { BOOT_COMPLETE_EVENT, isBootComplete } from '@/lib/boot-gate'
 
 const TWINKLE_BG = `
@@ -34,15 +35,15 @@ export default function SiteBackground() {
 
   return (
     <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden>
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_20%_50%,rgba(255,102,0,0.1)_0%,transparent_60%),radial-gradient(ellipse_at_80%_20%,rgba(139,92,246,0.08)_0%,transparent_50%),radial-gradient(ellipse_at_50%_80%,rgba(6,182,212,0.06)_0%,transparent_50%)]" />
+      <RouteAmbientLayer routeKey={routeKey} />
       <div
         className="pointer-events-none absolute inset-0 animate-[twinkle_8s_ease-in-out_infinite_alternate] opacity-90"
         style={{ backgroundImage: TWINKLE_BG }}
       />
-      <div className="pointer-events-none absolute inset-0 opacity-[0.72] saturate-[1.1] [&_canvas]:pointer-events-none">
+      <div className="pointer-events-none absolute inset-0 opacity-[0.92] saturate-[1.15] [&_canvas]:pointer-events-none">
         <PageBackgroundCanvas key={routeKey} routeKey={routeKey} />
       </div>
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[var(--dark)]/15 via-transparent to-[var(--dark)]/75" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[var(--dark)]/10 via-transparent to-[var(--dark)]/55" />
     </div>
   )
 }

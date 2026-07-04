@@ -115,6 +115,32 @@ ul, ol { list-style: none; }
   100% { opacity: 1; }
 }
 
+@keyframes ambient-drift-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(6%, -8%) scale(1.08); }
+  66% { transform: translate(-4%, 5%) scale(0.95); }
+}
+
+@keyframes ambient-drift-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  40% { transform: translate(-7%, 6%) scale(1.1); }
+  70% { transform: translate(5%, -4%) scale(0.92); }
+}
+
+@keyframes ambient-drift-c {
+  0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  50% { transform: translate(4%, 7%) rotate(8deg) scale(1.06); }
+}
+
+@keyframes ambient-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.12); opacity: 1; }
+}
+
+.ambient-blob {
+  will-change: transform, opacity;
+}
+
 @layer components {
   .cosmic-panel {
     background: rgba(15, 15, 42, 0.12);

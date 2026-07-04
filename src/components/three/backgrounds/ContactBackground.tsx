@@ -6,6 +6,7 @@ import * as THREE from 'three'
 import AmbientBackgroundShell from '@/components/three/backgrounds/AmbientBackgroundShell'
 import { pulseOpacity, smoothStep } from '@/components/three/backgrounds/live-utils'
 import type { PageBackgroundProps } from '@/lib/site-background-routes'
+import { BACKGROUND_FOG } from '@/lib/site-background-routes'
 
 function RadarPulse({ delay, color, z }: { delay: number; color: string; z: number }) {
   const ref = useRef<THREE.Mesh>(null)
@@ -130,7 +131,7 @@ export default function ContactBackground({ isMobile = false }: PageBackgroundPr
   const pulses = isMobile ? 4 : 6
 
   return (
-    <AmbientBackgroundShell isMobile={isMobile}>
+    <AmbientBackgroundShell isMobile={isMobile} fogColor={BACKGROUND_FOG.contact}>
       <mesh position={[0, 0, -8]}>
         <circleGeometry args={[0.06, 24]} />
         <meshBasicMaterial color="#06b6d4" transparent opacity={0.25} depthWrite={false} />

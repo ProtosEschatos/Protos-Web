@@ -5,6 +5,7 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import AmbientBackgroundShell from '@/components/three/backgrounds/AmbientBackgroundShell'
 import type { PageBackgroundProps } from '@/lib/site-background-routes'
+import { BACKGROUND_FOG } from '@/lib/site-background-routes'
 
 function DataStreams({ count, isMobile }: { count: number; isMobile: boolean }) {
   const pointsRef = useRef<THREE.Points>(null)
@@ -88,9 +89,29 @@ function DataStreams({ count, isMobile }: { count: number; isMobile: boolean }) 
   )
 }
 
+function BlogScanLine() {
+  const ref = useRef<THREE.Mesh>(null)
+
+  useFrame((state) => {
+    if (!ref.current) return
+    const t = state.clock.elapsedTime
+    ref.current.position.y = Math.sin(t * 0.4) * 5
+    const mat = ref.current.material as THREE.MeshBasicMaterial
+    mat.opacity = 0.08 + Math.abs(Math.sin(t * 0.8)) * 0.12
+  })
+
+  return (
+    <mesh ref={ref} position={[0, 0, -8]}>
+      <planeGeometry args={[28, 0.04]} />
+      <meshBasicMaterial color="#ff8800" transparent opacity={0.1} depthWrite={false} />
+    </mesh>
+  )
+}
+
 export default function BlogBackground({ isMobile = false }: PageBackgroundProps) {
   return (
-    <AmbientBackgroundShell isMobile={isMobile}>
+    <AmbientBackgroundShell isMobile={isMobile} fogColor={BACKGROUND_FOG.blog}>
+      <BlogScanLine />
       <DataStreams count={isMobile ? 100 : 200} isMobile={isMobile} />
     </AmbientBackgroundShell>
   )

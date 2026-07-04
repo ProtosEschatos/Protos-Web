@@ -6,6 +6,7 @@ import * as THREE from 'three'
 import AmbientBackgroundShell from '@/components/three/backgrounds/AmbientBackgroundShell'
 import { pulseOpacity, staggerPhase } from '@/components/three/backgrounds/live-utils'
 import type { PageBackgroundProps } from '@/lib/site-background-routes'
+import { BACKGROUND_FOG } from '@/lib/site-background-routes'
 
 const FRAMES = [
   { x: -5, y: 2, z: -5, w: 1.1, h: 0.65, color: '#6366f1', phase: 0, inner: '#818cf8' },
@@ -123,7 +124,7 @@ export default function PortfolioBackground({ isMobile = false }: PageBackground
   const thumbs = isMobile ? THUMBNAILS.slice(0, 2) : THUMBNAILS
 
   return (
-    <AmbientBackgroundShell isMobile={isMobile}>
+    <AmbientBackgroundShell isMobile={isMobile} fogColor={BACKGROUND_FOG.portfolio}>
       {frames.map((f, i) => (
         <DistantFrame key={i} {...f} />
       ))}

@@ -7,6 +7,7 @@ import * as THREE from 'three'
 import AmbientBackgroundShell from '@/components/three/backgrounds/AmbientBackgroundShell'
 import { pulseOpacity } from '@/components/three/backgrounds/live-utils'
 import type { PageBackgroundProps } from '@/lib/site-background-routes'
+import { BACKGROUND_FOG } from '@/lib/site-background-routes'
 
 function DistantParticleSphere({ isMobile }: { isMobile: boolean }) {
   const meshRef = useRef<THREE.Points>(null)
@@ -120,11 +121,31 @@ function ShootingStar({ isMobile }: { isMobile: boolean }) {
   )
 }
 
+function HomeSolarRing() {
+  const ref = useRef<THREE.Mesh>(null)
+
+  useFrame((state) => {
+    if (!ref.current) return
+    const t = state.clock.elapsedTime
+    ref.current.rotation.z = t * 0.08
+    const mat = ref.current.material as THREE.MeshBasicMaterial
+    mat.opacity = pulseOpacity(t * 0.35, 0, 0.06, 0.18)
+  })
+
+  return (
+    <mesh ref={ref} position={[0, 0, -10]}>
+      <ringGeometry args={[3.5, 3.65, 64]} />
+      <meshBasicMaterial color="#ff8800" transparent opacity={0.12} side={THREE.DoubleSide} depthWrite={false} />
+    </mesh>
+  )
+}
+
 export default function HomeBackground({ isMobile = false }: PageBackgroundProps) {
   return (
-    <AmbientBackgroundShell isMobile={isMobile}>
+    <AmbientBackgroundShell isMobile={isMobile} fogColor={BACKGROUND_FOG.home}>
       <Stars radius={90} depth={60} count={isMobile ? 1200 : 2200} factor={2.2} saturation={0} fade speed={0.35} />
       <NebulaPulse />
+      <HomeSolarRing />
       <DistantParticleSphere isMobile={isMobile} />
       <ShootingStar isMobile={isMobile} />
     </AmbientBackgroundShell>

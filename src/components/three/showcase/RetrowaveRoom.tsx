@@ -255,10 +255,10 @@ function FloatingObjects() {
 
 // ─── ASTRONAUT ────────────────────────────────────────────────────────────────
 function Astronaut({ playerRef, keysRef }: PlayerProps) {
-  const bodyRef   = useRef<THREE.Group>(null);
-  const leftLeg   = useRef<THREE.Mesh>(null);
-  const rightLeg  = useRef<THREE.Mesh>(null);
-  const antennaRef = useRef<THREE.Mesh>(null);
+  const leftLegRef  = useRef<THREE.Mesh>(null);
+  const rightLegRef = useRef<THREE.Mesh>(null);
+  const leftArmRef  = useRef<THREE.Mesh>(null);
+  const rightArmRef = useRef<THREE.Mesh>(null);
 
   useFrame(({ clock }) => {
     if (!playerRef.current) return;
@@ -278,137 +278,127 @@ function Astronaut({ playerRef, keysRef }: PlayerProps) {
     else if (k.ArrowDown  || k.KeyS) targetRot =  0;
     playerRef.current.rotation.y = THREE.MathUtils.lerp(playerRef.current.rotation.y, targetRot, 0.14);
 
-    if (leftLeg.current && rightLeg.current) {
-      const swing = moving ? Math.sin(t * 9) * 0.45 : 0;
-      leftLeg.current.rotation.x  = THREE.MathUtils.lerp(leftLeg.current.rotation.x,  swing, 0.2);
-      rightLeg.current.rotation.x = THREE.MathUtils.lerp(rightLeg.current.rotation.x, -swing, 0.2);
-    }
-
     if (!moving) {
       playerRef.current.position.y = Math.sin(t * 1.1) * 0.07;
     } else {
       playerRef.current.position.y = THREE.MathUtils.lerp(playerRef.current.position.y, 0, 0.1);
     }
 
-    if (bodyRef.current) {
-      bodyRef.current.rotation.z = Math.sin(t * 1.4) * 0.025;
-    }
-
-    if (antennaRef.current) {
-      (antennaRef.current.material as THREE.MeshStandardMaterial).emissiveIntensity =
-        0.5 + Math.abs(Math.sin(t * 3)) * 2.5;
-    }
+    const walkPhase = t * 9;
+    const legSwing  = moving ? Math.sin(walkPhase) * 0.4 : 0;
+    const armSwing  = moving ? Math.sin(walkPhase + Math.PI) * 0.3 : 0;
+    if (leftLegRef.current)  leftLegRef.current.rotation.x  = THREE.MathUtils.lerp(leftLegRef.current.rotation.x,  legSwing, 0.2);
+    if (rightLegRef.current) rightLegRef.current.rotation.x = THREE.MathUtils.lerp(rightLegRef.current.rotation.x, -legSwing, 0.2);
+    if (leftArmRef.current)  leftArmRef.current.rotation.x  = THREE.MathUtils.lerp(leftArmRef.current.rotation.x,  armSwing, 0.2);
+    if (rightArmRef.current) rightArmRef.current.rotation.x = THREE.MathUtils.lerp(rightArmRef.current.rotation.x, -armSwing, 0.2);
   });
-
-  const suitColor   = '#c8a8e0';
-  const accentColor = '#06b6d4';
 
   return (
     <group ref={playerRef} position={[0, 0, 0]}>
-      <group ref={bodyRef}>
-        {/* Torzo */}
-        <mesh position={[0, 1.05, 0]}>
-          <capsuleGeometry args={[0.28, 0.55, 8, 16]} />
-          <meshStandardMaterial color={suitColor} metalness={0.35} roughness={0.45} emissive="#3a0080" emissiveIntensity={0.1} />
-        </mesh>
-        {/* Panel na prsima */}
-        <mesh position={[0, 1.0, 0.3]}>
-          <boxGeometry args={[0.3, 0.22, 0.02]} />
-          <meshStandardMaterial color={accentColor} emissive={accentColor} emissiveIntensity={1.8} />
-        </mesh>
-        {[-0.08, 0, 0.08].map((x, i) => (
-          <mesh key={i} position={[x, 0.94, 0.32]}>
-            <sphereGeometry args={[0.025, 6, 6]} />
-            <meshStandardMaterial color={i === 1 ? '#ff6600' : '#8b5cf6'} emissive={i === 1 ? '#ff6600' : '#8b5cf6'} emissiveIntensity={2} />
-          </mesh>
-        ))}
+      <group rotation={[0, Math.PI, 0]}>
         {/* Kaciga */}
-        <mesh position={[0, 1.72, 0]}>
-          <sphereGeometry args={[0.33, 32, 32]} />
-          <meshStandardMaterial color={suitColor} metalness={0.65} roughness={0.18} />
+        <mesh position={[0, 1.6, 0]} scale={[1, 0.95, 0.9]} castShadow>
+          <sphereGeometry args={[0.55, 32, 32]} />
+          <meshStandardMaterial color={0xffffff} roughness={0.3} metalness={0.1} />
+        </mesh>
+        <mesh position={[0, 1.75, 0]} rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[0.5, 0.04, 16, 32]} />
+          <meshStandardMaterial color={0x06b6d4} roughness={0.4} metalness={0.3} />
         </mesh>
         {/* Vizir */}
-        <mesh position={[0, 1.72, 0.14]}>
-          <sphereGeometry args={[0.24, 32, 32, 0, Math.PI * 2, 0, Math.PI / 2]} />
-          <meshStandardMaterial color="#cc88ff" emissive="#9900ff" emissiveIntensity={0.55} transparent opacity={0.55} metalness={0.95} roughness={0.05} side={THREE.DoubleSide} />
+        <mesh position={[0, 1.55, 0.15]} rotation={[-Math.PI / 2, 0, 0]} castShadow>
+          <sphereGeometry args={[0.42, 32, 32, 0, Math.PI * 2, 0, Math.PI / 2]} />
+          <meshStandardMaterial color={0x1a1a2e} roughness={0.1} metalness={0.8} transparent opacity={0.9} />
         </mesh>
-        <mesh position={[0, 1.76, 0.36]}>
-          <boxGeometry args={[0.18, 0.03, 0.01]} />
-          <meshBasicMaterial color={accentColor} />
+        {/* Ramena */}
+        <mesh position={[-0.5, 1.6, 0]} scale={[0.8, 1, 0.8]}>
+          <sphereGeometry args={[0.12, 16, 16]} />
+          <meshStandardMaterial color={0x06b6d4} roughness={0.4} metalness={0.3} />
         </mesh>
-        {/* Antena */}
-        <mesh position={[0, 2.1, 0]}>
-          <cylinderGeometry args={[0.013, 0.013, 0.28, 6]} />
-          <meshStandardMaterial color="#aaaaaa" metalness={0.9} />
+        <mesh position={[0.5, 1.6, 0]} scale={[0.8, 1, 0.8]}>
+          <sphereGeometry args={[0.12, 16, 16]} />
+          <meshStandardMaterial color={0x06b6d4} roughness={0.4} metalness={0.3} />
         </mesh>
-        <mesh position={[0, 2.26, 0]} ref={antennaRef}>
-          <sphereGeometry args={[0.038, 8, 8]} />
-          <meshStandardMaterial color="#ff00ff" emissive="#ff00ff" emissiveIntensity={2} />
+        {/* Torzo */}
+        <mesh position={[0, 0.9, 0]} castShadow>
+          <cylinderGeometry args={[0.35, 0.4, 0.7, 16]} />
+          <meshStandardMaterial color={0xf5f5f5} roughness={0.5} metalness={0.1} />
         </mesh>
-        <pointLight position={[0, 2.26, 0]} color="#ff00ff" intensity={0.6} distance={2.5} />
-        {/* Lijeva ruka */}
-        <group position={[-0.44, 1.08, 0]}>
-          <mesh rotation={[0, 0, 0.22]}>
-            <capsuleGeometry args={[0.1, 0.38, 6, 8]} />
-            <meshStandardMaterial color={suitColor} metalness={0.3} roughness={0.5} />
-          </mesh>
-          <mesh position={[-0.12, -0.32, 0]}>
-            <sphereGeometry args={[0.13, 12, 12]} />
-            <meshStandardMaterial color="#1a0a2e" metalness={0.6} roughness={0.3} />
-          </mesh>
-        </group>
-        {/* Desna ruka */}
-        <group position={[0.44, 1.08, 0]}>
-          <mesh rotation={[0, 0, -0.22]}>
-            <capsuleGeometry args={[0.1, 0.38, 6, 8]} />
-            <meshStandardMaterial color={suitColor} metalness={0.3} roughness={0.5} />
-          </mesh>
-          <mesh position={[0.12, -0.32, 0]}>
-            <sphereGeometry args={[0.13, 12, 12]} />
-            <meshStandardMaterial color="#1a0a2e" metalness={0.6} roughness={0.3} />
-          </mesh>
-        </group>
-        {/* Lijeva noga */}
-        <group position={[-0.18, 0.52, 0]}>
-          <mesh ref={leftLeg} position={[0, -0.35, 0]}>
-            <capsuleGeometry args={[0.12, 0.45, 6, 8]} />
-            <meshStandardMaterial color={suitColor} metalness={0.25} roughness={0.5} />
-          </mesh>
-          <mesh position={[-0.02, -0.75, 0.08]}>
-            <boxGeometry args={[0.22, 0.14, 0.38]} />
-            <meshStandardMaterial color="#1a0a2e" metalness={0.5} roughness={0.4} />
-          </mesh>
-        </group>
-        {/* Desna noga */}
-        <group position={[0.18, 0.52, 0]}>
-          <mesh ref={rightLeg} position={[0, -0.35, 0]}>
-            <capsuleGeometry args={[0.12, 0.45, 6, 8]} />
-            <meshStandardMaterial color={suitColor} metalness={0.25} roughness={0.5} />
-          </mesh>
-          <mesh position={[0.02, -0.75, 0.08]}>
-            <boxGeometry args={[0.22, 0.14, 0.38]} />
-            <meshStandardMaterial color="#1a0a2e" metalness={0.5} roughness={0.4} />
-          </mesh>
-        </group>
-        {/* Jetpack */}
-        <mesh position={[0, 1.05, -0.42]}>
-          <boxGeometry args={[0.55, 0.72, 0.28]} />
-          <meshStandardMaterial color="#222233" metalness={0.8} roughness={0.2} emissive="#0033ff" emissiveIntensity={0.4} />
+        <mesh position={[-0.32, 0.9, 0]}>
+          <boxGeometry args={[0.15, 0.5, 0.3]} />
+          <meshStandardMaterial color={0xe07840} roughness={0.5} metalness={0.05} />
         </mesh>
-        {[-0.16, 0.16].map((x, i) => (
-          <group key={i} position={[x, 0.62, -0.42]}>
-            <mesh>
-              <cylinderGeometry args={[0.07, 0.05, 0.2, 6]} />
-              <meshStandardMaterial color="#333344" metalness={0.9} />
-            </mesh>
-            <mesh position={[0, -0.18, 0]}>
-              <sphereGeometry args={[0.08, 8, 8]} />
-              <meshStandardMaterial color={accentColor} emissive={accentColor} emissiveIntensity={3} transparent opacity={0.85} />
-            </mesh>
-            <pointLight position={[0, -0.18, 0]} color={accentColor} intensity={1} distance={2} />
-          </group>
-        ))}
-        <pointLight position={[0, 1.5, 0.5]} color="#9933ff" intensity={0.8} distance={4} />
+        <mesh position={[0.32, 0.9, 0]}>
+          <boxGeometry args={[0.15, 0.5, 0.3]} />
+          <meshStandardMaterial color={0x22d3ee} roughness={0.5} metalness={0.05} />
+        </mesh>
+        {/* Panel na prsima */}
+        <mesh position={[0, 0.8, 0.35]}>
+          <boxGeometry args={[0.25, 0.2, 0.1]} />
+          <meshStandardMaterial color={0xe07840} roughness={0.5} metalness={0.05} />
+        </mesh>
+        <mesh position={[0, 0.8, 0.405]}>
+          <planeGeometry args={[0.18, 0.15]} />
+          <meshStandardMaterial color={0x06b6d4} roughness={0.4} metalness={0.3} />
+        </mesh>
+        <mesh position={[0, 0.8, 0.41]}>
+          <planeGeometry args={[0.15, 0.12]} />
+          <meshBasicMaterial color={0x93c5fd} transparent opacity={0.9} />
+        </mesh>
+        {/* Gornje ruke */}
+        <mesh position={[-0.45, 0.95, 0]} rotation={[0, 0, 0.4]} castShadow>
+          <cylinderGeometry args={[0.1, 0.12, 0.25, 12]} />
+          <meshStandardMaterial color={0xf5f5f5} roughness={0.5} metalness={0.1} />
+        </mesh>
+        <mesh position={[0.45, 0.95, 0]} rotation={[0, 0, -0.4]} castShadow>
+          <cylinderGeometry args={[0.1, 0.12, 0.25, 12]} />
+          <meshStandardMaterial color={0xf5f5f5} roughness={0.5} metalness={0.1} />
+        </mesh>
+        {/* Laktovi */}
+        <mesh position={[-0.52, 0.85, 0]} rotation={[0, 0, 0.4]}>
+          <cylinderGeometry args={[0.11, 0.11, 0.05, 12]} />
+          <meshStandardMaterial color={0x06b6d4} roughness={0.4} metalness={0.3} />
+        </mesh>
+        <mesh position={[0.52, 0.85, 0]} rotation={[0, 0, -0.4]}>
+          <cylinderGeometry args={[0.11, 0.11, 0.05, 12]} />
+          <meshStandardMaterial color={0x06b6d4} roughness={0.4} metalness={0.3} />
+        </mesh>
+        {/* Donje ruke / rukavice */}
+        <mesh ref={leftArmRef} position={[-0.58, 0.72, 0]} rotation={[0, 0, 0.3]} castShadow>
+          <cylinderGeometry args={[0.08, 0.1, 0.2, 12]} />
+          <meshStandardMaterial color={0xd4d4d4} roughness={0.6} metalness={0.05} />
+        </mesh>
+        <mesh ref={rightArmRef} position={[0.58, 0.72, 0]} rotation={[0, 0, -0.3]} castShadow>
+          <cylinderGeometry args={[0.08, 0.1, 0.2, 12]} />
+          <meshStandardMaterial color={0xd4d4d4} roughness={0.6} metalness={0.05} />
+        </mesh>
+        {/* Gornje noge */}
+        <mesh position={[-0.18, 0.45, 0]} castShadow>
+          <cylinderGeometry args={[0.12, 0.14, 0.3, 12]} />
+          <meshStandardMaterial color={0x22d3ee} roughness={0.5} metalness={0.05} />
+        </mesh>
+        <mesh position={[0.18, 0.45, 0]} castShadow>
+          <cylinderGeometry args={[0.12, 0.14, 0.3, 12]} />
+          <meshStandardMaterial color={0x22d3ee} roughness={0.5} metalness={0.05} />
+        </mesh>
+        {/* Koljena */}
+        <mesh position={[-0.18, 0.32, 0]}>
+          <cylinderGeometry args={[0.13, 0.13, 0.04, 12]} />
+          <meshStandardMaterial color={0x06b6d4} roughness={0.4} metalness={0.3} />
+        </mesh>
+        <mesh position={[0.18, 0.32, 0]}>
+          <cylinderGeometry args={[0.13, 0.13, 0.04, 12]} />
+          <meshStandardMaterial color={0x06b6d4} roughness={0.4} metalness={0.3} />
+        </mesh>
+        {/* Donje noge */}
+        <mesh ref={leftLegRef} position={[-0.18, 0.15, 0]} castShadow>
+          <cylinderGeometry args={[0.1, 0.12, 0.25, 12]} />
+          <meshStandardMaterial color={0xf5f5f5} roughness={0.5} metalness={0.1} />
+        </mesh>
+        <mesh ref={rightLegRef} position={[0.18, 0.15, 0]} castShadow>
+          <cylinderGeometry args={[0.1, 0.12, 0.25, 12]} />
+          <meshStandardMaterial color={0xf5f5f5} roughness={0.5} metalness={0.1} />
+        </mesh>
       </group>
     </group>
   );

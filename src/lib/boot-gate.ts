@@ -25,4 +25,4 @@ export function removeBootSsrVeil(): void {
 }
 
 /** Inline script for layout — must stay in sync with BOOT_SESSION_KEY */
-export const BOOT_GATE_INIT_SCRIPT = `(function(){try{var k='${BOOT_SESSION_KEY}';if(location.pathname.includes('portfolio-showcase')){document.documentElement.classList.add('boot-complete');document.getElementById('boot-ssr-veil')&&document.getElementById('boot-ssr-veil').remove();}else if(sessionStorage.getItem(k)==='1'){document.documentElement.classList.add('boot-complete');}else{document.documentElement.classList.add('boot-pending');}}catch(e){document.documentElement.classList.add('boot-pending');}})();`
+export const BOOT_GATE_INIT_SCRIPT = `(function(){try{var k='${BOOT_SESSION_KEY}';if(sessionStorage.getItem(k)==='1'){document.documentElement.classList.add('boot-complete');}else{document.documentElement.classList.add('boot-pending');}}catch(e){document.documentElement.classList.add('boot-pending');}})();`

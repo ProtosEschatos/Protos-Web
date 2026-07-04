@@ -20,7 +20,7 @@ export function ShowcaseFallback({ projects, reason = 'unsupported', onRetry }: 
   const isDesktop = viewport === 'desktop'
 
   return (
-    <div className="fixed inset-0 overflow-y-auto bg-[#0a0018]">
+    <div className="fixed inset-0 overflow-y-auto bg-[#0a0a1a]">
       <header className="sticky top-0 z-20 flex items-center justify-between bg-gradient-to-b from-black/90 to-black/40 p-6 backdrop-blur-md">
         <Link href="/" className="flex items-center gap-3 text-white">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#ff0099] to-[#00eaff] text-lg font-bold">
@@ -71,7 +71,7 @@ export function ShowcaseFallback({ projects, reason = 'unsupported', onRetry }: 
               >
                 {project.imageUrl && (
                   <div className={`relative mx-auto pt-6 ${isDesktop ? 'w-full' : 'w-[55%]'}`}>
-                    <div className="overflow-hidden rounded-2xl border border-white/10 shadow-[0_0_40px_rgba(255,0,153,0.15)]">
+                    <div className="overflow-hidden rounded-2xl border border-white/10 shadow-[0_0_40px_rgba(99,102,241,0.15)]">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={project.imageUrl}

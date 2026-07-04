@@ -75,7 +75,7 @@ export function ShowcaseJoystick({ touchInput }: ShowcaseJoystickProps) {
   return (
     <div
       ref={baseRef}
-      className="fixed bottom-20 right-6 z-30 touch-none select-none md:hidden"
+      className="fixed left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2 touch-none select-none md:hidden"
       style={{ width: OUTER, height: OUTER }}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}

@@ -21,7 +21,11 @@ function collectFiles(dir, prefix = '') {
     if (statSync(full).isDirectory()) {
       entries.push(...collectFiles(full, rel))
     } else if (/\.(jpe?g|png|webp)$/i.test(name)) {
-      const storagePath = rel.includes('/') ? rel : `projects/${name}`
+      let storagePath = rel
+      if (!rel.includes('/')) {
+        if (/^(desktop|mobile)-/i.test(name)) storagePath = `projects/${name}`
+        else storagePath = `projects/${name}`
+      }
       entries.push({ full, storagePath })
     }
   }

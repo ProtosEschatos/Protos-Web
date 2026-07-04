@@ -1,16 +1,20 @@
 import dynamic from 'next/dynamic'
-import { setRequestLocale } from 'next-intl/server'
 import { getPortfolioItems } from '@/actions/portfolio'
+import { ShowcaseBootLoader } from '@/components/three/showcase/ShowcaseBootLoader'
+import { setRequestLocale } from 'next-intl/server'
 
-const RetrowaveRoom = dynamic(
-  () => import('@/components/three/showcase/RetrowaveRoom'),
-  { ssr: false },
+const SpaceGallery = dynamic(
+  () => import('@/components/three/SpaceGallery').then((mod) => ({ default: mod.SpaceGallery })),
+  {
+    ssr: false,
+    loading: () => <ShowcaseBootLoader />,
+  },
 )
 
 type Props = { params: { locale: string } }
 
 export default async function PortfolioShowcasePage({ params: { locale } }: Props) {
   setRequestLocale(locale)
-  const items = await getPortfolioItems(locale, 8)
-  return <RetrowaveRoom items={items} />
+  const portfolioItems = await getPortfolioItems(locale, 4)
+  return <SpaceGallery portfolioItems={portfolioItems} />
 }

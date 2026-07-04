@@ -2,6 +2,7 @@
 
 import { useMemo, useRef, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
+import { useTexture } from '@react-three/drei'
 import * as THREE from 'three'
 import { SHOWCASE_CONFIG, INITIAL_CHARACTER_HEADING, getFrameTransform, type ShowcaseProject } from './constants'
 import { getFrameDimensions } from './frameDimensions'
@@ -194,112 +195,284 @@ function ProjectFrame({
         <pointLight position={[0, 0.2, 0.35]} color={edgeColor} intensity={1.1} distance={5} decay={2} />
       </group>
 
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[floorX, 0.02, z]}>
-        <ringGeometry args={[0.8, 1.2, 32]} />
-        <meshBasicMaterial color={project.color} transparent opacity={0.4} side={THREE.DoubleSide} />
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[floorX, 0.022, z]}>
+        <planeGeometry args={[1.9, 1.1]} />
+        <meshBasicMaterial color={project.color} transparent opacity={0.22} side={THREE.DoubleSide} />
       </mesh>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[floorX, 0.015, z]}>
-        <circleGeometry args={[0.6, 32]} />
-        <meshBasicMaterial color={0x06b6d4} transparent opacity={0.2} />
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[floorX, 0.026, z]}>
+        <planeGeometry args={[1.25, 0.08]} />
+        <meshBasicMaterial color={0x06b6d4} transparent opacity={0.55} />
       </mesh>
     </>
   )
 }
 
-function GalleryShell() {
-  const { galleryLength, galleryWidth, galleryHeight } = SHOWCASE_CONFIG
+function BackdropPlane() {
+  const texture = useTexture('/textures/backdrop.png')
+
+  useMemo(() => {
+    texture.colorSpace = THREE.SRGBColorSpace
+    texture.anisotropy = 8
+  }, [texture])
 
   return (
-    <group>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-        <planeGeometry args={[galleryWidth, galleryLength]} />
-        <meshStandardMaterial color={0x1a1a2e} roughness={0.3} metalness={0.7} />
-      </mesh>
-      <gridHelper args={[Math.max(galleryWidth, galleryLength), 20, 0x06b6d4, 0x1e3a5f]} position={[0, 0.01, 0]} />
+    <mesh position={[0, 35, -135]}>
+      <planeGeometry args={[190, 95]} />
+      <meshBasicMaterial map={texture} fog={false} depthWrite={false} />
+    </mesh>
+  )
+}
 
-      {[-galleryWidth / 2 + 0.05, galleryWidth / 2 - 0.05].map((x) => (
-        <mesh key={x} rotation={[-Math.PI / 2, 0, 0]} position={[x, 0.02, 0]}>
-          <planeGeometry args={[0.1, galleryLength]} />
-          <meshBasicMaterial color={0x06b6d4} transparent opacity={0.6} />
-        </mesh>
-      ))}
+function SideBillboards({ side }: { side: -1 | 1 }) {
+  const texture = useTexture(side === -1 ? '/textures/city-strip.png' : '/textures/desert-strip.png')
+  const zPositions = useMemo(() => [-7, -27, -47, -67], [])
 
-      <mesh position={[0, galleryHeight, 0]} rotation={[Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[galleryWidth, galleryLength]} />
-        <meshStandardMaterial color={0x0f172a} roughness={0.5} metalness={0.5} />
-      </mesh>
+  useMemo(() => {
+    texture.colorSpace = THREE.SRGBColorSpace
+    texture.anisotropy = 8
+  }, [texture])
 
-      {Array.from({ length: 4 }).map((_, i) => {
-        const z = -galleryLength / 2 + 4 + i * 5
-        return (
-          <group key={z}>
-            <mesh position={[0, galleryHeight - 0.12, z]} castShadow>
-              <boxGeometry args={[galleryWidth + 0.5, 0.25, 0.25]} />
-              <meshStandardMaterial color={0x334155} metalness={0.6} roughness={0.4} />
-            </mesh>
-            <mesh position={[0, galleryHeight - 0.26, z]} rotation={[Math.PI / 2, 0, 0]}>
-              <planeGeometry args={[galleryWidth - 2, 0.08]} />
-              <meshBasicMaterial color={0x6366f1} transparent opacity={0.7} />
-            </mesh>
-          </group>
-        )
-      })}
-
-      {[-galleryWidth / 2 + 0.15, galleryWidth / 2 - 0.15].map((x) => (
-        <mesh key={x} position={[x, galleryHeight - 0.1, 0]}>
-          <boxGeometry args={[0.2, 0.2, galleryLength]} />
-          <meshStandardMaterial color={0x475569} metalness={0.6} roughness={0.4} />
-        </mesh>
-      ))}
-
-      {([
-        { rot: [0, Math.PI / 2, 0] as [number, number, number], pos: [-galleryWidth / 2, galleryHeight / 2, 0] as [number, number, number] },
-        { rot: [0, -Math.PI / 2, 0] as [number, number, number], pos: [galleryWidth / 2, galleryHeight / 2, 0] as [number, number, number] },
-        { rot: [0, 0, 0] as [number, number, number], pos: [0, galleryHeight / 2, -galleryLength / 2] as [number, number, number] },
-        { rot: [0, Math.PI, 0] as [number, number, number], pos: [0, galleryHeight / 2, galleryLength / 2] as [number, number, number] },
-      ] as const).map(({ rot, pos }, i) => (
-        <mesh key={i} position={pos} rotation={rot} receiveShadow>
-          <planeGeometry args={i < 2 ? [galleryLength, galleryHeight] : [galleryWidth, galleryHeight]} />
-          <meshStandardMaterial color={0x1e293b} roughness={0.6} metalness={0.4} />
-        </mesh>
-      ))}
-
-      {([-1, 1] as const).map((side) => (
+  return (
+    <>
+      {zPositions.map((z) => (
         <mesh
-          key={`inner-${side}`}
-          position={[side * (galleryWidth / 2 - 0.02), galleryHeight / 2, 0]}
+          key={`${side}-${z}`}
+          position={[side * 22, 12.5, z]}
           rotation={[0, side === -1 ? Math.PI / 2 : -Math.PI / 2, 0]}
         >
-          <planeGeometry args={[galleryLength, galleryHeight]} />
-          <meshStandardMaterial color={0x141c2e} roughness={0.75} metalness={0.25} />
+          <planeGeometry args={[45, 25]} />
+          <meshBasicMaterial
+            map={texture}
+            transparent
+            alphaTest={0.05}
+            side={THREE.DoubleSide}
+            depthWrite={false}
+            fog
+          />
         </mesh>
       ))}
+    </>
+  )
+}
 
-      {Array.from({ length: 6 }).map((_, i) => {
-        const z = -galleryLength / 2 + 3 + i * 4
-        return [-1, 1].map((side) => (
-          <group key={`${i}-${side}`}>
-            <mesh position={[side * (galleryWidth / 2 - 0.04), galleryHeight * 0.5, z]}>
-              <boxGeometry args={[0.08, 1.5, 0.8]} />
-              <meshStandardMaterial color={0x334155} roughness={0.5} metalness={0.5} />
-            </mesh>
-            <mesh position={[side * (galleryWidth / 2 - 0.01), galleryHeight * 0.65, z]} rotation={[0, (side * Math.PI) / 2, 0]}>
-              <circleGeometry args={[0.08, 16]} />
-              <meshBasicMaterial color={[0x6366f1, 0x06b6d4, 0xf59e0b, 0x818cf8][i % 4]} transparent opacity={0.9} />
-            </mesh>
-          </group>
-        ))
-      })}
+function SynthwaveGround() {
+  const { galleryLength, galleryWidth } = SHOWCASE_CONFIG
 
-      <mesh position={[-8, galleryHeight + 5, -20]}>
-        <sphereGeometry args={[1.5, 32, 32]} />
-        <meshStandardMaterial color={0x6366f1} roughness={0.8} metalness={0.2} />
+  const groundMat = useMemo(
+    () =>
+      new THREE.ShaderMaterial({
+        vertexShader: `
+          varying vec3 vPos;
+          void main(){
+            vPos = position;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          }
+        `,
+        fragmentShader: `
+          varying vec3 vPos;
+          void main(){
+            vec2 g = abs(fract(vPos.xy * 0.12) - 0.5);
+            float line = min(g.x, g.y);
+            float grid = 1.0 - smoothstep(0.0, 0.02, line);
+            float d = length(vPos.xy) * 0.005;
+            float fade = 1.0 - smoothstep(0.15, 0.9, d);
+            vec3 base = vec3(0.04, 0.01, 0.09);
+            vec3 gridCol = vec3(0.45, 0.12, 0.65);
+            vec3 col = base + gridCol * grid * fade * 0.35;
+            gl_FragColor = vec4(col, 1.0);
+          }
+        `,
+      }),
+    [],
+  )
+
+  const roadMat = useMemo(
+    () =>
+      new THREE.ShaderMaterial({
+        vertexShader: `
+          varying vec2 vUv;
+          void main(){
+            vUv = uv;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          }
+        `,
+        fragmentShader: `
+          varying vec2 vUv;
+          void main(){
+            vec3 base = vec3(0.05, 0.02, 0.11);
+            float edge = smoothstep(0.47, 0.5, abs(vUv.x - 0.5));
+            vec3 edgeCol = vec3(1.0, 0.18, 0.84);
+            float cx = abs(vUv.x - 0.5);
+            float centerMask = 1.0 - smoothstep(0.006, 0.014, cx);
+            float dash = step(0.5, fract(vUv.y * 25.0));
+            vec3 centerCol = vec3(0.13, 0.85, 0.93) * centerMask * dash;
+            vec3 col = base + edgeCol * edge * 1.6 + centerCol * 0.8;
+            gl_FragColor = vec4(col, 1.0);
+          }
+        `,
+      }),
+    [],
+  )
+
+  return (
+    <>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} material={groundMat} position={[0, -0.01, 0]} receiveShadow>
+        <planeGeometry args={[500, 500]} />
       </mesh>
-      <mesh position={[-8, galleryHeight + 5, -20]} rotation={[Math.PI / 3, 0, 0]}>
-        <torusGeometry args={[2.2, 0.15, 8, 32]} />
-        <meshStandardMaterial color={0x6366f1} roughness={0.5} transparent opacity={0.7} />
+      <mesh
+        rotation={[-Math.PI / 2, 0, 0]}
+        position={[0, 0.02, -galleryLength / 2 + 8]}
+        material={roadMat}
+        receiveShadow
+      >
+        <planeGeometry args={[galleryWidth, galleryLength]} />
       </mesh>
+      {[-galleryWidth / 2 + 0.06, galleryWidth / 2 - 0.06].map((x) => (
+        <mesh key={x} rotation={[-Math.PI / 2, 0, 0]} position={[x, 0.035, -galleryLength / 2 + 8]}>
+          <planeGeometry args={[0.12, galleryLength]} />
+          <meshBasicMaterial color={0xff2fd6} transparent opacity={0.5} />
+        </mesh>
+      ))}
+    </>
+  )
+}
+
+function NeonGate() {
+  const { galleryLength, galleryWidth } = SHOWCASE_CONFIG
+  const z = -galleryLength / 2 + 5
+
+  return (
+    <group position={[0, 0, z]}>
+      <mesh position={[-galleryWidth / 2, 7, 0]}>
+        <boxGeometry args={[0.5, 14, 0.5]} />
+        <meshBasicMaterial color={0xff2fd6} />
+      </mesh>
+      <mesh position={[galleryWidth / 2, 7, 0]}>
+        <boxGeometry args={[0.5, 14, 0.5]} />
+        <meshBasicMaterial color={0xff2fd6} />
+      </mesh>
+      <mesh position={[0, 14, 0]}>
+        <boxGeometry args={[galleryWidth + 1, 0.5, 0.5]} />
+        <meshBasicMaterial color={0x22d3ee} />
+      </mesh>
+      {Array.from({ length: 6 }).map((_, i) => (
+        <mesh key={i} position={[0, 12 - i * 1.7, 0]}>
+          <boxGeometry args={[galleryWidth - 0.5, 0.15, 0.15]} />
+          <meshBasicMaterial color={0xff88dd} transparent opacity={0.75 - i * 0.1} />
+        </mesh>
+      ))}
     </group>
+  )
+}
+
+function Palm({ position, scale = 1 }: { position: [number, number, number]; scale?: number }) {
+  return (
+    <group position={position}>
+      <mesh position={[0, 3 * scale, 0]}>
+        <cylinderGeometry args={[0.15 * scale, 0.22 * scale, 6 * scale, 6]} />
+        <meshBasicMaterial color={0x000000} />
+      </mesh>
+      {Array.from({ length: 8 }).map((_, i) => {
+        const a = (i / 8) * Math.PI * 2
+        return (
+          <mesh
+            key={i}
+            position={[Math.cos(a) * 1.1 * scale, 6 * scale, Math.sin(a) * 1.1 * scale]}
+            rotation={[Math.sin(a) * 1.1, 0, Math.cos(a) * 1.1]}
+          >
+            <coneGeometry args={[0.25 * scale, 3 * scale, 4]} />
+            <meshBasicMaterial color={0x000000} />
+          </mesh>
+        )
+      })}
+    </group>
+  )
+}
+
+function Palms() {
+  const { galleryLength, galleryWidth } = SHOWCASE_CONFIG
+  const palms = useMemo(() => {
+    const list: { x: number; z: number; scale: number }[] = []
+    for (let z = galleryLength / 2 - 5; z > -galleryLength / 2; z -= 10) {
+      const scale = 0.72 + ((Math.abs(Math.round(z)) % 5) * 0.04)
+      list.push({ x: -galleryWidth / 2 - 1.5, z, scale })
+      list.push({ x: galleryWidth / 2 + 1.5, z, scale: scale + 0.06 })
+    }
+    return list
+  }, [galleryLength, galleryWidth])
+
+  return (
+    <>
+      {palms.map((p, i) => (
+        <Palm key={i} position={[p.x, 0, p.z]} scale={p.scale} />
+      ))}
+    </>
+  )
+}
+
+function FloatingWireShapes() {
+  const shapes = useMemo(
+    () =>
+      Array.from({ length: 14 }).map((_, i) => {
+        const side = i % 2 === 0 ? -1 : 1
+        return {
+          geometry:
+            i % 3 === 0
+              ? new THREE.BoxGeometry(1.3, 1.3, 1.3)
+              : i % 3 === 1
+                ? new THREE.OctahedronGeometry(0.9)
+                : new THREE.TetrahedronGeometry(1.1),
+          color: [0xff2fd6, 0x22d3ee, 0xffffff][i % 3],
+          position: new THREE.Vector3(side * (2 + (i % 4) * 0.7), 4 + (i % 5), -8 - i * 5.5),
+          spinX: (i % 2 === 0 ? 1 : -1) * 0.006,
+          spinY: (i % 3 === 0 ? -1 : 1) * 0.008,
+          phase: i * 0.7,
+        }
+      }),
+    [],
+  )
+  const refs = useRef<Array<THREE.LineSegments | null>>([])
+
+  useFrame((state) => {
+    const t = state.clock.elapsedTime
+    refs.current.forEach((shape, i) => {
+      if (!shape) return
+      const data = shapes[i]
+      shape.rotation.x += data.spinX
+      shape.rotation.y += data.spinY
+      shape.position.y = data.position.y + Math.sin(t + data.phase) * 0.5
+    })
+  })
+
+  return (
+    <>
+      {shapes.map((shape, i) => (
+        <lineSegments
+          key={i}
+          ref={(node) => {
+            refs.current[i] = node
+          }}
+          position={shape.position}
+        >
+          <edgesGeometry args={[shape.geometry]} />
+          <lineBasicMaterial color={shape.color} transparent opacity={0.85} />
+        </lineSegments>
+      ))}
+    </>
+  )
+}
+
+function GalleryShell() {
+  return (
+    <>
+      <BackdropPlane />
+      <SideBillboards side={-1} />
+      <SideBillboards side={1} />
+      <SynthwaveGround />
+      <NeonGate />
+      <Palms />
+      <FloatingWireShapes />
+    </>
   )
 }
 
@@ -308,17 +481,19 @@ function GalleryLighting() {
 
   return (
     <>
-      <ambientLight color={0x3b4a6b} intensity={0.4} />
+      <ambientLight color={0x8866cc} intensity={0.9} />
       <directionalLight
-        position={[5, galleryHeight + 10, -10]}
-        intensity={0.5}
+        color={0xffaadd}
+        position={[0, galleryHeight + 10, -30]}
+        intensity={0.8}
         castShadow
         shadow-mapSize={[2048, 2048]}
       />
-      <pointLight position={[-5, galleryHeight - 1, 0]} color={0x6366f1} intensity={0.6} distance={25} />
-      <pointLight position={[5, galleryHeight - 1, 0]} color={0x06b6d4} intensity={0.6} distance={25} />
-      <pointLight position={[0, 1, -galleryLength / 2 + 3]} color={0x06b6d4} intensity={0.5} distance={20} />
-      <hemisphereLight args={[0x4a5568, 0x1a1a2e, 0.3]} />
+      <directionalLight color={0x22d3ee} intensity={0.5} position={[-10, 6, 8]} />
+      <pointLight position={[-5, galleryHeight - 1, 0]} color={0xff2fd6} intensity={0.7} distance={25} />
+      <pointLight position={[5, galleryHeight - 1, 0]} color={0x22d3ee} intensity={0.7} distance={25} />
+      <pointLight position={[0, 1, -galleryLength / 2 + 3]} color={0x22d3ee} intensity={0.6} distance={24} />
+      <hemisphereLight args={[0x4a5568, 0x1a0028, 0.35]} />
       {[1, 2, 3].map((i) => {
         const z = -galleryLength / 2 + (galleryLength / 4) * i
         const color = i % 2 === 0 ? 0x06b6d4 : 0x6366f1
@@ -473,8 +648,8 @@ export function ShowcaseScene({
 
   return (
     <>
-      <color attach="background" args={['#0a0a1a']} />
-      <fog attach="fog" args={['#0a0a1a', 20, 80]} />
+      <color attach="background" args={['#1a0028']} />
+      <fog attach="fog" args={['#2a0a4a', 35, 125]} />
       <GalleryLighting />
       <Starfield />
       <GalleryShell />

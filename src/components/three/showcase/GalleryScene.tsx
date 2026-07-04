@@ -223,9 +223,16 @@ function BackdropPlane() {
   )
 }
 
-function SideBillboards({ side }: { side: -1 | 1 }) {
-  const texture = useTexture(side === -1 ? '/textures/city-strip.png' : '/textures/desert-strip.png')
-  const zPositions = useMemo(() => [-15, -55, -95, -135], [])
+function LandscapeLayer({
+  texturePath,
+  position,
+  size,
+}: {
+  texturePath: string
+  position: [number, number, number]
+  size: [number, number]
+}) {
+  const texture = useTexture(texturePath)
 
   useMemo(() => {
     texture.colorSpace = THREE.SRGBColorSpace
@@ -233,24 +240,25 @@ function SideBillboards({ side }: { side: -1 | 1 }) {
   }, [texture])
 
   return (
+    <mesh position={position} renderOrder={1}>
+      <planeGeometry args={size} />
+      <meshBasicMaterial
+        map={texture}
+        transparent
+        alphaTest={0.04}
+        side={THREE.DoubleSide}
+        depthWrite={false}
+        fog={false}
+      />
+    </mesh>
+  )
+}
+
+function LandscapeBackdrop() {
+  return (
     <>
-      {zPositions.map((z) => (
-        <mesh
-          key={`${side}-${z}`}
-          position={[side * 22, 12.5, z]}
-          rotation={[0, side === -1 ? Math.PI / 2 : -Math.PI / 2, 0]}
-        >
-          <planeGeometry args={[45, 25]} />
-          <meshBasicMaterial
-            map={texture}
-            transparent
-            alphaTest={0.05}
-            side={THREE.DoubleSide}
-            depthWrite={false}
-            fog
-          />
-        </mesh>
-      ))}
+      <LandscapeLayer texturePath="/textures/city-strip.png" position={[-56, 20, -135]} size={[92, 32]} />
+      <LandscapeLayer texturePath="/textures/desert-strip.png" position={[58, 15, -125]} size={[96, 28]} />
     </>
   )
 }
@@ -466,8 +474,7 @@ function GalleryShell() {
   return (
     <>
       <BackdropPlane />
-      <SideBillboards side={-1} />
-      <SideBillboards side={1} />
+      <LandscapeBackdrop />
       <SynthwaveGround />
       <NeonGate />
       <Palms />

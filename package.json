@@ -17,6 +17,7 @@
   "dependencies": {
     "@react-three/drei": "^9.114.3",
     "@react-three/fiber": "^8.17.10",
+    "@react-three/postprocessing": "^3.0.4",
     "@supabase/supabase-js": "^2.45.4",
     "@vercel/speed-insights": "^2.0.0",
     "framer-motion": "^11.11.0",
@@ -27,6 +28,7 @@
     "r3f-perf": "^7.2.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-error-boundary": "^6.1.2",
     "react-markdown": "^10.1.0",
     "three": "^0.169.0"
   },

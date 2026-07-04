@@ -1,8 +1,9 @@
 'use client';
 
-import { useRef, useEffect, useCallback, Suspense } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Stars, Float, Billboard, Text, useTexture } from '@react-three/drei';
+import { useRef, useEffect, useCallback, Suspense, useMemo } from 'react';
+import { Canvas, useFrame, useThree, useLoader } from '@react-three/fiber';
+import { Stars, Float, Billboard, Text } from '@react-three/drei';
+import { ErrorBoundary } from 'react-error-boundary';
 import * as THREE from 'three';
 
 // ─── TIPOVI ──────────────────────────────────────────────────────────────────
@@ -58,11 +59,11 @@ function FollowCamera({ playerRef }: FollowCameraProps) {
 function NeonGrid({ playerRef }: GridProps) {
   const gridRef = useRef<THREE.Group>(null);
 
-  const hLineGeo = new THREE.BoxGeometry(GRID_HALF * 2, 0.01, 0.022);
-  const vLineGeo = new THREE.BoxGeometry(0.022, 0.01, GRID_HALF * 2);
-  const cyanMat = new THREE.MeshBasicMaterial({ color: '#00e5ff', transparent: true, opacity: 0.45 });
-  const magentaMat = new THREE.MeshBasicMaterial({ color: '#ff00c8', transparent: true, opacity: 0.3 });
-  const highlightMat = new THREE.MeshBasicMaterial({ color: '#ff00ff', transparent: true, opacity: 0.95 });
+  const hLineGeo = useMemo(() => new THREE.BoxGeometry(GRID_HALF * 2, 0.01, 0.022), []);
+  const vLineGeo = useMemo(() => new THREE.BoxGeometry(0.022, 0.01, GRID_HALF * 2), []);
+  const cyanMat = useMemo(() => new THREE.MeshBasicMaterial({ color: '#00e5ff', transparent: true, opacity: 0.75 }), []);
+  const magentaMat = useMemo(() => new THREE.MeshBasicMaterial({ color: '#ff00c8', transparent: true, opacity: 0.55 }), []);
+  const highlightMat = useMemo(() => new THREE.MeshBasicMaterial({ color: '#ff00ff', transparent: true, opacity: 1.0 }), []);
 
   useFrame(() => {
     if (!gridRef.current || !playerRef.current) return;
@@ -515,7 +516,10 @@ const FRAME_COLORS = ['#ff00aa', '#00e5ff', '#8b5cf6', '#ff6600'];
 
 function ProjectFrame({ item, index }: { item: PortfolioItem; index: number }) {
   const color = FRAME_COLORS[index % FRAME_COLORS.length];
-  const texture = useTexture(item.image_url ?? 'https://placehold.co/400x300/0a001a/ff00aa.jpg');
+  const url = item.image_url ?? 'https://placehold.co/400x300/0a001a/ff00aa.jpg';
+  const texture = useLoader(THREE.TextureLoader, url, (loader) => {
+    (loader as THREE.TextureLoader).crossOrigin = 'anonymous';
+  });
   const side = index % 2 === 0 ? -1 : 1;
   const z = -14 - Math.floor(index / 2) * 16;
   const x = side * 6;
@@ -565,9 +569,11 @@ function ProjectFrames({ items }: { items: PortfolioItem[] }) {
   return (
     <>
       {items.map((item, i) => (
-        <Suspense key={item.id} fallback={null}>
-          <ProjectFrame item={item} index={i} />
-        </Suspense>
+        <ErrorBoundary key={item.id} fallback={null as unknown as React.ReactElement}>
+          <Suspense fallback={null}>
+            <ProjectFrame item={item} index={i} />
+          </Suspense>
+        </ErrorBoundary>
       ))}
     </>
   );

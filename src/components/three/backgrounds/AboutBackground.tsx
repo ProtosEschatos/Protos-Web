@@ -8,54 +8,6 @@ import { pulseOpacity, pulseScale, staggerPhase } from '@/components/three/backg
 import type { PageBackgroundProps } from '@/lib/site-background-routes'
 import { BACKGROUND_FOG, BACKGROUND_GLOW } from '@/lib/site-background-routes'
 
-function OrbitRing({
-  radius,
-  color,
-  speed,
-  rotation,
-  z,
-}: {
-  radius: number
-  color: string
-  speed: number
-  rotation: [number, number, number]
-  z: number
-}) {
-  const ref = useRef<THREE.Mesh>(null)
-
-  useFrame((state) => {
-    if (!ref.current) return
-    ref.current.rotation.z = state.clock.elapsedTime * speed
-    ref.current.rotation.x = rotation[0] + Math.sin(state.clock.elapsedTime * 0.05) * 0.02
-  })
-
-  return (
-    <mesh ref={ref} rotation={rotation} position={[0, 0, z]}>
-      <torusGeometry args={[radius, 0.008, 6, 96]} />
-      <meshBasicMaterial color={color} transparent opacity={0.42} depthWrite={false} />
-    </mesh>
-  )
-}
-
-function RingSatellite({ radius, speed, color }: { radius: number; speed: number; color: string }) {
-  const ref = useRef<THREE.Mesh>(null)
-
-  useFrame((state) => {
-    if (!ref.current) return
-    const angle = state.clock.elapsedTime * speed
-    ref.current.position.x = Math.cos(angle) * radius
-    ref.current.position.y = Math.sin(angle) * radius * 0.35
-    ref.current.position.z = 0
-  })
-
-  return (
-    <mesh ref={ref}>
-      <sphereGeometry args={[0.04, 8, 8]} />
-      <meshBasicMaterial color={color} transparent opacity={0.75} depthWrite={false} />
-    </mesh>
-  )
-}
-
 function buildNodePositions(count: number): THREE.Vector3[] {
   return Array.from({ length: count }, (_, i) => {
     const angle = (i / count) * Math.PI * 2
@@ -166,12 +118,6 @@ export default function AboutBackground({ isMobile = false }: PageBackgroundProp
   return (
     <AmbientBackgroundShell isMobile={isMobile} fogColor={BACKGROUND_FOG.about} glowColor={BACKGROUND_GLOW.about}>
       <AboutCore />
-      <OrbitRing radius={4.5} color="#8b5cf6" speed={0.06} rotation={[Math.PI / 2.8, 0, 0]} z={-3} />
-      <group rotation={[Math.PI / 2.8, 0, 0]} position={[0, 0, -3]}>
-        <RingSatellite radius={4.5} speed={0.5} color="#fbbf24" />
-      </group>
-      <OrbitRing radius={6.2} color="#06b6d4" speed={-0.04} rotation={[Math.PI / 3.5, Math.PI / 5, 0]} z={-5} />
-      <OrbitRing radius={7.8} color="#ff6600" speed={0.03} rotation={[Math.PI / 2.2, -Math.PI / 6, 0]} z={-7} />
       <ConstellationNodes count={isMobile ? 12 : 22} />
     </AmbientBackgroundShell>
   )

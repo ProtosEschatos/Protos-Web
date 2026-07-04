@@ -4,7 +4,6 @@ import { useRef, type ReactNode } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { SafeCanvas } from '@/components/three/SafeCanvas'
-import { pulseOpacity } from '@/components/three/backgrounds/live-utils'
 import type { PageBackgroundProps } from '@/lib/site-background-routes'
 
 type AmbientBackgroundShellProps = PageBackgroundProps & {
@@ -33,32 +32,6 @@ function AmbientSceneGroup({ children }: { children: ReactNode }) {
     <group ref={groupRef} position={[0, 0, -5]} scale={1.1}>
       {children}
     </group>
-  )
-}
-
-function RouteGlow({ color }: { color: string }) {
-  const ref = useRef<THREE.Mesh>(null)
-
-  useFrame((state) => {
-    if (!ref.current) return
-    const t = state.clock.elapsedTime
-    const scale = 1 + Math.sin(t * 0.3) * 0.14
-    ref.current.scale.set(scale, scale, 1)
-    const mat = ref.current.material as THREE.MeshBasicMaterial
-    mat.opacity = pulseOpacity(t * 0.45, 0, 0.28, 0.55)
-  })
-
-  return (
-    <mesh ref={ref} position={[0, 0, -15]}>
-      <circleGeometry args={[13, 64]} />
-      <meshBasicMaterial
-        color={color}
-        transparent
-        opacity={0.4}
-        depthWrite={false}
-        blending={THREE.AdditiveBlending}
-      />
-    </mesh>
   )
 }
 
@@ -91,7 +64,6 @@ export default function AmbientBackgroundShell({
       <ambientLight intensity={showGlow ? 0.72 : 0.45} />
       {showGlow ? <pointLight position={[4, 3, 6]} intensity={0.55} color={glowColor} /> : null}
       <AmbientSceneGroup>
-        {showGlow ? <RouteGlow color={glowColor} /> : null}
         {children}
       </AmbientSceneGroup>
     </SafeCanvas>

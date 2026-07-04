@@ -78,7 +78,7 @@ function HexField({ rows, cols }: { rows: number; cols: number }) {
   return (
     <group ref={groupRef}>
       <instancedMesh ref={meshRef} args={[undefined, undefined, hexes.length]}>
-        <ringGeometry args={[0.22, 0.26, 6]} />
+        <planeGeometry args={[0.34, 0.34]} />
         <meshBasicMaterial transparent opacity={0.32} depthWrite={false} vertexColors />
       </instancedMesh>
     </group>

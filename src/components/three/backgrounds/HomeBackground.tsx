@@ -9,50 +9,6 @@ import { pulseOpacity } from '@/components/three/backgrounds/live-utils'
 import type { PageBackgroundProps } from '@/lib/site-background-routes'
 import { BACKGROUND_FOG } from '@/lib/site-background-routes'
 
-function HomeOrbitalInterface({ isMobile }: { isMobile: boolean }) {
-  const groupRef = useRef<THREE.Group>(null)
-  const innerRef = useRef<THREE.Mesh>(null)
-  const outerRef = useRef<THREE.Mesh>(null)
-  const coreRef = useRef<THREE.Mesh>(null)
-
-  useFrame((state) => {
-    const t = state.clock.elapsedTime
-    if (groupRef.current) {
-      groupRef.current.rotation.y = -0.25 + Math.sin(t * 0.18) * 0.08
-      groupRef.current.rotation.z = t * 0.035
-    }
-    if (innerRef.current) innerRef.current.rotation.z = -t * 0.16
-    if (outerRef.current) outerRef.current.rotation.z = t * 0.09
-    if (coreRef.current) {
-      const mat = coreRef.current.material as THREE.MeshBasicMaterial
-      mat.opacity = pulseOpacity(t * 0.9, 0, 0.16, 0.34)
-      const scale = 1 + Math.sin(t * 0.8) * 0.08
-      coreRef.current.scale.setScalar(scale)
-    }
-  })
-
-  return (
-    <group ref={groupRef} position={isMobile ? [1.3, 0.45, -9] : [3.8, 0.35, -9]} scale={isMobile ? 0.72 : 1}>
-      <mesh ref={outerRef} rotation={[0.55, 0.25, 0]}>
-        <torusGeometry args={[2.05, 0.01, 8, 128]} />
-        <meshBasicMaterial color="#06b6d4" transparent opacity={0.28} depthWrite={false} />
-      </mesh>
-      <mesh ref={innerRef} rotation={[1.1, -0.2, 0.25]}>
-        <torusGeometry args={[1.35, 0.012, 8, 96]} />
-        <meshBasicMaterial color="#ff8800" transparent opacity={0.22} depthWrite={false} />
-      </mesh>
-      <mesh rotation={[0.2, 0.9, 0.6]}>
-        <torusGeometry args={[0.82, 0.008, 8, 72]} />
-        <meshBasicMaterial color="#8b5cf6" transparent opacity={0.24} depthWrite={false} />
-      </mesh>
-      <mesh ref={coreRef}>
-        <icosahedronGeometry args={[0.34, 1]} />
-        <meshBasicMaterial color="#e8e8f0" transparent opacity={0.2} wireframe depthWrite={false} />
-      </mesh>
-    </group>
-  )
-}
-
 function FloatingInterfaceFrames({ isMobile }: { isMobile: boolean }) {
   const groupRef = useRef<THREE.Group>(null)
   const frames = useMemo(
@@ -138,7 +94,6 @@ export default function HomeBackground({ isMobile = false }: PageBackgroundProps
   return (
     <AmbientBackgroundShell isMobile={isMobile} fogColor={BACKGROUND_FOG.home} showGlow={false}>
       <Stars radius={90} depth={60} count={isMobile ? 900 : 1700} factor={1.8} saturation={0} fade speed={0.2} />
-      <HomeOrbitalInterface isMobile={isMobile} />
       <FloatingInterfaceFrames isMobile={isMobile} />
       <SignalNodes isMobile={isMobile} />
     </AmbientBackgroundShell>

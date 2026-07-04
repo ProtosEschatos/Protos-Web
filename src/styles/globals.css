@@ -32,10 +32,15 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-html.boot-pending,
-html.boot-pending body {
+html.boot-pending:not(.boot-complete),
+html.boot-pending:not(.boot-complete) body {
   background-color: #020818 !important;
   overflow: hidden !important;
+}
+
+html.boot-complete body {
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 html.boot-complete #boot-ssr-veil {

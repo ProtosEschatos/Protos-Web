@@ -11,16 +11,21 @@ import SiteShell from '@/components/ui/SiteShell'
 import SiteBackground from '@/components/ui/SiteBackground'
 import { PageTransitionProvider } from '@/components/navigation/PageTransitionProvider'
 import PageTransitionOverlay from '@/components/navigation/PageTransitionOverlay'
-import { clearBootPending, removeBootSsrVeil } from '@/lib/boot-gate'
+import { clearBootPending, isBootComplete, removeBootSsrVeil } from '@/lib/boot-gate'
 
 export default function AppChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const isShowcase = pathname.includes('portfolio-showcase')
 
   useEffect(() => {
-    if (!isShowcase) return
-    clearBootPending()
-    removeBootSsrVeil()
+    if (isShowcase) {
+      clearBootPending()
+      removeBootSsrVeil()
+      return
+    }
+    if (isBootComplete()) {
+      clearBootPending()
+    }
   }, [isShowcase])
 
   if (isShowcase) {

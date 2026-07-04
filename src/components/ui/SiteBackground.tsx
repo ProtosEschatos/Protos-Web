@@ -34,7 +34,7 @@ export default function SiteBackground() {
   if (!bootDone) return null
 
   return (
-    <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden>
+    <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden>
       <RouteAmbientLayer routeKey={routeKey} />
       <div
         className="pointer-events-none absolute inset-0 animate-[twinkle_8s_ease-in-out_infinite_alternate] opacity-90"

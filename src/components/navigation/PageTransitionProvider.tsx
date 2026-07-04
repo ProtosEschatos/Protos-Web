@@ -72,9 +72,9 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
         setPhase('enter')
 
         await sleep(ENTER_MS)
+      } finally {
         setPhase('idle')
         setDestinationKey(null)
-      } finally {
         unlockScroll()
         runningRef.current = false
       }
@@ -91,6 +91,17 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
     if (phase === 'idle') {
       unlockScroll()
     }
+  }, [phase])
+
+  useEffect(() => {
+    if (phase === 'idle') return
+    const watchdog = window.setTimeout(() => {
+      setPhase('idle')
+      setDestinationKey(null)
+      unlockScroll()
+      runningRef.current = false
+    }, 6000)
+    return () => window.clearTimeout(watchdog)
   }, [phase])
 
   return (

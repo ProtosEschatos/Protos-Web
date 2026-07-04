@@ -42,7 +42,7 @@ export default function PageTransitionOverlay() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-[9998] flex items-center justify-center overflow-hidden bg-[#050510]"
+          className={`fixed inset-0 z-[9998] flex items-center justify-center overflow-hidden bg-[#050510] ${phase === 'enter' ? 'pointer-events-none' : ''}`}
           aria-live="polite"
           aria-busy="true"
         >

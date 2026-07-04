@@ -1,9 +1,8 @@
 'use client';
 
-import { useRef, useEffect, useCallback, Suspense, useMemo } from 'react';
-import { Canvas, useFrame, useThree, useLoader } from '@react-three/fiber';
+import { useRef, useEffect, useCallback, Suspense } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Stars, Float, Billboard, Text } from '@react-three/drei';
-import { ErrorBoundary } from 'react-error-boundary';
 import * as THREE from 'three';
 
 // ─── TIPOVI ──────────────────────────────────────────────────────────────────
@@ -46,8 +45,8 @@ function FollowCamera({ playerRef }: FollowCameraProps) {
   useFrame(() => {
     if (!playerRef.current) return;
     const p = playerRef.current.position;
-    targetPos.current.set(p.x, p.y + 5, p.z + 13);
-    lookAtPos.current.set(p.x, p.y + 1.5, p.z - 10);
+    targetPos.current.set(p.x, p.y + 5.5, p.z + 11);
+    lookAtPos.current.set(p.x, p.y + 0.8, p.z);
     camera.position.lerp(targetPos.current, 0.07);
     camera.lookAt(lookAtPos.current);
   });
@@ -59,11 +58,11 @@ function FollowCamera({ playerRef }: FollowCameraProps) {
 function NeonGrid({ playerRef }: GridProps) {
   const gridRef = useRef<THREE.Group>(null);
 
-  const hLineGeo = useMemo(() => new THREE.BoxGeometry(GRID_HALF * 2, 0.01, 0.022), []);
-  const vLineGeo = useMemo(() => new THREE.BoxGeometry(0.022, 0.01, GRID_HALF * 2), []);
-  const cyanMat = useMemo(() => new THREE.MeshBasicMaterial({ color: '#00e5ff', transparent: true, opacity: 0.75 }), []);
-  const magentaMat = useMemo(() => new THREE.MeshBasicMaterial({ color: '#ff00c8', transparent: true, opacity: 0.55 }), []);
-  const highlightMat = useMemo(() => new THREE.MeshBasicMaterial({ color: '#ff00ff', transparent: true, opacity: 1.0 }), []);
+  const hLineGeo = new THREE.BoxGeometry(GRID_HALF * 2, 0.01, 0.022);
+  const vLineGeo = new THREE.BoxGeometry(0.022, 0.01, GRID_HALF * 2);
+  const cyanMat = new THREE.MeshBasicMaterial({ color: '#00e5ff', transparent: true, opacity: 0.45 });
+  const magentaMat = new THREE.MeshBasicMaterial({ color: '#ff00c8', transparent: true, opacity: 0.3 });
+  const highlightMat = new THREE.MeshBasicMaterial({ color: '#ff00ff', transparent: true, opacity: 0.95 });
 
   useFrame(() => {
     if (!gridRef.current || !playerRef.current) return;
@@ -95,32 +94,147 @@ function NeonGrid({ playerRef }: GridProps) {
   );
 }
 
-// ─── SCENE BACKGROUND (SKYBOX CYLINDER) ──────────────────────────────────────
-function SceneBackground() {
-  const texture = useLoader(THREE.TextureLoader, '/bg-retrowave.jpg', (loader) => {
-    (loader as THREE.TextureLoader).crossOrigin = 'anonymous';
-  });
+// ─── RETRO SUNCE ─────────────────────────────────────────────────────────────
+function RetroSun() {
   return (
-    <mesh position={[0, 15, -80]} rotation={[0, 0, 0]}>
-      <cylinderGeometry args={[120, 120, 80, 64, 1, true, -Math.PI * 0.55, Math.PI * 1.1]} />
-      <meshBasicMaterial map={texture} side={THREE.BackSide} />
-    </mesh>
+    <group position={[0, 9, -55]}>
+      <mesh>
+        <circleGeometry args={[10, 64]} />
+        <meshBasicMaterial color="#ff4488" />
+      </mesh>
+      {Array.from({ length: 9 }, (_, i) => (
+        <mesh key={i} position={[0, -3 + i * 0.7, 0.01]}>
+          <planeGeometry args={[20, 0.22]} />
+          <meshBasicMaterial color="#0d0020" />
+        </mesh>
+      ))}
+      <mesh position={[0, -6, -0.5]}>
+        <planeGeometry args={[30, 8]} />
+        <meshBasicMaterial color="#ff6600" transparent opacity={0.25} />
+      </mesh>
+      <mesh>
+        <ringGeometry args={[10, 12.5, 64]} />
+        <meshBasicMaterial color="#ff2266" transparent opacity={0.12} />
+      </mesh>
+      <pointLight color="#ff4488" intensity={4} distance={120} />
+      <pointLight color="#ff6600" intensity={2} distance={80} position={[0, -8, 0]} />
+    </group>
   );
 }
 
+// ─── NEONSKI GRAD ────────────────────────────────────────────────────────────
+function CyberBuildings() {
+  const buildings = [
+    { p: [-18, 7, -30] as [number,number,number], s: [3.5, 14, 3] as [number,number,number], c: '#ff00aa' },
+    { p: [-14, 5, -26] as [number,number,number], s: [2.8, 10, 2.5] as [number,number,number], c: '#00e5ff' },
+    { p: [-23, 9, -34] as [number,number,number], s: [4.5, 18, 3.5] as [number,number,number], c: '#8b5cf6' },
+    { p: [-10, 4, -22] as [number,number,number], s: [2.2, 8, 2] as [number,number,number], c: '#ff6600' },
+    { p: [-28, 11, -38] as [number,number,number], s: [5, 22, 4] as [number,number,number], c: '#ff0066' },
+    { p: [-19, 6, -24] as [number,number,number], s: [2.5, 12, 2.5] as [number,number,number], c: '#00ffcc' },
+    { p: [-32, 8, -32] as [number,number,number], s: [4, 16, 3.5] as [number,number,number], c: '#cc00ff' },
+    { p: [-8,  3, -20] as [number,number,number], s: [2, 6, 2] as [number,number,number], c: '#ff4400' },
+    { p: [16,  5, -42] as [number,number,number], s: [3, 10, 3] as [number,number,number], c: '#4400ff' },
+    { p: [22,  7, -46] as [number,number,number], s: [4, 14, 3] as [number,number,number], c: '#220066' },
+    { p: [28,  6, -44] as [number,number,number], s: [3, 12, 3] as [number,number,number], c: '#330088' },
+    { p: [12,  4, -40] as [number,number,number], s: [2.5, 8, 2.5] as [number,number,number], c: '#110044' },
+  ];
+
+  return (
+    <group>
+      {buildings.map((b, i) => (
+        <group key={i}>
+          <mesh position={b.p}>
+            <boxGeometry args={b.s} />
+            <meshStandardMaterial color="#0a0020" emissive={b.c} emissiveIntensity={i < 8 ? 0.18 : 0.06} />
+          </mesh>
+          <mesh position={b.p}>
+            <boxGeometry args={[b.s[0] + 0.08, b.s[1] + 0.08, b.s[2] + 0.08]} />
+            <meshBasicMaterial color={b.c} wireframe transparent opacity={i < 8 ? 0.6 : 0.2} />
+          </mesh>
+          {i < 8 && (
+            <mesh position={[b.p[0], b.p[1] + b.s[1] / 2 + 0.05, b.p[2]]}>
+              <boxGeometry args={[b.s[0] + 0.1, 0.1, b.s[2] + 0.1]} />
+              <meshBasicMaterial color={b.c} />
+            </mesh>
+          )}
+        </group>
+      ))}
+      <pointLight position={[-18, 12, -28]} color="#ff00aa" intensity={3} distance={25} />
+      <pointLight position={[-28, 15, -36]} color="#8b5cf6" intensity={3} distance={30} />
+      <pointLight position={[-12, 8, -22]}  color="#00e5ff" intensity={2} distance={20} />
+    </group>
+  );
+}
+
+// ─── NEONSKI ZNAKOVI ──────────────────────────────────────────────────────────
+function NeonSigns() {
+  const signs = [
+    { pos: [-16, 5, -22] as [number,number,number], text: 'ARCADE', color: '#ff00aa' },
+    { pos: [-12, 3.5, -20] as [number,number,number], text: 'RAMEN', color: '#ff6600' },
+    { pos: [-22, 7, -28] as [number,number,number], text: '電気街', color: '#00e5ff' },
+    { pos: [-19, 4, -24] as [number,number,number], text: 'TECHNO', color: '#8b5cf6' },
+    { pos: [-26, 9, -32] as [number,number,number], text: '未来', color: '#ff00cc' },
+  ];
+
+  return (
+    <group>
+      {signs.map((s, i) => (
+        <Billboard key={i} position={s.pos}>
+          <Text fontSize={0.7} color={s.color} anchorX="center" anchorY="middle" outlineWidth={0.04} outlineColor={s.color}>
+            {s.text}
+          </Text>
+        </Billboard>
+      ))}
+    </group>
+  );
+}
+
+// ─── SILUETE PALMI ────────────────────────────────────────────────────────────
+function Palms() {
+  const palmPositions: [number, number, number][] = [
+    [-6, 0, -12], [-4, 0, -16], [-8, 0, -20],
+    [-3, 0, -8],  [3, 0, -10],  [5, 0, -14],
+    [7, 0, -18],  [-11, 0, -18],
+  ];
+
+  return (
+    <group>
+      {palmPositions.map((pos, i) => (
+        <group key={i} position={pos}>
+          <mesh position={[0, 2, 0]}>
+            <cylinderGeometry args={[0.12, 0.18, 4, 6]} />
+            <meshBasicMaterial color="#0a0015" />
+          </mesh>
+          {[0, 60, 120, 180, 240, 300].map((deg, j) => (
+            <mesh
+              key={j}
+              position={[
+                Math.cos((deg * Math.PI) / 180) * 0.9,
+                4.2,
+                Math.sin((deg * Math.PI) / 180) * 0.9,
+              ]}
+              rotation={[-0.5, (deg * Math.PI) / 180, 0.3]}
+            >
+              <planeGeometry args={[1.8, 0.35]} />
+              <meshBasicMaterial color="#0d0020" side={THREE.DoubleSide} />
+            </mesh>
+          ))}
+        </group>
+      ))}
+    </group>
+  );
+}
 
 // ─── PLUTAJUĆI WIREFRAME OBJEKTI ──────────────────────────────────────────────
 function FloatingObjects() {
   const objects = [
-    { pos: [8,  11, -20] as [number,number,number], type: 'box', color: '#06b6d4', size: 1.1 },
-    { pos: [-3, 13, -26] as [number,number,number], type: 'ico', color: '#8b5cf6', size: 0.9 },
-    { pos: [12, 10, -18] as [number,number,number], type: 'ico', color: '#06b6d4', size: 1.0 },
-    { pos: [5,  15, -34] as [number,number,number], type: 'box', color: '#ff00aa', size: 1.3 },
-    { pos: [-6, 12, -30] as [number,number,number], type: 'ico', color: '#8b5cf6', size: 0.8 },
-    { pos: [15, 9,  -22] as [number,number,number], type: 'pyr', color: '#06b6d4', size: 0.9 },
-    { pos: [9,  14, -40] as [number,number,number], type: 'box', color: '#ff6600', size: 1.0 },
-    { pos: [-8, 16, -38] as [number,number,number], type: 'ico', color: '#ff00cc', size: 0.7 },
-    { pos: [3,  10, -16] as [number,number,number], type: 'pyr', color: '#00e5ff', size: 0.8 },
+    { pos: [6, 4, -18] as [number,number,number],   type: 'box', color: '#06b6d4', size: 0.9 },
+    { pos: [-2, 5, -22] as [number,number,number],  type: 'box', color: '#8b5cf6', size: 0.7 },
+    { pos: [10, 3, -14] as [number,number,number],  type: 'ico', color: '#06b6d4', size: 0.8 },
+    { pos: [4, 6, -30] as [number,number,number],   type: 'box', color: '#ff00aa', size: 1.1 },
+    { pos: [-5, 7, -28] as [number,number,number],  type: 'ico', color: '#8b5cf6', size: 0.6 },
+    { pos: [14, 5, -20] as [number,number,number],  type: 'pyr', color: '#06b6d4', size: 0.7 },
+    { pos: [8, 4, -35] as [number,number,number],   type: 'box', color: '#ff6600', size: 0.85 },
   ];
 
   return (
@@ -300,80 +414,23 @@ function Astronaut({ playerRef, keysRef }: PlayerProps) {
   );
 }
 
-// ─── PORTFOLIO BILLBOARD ──────────────────────────────────────────────────────
-export interface PortfolioItem {
-  id: string;
-  title: string;
-  tag: string | null;
-  description: string | null;
-  image_url: string | null;
-  project_url: string | null;
-}
-
-const FRAME_COLORS = ['#ff00aa', '#00e5ff', '#8b5cf6', '#ff6600'];
-
-function ProjectFrame({ item, index }: { item: PortfolioItem; index: number }) {
-  const color = FRAME_COLORS[index % FRAME_COLORS.length];
-  const url = item.image_url ?? 'https://placehold.co/400x300/0a001a/ff00aa.jpg';
-  const texture = useLoader(THREE.TextureLoader, url, (loader) => {
-    (loader as THREE.TextureLoader).crossOrigin = 'anonymous';
-  });
-  const side = index % 2 === 0 ? -1 : 1;
-  const z = -14 - Math.floor(index / 2) * 16;
-  const x = side * 6;
-  const rotY = side * (-Math.PI / 2);
+// ─── WIREFRAME PLANINE ────────────────────────────────────────────────────────
+function WireframeMountains() {
+  const peaks: [number, number, number][] = [
+    [18, 0, -38], [25, 0, -44], [32, 0, -40],
+    [15, 0, -46], [28, 0, -50], [22, 0, -34],
+  ];
+  const heights = [8, 11, 7, 13, 9, 6];
 
   return (
-    <group position={[x, 2.5, z]} rotation={[0, rotY, 0]}>
-      {/* Okvir */}
-      <mesh>
-        <boxGeometry args={[3.8, 4.8, 0.14]} />
-        <meshStandardMaterial color="#080018" emissive={color} emissiveIntensity={0.12} metalness={0.6} roughness={0.4} />
-      </mesh>
-      {/* Slika projekta */}
-      <mesh position={[0, 0.5, 0.08]}>
-        <planeGeometry args={[3.2, 3.2]} />
-        <meshBasicMaterial map={texture} />
-      </mesh>
-      {/* Naslov */}
-      <Billboard position={[0, -1.6, 0.12]}>
-        <Text fontSize={0.32} color={color} anchorX="center" anchorY="middle" outlineWidth={0.025} outlineColor="#000000">
-          {item.title}
-        </Text>
-      </Billboard>
-      {/* Tag */}
-      <Billboard position={[0, -2.0, 0.12]}>
-        <Text fontSize={0.2} color="#aaaacc" anchorX="center" anchorY="middle">
-          {item.tag ?? ''}
-        </Text>
-      </Billboard>
-      {/* Gornja i donja neon linija */}
-      <mesh position={[0,  2.4, 0.08]}><boxGeometry args={[3.8, 0.07, 0.01]} /><meshBasicMaterial color={color} /></mesh>
-      <mesh position={[0, -2.4, 0.08]}><boxGeometry args={[3.8, 0.07, 0.01]} /><meshBasicMaterial color={color} /></mesh>
-      <mesh position={[ 1.9, 0, 0.08]}><boxGeometry args={[0.07, 4.8, 0.01]} /><meshBasicMaterial color={color} /></mesh>
-      <mesh position={[-1.9, 0, 0.08]}><boxGeometry args={[0.07, 4.8, 0.01]} /><meshBasicMaterial color={color} /></mesh>
-      {/* Neon osvjetljenje */}
-      <pointLight color={color} intensity={3} distance={12} />
-      {/* Floor marker */}
-      <mesh position={[0, -2.5 - 2.5 * (side < 0 ? 0 : 0), 0]} rotation={[-Math.PI/2, 0, 0]}>
-        <ringGeometry args={[1.0, 1.5, 32]} />
-        <meshBasicMaterial color={color} transparent opacity={0.35} side={THREE.DoubleSide} />
-      </mesh>
-    </group>
-  );
-}
-
-function ProjectFrames({ items }: { items: PortfolioItem[] }) {
-  return (
-    <>
-      {items.map((item, i) => (
-        <ErrorBoundary key={item.id} fallback={<></>}>
-          <Suspense fallback={null}>
-            <ProjectFrame item={item} index={i} />
-          </Suspense>
-        </ErrorBoundary>
+    <group>
+      {peaks.map((pos, i) => (
+        <mesh key={i} position={[pos[0], pos[1] + heights[i] / 2 - 0.5, pos[2]]}>
+          <coneGeometry args={[5 + i * 0.5, heights[i], 4]} />
+          <meshBasicMaterial color="#1a0066" wireframe />
+        </mesh>
       ))}
-    </>
+    </group>
   );
 }
 
@@ -381,28 +438,23 @@ function ProjectFrames({ items }: { items: PortfolioItem[] }) {
 interface SceneProps {
   playerRef: React.RefObject<THREE.Group>;
   keysRef: React.RefObject<KeysRef>;
-  items: PortfolioItem[];
 }
 
-function Scene({ playerRef, keysRef, items }: SceneProps) {
+function Scene({ playerRef, keysRef }: SceneProps) {
   return (
     <>
-      <color attach="background" args={['#0d0022']} />
-      <fog attach="fog" args={['#0d0022', 80, 250]} />
-      <ambientLight intensity={0.6} color="#3a0066" />
-      <directionalLight position={[0, 30, -40]} intensity={0.8} color="#ff4488" />
-      <directionalLight position={[-30, 15, -50]} intensity={0.4} color="#8b5cf6" />
+      <ambientLight intensity={0.06} color="#1a0040" />
+      <directionalLight position={[0, 20, -20]} intensity={0.4} color="#ff4488" />
       <FollowCamera playerRef={playerRef} />
-      <ErrorBoundary fallback={<></>}>
-        <Suspense fallback={null}>
-          <SceneBackground />
-        </Suspense>
-      </ErrorBoundary>
       <NeonGrid playerRef={playerRef} />
+      <RetroSun />
+      <CyberBuildings />
+      <NeonSigns />
+      <Palms />
       <FloatingObjects />
-      <ProjectFrames items={items} />
+      <WireframeMountains />
       <Astronaut playerRef={playerRef} keysRef={keysRef} />
-      <Stars radius={100} depth={50} count={5000} factor={5} saturation={0.8} fade speed={0.3} />
+      <Stars radius={120} depth={60} count={6000} factor={4} saturation={0.6} fade speed={0.4} />
     </>
   );
 }
@@ -457,7 +509,7 @@ function TouchJoystick({ keysRef }: { keysRef: React.RefObject<KeysRef> }) {
 }
 
 // ─── GLAVNI EXPORT ────────────────────────────────────────────────────────────
-export default function RetrowaveRoom({ items = [] }: { items?: PortfolioItem[] }) {
+export default function RetrowaveRoom() {
   const playerRef = useRef<THREE.Group>(null!);
   const keysRef = useRef<KeysRef>({
     ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false,
@@ -481,11 +533,11 @@ export default function RetrowaveRoom({ items = [] }: { items?: PortfolioItem[] 
   return (
     <div className="relative w-full h-screen bg-[#06000f] overflow-hidden">
       <Canvas
-        camera={{ position: [0, 5, 13], fov: 75, near: 0.1, far: 400 }}
+        camera={{ position: [0, 5.5, 11], fov: 68, near: 0.1, far: 300 }}
         gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.1 }}
       >
         <Suspense fallback={null}>
-          <Scene playerRef={playerRef} keysRef={keysRef} items={items} />
+          <Scene playerRef={playerRef} keysRef={keysRef} />
         </Suspense>
       </Canvas>
 

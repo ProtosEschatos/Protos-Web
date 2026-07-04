@@ -352,6 +352,7 @@ export function ShowcaseScene({
   const walkPhase = useRef(0)
   const headingRef = useRef(INITIAL_CHARACTER_HEADING)
   const lastNearestLinkRef = useRef<string | null>(null)
+  const smoothTouch = useRef({ x: 0, y: 0 })
   const yAxis = useMemo(() => new THREE.Vector3(0, 1, 0), [])
   const moveDir = useMemo(() => new THREE.Vector3(), [])
   const framePositions = useMemo(
@@ -371,45 +372,60 @@ export function ShowcaseScene({
     }
   }, [characterRef, yAxis])
 
-  useFrame(({ camera }) => {
+  useFrame(({ camera }, delta) => {
     const character = characterRef.current
     if (!character) return
 
+    const dt = Math.min(delta, 0.05)
+
     if (isPlaying) {
       let moving = false
-      const { moveSpeed, turnSpeed, galleryLength, galleryWidth } = SHOWCASE_CONFIG
+      const { moveSpeed, turnSpeed, mobileSpeedMultiplier, touchDeadZone, galleryLength, galleryWidth } =
+        SHOWCASE_CONFIG
       const touch = touchInput.current
-      const deadZone = 0.14
+      const deadZone = touchDeadZone
+      const mobileBoost = viewport === 'mobile' ? mobileSpeedMultiplier : 1
 
-      const turnLeft = keys.current['KeyA'] || keys.current['ArrowLeft'] || (touch.active && touch.x < -deadZone)
-      const turnRight = keys.current['KeyD'] || keys.current['ArrowRight'] || (touch.active && touch.x > deadZone)
-      const moveForward = keys.current['KeyW'] || keys.current['ArrowUp'] || (touch.active && touch.y < -deadZone)
-      const moveBack = keys.current['KeyS'] || keys.current['ArrowDown'] || (touch.active && touch.y > deadZone)
+      if (touch.active) {
+        const blend = 1 - Math.exp(-14 * dt)
+        smoothTouch.current.x = THREE.MathUtils.lerp(smoothTouch.current.x, touch.x, blend)
+        smoothTouch.current.y = THREE.MathUtils.lerp(smoothTouch.current.y, touch.y, blend)
+      } else {
+        smoothTouch.current.x = 0
+        smoothTouch.current.y = 0
+      }
+
+      const tx = touch.active ? smoothTouch.current.x : 0
+      const ty = touch.active ? smoothTouch.current.y : 0
+
+      const turnLeft = keys.current['KeyA'] || keys.current['ArrowLeft'] || (touch.active && tx < -deadZone)
+      const turnRight = keys.current['KeyD'] || keys.current['ArrowRight'] || (touch.active && tx > deadZone)
+      const moveForward = keys.current['KeyW'] || keys.current['ArrowUp'] || (touch.active && ty < -deadZone)
+      const moveBack = keys.current['KeyS'] || keys.current['ArrowDown'] || (touch.active && ty > deadZone)
 
       if (turnLeft) {
-        const intensity = touch.active && touch.x < -deadZone ? Math.min(1, Math.abs(touch.x)) : 1
-        headingRef.current += turnSpeed * intensity
+        const intensity = touch.active && tx < -deadZone ? Math.min(1, Math.abs(tx)) : 1
+        headingRef.current += turnSpeed * intensity * dt * mobileBoost
         moving = true
       }
       if (turnRight) {
-        const intensity = touch.active && touch.x > deadZone ? Math.min(1, Math.abs(touch.x)) : 1
-        headingRef.current -= turnSpeed * intensity
+        const intensity = touch.active && tx > deadZone ? Math.min(1, Math.abs(tx)) : 1
+        headingRef.current -= turnSpeed * intensity * dt * mobileBoost
         moving = true
       }
 
       character.quaternion.setFromAxisAngle(yAxis, headingRef.current)
 
       if (moveForward) {
-        const intensity =
-          touch.active && touch.y < -deadZone ? Math.min(1, Math.abs(touch.y)) : 1
-        moveDir.set(0, 0, -moveSpeed * intensity)
+        const intensity = touch.active && ty < -deadZone ? Math.min(1, Math.abs(ty)) : 1
+        moveDir.set(0, 0, -moveSpeed * intensity * dt * mobileBoost)
         moveDir.applyQuaternion(character.quaternion)
         character.position.add(moveDir)
         moving = true
       }
       if (moveBack) {
-        const intensity = touch.active && touch.y > deadZone ? Math.min(1, Math.abs(touch.y)) : 1
-        moveDir.set(0, 0, moveSpeed * intensity)
+        const intensity = touch.active && ty > deadZone ? Math.min(1, Math.abs(ty)) : 1
+        moveDir.set(0, 0, moveSpeed * intensity * dt * mobileBoost)
         moveDir.applyQuaternion(character.quaternion)
         character.position.add(moveDir)
         moving = true
@@ -420,7 +436,7 @@ export function ShowcaseScene({
       character.position.z = Math.max(-galleryLength / 2 + margin, Math.min(galleryLength / 2 - margin, character.position.z))
 
       if (moving) {
-        walkPhase.current += 0.15
+        walkPhase.current += dt * 9
         animateAstronautWalk(character, walkPhase.current)
       } else {
         resetAstronautPose(character)

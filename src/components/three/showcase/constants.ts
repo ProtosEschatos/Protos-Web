@@ -1,8 +1,13 @@
 import { getShowcaseStorageUrl, SHOWCASE_STORAGE } from '@/lib/showcase-storage'
 
 export const SHOWCASE_CONFIG = {
-  moveSpeed: 0.35,
-  turnSpeed: 0.05,
+  /** Units per second (legacy was 0.35/frame @ ~60fps) */
+  moveSpeed: 21,
+  /** Radians per second (legacy was 0.05/frame @ ~60fps) */
+  turnSpeed: 3,
+  /** Extra speed on touch devices where FPS is often lower */
+  mobileSpeedMultiplier: 1.35,
+  touchDeadZone: 0.1,
   galleryLength: 24,
   galleryWidth: 12,
   galleryHeight: 10,

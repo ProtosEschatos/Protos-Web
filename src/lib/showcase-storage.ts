@@ -1,6 +1,7 @@
 const BUCKET = 'showcase'
 
 function localFallback(path: string): string {
+  if (path.startsWith('environment/')) return `/showcase/${path}`
   const name = path.split('/').pop() ?? path
   return `/showcase/${name}`
 }
@@ -12,5 +13,6 @@ export function getShowcaseStorageUrl(path: string): string {
 }
 
 export const SHOWCASE_STORAGE = {
+  environment360: 'environment/synthwave-360-panorama.jpg',
   project: (slug: string, viewport: 'mobile' | 'desktop') => `projects/${viewport}-${slug}.jpg`,
 } as const

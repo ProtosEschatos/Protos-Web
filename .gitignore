@@ -60,3 +60,7 @@ Thumbs.db
 # logs
 logs/
 *.log
+
+# playwright
+test-results/
+playwright-report/

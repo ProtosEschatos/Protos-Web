@@ -12,10 +12,7 @@ if (!base || !key) {
 const OBSOLETE_PATHS = [
   'environment/synthwave-room.jpg',
   'environment/synthwave-360-equirect.jpg',
-  'environment/synthwave-360-sheet.jpg',
-  'environment/synthwave-360-panorama.jpg',
   'synthwave-room.jpg',
-  'synthwave-360-sheet.jpg',
 ]
 
 async function deletePath(storagePath) {

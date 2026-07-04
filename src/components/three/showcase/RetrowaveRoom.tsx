@@ -295,6 +295,8 @@ function Astronaut({ playerRef, keysRef }: PlayerProps) {
 
   return (
     <group ref={playerRef} position={[0, 0, 0]}>
+      <pointLight position={[0, 2.5, 0.5]} color="#ffffff" intensity={3} distance={6} />
+      <pointLight position={[0, 0.8, 0.8]} color="#88ccff" intensity={1.5} distance={4} />
       <group rotation={[0, Math.PI, 0]}>
         {/* Kaciga */}
         <mesh position={[0, 1.6, 0]} scale={[1, 0.95, 0.9]} castShadow>

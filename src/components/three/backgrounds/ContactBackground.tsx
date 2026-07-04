@@ -6,7 +6,26 @@ import * as THREE from 'three'
 import AmbientBackgroundShell from '@/components/three/backgrounds/AmbientBackgroundShell'
 import { pulseOpacity, smoothStep } from '@/components/three/backgrounds/live-utils'
 import type { PageBackgroundProps } from '@/lib/site-background-routes'
-import { BACKGROUND_FOG, BACKGROUND_GLOW } from '@/lib/site-background-routes'
+
+function SignalPulse({ delay, color, z }: { delay: number; color: string; z: number }) {
+  const ref = useRef<THREE.Mesh>(null)
+
+  useFrame((state) => {
+    if (!ref.current) return
+    const t = (state.clock.elapsedTime + delay) % 4.5
+    const scale = 0.8 + t * 2.2
+    ref.current.scale.set(scale, scale, 1)
+    const mat = ref.current.material as THREE.MeshBasicMaterial
+    mat.opacity = Math.max(0, 0.32 - t * 0.07)
+  })
+
+  return (
+    <mesh ref={ref} position={[0, 0, z]}>
+      <planeGeometry args={[2.2, 2.2]} />
+      <meshBasicMaterial color={color} transparent opacity={0.12} side={THREE.DoubleSide} depthWrite={false} />
+    </mesh>
+  )
+}
 
 function SweepLine() {
   const mainRef = useRef<THREE.Mesh>(null)
@@ -98,20 +117,27 @@ function SecondaryEmitter({ isMobile }: { isMobile: boolean }) {
   return (
     <group ref={groupRef} position={[3.5, -2, -9]}>
       <mesh>
-        <octahedronGeometry args={[0.08, 0]} />
+        <boxGeometry args={[0.08, 0.08, 0.02]} />
         <meshBasicMaterial color="#8b5cf6" transparent opacity={0.3} depthWrite={false} />
       </mesh>
+      <SignalPulse delay={1.2} color="#8b5cf6" z={0} />
+      <SignalPulse delay={2.4} color="#8b5cf6" z={-0.3} />
     </group>
   )
 }
 
 export default function ContactBackground({ isMobile = false }: PageBackgroundProps) {
+  const pulses = isMobile ? 4 : 6
+
   return (
-    <AmbientBackgroundShell isMobile={isMobile} fogColor={BACKGROUND_FOG.contact} glowColor={BACKGROUND_GLOW.contact}>
+    <AmbientBackgroundShell isMobile={isMobile}>
       <mesh position={[0, 0, -8]}>
-        <octahedronGeometry args={[0.12, 0]} />
+        <boxGeometry args={[0.12, 0.12, 0.02]} />
         <meshBasicMaterial color="#06b6d4" transparent opacity={0.25} depthWrite={false} />
       </mesh>
+      {Array.from({ length: pulses }, (_, i) => (
+        <SignalPulse key={i} delay={i * 0.75} color={i % 2 === 0 ? '#06b6d4' : '#8b5cf6'} z={-7 - i * 0.5} />
+      ))}
       <SweepLine />
       <RadarBlips count={isMobile ? 6 : 12} />
       <SecondaryEmitter isMobile={isMobile} />

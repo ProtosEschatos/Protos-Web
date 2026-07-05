@@ -2,6 +2,7 @@
 
 import { useState, FormEvent } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
+import { MousePointer2, Heart } from 'lucide-react'
 import { Link } from '@/routing'
 import TransitionLink from '@/components/navigation/TransitionLink'
 import SocialLinks from '@/components/ui/SocialLinks'
@@ -138,9 +139,26 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row justify-between items-center py-6 border-t border-white/[0.06] text-xs text-[var(--light-muted)]">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 py-6 border-t border-white/[0.06] text-xs text-[var(--light-muted)]">
           <span>&copy; {t('copyright')}</span>
-          <span>{t('made_with')}</span>
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            <span className="inline-flex items-center gap-2 text-lg sm:text-xl font-semibold text-[var(--light)]">
+              {t('made_with')}
+              <Heart className="w-5 h-5 text-[var(--primary)] fill-[var(--primary)]" />
+            </span>
+            <a
+              href="https://cursor.com/referral?code=1HM5DWZJCWXH"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--border-card)] bg-[var(--dark-card)] text-xs font-semibold text-[var(--light)] hover:border-[var(--primary)] hover:text-[var(--primary)] hover:-translate-y-0.5 transition-all duration-300"
+            >
+              <MousePointer2 className="w-3.5 h-3.5" />
+              Try Cursor
+              <span className="px-2 py-0.5 rounded-full bg-gradient-to-r from-[var(--primary)] to-[#ff8800] text-white text-[10px] font-bold uppercase tracking-wide">
+                50% off 1st month
+              </span>
+            </a>
+          </div>
         </div>
       </div>
     </footer>

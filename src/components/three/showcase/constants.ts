@@ -8,8 +8,8 @@ export const SHOWCASE_CONFIG = {
   /** Extra speed on touch devices where FPS is often lower */
   mobileSpeedMultiplier: 1.35,
   touchDeadZone: 0.1,
-  galleryLength: 24,
-  galleryWidth: 12,
+  galleryLength: 48,
+  galleryWidth: 24,
   galleryHeight: 10,
   frameSpacing: 8,
   characterHeight: 2,

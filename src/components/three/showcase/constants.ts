@@ -8,10 +8,10 @@ export const SHOWCASE_CONFIG = {
   /** Extra speed on touch devices where FPS is often lower */
   mobileSpeedMultiplier: 1.35,
   touchDeadZone: 0.1,
-  galleryLength: 180,
+  galleryLength: 24,
   galleryWidth: 12,
   galleryHeight: 10,
-  frameSpacing: 24,
+  frameSpacing: 8,
   characterHeight: 2,
 } as const
 
@@ -59,7 +59,7 @@ export type FrameMarker = {
 }
 
 export function initCharacterPosition(group: import('three').Group, heading = INITIAL_CHARACTER_HEADING) {
-  group.position.set(0, 0, 6)
+  group.position.set(0, 0, SHOWCASE_CONFIG.galleryLength / 2 - 3)
   group.rotation.set(0, heading, 0, 'YXZ')
 }
 

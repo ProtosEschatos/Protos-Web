@@ -52,7 +52,7 @@ export default function Footer() {
   return (
     <footer className="cosmic-section border-t border-white/[0.06] pt-16">
       <div className="max-w-[1200px] mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-[2fr_1.4fr_1fr] gap-10 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-[2fr_1.4fr_auto] gap-10 mb-12">
           <div>
             <TransitionLink href="/" className="inline-flex items-center gap-2.5 font-bold text-lg text-[var(--light)] mb-1">
               <svg viewBox="0 0 32 32" width="28" height="28" xmlns="http://www.w3.org/2000/svg">
@@ -128,7 +128,7 @@ export default function Footer() {
               href="https://cursor.com/referral?code=1HM5DWZJCWXH"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-[var(--border-card)] bg-[var(--dark-card)] text-xs font-semibold text-[var(--light)] hover:border-[var(--primary)] hover:text-[var(--primary)] hover:-translate-y-0.5 transition-all duration-300"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-[var(--border-card)] bg-[var(--dark-card)] text-xs font-semibold text-[var(--light)] whitespace-nowrap hover:border-[var(--primary)] hover:text-[var(--primary)] hover:-translate-y-0.5 transition-all duration-300"
             >
               <MousePointer2 className="w-3.5 h-3.5" />
               Try Cursor

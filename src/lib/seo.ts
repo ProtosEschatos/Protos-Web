@@ -11,10 +11,11 @@ export function normalizeSiteUrl(url?: string): string {
 export const siteUrl = normalizeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL)
 
 export const ogImage = {
-  url: '/og-image.svg',
+  url: '/api/og',
   width: 1200,
   height: 630,
   alt: 'Protos Web',
+  type: 'image/png',
 } as const
 
 const openGraphLocale: Record<Locale, string> = {

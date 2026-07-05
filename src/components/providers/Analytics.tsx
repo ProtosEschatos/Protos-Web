@@ -1,11 +1,14 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import Script from 'next/script'
 import { getCookiePreferences, COOKIE_CONSENT_EVENT } from '@/lib/cookie-consent'
 
 export default function Analytics() {
   const [allowed, setAllowed] = useState(false)
+  const pathname = usePathname()
+  const lastTrackedPath = useRef<string | null>(null)
 
   useEffect(() => {
     const sync = () => {
@@ -22,6 +25,26 @@ export default function Analytics() {
 
   const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN
   const gaId = process.env.NEXT_PUBLIC_GA_ID
+
+  // GA gtag does not auto-track SPA route changes. The initial page_view is sent
+  // by gtag('config'), so we skip the first observed path and only fire on real
+  // client-side navigations. (Plausible's default script handles this on its own.)
+  useEffect(() => {
+    if (!allowed || !gaId || typeof window === 'undefined') return
+    if (lastTrackedPath.current === null) {
+      lastTrackedPath.current = pathname
+      return
+    }
+    if (lastTrackedPath.current === pathname) return
+    lastTrackedPath.current = pathname
+    const gtag = (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag
+    if (typeof gtag !== 'function') return
+    gtag('event', 'page_view', {
+      page_path: pathname,
+      page_location: window.location.href,
+      page_title: document.title,
+    })
+  }, [pathname, allowed, gaId])
 
   if (!allowed || (!plausibleDomain && !gaId)) {
     return null

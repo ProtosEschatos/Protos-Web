@@ -5,7 +5,7 @@ export const routing = defineRouting({
   locales: ['hr', 'en', 'de', 'it', 'es'],
   defaultLocale: 'hr',
   localePrefix: 'as-needed',
-  localeDetection: true,
+  localeDetection: false,
 })
 
 export type Locale = (typeof routing.locales)[number]

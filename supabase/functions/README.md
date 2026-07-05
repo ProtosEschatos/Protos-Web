@@ -7,6 +7,7 @@ Project ref: `laqnnzavwbojntfiqmxj`
 | `keep-alive` | GitHub cron (`supabase-keep-alive.yml`) | Ping DB to prevent free-tier pause |
 | `submit-form` | Database webhook on `contacts` INSERT | Admin + auto-reply emails (Resend/Brevo) |
 | `subscribe` | `POST /api/subscribe` from site footer | Newsletter signup + welcome email |
+| `content` | `GET ?type=<t>&lang=<l>` (service role) | Generic read API for DB-backed content (services, portfolio, blog, testimonials, pricing, process) |
 
 ## Deploy
 
@@ -25,7 +26,7 @@ Set in Supabase Dashboard → Edge Functions → Secrets:
 |--------|---------|
 | `KEEP_ALIVE_SECRET` | `keep-alive` |
 | `SUPABASE_URL` | all |
-| `SUPABASE_SERVICE_ROLE_KEY` | `subscribe`, `keep-alive` |
+| `SUPABASE_SERVICE_ROLE_KEY` | `subscribe`, `keep-alive`, `content` |
 | `RESEND_API_KEY` | `submit-form`, `subscribe` |
 | `RESEND_FROM_EMAIL` | `submit-form` |
 | `CONTACT_EMAIL` | `submit-form` |

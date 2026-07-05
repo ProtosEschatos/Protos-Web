@@ -34,7 +34,7 @@ export async function getBlogPosts(limit = 20, language = 'hr'): Promise<BlogPos
     return []
   }
 
-  return data ?? []
+  return (data ?? []).map((post) => ({ ...post, created_at: post.created_at ?? '' }))
 }
 
 export async function getBlogPostBySlug(
@@ -56,7 +56,9 @@ export async function getBlogPostBySlug(
     return null
   }
 
-  return data
+  if (!data) return null
+
+  return { ...data, created_at: data.created_at ?? '' }
 }
 
 export async function getAllBlogSlugs(): Promise<BlogSlugEntry[]> {
@@ -76,6 +78,6 @@ export async function getAllBlogSlugs(): Promise<BlogSlugEntry[]> {
   return (data ?? []).map((row) => ({
     slug: row.slug,
     language: row.language,
-    updated_at: row.created_at,
+    updated_at: row.created_at ?? new Date().toISOString(),
   }))
 }

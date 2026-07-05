@@ -24,7 +24,8 @@ export default function Analytics() {
   }, [])
 
   const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN
-  const gaId = process.env.NEXT_PUBLIC_GA_ID
+  // GA4 Measurement ID is public (visible in page source); env var overrides this default.
+  const gaId = process.env.NEXT_PUBLIC_GA_ID || 'G-HR9HK4SR7Q'
 
   // GA gtag does not auto-track SPA route changes. The initial page_view is sent
   // by gtag('config'), so we skip the first observed path and only fire on real

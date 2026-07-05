@@ -223,8 +223,9 @@
   },
   "contact": {
     "label": "KONTAKT",
-    "title": "Haben Sie ein Projekt?",
-    "titleLine2": "Lassen Sie uns sprechen.",
+    "title": "Haben Sie eine Idee oder Frage?",
+    "titleLine2": "Melden Sie sich — ich antworte persönlich.",
+    "subtitle": "Kein Druck, keine Verkaufstricks. Sagen Sie mir, was Sie brauchen, und wir finden gemeinsam die richtige Lösung.",
     "email": "E-Mail",
     "phone": "Telefon",
     "location": "Standort",
@@ -260,12 +261,14 @@
     "toContact": "Kontakt"
   },
   "footer": {
-    "brand_desc": "Professionelle Webdesign-Agentur. Wir verwandeln Ihre Vision in digitale Realitat, die verkauft.",
+    "brand_desc": "Web-Studio aus Zagreb, das Websites mit Seele baut — schnell, sauber und mit Liebe bis ins letzte Detail.",
     "links": "Links",
     "legal": "Rechtliches",
     "privacy": "Datenschutz",
     "terms": "AGB",
     "cookies": "Cookies",
+    "tools": "Mein Editor",
+    "tools_note": "Der Editor, in dem all das entsteht.",
     "causes_title": "Unterstutzen Sie Projekte, die den digitalen Balkan verandern",
     "cause_antiScam": "Anti-Betrug",
     "cause_education": "Bildung",
@@ -347,7 +350,7 @@
   },
   "metadata": {
     "home": {
-      "title": "Wir verwandeln Besucher in Kunden",
+      "title": "Websites mit Seele. Geschwindigkeit im Code. Liebe im Detail.",
       "description": "Professionelle Webdesign-Agentur aus Zagreb."
     },
     "about": {
@@ -384,7 +387,7 @@
     "heroTitleLine1": "Wir bauen digitale",
     "heroTitleHighlight": "Lösungen, die mit Ihnen wachsen",
     "heroTitleLine2": "und sich weiterentwickeln.",
-    "heroSubtitle": "Full Stack Developer & Web Designer aus Zagreb. Ich erstelle moderne, schnelle und visuell beeindruckende Websites, die Besucher in Kunden verwandeln.",
+    "heroSubtitle": "Full Stack Developer & Web Designer aus Zagreb. Ich baue moderne, schnelle und visuell beeindruckende Websites — jede mit Seele und Sorgfalt bis ins letzte Detail.",
     "whoTitle": "Wer ich bin",
     "bio1": "Full Stack Developer aus Zagreb mit 5 Jahren Erfahrung im Aufbau moderner Web-Lösungen. Ich arbeite mit Unternehmern und Firmen in Kroatien und Europa — von schnellen Landing Pages bis zu komplexen Custom-Plattformen, Webshops und CRM-Systemen.",
     "bio2": "Alles wird individuell entwickelt — ohne vorgefertigte Themes, ohne Kompromisse bei der Qualität. Jedes Projekt beginnt bei null und wird genau auf Ihre Bedürfnisse und Ziele zugeschnitten.",

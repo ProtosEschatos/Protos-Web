@@ -223,8 +223,9 @@
   },
   "contact": {
     "label": "CONTATTO",
-    "title": "Hai un progetto?",
-    "titleLine2": "Parliamone.",
+    "title": "Hai un'idea o una domanda?",
+    "titleLine2": "Scrivimi — rispondo personalmente.",
+    "subtitle": "Nessuna pressione, nessun trucco di vendita. Dimmi di cosa hai bisogno e troveremo insieme la soluzione giusta.",
     "email": "Email",
     "phone": "Telefono",
     "location": "Posizione",
@@ -260,12 +261,14 @@
     "toContact": "Contatto"
   },
   "footer": {
-    "brand_desc": "Agenzia professionale di web design. Trasformiamo la tua visione in realta digitale che vende.",
+    "brand_desc": "Web studio di Zagabria che crea siti con anima — veloci, puliti e curati con amore fino all'ultimo dettaglio.",
     "links": "Link",
     "legal": "Legale",
     "privacy": "Privacy",
     "terms": "Termini",
     "cookies": "Cookie",
+    "tools": "Il mio editor",
+    "tools_note": "L'editor in cui nasce tutto questo.",
     "causes_title": "Sostieni progetti che cambiano i Balcani digitali",
     "cause_antiScam": "Anti-truffa",
     "cause_education": "Educazione",
@@ -347,7 +350,7 @@
   },
   "metadata": {
     "home": {
-      "title": "Trasformiamo i visitatori in clienti",
+      "title": "Siti web con anima. Velocità nel codice. Amore nei dettagli.",
       "description": "Agenzia professionale di web design da Zagabria."
     },
     "about": {
@@ -384,7 +387,7 @@
     "heroTitleLine1": "Costruiamo soluzioni",
     "heroTitleHighlight": "digitali che crescono",
     "heroTitleLine2": "insieme a te.",
-    "heroSubtitle": "Full Stack Developer e Web Designer da Zagabria. Creo siti web moderni, veloci e visivamente sorprendenti che trasformano i visitatori in clienti.",
+    "heroSubtitle": "Full Stack Developer e Web Designer da Zagabria. Creo siti web moderni, veloci e visivamente sorprendenti — ognuno con anima e cura fino all'ultimo dettaglio.",
     "whoTitle": "Chi sono",
     "bio1": "Full Stack Developer di Zagabria con 5 anni di esperienza nello sviluppo di soluzioni web moderne. Collaboro con imprenditori e aziende in Croazia e in Europa — dalle landing page veloci a piattaforme custom complesse, e-commerce e sistemi CRM.",
     "bio2": "Tutto è sviluppato su misura — niente temi pronti, nessun compromesso sulla qualità. Ogni progetto parte da zero, adattato esattamente alle tue esigenze e ai tuoi obiettivi.",

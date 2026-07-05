@@ -31,12 +31,6 @@ export default function Footer() {
     { href: '/cookies', label: t('cookies') },
   ]
 
-  const causes = [
-    { label: t('cause_antiScam'), color: 'bg-[var(--secondary)]' },
-    { label: t('cause_education'), color: 'bg-[var(--primary)]' },
-    { label: t('cause_platforms'), color: 'bg-[var(--accent)]' },
-  ]
-
   const handleSubscribe = async (e: FormEvent) => {
     e.preventDefault()
     if (!email.trim()) return
@@ -58,7 +52,7 @@ export default function Footer() {
   return (
     <footer className="cosmic-section border-t border-white/[0.06] pt-16">
       <div className="max-w-[1200px] mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-[2fr_1.4fr_1fr] gap-10 mb-12">
           <div>
             <TransitionLink href="/" className="inline-flex items-center gap-2.5 font-bold text-lg text-[var(--light)] mb-1">
               <svg viewBox="0 0 32 32" width="28" height="28" xmlns="http://www.w3.org/2000/svg">
@@ -104,53 +98,37 @@ export default function Footer() {
             <SocialLinks className="flex gap-3 mt-6" />
           </div>
 
-          <div>
-            <h4 className="font-bold mb-5">{t('links')}</h4>
-            <div className="flex flex-col gap-3">
-              {footerLinks.map((l) => (
-                <TransitionLink key={l.href} href={l.href} className="text-sm text-[var(--light-muted)] hover:text-[var(--primary)] transition-colors duration-300">
-                  {tn(l.key)}
-                </TransitionLink>
-              ))}
+          <div className="flex gap-10">
+            <div>
+              <h4 className="font-bold mb-5">{t('links')}</h4>
+              <div className="flex flex-col gap-3">
+                {footerLinks.map((l) => (
+                  <TransitionLink key={l.href} href={l.href} className="text-sm text-[var(--light-muted)] hover:text-[var(--primary)] transition-colors duration-300">
+                    {tn(l.key)}
+                  </TransitionLink>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h4 className="font-bold mb-5">{t('legal')}</h4>
+              <div className="flex flex-col gap-3">
+                {legalLinks.map((l) => (
+                  <Link key={l.label} href={l.href} className="text-sm text-[var(--light-muted)] hover:text-[var(--primary)] transition-colors duration-300">
+                    {l.label}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
 
           <div>
-            <h4 className="font-bold mb-5">{t('legal')}</h4>
-            <div className="flex flex-col gap-3">
-              {legalLinks.map((l) => (
-                <Link key={l.label} href={l.href} className="text-sm text-[var(--light-muted)] hover:text-[var(--primary)] transition-colors duration-300">
-                  {l.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="text-center py-8 border-t border-white/[0.06] mt-4">
-          <p className="text-sm text-[var(--light-muted)] mb-3">{t('causes_title')}</p>
-          <div className="flex gap-3 justify-center flex-wrap">
-            {causes.map((c) => (
-              <span key={c.label} className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full border border-[var(--border-card)] text-xs text-[var(--light-muted)]">
-                <span className={`w-2 h-2 rounded-full ${c.color}`} />
-                {c.label}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 py-6 border-t border-white/[0.06] text-xs text-[var(--light-muted)]">
-          <span>&copy; {t('copyright')}</span>
-          <div className="flex flex-col sm:flex-row items-center gap-4">
-            <span className="inline-flex items-center gap-2 text-lg sm:text-xl font-semibold text-[var(--light)]">
-              {t('made_with')}
-              <Heart className="w-5 h-5 text-[var(--primary)] fill-[var(--primary)]" />
-            </span>
+            <h4 className="font-bold mb-5">{t('tools')}</h4>
             <a
               href="https://cursor.com/referral?code=1HM5DWZJCWXH"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--border-card)] bg-[var(--dark-card)] text-xs font-semibold text-[var(--light)] hover:border-[var(--primary)] hover:text-[var(--primary)] hover:-translate-y-0.5 transition-all duration-300"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-[var(--border-card)] bg-[var(--dark-card)] text-xs font-semibold text-[var(--light)] hover:border-[var(--primary)] hover:text-[var(--primary)] hover:-translate-y-0.5 transition-all duration-300"
             >
               <MousePointer2 className="w-3.5 h-3.5" />
               Try Cursor
@@ -158,7 +136,16 @@ export default function Footer() {
                 50% off 1st month
               </span>
             </a>
+            <p className="text-xs text-[var(--light-muted)] leading-6 mt-3 max-w-[220px]">{t('tools_note')}</p>
           </div>
+        </div>
+
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 py-6 border-t border-white/[0.06] text-xs text-[var(--light-muted)]">
+          <span>&copy; {t('copyright')}</span>
+          <span className="inline-flex items-center gap-2 text-lg sm:text-xl font-semibold text-[var(--light)]">
+            {t('made_with')}
+            <Heart className="w-5 h-5 text-[var(--primary)] fill-[var(--primary)]" />
+          </span>
         </div>
       </div>
     </footer>

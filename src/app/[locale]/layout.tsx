@@ -21,11 +21,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Protos Web — We Turn Visitors Into Customers',
+    default: 'Protos Web — Websites with Soul, Built in Zagreb',
     template: '%s | Protos Web',
   },
   description:
-    'Professional web design agency from Zagreb. Modern, fast and visually stunning websites that turn visitors into customers.',
+    'Web design studio from Zagreb crafting fast, modern websites with soul — built with love and care for businesses across Croatia and Europe.',
   openGraph: {
     type: 'website',
     locale: 'hr_HR',
@@ -35,9 +35,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Protos Web — We Turn Visitors Into Customers',
+    title: 'Protos Web — Websites with Soul, Built in Zagreb',
     description:
-      'Professional web design agency from Zagreb. Modern, fast and visually stunning websites that turn visitors into customers.',
+      'Web design studio from Zagreb crafting fast, modern websites with soul — built with love and care for businesses across Croatia and Europe.',
     images: [ogImage.url],
   },
   icons: {

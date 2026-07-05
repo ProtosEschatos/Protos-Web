@@ -116,8 +116,9 @@
   },
   "contact": {
     "label": "CONTACT",
-    "title": "Have a project?",
-    "titleLine2": "Let's talk.",
+    "title": "Got an idea or a question?",
+    "titleLine2": "Reach out — I reply personally.",
+    "subtitle": "No pressure, no sales tricks. Tell me what you need and we'll find the right solution together.",
     "email": "Email",
     "phone": "Phone",
     "location": "Location",
@@ -146,12 +147,14 @@
     "toContact": "Contact"
   },
   "footer": {
-    "brand_desc": "Professional web design agency. We turn your vision into digital reality that sells.",
+    "brand_desc": "Web studio from Zagreb building websites with soul — fast, clean and made with love down to the last detail.",
     "links": "Links",
     "legal": "Legal",
     "privacy": "Privacy",
     "terms": "Terms",
     "cookies": "Cookies",
+    "tools": "My editor",
+    "tools_note": "The editor where all of this comes to life.",
     "causes_title": "Support projects changing the digital Balkans",
     "cause_antiScam": "Anti-scam",
     "cause_education": "Education",
@@ -225,7 +228,7 @@
     "heroTitleLine1": "We build digital",
     "heroTitleHighlight": "solutions that grow",
     "heroTitleLine2": "together with you.",
-    "heroSubtitle": "Full Stack Developer & Web Designer from Zagreb. I create modern, fast and visually stunning websites that turn visitors into customers.",
+    "heroSubtitle": "Full Stack Developer & Web Designer from Zagreb. I build modern, fast and visually stunning websites — each one crafted with soul and care down to the last detail.",
     "whoTitle": "Who I am",
     "bio1": "Full Stack Developer from Zagreb with 5 years of experience building modern web solutions. I work with entrepreneurs and companies across Croatia and Europe — from fast landing pages to complex custom platforms, web shops, and CRM systems.",
     "bio2": "Everything I build is custom — no pre-made themes, no compromises on quality. Every project starts from scratch, tailored exactly to your needs and goals.",
@@ -279,7 +282,7 @@
     "cookiesBody": "We use essential cookies required for basic site functionality and, with your consent, analytics cookies to understand how visitors use the site.\n\nYou can accept or decline non-essential cookies via the cookie banner or showcase entry modal. Your choice is stored locally in your browser.\n\nYou can clear cookies at any time through your browser settings."
   },
   "metadata": {
-    "home": { "title": "We Turn Visitors Into Customers", "description": "Professional web design agency from Zagreb." },
+    "home": { "title": "Websites with soul. Speed in the code. Love in the details.", "description": "Professional web design agency from Zagreb." },
     "about": { "title": "About Me", "description": "Full Stack Developer & Web Designer from Zagreb." },
     "process": { "title": "Our Process", "description": "How we build modern web solutions." },
     "portfolio": { "title": "Portfolio", "description": "Selected projects and case studies." },

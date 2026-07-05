@@ -223,8 +223,9 @@
   },
   "contact": {
     "label": "CONTACTO",
-    "title": "Tienes un proyecto?",
-    "titleLine2": "Hablemos.",
+    "title": "¿Tienes una idea o una pregunta?",
+    "titleLine2": "Escríbeme — respondo personalmente.",
+    "subtitle": "Sin presión ni trucos de venta. Dime qué necesitas y encontraremos juntos la solución adecuada.",
     "email": "Email",
     "phone": "Telefono",
     "location": "Ubicacion",
@@ -260,12 +261,14 @@
     "toContact": "Contacto"
   },
   "footer": {
-    "brand_desc": "Agencia profesional de diseno web. Convertimos tu vision en realidad digital que vende.",
+    "brand_desc": "Estudio web de Zagreb que crea sitios con alma — rápidos, limpios y hechos con amor hasta el último detalle.",
     "links": "Enlaces",
     "legal": "Legal",
     "privacy": "Privacidad",
     "terms": "Terminos",
     "cookies": "Cookies",
+    "tools": "Mi editor",
+    "tools_note": "El editor donde nace todo esto.",
     "causes_title": "Apoya proyectos que cambian los Balcanes digitales",
     "cause_antiScam": "Anti-estafa",
     "cause_education": "Educacion",
@@ -347,7 +350,7 @@
   },
   "metadata": {
     "home": {
-      "title": "Convertimos visitantes en clientes",
+      "title": "Sitios web con alma. Velocidad en el código. Amor en los detalles.",
       "description": "Agencia profesional de diseno web de Zagreb."
     },
     "about": {
@@ -384,7 +387,7 @@
     "heroTitleLine1": "Construimos soluciones",
     "heroTitleHighlight": "digitales que crecen",
     "heroTitleLine2": "contigo.",
-    "heroSubtitle": "Full Stack Developer y Web Designer de Zagreb. Creo sitios web modernos, rápidos y visualmente impactantes que convierten visitantes en clientes.",
+    "heroSubtitle": "Full Stack Developer y Web Designer de Zagreb. Creo sitios web modernos, rápidos y visualmente impactantes — cada uno con alma y cuidado hasta el último detalle.",
     "whoTitle": "Quién soy",
     "bio1": "Full Stack Developer de Zagreb con 5 años de experiencia creando soluciones web modernas. Trabajo con emprendedores y empresas en Croacia y Europa — desde landing pages rápidas hasta plataformas custom complejas, tiendas online y sistemas CRM.",
     "bio2": "Todo lo construyo a medida — sin temas prefabricados, sin comprometer la calidad. Cada proyecto empieza desde cero, adaptado exactamente a tus necesidades y objetivos.",

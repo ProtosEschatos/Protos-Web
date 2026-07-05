@@ -48,9 +48,10 @@ export default function Contact() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
             <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[var(--primary)] mb-3">{t('label')}</p>
-            <h2 className="text-[clamp(2.5rem,5vw,3.8rem)] font-extrabold leading-tight mb-10">
+            <h2 className="text-[clamp(2.5rem,5vw,3.8rem)] font-extrabold leading-tight mb-5">
               {t('title')}<br />{t('titleLine2')}
             </h2>
+            <p className="text-base text-[var(--light-muted)] leading-7 mb-10 max-w-[440px]">{t('subtitle')}</p>
             <div className="space-y-7">
               {contactInfo.map((c) => (
                 <div key={c.label} className="flex items-center gap-4">

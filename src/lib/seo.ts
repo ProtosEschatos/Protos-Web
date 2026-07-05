@@ -148,7 +148,7 @@ export const organizationJsonLd = {
   url: siteUrl,
   logo: `${siteUrl}/favicon.svg`,
   description:
-    'Professional web design agency from Zagreb. Modern, fast and visually stunning websites that turn visitors into customers.',
+    'Web design studio from Zagreb crafting fast, modern websites with soul — built with love and care for businesses across Croatia and Europe.',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Zagreb',

@@ -45,7 +45,7 @@ export function GET() {
               color: '#8888aa',
             }}
           >
-            We Turn Visitors Into Customers
+            Websites with soul, built with love
           </div>
           <div
             style={{

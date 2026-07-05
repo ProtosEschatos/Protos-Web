@@ -6,6 +6,7 @@ import { MousePointer2, Heart } from 'lucide-react'
 import { Link } from '@/routing'
 import TransitionLink from '@/components/navigation/TransitionLink'
 import SocialLinks from '@/components/ui/SocialLinks'
+import ProtosLogo from '@/components/ui/ProtosLogo'
 
 const footerLinks = [
   { href: '/', key: 'home' as const },
@@ -55,10 +56,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-[2fr_1.4fr_auto] gap-10 mb-12">
           <div>
             <TransitionLink href="/" className="inline-flex items-center gap-2.5 font-bold text-lg text-[var(--light)] mb-1">
-              <svg viewBox="0 0 32 32" width="28" height="28" xmlns="http://www.w3.org/2000/svg">
-                <rect width="32" height="32" rx="8" fill="#8b5cf6" />
-                <text x="50%" y="55%" dominantBaseline="middle" textAnchor="middle" fill="#fff" fontWeight="800" fontSize="18" fontFamily="Inter,sans-serif">P</text>
-              </svg>
+              <ProtosLogo size={28} />
               <span>{th('brand')}</span>
             </TransitionLink>
             <p className="text-sm text-[var(--light-muted)] leading-7 mt-4 max-w-[340px]">

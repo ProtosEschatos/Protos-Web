@@ -6,7 +6,7 @@ import { usePathname, useRouter } from '@/routing'
 import TransitionLink from '@/components/navigation/TransitionLink'
 import { localeLabels, localeFlags, locales, type Locale } from '@/i18n'
 import MobileMenu from './MobileMenu'
-import { ChevronDown, Globe } from 'lucide-react'
+import { ChevronDown, Globe, MousePointer2 } from 'lucide-react'
 import ProtosEclipseLogo from '@/components/ui/ProtosEclipseLogo'
 
 const navLinks = [
@@ -91,6 +91,18 @@ export default function Header() {
             </nav>
 
             <div className="hidden lg:flex items-center gap-2.5">
+              <a
+                href="https://cursor.com/referral?code=1HM5DWZJCWXH"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Try Cursor — 50% off your first month"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[var(--dark-card)]/50 hover:bg-[var(--dark-card)] border border-[var(--primary)]/20 hover:border-[var(--primary)]/40 transition-all duration-300"
+              >
+                <MousePointer2 className="w-3.5 h-3.5 text-[var(--primary)]" />
+                <span className="text-sm font-medium text-[var(--light)]">Cursor</span>
+                <span className="text-[10px] font-bold text-[var(--primary)]">-50%</span>
+              </a>
+
               <div className="relative" ref={langRef}>
                 <button
                   onClick={() => setLangOpen(!langOpen)}
@@ -125,6 +137,16 @@ export default function Header() {
             </div>
 
             <div className="flex items-center gap-2 lg:hidden">
+              <a
+                href="https://cursor.com/referral?code=1HM5DWZJCWXH"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Try Cursor — 50% off your first month"
+                className="inline-flex items-center gap-1.5 px-2.5 h-10 rounded-xl bg-[var(--dark-card)]/50 border border-[var(--primary)]/20 text-[var(--primary)] text-[11px] font-bold"
+              >
+                <MousePointer2 className="w-4 h-4" />
+                <span>-50%</span>
+              </a>
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
                 className="w-12 h-12 flex flex-col items-center justify-center gap-[6px] p-2"

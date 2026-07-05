@@ -16,6 +16,7 @@ const navLinks = [
   { href: '/portfolio', key: 'portfolio' as const },
   { href: '/usluge', key: 'services' as const },
   { href: '/blog', key: 'blog' as const },
+  { href: '/o-meni#online-presence', key: 'presence' as const },
   { href: '/kontakt', key: 'contact' as const },
 ]
 

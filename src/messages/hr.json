@@ -6,7 +6,15 @@
     "portfolio": "PORTFOLIO",
     "services": "USLUGE",
     "blog": "BLOG",
+    "presence": "PRISUTNOST",
     "contact": "KONTAKT"
+  },
+  "onlinePresence": {
+    "label": "POVEŽIMO SE",
+    "title": "Moja online prisutnost",
+    "subtitle": "Pronađite me diljem weba — od koda do freelance platformi. Izgradimo nešto zajedno.",
+    "socialsTitle": "Društvene mreže",
+    "platformsTitle": "Freelance platforme"
   },
   "header": {
     "brand": "Protos Web",

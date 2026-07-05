@@ -1,9 +1,11 @@
 'use client'
 
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
 import { ArrowRight, BookOpen } from 'lucide-react'
+import OnlinePresence from '@/components/sections/OnlinePresence'
 
 const infoKeys = ['name', 'location', 'experience', 'email', 'phone', 'languages'] as const
 
@@ -30,6 +32,14 @@ export default function AboutPage() {
     btnText: string
     progress: number
   }>
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || window.location.hash !== '#online-presence') return
+    const scroll = () => document.getElementById('online-presence')?.scrollIntoView({ behavior: 'smooth' })
+    // wait for the page transition overlay to finish before scrolling
+    const timer = window.setTimeout(scroll, 1400)
+    return () => window.clearTimeout(timer)
+  }, [])
 
   return (
     <>
@@ -80,6 +90,8 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      <OnlinePresence />
 
       <section className="py-16 text-center">
         <div className="max-w-[1200px] mx-auto px-6">

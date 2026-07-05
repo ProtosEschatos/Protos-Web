@@ -1,0 +1,84 @@
+'use client'
+
+import { motion } from 'framer-motion'
+import { useTranslations } from 'next-intl'
+import { brandGlyph } from '@/components/ui/BrandIcons'
+import { socialItems, platformItems, type PresenceItem } from '@/lib/social-links'
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.05, duration: 0.5 } }),
+}
+
+function PresenceTile({ item, index }: { item: PresenceItem; index: number }) {
+  const isPending = item.pending || item.href === '#'
+  return (
+    <motion.a
+      href={item.href}
+      target={isPending ? undefined : '_blank'}
+      rel="noopener noreferrer"
+      aria-label={item.label}
+      custom={index}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={fadeUp}
+      className="group/tile flex items-center gap-3 rounded-2xl border border-[var(--border-card)] bg-[var(--dark-card)] px-4 py-3.5 transition-all duration-300 hover:-translate-y-0.5"
+      style={{ ['--brand' as string]: item.brand }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = item.brand
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = ''
+      }}
+    >
+      <span
+        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-colors duration-300"
+        style={{ backgroundColor: `${item.brand}1f`, color: item.brand }}
+      >
+        {brandGlyph(item.id, 'w-5 h-5')}
+      </span>
+      <span className="text-sm font-semibold text-[var(--light)] transition-colors duration-300 group-hover/tile:text-[color:var(--brand)]">
+        {item.label}
+      </span>
+    </motion.a>
+  )
+}
+
+export default function OnlinePresence() {
+  const t = useTranslations('onlinePresence')
+
+  return (
+    <section id="online-presence" className="scroll-mt-28 py-20 border-t border-white/[0.06]">
+      <div className="max-w-[1200px] mx-auto px-6">
+        <div className="text-center mb-12">
+          <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[var(--primary)] mb-3">{t('label')}</p>
+          <h2 className="text-[clamp(2rem,5vw,3rem)] font-extrabold leading-tight mb-4">{t('title')}</h2>
+          <p className="text-base text-[var(--light-muted)] max-w-[620px] mx-auto leading-7">{t('subtitle')}</p>
+        </div>
+
+        <div className="mb-10">
+          <h3 className="text-xs font-semibold tracking-[0.15em] uppercase text-[var(--light-muted)] mb-4">
+            {t('socialsTitle')}
+          </h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+            {socialItems.map((item, i) => (
+              <PresenceTile key={item.id} item={item} index={i} />
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <h3 className="text-xs font-semibold tracking-[0.15em] uppercase text-[var(--light-muted)] mb-4">
+            {t('platformsTitle')}
+          </h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+            {platformItems.map((item, i) => (
+              <PresenceTile key={item.id} item={item} index={i} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}

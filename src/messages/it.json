@@ -6,7 +6,15 @@
     "portfolio": "PORTFOLIO",
     "services": "SERVIZI",
     "blog": "BLOG",
+    "presence": "PRESENZA",
     "contact": "CONTATTO"
+  },
+  "onlinePresence": {
+    "label": "COLLEGHIAMOCI",
+    "title": "La mia presenza online",
+    "subtitle": "Trovami su tutto il web — dal codice alle piattaforme freelance. Costruiamo qualcosa insieme.",
+    "socialsTitle": "Social",
+    "platformsTitle": "Piattaforme freelance"
   },
   "header": {
     "brand": "Protos Web",

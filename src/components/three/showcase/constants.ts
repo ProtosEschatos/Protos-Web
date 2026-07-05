@@ -44,6 +44,13 @@ export const PROJECT_LINKS = [
 
 export const INITIAL_CHARACTER_HEADING = 0
 
+/**
+ * Total frame slots rendered on the gallery walls (2 per side per row).
+ * Filled from PROJECT_LINKS in order; remaining slots render as empty
+ * placeholders ready for future designs.
+ */
+export const FRAME_SLOTS = 8
+
 export type ShowcaseProject = {
   title: string
   description: string

@@ -3,7 +3,7 @@
 import { useMemo, useRef, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
-import { SHOWCASE_CONFIG, INITIAL_CHARACTER_HEADING, getFrameTransform, type ShowcaseProject } from './constants'
+import { SHOWCASE_CONFIG, INITIAL_CHARACTER_HEADING, FRAME_SLOTS, getFrameTransform, type ShowcaseProject } from './constants'
 import { getFrameDimensions } from './frameDimensions'
 import type { ShowcaseViewport } from '@/lib/showcase-viewport'
 import type { TouchInput } from '@/lib/showcase-viewport'
@@ -126,7 +126,7 @@ function ProjectFrame({
   index,
   viewport,
 }: {
-  project: ShowcaseProject
+  project: ShowcaseProject | null
   index: number
   viewport: ShowcaseViewport
 }) {
@@ -135,7 +135,7 @@ function ProjectFrame({
   const outerW = viewW + frameW * 2
   const outerH = viewH + frameW * 2
   const edgeColors = [0x6366f1, 0x06b6d4, 0xf59e0b, 0x818cf8]
-  const edgeColor = project.color ?? edgeColors[index % edgeColors.length]
+  const edgeColor = project?.color ?? edgeColors[index % edgeColors.length]
 
   const { x, z, rotationY, floorX } = getFrameTransform(index, centerY)
   const baseY = centerY
@@ -160,7 +160,7 @@ function ProjectFrame({
         </mesh>
 
         <FrameScreenshot
-          imageUrl={project.imageUrl}
+          imageUrl={project?.imageUrl ?? null}
           width={viewW * 0.94}
           height={viewH * 0.94}
           z={0.012}
@@ -196,7 +196,7 @@ function ProjectFrame({
 
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[floorX, 0.02, z]}>
         <ringGeometry args={[0.8, 1.2, 32]} />
-        <meshBasicMaterial color={project.color} transparent opacity={0.4} side={THREE.DoubleSide} />
+        <meshBasicMaterial color={edgeColor} transparent opacity={0.4} side={THREE.DoubleSide} />
       </mesh>
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[floorX, 0.015, z]}>
         <circleGeometry args={[0.6, 32]} />
@@ -479,8 +479,13 @@ export function ShowcaseScene({
       <Starfield />
       <GalleryShell />
       <PortfolioWallText />
-      {projects.map((project, index) => (
-        <ProjectFrame key={`${project.link}-${viewport}`} project={project} index={index} viewport={viewport} />
+      {Array.from({ length: FRAME_SLOTS }).map((_, index) => (
+        <ProjectFrame
+          key={`frame-${index}-${viewport}`}
+          project={projects[index] ?? null}
+          index={index}
+          viewport={viewport}
+        />
       ))}
       <AstronautCharacter ref={characterRef} />
     </>

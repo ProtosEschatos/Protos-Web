@@ -30,12 +30,7 @@
   - Resend: `send.protosweb.eu` SPF + `resend._domainkey` DKIM ✅
   - DMARC: još `rua=contact@protos-design.net` → promijeniti u `dario.admin@protosweb.eu`
 
-### Secrets (Supabase Edge)
-```
-RESEND_API_KEY          = novi key iz Resend dashboarda
-RESEND_FROM_EMAIL       = dario.admin@protosweb.eu
-CONTACT_EMAIL           = dario.admin@protosweb.eu
-```
+- **Resend API key:** ažuriran u Supabase secrets (2026-07-06). **Ne commitati u repo.**
 
 ### Kod
 - `src/lib/site.ts` — `CONTACT_EMAIL`, `SITE_URL`, `SITE_DOMAIN`

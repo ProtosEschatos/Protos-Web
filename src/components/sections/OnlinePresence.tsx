@@ -12,26 +12,12 @@ const fadeUp = {
 
 function PresenceTile({ item, index }: { item: PresenceItem; index: number }) {
   const isPending = item.pending || item.href === '#'
-  return (
-    <motion.a
-      href={item.href}
-      target={isPending ? undefined : '_blank'}
-      rel="noopener noreferrer"
-      aria-label={item.label}
-      custom={index}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
-      variants={fadeUp}
-      className="group/tile flex items-center gap-3 rounded-2xl border border-[var(--border-card)] bg-[var(--dark-card)] px-4 py-3.5 transition-all duration-300 hover:-translate-y-0.5"
-      style={{ ['--brand' as string]: item.brand }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.borderColor = item.brand
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.borderColor = ''
-      }}
-    >
+  const className =
+    'group/tile flex items-center gap-3 rounded-2xl border border-[var(--border-card)] bg-[var(--dark-card)] px-4 py-3.5 transition-all duration-300' +
+    (isPending ? ' opacity-60 cursor-not-allowed' : ' hover:-translate-y-0.5')
+
+  const inner = (
+    <>
       <span
         className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-colors duration-300"
         style={{ backgroundColor: `${item.brand}1f`, color: item.brand }}
@@ -40,7 +26,55 @@ function PresenceTile({ item, index }: { item: PresenceItem; index: number }) {
       </span>
       <span className="text-sm font-semibold text-[var(--light)] transition-colors duration-300 group-hover/tile:text-[color:var(--brand)]">
         {item.label}
+        {isPending ? (
+          <span className="ml-2 text-[10px] font-medium uppercase tracking-wider text-[var(--light-muted)]">
+            Uskoro
+          </span>
+        ) : null}
       </span>
+    </>
+  )
+
+  if (isPending) {
+    return (
+      <motion.div
+        role="link"
+        aria-label={`${item.label} — uskoro`}
+        aria-disabled="true"
+        custom={index}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeUp}
+        className={className}
+        style={{ ['--brand' as string]: item.brand }}
+      >
+        {inner}
+      </motion.div>
+    )
+  }
+
+  return (
+    <motion.a
+      href={item.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={item.label}
+      custom={index}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={fadeUp}
+      className={className}
+      style={{ ['--brand' as string]: item.brand }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = item.brand
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = ''
+      }}
+    >
+      {inner}
     </motion.a>
   )
 }

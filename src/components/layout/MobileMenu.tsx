@@ -86,7 +86,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               transition={{ delay: 0.5 }}
               className="mt-16 text-[var(--light-muted)]"
             >
-              <p className="text-sm">contact@protos-design.net</p>
+              <p className="text-sm">dario.admin@protosweb.eu</p>
               <p className="text-sm">+385 97 604 39 41</p>
               <SocialLinksInline className="flex gap-4 mt-6" />
             </motion.div>

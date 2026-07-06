@@ -97,8 +97,9 @@ Ključne datoteke: `src/components/three/SpaceGallery.tsx` (phase UI), `showcase
 | API rute | `/api/contact`, `/api/subscribe`, `/api/blog`. |
 | CI/CD | GitHub Actions: `ci` (lint/type-check/build), `security`, `supabase-keep-alive` (cron 10min), `supabase-deploy-functions`. |
 
-### Config status (provjereno 2026-07-05)
-- **Supabase Edge secrets:** ✅ `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `CONTACT_EMAIL`, `KEEP_ALIVE_SECRET`, `BREVO_API_KEY`. (`SUPABASE_URL`/`SERVICE_ROLE_KEY` auto-injectani, ne treba ih dodavati.)
+### Config status (provjereno 2026-07-06)
+- **Supabase Edge secrets:** ✅ `RESEND_API_KEY`, `RESEND_FROM_EMAIL=dario.admin@protosweb.eu`, `CONTACT_EMAIL=dario.admin@protosweb.eu`, `KEEP_ALIVE_SECRET`, `BREVO_API_KEY`.
+- **Email domena:** Zoho Mail inbox `dario.admin@protosweb.eu`; Resend DNS (SPF/DKIM na `send.protosweb.eu`) već prisutan — provjeri verifikaciju u Resend dashboardu.
 - **GitHub Actions secrets:** ✅ dodani `SUPABASE_ACCESS_TOKEN` + `SUPABASE_PROJECT_REF` (deploy workflow sad zelen), uz `KEEP_ALIVE_SECRET`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`.
 - **Vercel env:** ✅ `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `NEXT_PUBLIC_SITE_URL` (samo Production).
 
@@ -114,4 +115,4 @@ Ključne datoteke: `src/components/three/SpaceGallery.tsx` (phase UI), `showcase
 - **Opcionalno:** spojiti DB sadržaj (`services`/`process`/`pricing`/`testimonials`) na frontend preko `content` edge funkcije umjesto hardkodiranog i18n.
 - **Opcionalno:** Stripe/donacije (`donations`, `stripe_price_id`) — trenutno neiskorišteni ostatak multi-tenant platforme.
 - **Sitno:** `NEXT_PUBLIC_SITE_URL` dodati i za Vercel Preview (točni canonical/sitemap na preview deployevima); razmisliti o `.gitignore` za `test-results/`.
-- **Verifikacija dostave maila:** end-to-end test kontakt forme (pošalje pravi mail) još nije napravljen.
+- **Verifikacija dostave maila:** nakon deploya edge fn — test kontakt forme + newsletter; DMARC `rua` na DNS-u još pokazuje na staru `contact@protos-design.net` adresu (opcionalno ažurirati).

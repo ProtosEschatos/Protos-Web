@@ -13,6 +13,22 @@ Project ref: `laqnnzavwbojntfiqmxj`
 
 Functions deploy automatically via [`.github/workflows/supabase-deploy-functions.yml`](../../.github/workflows/supabase-deploy-functions.yml) when `supabase/functions/**` changes on `main`.
 
+`submit-form` and `subscribe` are deployed with `--no-verify-jwt` (DB webhook and public API callers).
+
+## Resend domain (protosweb.eu)
+
+Zoho Mail receives at `dario.admin@protosweb.eu`. Resend sends transactional mail from the same domain.
+
+DNS records already present (check Resend dashboard for verification status):
+
+| Record | Purpose |
+|--------|---------|
+| `send.protosweb.eu` TXT SPF | Resend sending (`include:amazonses.com`) |
+| `resend._domainkey.protosweb.eu` TXT | DKIM |
+| `_dmarc.protosweb.eu` TXT | DMARC — update `rua` to `dario.admin@protosweb.eu` if still pointing at old domain |
+
+Zoho MX records for receiving mail must remain alongside Resend records.
+
 Required GitHub secrets:
 
 - `SUPABASE_ACCESS_TOKEN` — personal access token with deploy rights
@@ -28,8 +44,8 @@ Set in Supabase Dashboard → Edge Functions → Secrets:
 | `SUPABASE_URL` | all |
 | `SUPABASE_SERVICE_ROLE_KEY` | `subscribe`, `keep-alive`, `content` |
 | `RESEND_API_KEY` | `submit-form`, `subscribe` |
-| `RESEND_FROM_EMAIL` | `submit-form` |
-| `CONTACT_EMAIL` | `submit-form` |
+| `RESEND_FROM_EMAIL` | `submit-form`, `subscribe` — `dario.admin@protosweb.eu` |
+| `CONTACT_EMAIL` | `submit-form` — admin inbox `dario.admin@protosweb.eu` |
 | `BREVO_API_KEY` | `submit-form` (optional fallback) |
 
 ## Contact form → email (database webhook)

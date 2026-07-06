@@ -47,6 +47,7 @@ Deno.serve(async (req) => {
     if (error) throw error
 
     const resendKey = Deno.env.get('RESEND_API_KEY')
+    const fromEmail = Deno.env.get('RESEND_FROM_EMAIL') || 'dario.admin@protosweb.eu'
     if (resendKey) {
       fetch('https://api.resend.com/emails', {
         method: 'POST',
@@ -55,7 +56,7 @@ Deno.serve(async (req) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          from: 'Dario | Protos Web <contact@protos-design.net>',
+          from: `Dario | Protos Web <${fromEmail}>`,
           to: [email],
           subject: 'Dobrodošli — Protos Web novosti',
           html: `

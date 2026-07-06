@@ -12,7 +12,7 @@ export default function Contact() {
   const serviceOptions = t.raw('serviceOptions') as string[]
 
   const contactInfo = [
-    { icon: Mail, label: t('email'), value: 'contact@protos-design.net', color: 'bg-[var(--secondary)]/15 text-[var(--secondary)]' },
+    { icon: Mail, label: t('email'), value: 'dario.admin@protosweb.eu', color: 'bg-[var(--secondary)]/15 text-[var(--secondary)]' },
     { icon: Phone, label: t('phone'), value: '+385 97 604 39 41', color: 'bg-[var(--accent)]/15 text-[var(--accent)]' },
     { icon: MapPin, label: t('location'), value: t('locationValue'), color: 'bg-[var(--primary)]/15 text-[var(--primary)]' },
   ]

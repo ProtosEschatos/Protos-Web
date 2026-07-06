@@ -51,8 +51,8 @@ serve(async (req) => {
 
     const resendKey = Deno.env.get('RESEND_API_KEY') || ''
     const brevoKey = Deno.env.get('BREVO_API_KEY') || ''
-    const contactEmail = Deno.env.get('CONTACT_EMAIL') || 'contact@protos-design.net'
-    const fromEmail = Deno.env.get('RESEND_FROM_EMAIL') || 'contact@protos-design.net'
+    const contactEmail = Deno.env.get('CONTACT_EMAIL') || 'dario.admin@protosweb.eu'
+    const fromEmail = Deno.env.get('RESEND_FROM_EMAIL') || 'dario.admin@protosweb.eu'
 
     console.log('[submit-form] Source:', source, '| Name:', name, '| Email:', email)
 

@@ -1,4 +1,4 @@
-export const SOCIAL_EMAIL = 'contact@protos-design.net'
+export const SOCIAL_EMAIL = 'dario.admin@protosweb.eu'
 export const SOCIAL_PHONE = '+385 97 604 39 41'
 export const WHATSAPP_URL = 'https://wa.me/385976043941'
 

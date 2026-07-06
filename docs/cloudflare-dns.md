@@ -9,7 +9,7 @@ As of 2026-07-06, public DNS lookup shows:
 | Issue | Fix |
 |-------|-----|
 | **DMARC `rua`** still `contact@protos-design.net` | Update to `dario.admin@protosweb.eu` |
-| **Legacy `brevo-code` TXT** on apex | Safe to remove if not using Brevo |
+| **Legacy `brevo-code` TXT** on apex | **Keep** — Brevo domain verification |
 
 MX (Zoho) and Resend sending records are configured.
 
@@ -29,19 +29,13 @@ Confirm exact values in Zoho Admin → Domains → `protosweb.eu` → DNS (EU da
 
 ### 2. Zoho Mail — SPF (apex TXT)
 
-Merge with existing TXT records on `@` into **one** SPF TXT (only one SPF per hostname):
+Merge apex TXT into **one** SPF record (Zoho + Brevo):
 
 ```
-v=spf1 include:zoho.eu ~all
+v=spf1 include:zohomail.eu include:spf.brevo.com ~all
 ```
 
-If you also send from Resend on the apex (not recommended), use:
-
-```
-v=spf1 include:zoho.eu include:amazonses.com ~all
-```
-
-Resend is already configured on subdomain `send.protosweb.eu` — apex SPF for Zoho only is fine.
+Resend sends from subdomain `send.protosweb.eu` (separate SPF). Keep `brevo-code:...` TXT on `@` for Brevo domain verification.
 
 ### 3. Zoho verification (keep if present)
 

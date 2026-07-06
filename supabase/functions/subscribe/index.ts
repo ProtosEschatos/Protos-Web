@@ -47,7 +47,17 @@ Deno.serve(async (req) => {
     if (error) throw error
 
     const resendKey = Deno.env.get('RESEND_API_KEY')
+    const brevoKey = Deno.env.get('BREVO_API_KEY')
     const fromEmail = Deno.env.get('RESEND_FROM_EMAIL') || 'dario.admin@protosweb.eu'
+
+    const welcomeHtml = `
+            <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px">
+              <h2 style="color:#6366f1">Pozdrav!</h2>
+              <p>Uspješno ste se pretplatili na Protos Web novosti.</p>
+              <p style="color:#666">Srdačan pozdrav,<br><strong>Dario Imsirović</strong><br>Protos Web</p>
+            </div>
+          `
+
     if (resendKey) {
       fetch('https://api.resend.com/emails', {
         method: 'POST',
@@ -59,13 +69,23 @@ Deno.serve(async (req) => {
           from: `Dario | Protos Web <${fromEmail}>`,
           to: [email],
           subject: 'Dobrodošli — Protos Web novosti',
-          html: `
-            <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px">
-              <h2 style="color:#6366f1">Pozdrav!</h2>
-              <p>Uspješno ste se pretplatili na Protos Web novosti.</p>
-              <p style="color:#666">Srdačan pozdrav,<br><strong>Dario Imsirović</strong><br>Protos Web</p>
-            </div>
-          `,
+          html: welcomeHtml,
+        }),
+      })
+    }
+
+    if (brevoKey) {
+      fetch('https://api.brevo.com/v3/smtp/email', {
+        method: 'POST',
+        headers: {
+          'api-key': brevoKey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          sender: { name: 'Dario | Protos Web', email: fromEmail },
+          to: [{ email, name: email.split('@')[0] }],
+          subject: 'Dobrodošli — Protos Web novosti',
+          htmlContent: welcomeHtml,
         }),
       })
     }

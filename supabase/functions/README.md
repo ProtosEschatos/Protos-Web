@@ -46,7 +46,7 @@ Set in Supabase Dashboard → Edge Functions → Secrets:
 | `RESEND_API_KEY` | `submit-form`, `subscribe` |
 | `RESEND_FROM_EMAIL` | `submit-form`, `subscribe` — `dario.admin@protosweb.eu` |
 | `CONTACT_EMAIL` | `submit-form` — admin inbox `dario.admin@protosweb.eu` |
-| `BREVO_API_KEY` | `submit-form` (optional fallback) |
+| `BREVO_API_KEY` | `submit-form`, `subscribe` — backup sender (parallel with Resend) |
 
 ## Contact form → email (database webhook)
 

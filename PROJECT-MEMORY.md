@@ -30,7 +30,8 @@
   - Resend: `send.protosweb.eu` SPF + `resend._domainkey` DKIM ✅
   - DMARC: još `rua=contact@protos-design.net` → promijeniti u `dario.admin@protosweb.eu`
 
-- **Resend API key:** ažuriran u Supabase secrets (2026-07-06). **Ne commitati u repo.**
+- **Resend API key:** u Supabase secrets. **Ne commitati u repo.**
+- **Brevo:** `BREVO_API_KEY` u Supabase; registriraj `dario.admin@protosweb.eu` na brevo.com, verificiraj domenu (`brevo-code` TXT već u Cloudflareu). Edge fn šalje preko **Resend + Brevo** paralelno.
 
 ### Kod
 - `src/lib/site.ts` — `CONTACT_EMAIL`, `SITE_URL`, `SITE_DOMAIN`

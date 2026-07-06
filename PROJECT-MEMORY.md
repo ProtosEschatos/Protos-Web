@@ -115,4 +115,6 @@ Ključne datoteke: `src/components/three/SpaceGallery.tsx` (phase UI), `showcase
 - **Opcionalno:** spojiti DB sadržaj (`services`/`process`/`pricing`/`testimonials`) na frontend preko `content` edge funkcije umjesto hardkodiranog i18n.
 - **Opcionalno:** Stripe/donacije (`donations`, `stripe_price_id`) — trenutno neiskorišteni ostatak multi-tenant platforme.
 - **Sitno:** `NEXT_PUBLIC_SITE_URL` dodati i za Vercel Preview (točni canonical/sitemap na preview deployevima); razmisliti o `.gitignore` za `test-results/`.
-- **Verifikacija dostave maila:** nakon deploya edge fn — test kontakt forme + newsletter; DMARC `rua` na DNS-u još pokazuje na staru `contact@protos-design.net` adresu (opcionalno ažurirati).
+- **Cloudflare DNS:** vidi [`docs/cloudflare-dns.md`](docs/cloudflare-dns.md) — **MX zapisi za Zoho još nedostaju** na apexu; DMARC `rua` ažurirati na `dario.admin@protosweb.eu`.
+- **Vercel env:** `CONTACT_EMAIL` + `RESEND_FROM_EMAIL` = `dario.admin@protosweb.eu` (Production); Preview na `main` branch.
+- **Kod:** `src/lib/site.ts` — single source of truth za email/URL.

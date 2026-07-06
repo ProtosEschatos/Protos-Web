@@ -1,4 +1,6 @@
-export const SOCIAL_EMAIL = 'dario.admin@protosweb.eu'
+import { CONTACT_EMAIL } from '@/lib/site'
+
+export const SOCIAL_EMAIL = CONTACT_EMAIL
 export const SOCIAL_PHONE = '+385 97 604 39 41'
 export const WHATSAPP_URL = 'https://wa.me/385976043941'
 

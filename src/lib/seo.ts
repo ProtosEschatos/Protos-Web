@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
 import { locales, defaultLocale, type Locale } from '@/i18n'
 
-const DEFAULT_SITE_URL = 'https://www.protosweb.eu'
+import { CONTACT_EMAIL, SITE_URL } from '@/lib/site'
+
+const DEFAULT_SITE_URL = SITE_URL
 
 export function normalizeSiteUrl(url?: string): string {
   const raw = (url || DEFAULT_SITE_URL).trim().replace(/\/+$/, '')

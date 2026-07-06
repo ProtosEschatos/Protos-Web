@@ -162,10 +162,11 @@ Secrets are **not** duplicated everywhere on purpose. Each platform reads only w
 
 | Location | Purpose | What goes here |
 |----------|---------|----------------|
+| **Cloudflare** | DNS for `protosweb.eu` — MX (Zoho), Resend DKIM/SPF, DMARC. See [`docs/cloudflare-dns.md`](docs/cloudflare-dns.md) |
 | **`.env.local`** (local dev, gitignored) | Your machine only | Copy from `.env.example` — never commit |
 | **Vercel** | Production/preview builds + runtime | All `NEXT_PUBLIC_*` + server keys the Next.js app uses |
 | **GitHub Secrets** | GitHub Actions workflows only | `SUPABASE_URL`, `KEEP_ALIVE_SECRET`, `SUPABASE_ACCESS_TOKEN`, `SUPABASE_PROJECT_REF` |
-| **Supabase Edge Secrets** | Edge functions only | `KEEP_ALIVE_SECRET`, `RESEND_API_KEY`, `CONTACT_EMAIL`, `RESEND_FROM_EMAIL`, `BREVO_API_KEY` (optional) |
+| **Supabase Edge Secrets** | Edge functions only | `KEEP_ALIVE_SECRET`, `RESEND_API_KEY`, `CONTACT_EMAIL=dario.admin@protosweb.eu`, `RESEND_FROM_EMAIL=dario.admin@protosweb.eu` |
 
 **Why not one `.env` for everything?** `.env` files must never be pushed to git (security). Vercel injects vars at deploy time. GitHub and Supabase run separate services that never read Vercel's config.
 
@@ -173,10 +174,14 @@ Secrets are **not** duplicated everywhere on purpose. Each platform reads only w
 
 ### Vercel — required for the live site
 
-- `NEXT_PUBLIC_SITE_URL` = `https://www.protosweb.eu`
+- `NEXT_PUBLIC_SITE_URL` = `https://www.protosweb.eu` (Production **and** Preview)
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
+
+Email vars on Vercel are **legacy/unused** by Next.js (mail goes through Supabase edge fn) but kept in sync: `CONTACT_EMAIL` and `RESEND_FROM_EMAIL` = `dario.admin@protosweb.eu`.
+
+**DNS (Cloudflare):** see [`docs/cloudflare-dns.md`](docs/cloudflare-dns.md) — MX for Zoho inbox, Resend on `send` subdomain, update DMARC `rua`.
 
 **Analytics (GA4):** wired by default (`G-HR9HK4SR7Q`, consent-gated). Optional override: `NEXT_PUBLIC_GA_ID`. Alternative: `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`.
 

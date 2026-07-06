@@ -1,19 +1,21 @@
 # Protos-Web — Project Memory
 
-> **Last updated:** 2026-07-07 (noć)
+> **Last updated:** 2026-07-07 (noć, final)
 > **Live:** https://www.protosweb.eu
 > **Repo:** `ProtosEschatos/Protos-Web`
-> **Latest commit:** `d978d74` — keep-alive redeploy (no-verify-jwt)
+> **Latest commit:** `7892a8c` — lucide-react minor + dependabot cleanup
 
 ---
 
 ## Gdje si stao (TL;DR)
 
-**Env audit (2026-07-07):** Vercel, Supabase, GitHub, Cloudflare DNS — **sve obavezno pokriveno**. Live testovi: kontakt ✅, newsletter ✅, admin login API ✅, keep-alive cron ✅ (nakon deploya `verify_jwt=false`).
+**Remote (2026-07-07):** `main` = remote, CI zelen, Vercel READY, 0 otvorenih PR-ova. Vercel env očišćen na **11 varijabli** (samo ono što Next.js koristi). Supabase/GitHub secreta **nije dirano**.
+
+**Env audit:** Vercel, Supabase, GitHub, Cloudflare DNS — sve obavezno pokriveno. Live: kontakt ✅, newsletter ✅, admin ✅, keep-alive ✅.
 
 **Email + DNS:** Sve na `dario.admin@protosweb.eu`. Zoho MX, Resend `send`, Brevo DKIM, DMARC, SPF — OK.
 
-**Admin:** `/admin` samo direktni URL (nema javnog nav linka). `ADMIN_SECRET` + `SUPABASE_SERVICE_ROLE_KEY` na Vercelu. UI scale 115% (`globals.css`).
+**Admin:** `/admin` samo direktni URL. `ADMIN_SECRET` + `SUPABASE_SERVICE_ROLE_KEY` na Vercelu.
 
 **Opcionalno (nije postavljeno):** `STRIPE_DONATION_*`, Turnstile, Upstash, `BREVO_NEWSLETTER_LIST_ID`.
 
@@ -124,12 +126,11 @@ Ključne datoteke: `src/components/three/SpaceGallery.tsx` (phase UI), `showcase
 | CI/CD | GitHub Actions: `ci` (lint/type-check/build), `security`, `supabase-keep-alive` (cron 10min), `supabase-deploy-functions`. |
 
 ### Config status (provjereno 2026-07-07 — finalni audit)
-- **Supabase Edge secrets:** ✅ `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `CONTACT_EMAIL`, `KEEP_ALIVE_SECRET`, `BREVO_API_KEY`. ❌ `ADMIN_SECRET` (ispravno odsutan). ❌ `BREVO_NEWSLETTER_LIST_ID` (opcionalno).
+- **Vercel env (11 varijabli):** `ADMIN_SECRET`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_SENTRY_DSN`, `SENTRY_DSN`, `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`. Mail API ključevi **nisu** na Vercelu (edge fn u Supabase).
+- **Supabase Edge secrets:** ✅ `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `CONTACT_EMAIL`, `KEEP_ALIVE_SECRET`, `BREVO_API_KEY`. ❌ `ADMIN_SECRET` (ispravno odsutan).
 - **GitHub Actions secrets:** ✅ `KEEP_ALIVE_SECRET`, `SUPABASE_ACCESS_TOKEN`, `SUPABASE_PROJECT_REF`, `SUPABASE_SERVICE_ROLE_KEY`, `SUPABASE_URL`.
-- **Vercel env:** ✅ `ADMIN_SECRET`, `SUPABASE_SERVICE_ROLE_KEY`, `NEXT_PUBLIC_SUPABASE_*`, `NEXT_PUBLIC_SITE_URL`, Stripe, Sentry, GA. Mail API ključevi na Vercelu su legacy (edge fn koristi Supabase).
-- **Cloudflare DNS:** ✅ Vercel A/CNAME, Zoho MX, Resend `send`, Brevo DKIM, DMARC, google-site-verification TXT.
-- **Keep-alive:** edge fn `verify_jwt=false`; cron zelen nakon deploya `578f768`/`d978d74`.
-- **Live E2E (2026-07-07):** `/api/contact` 200, `/api/subscribe` 200, `/admin/login` 200.
+- **Dependabot:** major bumpovi ignorirani; mergeani samo patch/minor (postcss, lucide-react).
+- **Keep-alive:** edge fn `verify_jwt=false`; cron success nakon fixa.
 
 ### Preostali (namjerni) security advisor WARN-ovi
 - `pg_net` u `public` schemi — Supabase-managed; webhook ovisi o njemu → ostavljeno.

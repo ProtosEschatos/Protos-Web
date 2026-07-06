@@ -5,8 +5,8 @@ Project ref: `laqnnzavwbojntfiqmxj`
 | Function | Trigger | Purpose |
 |----------|---------|---------|
 | `keep-alive` | GitHub cron (`supabase-keep-alive.yml`) | Ping DB to prevent free-tier pause |
-| `submit-form` | Database webhook on `contacts` INSERT | Admin + auto-reply emails (Resend/Brevo) |
-| `subscribe` | `POST /api/subscribe` from site footer | Newsletter signup + welcome email |
+| `submit-form` | Database webhook on `contacts` INSERT | Contact emails: **Resend primary**, Brevo fallback → Zoho inbox |
+| `subscribe` | `POST /api/subscribe` from site footer | Newsletter: **Brevo primary**, Resend fallback |
 | `content` | `GET ?type=<t>&lang=<l>` (service role) | Generic read API for DB-backed content (services, portfolio, blog, testimonials, pricing, process) |
 
 ## Deploy
@@ -46,7 +46,9 @@ Set in Supabase Dashboard → Edge Functions → Secrets:
 | `RESEND_API_KEY` | `submit-form`, `subscribe` |
 | `RESEND_FROM_EMAIL` | `submit-form`, `subscribe` — `dario.admin@protosweb.eu` |
 | `CONTACT_EMAIL` | `submit-form` — admin inbox `dario.admin@protosweb.eu` |
-| `BREVO_API_KEY` | `submit-form`, `subscribe` — backup sender (parallel with Resend) |
+| `BREVO_API_KEY` | `submit-form` (fallback), `subscribe` (primary) — REST API key `xkeysib-`, not SMTP |
+
+See [docs/email-setup.md](../../docs/email-setup.md) for Zoho + Resend + Brevo wiring.
 
 ## Contact form → email (database webhook)
 

@@ -56,76 +56,28 @@ serve(async (req) => {
 
     console.log('[submit-form] Source:', source, '| Name:', name, '| Email:', email)
 
-    const promises: Promise<unknown>[] = []
+    const adminSubject = `Nova upita — ${name} (${service || 'nije navedeno'})`
+    const adminBody = adminHtml(name, email, phone, service, message)
+    const replyBody = autoReplyHtml(name, message)
 
+    // Contact: Resend (transactional) primary → Brevo fallback. Inbox = Zoho via MX on CONTACT_EMAIL.
+    let sent = false
     if (resendKey) {
-      promises.push(
-        fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${resendKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            from: `Protos Web <${fromEmail}>`,
-            to: [contactEmail],
-            subject: `Nova upita — ${name} (${service || 'nije navedeno'})`,
-            html: adminHtml(name, email, phone, service, message),
-          }),
-        }),
-      )
-
-      promises.push(
-        fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${resendKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            from: `Dario | Protos Web <${fromEmail}>`,
-            to: [email],
-            subject: 'Hvala na upitu — odgovoriti ćemo uskoro',
-            html: autoReplyHtml(name, message),
-          }),
-        }),
-      )
+      sent = await sendContactViaResend(resendKey, fromEmail, contactEmail, email, name, adminSubject, adminBody, replyBody)
+      if (sent) console.log('[submit-form] Sent via Resend')
+    }
+    if (!sent && brevoKey) {
+      sent = await sendContactViaBrevo(brevoKey, fromEmail, contactEmail, email, name, adminSubject, adminBody, replyBody)
+      if (sent) console.log('[submit-form] Sent via Brevo fallback')
     }
 
-    if (brevoKey) {
-      promises.push(
-        fetch('https://api.brevo.com/v3/smtp/email', {
-          method: 'POST',
-          headers: {
-            'api-key': brevoKey,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            sender: { name: 'Protos Web', email: fromEmail },
-            to: [{ email: contactEmail, name: 'Protos Web' }],
-            subject: `Nova upita — ${name} (${service || 'nije navedeno'})`,
-            htmlContent: adminHtml(name, email, phone, service, message),
-          }),
-        }),
-      )
-      promises.push(
-        fetch('https://api.brevo.com/v3/smtp/email', {
-          method: 'POST',
-          headers: {
-            'api-key': brevoKey,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            sender: { name: 'Dario | Protos Web', email: fromEmail },
-            to: [{ email, name }],
-            subject: 'Hvala na upitu — odgovoriti ćemo uskoro',
-            htmlContent: autoReplyHtml(name, message),
-          }),
-        }),
-      )
+    if (!sent) {
+      console.error('[submit-form] No email provider succeeded')
+      return new Response(JSON.stringify({ error: 'Email provider nije dostupan' }), {
+        status: 503,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
     }
-
-    await Promise.allSettled(promises)
 
     return new Response(JSON.stringify({ success: true, message: 'Poruka poslana!' }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -138,6 +90,84 @@ serve(async (req) => {
     })
   }
 })
+
+async function sendContactViaResend(
+  apiKey: string,
+  fromEmail: string,
+  contactEmail: string,
+  visitorEmail: string,
+  visitorName: string,
+  adminSubject: string,
+  adminBody: string,
+  replyBody: string,
+): Promise<boolean> {
+  try {
+    const [adminRes, replyRes] = await Promise.all([
+      fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          from: `Protos Web <${fromEmail}>`,
+          to: [contactEmail],
+          subject: adminSubject,
+          html: adminBody,
+        }),
+      }),
+      fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          from: `Dario | Protos Web <${fromEmail}>`,
+          to: [visitorEmail],
+          subject: 'Hvala na upitu — odgovoriti ćemo uskoro',
+          html: replyBody,
+        }),
+      }),
+    ])
+    return adminRes.ok && replyRes.ok
+  } catch {
+    return false
+  }
+}
+
+async function sendContactViaBrevo(
+  apiKey: string,
+  fromEmail: string,
+  contactEmail: string,
+  visitorEmail: string,
+  visitorName: string,
+  adminSubject: string,
+  adminBody: string,
+  replyBody: string,
+): Promise<boolean> {
+  try {
+    const [adminRes, replyRes] = await Promise.all([
+      fetch('https://api.brevo.com/v3/smtp/email', {
+        method: 'POST',
+        headers: { 'api-key': apiKey, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sender: { name: 'Protos Web', email: fromEmail },
+          to: [{ email: contactEmail, name: 'Protos Web' }],
+          subject: adminSubject,
+          htmlContent: adminBody,
+        }),
+      }),
+      fetch('https://api.brevo.com/v3/smtp/email', {
+        method: 'POST',
+        headers: { 'api-key': apiKey, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sender: { name: 'Dario | Protos Web', email: fromEmail },
+          to: [{ email: visitorEmail, name: visitorName }],
+          subject: 'Hvala na upitu — odgovoriti ćemo uskoro',
+          htmlContent: replyBody,
+        }),
+      }),
+    ])
+    return adminRes.ok && replyRes.ok
+  } catch {
+    return false
+  }
+}
 
 function escapeHtml(value: string) {
   return value

@@ -5,6 +5,18 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
+const WELCOME_SUBJECT = 'Dobrodošli — Protos Web novosti'
+
+function welcomeHtml(): string {
+  return `
+    <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px">
+      <h2 style="color:#6366f1">Pozdrav!</h2>
+      <p>Uspješno ste se pretplatili na Protos Web novosti.</p>
+      <p style="color:#666">Srdačan pozdrav,<br><strong>Dario Imsirović</strong><br>Protos Web</p>
+    </div>
+  `
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
@@ -49,45 +61,21 @@ Deno.serve(async (req) => {
     const resendKey = Deno.env.get('RESEND_API_KEY')
     const brevoKey = Deno.env.get('BREVO_API_KEY')
     const fromEmail = Deno.env.get('RESEND_FROM_EMAIL') || 'dario.admin@protosweb.eu'
+    const html = welcomeHtml()
 
-    const welcomeHtml = `
-            <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px">
-              <h2 style="color:#6366f1">Pozdrav!</h2>
-              <p>Uspješno ste se pretplatili na Protos Web novosti.</p>
-              <p style="color:#666">Srdačan pozdrav,<br><strong>Dario Imsirović</strong><br>Protos Web</p>
-            </div>
-          `
-
-    if (resendKey) {
-      fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${resendKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          from: `Dario | Protos Web <${fromEmail}>`,
-          to: [email],
-          subject: 'Dobrodošli — Protos Web novosti',
-          html: welcomeHtml,
-        }),
-      })
+    // Newsletter welcome: Brevo primary → Resend fallback
+    let sent = false
+    if (brevoKey) {
+      sent = await sendWelcomeViaBrevo(brevoKey, fromEmail, email, html)
+      if (sent) console.log('[subscribe] Welcome sent via Brevo')
+    }
+    if (!sent && resendKey) {
+      sent = await sendWelcomeViaResend(resendKey, fromEmail, email, html)
+      if (sent) console.log('[subscribe] Welcome sent via Resend fallback')
     }
 
-    if (brevoKey) {
-      fetch('https://api.brevo.com/v3/smtp/email', {
-        method: 'POST',
-        headers: {
-          'api-key': brevoKey,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          sender: { name: 'Dario | Protos Web', email: fromEmail },
-          to: [{ email, name: email.split('@')[0] }],
-          subject: 'Dobrodošli — Protos Web novosti',
-          htmlContent: welcomeHtml,
-        }),
-      })
+    if (!sent) {
+      console.warn('[subscribe] Subscriber saved but welcome email not sent')
     }
 
     return new Response(JSON.stringify({ success: true }), {
@@ -101,3 +89,49 @@ Deno.serve(async (req) => {
     })
   }
 })
+
+async function sendWelcomeViaBrevo(
+  apiKey: string,
+  fromEmail: string,
+  toEmail: string,
+  html: string,
+): Promise<boolean> {
+  try {
+    const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: { 'api-key': apiKey, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sender: { name: 'Dario | Protos Web', email: fromEmail },
+        to: [{ email: toEmail, name: toEmail.split('@')[0] }],
+        subject: WELCOME_SUBJECT,
+        htmlContent: html,
+      }),
+    })
+    return res.ok
+  } catch {
+    return false
+  }
+}
+
+async function sendWelcomeViaResend(
+  apiKey: string,
+  fromEmail: string,
+  toEmail: string,
+  html: string,
+): Promise<boolean> {
+  try {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from: `Dario | Protos Web <${fromEmail}>`,
+        to: [toEmail],
+        subject: WELCOME_SUBJECT,
+        html,
+      }),
+    })
+    return res.ok
+  } catch {
+    return false
+  }
+}

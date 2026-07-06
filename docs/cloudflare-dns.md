@@ -1,6 +1,6 @@
 # Cloudflare DNS — protosweb.eu
 
-Domain DNS is managed in **Cloudflare**. Email uses **Zoho Mail** (inbox) + **Resend** (transactional send from the website).
+Domain DNS is managed in **Cloudflare**. Full email architecture: [email-setup.md](./email-setup.md).
 
 ## Current gaps (check in Cloudflare dashboard)
 
@@ -90,9 +90,10 @@ Google site verification TXT can stay.
 |----------|-------------|
 | **Cloudflare** | MX, SPF, DMARC (this doc) |
 | **Zoho Mail** | Mailbox `dario.admin@protosweb.eu` |
-| **Resend** | Domain `protosweb.eu` verified; API key in Supabase |
-| **Supabase Edge secrets** | `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `CONTACT_EMAIL` |
-| **Vercel** | `NEXT_PUBLIC_SITE_URL`, `ADMIN_SECRET` (admin panel only — **not** Supabase) |
+| **Resend** | Domain `protosweb.eu` verified; API key in **Supabase** `RESEND_API_KEY` |
+| **Brevo** | Domain verified; **API key** (`xkeysib-`) in **Supabase** `BREVO_API_KEY` — not SMTP key |
+| **Supabase Edge secrets** | `RESEND_API_KEY`, `BREVO_API_KEY`, `RESEND_FROM_EMAIL`, `CONTACT_EMAIL` |
+| **Vercel** | `NEXT_PUBLIC_SITE_URL`, `ADMIN_SECRET`, `SUPABASE_SERVICE_ROLE_KEY`, `NEXT_PUBLIC_SUPABASE_*` |
 | **GitHub Actions** | `SUPABASE_URL`, `SUPABASE_PROJECT_REF`, `SUPABASE_ACCESS_TOKEN`, `KEEP_ALIVE_SECRET` — no email secrets needed |
 | **Code** | `src/lib/site.ts` + edge function fallbacks |
 

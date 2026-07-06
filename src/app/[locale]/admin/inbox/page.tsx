@@ -2,8 +2,9 @@ import { setRequestLocale } from 'next-intl/server'
 import { adminListContacts } from '@/actions/admin-notifications'
 import AdminPageShell from '@/components/admin/AdminPageShell'
 import AdminHubCard from '@/components/admin/AdminHubCard'
+import { adminMarketingLinks } from '@/lib/admin-hub-links'
 import { CONTACT_EMAIL } from '@/lib/site'
-import { Inbox } from 'lucide-react'
+import { Inbox, Megaphone } from 'lucide-react'
 
 type Props = { params: { locale: string } }
 
@@ -16,7 +17,7 @@ export default async function AdminInboxPage({ params: { locale } }: Props) {
       title="Inbox"
       description={`Zoho inbox (${CONTACT_EMAIL}) + upiti s kontakt forme u bazi.`}
     >
-      <div className="mb-8 max-w-md">
+      <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <AdminHubCard
           href="https://mail.zoho.eu"
           label="Otvori Zoho Mail"
@@ -24,6 +25,16 @@ export default async function AdminInboxPage({ params: { locale } }: Props) {
           icon={Inbox}
           external
         />
+        {adminMarketingLinks.map((link) => (
+          <AdminHubCard
+            key={link.id}
+            href={link.href}
+            label={link.label}
+            description={link.description}
+            icon={Megaphone}
+            external
+          />
+        ))}
       </div>
 
       <h2 className="text-lg font-semibold text-[var(--light)] mb-4">Upiti s web stranice</h2>

@@ -5,6 +5,7 @@ import {
   Globe,
   Inbox,
   LayoutGrid,
+  Megaphone,
   Plus,
   Share2,
   Shield,
@@ -16,6 +17,7 @@ import { CONTACT_EMAIL } from '@/lib/site'
 import {
   adminFreelanceLinks,
   adminInboxLinks,
+  adminMarketingLinks,
   adminPlatformLinks,
   adminSocialLinks,
 } from '@/lib/admin-hub-links'
@@ -60,6 +62,22 @@ export default async function AdminPage({ params: { locale } }: Props) {
                 label={link.label}
                 description={link.description}
                 icon={Inbox}
+                external={link.external}
+              />
+            ))}
+          </div>
+        </section>
+
+        <section className="mb-10">
+          <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--primary)] mb-4">Marketing</h2>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {adminMarketingLinks.map((link) => (
+              <AdminHubCard
+                key={link.id}
+                href={link.href}
+                label={link.label}
+                description={link.description}
+                icon={Megaphone}
                 external={link.external}
               />
             ))}

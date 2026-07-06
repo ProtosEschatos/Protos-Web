@@ -41,6 +41,23 @@ export const adminInboxLinks: AdminHubLink[] = [
   },
 ]
 
+export const adminMarketingLinks: AdminHubLink[] = [
+  {
+    id: 'brevo-campaigns',
+    label: 'Brevo kampanje',
+    href: 'https://app.brevo.com/marketing/campaign',
+    description: 'Email marketing i newsletter kampanje',
+    external: true,
+  },
+  {
+    id: 'brevo-contacts',
+    label: 'Brevo kontakti',
+    href: 'https://app.brevo.com/contact/list',
+    description: 'Pretplatnici, liste i segmenti',
+    external: true,
+  },
+]
+
 export const adminPlatformLinks: AdminHubLink[] = [
   { id: 'cloudflare', label: 'Cloudflare', href: 'https://dash.cloudflare.com', external: true },
   { id: 'vercel', label: 'Vercel', href: 'https://vercel.com/dashboard', external: true },
@@ -51,7 +68,7 @@ export const adminPlatformLinks: AdminHubLink[] = [
     external: true,
   },
   { id: 'resend', label: 'Resend', href: 'https://resend.com/domains', external: true },
-  { id: 'brevo', label: 'Brevo', href: 'https://app.brevo.com/senders/domain', external: true },
+  { id: 'brevo', label: 'Brevo', href: 'https://app.brevo.com/marketing/campaign', external: true },
   { id: 'github', label: 'GitHub Repo', href: 'https://github.com/ProtosEschatos/Protos-Web', external: true },
   { id: 'live', label: 'Javna stranica', href: SITE_URL, external: true },
 ]

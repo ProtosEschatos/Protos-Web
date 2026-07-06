@@ -178,7 +178,7 @@ Secrets are **not** duplicated everywhere on purpose. Each platform reads only w
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
 
-Optional later: `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`, `NEXT_PUBLIC_GA_ID`
+**Analytics (GA4):** wired by default (`G-HR9HK4SR7Q`, consent-gated). Optional override: `NEXT_PUBLIC_GA_ID`. Alternative: `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`.
 
 ### Vercel — safe to remove (unused by current code)
 

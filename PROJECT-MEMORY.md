@@ -3,11 +3,13 @@
 > **Last updated:** 2026-07-06
 > **Live:** https://www.protosweb.eu
 > **Repo:** `ProtosEschatos/Protos-Web`
-> **Latest commit:** `1dda0ba` — *Online Presence section* (+ design element library, ovaj commit)
+> **Latest commit:** GA4 wire-up (ovaj commit)
 
 ---
 
 ## Gdje si stao (TL;DR)
+
+**GA4 aktiviran:** `G-HR9HK4SR7Q` (Google račun `dario23imsirovic@gmail.com`) — consent-gated, SPA pageview tracking, default u kodu pa radi bez Vercel env vara.
 
 Danas (2026-07-05) odrađeno dvoje:
 
@@ -15,6 +17,15 @@ Danas (2026-07-05) odrađeno dvoje:
 2. **Backend hardening** — sigurnost, uklanjanje drifta i verzioniranje Supabase sheme; kontakt-mailovi popravljeni.
 
 Sve commitano i pushano na `main`. DB migracije + edge funkcije primijenjene i na živom Supabase projektu (`laqnnzavwbojntfiqmxj`). GitHub Actions deploy pipeline je zelen.
+
+---
+
+## 2026-07-06 — GA4 Analytics
+
+- **GA4 Measurement ID:** `G-HR9HK4SR7Q` (property na `dario23imsirovic@gmail.com`).
+- **Kod:** `Analytics.tsx` učitava gtag samo nakon analytics cookie opt-in; SPA navigacije trackirane ručno (`page_view` event).
+- **Deploy:** ID je hardcodirani fallback u kodu — ne treba Vercel env var da bi radio na produkciji. Override: `NEXT_PUBLIC_GA_ID`.
+- **Provjera:** prihvati kolačiće na live siteu → GA4 Realtime report.
 
 ---
 

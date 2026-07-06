@@ -3,8 +3,9 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
-import { ArrowRight, Mail, MapPin, Phone } from 'lucide-react'
-import { CONTACT_EMAIL } from '@/lib/site'
+import { ArrowRight, MapPin, Phone } from 'lucide-react'
+import ContactChannels from '@/components/ui/ContactChannels'
+import { WHATSAPP_URL } from '@/lib/social-links'
 
 export default function Contact() {
   const t = useTranslations('contact')
@@ -13,8 +14,7 @@ export default function Contact() {
   const serviceOptions = t.raw('serviceOptions') as string[]
 
   const contactInfo = [
-    { icon: Mail, label: t('email'), value: CONTACT_EMAIL, color: 'bg-[var(--secondary)]/15 text-[var(--secondary)]' },
-    { icon: Phone, label: t('phone'), value: '+385 97 604 39 41', color: 'bg-[var(--accent)]/15 text-[var(--accent)]' },
+    { icon: Phone, label: t('phone'), value: '+385 97 604 39 41', href: WHATSAPP_URL, color: 'bg-[var(--accent)]/15 text-[var(--accent)]' },
     { icon: MapPin, label: t('location'), value: t('locationValue'), color: 'bg-[var(--primary)]/15 text-[var(--primary)]' },
   ]
 
@@ -54,6 +54,10 @@ export default function Contact() {
             </h2>
             <p className="text-base text-[var(--light-muted)] leading-7 mb-10 max-w-[440px]">{t('subtitle')}</p>
             <div className="space-y-7">
+              <div>
+                <div className="text-xs text-[var(--light-muted)] uppercase tracking-wider mb-3">{t('directContact')}</div>
+                <ContactChannels iconClassName="w-5 h-5" />
+              </div>
               {contactInfo.map((c) => (
                 <div key={c.label} className="flex items-center gap-4">
                   <div className={`w-12 h-12 rounded-full flex items-center justify-center text-lg ${c.color}`}>
@@ -61,7 +65,13 @@ export default function Contact() {
                   </div>
                   <div>
                     <div className="text-xs text-[var(--light-muted)] uppercase tracking-wider">{c.label}</div>
-                    <div className="text-base font-semibold text-[var(--light)]">{c.value}</div>
+                    {'href' in c && c.href ? (
+                      <a href={c.href} className="text-base font-semibold text-[var(--primary)] hover:underline">
+                        {c.value}
+                      </a>
+                    ) : (
+                      <div className="text-base font-semibold text-[var(--light)]">{c.value}</div>
+                    )}
                   </div>
                 </div>
               ))}

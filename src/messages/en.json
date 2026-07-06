@@ -129,6 +129,7 @@
     "titleLine2": "Reach out — I reply personally.",
     "subtitle": "No pressure, no sales tricks. Tell me what you need and we'll find the right solution together.",
     "email": "Email",
+    "directContact": "Direct contact",
     "phone": "Phone",
     "location": "Location",
     "locationValue": "Zagreb, Croatia",
@@ -165,7 +166,7 @@
     "tools": "My editor",
     "cursor_cta": "Try Cursor",
     "cursor_badge": "50% off",
-    "cursor_promo": "on your first month — the AI editor I use to build this site, faster than classic coding.",
+    "cursor_promo": "on your first month — one of the tools worth trying for faster, smarter coding.",
     "causes_title": "Support projects changing the digital Balkans",
     "cause_antiScam": "Anti-scam",
     "cause_education": "Education",
@@ -252,6 +253,7 @@
       "location": "LOCATION",
       "experience": "EXPERIENCE",
       "email": "EMAIL",
+      "contact": "CONTACT",
       "phone": "PHONE",
       "languages": "LANGUAGES"
     },
@@ -259,7 +261,6 @@
       "name": "Dario Imsirović",
       "location": "Zagreb, Croatia",
       "experience": "5 years",
-      "email": "dario.admin@protosweb.eu",
       "phone": "+385 97 604 39 41",
       "languages": "Croatian, English, Deutsch (basic)"
     },
@@ -273,10 +274,12 @@
     "supportTitle": "Projects that change",
     "supportTitleHighlight": "the digital Balkans",
     "supportSubtitle": "Every donation contributes to developing a platform for protection against internet fraud and building a freer digital space for our region.",
+    "supportDonateBtn": "Support the projects",
+    "supportDonateNote": "Donations coming soon — thank you for your support.",
     "supportCards": [
-      { "title": "Cyber Security Education Equipment", "text": "Help us acquire a server, laptop and software for free online cyber security education — for everyone who wants to learn how to protect themselves online.", "target": "10,000", "btnText": "Support education", "progress": 5 },
-      { "title": "Free Digital Education", "text": "Fund free HR video tutorials and guides on web development, AI tools and digital security.", "target": "10,000", "btnText": "Support education", "progress": 3 },
-      { "title": "Regional Digital Platforms", "text": "Building open source alternatives to global platforms — made for the Balkans, by the Balkans.", "target": "20,000", "btnText": "Invest in the region", "progress": 2 }
+      { "title": "Cyber Security Education Equipment", "text": "Help us acquire a server, laptop and software for free online cyber security education — for everyone who wants to learn how to protect themselves online.", "target": "10,000", "progress": 5 },
+      { "title": "Free Digital Education", "text": "Fund free HR video tutorials and guides on web development, AI tools and digital security.", "target": "10,000", "progress": 3 },
+      { "title": "Regional Digital Platforms", "text": "Building open source alternatives to global platforms — made for the Balkans, by the Balkans.", "target": "20,000", "progress": 2 }
     ],
     "currencyZero": "0 €",
     "currencyOf": "of {target} €"

@@ -4,10 +4,13 @@ import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
-import { ArrowRight, BookOpen } from 'lucide-react'
+import { ArrowRight, BookOpen, Heart } from 'lucide-react'
 import OnlinePresence from '@/components/sections/OnlinePresence'
 
-const infoKeys = ['name', 'location', 'experience', 'email', 'phone', 'languages'] as const
+import ContactChannels from '@/components/ui/ContactChannels'
+import { WHATSAPP_URL } from '@/lib/social-links'
+
+const infoKeys = ['name', 'location', 'experience', 'contact', 'phone', 'languages'] as const
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -16,11 +19,6 @@ const fadeUp = {
 
 const goalEmojis = ['\u{1F30E}', '\u{1F4BB}', '\u{1F510}']
 const supportEmojis = ['\u{1F6E1}', '\u{1F4DA}', '\u{1F310}']
-const supportBtnColors = [
-  'bg-red-500 hover:bg-red-600',
-  'bg-green-500 hover:bg-green-600',
-  'bg-green-500 hover:bg-green-600',
-]
 
 export default function AboutPage() {
   const t = useTranslations('aboutPage')
@@ -29,7 +27,6 @@ export default function AboutPage() {
     title: string
     text: string
     target: string
-    btnText: string
     progress: number
   }>
 
@@ -78,8 +75,12 @@ export default function AboutPage() {
                 {infoKeys.map((key) => (
                   <div key={key}>
                     <div className="text-[0.7rem] text-[var(--light-muted)] uppercase tracking-[0.15em] mb-1">{t(`infoLabels.${key}`)}</div>
-                    {key === 'email' ? (
-                      <a href={`mailto:${t(`infoValues.${key}`)}`} className="text-base font-semibold text-[var(--primary)]">{t(`infoValues.${key}`)}</a>
+                    {key === 'contact' ? (
+                      <ContactChannels iconClassName="w-5 h-5" />
+                    ) : key === 'phone' ? (
+                      <a href={WHATSAPP_URL} className="text-base font-semibold text-[var(--primary)] hover:underline">
+                        {t(`infoValues.${key}`)}
+                      </a>
                     ) : (
                       <div className="text-base font-semibold text-[var(--light)]">{t(`infoValues.${key}`)}</div>
                     )}
@@ -129,15 +130,31 @@ export default function AboutPage() {
                   <span>{t('currencyZero')}</span>
                   <span>{t('currencyOf', { target: c.target })}</span>
                 </div>
-                <div className="h-1 rounded-full bg-white/[0.08] overflow-hidden mb-5">
+                <div className="h-1 rounded-full bg-white/[0.08] overflow-hidden">
                   <div className="h-full rounded-full bg-gradient-to-r from-[var(--primary)] to-[#ff8800]" style={{ width: `${c.progress}%` }} />
                 </div>
-                <button type="button" disabled aria-disabled="true" className={`inline-flex items-center justify-center px-6 py-3 rounded-full text-sm font-semibold text-white transition-all duration-300 opacity-70 cursor-not-allowed ${supportBtnColors[i]}`}>
-                  {c.btnText}
-                </button>
               </motion.div>
             ))}
           </div>
+          <motion.div
+            custom={3}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            className="mt-10 flex flex-col items-center gap-3"
+          >
+            <button
+              type="button"
+              disabled
+              aria-disabled="true"
+              className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-[var(--primary)] to-[#ff8800] shadow-lg shadow-[var(--primary)]/20 opacity-80 cursor-not-allowed"
+            >
+              <Heart className="w-4 h-4 fill-current" />
+              {t('supportDonateBtn')}
+            </button>
+            <p className="text-xs text-[var(--light-muted)]">{t('supportDonateNote')}</p>
+          </motion.div>
         </div>
       </section>
     </>

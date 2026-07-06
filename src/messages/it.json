@@ -236,6 +236,7 @@
     "titleLine2": "Scrivimi — rispondo personalmente.",
     "subtitle": "Nessuna pressione, nessun trucco di vendita. Dimmi di cosa hai bisogno e troveremo insieme la soluzione giusta.",
     "email": "Email",
+    "directContact": "Contatto diretto",
     "phone": "Telefono",
     "location": "Posizione",
     "locationValue": "Zagabria, Croazia",
@@ -279,7 +280,7 @@
     "tools": "Il mio editor",
     "cursor_cta": "Prova Cursor",
     "cursor_badge": "50% di sconto",
-    "cursor_promo": "nel primo mese — l'editor AI con cui costruisco questo sito, piu veloce del codice classico.",
+    "cursor_promo": "nel primo mese — uno degli strumenti che potete provare per codare piu velocemente.",
     "causes_title": "Sostieni progetti che cambiano i Balcani digitali",
     "cause_antiScam": "Anti-truffa",
     "cause_education": "Educazione",
@@ -411,6 +412,7 @@
       "location": "POSIZIONE",
       "experience": "ESPERIENZA",
       "email": "EMAIL",
+      "contact": "CONTATTO",
       "phone": "TELEFONO",
       "languages": "LINGUE"
     },
@@ -418,7 +420,6 @@
       "name": "Dario Imsirović",
       "location": "Zagabria, Croazia",
       "experience": "5 anni",
-      "email": "dario.admin@protosweb.eu",
       "phone": "+385 97 604 39 41",
       "languages": "Croato, Inglese, Tedesco (base)"
     },
@@ -441,26 +442,25 @@
     "supportTitle": "Progetti che cambiano",
     "supportTitleHighlight": "i Balcani digitali",
     "supportSubtitle": "Ogni donazione contribuisce allo sviluppo di una piattaforma per la protezione dalle frodi online e alla costruzione di uno spazio digitale più libero per la nostra regione.",
+    "supportDonateBtn": "Sostieni i progetti",
+    "supportDonateNote": "Donazioni in arrivo — grazie per il supporto.",
     "supportCards": [
       {
         "title": "Attrezzatura per formazione sulla cyber security",
         "text": "Aiutaci ad acquistare server, laptop e software per la formazione online gratuita sulla cyber security.",
         "target": "10.000",
-        "btnText": "Sostieni la formazione",
         "progress": 5
       },
       {
         "title": "Formazione digitale gratuita",
         "text": "Finanzia tutorial video e guide gratuite su sviluppo web, strumenti AI e sicurezza digitale.",
         "target": "10.000",
-        "btnText": "Sostieni la formazione",
         "progress": 3
       },
       {
         "title": "Piattaforme digitali regionali",
         "text": "Costruzione di alternative open source alle piattaforme globali — fatte per i Balcani, dai Balcani.",
         "target": "20.000",
-        "btnText": "Investi nella regione",
         "progress": 2
       }
     ],

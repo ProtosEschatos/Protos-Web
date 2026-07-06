@@ -129,6 +129,7 @@
     "titleLine2": "Javi se — odgovaram osobno.",
     "subtitle": "Bez pritiska i prodajnih trikova. Reci mi što ti treba i zajedno ćemo pronaći pravo rješenje.",
     "email": "Email",
+    "directContact": "Direktan kontakt",
     "phone": "Telefon",
     "location": "Lokacija",
     "locationValue": "Zagreb, Hrvatska",
@@ -165,7 +166,7 @@
     "tools": "Moj editor",
     "cursor_cta": "Isprobaj Cursor",
     "cursor_badge": "50% popusta",
-    "cursor_promo": "na prvi mjesec — AI editor kojim gradim ovu stranicu, brže od klasičnog koda.",
+    "cursor_promo": "na prvi mjesec — jedan od alata koji možete isprobati za brže i pametnije kodiranje.",
     "causes_title": "Podrzite projekte koji mijenjaju digitalni Balkan",
     "cause_antiScam": "Anti-scam",
     "cause_education": "Edukacija",
@@ -252,6 +253,7 @@
       "location": "LOKACIJA",
       "experience": "ISKUSTVO",
       "email": "EMAIL",
+      "contact": "KONTAKT",
       "phone": "TELEFON",
       "languages": "JEZICI"
     },
@@ -259,7 +261,6 @@
       "name": "Dario Imsirović",
       "location": "Zagreb, Hrvatska",
       "experience": "5 godina",
-      "email": "dario.admin@protosweb.eu",
       "phone": "+385 97 604 39 41",
       "languages": "Hrvatski, Engleski, Deutsch (osnovno)"
     },
@@ -273,10 +274,12 @@
     "supportTitle": "Projekti koji mijenjaju",
     "supportTitleHighlight": "digitalne Balkane",
     "supportSubtitle": "Svaka donacija doprinosi razvoju platforme za zastitu od internetskih prijevara i gradnji slobodnijeg digitalnog prostora za nasu regiju.",
+    "supportDonateBtn": "Podrzi projekte",
+    "supportDonateNote": "Donacije uskoro — hvala na podrsci.",
     "supportCards": [
-      { "title": "Oprema za edukaciju o cyber sigurnosti", "text": "Pomozite nam nabaviti server, laptop i softver za besplatnu online edukaciju o cyber sigurnosti — za sve koji zele nauciti kako se zastititi online.", "target": "10.000", "btnText": "Podrzi edukaciju", "progress": 5 },
-      { "title": "Besplatna digitalna edukacija", "text": "Financirajte besplatne HR video tutoriale i vodiče o web razvoju, AI alatima i digitalnoj sigurnosti.", "target": "10.000", "btnText": "Podrzi edukaciju", "progress": 3 },
-      { "title": "Regionalne digitalne platforme", "text": "Gradnja open source alternativa globalnim platformama — napravljeno za Balkan, od Balkana.", "target": "20.000", "btnText": "Ulozi u regiju", "progress": 2 }
+      { "title": "Oprema za edukaciju o cyber sigurnosti", "text": "Pomozite nam nabaviti server, laptop i softver za besplatnu online edukaciju o cyber sigurnosti — za sve koji zele nauciti kako se zastititi online.", "target": "10.000", "progress": 5 },
+      { "title": "Besplatna digitalna edukacija", "text": "Financirajte besplatne HR video tutoriale i vodiče o web razvoju, AI alatima i digitalnoj sigurnosti.", "target": "10.000", "progress": 3 },
+      { "title": "Regionalne digitalne platforme", "text": "Gradnja open source alternativa globalnim platformama — napravljeno za Balkan, od Balkana.", "target": "20.000", "progress": 2 }
     ],
     "currencyZero": "0 €",
     "currencyOf": "od {target} €"

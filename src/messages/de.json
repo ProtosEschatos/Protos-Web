@@ -236,6 +236,7 @@
     "titleLine2": "Melden Sie sich — ich antworte persönlich.",
     "subtitle": "Kein Druck, keine Verkaufstricks. Sagen Sie mir, was Sie brauchen, und wir finden gemeinsam die richtige Lösung.",
     "email": "E-Mail",
+    "directContact": "Direkter Kontakt",
     "phone": "Telefon",
     "location": "Standort",
     "locationValue": "Zagreb, Kroatien",
@@ -279,7 +280,7 @@
     "tools": "Mein Editor",
     "cursor_cta": "Cursor testen",
     "cursor_badge": "50% Rabatt",
-    "cursor_promo": "im ersten Monat — der KI-Editor, mit dem ich diese Seite baue, schneller als klassisches Coden.",
+    "cursor_promo": "im ersten Monat — eines der Werkzeuge, die Sie fur schnelleres Coden ausprobieren konnen.",
     "causes_title": "Unterstutzen Sie Projekte, die den digitalen Balkan verandern",
     "cause_antiScam": "Anti-Betrug",
     "cause_education": "Bildung",
@@ -411,6 +412,7 @@
       "location": "STANDORT",
       "experience": "ERFAHRUNG",
       "email": "E-MAIL",
+      "contact": "KONTAKT",
       "phone": "TELEFON",
       "languages": "SPRACHEN"
     },
@@ -418,7 +420,6 @@
       "name": "Dario Imsirović",
       "location": "Zagreb, Kroatien",
       "experience": "5 Jahre",
-      "email": "dario.admin@protosweb.eu",
       "phone": "+385 97 604 39 41",
       "languages": "Kroatisch, Englisch, Deutsch (Grundkenntnisse)"
     },
@@ -441,26 +442,25 @@
     "supportTitle": "Projekte, die den",
     "supportTitleHighlight": "digitalen Balkan verändern",
     "supportSubtitle": "Jede Spende trägt zur Entwicklung einer Plattform zum Schutz vor Internetbetrug und zum Aufbau eines freieren digitalen Raums für unsere Region bei.",
+    "supportDonateBtn": "Projekte unterstützen",
+    "supportDonateNote": "Spenden demnächst — danke für Ihre Unterstützung.",
     "supportCards": [
       {
         "title": "Ausstattung für Cyber-Security-Schulungen",
         "text": "Helfen Sie uns, Server, Laptop und Software für kostenlose Online-Schulungen zur Cyber Security zu beschaffen.",
         "target": "10.000",
-        "btnText": "Bildung unterstützen",
         "progress": 5
       },
       {
         "title": "Kostenlose digitale Bildung",
         "text": "Finanzieren Sie kostenlose Video-Tutorials und Leitfäden zu Webentwicklung, KI-Tools und digitaler Sicherheit.",
         "target": "10.000",
-        "btnText": "Bildung unterstützen",
         "progress": 3
       },
       {
         "title": "Regionale digitale Plattformen",
         "text": "Open-Source-Alternativen zu globalen Plattformen — gemacht für den Balkan, vom Balkan.",
         "target": "20.000",
-        "btnText": "In die Region investieren",
         "progress": 2
       }
     ],

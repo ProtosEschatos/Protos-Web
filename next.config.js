@@ -35,8 +35,6 @@ const nextConfig = {
       { protocol: 'https', hostname: '**.supabase.co' },
       { protocol: 'https', hostname: 'www.protosweb.eu' },
       { protocol: 'https', hostname: 'protosweb.eu' },
-      { protocol: 'https', hostname: 'www.protos-design.net' },
-      { protocol: 'https', hostname: 'protos-design.net' },
     ],
   },
 

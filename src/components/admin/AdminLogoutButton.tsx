@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from '@/routing'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 export default function AdminLogoutButton() {

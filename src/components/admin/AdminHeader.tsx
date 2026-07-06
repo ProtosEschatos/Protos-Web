@@ -1,3 +1,4 @@
+import AdminLink from '@/components/admin/AdminLink'
 import { SITE_URL } from '@/lib/site'
 import ProtosLogo from '@/components/ui/ProtosLogo'
 import AdminLogoutButton from '@/components/admin/AdminLogoutButton'
@@ -5,14 +6,16 @@ import AdminLogoutButton from '@/components/admin/AdminLogoutButton'
 export default function AdminHeader() {
   return (
     <header className="relative z-[2] border-b border-white/5 bg-[#100818]/60 backdrop-blur-md">
-      <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
+      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between gap-4">
+        <AdminLink href="/admin" className="flex items-center gap-3 group">
           <ProtosLogo size={32} />
           <div>
             <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--primary)]">Privatno</p>
-            <p className="text-sm font-semibold text-[var(--light)]">Ops panel</p>
+            <p className="text-sm font-semibold text-[var(--light)] group-hover:text-[var(--primary)] transition-colors">
+              Kontrolna ploča
+            </p>
           </div>
-        </div>
+        </AdminLink>
         <div className="flex items-center gap-3">
           <a
             href={SITE_URL}

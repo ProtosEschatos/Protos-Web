@@ -1,6 +1,8 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts'
 import { createClient } from 'jsr:@supabase/supabase-js@2'
 
+// Called by GitHub cron with Authorization: Bearer KEEP_ALIVE_SECRET (no Supabase JWT).
+
 Deno.serve(async (req: Request) => {
   const secret = Deno.env.get('KEEP_ALIVE_SECRET')
   const auth = req.headers.get('Authorization')

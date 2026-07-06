@@ -25,7 +25,7 @@ DNS records already present (check Resend dashboard for verification status):
 |--------|---------|
 | `send.protosweb.eu` TXT SPF | Resend sending (`include:amazonses.com`) |
 | `resend._domainkey.protosweb.eu` TXT | DKIM |
-| `_dmarc.protosweb.eu` TXT | DMARC — update `rua` to `dario.admin@protosweb.eu` if still pointing at old domain |
+| `_dmarc.protosweb.eu` TXT | DMARC — `rua=mailto:dario.admin@protosweb.eu` ✅ |
 
 Zoho MX records for receiving mail must remain alongside Resend records.
 

@@ -22,18 +22,20 @@ export CLOUDFLARE_ZONE_ID=76b7e8a0944ccdbca556b65956747930
 
 ---
 
-## Current gaps (check in Cloudflare dashboard)
+## Current status (verified 2026-07-06)
 
-As of 2026-07-06, public DNS lookup may still show (fix via dashboard or `scripts/fix-cloudflare-dns.sh` with **Zone → DNS → Edit** token, not IDE `cfat_` / Internal DNS View only):
+All email DNS records are configured. Public `dig` confirms:
 
-| Issue | Fix |
-|-------|-----|
-| **DMARC `rua`** still `contact@protos-design.net` | Update to `dario.admin@protosweb.eu` |
-| **Duplicate `brevo-code` TXT** on apex | Keep `360956...`, delete `c2e6097f...` |
-| **SPF apex** missing Brevo | `v=spf1 include:zohomail.eu include:spf.brevo.com ~all` |
-| **Legacy `brevo-code` TXT** on apex | **Keep** — Brevo domain verification |
+| Check | Status |
+|-------|--------|
+| MX Zoho | ✅ |
+| SPF apex (Zoho + Brevo) | ✅ |
+| DMARC `rua` → `dario.admin@protosweb.eu` | ✅ |
+| Single `brevo-code` on apex | ✅ |
+| Resend `send` MX + SPF + `resend._domainkey` DKIM | ✅ |
+| Resend dashboard `protosweb.eu` | Verified (eu-west-1) |
 
-MX (Zoho) and Resend sending records are configured.
+Apex A/CNAME stay **DNS only** (grey cloud) for Vercel — intentional.
 
 ---
 

@@ -1,21 +1,19 @@
 # Protos-Web — Project Memory
 
-> **Last updated:** 2026-07-06
+> **Last updated:** 2026-07-06 (večer)
 > **Live:** https://www.protosweb.eu
 > **Repo:** `ProtosEschatos/Protos-Web`
-> **Latest commit:** email infra + PROJECT-MEMORY (ovaj commit)
+> **Latest commit:** `778db23` — security.txt + DNS fix script + docs
 
 ---
 
 ## Gdje si stao (TL;DR)
 
-**Email stack (2026-07-06):** `dario.admin@protosweb.eu` na Zoho Mail (inbox) + Resend (slanje s web stranice). Cloudflare MX za Zoho ✅. Resend domena + novi API key u Supabase secrets ✅. `src/lib/site.ts` = single source of truth.
+**Email + DNS (2026-07-06):** Sve na `dario.admin@protosweb.eu`. Zoho inbox (MX) ✅. Resend verified (eu-west-1), DNS na `send` + `resend._domainkey` ✅. Brevo DKIM + brevo-code ✅. DMARC `rua` → `dario.admin@protosweb.eu` ✅. SPF apex Zoho+Brevo ✅. Nema duplih TXT zapisa.
 
-**Kritičan fix:** `NEXT_PUBLIC_SUPABASE_URL` nedostajao na Vercel **Production** → kontakt forma vraćala "not configured". Dodan + redeploy.
+**Security:** `public/.well-known/security.txt` live ✅. `ADMIN_SECRET` samo Vercel (nije u Supabase secrets). Edge fn redeployane.
 
-**GA4:** `G-HR9HK4SR7Q` (consent-gated).
-
-**Preostalo:** DMARC `rua` → `dario.admin@protosweb.eu`; IMAP/SMTP opcionalno (mobitel); online presence linkovi placeholderi; design asset slike.
+**Preostalo:** live test kontakt + newsletter; Cloudflare MFA (ručno); social URL-ovi placeholderi; design asset slike.
 
 ---
 
@@ -24,14 +22,12 @@
 ### Arhitektura
 - **Zoho Mail** `dario.admin@protosweb.eu` — prima admin upite (inbox). IMAP/SMTP opcionalno za mobitel (nije potrebno za site).
 - **Resend** — šalje transakcijske mailove (kontakt forma admin + auto-reply, newsletter welcome).
-- **Cloudflare DNS** (`docs/cloudflare-dns.md`):
+- **Cloudflare DNS** (`docs/cloudflare-dns.md`) — **sve OK (2026-07-06):**
   - MX: `mx.zoho.eu` / `mx2.zoho.eu` / `mx3.zoho.eu` ✅
-  - SPF apex: `include:zohomail.eu` ✅
-  - Resend: `send.protosweb.eu` SPF + `resend._domainkey` DKIM ✅
-  - DMARC: još `rua=contact@protos-design.net` → promijeniti u `dario.admin@protosweb.eu`
-
-- **Resend API key:** u Supabase secrets. **Ne commitati u repo.**
-- **Brevo:** `BREVO_API_KEY` u Supabase. DNS: `brevo-code:360956dbf3c469b26dacf873722764d9` na `@` (obriši stari `c2e6097f...` duplikat).
+  - SPF apex: `include:zohomail.eu include:spf.brevo.com` ✅
+  - DMARC: `rua=mailto:dario.admin@protosweb.eu` ✅
+  - Brevo: `brevo-code:360956...` (jedan zapis) + `brevo1/2._domainkey` CNAME ✅
+  - Resend: `send` MX+SPF + `resend._domainkey` DKIM ✅; domena **Verified** (eu-west-1)
 
 ### Kod
 - `src/lib/site.ts` — `CONTACT_EMAIL`, `SITE_URL`, `SITE_DOMAIN`
@@ -141,4 +137,5 @@ Ključne datoteke: `src/components/three/SpaceGallery.tsx` (phase UI), `showcase
 - **Opcionalno:** spojiti DB sadržaj (`services`/`process`/`pricing`/`testimonials`) na frontend preko `content` edge funkcije umjesto hardkodiranog i18n.
 - **Opcionalno:** Stripe/donacije (`donations`, `stripe_price_id`) — trenutno neiskorišteni ostatak multi-tenant platforme.
 - **Sitno:** `NEXT_PUBLIC_SITE_URL` dodati i za Vercel Preview (točni canonical/sitemap na preview deployevima); razmisliti o `.gitignore` za `test-results/`.
-- **Cloudflare DNS:** MX + Zoho SPF ✅; DMARC `rua` još stara adresa — vidi [`docs/cloudflare-dns.md`](docs/cloudflare-dns.md)
+- **Cloudflare DNS:** sve email zapise ✅ (vidi [`docs/cloudflare-dns.md`](docs/cloudflare-dns.md))
+- **security.txt:** `public/.well-known/security.txt` ✅

@@ -1,9 +1,9 @@
 # Protos-Web — Project Memory
 
-> **Last updated:** 2026-07-05
+> **Last updated:** 2026-07-06
 > **Live:** https://www.protosweb.eu
 > **Repo:** `ProtosEschatos/Protos-Web`
-> **Latest commit:** `8f15a77` — *Harden Supabase backend: security, drift, schema tracking*
+> **Latest commit:** `1dda0ba` — *Online Presence section* (+ design element library, ovaj commit)
 
 ---
 
@@ -15,6 +15,18 @@ Danas (2026-07-05) odrađeno dvoje:
 2. **Backend hardening** — sigurnost, uklanjanje drifta i verzioniranje Supabase sheme; kontakt-mailovi popravljeni.
 
 Sve commitano i pushano na `main`. DB migracije + edge funkcije primijenjene i na živom Supabase projektu (`laqnnzavwbojntfiqmxj`). GitHub Actions deploy pipeline je zelen.
+
+---
+
+## 2026-07-06 — Logo, Online Presence & Design biblioteka
+
+- **Novi animirani logo** (`src/components/ui/ProtosLogo.tsx`): dvije neonske kugle (plava + narančasta) eliptično orbitiraju, spoje se u ljubičasto-zelenu neonsku kuglu, pa se razdvoje. Poštuje `prefers-reduced-motion`. Stari `ProtosEclipseLogo` obrisan.
+- **"Moja online prisutnost"** sekcija na `/o-meni` (`components/sections/OnlinePresence.tsx` + `ui/BrandIcons.tsx` + `lib/social-links.ts`) — socials + freelance platforme kao pločice. Nav gumb `PRISUTNOST` u headeru + mobilnom meniju (deep-link `#online-presence`). **Linkovi su placeholderi (`#`)** osim WhatsAppa — čekaju prave URL-ove.
+- **Design element library (baza):**
+  - Repo: `design/references/README.md` (katalog 22 kategorije / ~232 elementa) + `design/references/{boards,elements}/` za slike.
+  - Cursor pravilo `.cursor/rules/design-system.mdc` (`alwaysApply`) — vizualni jezik (cosmic/neon/glassmorphism) + popis kategorija; AI uvijek ima kontekst.
+  - Supabase: tablica `public.design_elements` (RLS on, service-role only) + Storage bucket `design-assets` (public, bez listanja). Migracije `20260706001900_design_elements_library.sql` + `20260706002000_seed_design_elements.sql`. Tipovi regenerirani u `database.types.ts`.
+  - **TODO:** uploadati stvarne slike u bucket / `design/references/` i upisati `storage_path`+`image_url` u redove.
 
 ---
 

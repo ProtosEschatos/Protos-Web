@@ -105,6 +105,45 @@ export type Database = {
           },
         ]
       }
+      design_elements: {
+        Row: {
+          category: string
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          name: string
+          sort_order: number
+          source_board: string | null
+          storage_path: string | null
+          tags: string[]
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          sort_order?: number
+          source_board?: string | null
+          storage_path?: string | null
+          tags?: string[]
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          sort_order?: number
+          source_board?: string | null
+          storage_path?: string | null
+          tags?: string[]
+        }
+        Relationships: []
+      }
       donations: {
         Row: {
           amount: number

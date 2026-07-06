@@ -1,0 +1,39 @@
+---
+description: Protos Web visual design language + element library reference
+alwaysApply: true
+---
+
+# Protos Web — Design Language
+
+Protos Web is **cosmic / neon / glassmorphism** on a dark space background. When
+building or restyling UI, match this language and reuse patterns from the element
+library (`design/references/README.md`).
+
+## Palette (CSS vars, defined in globals)
+
+- `--dark #0a0a1a` (bg) · `--dark-card #0f0f2a` (panels)
+- `--primary #ff6600` (sunset orange brand accent) · `--secondary #8b5cf6` (purple) · `--accent #06b6d4` (cyan)
+- `--light #e8e8f0` (text) · `--light-muted #8888aa`
+- Neon effect palette: cyan `#22d3ee`, blue `#3b82f6`, purple `#a855f7`, magenta `#ec4899`, neon green `#39ff9e`
+
+## Rules of thumb
+
+- Dark space bg + glassmorphism panels: subtle blur, thin light border `rgba(255,255,255,0.06–0.08)`, rounded (`rounded-2xl`).
+- Prefer glow / neon borders + soft shadows over hard lines.
+- Animate only `opacity` + `transform` (see `dom-canvas-layers.mdc`). No animating width/height/top/left/heavy filters on large fixed layers.
+- 3D/spatial → R3F in `src/components/three/**`. UI chrome/content → DOM.
+- Framer Motion for DOM motion; respect `prefers-reduced-motion`.
+
+## Element library (always available)
+
+Catalog of reusable element concepts lives in **`design/references/README.md`** and
+in Supabase (`public.design_elements` table + `design-assets` storage bucket).
+
+Categories: `text-animations`, `scroll-animations`, `page-transitions`, `card-layouts`,
+`card-hover`, `card-hover-themes`, `card-bg-textures`, `hero-backgrounds`,
+`animated-bg-patterns`, `lighting-backgrounds`, `parallax-layers`, `buttons`,
+`navigation`, `modals`, `logo-treatments`, `icon-badges`, `dividers`, `service-icons`,
+`blog-ui`, `about-assets`, `process-assets`, `loaders`.
+
+When asked for a new UI element, first check the catalog for a matching pattern and
+implement it in this visual language before inventing something new.

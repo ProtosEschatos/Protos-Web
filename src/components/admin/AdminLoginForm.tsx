@@ -25,7 +25,7 @@ export default function AdminLoginForm() {
       const data = await res.json()
 
       if (!res.ok) {
-        setError(data.message === 'Admin not configured' ? 'Admin nije konfiguriran (ADMIN_SECRET).' : 'Pogrešna lozinka.')
+        setError(data.message || 'Neispravna lozinka ili pristup trenutno nije dostupan.')
         return
       }
 
@@ -33,15 +33,15 @@ export default function AdminLoginForm() {
       router.push(from)
       router.refresh()
     } catch {
-      setError('Greška pri prijavi.')
+      setError('Greška pri prijavi. Pokušaj ponovno.')
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-6 bg-[var(--dark)]">
-      <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[var(--dark-card)]/80 backdrop-blur-md p-8 shadow-2xl">
+    <div className="min-h-screen flex items-center justify-center px-6 py-12">
+      <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[var(--dark-card)]/75 backdrop-blur-md p-8 shadow-2xl shadow-black/40">
         <div className="flex items-center gap-3 mb-8">
           <ProtosLogo size={40} />
           <div>
@@ -61,7 +61,7 @@ export default function AdminLoginForm() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               autoComplete="current-password"
-              className="w-full px-4 py-3 rounded-xl bg-[var(--dark)] border border-white/10 text-[var(--light)] focus:outline-none focus:border-[var(--primary)]/50"
+              className="w-full px-4 py-3 rounded-xl bg-[var(--dark)]/80 border border-white/10 text-[var(--light)] focus:outline-none focus:border-[var(--primary)]/50"
               required
             />
           </div>

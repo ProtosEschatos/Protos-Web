@@ -1,6 +1,5 @@
 import { setRequestLocale } from 'next-intl/server'
 import { getAdminStatus } from '@/actions/admin-status'
-import AdminLogoutButton from '@/components/admin/AdminLogoutButton'
 import { CONTACT_EMAIL, SITE_DOMAIN, SITE_URL } from '@/lib/site'
 import { ExternalLink, Mail, Server, Shield } from 'lucide-react'
 
@@ -11,17 +10,13 @@ export default async function AdminPage({ params: { locale } }: Props) {
   const status = await getAdminStatus()
 
   return (
-    <div className="pt-28 pb-20">
+    <div className="py-10 md:py-14">
       <div className="max-w-5xl mx-auto px-6">
-        <div className="flex flex-wrap items-start justify-between gap-4 mb-10">
-          <div>
-            <p className="text-xs uppercase tracking-[0.2em] text-[var(--primary)] mb-2">Privatno</p>
-            <h1 className="text-3xl md:text-4xl font-bold text-[var(--light)]">Ops panel</h1>
-            <p className="text-[var(--light-muted)] mt-2">
-              Email, DNS i brzi linkovi za {SITE_DOMAIN}
-            </p>
-          </div>
-          <AdminLogoutButton />
+        <div className="mb-10">
+          <h1 className="text-3xl md:text-4xl font-bold text-[var(--light)]">Ops panel</h1>
+          <p className="text-[var(--light-muted)] mt-2">
+            Email, DNS i brzi linkovi za {SITE_DOMAIN}
+          </p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">

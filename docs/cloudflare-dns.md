@@ -92,7 +92,7 @@ Google site verification TXT can stay.
 | **Zoho Mail** | Mailbox `dario.admin@protosweb.eu` |
 | **Resend** | Domain `protosweb.eu` verified; API key in Supabase |
 | **Supabase Edge secrets** | `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `CONTACT_EMAIL` |
-| **Vercel** | `NEXT_PUBLIC_SITE_URL=https://www.protosweb.eu` (Production + Preview); `ADMIN_SECRET` |
+| **Vercel** | `NEXT_PUBLIC_SITE_URL`, `ADMIN_SECRET` (admin panel only — **not** Supabase) |
 | **GitHub Actions** | `SUPABASE_URL`, `SUPABASE_PROJECT_REF`, `SUPABASE_ACCESS_TOKEN`, `KEEP_ALIVE_SECRET` — no email secrets needed |
 | **Code** | `src/lib/site.ts` + edge function fallbacks |
 

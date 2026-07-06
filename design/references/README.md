@@ -111,6 +111,9 @@ Svaki red u tablici `public.design_elements` ima: `category`, `name`, `descripti
 ### 22. `loaders` — loaderi / progress
 `flame_ring`, `vine_bar`, `wave_loader`, `orbit_loader`, `hourglass`, `snowflake`, `matrix_percent`, `dna_helix`, `morph_shapes`, `plasma_globe`, `skeleton_loader`, `holographic_connection`
 
+### 23. `admin-assets` — privatni admin panel
+`mystical_knight_mark` — neon glass sahovski konj (watermark pozadina `/admin`)
+
 ---
 
 ## Sinkronizacija repo ↔ Supabase

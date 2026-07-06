@@ -1,0 +1,15 @@
+<svg viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="knightFill" x1="30%" y1="0%" x2="70%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.35"/>
+      <stop offset="45%" stop-color="#ff6600" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.15"/>
+    </linearGradient>
+    <linearGradient id="knightStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff8800"/>
+      <stop offset="50%" stop-color="#a78bfa"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+  </defs>
+  <path d="M100 18c-8 12-22 18-22 36 0 10 4 18 12 24-6 4-10 12-10 22 0 14 10 26 24 30v8H56c-6 0-10 4-10 10v12c0 6 4 10 10 10h88c6 0 10-4 10-10v-12c0-6-4-10-10-10h-48v-8c14-4 24-16 24-30 0-10-4-18-10-22 8-6 12-14 12-24 0-18-14-24-22-36z" fill="url(#knightFill)" stroke="url(#knightStroke)" stroke-width="2.5" stroke-linejoin="round"/>
+</svg>

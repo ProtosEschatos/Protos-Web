@@ -63,7 +63,7 @@ See [cloudflare-dns.md](./cloudflare-dns.md). Critical:
 
 ## Test
 
-1. Send mail **to** `dario.admin@protosweb.eu` from Gmail → Zoho inbox
+1. Send mail **to** `dario.admin@protosweb.eu` from any external mailbox (npr. Proton) → Zoho inbox
 2. Submit [kontakt](https://www.protosweb.eu/kontakt) → admin mail in Zoho + visitor auto-reply
 3. Newsletter signup in footer → one welcome email (Brevo)
 4. Admin `/admin/inbox` → contact form rows in Supabase `contacts`

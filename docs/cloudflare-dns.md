@@ -2,13 +2,35 @@
 
 Domain DNS is managed in **Cloudflare**. Full email architecture: [email-setup.md](./email-setup.md).
 
+## Cloudflare API token (ProtosWeb)
+
+For agent/scripts to edit public DNS (`protosweb.eu`), the token needs:
+
+| Permission | Level |
+|------------|--------|
+| **Zone → DNS → Edit** | Required (public zone records) |
+| **Zone → Zone → Read** | Recommended |
+
+**Not sufficient alone:** Account **DNS View Write** (Internal DNS views) or Cursor IDE `cfat_` agent tokens — these fail on `/zones/.../dns_records`.
+
+Store token in `CLOUDFLARE_API_TOKEN` (e.g. `~/.config/kilo/.env`), then:
+
+```bash
+export CLOUDFLARE_ZONE_ID=76b7e8a0944ccdbca556b65956747930
+./scripts/fix-cloudflare-dns.sh
+```
+
+---
+
 ## Current gaps (check in Cloudflare dashboard)
 
-As of 2026-07-06, public DNS lookup shows:
+As of 2026-07-06, public DNS lookup may still show (fix via dashboard or `scripts/fix-cloudflare-dns.sh` with **Zone → DNS → Edit** token, not IDE `cfat_` / Internal DNS View only):
 
 | Issue | Fix |
 |-------|-----|
 | **DMARC `rua`** still `contact@protos-design.net` | Update to `dario.admin@protosweb.eu` |
+| **Duplicate `brevo-code` TXT** on apex | Keep `360956...`, delete `c2e6097f...` |
+| **SPF apex** missing Brevo | `v=spf1 include:zohomail.eu include:spf.brevo.com ~all` |
 | **Legacy `brevo-code` TXT** on apex | **Keep** — Brevo domain verification |
 
 MX (Zoho) and Resend sending records are configured.
@@ -101,6 +123,6 @@ Google site verification TXT can stay.
 
 ## Test after DNS propagates (up to 24h)
 
-1. Send email **to** `dario.admin@protosweb.eu` from Gmail → appears in Zoho inbox
+1. Send email **to** `dario.admin@protosweb.eu` from any external mailbox → appears in Zoho inbox
 2. Submit https://www.protosweb.eu/kontakt → admin mail in Zoho + auto-reply to submitter
 3. Newsletter signup in footer → welcome email from `dario.admin@protosweb.eu`

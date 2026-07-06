@@ -47,3 +47,4 @@ Set in `next.config.js`: HSTS, `X-Frame-Options`, `X-Content-Type-Options`, `Ref
 - Enable 2FA on Vercel, GitHub, Supabase, Cloudflare, Zoho
 - Use strong unique `ADMIN_SECRET` (20+ chars)
 - Cloudflare WAF / DNS — see [cloudflare-dns.md](./cloudflare-dns.md)
+- Publish `/.well-known/security.txt` (see `public/.well-known/security.txt`)

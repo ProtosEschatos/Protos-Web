@@ -5,13 +5,38 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
-const WELCOME_SUBJECT = 'Dobrodošli — Protos Web novosti'
+const WELCOME_COPY: Record<string, { subject: string; html: () => string }> = {
+  hr: {
+    subject: 'Dobrodošli — Protos Web novosti',
+    html: () => welcomeHtml('Pozdrav!', 'Uspješno ste se pretplatili na Protos Web novosti.'),
+  },
+  en: {
+    subject: 'Welcome — Protos Web newsletter',
+    html: () => welcomeHtml('Hello!', 'You have successfully subscribed to Protos Web updates.'),
+  },
+  de: {
+    subject: 'Willkommen — Protos Web Newsletter',
+    html: () => welcomeHtml('Hallo!', 'Sie haben den Protos Web Newsletter erfolgreich abonniert.'),
+  },
+  it: {
+    subject: 'Benvenuto — newsletter Protos Web',
+    html: () => welcomeHtml('Ciao!', 'Ti sei iscritto con successo alle novità di Protos Web.'),
+  },
+  es: {
+    subject: 'Bienvenido — newsletter Protos Web',
+    html: () => welcomeHtml('¡Hola!', 'Te has suscrito correctamente a las novedades de Protos Web.'),
+  },
+}
 
-function welcomeHtml(): string {
+function welcomeCopy(language: string) {
+  return WELCOME_COPY[language] ?? WELCOME_COPY.hr
+}
+
+function welcomeHtml(greeting: string, body: string): string {
   return `
     <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px">
-      <h2 style="color:#6366f1">Pozdrav!</h2>
-      <p>Uspješno ste se pretplatili na Protos Web novosti.</p>
+      <h2 style="color:#6366f1">${greeting}</h2>
+      <p>${body}</p>
       <p style="color:#666">Srdačan pozdrav,<br><strong>Dario Imsirović</strong><br>Protos Web</p>
     </div>
   `
@@ -83,7 +108,8 @@ Deno.serve(async (req) => {
     const brevoKey = Deno.env.get('BREVO_API_KEY')
     const fromEmail = Deno.env.get('RESEND_FROM_EMAIL') || 'dario.admin@protosweb.eu'
     const contactEmail = Deno.env.get('CONTACT_EMAIL') || fromEmail
-    const html = welcomeHtml()
+    const welcome = welcomeCopy(language)
+    const html = welcome.html()
 
     if (isNewSubscriber) {
       const adminHtml = adminNotifyHtml(email, language, source)
@@ -98,14 +124,18 @@ Deno.serve(async (req) => {
       if (adminSent) console.log('[subscribe] Admin notified')
     }
 
+    if (isNewSubscriber && brevoKey) {
+      await syncBrevoContact(brevoKey, email, language)
+    }
+
     // Newsletter welcome: Brevo primary → Resend fallback
     let sent = false
     if (brevoKey) {
-      sent = await sendWelcomeViaBrevo(brevoKey, fromEmail, email, html)
+      sent = await sendWelcomeViaBrevo(brevoKey, fromEmail, email, welcome.subject, html)
       if (sent) console.log('[subscribe] Welcome sent via Brevo')
     }
     if (!sent && resendKey) {
-      sent = await sendWelcomeViaResend(resendKey, fromEmail, email, html)
+      sent = await sendWelcomeViaResend(resendKey, fromEmail, email, welcome.subject, html)
       if (sent) console.log('[subscribe] Welcome sent via Resend fallback')
     }
 
@@ -125,10 +155,29 @@ Deno.serve(async (req) => {
   }
 })
 
+async function syncBrevoContact(apiKey: string, email: string, language: string): Promise<void> {
+  const listId = Number(Deno.env.get('BREVO_NEWSLETTER_LIST_ID') || '0')
+  try {
+    await fetch('https://api.brevo.com/v3/contacts', {
+      method: 'POST',
+      headers: { 'api-key': apiKey, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email,
+        attributes: { LANGUAGE: language.toUpperCase() },
+        listIds: listId > 0 ? [listId] : undefined,
+        updateEnabled: true,
+      }),
+    })
+  } catch {
+    // non-blocking
+  }
+}
+
 async function sendWelcomeViaBrevo(
   apiKey: string,
   fromEmail: string,
   toEmail: string,
+  subject: string,
   html: string,
 ): Promise<boolean> {
   try {
@@ -138,7 +187,7 @@ async function sendWelcomeViaBrevo(
       body: JSON.stringify({
         sender: { name: 'Dario | Protos Web', email: fromEmail },
         to: [{ email: toEmail, name: toEmail.split('@')[0] }],
-        subject: WELCOME_SUBJECT,
+        subject,
         htmlContent: html,
       }),
     })
@@ -152,6 +201,7 @@ async function sendWelcomeViaResend(
   apiKey: string,
   fromEmail: string,
   toEmail: string,
+  subject: string,
   html: string,
 ): Promise<boolean> {
   try {
@@ -161,7 +211,7 @@ async function sendWelcomeViaResend(
       body: JSON.stringify({
         from: `Dario | Protos Web <${fromEmail}>`,
         to: [toEmail],
-        subject: WELCOME_SUBJECT,
+        subject,
         html,
       }),
     })

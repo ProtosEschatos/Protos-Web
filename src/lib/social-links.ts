@@ -20,6 +20,13 @@ export const socialItems: PresenceItem[] = [
   { id: 'whatsapp', label: 'WhatsApp', href: WHATSAPP_URL, brand: '#25d366' },
 ]
 
+/** Public profile URLs for JSON-LD sameAs (live links only). */
+export function getLiveSocialUrls(): string[] {
+  return socialItems
+    .filter((item) => !item.pending && item.href !== '#' && item.href.startsWith('http'))
+    .map((item) => item.href)
+}
+
 export const platformItems: PresenceItem[] = [
   { id: 'upwork', label: 'Upwork', href: '#', brand: '#14a800', pending: true },
   { id: 'freelancer', label: 'Freelancer.com', href: '#', brand: '#29b2fe', pending: true },

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { getBlogPostBySlug } from '@/actions/blog'
+import { getBlogPostBySlug, getBlogSlugLocales } from '@/actions/blog'
 import BlogPostContent from '@/components/blog/BlogPostContent'
 import { Link } from '@/routing'
 import { ArrowLeft, Calendar } from 'lucide-react'
@@ -14,11 +14,14 @@ export async function generateMetadata({ params: { locale, slug } }: Props): Pro
   const post = await getBlogPostBySlug(slug, locale)
   if (!post) return {}
 
+  const slugLocales = await getBlogSlugLocales(slug)
+
   return buildBlogPostMetadata({
     title: post.title,
     description: post.excerpt || post.title,
     locale,
     slug,
+    slugLocales: slugLocales.length > 0 ? slugLocales : [locale],
   })
 }
 

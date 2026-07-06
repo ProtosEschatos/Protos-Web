@@ -120,8 +120,38 @@ export default function PortfolioAdminForm({ item }: Props) {
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
             placeholder="https://..."
-            className="w-full px-4 py-3 rounded-xl bg-[var(--dark)]/80 border border-white/10 text-[var(--light)]"
+            className="w-full px-4 py-3 rounded-xl bg-[var(--dark)]/80 border border-white/10 text-[var(--light)] mb-2"
           />
+          <label className="inline-flex items-center gap-2 text-xs text-[var(--primary)] cursor-pointer">
+            <input
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={async (e) => {
+                const file = e.target.files?.[0]
+                if (!file) return
+                setLoading(true)
+                setError('')
+                try {
+                  const formData = new FormData()
+                  formData.append('file', file)
+                  const res = await fetch('/api/admin/upload', { method: 'POST', body: formData })
+                  const data = await res.json()
+                  if (!data.success || !data.url) {
+                    setError(data.error || 'Upload nije uspio.')
+                    return
+                  }
+                  setImageUrl(data.url)
+                } catch {
+                  setError('Upload nije uspio.')
+                } finally {
+                  setLoading(false)
+                  e.target.value = ''
+                }
+              }}
+            />
+            Učitaj sliku u Storage
+          </label>
         </div>
         <div>
           <label className="block text-sm text-[var(--light-muted)] mb-2">URL projekta</label>

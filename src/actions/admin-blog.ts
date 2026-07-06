@@ -4,11 +4,19 @@ import { revalidatePath } from 'next/cache'
 import { requireAdmin } from '@/lib/require-admin'
 import { slugify } from '@/lib/slug'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { buildLocalePath } from '@/lib/seo'
 import type { Database } from '@/lib/database.types'
 import type { BlogFormInput } from '@/types/admin-blog'
 
 type BlogInsert = Database['public']['Tables']['blog_posts']['Insert']
 type BlogUpdate = Database['public']['Tables']['blog_posts']['Update']
+
+function revalidateBlogPaths(language: string, slug: string) {
+  revalidatePath('/blog')
+  revalidatePath(buildLocalePath(language, '/blog'))
+  revalidatePath(buildLocalePath(language, `/blog/${slug}`))
+  revalidatePath('/')
+}
 
 export async function adminCreateBlogPost(
   input: BlogFormInput,
@@ -29,8 +37,7 @@ export async function adminCreateBlogPost(
   const { data, error } = await supabaseAdmin.from('blog_posts').insert(row).select('id').single()
   if (error) return { success: false, error: error.message }
 
-  revalidatePath('/blog')
-  revalidatePath('/')
+  revalidateBlogPaths(input.language, slug)
   return { success: true, id: data.id }
 }
 
@@ -53,8 +60,7 @@ export async function adminUpdateBlogPost(
   const { error } = await supabaseAdmin.from('blog_posts').update(row).eq('id', id)
   if (error) return { success: false, error: error.message }
 
-  revalidatePath('/blog')
-  revalidatePath('/')
+  revalidateBlogPaths(input.language, row.slug as string)
   return { success: true }
 }
 
@@ -62,10 +68,20 @@ export async function adminDeleteBlogPost(id: string): Promise<{ success: boolea
   await requireAdmin()
   if (!supabaseAdmin) return { success: false, error: 'Supabase nije konfiguriran' }
 
+  const { data: existing } = await supabaseAdmin
+    .from('blog_posts')
+    .select('slug, language')
+    .eq('id', id)
+    .maybeSingle()
+
   const { error } = await supabaseAdmin.from('blog_posts').delete().eq('id', id)
   if (error) return { success: false, error: error.message }
 
-  revalidatePath('/blog')
-  revalidatePath('/')
+  if (existing?.slug && existing.language) {
+    revalidateBlogPaths(existing.language, existing.slug)
+  } else {
+    revalidatePath('/blog')
+    revalidatePath('/')
+  }
   return { success: true }
 }

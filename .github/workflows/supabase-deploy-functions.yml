@@ -24,7 +24,7 @@ jobs:
       - name: Deploy all edge functions
         run: |
           # submit-form: DB webhook has no JWT; subscribe: called with anon key from Next.js API
-          NO_JWT="submit-form subscribe"
+          NO_JWT="submit-form subscribe keep-alive"
           for dir in supabase/functions/*/; do
             fn=$(basename "$dir")
             echo "Deploying $fn..."

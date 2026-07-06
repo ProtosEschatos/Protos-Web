@@ -19,3 +19,5 @@ jobs:
       - run: npm run lint
       - run: npm run type-check
       - run: npm run build
+      - run: npm start &
+      - run: sleep 8 && npm test

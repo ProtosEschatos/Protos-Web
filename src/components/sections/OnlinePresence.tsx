@@ -11,6 +11,7 @@ const fadeUp = {
 }
 
 function PresenceTile({ item, index }: { item: PresenceItem; index: number }) {
+  const t = useTranslations('onlinePresence')
   const isPending = item.pending || item.href === '#'
   const className =
     'group/tile flex items-center gap-3 rounded-2xl border border-[var(--border-card)] bg-[var(--dark-card)] px-4 py-3.5 transition-all duration-300' +
@@ -28,7 +29,7 @@ function PresenceTile({ item, index }: { item: PresenceItem; index: number }) {
         {item.label}
         {isPending ? (
           <span className="ml-2 text-[10px] font-medium uppercase tracking-wider text-[var(--light-muted)]">
-            Uskoro
+            {t('pending')}
           </span>
         ) : null}
       </span>
@@ -39,7 +40,7 @@ function PresenceTile({ item, index }: { item: PresenceItem; index: number }) {
     return (
       <motion.div
         role="link"
-        aria-label={`${item.label} — uskoro`}
+        aria-label={`${item.label} — ${t('pending')}`}
         aria-disabled="true"
         custom={index}
         initial="hidden"

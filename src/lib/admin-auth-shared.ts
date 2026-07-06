@@ -9,18 +9,16 @@ export const adminCookieOptions = {
   maxAge: 60 * 60 * 24 * 7,
 }
 
+const LOCALIZED_ADMIN = /^\/(hr|en|de|it|es)\/admin(\/|$)/
+
 export function isAdminPath(pathname: string): boolean {
   const path = pathname.split('?')[0]
-  return (
-    path === '/admin' ||
-    path.startsWith('/admin/') ||
-    /^\/(en|de|it|es)\/admin(\/|$)/.test(path)
-  )
+  return path === '/admin' || path.startsWith('/admin/') || LOCALIZED_ADMIN.test(path)
 }
 
 export function isAdminLoginPath(pathname: string): boolean {
   const path = pathname.split('?')[0]
-  return path === '/admin/login' || /^\/(en|de|it|es)\/admin\/login$/.test(path)
+  return path === '/admin/login' || /^\/(hr|en|de|it|es)\/admin\/login$/.test(path)
 }
 
 async function hmacHex(secret: string, message: string): Promise<string> {

@@ -34,7 +34,7 @@ export default function CookieBanner() {
   }, [])
 
   const accept = () => {
-    saveCookiePreferences(false)
+    saveCookiePreferences(true)
     setVisible(false)
   }
 

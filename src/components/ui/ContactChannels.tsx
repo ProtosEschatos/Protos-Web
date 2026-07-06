@@ -1,4 +1,7 @@
+'use client'
+
 import type { ReactNode } from 'react'
+import { useTranslations } from 'next-intl'
 import { brandGlyph } from '@/components/ui/BrandIcons'
 import { socialItems, type PresenceItem } from '@/lib/social-links'
 
@@ -89,8 +92,10 @@ export default function ContactChannels({
   boxClassName = 'w-10 h-10 rounded-xl bg-[var(--dark-card)] border border-[var(--border-card)] flex items-center justify-center text-[var(--light-muted)] hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all duration-300',
   iconClassName = 'w-4 h-4',
   variant = 'boxed',
-  pendingLabel = 'Uskoro',
+  pendingLabel,
 }: Props) {
+  const t = useTranslations('onlinePresence')
+  const label = pendingLabel ?? t('pending')
   const items = socialItems.filter((item) =>
     (CONTACT_IDS as readonly string[]).includes(item.id),
   )
@@ -104,7 +109,7 @@ export default function ContactChannels({
           boxClassName={boxClassName}
           iconClassName={iconClassName}
           variant={variant}
-          pendingLabel={pendingLabel}
+          pendingLabel={label}
         />
       ))}
     </div>

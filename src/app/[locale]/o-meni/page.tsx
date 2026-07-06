@@ -4,7 +4,8 @@ import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
-import { ArrowRight, BookOpen, Heart } from 'lucide-react'
+import { ArrowRight, BookOpen } from 'lucide-react'
+import DonateButton from '@/components/sections/DonateButton'
 import OnlinePresence from '@/components/sections/OnlinePresence'
 
 import ContactChannels from '@/components/ui/ContactChannels'
@@ -144,15 +145,7 @@ export default function AboutPage() {
             variants={fadeUp}
             className="mt-10 flex flex-col items-center gap-3"
           >
-            <button
-              type="button"
-              disabled
-              aria-disabled="true"
-              className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-[var(--primary)] to-[#ff8800] shadow-lg shadow-[var(--primary)]/20 opacity-80 cursor-not-allowed"
-            >
-              <Heart className="w-4 h-4 fill-current" />
-              {t('supportDonateBtn')}
-            </button>
+            <DonateButton />
             <p className="text-xs text-[var(--light-muted)]">{t('supportDonateNote')}</p>
           </motion.div>
         </div>

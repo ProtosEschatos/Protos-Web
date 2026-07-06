@@ -40,6 +40,30 @@ export const PROJECT_LINKS = [
     screenshotMobile: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('protosweb', 'mobile')),
     screenshotDesktop: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('protosweb', 'desktop')),
   },
+  {
+    color: 0x22c55e,
+    link: 'https://www.protosweb.eu/portfolio',
+    screenshotMobile: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('bodulica', 'mobile')),
+    screenshotDesktop: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('bodulica', 'desktop')),
+  },
+  {
+    color: 0xec4899,
+    link: 'https://www.protosweb.eu/portfolio',
+    screenshotMobile: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('zeustrading', 'mobile')),
+    screenshotDesktop: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('zeustrading', 'desktop')),
+  },
+  {
+    color: 0x8b5cf6,
+    link: 'https://www.protosweb.eu/portfolio',
+    screenshotMobile: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('cosmic-blueprint', 'mobile')),
+    screenshotDesktop: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('cosmic-blueprint', 'desktop')),
+  },
+  {
+    color: 0x14b8a6,
+    link: 'https://www.protosweb.eu/kontakt',
+    screenshotMobile: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('protosweb', 'mobile')),
+    screenshotDesktop: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('protosweb', 'desktop')),
+  },
 ] as const
 
 export const INITIAL_CHARACTER_HEADING = 0

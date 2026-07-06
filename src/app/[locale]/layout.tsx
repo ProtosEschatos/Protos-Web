@@ -9,8 +9,9 @@ import AppChrome from '@/components/layout/AppChrome'
 import LenisProvider from '@/components/providers/LenisProvider'
 import Analytics from '@/components/providers/Analytics'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { Analytics as VercelAnalytics } from '@vercel/analytics/react'
 import { locales, type Locale } from '@/i18n'
-import { ogImage, organizationJsonLd, siteUrl } from '@/lib/seo'
+import { ogImage, organizationJsonLd, siteUrl, websiteJsonLd, professionalServiceJsonLd } from '@/lib/seo'
 import { BOOT_GATE_INIT_SCRIPT, BOOT_VIDEO } from '@/lib/boot-gate'
 
 const inter = Inter({
@@ -42,6 +43,7 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: '/favicon.svg',
+    apple: '/favicon.svg',
   },
 }
 
@@ -78,13 +80,22 @@ export default async function LocaleLayout({
         </div>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd()) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd()) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(professionalServiceJsonLd()) }}
         />
         <NextIntlClientProvider messages={messages}>
           <LenisProvider>
             <Analytics />
             <AppChrome>{children}</AppChrome>
             <SpeedInsights />
+            <VercelAnalytics />
           </LenisProvider>
         </NextIntlClientProvider>
       </body>

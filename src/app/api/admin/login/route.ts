@@ -15,7 +15,7 @@ function delay(ms: number) {
 
 export async function POST(request: Request) {
   const ip = getClientIp(request)
-  const rate = checkRateLimit(ip)
+  const rate = await checkRateLimit(ip)
 
   if (!rate.ok) {
     return NextResponse.json(
@@ -25,7 +25,10 @@ export async function POST(request: Request) {
   }
 
   if (!process.env.ADMIN_SECRET) {
-    return NextResponse.json({ success: false, message: GENERIC_ERROR }, { status: 503 })
+    return NextResponse.json(
+      { success: false, message: 'Admin pristup nije konfiguriran na serveru (ADMIN_SECRET).' },
+      { status: 503 },
+    )
   }
 
   try {

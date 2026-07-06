@@ -40,7 +40,8 @@ serve(async (req) => {
       })
     }
 
-    const { name, email, phone, service, message } = data
+    const { name, email, phone, service, message, language } = data
+    const lang = language || 'hr'
 
     if (!name || !email || !message) {
       return new Response(JSON.stringify({ error: 'Nedostaju obavezna polja' }), {
@@ -58,16 +59,17 @@ serve(async (req) => {
 
     const adminSubject = `Nova upita — ${name} (${service || 'nije navedeno'})`
     const adminBody = adminHtml(name, email, phone, service, message)
-    const replyBody = autoReplyHtml(name, message)
+    const replyCopy = autoReplyCopy(lang)
+    const replyBody = autoReplyHtml(name, message, lang)
 
     // Contact: Resend (transactional) primary → Brevo fallback. Inbox = Zoho via MX on CONTACT_EMAIL.
     let sent = false
     if (resendKey) {
-      sent = await sendContactViaResend(resendKey, fromEmail, contactEmail, email, name, adminSubject, adminBody, replyBody)
+      sent = await sendContactViaResend(resendKey, fromEmail, contactEmail, email, name, adminSubject, adminBody, replyCopy.subject, replyBody)
       if (sent) console.log('[submit-form] Sent via Resend')
     }
     if (!sent && brevoKey) {
-      sent = await sendContactViaBrevo(brevoKey, fromEmail, contactEmail, email, name, adminSubject, adminBody, replyBody)
+      sent = await sendContactViaBrevo(brevoKey, fromEmail, contactEmail, email, name, adminSubject, adminBody, replyCopy.subject, replyBody)
       if (sent) console.log('[submit-form] Sent via Brevo fallback')
     }
 
@@ -99,6 +101,7 @@ async function sendContactViaResend(
   visitorName: string,
   adminSubject: string,
   adminBody: string,
+  replySubject: string,
   replyBody: string,
 ): Promise<boolean> {
   try {
@@ -119,7 +122,7 @@ async function sendContactViaResend(
         body: JSON.stringify({
           from: `Dario | Protos Web <${fromEmail}>`,
           to: [visitorEmail],
-          subject: 'Hvala na upitu — odgovoriti ćemo uskoro',
+          subject: replySubject,
           html: replyBody,
         }),
       }),
@@ -138,6 +141,7 @@ async function sendContactViaBrevo(
   visitorName: string,
   adminSubject: string,
   adminBody: string,
+  replySubject: string,
   replyBody: string,
 ): Promise<boolean> {
   try {
@@ -158,7 +162,7 @@ async function sendContactViaBrevo(
         body: JSON.stringify({
           sender: { name: 'Dario | Protos Web', email: fromEmail },
           to: [{ email: visitorEmail, name: visitorName }],
-          subject: 'Hvala na upitu — odgovoriti ćemo uskoro',
+          subject: replySubject,
           htmlContent: replyBody,
         }),
       }),
@@ -206,18 +210,60 @@ function adminHtml(
   `
 }
 
-function autoReplyHtml(name: string, message: string) {
+function autoReplyCopy(language: string) {
+  const copy: Record<string, { subject: string; greeting: string; thanks: string; yourMessage: string; signoff: string }> = {
+    hr: {
+      subject: 'Hvala na upitu — odgovoriti ćemo uskoro',
+      greeting: 'Pozdrav',
+      thanks: 'Hvala na upitu! Primili smo vašu poruku i odgovoriti ćemo u roku od 24 sata.',
+      yourMessage: 'Vaš upit:',
+      signoff: 'Srdačan pozdrav,',
+    },
+    en: {
+      subject: 'Thanks for your message — we will reply soon',
+      greeting: 'Hello',
+      thanks: 'Thank you for reaching out! We received your message and will reply within 24 hours.',
+      yourMessage: 'Your message:',
+      signoff: 'Best regards,',
+    },
+    de: {
+      subject: 'Danke für Ihre Anfrage — wir melden uns bald',
+      greeting: 'Hallo',
+      thanks: 'Vielen Dank für Ihre Nachricht! Wir haben sie erhalten und antworten innerhalb von 24 Stunden.',
+      yourMessage: 'Ihre Nachricht:',
+      signoff: 'Mit freundlichen Grüßen,',
+    },
+    it: {
+      subject: 'Grazie per il messaggio — risponderemo presto',
+      greeting: 'Ciao',
+      thanks: 'Grazie per averci contattato! Abbiamo ricevuto il tuo messaggio e risponderemo entro 24 ore.',
+      yourMessage: 'Il tuo messaggio:',
+      signoff: 'Cordiali saluti,',
+    },
+    es: {
+      subject: 'Gracias por tu mensaje — responderemos pronto',
+      greeting: 'Hola',
+      thanks: '¡Gracias por contactarnos! Hemos recibido tu mensaje y responderemos en 24 horas.',
+      yourMessage: 'Tu mensaje:',
+      signoff: 'Saludos cordiales,',
+    },
+  }
+  return copy[language] ?? copy.hr
+}
+
+function autoReplyHtml(name: string, message: string, language: string) {
+  const c = autoReplyCopy(language)
   const safeName = escapeHtml(name)
   const safeMessage = escapeHtml(message).replace(/\n/g, '<br>')
 
   return `
     <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;color:#1a1a1a">
-      <h2 style="color:#6366f1">Pozdrav ${safeName},</h2>
-      <p style="font-size:16px;line-height:1.7">Hvala na upitu! Primili smo vašu poruku i odgovoriti ćemo u roku od 24 sata.</p>
-      <h3 style="margin-top:24px;color:#6366f1">Vaš upit:</h3>
+      <h2 style="color:#6366f1">${c.greeting} ${safeName},</h2>
+      <p style="font-size:16px;line-height:1.7">${c.thanks}</p>
+      <h3 style="margin-top:24px;color:#6366f1">${c.yourMessage}</h3>
       <p style="padding:16px;background:#f9f9f9;border-left:4px solid #6366f1;font-size:15px;line-height:1.6">${safeMessage}</p>
       <p style="margin-top:32px;font-size:15px;line-height:1.7">
-        Srdačan pozdrav,<br>
+        ${c.signoff}<br>
         <strong>Dario Imsirović</strong><br>
         Protos Web
       </p>

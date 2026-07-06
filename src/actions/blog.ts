@@ -61,6 +61,23 @@ export async function getBlogPostBySlug(
   return { ...data, created_at: data.created_at ?? '' }
 }
 
+export async function getBlogSlugLocales(slug: string): Promise<string[]> {
+  if (!supabase) return []
+
+  const { data, error } = await supabase
+    .from('blog_posts')
+    .select('language')
+    .eq('is_published', true)
+    .eq('slug', slug)
+
+  if (error) {
+    console.error('getBlogSlugLocales error:', error)
+    return []
+  }
+
+  return [...new Set((data ?? []).map((row) => row.language))]
+}
+
 export async function getAllBlogSlugs(): Promise<BlogSlugEntry[]> {
   if (!supabase) return []
 

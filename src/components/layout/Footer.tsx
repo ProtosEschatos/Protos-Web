@@ -2,7 +2,8 @@
 
 import { useState, FormEvent } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
-import { MousePointer2, Heart } from 'lucide-react'
+import TurnstileWidget from '@/components/ui/TurnstileWidget'
+import { Heart, MousePointer2 } from 'lucide-react'
 import { Link } from '@/routing'
 import TransitionLink from '@/components/navigation/TransitionLink'
 import SocialLinks from '@/components/ui/SocialLinks'
@@ -25,6 +26,7 @@ export default function Footer() {
   const locale = useLocale()
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
 
   const legalLinks = [
     { href: '/privacy', label: t('privacy') },
@@ -41,7 +43,7 @@ export default function Footer() {
       const res = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, language: locale }),
+        body: JSON.stringify({ email, language: locale, turnstileToken }),
       })
       setStatus(res.ok ? 'success' : 'error')
       if (res.ok) setEmail('')
@@ -79,11 +81,14 @@ export default function Footer() {
                 />
                 <button
                   type="submit"
-                  disabled={status === 'loading'}
+                  disabled={status === 'loading' || (Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY) && !turnstileToken)}
                   className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[var(--primary)] to-[#ff8800] text-white text-sm font-semibold whitespace-nowrap hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-60"
                 >
                   {status === 'loading' ? '…' : t('newsletter_submit')}
                 </button>
+              </div>
+              <div className="mt-3">
+                <TurnstileWidget onToken={setTurnstileToken} onExpire={() => setTurnstileToken(null)} />
               </div>
               {status === 'success' && (
                 <p className="text-xs text-[var(--accent)] mt-2">{t('newsletter_success')}</p>

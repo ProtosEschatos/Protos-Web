@@ -30,6 +30,13 @@
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  zoom: 1.15;
+}
+
+@supports not (zoom: 1) {
+  html {
+    font-size: 115%;
+  }
 }
 
 html.boot-pending:not(.boot-complete),

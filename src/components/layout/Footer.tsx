@@ -129,12 +129,17 @@ export default function Footer() {
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-[var(--border-card)] bg-[var(--dark-card)] text-xs font-semibold text-[var(--light)] whitespace-nowrap hover:border-[var(--primary)] hover:text-[var(--primary)] hover:-translate-y-0.5 transition-all duration-300"
             >
               <MousePointer2 className="w-3.5 h-3.5" />
-              Try Cursor
+              {t('cursor_cta')}
               <span className="px-2 py-0.5 rounded-full bg-gradient-to-r from-[var(--primary)] to-[#ff8800] text-white text-[10px] font-bold uppercase tracking-wide">
-                50% off 1st month
+                {t('cursor_badge')}
               </span>
             </a>
-            <p className="text-xs text-[var(--light-muted)] leading-6 mt-3 max-w-[220px]">{t('tools_note')}</p>
+            <p className="mt-3 max-w-[240px] text-sm leading-relaxed">
+              <span className="font-bold bg-gradient-to-r from-[var(--primary)] to-[#ff8800] bg-clip-text text-transparent">
+                {t('cursor_badge')}
+              </span>
+              <span className="text-[var(--light)]"> {t('cursor_promo')}</span>
+            </p>
           </div>
         </div>
 

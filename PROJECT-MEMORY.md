@@ -3,24 +3,54 @@
 > **Last updated:** 2026-07-06
 > **Live:** https://www.protosweb.eu
 > **Repo:** `ProtosEschatos/Protos-Web`
-> **Latest commit:** GA4 wire-up (ovaj commit)
+> **Latest commit:** email infra + PROJECT-MEMORY (ovaj commit)
 
 ---
 
 ## Gdje si stao (TL;DR)
 
-**GA4 aktiviran:** `G-HR9HK4SR7Q` (Google račun `dario23imsirovic@gmail.com`) — consent-gated, SPA pageview tracking, default u kodu pa radi bez Vercel env vara.
+**Email stack (2026-07-06):** `dario.admin@protosweb.eu` na Zoho Mail (inbox) + Resend (slanje s web stranice). Cloudflare MX za Zoho ✅. Resend domena + novi API key u Supabase secrets ✅. `src/lib/site.ts` = single source of truth.
 
-Danas (2026-07-05) odrađeno dvoje:
+**Kritičan fix:** `NEXT_PUBLIC_SUPABASE_URL` nedostajao na Vercel **Production** → kontakt forma vraćala "not configured". Dodan + redeploy.
 
-1. **Showcase soba s astronautom** vraćena iz "synthwave koridora" natrag u galeriju-sobu, povećana i pripremljena za više dizajna.
-2. **Backend hardening** — sigurnost, uklanjanje drifta i verzioniranje Supabase sheme; kontakt-mailovi popravljeni.
+**GA4:** `G-HR9HK4SR7Q` (consent-gated).
 
-Sve commitano i pushano na `main`. DB migracije + edge funkcije primijenjene i na živom Supabase projektu (`laqnnzavwbojntfiqmxj`). GitHub Actions deploy pipeline je zelen.
+**Preostalo:** DMARC `rua` → `dario.admin@protosweb.eu`; IMAP/SMTP opcionalno (mobitel); online presence linkovi placeholderi; design asset slike.
 
 ---
 
-## 2026-07-06 — GA4 Analytics
+## 2026-07-06 — Email: protosweb.eu + Zoho + Resend
+
+### Arhitektura
+- **Zoho Mail** `dario.admin@protosweb.eu` — prima admin upite (inbox). IMAP/SMTP opcionalno za mobitel (nije potrebno za site).
+- **Resend** — šalje transakcijske mailove (kontakt forma admin + auto-reply, newsletter welcome).
+- **Cloudflare DNS** (`docs/cloudflare-dns.md`):
+  - MX: `mx.zoho.eu` / `mx2.zoho.eu` / `mx3.zoho.eu` ✅
+  - SPF apex: `include:zohomail.eu` ✅
+  - Resend: `send.protosweb.eu` SPF + `resend._domainkey` DKIM ✅
+  - DMARC: još `rua=contact@protos-design.net` → promijeniti u `dario.admin@protosweb.eu`
+
+### Secrets (Supabase Edge)
+```
+RESEND_API_KEY          = novi key iz Resend dashboarda
+RESEND_FROM_EMAIL       = dario.admin@protosweb.eu
+CONTACT_EMAIL           = dario.admin@protosweb.eu
+```
+
+### Kod
+- `src/lib/site.ts` — `CONTACT_EMAIL`, `SITE_URL`, `SITE_DOMAIN`
+- Edge fn: `submit-form` (webhook INSERT → Resend), `subscribe` (newsletter)
+- Deploy workflow: `--no-verify-jwt` za submit-form + subscribe
+
+### Vercel fix (kritično)
+`NEXT_PUBLIC_SUPABASE_URL` bio samo na **Development** — kontakt forma na produkciji padala. Dodan na Production + redeploy.
+
+### E2E testovi (2026-07-06)
+- Newsletter subscribe edge fn: ✅ 200
+- submit-form webhook (Resend): ✅ 200 `Poruka poslana!`
+- Live `/api/contact`: ✅ 200 nakon Vercel redeploy
+
+---
 
 - **GA4 Measurement ID:** `G-HR9HK4SR7Q` (property na `dario23imsirovic@gmail.com`).
 - **Kod:** `Analytics.tsx` učitava gtag samo nakon analytics cookie opt-in; SPA navigacije trackirane ručno (`page_view` event).
@@ -93,7 +123,7 @@ Ključne datoteke: `src/components/three/SpaceGallery.tsx` (phase UI), `showcase
 | DB | Supabase Postgres, RLS na svim tablicama. Multi-tenant shema (`sites` + FK-ovi). |
 | App čita iz DB | `portfolio_items`, `blog_posts` (server akcije), kontakt preko RPC `submit_contact`. |
 | Hardkodirano (i18n) | `services`, `process_steps`, `pricing_plans`, `testimonials` — NISU spojeni na frontend (namjerno). |
-| Edge funkcije | `submit-form` (v15), `subscribe` (v13), `content` (v12), `keep-alive` (v3) — sve deployane iz repoa. |
+| Edge funkcije | `submit-form` (v18), `subscribe` (v17), `content` (v13), `keep-alive` (v4) — deployane, submit/subscribe bez JWT |
 | API rute | `/api/contact`, `/api/subscribe`, `/api/blog`. |
 | CI/CD | GitHub Actions: `ci` (lint/type-check/build), `security`, `supabase-keep-alive` (cron 10min), `supabase-deploy-functions`. |
 
@@ -101,7 +131,7 @@ Ključne datoteke: `src/components/three/SpaceGallery.tsx` (phase UI), `showcase
 - **Supabase Edge secrets:** ✅ `RESEND_API_KEY`, `RESEND_FROM_EMAIL=dario.admin@protosweb.eu`, `CONTACT_EMAIL=dario.admin@protosweb.eu`, `KEEP_ALIVE_SECRET`, `BREVO_API_KEY`.
 - **Email domena:** Zoho Mail inbox `dario.admin@protosweb.eu`; Resend DNS (SPF/DKIM na `send.protosweb.eu`) već prisutan — provjeri verifikaciju u Resend dashboardu.
 - **GitHub Actions secrets:** ✅ dodani `SUPABASE_ACCESS_TOKEN` + `SUPABASE_PROJECT_REF` (deploy workflow sad zelen), uz `KEEP_ALIVE_SECRET`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`.
-- **Vercel env:** ✅ `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `NEXT_PUBLIC_SITE_URL` (samo Production).
+- **Vercel env:** ✅ `NEXT_PUBLIC_SUPABASE_URL` (Production — fix 2026-07-06), `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `NEXT_PUBLIC_SITE_URL`, `CONTACT_EMAIL` + `RESEND_FROM_EMAIL` = `dario.admin@protosweb.eu`
 
 ### Preostali (namjerni) security advisor WARN-ovi
 - `pg_net` u `public` schemi — Supabase-managed; webhook ovisi o njemu → ostavljeno.
@@ -115,6 +145,4 @@ Ključne datoteke: `src/components/three/SpaceGallery.tsx` (phase UI), `showcase
 - **Opcionalno:** spojiti DB sadržaj (`services`/`process`/`pricing`/`testimonials`) na frontend preko `content` edge funkcije umjesto hardkodiranog i18n.
 - **Opcionalno:** Stripe/donacije (`donations`, `stripe_price_id`) — trenutno neiskorišteni ostatak multi-tenant platforme.
 - **Sitno:** `NEXT_PUBLIC_SITE_URL` dodati i za Vercel Preview (točni canonical/sitemap na preview deployevima); razmisliti o `.gitignore` za `test-results/`.
-- **Cloudflare DNS:** vidi [`docs/cloudflare-dns.md`](docs/cloudflare-dns.md) — **MX zapisi za Zoho još nedostaju** na apexu; DMARC `rua` ažurirati na `dario.admin@protosweb.eu`.
-- **Vercel env:** `CONTACT_EMAIL` + `RESEND_FROM_EMAIL` = `dario.admin@protosweb.eu` (Production); Preview na `main` branch.
-- **Kod:** `src/lib/site.ts` — single source of truth za email/URL.
+- **Cloudflare DNS:** MX + Zoho SPF ✅; DMARC `rua` još stara adresa — vidi [`docs/cloudflare-dns.md`](docs/cloudflare-dns.md)

@@ -8,11 +8,10 @@ As of 2026-07-06, public DNS lookup shows:
 
 | Issue | Fix |
 |-------|-----|
-| **No MX records** on `protosweb.eu` | Add Zoho MX below — without these, `dario.admin@protosweb.eu` cannot receive mail |
 | **DMARC `rua`** still `contact@protos-design.net` | Update to `dario.admin@protosweb.eu` |
 | **Legacy `brevo-code` TXT** on apex | Safe to remove if not using Brevo |
 
-Resend sending records on `send.protosweb.eu` and DKIM on `resend._domainkey` are already present.
+MX (Zoho) and Resend sending records are configured.
 
 ---
 

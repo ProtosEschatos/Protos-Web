@@ -55,6 +55,9 @@ Thumbs.db
 # wrangler (legacy)
 .wrangler
 
+# supabase cli temp
+supabase/.temp/
+
 # local scrape/cache tooling
 .firecrawl/
 

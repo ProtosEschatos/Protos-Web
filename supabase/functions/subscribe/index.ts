@@ -17,6 +17,18 @@ function welcomeHtml(): string {
   `
 }
 
+function adminNotifyHtml(email: string, language: string, source: string): string {
+  return `
+    <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px">
+      <h2 style="color:#6366f1">Nova newsletter pretplata</h2>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Jezik:</strong> ${language}</p>
+      <p><strong>Izvor:</strong> ${source}</p>
+      <p style="color:#666">Pregled u admin panelu → Pretplatnici.</p>
+    </div>
+  `
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
@@ -46,6 +58,15 @@ Deno.serve(async (req) => {
     const siteId =
       (record.site_id as string | undefined) ?? '4a0e4171-2f08-4969-b9e5-1ea222e298d7'
 
+    const { data: existing } = await supabase
+      .from('subscribers')
+      .select('id')
+      .eq('site_id', siteId)
+      .eq('email', email)
+      .maybeSingle()
+
+    const isNewSubscriber = !existing
+
     const { error } = await supabase.from('subscribers').upsert(
       {
         email,
@@ -61,7 +82,21 @@ Deno.serve(async (req) => {
     const resendKey = Deno.env.get('RESEND_API_KEY')
     const brevoKey = Deno.env.get('BREVO_API_KEY')
     const fromEmail = Deno.env.get('RESEND_FROM_EMAIL') || 'dario.admin@protosweb.eu'
+    const contactEmail = Deno.env.get('CONTACT_EMAIL') || fromEmail
     const html = welcomeHtml()
+
+    if (isNewSubscriber) {
+      const adminHtml = adminNotifyHtml(email, language, source)
+      const adminSubject = `Nova newsletter pretplata — ${email}`
+      let adminSent = false
+      if (resendKey) {
+        adminSent = await sendAdminViaResend(resendKey, fromEmail, contactEmail, adminSubject, adminHtml)
+      }
+      if (!adminSent && brevoKey) {
+        adminSent = await sendAdminViaBrevo(brevoKey, fromEmail, contactEmail, adminSubject, adminHtml)
+      }
+      if (adminSent) console.log('[subscribe] Admin notified')
+    }
 
     // Newsletter welcome: Brevo primary → Resend fallback
     let sent = false
@@ -128,6 +163,54 @@ async function sendWelcomeViaResend(
         to: [toEmail],
         subject: WELCOME_SUBJECT,
         html,
+      }),
+    })
+    return res.ok
+  } catch {
+    return false
+  }
+}
+
+async function sendAdminViaResend(
+  apiKey: string,
+  fromEmail: string,
+  toEmail: string,
+  subject: string,
+  html: string,
+): Promise<boolean> {
+  try {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from: `Protos Web <${fromEmail}>`,
+        to: [toEmail],
+        subject,
+        html,
+      }),
+    })
+    return res.ok
+  } catch {
+    return false
+  }
+}
+
+async function sendAdminViaBrevo(
+  apiKey: string,
+  fromEmail: string,
+  toEmail: string,
+  subject: string,
+  html: string,
+): Promise<boolean> {
+  try {
+    const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: { 'api-key': apiKey, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sender: { name: 'Protos Web', email: fromEmail },
+        to: [{ email: toEmail, name: 'Protos Web' }],
+        subject,
+        htmlContent: html,
       }),
     })
     return res.ok

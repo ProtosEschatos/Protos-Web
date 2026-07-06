@@ -1,4 +1,6 @@
 import AdminLink from '@/components/admin/AdminLink'
+import AdminNav from '@/components/admin/AdminNav'
+import AdminActivityBadge from '@/components/admin/AdminActivityBadge'
 import { SITE_URL } from '@/lib/site'
 import ProtosLogo from '@/components/ui/ProtosLogo'
 import AdminLogoutButton from '@/components/admin/AdminLogoutButton'
@@ -11,9 +13,12 @@ export default function AdminHeader() {
           <ProtosLogo size={32} />
           <div>
             <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--primary)]">Privatno</p>
-            <p className="text-sm font-semibold text-[var(--light)] group-hover:text-[var(--primary)] transition-colors">
-              Kontrolna ploča
-            </p>
+            <div className="flex items-center gap-2">
+              <p className="text-sm font-semibold text-[var(--light)] group-hover:text-[var(--primary)] transition-colors">
+                Admin
+              </p>
+              <AdminActivityBadge />
+            </div>
           </div>
         </AdminLink>
         <div className="flex items-center gap-3">
@@ -26,6 +31,7 @@ export default function AdminHeader() {
           <AdminLogoutButton />
         </div>
       </div>
+      <AdminNav />
     </header>
   )
 }

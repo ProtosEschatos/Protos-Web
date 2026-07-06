@@ -1,199 +1,117 @@
 import { setRequestLocale } from 'next-intl/server'
-import {
-  Bell,
-  FileText,
-  Globe,
-  Inbox,
-  LayoutGrid,
-  Megaphone,
-  Plus,
-  Share2,
-  Shield,
-} from 'lucide-react'
+import { FileText, Inbox, LayoutGrid, Mail } from 'lucide-react'
 import AdminHubCard from '@/components/admin/AdminHubCard'
+import AdminActivityFeed from '@/components/admin/AdminActivityFeed'
+import AdminSection from '@/components/admin/AdminSection'
+import AdminStatGrid from '@/components/admin/AdminStatGrid'
 import { adminGetNotifications } from '@/actions/admin-notifications'
-import { getAdminStatus } from '@/actions/admin-status'
 import { CONTACT_EMAIL } from '@/lib/site'
-import {
-  adminFreelanceLinks,
-  adminInboxLinks,
-  adminMarketingLinks,
-  adminPlatformLinks,
-  adminSocialLinks,
-} from '@/lib/admin-hub-links'
-import AdminLink from '@/components/admin/AdminLink'
+import { adminContentLinks } from '@/lib/admin-hub-links'
 
 type Props = { params: { locale: string } }
 
 export default async function AdminPage({ params: { locale } }: Props) {
   setRequestLocale(locale)
-  const [notifications, status] = await Promise.all([adminGetNotifications(), getAdminStatus()])
+  const notifications = await adminGetNotifications()
 
   return (
     <div className="py-8 md:py-12">
       <div className="max-w-6xl mx-auto px-6">
         <div className="mb-10">
-          <h1 className="text-3xl md:text-4xl font-bold text-[var(--light)]">Kontrolna ploča</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-[var(--light)]">Pregled</h1>
           <p className="text-[var(--light-muted)] mt-2">
-            Sadržaj, inbox, notifikacije i brzi pristup platformama — {CONTACT_EMAIL}
+            Aktivnost s web stranice — kontakt forma, newsletter i brzi pristup sadržaju.
           </p>
         </div>
 
-        <section className="mb-10">
-          <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--primary)] mb-4">Sadržaj</h2>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <AdminHubCard href="/admin/blog" label="Blog" description="Dodaj i uredi članke (Supabase)" icon={FileText} />
-            <AdminHubCard
-              href="/admin/portfolio"
-              label="Portfolio"
-              description="Upravljaj projektima na stranici"
-              icon={LayoutGrid}
+        <AdminSection title="Aktivnost (zadnjih 24h)">
+          <div className="mb-6">
+            <AdminStatGrid
+              stats={[
+                {
+                  value: notifications.recentActivityCount,
+                  label: 'Nova aktivnost (24h)',
+                  tone: notifications.recentActivityCount > 0 ? 'ok' : 'default',
+                },
+                {
+                  value: notifications.contactsLast24Hours,
+                  label: 'Kontakt upiti (24h)',
+                },
+                {
+                  value: notifications.subscribersLast24Hours,
+                  label: 'Newsletter (24h)',
+                },
+                {
+                  value: notifications.contactsLast7Days + notifications.subscribersLast7Days,
+                  label: 'Ukupno (7 dana)',
+                },
+              ]}
             />
           </div>
-        </section>
+          <AdminActivityFeed items={notifications.activityFeed} />
+        </AdminSection>
 
-        <section className="mb-10">
-          <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--primary)] mb-4">Inbox</h2>
+        <AdminSection title="Poruke" actionHref="/admin/inbox" actionLabel="Sve poruke →">
           <div className="grid gap-4 sm:grid-cols-2">
-            {adminInboxLinks.map((link) => (
+            <AdminHubCard
+              href="/admin/inbox"
+              label="Kontakt forma"
+              description={`${notifications.contactsLast7Days} upita u 7 dana · ${CONTACT_EMAIL}`}
+              icon={Inbox}
+              badge={notifications.contactsLast24Hours > 0 ? `${notifications.contactsLast24Hours} novo` : undefined}
+            />
+            <AdminHubCard
+              href="/admin/subscribers"
+              label="Newsletter pretplatnici"
+              description={`${notifications.subscriberCount} ukupno · Brevo welcome mail`}
+              icon={Mail}
+              badge={
+                notifications.subscribersLast24Hours > 0
+                  ? `${notifications.subscribersLast24Hours} novo`
+                  : undefined
+              }
+            />
+          </div>
+        </AdminSection>
+
+        <AdminSection title="Sadržaj">
+          <div className="grid gap-4 sm:grid-cols-2">
+            {adminContentLinks.map((link) => (
               <AdminHubCard
                 key={link.id}
                 href={link.href}
                 label={link.label}
                 description={link.description}
-                icon={Inbox}
-                external={link.external}
+                icon={link.id === 'blog' ? FileText : LayoutGrid}
               />
             ))}
           </div>
-        </section>
+        </AdminSection>
 
-        <section className="mb-10">
-          <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--primary)] mb-4">Marketing</h2>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {adminMarketingLinks.map((link) => (
-              <AdminHubCard
-                key={link.id}
-                href={link.href}
-                label={link.label}
-                description={link.description}
-                icon={Megaphone}
-                external={link.external}
-              />
-            ))}
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <div className="flex items-center justify-between gap-4 mb-4">
-            <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--primary)]">Notifikacije</h2>
-            <AdminLink href="/admin/inbox" className="text-xs text-[var(--light-muted)] hover:text-[var(--primary)]">
-              Svi upiti →
-            </AdminLink>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-4">
-            <div className="rounded-xl border border-white/10 bg-[var(--dark-card)]/50 px-4 py-3">
-              <p className="text-2xl font-bold text-[var(--light)]">{notifications.contactsLast7Days}</p>
-              <p className="text-xs text-[var(--light-muted)]">Upita (7 dana)</p>
-            </div>
-            <div className="rounded-xl border border-white/10 bg-[var(--dark-card)]/50 px-4 py-3">
-              <p className="text-2xl font-bold text-[var(--light)]">{notifications.subscriberCount}</p>
-              <p className="text-xs text-[var(--light-muted)]">Newsletter pretplatnika</p>
-            </div>
-            <div className="rounded-xl border border-white/10 bg-[var(--dark-card)]/50 px-4 py-3">
-              <p className={`text-2xl font-bold ${notifications.dnsIssues ? 'text-amber-400' : 'text-emerald-400'}`}>
-                {notifications.dnsIssues}
-              </p>
-              <p className="text-xs text-[var(--light-muted)]">DNS upozorenja</p>
-            </div>
-            <div className="rounded-xl border border-white/10 bg-[var(--dark-card)]/50 px-4 py-3">
-              <p className={`text-2xl font-bold ${notifications.serviceRoleConfigured ? 'text-emerald-400' : 'text-amber-400'}`}>
-                {notifications.serviceRoleConfigured ? 'OK' : '!'}
-              </p>
-              <p className="text-xs text-[var(--light-muted)]">CMS (service role)</p>
-            </div>
-          </div>
-          {notifications.recentContacts.length > 0 ? (
-            <div className="rounded-2xl border border-white/10 bg-[var(--dark-card)]/40 divide-y divide-white/5">
-              {notifications.recentContacts.slice(0, 4).map((c) => (
-                <div key={c.id} className="px-4 py-3 flex flex-wrap justify-between gap-2 text-sm">
-                  <div>
-                    <p className="text-[var(--light)] font-medium">{c.name}</p>
-                    <p className="text-[var(--light-muted)]">{c.email}</p>
-                  </div>
-                  <p className="text-xs text-[var(--light-muted)] max-w-md truncate">{c.message}</p>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-sm text-[var(--light-muted)]">Nema novih upita s kontakt forme.</p>
-          )}
-        </section>
-
-        <section className="mb-10">
-          <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--primary)] mb-4">Platforme</h2>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {adminPlatformLinks.map((link) => (
-              <AdminHubCard
-                key={link.id}
-                href={link.href}
-                label={link.label}
-                icon={Globe}
-                external
-              />
-            ))}
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--primary)] mb-4">Društvene mreže</h2>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {adminSocialLinks.map((link) => (
-              <AdminHubCard
-                key={link.id}
-                href={link.href}
-                label={link.label}
-                icon={Share2}
-                external
-                pending={link.pending}
-              />
-            ))}
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--primary)] mb-4">Freelance platforme</h2>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {adminFreelanceLinks.map((link) => (
-              <AdminHubCard
-                key={link.id}
-                href={link.href}
-                label={link.label}
-                icon={Bell}
-                external
-                pending={link.pending}
-              />
-            ))}
-          </div>
-        </section>
-
-        <section>
-          <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--primary)] mb-4">Ops / DNS</h2>
-          <div className="rounded-2xl border border-white/10 bg-[var(--dark-card)]/50 p-6">
-            <div className="flex items-center gap-2 mb-4">
-              <Shield className="w-5 h-5 text-[var(--primary)]" />
-              <h3 className="font-semibold text-[var(--light)]">DNS status</h3>
-            </div>
-            <div className="grid gap-2 sm:grid-cols-2">
-              {status.dns.map((check) => (
-                <div key={check.label} className="flex justify-between gap-2 text-sm">
-                  <span className="text-[var(--light-muted)]">{check.label}</span>
-                  <span className={check.ok ? 'text-emerald-400' : 'text-amber-400'}>{check.ok ? 'OK' : 'Provjeri'}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <AdminSection title="Sustav" actionHref="/admin/tools" actionLabel="Alati i platforme →">
+          <AdminStatGrid
+            stats={[
+              {
+                value: notifications.dnsIssues,
+                label: 'DNS upozorenja',
+                tone: notifications.dnsIssues ? 'warn' : 'ok',
+              },
+              {
+                value: notifications.serviceRoleConfigured ? 'OK' : '!',
+                label: 'CMS (service role)',
+                tone: notifications.serviceRoleConfigured ? 'ok' : 'warn',
+              },
+              {
+                value: notifications.subscriberCount,
+                label: 'Pretplatnika ukupno',
+              },
+              {
+                value: notifications.contactsLast7Days,
+                label: 'Upita (7 dana)',
+              },
+            ]}
+          />
+        </AdminSection>
       </div>
     </div>
   )

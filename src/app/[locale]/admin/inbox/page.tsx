@@ -14,8 +14,8 @@ export default async function AdminInboxPage({ params: { locale } }: Props) {
 
   return (
     <AdminPageShell
-      title="Inbox"
-      description={`Zoho inbox (${CONTACT_EMAIL}) + upiti s kontakt forme u bazi.`}
+      title="Kontakt upiti"
+      description={`Email na ${CONTACT_EMAIL} (Zoho) + upiti spremljeni u bazi. Na svaki upit dobivaš obavijest mailom.`}
     >
       <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <AdminHubCard

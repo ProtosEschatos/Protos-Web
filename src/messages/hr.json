@@ -7,7 +7,8 @@
     "services": "USLUGE",
     "blog": "BLOG",
     "presence": "PRISUTNOST",
-    "contact": "KONTAKT"
+    "contact": "KONTAKT",
+    "admin": "PANEL"
   },
   "onlinePresence": {
     "label": "POVEŽIMO SE",

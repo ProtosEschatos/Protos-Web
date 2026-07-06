@@ -7,7 +7,8 @@
     "services": "SERVIZI",
     "blog": "BLOG",
     "presence": "PRESENZA",
-    "contact": "CONTATTO"
+    "contact": "CONTATTO",
+    "admin": "PANEL"
   },
   "onlinePresence": {
     "label": "COLLEGHIAMOCI",

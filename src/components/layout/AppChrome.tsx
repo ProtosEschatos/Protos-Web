@@ -16,6 +16,7 @@ import { clearBootPending, isBootComplete, removeBootSsrVeil } from '@/lib/boot-
 export default function AppChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const isShowcase = pathname.includes('portfolio-showcase')
+  const isAdminLogin = pathname.endsWith('/admin/login')
 
   useEffect(() => {
     if (isShowcase) {
@@ -30,6 +31,10 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
 
   if (isShowcase) {
     return <main className="relative min-h-0 overflow-hidden">{children}</main>
+  }
+
+  if (isAdminLogin) {
+    return <main className="relative min-h-screen">{children}</main>
   }
 
   return (

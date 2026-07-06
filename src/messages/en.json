@@ -7,7 +7,8 @@
     "services": "SERVICES",
     "blog": "BLOG",
     "presence": "PRESENCE",
-    "contact": "CONTACT"
+    "contact": "CONTACT",
+    "admin": "PANEL"
   },
   "onlinePresence": {
     "label": "LET'S CONNECT",

@@ -4,4 +4,8 @@ updates:
     directory: /
     schedule:
       interval: weekly
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 3
+    # Major bumps (Next 16, Tailwind 4, etc.) need planned migrations — patch/minor only.
+    ignore:
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']

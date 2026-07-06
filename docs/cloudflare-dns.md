@@ -35,7 +35,13 @@ Merge apex TXT into **one** SPF record (Zoho + Brevo):
 v=spf1 include:zohomail.eu include:spf.brevo.com ~all
 ```
 
-Resend sends from subdomain `send.protosweb.eu` (separate SPF). Keep `brevo-code:...` TXT on `@` for Brevo domain verification.
+Brevo domain verification TXT on `@` (keep **one** record only):
+
+```
+brevo-code:360956dbf3c469b26dacf873722764d9
+```
+
+Remove any older `brevo-code:c2e6097f...` duplicate if still present.
 
 ### 3. Zoho verification (keep if present)
 

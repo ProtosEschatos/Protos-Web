@@ -31,7 +31,7 @@
   - DMARC: još `rua=contact@protos-design.net` → promijeniti u `dario.admin@protosweb.eu`
 
 - **Resend API key:** u Supabase secrets. **Ne commitati u repo.**
-- **Brevo:** `BREVO_API_KEY` ažuriran u Supabase (2026-07-06). Registriraj/verificiraj domenu na brevo.com; `brevo-code` TXT u Cloudflareu.
+- **Brevo:** `BREVO_API_KEY` u Supabase. DNS: `brevo-code:360956dbf3c469b26dacf873722764d9` na `@` (obriši stari `c2e6097f...` duplikat).
 
 ### Kod
 - `src/lib/site.ts` — `CONTACT_EMAIL`, `SITE_URL`, `SITE_DOMAIN`

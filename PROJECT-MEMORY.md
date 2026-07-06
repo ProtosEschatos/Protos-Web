@@ -3,7 +3,7 @@
 > **Last updated:** 2026-07-07 (noć, final)
 > **Live:** https://www.protosweb.eu
 > **Repo:** `ProtosEschatos/Protos-Web`
-> **Latest commit:** `7892a8c` — lucide-react minor + dependabot cleanup
+> **Latest commit:** `bc88971` — docs: final Vercel env cleanup + remote verification
 
 ---
 

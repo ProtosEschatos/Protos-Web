@@ -24,9 +24,8 @@ export default function Analytics() {
   }, [])
 
   const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN
-  // GA4: set NEXT_PUBLIC_GA_ID on Vercel (protoswebmark23@gmail.com property).
-  // Legacy fallback until the new property ID is configured.
-  const gaId = process.env.NEXT_PUBLIC_GA_ID || 'G-HR9HK4SR7Q'
+  // GA4 property: protoswebmark23@gmail.com (consent-gated).
+  const gaId = process.env.NEXT_PUBLIC_GA_ID || 'G-LP29SJ3MM3'
 
   // GA gtag does not auto-track SPA route changes. The initial page_view is sent
   // by gtag('config'), so we skip the first observed path and only fire on real

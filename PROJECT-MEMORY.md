@@ -13,7 +13,9 @@
 
 **SEO (2026-07-07):** Dario Imsirović + Protos Web / ProtosWeb / ProtosWeb Mark23 u meta tagovima i JSON-LD (Person, Organization, BlogPosting) na svim stranicama. Blog byline vidljiv. Instagram @protos_eschatos u `sameAs`. Google mail za analitiku: `protoswebmark23@gmail.com` (samo GA4/GSC — **ne** kontakt).
 
-**Čeka tebe:** novi GA4 Measurement ID + Search Console verification string → `NEXT_PUBLIC_GA_ID` + `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` na Vercel.
+**Čeka tebe:** Search Console verification string → `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` na Vercel.
+
+**GA4 (2026-07-08):** `G-LP29SJ3MM3` na `protoswebmark23@gmail.com` — consent-gated u `Analytics.tsx`.
 
 **Za kasnije:** social/freelance URL-ovi, showcase polish, design assets, Stripe donacije (gumb skriven dok nije konfiguriran).
 
@@ -46,7 +48,7 @@
 
 ---
 
-- **GA4 Measurement ID:** `G-HR9HK4SR7Q` (property na `dario23imsirovic@gmail.com`).
+- **GA4 Measurement ID:** `G-LP29SJ3MM3` (property na `protoswebmark23@gmail.com`).
 - **Kod:** `Analytics.tsx` učitava gtag samo nakon analytics cookie opt-in; SPA navigacije trackirane ručno (`page_view` event).
 - **Deploy:** ID je hardcodirani fallback u kodu — ne treba Vercel env var da bi radio na produkciji. Override: `NEXT_PUBLIC_GA_ID`.
 - **Provjera:** prihvati kolačiće na live siteu → GA4 Realtime report.

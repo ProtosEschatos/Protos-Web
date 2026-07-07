@@ -30,12 +30,19 @@
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  zoom: 1.15;
 }
 
-@supports not (zoom: 1) {
+/* Larger UI only on desktop; mobile/tablet stay at 100% to avoid oversized,
+   overflowing layout on small screens. */
+@media (min-width: 1024px) {
   html {
-    font-size: 115%;
+    zoom: 1.15;
+  }
+
+  @supports not (zoom: 1) {
+    html {
+      font-size: 115%;
+    }
   }
 }
 

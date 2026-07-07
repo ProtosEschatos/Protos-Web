@@ -467,5 +467,18 @@
     ],
     "currencyZero": "0 €",
     "currencyOf": "de {target} €"
+  },
+  "notFound": {
+    "code": "404",
+    "title": "Página no encontrada",
+    "text": "Parece que esta página se perdió en el espacio. Volvamos a lugar seguro.",
+    "home": "Volver al inicio",
+    "blog": "Ver el blog"
+  },
+  "errorPage": {
+    "title": "Algo salió mal",
+    "text": "Ocurrió un error inesperado. Inténtalo de nuevo o vuelve al inicio.",
+    "retry": "Intentar de nuevo",
+    "home": "Volver al inicio"
   }
 }

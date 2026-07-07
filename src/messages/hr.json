@@ -305,5 +305,18 @@
     "services": { "title": "Usluge", "description": "Web dizajn, razvoj, SEO i vise." },
     "blog": { "title": "Blog", "description": "Besplatni vodicima o web prisutnosti za poduzetnike." },
     "contact": { "title": "Kontakt", "description": "Javite nam se za vas sljedeci projekt." }
+  },
+  "notFound": {
+    "code": "404",
+    "title": "Stranica nije pronađena",
+    "text": "Izgleda da je ova stranica odlutala u svemir. Vratimo te na sigurno.",
+    "home": "Natrag na početnu",
+    "blog": "Pregledaj blog"
+  },
+  "errorPage": {
+    "title": "Nešto je pošlo po zlu",
+    "text": "Dogodila se neočekivana greška. Pokušaj ponovno ili se vrati na početnu.",
+    "retry": "Pokušaj ponovno",
+    "home": "Natrag na početnu"
   }
 }

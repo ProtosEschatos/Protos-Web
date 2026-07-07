@@ -467,5 +467,18 @@
     ],
     "currencyZero": "0 €",
     "currencyOf": "von {target} €"
+  },
+  "notFound": {
+    "code": "404",
+    "title": "Seite nicht gefunden",
+    "text": "Diese Seite scheint im Weltraum verloren gegangen zu sein. Zurück auf sicheren Boden.",
+    "home": "Zurück zur Startseite",
+    "blog": "Zum Blog"
+  },
+  "errorPage": {
+    "title": "Etwas ist schiefgelaufen",
+    "text": "Ein unerwarteter Fehler ist aufgetreten. Versuchen Sie es erneut oder kehren Sie zur Startseite zurück.",
+    "retry": "Erneut versuchen",
+    "home": "Zurück zur Startseite"
   }
 }

@@ -305,5 +305,18 @@
     "services": { "title": "Services", "description": "Web design, development, SEO and more." },
     "blog": { "title": "Blog", "description": "Free guides on web presence for entrepreneurs." },
     "contact": { "title": "Contact", "description": "Get in touch about your next project." }
+  },
+  "notFound": {
+    "code": "404",
+    "title": "Page not found",
+    "text": "Looks like this page drifted off into space. Let's get you back on track.",
+    "home": "Back to home",
+    "blog": "Browse the blog"
+  },
+  "errorPage": {
+    "title": "Something went wrong",
+    "text": "An unexpected error occurred. Try again or head back home.",
+    "retry": "Try again",
+    "home": "Back to home"
   }
 }

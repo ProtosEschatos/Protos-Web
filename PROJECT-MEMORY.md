@@ -13,9 +13,9 @@
 
 **SEO (2026-07-07):** Dario Imsirović + Protos Web / ProtosWeb / ProtosWeb Mark23 u meta tagovima i JSON-LD (Person, Organization, BlogPosting) na svim stranicama. Blog byline vidljiv. Instagram @protos_eschatos u `sameAs`. Google mail za analitiku: `protoswebmark23@gmail.com` (samo GA4/GSC — **ne** kontakt).
 
-**Čeka tebe:** Search Console verification string → `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` na Vercel.
+**Google (2026-07-08) — GOTOVO:** GA4 `G-LP29SJ3MM3` (consent-gated u `Analytics.tsx`) + Search Console verificiran (DNS TXT `google-site-verification=fk8ppA-...` na Cloudflareu + meta tag preko `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` na Vercelu). Sve na `protoswebmark23@gmail.com`. Sitemap 135 URL-ova live.
 
-**GA4 (2026-07-08):** `G-LP29SJ3MM3` na `protoswebmark23@gmail.com` — consent-gated u `Analytics.tsx`.
+**Sljedeće u GSC (kad stigneš):** submit sitemap `https://www.protosweb.eu/sitemap.xml` (Search Console → Sitemaps).
 
 **Za kasnije:** social/freelance URL-ovi, showcase polish, design assets, Stripe donacije (gumb skriven dok nije konfiguriran).
 

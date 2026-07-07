@@ -11,34 +11,49 @@ import Analytics from '@/components/providers/Analytics'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics as VercelAnalytics } from '@vercel/analytics/react'
 import { locales, type Locale } from '@/i18n'
-import { ogImage, organizationJsonLd, siteUrl, websiteJsonLd, professionalServiceJsonLd } from '@/lib/seo'
+import {
+  buildSeoIdentityMetadata,
+  ogImage,
+  organizationJsonLd,
+  personJsonLd,
+  siteUrl,
+  websiteJsonLd,
+  professionalServiceJsonLd,
+} from '@/lib/seo'
 import { BOOT_GATE_INIT_SCRIPT, BOOT_VIDEO } from '@/lib/boot-gate'
+import { SITE_NAME } from '@/lib/site'
 
 const inter = Inter({
   subsets: ['latin', 'latin-ext'],
   display: 'swap',
 })
 
+const defaultTitle = `${SITE_NAME} — Websites with Soul, Built in Zagreb`
+const defaultDescription =
+  'Web design studio from Zagreb crafting fast, modern websites with soul — built with love and care for businesses across Croatia and Europe.'
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Protos Web — Websites with Soul, Built in Zagreb',
-    template: '%s | Protos Web',
+    default: defaultTitle,
+    template: `%s | ${SITE_NAME}`,
   },
-  description:
-    'Web design studio from Zagreb crafting fast, modern websites with soul — built with love and care for businesses across Croatia and Europe.',
+  description: defaultDescription,
+  ...buildSeoIdentityMetadata('hr'),
+  verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+    : undefined,
   openGraph: {
     type: 'website',
     locale: 'hr_HR',
-    siteName: 'Protos Web',
+    siteName: SITE_NAME,
     url: siteUrl,
     images: [ogImage],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Protos Web — Websites with Soul, Built in Zagreb',
-    description:
-      'Web design studio from Zagreb crafting fast, modern websites with soul — built with love and care for businesses across Croatia and Europe.',
+    title: defaultTitle,
+    description: defaultDescription,
     images: [ogImage.url],
   },
   icons: {
@@ -76,8 +91,12 @@ export default async function LocaleLayout({
         </Script>
         <div id="boot-ssr-veil" aria-hidden suppressHydrationWarning>
           <div className="boot-ssr-spinner" />
-          <p className="boot-ssr-title">Protos Web</p>
+          <p className="boot-ssr-title">{SITE_NAME}</p>
         </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd(locale)) }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd()) }}

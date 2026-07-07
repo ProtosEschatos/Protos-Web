@@ -1,7 +1,17 @@
 import type { Metadata } from 'next'
 import { locales, defaultLocale, type Locale } from '@/i18n'
 
-import { CONTACT_EMAIL, SITE_URL } from '@/lib/site'
+import {
+  AUTHOR_JOB_TITLE,
+  AUTHOR_NAME,
+  AUTHOR_URL_PATH,
+  COMPANY_NAME,
+  CONTACT_EMAIL,
+  INSTAGRAM_URL,
+  SITE_NAME,
+  SITE_NAME_ALT,
+  SITE_URL,
+} from '@/lib/site'
 import { getLiveSocialUrls } from '@/lib/social-links'
 
 const DEFAULT_SITE_URL = SITE_URL
@@ -25,7 +35,7 @@ export const ogImage = {
   url: buildOgImageUrl(),
   width: 1200,
   height: 630,
-  alt: 'Protos Web',
+  alt: SITE_NAME,
   type: 'image/png',
 } as const
 
@@ -51,6 +61,54 @@ export function buildLocaleUrl(locale: string, path = ''): string {
   return `${siteUrl}${localePath}`
 }
 
+function resolveLocale(locale: string): Locale {
+  return (locale in openGraphLocale ? locale : defaultLocale) as Locale
+}
+
+function authorPageUrl(locale: string): string {
+  return buildLocaleUrl(locale, AUTHOR_URL_PATH)
+}
+
+/** Profile URLs for Person/Organization sameAs (SEO graph). */
+export function getSeoSameAs(): string[] {
+  const urls = new Set<string>([INSTAGRAM_URL, ...getLiveSocialUrls()])
+  return [...urls].filter((url) => url.startsWith('http'))
+}
+
+/** Invisible author/publisher meta on every public page. */
+export function buildSeoIdentityMetadata(locale: string): Pick<
+  Metadata,
+  'authors' | 'creator' | 'publisher' | 'other'
+> {
+  return {
+    authors: [{ name: AUTHOR_NAME, url: authorPageUrl(locale) }],
+    creator: AUTHOR_NAME,
+    publisher: SITE_NAME,
+    other: {
+      brand: SITE_NAME_ALT,
+      company: COMPANY_NAME,
+    },
+  }
+}
+
+export function personJsonLd(locale: string) {
+  const authorUrl = authorPageUrl(locale)
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': `${authorUrl}#person`,
+    name: AUTHOR_NAME,
+    url: authorUrl,
+    jobTitle: AUTHOR_JOB_TITLE,
+    worksFor: {
+      '@type': 'Organization',
+      '@id': `${siteUrl}#organization`,
+      name: SITE_NAME,
+    },
+    sameAs: getSeoSameAs(),
+  }
+}
+
 type PageMetadataInput = {
   title: string
   description: string
@@ -70,6 +128,14 @@ export function buildLanguageAlternates(path = ''): Record<string, string> {
   return languages
 }
 
+function buildGoogleVerification(): Metadata['verification'] | undefined {
+  const verification: Metadata['verification'] = {}
+  if (process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION) {
+    verification.google = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+  }
+  return Object.keys(verification).length ? verification : undefined
+}
+
 export function buildPageMetadata({
   title,
   description,
@@ -78,7 +144,7 @@ export function buildPageMetadata({
   ogTitle,
   ogType = 'website',
 }: PageMetadataInput): Metadata {
-  const safeLocale = (locale in openGraphLocale ? locale : defaultLocale) as Locale
+  const safeLocale = resolveLocale(locale)
   const canonical = buildLocaleUrl(safeLocale, path)
   const languages = buildLanguageAlternates(path)
   const imagePath = buildOgImageUrl(ogTitle ?? title, description)
@@ -87,15 +153,11 @@ export function buildPageMetadata({
     .filter((loc) => loc !== safeLocale)
     .map((loc) => openGraphLocale[loc as Locale])
 
-  const verification: Metadata['verification'] = {}
-  if (process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION) {
-    verification.google = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
-  }
-
   return {
     title,
     description,
-    verification: Object.keys(verification).length ? verification : undefined,
+    verification: buildGoogleVerification(),
+    ...buildSeoIdentityMetadata(safeLocale),
     alternates: {
       canonical,
       languages,
@@ -106,7 +168,7 @@ export function buildPageMetadata({
       type: ogType,
       locale: openGraphLocale[safeLocale],
       alternateLocale: alternateLocales,
-      siteName: 'Protos Web',
+      siteName: SITE_NAME,
       url: canonical,
       images: [
         {
@@ -140,7 +202,7 @@ export async function buildBlogPostMetadata({
   slugLocales: string[]
 }): Promise<Metadata> {
   const path = `/blog/${slug}`
-  const safeLocale = (locale in openGraphLocale ? locale : defaultLocale) as Locale
+  const safeLocale = resolveLocale(locale)
   const canonical = buildLocaleUrl(safeLocale, path)
 
   const languages: Record<string, string> = {}
@@ -156,6 +218,8 @@ export async function buildBlogPostMetadata({
   return {
     title,
     description,
+    verification: buildGoogleVerification(),
+    ...buildSeoIdentityMetadata(safeLocale),
     alternates: {
       canonical,
       languages,
@@ -165,9 +229,10 @@ export async function buildBlogPostMetadata({
       description,
       type: 'article',
       locale: openGraphLocale[safeLocale],
-      siteName: 'Protos Web',
+      siteName: SITE_NAME,
       url: canonical,
       images: [{ url: imagePath, width: 1200, height: 630, alt: title }],
+      authors: [AUTHOR_NAME],
     },
     twitter: {
       card: 'summary_large_image',
@@ -185,7 +250,10 @@ export function blogPostingJsonLd(post: {
   locale: string
   createdAt: string
 }) {
-  const pageUrl = buildLocaleUrl(post.locale, `/blog/${post.slug}`)
+  const safeLocale = resolveLocale(post.locale)
+  const pageUrl = buildLocaleUrl(safeLocale, `/blog/${post.slug}`)
+  const authorUrl = authorPageUrl(safeLocale)
+
   return {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -195,14 +263,26 @@ export function blogPostingJsonLd(post: {
     dateModified: post.createdAt,
     url: pageUrl,
     mainEntityOfPage: pageUrl,
+    inLanguage: openGraphLocale[safeLocale],
+    articleSection: 'Blog',
     image: `${siteUrl}${buildOgImageUrl(post.title, post.description)}`,
     author: {
-      '@type': 'Organization',
-      name: 'Protos Web',
+      '@type': 'Person',
+      '@id': `${authorUrl}#person`,
+      name: AUTHOR_NAME,
+      url: authorUrl,
+      jobTitle: AUTHOR_JOB_TITLE,
+      worksFor: {
+        '@type': 'Organization',
+        '@id': `${siteUrl}#organization`,
+        name: SITE_NAME,
+      },
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Protos Web',
+      '@id': `${siteUrl}#organization`,
+      name: SITE_NAME,
+      alternateName: [SITE_NAME_ALT, COMPANY_NAME],
       logo: {
         '@type': 'ImageObject',
         url: `${siteUrl}/favicon.svg`,
@@ -212,21 +292,37 @@ export function blogPostingJsonLd(post: {
 }
 
 export function organizationJsonLd() {
+  const organizationId = `${siteUrl}#organization`
+  const authorUrl = buildLocaleUrl(defaultLocale, AUTHOR_URL_PATH)
+
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Protos Web',
+    '@id': organizationId,
+    name: SITE_NAME,
+    alternateName: [SITE_NAME_ALT, COMPANY_NAME],
+    brand: {
+      '@type': 'Brand',
+      name: COMPANY_NAME,
+    },
     url: siteUrl,
     logo: `${siteUrl}/favicon.svg`,
     email: CONTACT_EMAIL,
     description:
       'Web design studio from Zagreb crafting fast, modern websites with soul — built with love and care for businesses across Croatia and Europe.',
+    founder: {
+      '@type': 'Person',
+      '@id': `${authorUrl}#person`,
+      name: AUTHOR_NAME,
+      url: authorUrl,
+      jobTitle: AUTHOR_JOB_TITLE,
+    },
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Zagreb',
       addressCountry: 'HR',
     },
-    sameAs: getLiveSocialUrls(),
+    sameAs: getSeoSameAs(),
   }
 }
 
@@ -234,12 +330,15 @@ export function websiteJsonLd() {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'Protos Web',
+    '@id': `${siteUrl}#website`,
+    name: SITE_NAME,
+    alternateName: [SITE_NAME_ALT, COMPANY_NAME],
     url: siteUrl,
     inLanguage: locales,
     publisher: {
       '@type': 'Organization',
-      name: 'Protos Web',
+      '@id': `${siteUrl}#organization`,
+      name: SITE_NAME,
     },
   }
 }
@@ -248,7 +347,9 @@ export function professionalServiceJsonLd() {
   return {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
-    name: 'Protos Web',
+    '@id': `${siteUrl}#service`,
+    name: SITE_NAME,
+    alternateName: [SITE_NAME_ALT, COMPANY_NAME],
     url: siteUrl,
     image: `${siteUrl}/favicon.svg`,
     telephone: '+385976043941',
@@ -259,6 +360,11 @@ export function professionalServiceJsonLd() {
       addressCountry: 'HR',
     },
     areaServed: ['HR', 'EU'],
-    sameAs: getLiveSocialUrls(),
+    founder: {
+      '@type': 'Person',
+      name: AUTHOR_NAME,
+      url: buildLocaleUrl(defaultLocale, AUTHOR_URL_PATH),
+    },
+    sameAs: getSeoSameAs(),
   }
 }

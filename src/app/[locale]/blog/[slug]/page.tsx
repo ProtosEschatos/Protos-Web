@@ -6,6 +6,7 @@ import BlogPostContent from '@/components/blog/BlogPostContent'
 import { Link } from '@/routing'
 import { ArrowLeft, Calendar } from 'lucide-react'
 import { buildBlogPostMetadata, blogPostingJsonLd } from '@/lib/seo'
+import { AUTHOR_NAME, SITE_NAME } from '@/lib/site'
 
 type Props = { params: { locale: string; slug: string } }
 
@@ -64,8 +65,20 @@ export default async function BlogPostPage({ params: { locale, slug } }: Props) 
           </Link>
 
           <div className="cosmic-panel rounded-3xl p-8 md:p-10">
-          <div className="flex items-center gap-1.5 text-xs text-[var(--primary)] mb-4">
-            <Calendar className="w-3.5 h-3.5" /> {formatDate(post.created_at, locale)}
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[var(--light-muted)] mb-4">
+            <span className="inline-flex items-center gap-1.5 text-[var(--primary)]">
+              <Calendar className="w-3.5 h-3.5" /> {formatDate(post.created_at, locale)}
+            </span>
+            <span aria-hidden="true">·</span>
+            <Link
+              href="/o-meni"
+              className="hover:text-[var(--primary)] transition-colors"
+              rel="author"
+            >
+              {AUTHOR_NAME}
+            </Link>
+            <span aria-hidden="true">·</span>
+            <span>{SITE_NAME}</span>
           </div>
 
           <h1 className="text-[clamp(2rem,5vw,3rem)] font-extrabold leading-tight mb-6 text-[var(--light)]">

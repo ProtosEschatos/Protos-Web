@@ -146,7 +146,6 @@ export default function AboutPage() {
             className="mt-10 flex flex-col items-center gap-3"
           >
             <DonateButton />
-            <p className="text-xs text-[var(--light-muted)]">{t('supportDonateNote')}</p>
           </motion.div>
         </div>
       </section>

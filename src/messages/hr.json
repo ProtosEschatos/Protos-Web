@@ -276,7 +276,7 @@
     "supportTitleHighlight": "digitalne Balkane",
     "supportSubtitle": "Svaka donacija doprinosi razvoju platforme za zastitu od internetskih prijevara i gradnji slobodnijeg digitalnog prostora za nasu regiju.",
     "supportDonateBtn": "Podrzi projekte",
-    "supportDonateNote": "Sigurna naplata putem Stripea. Hvala na podršci.",
+    "supportDonateNote": "Donacije uskoro — hvala na podršci.",
     "supportCards": [
       { "title": "Oprema za edukaciju o cyber sigurnosti", "text": "Pomozite nam nabaviti server, laptop i softver za besplatnu online edukaciju o cyber sigurnosti — za sve koji zele nauciti kako se zastititi online.", "target": "10.000", "progress": 5 },
       { "title": "Besplatna digitalna edukacija", "text": "Financirajte besplatne HR video tutoriale i vodiče o web razvoju, AI alatima i digitalnoj sigurnosti.", "target": "10.000", "progress": 3 },

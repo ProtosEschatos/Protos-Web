@@ -1,25 +1,21 @@
 # Protos-Web — Project Memory
 
-> **Last updated:** 2026-07-07 (noć, final)
+> **Last updated:** 2026-07-07 (večer)
 > **Live:** https://www.protosweb.eu
 > **Repo:** `ProtosEschatos/Protos-Web`
-> **Latest commit:** `bc88971` — docs: final Vercel env cleanup + remote verification
+> **Latest commit:** `3c30570` — feat(seo): author/brand identity on all pages + blog
 
 ---
 
 ## Gdje si stao (TL;DR)
 
-**Remote (2026-07-07):** `main` = remote, CI zelen, Vercel READY, 0 otvorenih PR-ova. Vercel env očišćen na **11 varijabli** (samo ono što Next.js koristi). Supabase/GitHub secreta **nije dirano**.
+**Remote (2026-07-07):** `main` pushed, CI/Vercel deploy u tijeku nakon SEO commita. Vercel env 11 varijabli. Kontakt ✅, newsletter ✅, admin ✅, keep-alive ✅.
 
-**Env audit:** Vercel, Supabase, GitHub, Cloudflare DNS — sve obavezno pokriveno. Live: kontakt ✅, newsletter ✅, admin ✅, keep-alive ✅.
+**SEO (2026-07-07):** Dario Imsirović + Protos Web / ProtosWeb / ProtosWeb Mark23 u meta tagovima i JSON-LD (Person, Organization, BlogPosting) na svim stranicama. Blog byline vidljiv. Instagram @protos_eschatos u `sameAs`. Google mail za analitiku: `protoswebmark23@gmail.com` (samo GA4/GSC — **ne** kontakt).
 
-**Email + DNS:** Sve na `dario.admin@protosweb.eu`. Zoho MX, Resend `send`, Brevo DKIM, DMARC, SPF — OK.
+**Čeka tebe:** novi GA4 Measurement ID + Search Console verification string → `NEXT_PUBLIC_GA_ID` + `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` na Vercel.
 
-**Admin:** `/admin` samo direktni URL. `ADMIN_SECRET` + `SUPABASE_SERVICE_ROLE_KEY` na Vercelu.
-
-**Opcionalno (nije postavljeno):** `STRIPE_DONATION_*`, Turnstile, Upstash, `BREVO_NEWSLETTER_LIST_ID`.
-
-**Preostalo:** Cloudflare MFA (ručno); social URL-ovi (Instagram itd.); design asset slike; opcionalni feature-i po želji.
+**Za kasnije:** social/freelance URL-ovi, showcase polish, design assets, Stripe donacije (gumb skriven dok nije konfiguriran).
 
 ---
 

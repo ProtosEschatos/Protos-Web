@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
 import { Heart } from 'lucide-react'
 
@@ -8,6 +8,14 @@ export default function DonateButton() {
   const t = useTranslations('aboutPage')
   const locale = useLocale()
   const [loading, setLoading] = useState(false)
+  const [configured, setConfigured] = useState<boolean | null>(null)
+
+  useEffect(() => {
+    fetch('/api/donate')
+      .then((res) => res.json())
+      .then((data: { configured?: boolean }) => setConfigured(data.configured === true))
+      .catch(() => setConfigured(false))
+  }, [])
 
   const handleDonate = async () => {
     setLoading(true)
@@ -28,6 +36,16 @@ export default function DonateButton() {
     } finally {
       setLoading(false)
     }
+  }
+
+  if (configured === false) {
+    return (
+      <p className="text-xs text-[var(--light-muted)]">{t('supportDonateNote')}</p>
+    )
+  }
+
+  if (configured === null) {
+    return null
   }
 
   return (

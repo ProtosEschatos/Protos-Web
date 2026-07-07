@@ -1,7 +1,12 @@
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
+import { isDonationsConfigured } from '@/lib/donations'
 import { siteUrl } from '@/lib/seo'
 import { buildLocalePath } from '@/lib/seo'
+
+export async function GET() {
+  return NextResponse.json({ configured: isDonationsConfigured() })
+}
 
 export async function POST(request: Request) {
   try {

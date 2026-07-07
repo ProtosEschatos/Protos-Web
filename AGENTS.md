@@ -20,6 +20,7 @@ Next.js 14 App Router · TypeScript · Tailwind · next-intl (hr/en/de/it/es) ·
 - Admin UI uses `AdminShell` (bypasses boot veil) and `AdminLink` (not `@/routing` on server pages)
 - CMS reads: `src/lib/admin/*-queries.ts` · writes: `src/actions/admin-*.ts`
 - Social/platform placeholders: `src/lib/social-links.ts` (`pending: true` until real URLs)
+- SEO identity (author, brand, JSON-LD): `src/lib/site.ts` + `src/lib/seo.ts`
 
 ## Conventions
 

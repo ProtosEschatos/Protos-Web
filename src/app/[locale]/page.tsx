@@ -3,7 +3,6 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { getBlogPosts } from '@/actions/blog'
 import { buildPageMetadata } from '@/lib/seo'
 import Hero from '@/components/sections/Hero'
-import Services from '@/components/sections/Services'
 import Process from '@/components/sections/Process'
 import Portfolio from '@/components/sections/Portfolio'
 import Blog from '@/components/sections/Blog'
@@ -31,7 +30,6 @@ export default async function HomePage({ params: { locale } }: Props) {
       <Hero />
       <Process />
       <Portfolio />
-      <Services />
       <Blog posts={blogPosts} locale={locale} />
       <Contact />
     </>

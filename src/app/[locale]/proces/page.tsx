@@ -43,6 +43,7 @@ export default function ProcessPage() {
               <EffectCard
                 key={s.num}
                 index={i}
+                libraryOffset={6}
                 custom={i}
                 initial="hidden"
                 whileInView="visible"

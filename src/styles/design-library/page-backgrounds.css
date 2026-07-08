@@ -1,0 +1,222 @@
+/* ============================================================
+   design_elements page backgrounds
+   hero-backgrounds + animated-bg-patterns + lighting-backgrounds
+   Stacked in LibraryBackdrop per route.
+   ============================================================ */
+
+.lib-bg-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.lib-bg-vignette {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #0a0a1acc 0%, #0a0a1a66 45%, #0a0a1aee 100%);
+  pointer-events: none;
+}
+
+/* ---- hero-backgrounds (route picks one) ---- */
+
+.lib-bg-hero-hero-space-bg {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(139, 92, 246, 0.35) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 60%, rgba(6, 182, 212, 0.2) 0%, transparent 45%),
+    #0a0a1a;
+}
+
+.lib-bg-hero-aurora-hero {
+  background:
+    linear-gradient(180deg, rgba(6, 182, 212, 0.15) 0%, transparent 40%),
+    radial-gradient(ellipse at 30% 20%, rgba(139, 92, 246, 0.4) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 40%, rgba(34, 211, 238, 0.25) 0%, transparent 45%),
+    #0c0820;
+  animation: lib-aurora-shift 14s ease-in-out infinite alternate;
+}
+
+.lib-bg-hero-tunnel-grid {
+  background:
+    linear-gradient(180deg, transparent 0%, rgba(255, 102, 0, 0.08) 100%),
+    repeating-linear-gradient(90deg, rgba(255, 102, 0, 0.12) 0 1px, transparent 1px 80px),
+    repeating-linear-gradient(0deg, rgba(139, 92, 246, 0.1) 0 1px, transparent 1px 60px);
+  transform: perspective(400px) rotateX(55deg) scale(1.4);
+  transform-origin: center 80%;
+  opacity: 0.7;
+}
+
+.lib-bg-hero-neon-tunnel {
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(6, 182, 212, 0.45) 0%, transparent 55%),
+    repeating-linear-gradient(90deg, rgba(6, 182, 212, 0.15) 0 2px, transparent 2px 48px);
+  animation: lib-tunnel-pulse 5s ease-in-out infinite alternate;
+}
+
+.lib-bg-hero-grid-perspective {
+  background:
+    linear-gradient(180deg, #061018 0%, #0a0a1a 100%),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 39px,
+      rgba(6, 182, 212, 0.15) 39px,
+      rgba(6, 182, 212, 0.15) 40px
+    );
+  background-size: 100% 100%, 40px 100%;
+}
+
+.lib-bg-hero-purple-galaxy {
+  background:
+    radial-gradient(ellipse at 40% 35%, rgba(139, 92, 246, 0.5) 0%, transparent 50%),
+    radial-gradient(ellipse at 75% 65%, rgba(236, 72, 153, 0.3) 0%, transparent 45%),
+    radial-gradient(ellipse at 20% 80%, rgba(99, 102, 241, 0.35) 0%, transparent 40%),
+    #100818;
+}
+
+.lib-bg-hero-teal-particles {
+  background:
+    radial-gradient(circle at 25% 30%, rgba(6, 182, 212, 0.35) 0%, transparent 35%),
+    radial-gradient(circle at 75% 55%, rgba(20, 184, 166, 0.25) 0%, transparent 40%),
+    #061218;
+}
+
+/* ---- animated-bg-patterns ---- */
+
+.lib-bg-pattern-particle-field {
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.35) 1px, transparent 1px),
+    radial-gradient(circle at 60% 40%, rgba(6, 182, 212, 0.4) 1px, transparent 1px),
+    radial-gradient(circle at 85% 75%, rgba(139, 92, 246, 0.35) 1px, transparent 1px);
+  background-size: 120px 120px, 90px 90px, 110px 110px;
+  opacity: 0.5;
+  animation: lib-pattern-drift 40s linear infinite;
+}
+
+.lib-bg-pattern-aurora-borealis {
+  background:
+    linear-gradient(120deg, transparent 30%, rgba(34, 211, 238, 0.12) 45%, rgba(139, 92, 246, 0.15) 55%, transparent 70%);
+  opacity: 0.65;
+  animation: lib-aurora-shift 18s ease-in-out infinite alternate;
+}
+
+.lib-bg-pattern-circuit-pattern {
+  background-image:
+    linear-gradient(rgba(34, 197, 94, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 197, 94, 0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse at 50% 50%, black 30%, transparent 75%);
+  opacity: 0.6;
+}
+
+.lib-bg-pattern-holographic-grid {
+  background:
+    repeating-linear-gradient(0deg, rgba(6, 182, 212, 0.06) 0 1px, transparent 1px 24px),
+    repeating-linear-gradient(90deg, rgba(139, 92, 246, 0.08) 0 1px, transparent 1px 24px);
+  opacity: 0.55;
+}
+
+.lib-bg-pattern-grid-lines {
+  background:
+    linear-gradient(rgba(6, 182, 212, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6, 182, 212, 0.1) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.4;
+}
+
+.lib-bg-pattern-starfield {
+  background-image:
+    radial-gradient(1px 1px at 15% 25%, white, transparent),
+    radial-gradient(1px 1px at 45% 65%, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(1.5px 1.5px at 78% 18%, rgba(6, 182, 212, 0.9), transparent),
+    radial-gradient(1px 1px at 92% 82%, white, transparent);
+  background-size: 200px 200px, 180px 180px, 220px 220px, 160px 160px;
+  opacity: 0.7;
+  animation: lib-pattern-drift 60s linear infinite;
+}
+
+.lib-bg-pattern-wave-gradient {
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(6, 182, 212, 0.06) 0px,
+      rgba(139, 92, 246, 0.08) 40px,
+      rgba(6, 182, 212, 0.06) 80px
+    );
+  opacity: 0.5;
+  animation: lib-wave-scroll 12s linear infinite;
+}
+
+/* ---- lighting-backgrounds ---- */
+
+.lib-bg-light-glow-orbs {
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255, 102, 0, 0.25) 0%, transparent 25%),
+    radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.22) 0%, transparent 28%),
+    radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.15) 0%, transparent 35%);
+  mix-blend-mode: screen;
+  animation: lib-orbs-float 10s ease-in-out infinite alternate;
+}
+
+.lib-bg-light-aurora-lights {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(34, 211, 238, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 30% 60%, rgba(139, 92, 246, 0.2) 0%, transparent 40%);
+  mix-blend-mode: soft-light;
+}
+
+.lib-bg-light-light-rays {
+  background:
+    conic-gradient(from 200deg at 50% -10%, rgba(255, 102, 0, 0.15) 0deg, transparent 40deg, rgba(139, 92, 246, 0.12) 80deg, transparent 120deg);
+  opacity: 0.6;
+}
+
+.lib-bg-light-neon-glow {
+  background: radial-gradient(ellipse at 50% 80%, rgba(6, 182, 212, 0.35) 0%, transparent 55%);
+  mix-blend-mode: screen;
+}
+
+.lib-bg-light-spotlight {
+  background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.12) 0%, transparent 45%);
+}
+
+.lib-bg-light-ambient-glow {
+  background:
+    radial-gradient(ellipse at 60% 40%, rgba(255, 136, 0, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 30% 70%, rgba(139, 92, 246, 0.12) 0%, transparent 45%);
+}
+
+.lib-bg-light-lens-flare {
+  background:
+    radial-gradient(circle at 85% 15%, rgba(255, 255, 255, 0.2) 0%, rgba(6, 182, 212, 0.15) 8%, transparent 20%),
+    linear-gradient(135deg, transparent 40%, rgba(255, 255, 255, 0.06) 50%, transparent 60%);
+  mix-blend-mode: screen;
+}
+
+@keyframes lib-aurora-shift {
+  0% { filter: hue-rotate(0deg); transform: translateY(0); }
+  100% { filter: hue-rotate(25deg); transform: translateY(-12px); }
+}
+
+@keyframes lib-tunnel-pulse {
+  0% { opacity: 0.55; }
+  100% { opacity: 0.85; }
+}
+
+@keyframes lib-pattern-drift {
+  to { background-position: 200px 120px, 150px 90px, 180px 100px; }
+}
+
+@keyframes lib-wave-scroll {
+  to { background-position: 0 80px; }
+}
+
+@keyframes lib-orbs-float {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(20px, -15px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lib-bg-layer {
+    animation: none !important;
+  }
+}

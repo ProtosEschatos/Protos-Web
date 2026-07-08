@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import ImageBackdrop from '@/components/ui/ImageBackdrop'
+import LibraryBackdrop from '@/components/ui/LibraryBackdrop'
 import { BOOT_COMPLETE_EVENT, isBootComplete } from '@/lib/boot-gate'
 
 const TWINKLE_BG = `
@@ -31,7 +31,7 @@ export default function SiteBackground() {
   return (
     <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden>
       <div className="absolute inset-0 bg-[var(--dark)]" />
-      <ImageBackdrop />
+      <LibraryBackdrop />
       <div
         className="pointer-events-none absolute inset-0 animate-[twinkle_8s_ease-in-out_infinite_alternate] opacity-70"
         style={{ backgroundImage: TWINKLE_BG }}

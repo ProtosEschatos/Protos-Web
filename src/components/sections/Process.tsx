@@ -37,6 +37,7 @@ export default function Process() {
             <EffectCard
               key={s.num}
               index={i}
+              libraryOffset={0}
               custom={i}
               initial="hidden"
               whileInView="visible"

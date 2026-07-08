@@ -43,6 +43,7 @@ export default function BlogGrid({ posts, locale }: Props) {
         <EffectCard
           key={p.id}
           index={i}
+          libraryOffset={8}
           custom={i}
           initial="hidden"
           whileInView="visible"

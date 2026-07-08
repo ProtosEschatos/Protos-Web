@@ -45,6 +45,7 @@ export default function Blog({ posts, locale }: Props) {
             <EffectCard
               key={p.id}
               index={i}
+              libraryOffset={12}
               custom={i}
               initial="hidden"
               whileInView="visible"

@@ -44,6 +44,7 @@ export default function ServicesPage() {
               <EffectCard
                 key={s.title}
                 index={i}
+                libraryOffset={24}
                 custom={i}
                 initial="hidden"
                 whileInView="visible"

@@ -2,10 +2,12 @@
 
 import { motion, type HTMLMotionProps } from 'framer-motion'
 import { useCallback, useRef, type ReactNode } from 'react'
-import { getCardEffectClasses } from '@/lib/card-effects'
+import { getCardLibraryClasses } from '@/lib/design-library'
 
 type BaseProps = {
   index?: number
+  /** Shifts library texture/hover pick so sections don't repeat the same combo. */
+  libraryOffset?: number
   className?: string
   children: ReactNode
   /** Skip cosmic-panel base when the card has its own surface styles. */
@@ -30,14 +32,19 @@ type AnchorProps = BaseProps &
 
 export type EffectCardProps = DivProps | AnchorProps
 
-function mergeClasses(index: number, className?: string, bare?: boolean) {
-  return ['effect-card', bare ? null : 'cosmic-panel', getCardEffectClasses(index), className]
+function mergeClasses(index: number, libraryOffset: number, className?: string, bare?: boolean) {
+  return [
+    'effect-card',
+    bare ? null : 'cosmic-panel',
+    getCardLibraryClasses(index + libraryOffset),
+    className,
+  ]
     .filter(Boolean)
     .join(' ')
 }
 
 export default function EffectCard(props: EffectCardProps) {
-  const { index = 0, className, children, bare, as = 'div', ...rest } = props
+  const { index = 0, libraryOffset = 0, className, children, bare, as = 'div', ...rest } = props
   const nodeRef = useRef<HTMLElement | null>(null)
 
   const setRef = useCallback((node: HTMLDivElement | HTMLAnchorElement | null) => {
@@ -61,7 +68,7 @@ export default function EffectCard(props: EffectCardProps) {
 
   const shared = {
     ref: setRef,
-    className: mergeClasses(index, className, bare),
+    className: mergeClasses(index, libraryOffset, className, bare),
     onMouseMove,
     onMouseLeave,
   }

@@ -104,6 +104,7 @@ export default function AboutPage() {
               <EffectCard
                 key={g.title}
                 index={i}
+                libraryOffset={32}
                 custom={i}
                 initial="hidden"
                 whileInView="visible"
@@ -133,7 +134,8 @@ export default function AboutPage() {
             {supportCards.map((c, i) => (
               <EffectCard
                 key={c.title}
-                index={i + 3}
+                index={i}
+                libraryOffset={38}
                 custom={i}
                 initial="hidden"
                 whileInView="visible"

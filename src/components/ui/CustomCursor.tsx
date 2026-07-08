@@ -2,70 +2,120 @@
 
 import { useEffect, useRef } from 'react'
 
+/** Selectors that switch the cursor into its interactive (expanded) state. */
+const INTERACTIVE = 'a, button, [role="button"], input, textarea, select, label, .magnetic-btn, [data-cursor="hover"]'
+
 export default function CustomCursor() {
-  const cursorRef = useRef<HTMLDivElement>(null)
-  const followerRef = useRef<HTMLDivElement>(null)
+  const coreRef = useRef<HTMLDivElement>(null)
+  const ringRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const cursor = cursorRef.current
-    const follower = followerRef.current
-    if (!cursor || !follower) return
+    const mql = window.matchMedia('(min-width: 1024px) and (pointer: fine)')
+    if (!mql.matches) return
 
-    let mouseX = 0
-    let mouseY = 0
-    let followerX = 0
-    let followerY = 0
+    const core = coreRef.current
+    const ring = ringRef.current
+    if (!core || !ring) return
 
-    const onMouseMove = (e: MouseEvent) => {
-      mouseX = e.clientX
-      mouseY = e.clientY
-      cursor.style.left = `${mouseX}px`
-      cursor.style.top = `${mouseY}px`
+    const root = document.documentElement
+    root.classList.add('cursor-none')
+
+    // The desktop `zoom: 1.15` on <html> scales fixed px coordinates, so raw
+    // clientX/Y drift from the pointer. Measure the applied zoom and divide.
+    let zoom = 1
+    const measureZoom = () => {
+      const probe = document.createElement('div')
+      probe.style.cssText =
+        'position:fixed;left:0;top:0;width:100px;height:0;visibility:hidden;pointer-events:none;'
+      document.body.appendChild(probe)
+      const width = probe.getBoundingClientRect().width
+      probe.remove()
+      zoom = width > 0 ? width / 100 : 1
+    }
+    measureZoom()
+
+    let mouseX = -100
+    let mouseY = -100
+    let ringX = -100
+    let ringY = -100
+    let visible = false
+
+    const setVisible = (next: boolean) => {
+      if (visible === next) return
+      visible = next
+      core.style.opacity = next ? '1' : '0'
+      ring.style.opacity = next ? '1' : '0'
     }
 
-    const onMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement
-      if (target.closest('a, button, [role="button"], .magnetic-btn')) {
-        cursor.classList.add('cursor-hover')
-        follower.classList.add('follower-hover')
+    const onMove = (e: MouseEvent) => {
+      mouseX = e.clientX / zoom
+      mouseY = e.clientY / zoom
+      core.style.left = `${mouseX}px`
+      core.style.top = `${mouseY}px`
+      setVisible(true)
+    }
+
+    const onOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null
+      if (target?.closest?.(INTERACTIVE)) {
+        core.classList.add('is-hover')
+        ring.classList.add('is-hover')
       }
     }
 
-    const onMouseOut = () => {
-      cursor.classList.remove('cursor-hover')
-      follower.classList.remove('follower-hover')
+    const onOut = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null
+      if (target?.closest?.(INTERACTIVE)) {
+        core.classList.remove('is-hover')
+        ring.classList.remove('is-hover')
+      }
     }
 
+    const onDown = () => {
+      core.classList.add('is-down')
+      ring.classList.add('is-down')
+    }
+    const onUp = () => {
+      core.classList.remove('is-down')
+      ring.classList.remove('is-down')
+    }
+    const onLeaveWindow = () => setVisible(false)
+
+    let raf = 0
     const animate = () => {
-      followerX += (mouseX - followerX) * 0.15
-      followerY += (mouseY - followerY) * 0.15
-      follower.style.left = `${followerX}px`
-      follower.style.top = `${followerY}px`
-      requestAnimationFrame(animate)
+      ringX += (mouseX - ringX) * 0.18
+      ringY += (mouseY - ringY) * 0.18
+      ring.style.left = `${ringX}px`
+      ring.style.top = `${ringY}px`
+      raf = requestAnimationFrame(animate)
     }
+    raf = requestAnimationFrame(animate)
 
-    window.addEventListener('mousemove', onMouseMove)
-    document.addEventListener('mouseover', onMouseOver)
-    document.addEventListener('mouseout', onMouseOut)
-    animate()
+    window.addEventListener('mousemove', onMove)
+    document.addEventListener('mouseover', onOver)
+    document.addEventListener('mouseout', onOut)
+    document.addEventListener('mousedown', onDown)
+    document.addEventListener('mouseup', onUp)
+    document.documentElement.addEventListener('mouseleave', onLeaveWindow)
+    window.addEventListener('resize', measureZoom)
 
     return () => {
-      window.removeEventListener('mousemove', onMouseMove)
-      document.removeEventListener('mouseover', onMouseOver)
-      document.removeEventListener('mouseout', onMouseOut)
+      cancelAnimationFrame(raf)
+      root.classList.remove('cursor-none')
+      window.removeEventListener('mousemove', onMove)
+      document.removeEventListener('mouseover', onOver)
+      document.removeEventListener('mouseout', onOut)
+      document.removeEventListener('mousedown', onDown)
+      document.removeEventListener('mouseup', onUp)
+      document.documentElement.removeEventListener('mouseleave', onLeaveWindow)
+      window.removeEventListener('resize', measureZoom)
     }
   }, [])
 
   return (
     <>
-      <div
-        ref={cursorRef}
-        className="fixed w-2 h-2 bg-[var(--primary)] rounded-full pointer-events-none z-[9998] -translate-x-1/2 -translate-y-1/2 transition-[width,height,background] duration-200 hidden lg:block [&.cursor-hover]:w-4 [&.cursor-hover]:h-4 [&.cursor-hover]:bg-[var(--primary)]/50"
-      />
-      <div
-        ref={followerRef}
-        className="fixed w-10 h-10 border border-[var(--primary)]/40 rounded-full pointer-events-none z-[9997] -translate-x-1/2 -translate-y-1/2 transition-[width,height,border-color] duration-300 hidden lg:block [&.follower-hover]:w-16 [&.follower-hover]:h-16 [&.follower-hover]:border-[var(--primary)]/80"
-      />
+      <div ref={ringRef} className="cursor-ring" aria-hidden="true" />
+      <div ref={coreRef} className="cursor-core" aria-hidden="true" />
     </>
   )
 }

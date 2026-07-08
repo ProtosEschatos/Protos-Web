@@ -1,9 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { usePathname } from '@/routing'
-import { BACKGROUND_FALLBACKS, getBackgroundKey } from '@/lib/site-background-routes'
-import PageBackgroundCanvas from '@/components/three/backgrounds/PageBackgroundCanvas'
+import ImageBackdrop from '@/components/ui/ImageBackdrop'
 import { BOOT_COMPLETE_EVENT, isBootComplete } from '@/lib/boot-gate'
 
 const TWINKLE_BG = `
@@ -19,8 +17,6 @@ const TWINKLE_BG = `
 `
 
 export default function SiteBackground() {
-  const pathname = usePathname()
-  const routeKey = getBackgroundKey(pathname)
   const [bootDone, setBootDone] = useState(() => isBootComplete())
 
   useEffect(() => {
@@ -35,19 +31,11 @@ export default function SiteBackground() {
   return (
     <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden>
       <div className="absolute inset-0 bg-[var(--dark)]" />
-      {routeKey !== 'home' ? (
-        <div
-          className="pointer-events-none absolute inset-0 opacity-100"
-          style={{ background: BACKGROUND_FALLBACKS[routeKey] }}
-        />
-      ) : null}
+      <ImageBackdrop />
       <div
-        className="pointer-events-none absolute inset-0 animate-[twinkle_8s_ease-in-out_infinite_alternate] opacity-90"
+        className="pointer-events-none absolute inset-0 animate-[twinkle_8s_ease-in-out_infinite_alternate] opacity-70"
         style={{ backgroundImage: TWINKLE_BG }}
       />
-      <div className="pointer-events-none absolute inset-0 [&_canvas]:pointer-events-none">
-        <PageBackgroundCanvas key={routeKey} routeKey={routeKey} />
-      </div>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[var(--dark)]/0 via-transparent to-[var(--dark)]/20" />
     </div>
   )

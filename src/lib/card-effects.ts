@@ -16,9 +16,18 @@ export const CARD_EFFECTS = [
 
 export type CardEffect = (typeof CARD_EFFECTS)[number]
 
-/** Primary + secondary layer so every card combines two different effects. */
+/**
+ * Primary + secondary layer so every card combines two different effects.
+ *
+ * Strides 5 and 7 are coprime to 12, so consecutive cards cycle through ALL
+ * twelve effects (a full permutation) instead of always reusing the first few.
+ * Even a small section of 4–6 cards now shows widely-different effects, and the
+ * primary never collides with its layer.
+ */
 export function getCardEffectClasses(index: number): string {
-  const primary = CARD_EFFECTS[index % CARD_EFFECTS.length]
-  const layer = CARD_EFFECTS[(index + 5) % CARD_EFFECTS.length]
+  const n = CARD_EFFECTS.length
+  const i = ((index % n) + n) % n
+  const primary = CARD_EFFECTS[(i * 5) % n]
+  const layer = CARD_EFFECTS[(i * 7 + 3) % n]
   return `fx-${primary} fx-layer-${layer}`
 }

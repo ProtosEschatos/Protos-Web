@@ -14,4 +14,11 @@ export function getShowcaseStorageUrl(path: string): string {
 
 export const SHOWCASE_STORAGE = {
   project: (slug: string, viewport: 'mobile' | 'desktop') => `projects/${viewport}-${slug}.jpg`,
+  environment: {
+    synthwavePanorama: 'environment/synthwave-360-panorama.jpg',
+    front: 'environment/refs/front.jpg',
+    back: 'environment/refs/back.jpg',
+    left: 'environment/refs/left.jpg',
+    right: 'environment/refs/right.jpg',
+  },
 } as const

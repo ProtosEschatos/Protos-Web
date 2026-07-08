@@ -139,6 +139,17 @@ ul, ol { list-style: none; }
   100% { opacity: 1; }
 }
 
+@keyframes backdrop-drift {
+  0% { transform: translate3d(var(--px, 0), var(--py, 0), 0) scale(1.12); }
+  100% { transform: translate3d(calc(var(--px, 0) + 26px), calc(var(--py, 0) - 18px), 0) scale(1.2); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-\[backdrop-drift_36s_ease-in-out_infinite_alternate\] {
+    animation: none !important;
+  }
+}
+
 @keyframes ambient-drift-a {
   0%, 100% { transform: translate(0, 0) scale(1); }
   33% { transform: translate(6%, -8%) scale(1.08); }

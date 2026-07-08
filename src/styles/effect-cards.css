@@ -1,0 +1,543 @@
+/* ============================================================
+   EffectCard — 12 combined hover presets
+   Primary: .fx-{name}  |  Layer: .fx-layer-{name}
+   Mouse position: --mx / --my (0–1)
+   ============================================================ */
+
+.effect-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  --mx: 0.5;
+  --my: 0.5;
+  transform-style: preserve-3d;
+  transition:
+    transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 0.4s ease,
+    border-color 0.35s ease;
+}
+
+.effect-card__content {
+  position: relative;
+  z-index: 3;
+}
+
+.effect-card__fx {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 1;
+}
+
+.effect-card__fx--layer {
+  z-index: 2;
+}
+
+.effect-card__fx--trail {
+  z-index: 4;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.effect-card:hover .effect-card__fx--trail {
+  opacity: 1;
+}
+
+/* ---- 1. CRIMSON LIFT ---- */
+.fx-crimson-lift:hover {
+  transform: translateY(-10px);
+  box-shadow:
+    0 24px 48px rgba(220, 38, 38, 0.35),
+    0 0 0 1px rgba(248, 113, 113, 0.25);
+  border-color: rgba(248, 113, 113, 0.35) !important;
+}
+
+.fx-crimson-lift .effect-card__fx--primary {
+  background: radial-gradient(ellipse at 50% 120%, rgba(220, 38, 38, 0.35), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.fx-crimson-lift:hover .effect-card__fx--primary {
+  opacity: 1;
+}
+
+/* ---- 2. EMERALD TILT ---- */
+.fx-emerald-tilt:hover {
+  transform: perspective(900px)
+    rotateX(calc((var(--my) - 0.5) * -14deg))
+    rotateY(calc((var(--mx) - 0.5) * 14deg))
+    translateY(-6px);
+  box-shadow: 0 20px 40px rgba(16, 185, 129, 0.25);
+  border-color: rgba(52, 211, 153, 0.35) !important;
+}
+
+.fx-emerald-tilt .effect-card__fx--primary {
+  background: linear-gradient(
+    135deg,
+    transparent 30%,
+    rgba(16, 185, 129, 0.18) 50%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.6s ease;
+}
+
+.fx-emerald-tilt:hover .effect-card__fx--primary {
+  transform: translateX(120%);
+}
+
+/* ---- 3. OCEAN FLOAT ---- */
+.fx-ocean-float:hover {
+  transform: translateY(-8px);
+  border-color: rgba(6, 182, 212, 0.4) !important;
+  box-shadow: 0 16px 40px rgba(6, 182, 212, 0.2);
+}
+
+.fx-ocean-float .effect-card__fx--primary {
+  background:
+    radial-gradient(circle at 20% 80%, rgba(6, 182, 212, 0.5) 0%, transparent 8%),
+    radial-gradient(circle at 70% 60%, rgba(59, 130, 246, 0.4) 0%, transparent 6%),
+    radial-gradient(circle at 40% 40%, rgba(6, 182, 212, 0.35) 0%, transparent 5%),
+    radial-gradient(circle at 85% 30%, rgba(14, 165, 233, 0.3) 0%, transparent 7%);
+  opacity: 0;
+  animation: ocean-bubbles 3s ease-in-out infinite;
+}
+
+.fx-ocean-float:hover .effect-card__fx--primary {
+  opacity: 1;
+}
+
+@keyframes ocean-bubbles {
+  0%,
+  100% {
+    transform: translateY(8px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+/* ---- 4. GALAXY EXPAND ---- */
+.fx-galaxy-expand:hover {
+  transform: scale(1.03);
+  border-color: rgba(139, 92, 246, 0.5) !important;
+  box-shadow: 0 0 60px rgba(139, 92, 246, 0.35);
+}
+
+.fx-galaxy-expand .effect-card__fx--primary {
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(139, 92, 246, 0.55) 0%, transparent 55%),
+    radial-gradient(ellipse at 30% 70%, rgba(99, 102, 241, 0.4) 0%, transparent 40%),
+    radial-gradient(ellipse at 70% 30%, rgba(236, 72, 153, 0.3) 0%, transparent 45%);
+  transform: scale(0.6);
+  opacity: 0;
+  transition: transform 0.5s ease, opacity 0.4s ease;
+}
+
+.fx-galaxy-expand:hover .effect-card__fx--primary {
+  transform: scale(1.4);
+  opacity: 1;
+}
+
+/* ---- 5. SUNSET GLOW ---- */
+.fx-sunset-glow:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 0 30px rgba(251, 146, 60, 0.5),
+    0 0 60px rgba(234, 88, 12, 0.3),
+    inset 0 0 40px rgba(251, 191, 36, 0.08);
+  border-color: rgba(251, 146, 60, 0.45) !important;
+}
+
+.fx-sunset-glow .effect-card__fx--primary {
+  background: radial-gradient(circle at 50% 50%, rgba(251, 146, 60, 0.25), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.fx-sunset-glow:hover .effect-card__fx--primary {
+  opacity: 1;
+}
+
+/* ---- 6. ICE FROST ---- */
+.fx-ice-frost:hover {
+  transform: translateY(-6px);
+  border-color: rgba(147, 197, 253, 0.45) !important;
+  box-shadow: 0 16px 36px rgba(59, 130, 246, 0.2);
+}
+
+.fx-ice-frost .effect-card__fx--primary {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, transparent 50%),
+    repeating-linear-gradient(
+      45deg,
+      rgba(191, 219, 254, 0.06) 0px,
+      rgba(191, 219, 254, 0.06) 2px,
+      transparent 2px,
+      transparent 8px
+    );
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.fx-ice-frost:hover .effect-card__fx--primary {
+  opacity: 1;
+}
+
+/* ---- 7. MATRIX SCAN ---- */
+.fx-matrix-scan:hover {
+  transform: translateY(-6px);
+  border-color: rgba(34, 197, 94, 0.45) !important;
+  box-shadow: 0 0 30px rgba(34, 197, 94, 0.25);
+}
+
+.fx-matrix-scan .effect-card__fx--primary {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(34, 197, 94, 0.08) 3px,
+    rgba(34, 197, 94, 0.08) 4px
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.fx-matrix-scan:hover .effect-card__fx--primary {
+  opacity: 1;
+  animation: matrix-fall 2s linear infinite;
+}
+
+.fx-matrix-scan .effect-card__fx--layer {
+  background: linear-gradient(180deg, transparent, rgba(34, 197, 94, 0.15), transparent);
+  height: 30%;
+  top: -30%;
+  opacity: 0;
+}
+
+.fx-matrix-scan:hover .effect-card__fx--layer {
+  opacity: 1;
+  animation: matrix-scan 1.8s ease-in-out infinite;
+}
+
+@keyframes matrix-fall {
+  to {
+    background-position: 0 40px;
+  }
+}
+
+@keyframes matrix-scan {
+  0% {
+    top: -30%;
+  }
+  100% {
+    top: 100%;
+  }
+}
+
+/* ---- 8. NEON PULSE ---- */
+.fx-neon-pulse {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.fx-neon-pulse:hover {
+  transform: translateY(-6px);
+  animation: neon-border 1.5s ease-in-out infinite;
+}
+
+.fx-neon-pulse .effect-card__fx--primary {
+  inset: -2px;
+  background: linear-gradient(
+    90deg,
+    var(--primary),
+    var(--secondary),
+    var(--accent),
+    var(--primary)
+  );
+  background-size: 300% 100%;
+  opacity: 0;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 2px;
+  transition: opacity 0.3s ease;
+}
+
+.fx-neon-pulse:hover .effect-card__fx--primary {
+  opacity: 1;
+  animation: neon-shift 2s linear infinite;
+}
+
+@keyframes neon-shift {
+  to {
+    background-position: 300% 0;
+  }
+}
+
+@keyframes neon-border {
+  0%,
+  100% {
+    box-shadow: 0 0 20px var(--primary-glow);
+  }
+  50% {
+    box-shadow: 0 0 35px var(--secondary-glow), 0 0 50px var(--accent-glow);
+  }
+}
+
+/* ---- 9. HOLOGRAM GLITCH ---- */
+.fx-hologram-glitch:hover {
+  transform: translateY(-6px);
+  animation: holo-glitch 0.4s steps(2) infinite;
+  border-color: rgba(6, 182, 212, 0.4) !important;
+}
+
+.fx-hologram-glitch .effect-card__fx--primary {
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(6, 182, 212, 0.04) 0px,
+    rgba(6, 182, 212, 0.04) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.fx-hologram-glitch:hover .effect-card__fx--primary {
+  opacity: 1;
+}
+
+@keyframes holo-glitch {
+  0% {
+    filter: hue-rotate(0deg);
+    box-shadow: -2px 0 rgba(255, 0, 128, 0.3), 2px 0 rgba(0, 255, 255, 0.3);
+  }
+  50% {
+    filter: hue-rotate(20deg);
+    box-shadow: 2px 0 rgba(255, 0, 128, 0.4), -2px 0 rgba(0, 255, 255, 0.4);
+  }
+  100% {
+    filter: hue-rotate(0deg);
+    box-shadow: -2px 0 rgba(255, 0, 128, 0.3), 2px 0 rgba(0, 255, 255, 0.3);
+  }
+}
+
+/* ---- 10. MAGNETIC ATTRACT ---- */
+.fx-magnetic-attract:hover {
+  transform: translateY(-8px);
+  border-color: rgba(139, 92, 246, 0.45) !important;
+  box-shadow: 0 20px 50px rgba(139, 92, 246, 0.3);
+}
+
+.fx-magnetic-attract .effect-card__fx--primary::before,
+.fx-magnetic-attract .effect-card__fx--primary::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--secondary);
+  box-shadow:
+    48px -20px 0 var(--accent),
+    -40px 30px 0 var(--primary),
+    60px 40px 0 rgba(139, 92, 246, 0.8),
+    -55px -35px 0 rgba(6, 182, 212, 0.7);
+  top: 20%;
+  left: 15%;
+  opacity: 0.7;
+  transition: transform 0.5s ease, opacity 0.3s ease;
+}
+
+.fx-magnetic-attract .effect-card__fx--primary::after {
+  top: 60%;
+  left: 70%;
+  box-shadow:
+    -35px -25px 0 var(--primary),
+    25px 35px 0 var(--accent),
+    -50px 15px 0 var(--secondary);
+}
+
+.fx-magnetic-attract:hover .effect-card__fx--primary::before {
+  transform: translate(
+    calc((0.5 - var(--mx)) * 40px),
+    calc((0.5 - var(--my)) * 40px)
+  );
+}
+
+.fx-magnetic-attract:hover .effect-card__fx--primary::after {
+  transform: translate(
+    calc((0.5 - var(--mx)) * -35px),
+    calc((0.5 - var(--my)) * -35px)
+  );
+}
+
+/* ---- 11. LIQUID SPREAD ---- */
+.fx-liquid-spread:hover {
+  transform: translateY(-6px);
+  border-color: rgba(20, 184, 166, 0.4) !important;
+}
+
+.fx-liquid-spread .effect-card__fx--primary {
+  background: radial-gradient(
+    circle at calc(var(--mx) * 100%) calc(var(--my) * 100%),
+    rgba(20, 184, 166, 0.45) 0%,
+    rgba(6, 182, 212, 0.2) 25%,
+    transparent 55%
+  );
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.35s ease, transform 0.5s ease;
+}
+
+.fx-liquid-spread:hover .effect-card__fx--primary {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+/* ---- 12. PARTICLE TRAIL ---- */
+.fx-particle-trail:hover {
+  transform: translateY(-6px);
+  border-color: rgba(251, 191, 36, 0.35) !important;
+  box-shadow: 0 16px 40px rgba(251, 191, 36, 0.15);
+}
+
+.fx-particle-trail .effect-card__fx--trail {
+  background:
+    radial-gradient(circle at calc(var(--mx) * 100%) calc(var(--my) * 100%), rgba(251, 191, 36, 0.7) 0%, transparent 10%),
+    radial-gradient(circle at calc(var(--mx) * 100% - 6%) calc(var(--my) * 100% + 4%), rgba(255, 215, 0, 0.45) 0%, transparent 7%),
+    radial-gradient(circle at calc(var(--mx) * 100% + 5%) calc(var(--my) * 100% - 3%), rgba(251, 146, 60, 0.35) 0%, transparent 6%);
+}
+
+/* ---- LAYER variants (secondary combo on __fx--layer) ---- */
+
+.fx-layer-crimson-lift:hover {
+  box-shadow:
+    0 20px 40px rgba(220, 38, 38, 0.2),
+    0 0 0 1px rgba(248, 113, 113, 0.15);
+}
+
+.fx-layer-emerald-tilt .effect-card__fx--layer {
+  background: linear-gradient(120deg, transparent, rgba(16, 185, 129, 0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.fx-layer-emerald-tilt:hover .effect-card__fx--layer {
+  opacity: 1;
+}
+
+.fx-layer-ocean-float .effect-card__fx--layer {
+  background: radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.2), transparent 35%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.fx-layer-ocean-float:hover .effect-card__fx--layer {
+  opacity: 1;
+}
+
+.fx-layer-galaxy-expand .effect-card__fx--layer {
+  background: radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.15), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.5s ease;
+}
+
+.fx-layer-galaxy-expand:hover .effect-card__fx--layer {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+.fx-layer-sunset-glow:hover {
+  box-shadow:
+    0 0 25px rgba(251, 146, 60, 0.25),
+    inset 0 0 20px rgba(251, 191, 36, 0.05);
+}
+
+.fx-layer-ice-frost .effect-card__fx--layer {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.fx-layer-ice-frost:hover .effect-card__fx--layer {
+  opacity: 1;
+}
+
+.fx-layer-matrix-scan .effect-card__fx--layer {
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 8px,
+    rgba(34, 197, 94, 0.05) 8px,
+    rgba(34, 197, 94, 0.05) 9px
+  );
+  opacity: 0;
+}
+
+.fx-layer-matrix-scan:hover .effect-card__fx--layer {
+  opacity: 1;
+}
+
+.fx-layer-neon-pulse:hover {
+  box-shadow: 0 0 25px var(--accent-glow);
+}
+
+.fx-layer-hologram-glitch:hover .effect-card__content {
+  text-shadow: 1px 0 rgba(255, 0, 128, 0.2), -1px 0 rgba(0, 255, 255, 0.2);
+}
+
+.fx-layer-magnetic-attract:hover {
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
+}
+
+.fx-layer-liquid-spread .effect-card__fx--layer {
+  background: radial-gradient(
+    circle at calc((1 - var(--mx)) * 100%) calc((1 - var(--my)) * 100%),
+    rgba(20, 184, 166, 0.2),
+    transparent 45%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.fx-layer-liquid-spread:hover .effect-card__fx--layer {
+  opacity: 1;
+}
+
+.fx-layer-particle-trail .effect-card__fx--layer {
+  background: radial-gradient(
+    circle at calc(var(--mx) * 100%) calc(var(--my) * 100%),
+    rgba(251, 191, 36, 0.25),
+    transparent 20%
+  );
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.fx-layer-particle-trail:hover .effect-card__fx--layer {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .effect-card,
+  .effect-card:hover,
+  .effect-card__fx,
+  .effect-card__fx--primary,
+  .effect-card__fx--layer {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .fx-emerald-tilt:hover,
+  .fx-hologram-glitch:hover {
+    transform: translateY(-4px);
+  }
+}

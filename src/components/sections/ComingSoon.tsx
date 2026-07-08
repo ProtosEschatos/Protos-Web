@@ -1,9 +1,9 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
 import { Rocket, ArrowRight } from 'lucide-react'
+import EffectCard from '@/components/ui/EffectCard'
 
 type Props = {
   /** Optional extra top/bottom padding when used as a standalone page. */
@@ -19,12 +19,13 @@ export default function ComingSoon({ standalone = false }: Props) {
         standalone ? 'min-h-[70vh] pt-36 pb-24' : 'py-12 sm:py-16'
       }`}
     >
-      <motion.div
+      <EffectCard
+        index={0}
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="w-full max-w-[540px] cosmic-panel rounded-3xl px-6 py-10 sm:px-10 sm:py-14"
+        className="w-full max-w-[540px] rounded-3xl px-6 py-10 sm:px-10 sm:py-14"
       >
         <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--primary)]/15 text-[var(--primary)] sm:h-20 sm:w-20">
           <Rocket className="h-7 w-7 sm:h-9 sm:w-9" />
@@ -48,7 +49,7 @@ export default function ComingSoon({ standalone = false }: Props) {
         >
           {t('comingSoonCta')} <ArrowRight className="h-4 w-4" />
         </Link>
-      </motion.div>
+      </EffectCard>
     </div>
   )
 }

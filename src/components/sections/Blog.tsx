@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
 import { ArrowRight, Calendar } from 'lucide-react'
 import type { BlogPost } from '@/actions/blog'
+import EffectCard from '@/components/ui/EffectCard'
 
 const cardVariant = {
   hidden: { opacity: 0, y: 20 },
@@ -39,18 +40,17 @@ export default function Blog({ posts, locale }: Props) {
         <p className="text-base text-[var(--light-muted)] max-w-[600px] mx-auto mb-12 leading-7">{t('subtitle')}</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {posts.map((p, i) => (
-            <motion.div
+            <EffectCard
               key={p.id}
+              index={i}
               custom={i}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: '-50px' }}
               variants={cardVariant}
+              className="rounded-2xl h-full text-left"
             >
-              <Link
-                href={`/blog/${p.slug}`}
-                className="cosmic-panel rounded-2xl p-7 text-left flex flex-col h-full hover:border-[var(--primary)]/20 hover:-translate-y-1 transition-all duration-300 group"
-              >
+              <Link href={`/blog/${p.slug}`} className="flex flex-col h-full p-7 group">
                 <div className="flex items-center gap-1.5 text-xs text-[var(--primary)] mb-3">
                   <Calendar className="w-3.5 h-3.5" />
                   {formatDate(p.created_at, locale)}
@@ -60,7 +60,7 @@ export default function Blog({ posts, locale }: Props) {
                 </h3>
                 <p className="text-sm text-[var(--light-muted)] leading-relaxed flex-1">{p.excerpt}</p>
               </Link>
-            </motion.div>
+            </EffectCard>
           ))}
         </div>
         <div className="mt-10">

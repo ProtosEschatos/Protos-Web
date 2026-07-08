@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import ComingSoon from '@/components/sections/ComingSoon'
+import EffectCard from '@/components/ui/EffectCard'
 import { Link } from '@/routing'
 import { ArrowRight, Layers } from 'lucide-react'
 
@@ -37,7 +38,11 @@ export default async function PortfolioPage({ params: { locale } }: Props) {
         <div className="max-w-[1200px] mx-auto px-6">
           <ComingSoon />
 
-          <div className="mt-16 bg-gradient-to-r from-[var(--secondary)]/15 to-[var(--accent)]/10 border border-[var(--secondary)]/20 rounded-3xl p-6 sm:p-8 md:px-10 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <EffectCard
+            index={6}
+            bare
+            className="mt-16 bg-gradient-to-r from-[var(--secondary)]/15 to-[var(--accent)]/10 border border-[var(--secondary)]/20 rounded-3xl p-6 sm:p-8 md:px-10 flex flex-col sm:flex-row items-center justify-between gap-6"
+          >
             <div className="flex items-center gap-4 sm:gap-5">
               <div className="w-12 h-12 shrink-0 rounded-xl bg-[var(--secondary)]/20 flex items-center justify-center text-[var(--secondary)]">
                 <Layers className="w-5 h-5" />
@@ -54,7 +59,7 @@ export default async function PortfolioPage({ params: { locale } }: Props) {
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-          </div>
+          </EffectCard>
         </div>
       </section>
     </>

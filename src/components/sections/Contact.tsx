@@ -6,6 +6,7 @@ import { useLocale, useTranslations } from 'next-intl'
 import { ArrowRight, MapPin, Phone } from 'lucide-react'
 import ContactChannels from '@/components/ui/ContactChannels'
 import TurnstileWidget from '@/components/ui/TurnstileWidget'
+import EffectCard from '@/components/ui/EffectCard'
 import { WHATSAPP_URL } from '@/lib/social-links'
 
 export default function Contact() {
@@ -83,7 +84,14 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }} className="cosmic-panel rounded-3xl p-10">
+          <EffectCard
+            index={3}
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="rounded-3xl p-10"
+          >
             {!submitted ? (
               <form onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
@@ -112,7 +120,7 @@ export default function Contact() {
                 <p className="text-lg font-semibold text-[var(--light)]">{t('success')}</p>
               </div>
             )}
-          </motion.div>
+          </EffectCard>
         </div>
       </div>
     </section>

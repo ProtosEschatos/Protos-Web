@@ -1,9 +1,9 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { brandGlyph } from '@/components/ui/BrandIcons'
 import { socialItems, platformItems, type PresenceItem } from '@/lib/social-links'
+import EffectCard from '@/components/ui/EffectCard'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -13,9 +13,6 @@ const fadeUp = {
 function PresenceTile({ item, index }: { item: PresenceItem; index: number }) {
   const t = useTranslations('onlinePresence')
   const isPending = item.pending || item.href === '#'
-  const className =
-    'group/tile flex items-center gap-3 rounded-2xl border border-[var(--border-card)] bg-[var(--dark-card)] px-4 py-3.5 transition-all duration-300' +
-    (isPending ? ' opacity-60 cursor-not-allowed' : ' hover:-translate-y-0.5')
 
   const inner = (
     <>
@@ -36,38 +33,39 @@ function PresenceTile({ item, index }: { item: PresenceItem; index: number }) {
     </>
   )
 
+  const shared = {
+    index,
+    custom: index,
+    initial: 'hidden' as const,
+    whileInView: 'visible' as const,
+    viewport: { once: true },
+    variants: fadeUp,
+    className: 'group/tile flex items-center gap-3 rounded-2xl px-4 py-3.5',
+    style: { ['--brand' as string]: item.brand },
+  }
+
   if (isPending) {
     return (
-      <motion.div
+      <EffectCard
+        {...shared}
         role="link"
         aria-label={`${item.label} — ${t('pending')}`}
         aria-disabled="true"
-        custom={index}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={fadeUp}
-        className={className}
-        style={{ ['--brand' as string]: item.brand }}
+        className={`${shared.className} opacity-60 cursor-not-allowed`}
       >
         {inner}
-      </motion.div>
+      </EffectCard>
     )
   }
 
   return (
-    <motion.a
+    <EffectCard
+      {...shared}
+      as="a"
       href={item.href}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={item.label}
-      custom={index}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
-      variants={fadeUp}
-      className={className}
-      style={{ ['--brand' as string]: item.brand }}
       onMouseEnter={(e) => {
         e.currentTarget.style.borderColor = item.brand
       }}
@@ -76,7 +74,7 @@ function PresenceTile({ item, index }: { item: PresenceItem; index: number }) {
       }}
     >
       {inner}
-    </motion.a>
+    </EffectCard>
   )
 }
 
@@ -109,7 +107,7 @@ export default function OnlinePresence() {
           </h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {platformItems.map((item, i) => (
-              <PresenceTile key={item.id} item={item} index={i} />
+              <PresenceTile key={item.id} item={item} index={i + socialItems.length} />
             ))}
           </div>
         </div>

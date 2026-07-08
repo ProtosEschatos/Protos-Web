@@ -1,10 +1,10 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
 import { ArrowRight, Layers } from 'lucide-react'
 import ComingSoon from '@/components/sections/ComingSoon'
+import EffectCard from '@/components/ui/EffectCard'
 
 const marqueeItems = ['NEXT.JS', 'TYPESCRIPT', 'TAILWIND', 'THREE.JS', 'FRAMER MOTION', 'WEBGL', 'SUPABASE']
 
@@ -31,11 +31,13 @@ export default function Portfolio() {
 
         <ComingSoon />
 
-        <motion.div
+        <EffectCard
+          index={6}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
+          bare
           className="mt-12 bg-gradient-to-r from-[var(--secondary)]/15 to-[var(--accent)]/10 border border-[var(--secondary)]/20 rounded-3xl p-6 sm:p-8 md:px-10 flex flex-col sm:flex-row items-center justify-between gap-6"
         >
           <div className="flex items-center gap-4 sm:gap-5">
@@ -53,7 +55,7 @@ export default function Portfolio() {
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-        </motion.div>
+        </EffectCard>
       </div>
     </section>
   )

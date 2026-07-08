@@ -1,10 +1,10 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
 import { ArrowRight } from 'lucide-react'
 import { PROCESS_FEATURE_ICONS } from '@/lib/section-icons'
+import EffectCard from '@/components/ui/EffectCard'
 
 const featureColors = [
   'bg-[var(--primary)]/15 text-[var(--primary)]',
@@ -40,12 +40,20 @@ export default function ProcessPage() {
         <div className="max-w-[1200px] mx-auto px-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {steps.map((s, i) => (
-              <motion.div key={s.num} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-                className="cosmic-panel rounded-2xl p-7 hover:border-[var(--primary)]/30 hover:-translate-y-1 transition-all duration-300">
+              <EffectCard
+                key={s.num}
+                index={i}
+                custom={i}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                className="rounded-2xl p-7"
+              >
                 <div className="text-4xl font-extrabold gradient-text mb-4 leading-none">{s.num}</div>
                 <h3 className="text-base font-bold text-[var(--light)] mb-2">{s.title}</h3>
                 <p className="text-sm text-[var(--light-muted)] leading-relaxed">{s.text}</p>
-              </motion.div>
+              </EffectCard>
             ))}
           </div>
         </div>
@@ -55,8 +63,16 @@ export default function ProcessPage() {
         <div className="max-w-[1200px] mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {features.map((f, i) => (
-              <motion.div key={f.title} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-                className="cosmic-panel rounded-3xl p-8 text-center hover:-translate-y-1 transition-all duration-300">
+              <EffectCard
+                key={f.title}
+                index={i + 4}
+                custom={i}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                className="rounded-3xl p-8 text-center"
+              >
                 <div className={`w-14 h-14 rounded-full mx-auto mb-4 flex items-center justify-center text-xl ${featureColors[i]}`}>
                   {(() => {
                     const Icon = PROCESS_FEATURE_ICONS[i]
@@ -65,7 +81,7 @@ export default function ProcessPage() {
                 </div>
                 <h3 className="text-base font-bold text-[var(--light)] mb-2">{f.title}</h3>
                 <p className="text-sm text-[var(--light-muted)] leading-relaxed">{f.text}</p>
-              </motion.div>
+              </EffectCard>
             ))}
           </div>
         </div>
@@ -81,11 +97,19 @@ export default function ProcessPage() {
         <div className="max-w-[1200px] mx-auto px-6">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             {stats.map((s, i) => (
-              <motion.div key={i} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-                className="cosmic-panel text-center p-8 rounded-3xl">
+              <EffectCard
+                key={i}
+                index={i + 7}
+                custom={i}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                className="text-center p-8 rounded-3xl"
+              >
                 <div className="text-4xl font-extrabold gradient-text mb-2">{s.value}</div>
                 <div className="text-xs text-[var(--light-muted)]">{s.label}</div>
-              </motion.div>
+              </EffectCard>
             ))}
           </div>
         </div>
@@ -95,10 +119,14 @@ export default function ProcessPage() {
         <div className="max-w-[1200px] mx-auto px-6">
           <h2 className="text-[clamp(2rem,5vw,3rem)] font-extrabold mb-8">{t('technologiesTitle')}</h2>
           <div className="flex flex-wrap gap-3 justify-center">
-            {techs.map((tech) => (
-              <span key={tech} className="cosmic-panel px-6 py-2.5 rounded-full text-sm font-medium text-[var(--light)] hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all duration-300">
+            {techs.map((tech, i) => (
+              <EffectCard
+                key={tech}
+                index={i + 11}
+                className="px-6 py-2.5 rounded-full text-sm font-medium text-[var(--light)]"
+              >
                 {tech}
-              </span>
+              </EffectCard>
             ))}
           </div>
         </div>

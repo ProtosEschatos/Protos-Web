@@ -1,10 +1,10 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { ExternalLink, ImageIcon } from 'lucide-react'
 import type { PortfolioItem } from '@/actions/portfolio'
+import EffectCard from '@/components/ui/EffectCard'
 
 const tagColors = [
   'text-[var(--primary)]',
@@ -37,14 +37,15 @@ export default function PortfolioGrid({ items }: Props) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
       {items.map((p, i) => (
-        <motion.div
+        <EffectCard
           key={p.id}
+          index={i}
           custom={i}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-50px' }}
           variants={cardVariant}
-          className="cosmic-panel rounded-2xl overflow-hidden hover:-translate-y-1.5 hover:shadow-[0_4px_24px_rgba(0,0,0,0.3)] transition-all duration-300"
+          className="rounded-2xl overflow-hidden"
         >
           {p.image_url ? (
             <div className="relative w-full aspect-[4/3]">
@@ -82,7 +83,7 @@ export default function PortfolioGrid({ items }: Props) {
               </a>
             ) : null}
           </div>
-        </motion.div>
+        </EffectCard>
       ))}
     </div>
   )

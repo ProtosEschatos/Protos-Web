@@ -9,6 +9,7 @@ import DonateButton from '@/components/sections/DonateButton'
 import OnlinePresence from '@/components/sections/OnlinePresence'
 
 import ContactChannels from '@/components/ui/ContactChannels'
+import EffectCard from '@/components/ui/EffectCard'
 import { WHATSAPP_URL } from '@/lib/social-links'
 
 const infoKeys = ['name', 'location', 'experience', 'contact', 'phone', 'languages'] as const
@@ -100,12 +101,20 @@ export default function AboutPage() {
           <h2 className="text-[clamp(2rem,5vw,3rem)] font-extrabold mb-10">{t('goalsTitle')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {goals.map((g, i) => (
-              <motion.div key={g.title} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-                className="cosmic-panel rounded-2xl p-8 text-center hover:-translate-y-1 transition-all duration-300">
+              <EffectCard
+                key={g.title}
+                index={i}
+                custom={i}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                className="rounded-2xl p-8 text-center"
+              >
                 <div className="text-3xl mb-4">{goalEmojis[i]}</div>
                 <h3 className="text-base font-bold text-[var(--light)] mb-2">{g.title}</h3>
                 <p className="text-sm text-[var(--light-muted)] leading-relaxed">{g.text}</p>
-              </motion.div>
+              </EffectCard>
             ))}
           </div>
         </div>
@@ -122,8 +131,16 @@ export default function AboutPage() {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {supportCards.map((c, i) => (
-              <motion.div key={c.title} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-                className="cosmic-panel rounded-2xl p-7 flex flex-col text-left">
+              <EffectCard
+                key={c.title}
+                index={i + 3}
+                custom={i}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                className="rounded-2xl p-7 flex flex-col text-left"
+              >
                 <div className="text-3xl mb-4">{supportEmojis[i]}</div>
                 <h3 className="text-base font-bold mb-2">{c.title}</h3>
                 <p className="text-sm text-[var(--light-muted)] leading-relaxed flex-1 mb-5">{c.text}</p>
@@ -134,7 +151,7 @@ export default function AboutPage() {
                 <div className="h-1 rounded-full bg-white/[0.08] overflow-hidden">
                   <div className="h-full rounded-full bg-gradient-to-r from-[var(--primary)] to-[#ff8800]" style={{ width: `${c.progress}%` }} />
                 </div>
-              </motion.div>
+              </EffectCard>
             ))}
           </div>
           <motion.div

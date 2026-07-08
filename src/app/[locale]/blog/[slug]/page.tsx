@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { getBlogPostBySlug, getBlogSlugLocales } from '@/actions/blog'
+import { getAdjacentBlogPosts, getBlogPostBySlug, getBlogSlugLocales } from '@/actions/blog'
 import BlogPostContent from '@/components/blog/BlogPostContent'
+import BlogPostNav from '@/components/blog/BlogPostNav'
 import { Link } from '@/routing'
 import { ArrowLeft, Calendar } from 'lucide-react'
 import { buildBlogPostMetadata, blogPostingJsonLd } from '@/lib/seo'
@@ -41,6 +42,8 @@ export default async function BlogPostPage({ params: { locale, slug } }: Props) 
 
   if (!post) notFound()
 
+  const { previous, next } = await getAdjacentBlogPosts(post.created_at, locale)
+
   const jsonLd = blogPostingJsonLd({
     title: post.title,
     description: post.excerpt || post.title,
@@ -55,6 +58,7 @@ export default async function BlogPostPage({ params: { locale, slug } }: Props) 
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <BlogPostNav previous={previous} next={next} />
       <article className="pt-36 pb-24">
         <div className="max-w-[800px] mx-auto px-6">
           <Link

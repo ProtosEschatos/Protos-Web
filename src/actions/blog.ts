@@ -61,6 +61,50 @@ export async function getBlogPostBySlug(
   return { ...data, created_at: data.created_at ?? '' }
 }
 
+export type AdjacentBlogPost = { slug: string; title: string }
+
+export type BlogNeighbors = {
+  previous: AdjacentBlogPost | null
+  next: AdjacentBlogPost | null
+}
+
+/**
+ * Neighboring posts for prev/next navigation, within the same language.
+ * `previous` = newer post, `next` = older post (list is newest-first).
+ */
+export async function getAdjacentBlogPosts(
+  createdAt: string,
+  language = 'hr',
+): Promise<BlogNeighbors> {
+  if (!supabase) return { previous: null, next: null }
+
+  const [newer, older] = await Promise.all([
+    supabase
+      .from('blog_posts')
+      .select('slug, title')
+      .eq('is_published', true)
+      .eq('language', language)
+      .gt('created_at', createdAt)
+      .order('created_at', { ascending: true })
+      .limit(1)
+      .maybeSingle(),
+    supabase
+      .from('blog_posts')
+      .select('slug, title')
+      .eq('is_published', true)
+      .eq('language', language)
+      .lt('created_at', createdAt)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle(),
+  ])
+
+  return {
+    previous: newer.data ? { slug: newer.data.slug, title: newer.data.title } : null,
+    next: older.data ? { slug: older.data.slug, title: older.data.title } : null,
+  }
+}
+
 export async function getBlogSlugLocales(slug: string): Promise<string[]> {
   if (!supabase) return []
 

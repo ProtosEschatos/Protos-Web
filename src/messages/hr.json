@@ -105,7 +105,11 @@
     "showcaseText": "Istrazite nase radove u interaktivnoj 3D galeriji.",
     "showcaseCta": "Udi u showcase",
     "viewProject": "Pogledaj projekt",
-    "empty": "Jos nema projekata za prikaz."
+    "empty": "Jos nema projekata za prikaz.",
+    "comingSoonBadge": "Uskoro",
+    "comingSoonTitle": "Portfolio stize uskoro",
+    "comingSoonText": "Trenutno pripremam odabrane projekte i studije slucaja. Do tada slobodno javi za suradnju.",
+    "comingSoonCta": "Zapocni projekt"
   },
   "portfolioPage": {
     "label": "PORTFOLIO",
@@ -122,7 +126,9 @@
     "subtitle": "Besplatni vodicima o web prisutnosti za poduzetnike",
     "readMore": "Citaj vise",
     "viewAll": "Pogledaj sve clanke",
-    "empty": "Jos nema objavljenih clanaka."
+    "empty": "Jos nema objavljenih clanaka.",
+    "previous": "Prethodni clanak",
+    "next": "Sljedeci clanak"
   },
   "contact": {
     "label": "KONTAKT",

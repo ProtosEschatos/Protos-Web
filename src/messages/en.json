@@ -105,7 +105,11 @@
     "showcaseText": "Explore our work in an interactive 3D space gallery.",
     "showcaseCta": "Enter showcase",
     "viewProject": "View project",
-    "empty": "No projects to display yet."
+    "empty": "No projects to display yet.",
+    "comingSoonBadge": "Coming soon",
+    "comingSoonTitle": "Portfolio coming soon",
+    "comingSoonText": "I'm currently curating selected projects and case studies. In the meantime, feel free to reach out about working together.",
+    "comingSoonCta": "Start a project"
   },
   "portfolioPage": {
     "label": "PORTFOLIO",
@@ -122,7 +126,9 @@
     "subtitle": "Free guides on web presence for entrepreneurs",
     "readMore": "Read more",
     "viewAll": "View all articles",
-    "empty": "No articles published yet."
+    "empty": "No articles published yet.",
+    "previous": "Previous article",
+    "next": "Next article"
   },
   "contact": {
     "label": "CONTACT",

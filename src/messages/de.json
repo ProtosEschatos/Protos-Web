@@ -212,7 +212,11 @@
     "showcaseText": "Entdecken Sie unsere Arbeit in einer interaktiven 3D-Galerie.",
     "showcaseCta": "Showcase betreten",
     "viewProject": "Projekt ansehen",
-    "empty": "Noch keine Projekte vorhanden."
+    "empty": "Noch keine Projekte vorhanden.",
+    "comingSoonBadge": "Demnächst",
+    "comingSoonTitle": "Portfolio folgt in Kürze",
+    "comingSoonText": "Ich bereite gerade ausgewählte Projekte und Fallstudien vor. Melde dich in der Zwischenzeit gerne für eine Zusammenarbeit.",
+    "comingSoonCta": "Projekt starten"
   },
   "portfolioPage": {
     "label": "PORTFOLIO",
@@ -229,7 +233,9 @@
     "subtitle": "Kostenlose Leitfaden zur Web-Praesenz fur Unternehmer",
     "readMore": "Weiterlesen",
     "viewAll": "Alle Artikel ansehen",
-    "empty": "Noch keine Artikel veroffentlicht."
+    "empty": "Noch keine Artikel veroffentlicht.",
+    "previous": "Vorheriger Artikel",
+    "next": "Nächster Artikel"
   },
   "contact": {
     "label": "KONTAKT",

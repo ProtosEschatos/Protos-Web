@@ -212,7 +212,11 @@
     "showcaseText": "Esplora il nostro lavoro in una galleria 3D interattiva.",
     "showcaseCta": "Entra nello showcase",
     "viewProject": "Vedi progetto",
-    "empty": "Nessun progetto da mostrare."
+    "empty": "Nessun progetto da mostrare.",
+    "comingSoonBadge": "In arrivo",
+    "comingSoonTitle": "Portfolio in arrivo",
+    "comingSoonText": "Sto preparando progetti selezionati e case study. Nel frattempo, contattami pure per collaborare.",
+    "comingSoonCta": "Avvia un progetto"
   },
   "portfolioPage": {
     "label": "PORTFOLIO",
@@ -229,7 +233,9 @@
     "subtitle": "Guide gratuite sulla presenza web per imprenditori",
     "readMore": "Leggi di piu",
     "viewAll": "Vedi tutti gli articoli",
-    "empty": "Nessun articolo pubblicato ancora."
+    "empty": "Nessun articolo pubblicato ancora.",
+    "previous": "Articolo precedente",
+    "next": "Articolo successivo"
   },
   "contact": {
     "label": "CONTATTO",

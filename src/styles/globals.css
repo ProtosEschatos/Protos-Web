@@ -73,7 +73,7 @@ html.cursor-none * {
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 9999;
+  z-index: 2147483647;
   width: 8px;
   height: 8px;
   margin: -4px 0 0 -4px;
@@ -99,7 +99,7 @@ html.cursor-none * {
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 9998;
+  z-index: 2147483646;
   width: 42px;
   height: 42px;
   margin: -21px 0 0 -21px;

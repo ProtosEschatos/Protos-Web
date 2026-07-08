@@ -140,8 +140,8 @@ ul, ol { list-style: none; }
 }
 
 @keyframes backdrop-drift {
-  0% { transform: translate3d(var(--px, 0), var(--py, 0), 0) scale(1.12); }
-  100% { transform: translate3d(calc(var(--px, 0) + 26px), calc(var(--py, 0) - 18px), 0) scale(1.2); }
+  0% { transform: scale(1.05) translate(0, 0); }
+  100% { transform: scale(1.14) translate(20px, -14px); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -178,10 +178,12 @@ ul, ol { list-style: none; }
 
 @layer components {
   .cosmic-panel {
-    background: rgba(15, 15, 42, 0.12);
+    background: rgba(10, 10, 26, 0.78);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow:
-      0 0 24px rgba(99, 102, 241, 0.04),
+      0 0 24px rgba(99, 102, 241, 0.06),
       inset 0 1px 0 rgba(255, 255, 255, 0.05);
   }
 

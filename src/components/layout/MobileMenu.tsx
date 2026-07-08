@@ -42,7 +42,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           animate={{ x: 0 }}
           exit={{ x: '100%' }}
           transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
-          className="fixed inset-0 bg-[var(--dark)] z-40 lg:hidden"
+          className="fixed inset-0 bg-[var(--dark)] z-[60] lg:hidden"
         >
           <div className="max-w-lg mx-auto px-6 h-full flex flex-col justify-center">
             <nav className="space-y-4">

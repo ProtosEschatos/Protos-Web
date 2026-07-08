@@ -11,9 +11,9 @@ import {
 } from '@/lib/site-background-routes'
 
 /**
- * Real background images pulled from the Supabase `showcase/environment` set
- * (the synthwave 360 panorama + the four room reference views). Each route gets
- * a distinct image so no two adjacent pages look the same.
+ * Real background images from the Supabase `showcase/environment` set.
+ * Each route gets a distinct image. Drift + mouse parallax on separate
+ * layers so transforms never fight each other.
  */
 const ROUTE_IMAGE: Record<BackgroundRouteKey, string> = {
   home: SHOWCASE_STORAGE.environment.synthwavePanorama,
@@ -28,11 +28,22 @@ const ROUTE_IMAGE: Record<BackgroundRouteKey, string> = {
 export default function ImageBackdrop() {
   const pathname = usePathname()
   const routeKey = getBackgroundKey(pathname)
-  const layerRef = useRef<HTMLDivElement>(null)
+  const parallaxRef = useRef<HTMLDivElement>(null)
 
   const imageUrl = getShowcaseStorageUrl(ROUTE_IMAGE[routeKey])
   const glow = BACKGROUND_GLOW[routeKey]
   const fog = BACKGROUND_FOG[routeKey]
+
+  useEffect(() => {
+    const link = document.createElement('link')
+    link.rel = 'preload'
+    link.as = 'image'
+    link.href = imageUrl
+    document.head.appendChild(link)
+    return () => {
+      link.remove()
+    }
+  }, [imageUrl])
 
   useEffect(() => {
     if (window.matchMedia('(pointer: coarse)').matches) return
@@ -41,12 +52,11 @@ export default function ImageBackdrop() {
     const onMove = (e: MouseEvent) => {
       cancelAnimationFrame(raf)
       raf = requestAnimationFrame(() => {
-        const el = layerRef.current
+        const el = parallaxRef.current
         if (!el) return
         const x = (e.clientX / window.innerWidth - 0.5) * 2
         const y = (e.clientY / window.innerHeight - 0.5) * 2
-        el.style.setProperty('--px', `${x * -14}px`)
-        el.style.setProperty('--py', `${y * -14}px`)
+        el.style.transform = `translate3d(${x * -12}px, ${y * -12}px, 0)`
       })
     }
 
@@ -58,22 +68,24 @@ export default function ImageBackdrop() {
   }, [])
 
   return (
-    <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden>
+    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
       <div className="absolute inset-0" style={{ background: fog }} />
 
       <div
         key={routeKey}
-        ref={layerRef}
-        className="absolute inset-0 bg-cover bg-center animate-[backdrop-drift_36s_ease-in-out_infinite_alternate] opacity-45"
-        style={{
-          backgroundImage: `url(${imageUrl})`,
-          transform: 'translate3d(var(--px, 0), var(--py, 0), 0) scale(1.12)',
-          transition: 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)',
-        }}
-      />
+        className="absolute inset-0 animate-[backdrop-drift_36s_ease-in-out_infinite_alternate]"
+      >
+        <div
+          ref={parallaxRef}
+          className="absolute inset-[-8%] bg-cover bg-center opacity-55 transition-transform duration-500 ease-out will-change-transform"
+          style={{
+            backgroundImage: `url(${imageUrl})`,
+          }}
+        />
+      </div>
 
       <div
-        className="absolute inset-0 opacity-70 mix-blend-soft-light"
+        className="absolute inset-0 opacity-60 mix-blend-soft-light"
         style={{
           background: `radial-gradient(ellipse at 50% 40%, ${glow}55 0%, transparent 60%)`,
         }}
@@ -82,7 +94,7 @@ export default function ImageBackdrop() {
       <div
         className="absolute inset-0"
         style={{
-          background: `linear-gradient(180deg, ${fog}cc 0%, ${fog}66 40%, ${fog}dd 100%)`,
+          background: `linear-gradient(180deg, ${fog}dd 0%, ${fog}88 42%, ${fog}ee 100%)`,
         }}
       />
     </div>

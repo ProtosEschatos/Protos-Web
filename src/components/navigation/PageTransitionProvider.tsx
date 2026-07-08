@@ -29,9 +29,14 @@ type PageTransitionContextValue = {
 
 const PageTransitionContext = createContext<PageTransitionContextValue | null>(null)
 
-const EXIT_MS = 1300
-const LOADING_MS = 900
-const ENTER_MS = 1100
+const EXIT_MS = 320
+const LOADING_MS = 120
+const ENTER_MS = 380
+
+function prefersReducedMotion(): boolean {
+  if (typeof window === 'undefined') return false
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+}
 
 function sleep(ms: number) {
   return new Promise<void>((resolve) => {
@@ -59,6 +64,14 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
 
       runningRef.current = true
       setDestinationKey(getTransitionDestinationKey(href))
+
+      if (prefersReducedMotion()) {
+        router.push(href)
+        window.scrollTo(0, 0)
+        runningRef.current = false
+        return
+      }
+
       setPhase('exit')
       document.body.style.overflow = 'hidden'
 

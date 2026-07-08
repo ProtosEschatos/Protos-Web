@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import './effect-cards.css';
+@import './design-library/board-assets.css';
 @import './design-library/card-textures.css';
 @import './design-library/card-hover.css';
 @import './design-library/page-backgrounds.css';

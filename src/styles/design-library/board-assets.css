@@ -1,0 +1,33 @@
+/* Real board PNG slices via CSS variables (see EffectCard + design-assets.ts) */
+
+.effect-card--board-assets::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.28;
+  transition: opacity 0.35s ease;
+  background-image: var(--card-tex-bg);
+  background-size: var(--card-tex-size);
+  background-position: var(--card-tex-pos);
+  background-repeat: no-repeat;
+}
+
+.effect-card--board-assets:hover::before {
+  opacity: 0.42;
+}
+
+.effect-card--board-assets .effect-card__fx--primary {
+  background-image: var(--card-hover-bg);
+  background-size: var(--card-hover-size);
+  background-position: var(--card-hover-pos);
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.effect-card--board-assets:hover .effect-card__fx--primary {
+  opacity: 0.35;
+}

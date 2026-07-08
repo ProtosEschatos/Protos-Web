@@ -1,8 +1,9 @@
 'use client'
 
 import { motion, type HTMLMotionProps } from 'framer-motion'
-import { useCallback, useRef, type ReactNode } from 'react'
+import { useCallback, useRef, type CSSProperties, type ReactNode } from 'react'
 import { getCardLibraryClasses } from '@/lib/design-library'
+import { getCardHoverStyle, getCardTextureStyle } from '@/lib/design-assets'
 
 type BaseProps = {
   index?: number
@@ -35,12 +36,25 @@ export type EffectCardProps = DivProps | AnchorProps
 function mergeClasses(index: number, libraryOffset: number, className?: string, bare?: boolean) {
   return [
     'effect-card',
+    'effect-card--board-assets',
     bare ? null : 'cosmic-panel',
     getCardLibraryClasses(index + libraryOffset),
     className,
   ]
     .filter(Boolean)
     .join(' ')
+}
+
+function getBoardStyles(index: number, libraryOffset: number) {
+  const i = index + libraryOffset
+  return {
+    '--card-tex-bg': getCardTextureStyle(i).backgroundImage,
+    '--card-tex-size': getCardTextureStyle(i).backgroundSize,
+    '--card-tex-pos': getCardTextureStyle(i).backgroundPosition,
+    '--card-hover-bg': getCardHoverStyle(i).backgroundImage,
+    '--card-hover-size': getCardHoverStyle(i).backgroundSize,
+    '--card-hover-pos': getCardHoverStyle(i).backgroundPosition,
+  } as CSSProperties
 }
 
 export default function EffectCard(props: EffectCardProps) {
@@ -69,6 +83,7 @@ export default function EffectCard(props: EffectCardProps) {
   const shared = {
     ref: setRef,
     className: mergeClasses(index, libraryOffset, className, bare),
+    style: getBoardStyles(index, libraryOffset),
     onMouseMove,
     onMouseLeave,
   }

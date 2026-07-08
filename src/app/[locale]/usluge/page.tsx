@@ -27,7 +27,7 @@ export default function ServicesPage() {
 
   return (
     <>
-      <section className="pt-36 pb-16 text-center relative overflow-hidden cosmic-hero-band">
+      <section className="pt-36 pb-16 text-center relative overflow-hidden">
         <div className="max-w-[1200px] mx-auto px-6 relative z-10">
           <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[var(--primary)] mb-3">{t('label')}</p>
           <h1 className="text-[clamp(2.5rem,6vw,4rem)] font-extrabold leading-tight mb-5">

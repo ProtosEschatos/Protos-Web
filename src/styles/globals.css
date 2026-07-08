@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import './effect-cards.css';
-@import './design-library/board-assets.css';
-@import './design-library/card-textures.css';
-@import './design-library/card-hover.css';
-@import './design-library/page-backgrounds.css';
-
 /* ============================================
    PROTOS WEB — Global Styles (Next.js)
    ============================================ */
@@ -170,6 +164,11 @@ ul, ol { list-style: none; }
 }
 
 @layer components {
+  .plain-card {
+    background: var(--dark-card);
+    border: 1px solid var(--border-card);
+  }
+
   .cosmic-panel {
     background: rgba(10, 10, 26, 0.78);
     backdrop-filter: blur(12px);

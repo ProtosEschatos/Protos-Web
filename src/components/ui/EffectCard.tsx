@@ -1,17 +1,13 @@
 'use client'
 
 import { motion, type HTMLMotionProps } from 'framer-motion'
-import { useCallback, useRef, type CSSProperties, type ReactNode } from 'react'
-import { getCardLibraryClasses } from '@/lib/design-library'
-import { getCardHoverStyle, getCardTextureStyle } from '@/lib/design-assets'
+import type { ReactNode } from 'react'
 
 type BaseProps = {
   index?: number
-  /** Shifts library texture/hover pick so sections don't repeat the same combo. */
   libraryOffset?: number
   className?: string
   children: ReactNode
-  /** Skip cosmic-panel base when the card has its own surface styles. */
   bare?: boolean
 }
 
@@ -33,89 +29,32 @@ type AnchorProps = BaseProps &
 
 export type EffectCardProps = DivProps | AnchorProps
 
-function mergeClasses(index: number, libraryOffset: number, className?: string, bare?: boolean) {
-  return [
-    'effect-card',
-    'effect-card--board-assets',
-    bare ? null : 'cosmic-panel',
-    getCardLibraryClasses(index + libraryOffset),
-    className,
-  ]
-    .filter(Boolean)
-    .join(' ')
-}
-
-function getBoardStyles(index: number, libraryOffset: number) {
-  const i = index + libraryOffset
-  return {
-    '--card-tex-bg': getCardTextureStyle(i).backgroundImage,
-    '--card-tex-size': getCardTextureStyle(i).backgroundSize,
-    '--card-tex-pos': getCardTextureStyle(i).backgroundPosition,
-    '--card-hover-bg': getCardHoverStyle(i).backgroundImage,
-    '--card-hover-size': getCardHoverStyle(i).backgroundSize,
-    '--card-hover-pos': getCardHoverStyle(i).backgroundPosition,
-  } as CSSProperties
+function mergeClasses(className?: string, bare?: boolean) {
+  return [bare ? null : 'plain-card', className].filter(Boolean).join(' ')
 }
 
 export default function EffectCard(props: EffectCardProps) {
-  const { index = 0, libraryOffset = 0, className, children, bare, as = 'div', ...rest } = props
-  const nodeRef = useRef<HTMLElement | null>(null)
-
-  const setRef = useCallback((node: HTMLDivElement | HTMLAnchorElement | null) => {
-    nodeRef.current = node
-  }, [])
-
-  const onMouseMove = useCallback((e: React.MouseEvent) => {
-    const el = nodeRef.current
-    if (!el) return
-    const rect = el.getBoundingClientRect()
-    el.style.setProperty('--mx', String((e.clientX - rect.left) / rect.width))
-    el.style.setProperty('--my', String((e.clientY - rect.top) / rect.height))
-  }, [])
-
-  const onMouseLeave = useCallback(() => {
-    const el = nodeRef.current
-    if (!el) return
-    el.style.setProperty('--mx', '0.5')
-    el.style.setProperty('--my', '0.5')
-  }, [])
-
-  const shared = {
-    ref: setRef,
-    className: mergeClasses(index, libraryOffset, className, bare),
-    style: getBoardStyles(index, libraryOffset),
-    onMouseMove,
-    onMouseLeave,
-  }
-
-  const layers = (
-    <>
-      <span className="effect-card__fx effect-card__fx--primary" aria-hidden />
-      <span className="effect-card__fx effect-card__fx--layer" aria-hidden />
-      <span className="effect-card__fx effect-card__fx--trail" aria-hidden />
-      <div className="effect-card__content">{children}</div>
-    </>
-  )
+  const { index: _index, libraryOffset: _libraryOffset, className, children, bare, as = 'div', ...rest } = props
 
   if (as === 'a') {
     const { href, target, rel, ...motionRest } = rest as AnchorProps
     return (
       <motion.a
-        {...shared}
         href={href}
         target={target}
         rel={rel}
+        className={mergeClasses(className, bare)}
         {...motionRest}
       >
-        {layers}
+        {children}
       </motion.a>
     )
   }
 
   const motionRest = rest as HTMLMotionProps<'div'>
   return (
-    <motion.div {...shared} {...motionRest}>
-      {layers}
+    <motion.div className={mergeClasses(className, bare)} {...motionRest}>
+      {children}
     </motion.div>
   )
 }

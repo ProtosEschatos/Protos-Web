@@ -11,7 +11,7 @@ export default function LegalDocument({ namespace }: LegalDocumentProps) {
   const t = useTranslations('legalPages')
 
   return (
-    <section className="pt-36 pb-20 cosmic-hero-band">
+    <section className="pt-36 pb-20">
       <div className="relative z-10 mx-auto max-w-3xl px-6">
         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--primary)]">Protos Web</p>
         <h1 className="mb-8 text-[clamp(2rem,4vw,3rem)] font-extrabold leading-tight">{t(`${namespace}Title`)}</h1>

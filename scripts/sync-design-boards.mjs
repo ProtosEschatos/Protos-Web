@@ -2,8 +2,13 @@
 /**
  * Sync Desktop "Za Protos Web" boards → repo + Supabase design-assets + design_elements URLs.
  *
- * Usage: node scripts/sync-design-boards.mjs
- * Requires: SUPABASE_SERVICE_ROLE_KEY + NEXT_PUBLIC_SUPABASE_URL in .env.local
+ * Usage:
+ *   node scripts/sync-design-boards.mjs
+ *   # or if service role key unavailable locally (Vercel sensitive vars):
+ *   supabase storage cp --experimental --linked -r design/references/boards ss:///design-assets/boards
+ *
+ * Requires: SUPABASE_SERVICE_ROLE_KEY + NEXT_PUBLIC_SUPABASE_URL
+ *           in process.env or .env.local (Vercel `env pull` leaves sensitive keys empty).
  */
 import { createClient } from '@supabase/supabase-js'
 import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync } from 'fs'
@@ -40,10 +45,18 @@ const BOARD_MAP = {
 }
 
 function loadEnv() {
+  const fromProcess = {
+    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+    SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
+  }
+  if (fromProcess.NEXT_PUBLIC_SUPABASE_URL && fromProcess.SUPABASE_SERVICE_ROLE_KEY) {
+    return fromProcess
+  }
+
   const envPath = join(ROOT, '.env.local')
-  if (!existsSync(envPath)) throw new Error('Missing .env.local')
+  if (!existsSync(envPath)) throw new Error('Missing Supabase env (process.env or .env.local)')
   const lines = readFileSync(envPath, 'utf8').split('\n')
-  const env = {}
+  const env = { ...fromProcess }
   for (const line of lines) {
     const m = line.match(/^([^#=]+)=(.*)$/)
     if (m) env[m[1].trim()] = m[2].trim().replace(/^["']|["']$/g, '')
@@ -87,8 +100,8 @@ async function main() {
   try {
     envVars = loadEnv()
   } catch {
-    console.log('\nNo .env.local — repo copy done, skipping Supabase upload.')
-    console.log('Run: vercel env pull .env.local && node scripts/sync-design-boards.mjs')
+    console.log('\nNo Supabase creds in process.env or .env.local — repo copy done, skipping upload.')
+    console.log('Run: vercel env run -e production -- node scripts/sync-design-boards.mjs')
     return
   }
   const url = envVars.NEXT_PUBLIC_SUPABASE_URL

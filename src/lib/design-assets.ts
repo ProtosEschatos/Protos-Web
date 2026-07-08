@@ -1,14 +1,10 @@
 import type { CSSProperties } from 'react'
 
 /**
- * Real design board images from Desktop "Za Protos Web" → design/references/boards/.
- * Served at /design/boards/ (symlink in public/).
- * Supabase design-assets mirror: boards/{source_board}.png
+ * Design board PNGs — canonical copy in design/references/boards/, served live from
+ * Supabase design-assets (public bucket). Sync via scripts/sync-design-boards.mjs
+ * or `supabase storage cp --experimental --linked`.
  */
-
-const SITE_URL =
-  (typeof process !== 'undefined' && process.env.NEXT_PUBLIC_SITE_URL) ||
-  'https://www.protosweb.eu'
 
 const SUPABASE_URL =
   (typeof process !== 'undefined' && process.env.NEXT_PUBLIC_SUPABASE_URL) ||
@@ -82,19 +78,19 @@ export const DESIGN_BOARD_KEYS = [
 
 export type DesignBoardKey = (typeof DESIGN_BOARD_KEYS)[number]
 
-/** Static path on protosweb.eu (canonical until Supabase bucket is populated). */
+/** @deprecated Use getDesignBoardStorageUrl — site no longer serves boards from Vercel. */
 export function getDesignBoardUrl(sourceBoard: string): string {
-  return `${SITE_URL}/design/boards/${sourceBoard}.png`
+  return getDesignBoardStorageUrl(sourceBoard)
 }
 
-/** Supabase public storage URL (after sync-design-boards upload). */
+/** Public Supabase Storage URL for a design board PNG. */
 export function getDesignBoardStorageUrl(sourceBoard: string): string {
   return `${SUPABASE_URL}/storage/v1/object/public/design-assets/boards/${sourceBoard}.png`
 }
 
-/** Relative path for next/image and CSS url() in-app. */
+/** Absolute board image URL for CSS backgrounds (Supabase CDN). */
 export function getDesignBoardPath(sourceBoard: string): string {
-  return `/design/boards/${sourceBoard}.png`
+  return getDesignBoardStorageUrl(sourceBoard)
 }
 
 export type RouteBoardStack = {

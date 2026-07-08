@@ -67,3 +67,4 @@ playwright-report/
 
 # generated at prebuild from design/references/boards
 public/design/boards/
+.env*

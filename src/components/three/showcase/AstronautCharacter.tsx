@@ -135,13 +135,6 @@ export const AstronautCharacter = forwardRef<THREE.Group | null>(function Astron
         <meshBasicMaterial color={0x93c5fd} transparent opacity={0.9} />
       </mesh>
 
-      {mLogo ? (
-        <mesh position={[0, 0.98, -0.37]} rotation={[0, Math.PI, 0]}>
-          <planeGeometry args={[0.34, 0.34]} />
-          <meshBasicMaterial map={mLogo} transparent alphaTest={0.05} toneMapped={false} />
-        </mesh>
-      ) : null}
-
       <mesh position={[-0.45, 0.95, 0]} rotation={[0, 0, 0.4]} castShadow>
         <cylinderGeometry args={[0.1, 0.12, 0.25, 12]} />
         <meshStandardMaterial {...suitMat} />
@@ -196,6 +189,20 @@ export const AstronautCharacter = forwardRef<THREE.Group | null>(function Astron
         <meshStandardMaterial {...suitMat} />
       </mesh>
       </group>
+
+      {/* Back badge on +Z — chase camera sits behind the astronaut at all times */}
+      {mLogo ? (
+        <mesh position={[0, 0.98, 0.44]} renderOrder={20}>
+          <planeGeometry args={[0.5, 0.5]} />
+          <meshBasicMaterial
+            map={mLogo}
+            transparent
+            alphaTest={0.05}
+            toneMapped={false}
+            depthWrite={false}
+          />
+        </mesh>
+      ) : null}
     </group>
   )
 })

@@ -5,6 +5,8 @@ import { Link } from '@/routing'
 import { Calendar } from 'lucide-react'
 import type { BlogPost } from '@/actions/blog'
 import EffectCard from '@/components/ui/EffectCard'
+import ReadingTime from '@/components/blog/ReadingTime'
+import { estimateReadingMinutes } from '@/lib/reading-time'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -52,8 +54,12 @@ export default function BlogGrid({ posts, locale }: Props) {
             href={`/blog/${p.slug}`}
             className="flex flex-col h-full p-7 group"
           >
-            <div className="flex items-center gap-1.5 text-xs text-[var(--primary)] mb-3">
-              <Calendar className="w-3.5 h-3.5" /> {formatDate(p.created_at, locale)}
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[var(--primary)] mb-3">
+              <span className="inline-flex items-center gap-1.5">
+                <Calendar className="w-3.5 h-3.5" /> {formatDate(p.created_at, locale)}
+              </span>
+              <span aria-hidden="true" className="text-[var(--light-muted)]">·</span>
+              <ReadingTime minutes={estimateReadingMinutes(p.content)} className="text-[var(--light-muted)]" />
             </div>
             <h3 className="text-base font-bold text-[var(--light)] mb-2.5 leading-snug group-hover:text-[var(--primary)] transition-colors duration-300">
               {p.title}

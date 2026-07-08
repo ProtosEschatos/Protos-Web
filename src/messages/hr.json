@@ -128,7 +128,11 @@
     "viewAll": "Pogledaj sve clanke",
     "empty": "Jos nema objavljenih clanaka.",
     "previous": "Prethodni clanak",
-    "next": "Sljedeci clanak"
+    "next": "Sljedeci clanak",
+    "readingTime": "{min} min citanja",
+    "share": "Podijeli",
+    "copyLink": "Kopiraj link",
+    "linkCopied": "Link kopiran"
   },
   "contact": {
     "label": "KONTAKT",

@@ -235,7 +235,11 @@
     "viewAll": "Vedi tutti gli articoli",
     "empty": "Nessun articolo pubblicato ancora.",
     "previous": "Articolo precedente",
-    "next": "Articolo successivo"
+    "next": "Articolo successivo",
+    "readingTime": "{min} min di lettura",
+    "share": "Condividi",
+    "copyLink": "Copia link",
+    "linkCopied": "Link copiato"
   },
   "contact": {
     "label": "CONTATTO",

@@ -128,7 +128,11 @@
     "viewAll": "View all articles",
     "empty": "No articles published yet.",
     "previous": "Previous article",
-    "next": "Next article"
+    "next": "Next article",
+    "readingTime": "{min} min read",
+    "share": "Share",
+    "copyLink": "Copy link",
+    "linkCopied": "Link copied"
   },
   "contact": {
     "label": "CONTACT",

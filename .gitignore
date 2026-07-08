@@ -65,6 +65,5 @@ playwright-report/
 # local scrape/cache tooling
 .firecrawl/
 
-# logs
-logs/
-*.log
+# generated at prebuild from design/references/boards
+public/design/boards/

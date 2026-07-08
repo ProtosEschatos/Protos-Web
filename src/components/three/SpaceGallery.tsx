@@ -3,7 +3,7 @@
 import { useState, useRef, useMemo, useEffect, useCallback, memo } from 'react'
 import * as THREE from 'three'
 import { useTranslations } from 'next-intl'
-import { Link } from '@/routing'
+import { Link, useRouter } from '@/routing'
 import { type ShowcaseProject } from './showcase/constants'
 import { ShowcaseScene } from './showcase/GalleryScene'
 import { buildShowcaseProjects } from './showcase/buildProjects'
@@ -30,6 +30,7 @@ type ShowcaseCanvasLayerProps = {
   projects: ShowcaseProject[]
   isPlaying: boolean
   viewport: import('@/lib/showcase-viewport').ShowcaseViewport
+  screenLabel: string
   keys: React.MutableRefObject<Record<string, boolean>>
   touchInput: React.MutableRefObject<TouchInput>
   characterRef: React.RefObject<THREE.Group | null>
@@ -42,6 +43,7 @@ const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
   projects,
   isPlaying,
   viewport,
+  screenLabel,
   keys,
   touchInput,
   characterRef,
@@ -62,6 +64,7 @@ const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
           projects={projects}
           isPlaying={isPlaying}
           viewport={viewport}
+          screenLabel={screenLabel}
           keys={keys}
           touchInput={touchInput}
           characterRef={characterRef}
@@ -72,16 +75,14 @@ const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
   )
 })
 
-export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
+export function SpaceGallery(_props: SpaceGalleryProps = {}) {
   const t = useTranslations('showcase')
   const tNav = useTranslations('nav')
+  const router = useRouter()
   const viewport = useShowcaseViewport()
   const touchControlsEnabled = useTouchControlsEnabled()
 
-  const projects = useMemo<ShowcaseProject[]>(
-    () => buildShowcaseProjects(t, portfolioItems, viewport),
-    [t, portfolioItems, viewport],
-  )
+  const projects = useMemo<ShowcaseProject[]>(() => buildShowcaseProjects(t), [t])
 
   const [webglReady, setWebglReady] = useState<boolean | null>(null)
   const [contextLost, setContextLost] = useState(false)
@@ -133,7 +134,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
       })
       if (e.code === 'Escape') setShowMenu((m) => !m)
       if (e.code === 'KeyE' && nearestProject && phase === 'playing') {
-        window.open(nearestProject.link, '_blank', 'noopener,noreferrer')
+        router.push('/kontakt')
       }
     }
     const onKeyUp = (e: KeyboardEvent) => {
@@ -151,7 +152,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
       window.removeEventListener('keydown', onKeyDown)
       window.removeEventListener('keyup', onKeyUp)
     }
-  }, [nearestProject, phase])
+  }, [nearestProject, phase, router])
 
   const handleNearestProject = useCallback((project: ShowcaseProject | null) => {
     setNearestProject(project)
@@ -174,11 +175,11 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
   }
 
   if (webglReady === false) {
-    return <ShowcaseFallback projects={projects} reason="unsupported" />
+    return <ShowcaseFallback reason="unsupported" />
   }
 
   if (contextLost) {
-    return <ShowcaseFallback projects={projects} reason="lost" onRetry={handleRetryWebGL} />
+    return <ShowcaseFallback reason="lost" onRetry={handleRetryWebGL} />
   }
 
   return (
@@ -187,6 +188,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
         projects={projects}
         isPlaying={phase === 'playing'}
         viewport={viewport}
+        screenLabel={t('frameComingSoon')}
         keys={keys}
         touchInput={touchInput}
         characterRef={characterRef}
@@ -280,25 +282,13 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
             }`}
           >
             <h3 className="mb-2 text-xl text-[#6366f1]">{nearestProject?.title}</h3>
-            {nearestProject?.imageUrl && phase === 'playing' && (
-              <div className="mb-3 overflow-hidden rounded-lg border border-white/10 bg-[#0f172a]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={nearestProject.imageUrl}
-                  alt={nearestProject.title}
-                  className="mx-auto h-36 w-auto max-w-full object-contain object-top"
-                />
-              </div>
-            )}
             <p className="mb-4 text-sm text-[#94a3b8]">{nearestProject?.description}</p>
-            <a
-              href={nearestProject?.link || '#'}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/kontakt"
               className="inline-flex items-center gap-2 rounded-full bg-[#6366f1] px-5 py-2 text-sm text-white hover:bg-[#06b6d4]"
             >
-              {t('viewProject')}
-            </a>
+              {t('frameComingSoonCta')}
+            </Link>
           </div>
 
           <div className="fixed bottom-8 left-1/2 z-20 hidden -translate-x-1/2 items-center gap-8 rounded-2xl border border-white/10 bg-black/80 px-8 py-4 backdrop-blur-md md:flex">
@@ -330,7 +320,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
             <button
               type="button"
               className="flex flex-col items-center gap-2"
-              onClick={() => nearestProject && window.open(nearestProject.link, '_blank', 'noopener,noreferrer')}
+              onClick={() => nearestProject && router.push('/kontakt')}
             >
               <div className="rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-xs font-semibold">{t('details')}</div>
               <span className="text-[0.65rem] uppercase tracking-wider text-[#94a3b8]">E</span>

@@ -2,10 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
-import { useShowcaseViewport } from '@/lib/showcase-viewport'
 import type { ShowcaseProject } from './constants'
-
-const edgeColors = ['#ff0099', '#00eaff', '#ff8800', '#ff66cc']
 
 type ShowcaseFallbackProps = {
   projects: ShowcaseProject[]
@@ -13,11 +10,9 @@ type ShowcaseFallbackProps = {
   onRetry?: () => void
 }
 
-export function ShowcaseFallback({ projects, reason = 'unsupported', onRetry }: ShowcaseFallbackProps) {
+export function ShowcaseFallback({ reason = 'unsupported', onRetry }: Omit<ShowcaseFallbackProps, 'projects'>) {
   const t = useTranslations('showcase')
   const tNav = useTranslations('nav')
-  const viewport = useShowcaseViewport()
-  const isDesktop = viewport === 'desktop'
 
   return (
     <div className="fixed inset-0 overflow-y-auto bg-[#0a0a1a]">
@@ -60,45 +55,10 @@ export function ShowcaseFallback({ projects, reason = 'unsupported', onRetry }: 
           )}
         </div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-          {projects.map((project, index) => {
-            const edge = edgeColors[index % edgeColors.length]
-            return (
-              <article
-                key={project.link}
-                className="cosmic-panel overflow-hidden rounded-2xl transition-transform duration-300 hover:-translate-y-1"
-                style={{ borderColor: `${edge}44` }}
-              >
-                {project.imageUrl && (
-                  <div className={`relative mx-auto pt-6 ${isDesktop ? 'w-full' : 'w-[55%]'}`}>
-                    <div className="overflow-hidden rounded-2xl border border-white/10 shadow-[0_0_40px_rgba(99,102,241,0.15)]">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={project.imageUrl}
-                        alt={project.title}
-                        className={`w-full object-cover object-top ${isDesktop ? 'aspect-video' : 'aspect-[195/422]'}`}
-                      />
-                    </div>
-                  </div>
-                )}
-                <div className="p-6 pt-4">
-                  <h2 className="mb-2 text-xl font-bold" style={{ color: edge }}>
-                    {project.title}
-                  </h2>
-                  <p className="mb-5 text-sm leading-relaxed text-[#94a3b8]">{project.description}</p>
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-                    style={{ backgroundColor: edge }}
-                  >
-                    {t('viewProject')} →
-                  </a>
-                </div>
-              </article>
-            )
-          })}
+        <div className="mx-auto max-w-2xl rounded-3xl border border-white/10 bg-white/5 px-8 py-12 text-center">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-[#06b6d4]">{t('frameComingSoon')}</p>
+          <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">{t('frameComingSoon')}</h2>
+          <p className="text-base leading-relaxed text-[#94a3b8]">{t('frameComingSoonDesc')}</p>
         </div>
 
         <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">

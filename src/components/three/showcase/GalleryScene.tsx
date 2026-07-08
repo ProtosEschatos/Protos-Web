@@ -8,7 +8,7 @@ import { getFrameDimensions } from './frameDimensions'
 import type { ShowcaseViewport } from '@/lib/showcase-viewport'
 import type { TouchInput } from '@/lib/showcase-viewport'
 import { AstronautCharacter, animateAstronautWalk, resetAstronautPose } from './AstronautCharacter'
-import { FrameScreenshot } from './FrameScreenshot'
+import { FrameComingSoon } from './FrameComingSoon'
 
 const LETTER_BLOCKS = [
   [
@@ -125,10 +125,12 @@ function ProjectFrame({
   project,
   index,
   viewport,
+  screenLabel,
 }: {
   project: ShowcaseProject | null
   index: number
   viewport: ShowcaseViewport
+  screenLabel: string
 }) {
   const groupRef = useRef<THREE.Group>(null)
   const { viewW, viewH, frameW, depth, centerY } = getFrameDimensions(viewport)
@@ -159,12 +161,12 @@ function ProjectFrame({
           <meshStandardMaterial color={0x020617} roughness={0.4} metalness={0.2} />
         </mesh>
 
-        <FrameScreenshot
-          imageUrl={project?.imageUrl ?? null}
+        <FrameComingSoon
+          label={screenLabel}
           width={viewW * 0.94}
           height={viewH * 0.94}
           z={0.012}
-          fallbackColor={edgeColor}
+          accentColor={edgeColor}
         />
 
         <WindowFrameBar position={[0, outerH / 2 - frameW / 2, depth * 0.15]} size={[outerW, frameW, depth * 0.5]} />
@@ -334,6 +336,7 @@ type SceneProps = {
   projects: ShowcaseProject[]
   isPlaying: boolean
   viewport: ShowcaseViewport
+  screenLabel: string
   keys: React.MutableRefObject<Record<string, boolean>>
   touchInput: React.MutableRefObject<TouchInput>
   characterRef: React.RefObject<THREE.Group | null>
@@ -344,6 +347,7 @@ export function ShowcaseScene({
   projects,
   isPlaying,
   viewport,
+  screenLabel,
   keys,
   touchInput,
   characterRef,
@@ -485,6 +489,7 @@ export function ShowcaseScene({
           project={projects[index] ?? null}
           index={index}
           viewport={viewport}
+          screenLabel={screenLabel}
         />
       ))}
       <AstronautCharacter ref={characterRef} />

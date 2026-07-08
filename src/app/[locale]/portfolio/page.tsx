@@ -1,5 +1,7 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import ComingSoon from '@/components/sections/ComingSoon'
+import { Link } from '@/routing'
+import { ArrowRight, Layers } from 'lucide-react'
 
 type Props = { params: { locale: string } }
 
@@ -34,6 +36,25 @@ export default async function PortfolioPage({ params: { locale } }: Props) {
       <section className="py-16 cosmic-section">
         <div className="max-w-[1200px] mx-auto px-6">
           <ComingSoon />
+
+          <div className="mt-16 bg-gradient-to-r from-[var(--secondary)]/15 to-[var(--accent)]/10 border border-[var(--secondary)]/20 rounded-3xl p-6 sm:p-8 md:px-10 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-4 sm:gap-5">
+              <div className="w-12 h-12 shrink-0 rounded-xl bg-[var(--secondary)]/20 flex items-center justify-center text-[var(--secondary)]">
+                <Layers className="w-5 h-5" />
+              </div>
+              <div className="text-left">
+                <span className="inline-block px-2.5 py-0.5 rounded-full bg-green-500/20 text-green-500 text-[0.7rem] font-semibold uppercase mb-1">NEW</span>
+                <div className="text-base sm:text-lg font-bold text-[var(--light)]">{t('showcaseTitle')}</div>
+                <div className="text-sm text-[var(--light-muted)]">{t('showcaseText')}</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <span className="text-xs font-semibold tracking-[0.1em] uppercase text-[var(--accent)]">{t('showcaseCta')}</span>
+              <Link href="/portfolio-showcase" className="w-11 h-11 rounded-full bg-[var(--primary)] flex items-center justify-center text-white hover:scale-110 transition-transform duration-300" aria-label={t('showcaseCta')}>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
     </>

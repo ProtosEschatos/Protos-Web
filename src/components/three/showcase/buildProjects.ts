@@ -1,27 +1,13 @@
-import type { PortfolioItem } from '@/actions/portfolio'
 import type { ShowcaseViewport } from '@/lib/showcase-viewport'
-import { normalizeProjectUrl } from '@/lib/showcase-utils'
 import { PROJECT_LINKS, type ShowcaseProject } from './constants'
 
-export function buildShowcaseProjects(
-  t: (key: string) => string,
-  portfolioItems: PortfolioItem[],
-  viewport: ShowcaseViewport,
-): ShowcaseProject[] {
-  return PROJECT_LINKS.map((meta, index) => {
-    const dbItem = portfolioItems.find(
-      (item) => item.project_url && normalizeProjectUrl(item.project_url) === normalizeProjectUrl(meta.link),
-    )
-
-    const fallback = viewport === 'desktop' ? meta.screenshotDesktop : meta.screenshotMobile
-    const imageUrl = dbItem?.image_url ?? fallback
-
-    return {
-      color: meta.color,
-      link: meta.link,
-      title: dbItem?.title ?? t(`project${index + 1}_title`),
-      description: dbItem?.description ?? t(`project${index + 1}_desc`),
-      imageUrl,
-    }
-  })
+/** Placeholder frames — screens show "Coming Soon", no live project data. */
+export function buildShowcaseProjects(t: (key: string) => string): ShowcaseProject[] {
+  return PROJECT_LINKS.map((meta) => ({
+    color: meta.color,
+    link: '',
+    title: t('frameComingSoon'),
+    description: t('frameComingSoonDesc'),
+    imageUrl: null,
+  }))
 }

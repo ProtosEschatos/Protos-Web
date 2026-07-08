@@ -1,6 +1,9 @@
 'use client'
 
+import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
+import { Link } from '@/routing'
+import { ArrowRight, Layers } from 'lucide-react'
 import ComingSoon from '@/components/sections/ComingSoon'
 
 const marqueeItems = ['NEXT.JS', 'TYPESCRIPT', 'TAILWIND', 'THREE.JS', 'FRAMER MOTION', 'WEBGL', 'SUPABASE']
@@ -27,6 +30,30 @@ export default function Portfolio() {
         </div>
 
         <ComingSoon />
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="mt-12 bg-gradient-to-r from-[var(--secondary)]/15 to-[var(--accent)]/10 border border-[var(--secondary)]/20 rounded-3xl p-6 sm:p-8 md:px-10 flex flex-col sm:flex-row items-center justify-between gap-6"
+        >
+          <div className="flex items-center gap-4 sm:gap-5">
+            <div className="w-12 h-12 shrink-0 rounded-xl bg-[var(--secondary)]/20 flex items-center justify-center text-[var(--secondary)]">
+              <Layers className="w-5 h-5" />
+            </div>
+            <div className="text-left">
+              <div className="text-base sm:text-lg font-bold text-[var(--light)]">{t('showcaseTitle')}</div>
+              <div className="text-sm text-[var(--light-muted)]">{t('showcaseText')}</div>
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            <span className="text-xs font-semibold tracking-[0.1em] uppercase text-[var(--accent)]">{t('showcaseCta')}</span>
+            <Link href="/portfolio-showcase" className="w-11 h-11 rounded-full bg-[var(--primary)] flex items-center justify-center text-white hover:scale-110 transition-transform duration-300" aria-label={t('showcaseCta')}>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </motion.div>
       </div>
     </section>
   )

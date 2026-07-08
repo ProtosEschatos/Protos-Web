@@ -1,13 +1,17 @@
 # Protos-Web — Project Memory
 
-> **Last updated:** 2026-07-07 (večer)
+> **Last updated:** 2026-07-08
 > **Live:** https://www.protosweb.eu
 > **Repo:** `ProtosEschatos/Protos-Web`
-> **Latest commit:** `3c30570` — feat(seo): author/brand identity on all pages + blog
+> **Latest commit:** `ec1e119` — refactor: drop duplicate Services section from homepage
 
 ---
 
 ## Gdje si stao (TL;DR)
+
+**Remote (2026-07-08):** `main` pushed, Vercel produkcija **Ready** (svi zadnji deployevi zeleni). Sve rute live 200 (home/admin/portfolio/blog/showcase). Kontakt ✅, newsletter ✅, admin ✅, keep-alive ✅.
+
+**Admin gotcha:** ako lokalni dev pukne s `MODULE_NOT_FOUND` / `vendor-chunks/@supabase.js` → to je **samo** pokvaren `.next` dev cache, ne kod. Lijek: ugasi dev, `rm -rf .next`, `npm run dev`. Produkcija (Vercel) time nije pogođena.
 
 **Remote (2026-07-07):** `main` pushed, CI/Vercel deploy u tijeku nakon SEO commita. Vercel env 11 varijabli. Kontakt ✅, newsletter ✅, admin ✅, keep-alive ✅.
 
@@ -18,6 +22,34 @@
 **Sljedeće u GSC (kad stigneš):** submit sitemap `https://www.protosweb.eu/sitemap.xml` (Search Console → Sitemaps).
 
 **Za kasnije:** social/freelance URL-ovi, showcase polish, design assets, Stripe donacije (gumb skriven dok nije konfiguriran).
+
+---
+
+## 2026-07-08 — UI/UX: galerija, pozadine, blog komponente, cleanup
+
+### Portfolio showcase (3D galerija)
+- Ekrani povećani **+50% po dijagonali** (širina i visina ×1.5) u `src/components/three/showcase/frameDimensions.ts` (`DIAGONAL_SCALE = 1.5`), `centerY` podignut da veći ekrani stanu.
+
+### Nove 3D pozadine iz slika u bazi
+- Nova komponenta `src/components/three/backgrounds/DbImageBackground.tsx` — lebdeći paneli građeni od pravih screenshotova iz Supabase `showcase` bucketa (`projects/{desktop,mobile}-{slug}.jpg`).
+- Svaka ruta ima **različit seedani raspored** (`ROUTE_SEED` po `BackgroundRouteKey`). `PageBackgroundCanvas` sad renderira samo `DbImageBackground` (prije 7 zasebnih komponenti).
+- `PageBackgroundProps` dobio `routeKey`. Dijeljeni texture cache (učitaj jednom, reuse svugdje).
+- **Napomena:** `design_elements` tablica ima kategorije ali **0 slika** i ništa u kodu je ne koristi — pozadine koriste `showcase` bucket, ne `design_elements`.
+
+### Blog komponente (u kodu, ne raster asseti s board-ova)
+- `ReadingTime` + `src/lib/reading-time.ts` (procjena ~200 wpm) — na post stranici, `BlogGrid`, homepage `Blog`.
+- `AuthorAvatar` — svijetleći gradient prsten s brend "M" (isti kao favicon/astronaut) u bylineu.
+- `ShareButtons` — X / LinkedIn / Facebook / kopiraj-link na dnu članka.
+- i18n ključevi `readingTime`/`share`/`copyLink`/`linkCopied` u svih 5 jezika (`blog` namespace).
+- Preskočeno: "Pricing Table Background" i "Service Card Background" tile-ovi; "Category Badge" (blog shema **nema** `category` polje — bilo bi lažno).
+
+### Cleanup (mrtav kod obrisan)
+- Obrisano 7 starih per-page pozadina (`Home/About/Process/Portfolio/Services/Blog/ContactBackground.tsx`) + `FrameScreenshot.tsx` (zamijenjen `FrameComingSoon`).
+- `CustomCursor.tsx` obrisan (regresija — nestajao iza loading screena; native cursor ostaje).
+- **Naslovnica:** maknuta duplirana `Services` sekcija (duplala `/usluge`); `src/components/sections/Services.tsx` obrisan. Homepage sad: Hero → Proces → Portfolio → Blog → Kontakt. `/usluge` = jedini izvor usluga.
+
+### Commitovi
+`f833678` (ekrani + pozadine) → `cf0137d` (cleanup pozadina) → `59824ff` (blog komponente) → `ec1e119` (maknuta Services sekcija). Svi Ready na Vercelu.
 
 ---
 

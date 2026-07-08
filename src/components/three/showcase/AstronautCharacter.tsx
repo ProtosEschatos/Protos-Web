@@ -1,17 +1,79 @@
 'use client'
 
-import { forwardRef, useImperativeHandle, useRef, useEffect } from 'react'
+import { forwardRef, useImperativeHandle, useRef, useEffect, useMemo } from 'react'
 import * as THREE from 'three'
 import { initCharacterPosition, INITIAL_CHARACTER_HEADING } from './constants'
 
+/** Draws the metallic "M" brand mark used on the tab icon onto a canvas texture. */
+function createMLogoTexture(): THREE.CanvasTexture | null {
+  if (typeof document === 'undefined') return null
+  const canvas = document.createElement('canvas')
+  canvas.width = 256
+  canvas.height = 256
+  const ctx = canvas.getContext('2d')
+  if (!ctx) return null
+
+  const points: Array<[number, number]> = [
+    [56, 198],
+    [56, 64],
+    [128, 136],
+    [200, 64],
+    [200, 198],
+  ]
+
+  const drawM = (lineWidth: number, stroke: string | CanvasGradient, glow?: string) => {
+    ctx.beginPath()
+    ctx.moveTo(points[0][0], points[0][1])
+    for (let i = 1; i < points.length; i++) ctx.lineTo(points[i][0], points[i][1])
+    ctx.lineJoin = 'round'
+    ctx.lineCap = 'round'
+    ctx.lineWidth = lineWidth
+    ctx.strokeStyle = stroke
+    if (glow) {
+      ctx.shadowColor = glow
+      ctx.shadowBlur = 24
+    } else {
+      ctx.shadowBlur = 0
+    }
+    ctx.stroke()
+  }
+
+  // Cyan→purple glow pass
+  const glowGrad = ctx.createLinearGradient(40, 40, 216, 216)
+  glowGrad.addColorStop(0, '#06b6d4')
+  glowGrad.addColorStop(1, '#8b5cf6')
+  drawM(40, glowGrad, 'rgba(99,102,241,0.9)')
+
+  // Silver body pass
+  const silver = ctx.createLinearGradient(0, 50, 0, 210)
+  silver.addColorStop(0, '#f4f8ff')
+  silver.addColorStop(0.5, '#c6d2e8')
+  silver.addColorStop(1, '#8fa2c2')
+  drawM(26, silver)
+
+  const texture = new THREE.CanvasTexture(canvas)
+  texture.colorSpace = THREE.SRGBColorSpace
+  texture.minFilter = THREE.LinearFilter
+  texture.magFilter = THREE.LinearFilter
+  texture.needsUpdate = true
+  return texture
+}
+
 export const AstronautCharacter = forwardRef<THREE.Group | null>(function AstronautCharacter(_, ref) {
   const groupRef = useRef<THREE.Group>(null)
+  const mLogo = useMemo(() => createMLogoTexture(), [])
 
   useImperativeHandle(ref, () => groupRef.current as THREE.Group)
 
   useEffect(() => {
     if (groupRef.current) initCharacterPosition(groupRef.current, INITIAL_CHARACTER_HEADING)
   }, [])
+
+  useEffect(() => {
+    return () => {
+      mLogo?.dispose()
+    }
+  }, [mLogo])
 
   const suitMat = { color: 0xf5f5f5, roughness: 0.5, metalness: 0.1 }
   const blueMat = { color: 0x06b6d4, roughness: 0.4, metalness: 0.3 }
@@ -72,6 +134,13 @@ export const AstronautCharacter = forwardRef<THREE.Group | null>(function Astron
         <planeGeometry args={[0.15, 0.12]} />
         <meshBasicMaterial color={0x93c5fd} transparent opacity={0.9} />
       </mesh>
+
+      {mLogo ? (
+        <mesh position={[0, 0.98, -0.37]} rotation={[0, Math.PI, 0]}>
+          <planeGeometry args={[0.34, 0.34]} />
+          <meshBasicMaterial map={mLogo} transparent alphaTest={0.05} toneMapped={false} />
+        </mesh>
+      ) : null}
 
       <mesh position={[-0.45, 0.95, 0]} rotation={[0, 0, 0.4]} castShadow>
         <cylinderGeometry args={[0.1, 0.12, 0.25, 12]} />

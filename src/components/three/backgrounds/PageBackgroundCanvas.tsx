@@ -1,6 +1,5 @@
 'use client'
 
-import type { ComponentType } from 'react'
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { isWebGLAvailable } from '@/lib/webgl'
@@ -8,18 +7,13 @@ import { BackgroundErrorBoundary } from '@/components/three/backgrounds/Backgrou
 import {
   BACKGROUND_FALLBACKS,
   type BackgroundRouteKey,
-  type PageBackgroundProps,
 } from '@/lib/site-background-routes'
 
-const Backgrounds: Record<BackgroundRouteKey, ComponentType<PageBackgroundProps>> = {
-  home: dynamic(() => import('@/components/three/backgrounds/HomeBackground'), { ssr: false, loading: () => null }),
-  about: dynamic(() => import('@/components/three/backgrounds/AboutBackground'), { ssr: false, loading: () => null }),
-  process: dynamic(() => import('@/components/three/backgrounds/ProcessBackground'), { ssr: false, loading: () => null }),
-  portfolio: dynamic(() => import('@/components/three/backgrounds/PortfolioBackground'), { ssr: false, loading: () => null }),
-  services: dynamic(() => import('@/components/three/backgrounds/ServicesBackground'), { ssr: false, loading: () => null }),
-  blog: dynamic(() => import('@/components/three/backgrounds/BlogBackground'), { ssr: false, loading: () => null }),
-  contact: dynamic(() => import('@/components/three/backgrounds/ContactBackground'), { ssr: false, loading: () => null }),
-}
+/** Every route renders the same image-driven background, seeded per route for a distinct layout. */
+const DbImageBackground = dynamic(
+  () => import('@/components/three/backgrounds/DbImageBackground'),
+  { ssr: false, loading: () => null },
+)
 
 type PageBackgroundCanvasProps = {
   routeKey: BackgroundRouteKey
@@ -39,8 +33,6 @@ export default function PageBackgroundCanvas({ routeKey }: PageBackgroundCanvasP
   const [mounted, setMounted] = useState(false)
   const [supported, setSupported] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
-
-  const Background = Backgrounds[routeKey]
 
   useEffect(() => {
     setSupported(isWebGLAvailable())
@@ -63,7 +55,7 @@ export default function PageBackgroundCanvas({ routeKey }: PageBackgroundCanvasP
   return (
     <div className="pointer-events-none absolute inset-0 h-full w-full [&_canvas]:pointer-events-none">
       <BackgroundErrorBoundary fallback={<CssFallback routeKey={routeKey} />}>
-        <Background isMobile={isMobile} />
+        <DbImageBackground isMobile={isMobile} routeKey={routeKey} />
       </BackgroundErrorBoundary>
     </div>
   )

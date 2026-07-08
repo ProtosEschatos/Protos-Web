@@ -5,7 +5,6 @@ import { usePathname } from '@/routing'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import PageLoader from '@/components/ui/PageLoader'
-import CustomCursor from '@/components/ui/CustomCursor'
 import CookieBanner from '@/components/ui/CookieBanner'
 import SiteShell from '@/components/ui/SiteShell'
 import SiteBackground from '@/components/ui/SiteBackground'
@@ -48,7 +47,6 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
       <PageLoader />
       <SiteBackground />
       <PageTransitionOverlay />
-      <CustomCursor />
       <Header />
       <main className="relative z-[1]">
         <SiteShell>{children}</SiteShell>

@@ -9,6 +9,7 @@ export type BackgroundRouteKey =
 
 export type PageBackgroundProps = {
   isMobile?: boolean
+  routeKey?: BackgroundRouteKey
 }
 
 const LOCALE_PREFIXES = ['hr', 'en', 'de', 'it', 'es'] as const

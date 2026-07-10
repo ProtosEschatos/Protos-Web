@@ -13,6 +13,7 @@ import {
   clearBootPending,
   setBootPending,
   removeBootSsrVeil,
+  isBootComplete,
 } from '@/lib/boot-gate'
 
 export { BOOT_SESSION_KEY, BOOT_COMPLETE_EVENT } from '@/lib/boot-gate'
@@ -67,18 +68,21 @@ export default function PageLoader() {
   const termsHref = buildLocalePath(locale, '/terms')
   const privacyHref = buildLocalePath(locale, '/privacy')
   const cookiesHref = buildLocalePath(locale, '/cookies')
-  const [loading, setLoading] = useState(() => {
-    if (typeof window === 'undefined') return true
-    return sessionStorage.getItem(BOOT_SESSION_KEY) !== '1'
-  })
+  // Start identical on server and first client render to avoid a hydration
+  // mismatch; returning visitors are hidden in useLayoutEffect before paint.
+  const [loading, setLoading] = useState(true)
   const [progress, setProgress] = useState(0)
   const [readyToEnter, setReadyToEnter] = useState(false)
   const [showCookieModal, setShowCookieModal] = useState(false)
   const [analyticsOptIn, setAnalyticsOptIn] = useState(false)
 
   useLayoutEffect(() => {
-    if (loading) removeBootSsrVeil()
-  }, [loading])
+    if (isBootComplete()) {
+      setLoading(false)
+    } else {
+      removeBootSsrVeil()
+    }
+  }, [])
 
   useEffect(() => {
     if (loading) setBootPending()

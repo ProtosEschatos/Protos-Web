@@ -20,6 +20,7 @@ function formatDate(dateStr: string, locale: string) {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
+    timeZone: 'UTC',
   })
 }
 

@@ -11,6 +11,7 @@ import Analytics from '@/components/providers/Analytics'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { locales, type Locale } from '@/i18n'
 import { ogImage, siteUrl } from '@/lib/seo'
+import { LEGAL_OWNER, SITE_URL } from '@/lib/site'
 import LocaleCreatorSeo from '@/components/seo/LocaleCreatorSeo'
 import { BOOT_GATE_INIT_SCRIPT, BOOT_VIDEO } from '@/lib/boot-gate'
 
@@ -27,11 +28,26 @@ export const metadata: Metadata = {
   },
   description:
     'Web design studio from Zagreb crafting fast, modern websites with soul — built with love and care for businesses across Croatia and Europe.',
+  keywords: [
+    'izrada web stranica',
+    'web developer zagreb',
+    'web dizajn zagreb',
+    'next.js developer',
+    'react developer hrvatska',
+    'protosweb',
+    'protos web',
+    'custom web stranice',
+  ],
+  authors: [{ name: LEGAL_OWNER, url: SITE_URL }],
+  creator: `${LEGAL_OWNER} — Protos Web`,
   openGraph: {
     type: 'website',
     locale: 'hr_HR',
     siteName: 'Protos Web',
     url: siteUrl,
+    title: 'Protos Web — Websites with Soul, Built in Zagreb',
+    description:
+      'Brze, lagane i robusne web stranice izrađene po mjeri. Next.js, React, Three.js. Zagreb, Hrvatska.',
     images: [ogImage],
   },
   twitter: {
@@ -43,6 +59,19 @@ export const metadata: Metadata = {
       'Web design studio from Zagreb crafting fast, modern websites with soul — built with love and care for businesses across Croatia and Europe.',
     images: [ogImage.url],
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } }
+    : {}),
   icons: {
     icon: '/favicon.svg',
   },

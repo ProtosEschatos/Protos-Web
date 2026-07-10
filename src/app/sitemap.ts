@@ -16,7 +16,7 @@ const pathConfigs: PathConfig[] = [
   { path: '/o-meni', priority: 0.85, changeFrequency: 'monthly' },
   { path: '/proces', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/portfolio', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/blog', priority: 0.75, changeFrequency: 'weekly' },
+  { path: '/blog', priority: 0.75, changeFrequency: 'daily' },
   { path: '/portfolio-showcase', priority: 0.4, changeFrequency: 'monthly' },
   { path: '/privacy', priority: 0.3, changeFrequency: 'yearly' },
   { path: '/terms', priority: 0.3, changeFrequency: 'yearly' },

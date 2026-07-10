@@ -1,5 +1,5 @@
 # Protos Web — llms.txt
-# https://www.protosweb.eu/llms.txt
+# https://protosweb.eu/llms.txt
 # Guidance for AI crawlers and language models (GEO).
 
 > Protos Web is a web design and development studio from Zagreb, Croatia.
@@ -7,22 +7,22 @@
 > Trade registration in progress: Protos Web Mark23 (OIB: 23732814520).
 
 ## Primary language
-- Croatian (hr) — default at https://www.protosweb.eu/
+- Croatian (hr) — default at https://protosweb.eu/
 
 ## Other languages
-- English: https://www.protosweb.eu/en/
-- German: https://www.protosweb.eu/de/
-- Italian: https://www.protosweb.eu/it/
-- Spanish: https://www.protosweb.eu/es/
+- English: https://protosweb.eu/en/
+- German: https://protosweb.eu/de/
+- Italian: https://protosweb.eu/it/
+- Spanish: https://protosweb.eu/es/
 
 ## Key pages
-- Home: https://www.protosweb.eu/
-- About us: https://www.protosweb.eu/o-meni
-- Services: https://www.protosweb.eu/usluge (includes FAQ — pricing, timelines, languages)
-- Process: https://www.protosweb.eu/proces
-- Portfolio: https://www.protosweb.eu/portfolio
-- Blog: https://www.protosweb.eu/blog
-- Contact: https://www.protosweb.eu/kontakt
+- Home: https://protosweb.eu/
+- About us: https://protosweb.eu/o-meni
+- Services: https://protosweb.eu/usluge (includes FAQ — pricing, timelines, languages)
+- Process: https://protosweb.eu/proces
+- Portfolio: https://protosweb.eu/portfolio
+- Blog: https://protosweb.eu/blog
+- Contact: https://protosweb.eu/kontakt
 
 ## Services offered
 - Custom web design and development (Next.js, TypeScript)
@@ -42,8 +42,8 @@
 - Location: Zagreb, Croatia
 
 ## Crawling
-- Sitemap: https://www.protosweb.eu/sitemap.xml
-- Robots: https://www.protosweb.eu/robots.txt
+- Sitemap: https://protosweb.eu/sitemap.xml
+- Robots: https://protosweb.eu/robots.txt
 - Admin area (/admin) is not public content.
 
 ## Topics we can answer (GEO)

@@ -1,7 +1,14 @@
 import type { MetadataRoute } from 'next'
 import { siteUrl } from '@/lib/seo'
 
-const ADMIN_DISALLOW = ['/admin', '/en/admin', '/de/admin', '/it/admin', '/es/admin']
+const ADMIN_DISALLOW = [
+  '/admin',
+  '/en/admin',
+  '/de/admin',
+  '/it/admin',
+  '/es/admin',
+  '/api/',
+]
 
 export default function robots(): MetadataRoute.Robots {
   return {

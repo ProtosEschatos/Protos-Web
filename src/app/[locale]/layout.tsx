@@ -11,7 +11,7 @@ import Analytics from '@/components/providers/Analytics'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { locales, type Locale } from '@/i18n'
 import { ogImage, siteUrl } from '@/lib/seo'
-import { LEGAL_OWNER, SITE_URL } from '@/lib/site'
+import { LEGAL_OWNER, SITE_URL, GOOGLE_SITE_VERIFICATION } from '@/lib/site'
 import LocaleCreatorSeo from '@/components/seo/LocaleCreatorSeo'
 import { BOOT_GATE_INIT_SCRIPT, BOOT_VIDEO } from '@/lib/boot-gate'
 
@@ -69,9 +69,9 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
-    ? { verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } }
-    : {}),
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || GOOGLE_SITE_VERIFICATION,
+  },
   icons: {
     icon: '/favicon.svg',
   },

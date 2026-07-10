@@ -174,7 +174,7 @@ Secrets are **not** duplicated everywhere on purpose. Each platform reads only w
 
 ### Vercel — required for the live site
 
-- `NEXT_PUBLIC_SITE_URL` = `https://www.protosweb.eu` (Production **and** Preview)
+- `NEXT_PUBLIC_SITE_URL` = `https://protosweb.eu` (Production **and** Preview — mora odgovarati `SITE_URL` u `src/lib/site.ts`)
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`

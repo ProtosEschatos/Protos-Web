@@ -11,7 +11,8 @@ export function normalizeSiteUrl(url?: string): string {
   return raw || DEFAULT_SITE_URL
 }
 
-export const siteUrl = normalizeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL)
+/** Canonical site URL — single source of truth (see src/lib/site.ts). */
+export const siteUrl = SITE_URL
 
 export const ogImage = {
   url: '/api/og',

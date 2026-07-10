@@ -24,7 +24,7 @@
   },
   "hero": {
     "label": "BRZO. ZA VAS POSAO",
-    "title_line1": "Web stranice s dusom.",
+    "title_line1": "Web stranice s dušom.",
     "title_line2": "Brzina u kodu.",
     "title_line3": "Ljubav u detaljima.",
     "subtitle": "Brze, lagane i robusne web stranice koje rade za vas. Sve na jednom mjestu.",
@@ -293,7 +293,7 @@
     "cookiesBody": "Koristimo nužne kolacice za osnovno funkcioniranje stranice te, uz vasu suglasnost, analiticke kolacice za razumijevanje posjeta.\n\nNebitne kolacice mozete prihvatiti ili odbiti putem bannera ili modala pri ulasku u showcase. Odabir se sprema lokalno u pregledniku.\n\nKolacice mozete obrisati u postavkama preglednika."
   },
   "metadata": {
-    "home": { "title": "Web stranice s dusom. Brzina u kodu. Ljubav u detaljima.", "description": "Profesionalna agencija za web dizajn iz Zagreba." },
+    "home": { "title": "Web stranice s dušom. Brzina u kodu. Ljubav u detaljima.", "description": "Profesionalna agencija za web dizajn iz Zagreba." },
     "about": { "title": "O meni", "description": "Full Stack Developer i Web Designer iz Zagreba." },
     "process": { "title": "Nas proces", "description": "Kako gradimo moderna web rjesenja." },
     "portfolio": { "title": "Portfolio", "description": "Odabrani projekti i studije slucaja." },

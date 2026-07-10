@@ -37,7 +37,7 @@ async function hmacHex(secret: string, message: string): Promise<string> {
 }
 
 export async function getAdminSessionTokenEdge(): Promise<string> {
-  const secret = process.env.ADMIN_SECRET
+  const secret = process.env.ADMIN_SECRET?.trim()
   if (!secret) return ''
   return hmacHex(secret, SESSION_SALT)
 }

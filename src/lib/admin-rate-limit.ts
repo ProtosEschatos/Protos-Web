@@ -16,7 +16,6 @@ export function checkRateLimit(ip: string): { ok: true } | { ok: false; retryAft
   const entry = store.get(ip)
 
   if (!entry || now > entry.resetAt) {
-    store.set(ip, { count: 1, resetAt: now + WINDOW_MS })
     return { ok: true }
   }
 
@@ -24,7 +23,6 @@ export function checkRateLimit(ip: string): { ok: true } | { ok: false; retryAft
     return { ok: false, retryAfterSec: Math.ceil((entry.resetAt - now) / 1000) }
   }
 
-  entry.count += 1
   return { ok: true }
 }
 

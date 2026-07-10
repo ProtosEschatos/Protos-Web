@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
+import PageBreadcrumbSeo from '@/components/seo/PageBreadcrumbSeo'
 import { buildPageMetadata } from '@/lib/seo'
 
-type Props = { params: { locale: string } }
+type Props = { params: { locale: string }; children: React.ReactNode }
 
 export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
   setRequestLocale(locale)
@@ -15,6 +16,14 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
   })
 }
 
-export default function PortfolioLayout({ children }: { children: React.ReactNode }) {
-  return children
+export default async function PortfolioLayout({ children, params: { locale } }: Props) {
+  setRequestLocale(locale)
+  const t = await getTranslations({ locale, namespace: 'metadata.portfolio' })
+
+  return (
+    <>
+      <PageBreadcrumbSeo locale={locale} path="/portfolio" pageTitle={t('title')} />
+      {children}
+    </>
+  )
 }

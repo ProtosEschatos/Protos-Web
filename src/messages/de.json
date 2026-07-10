@@ -537,11 +537,11 @@
     },
     "process": {
       "title": "Unser Prozess",
-      "description": "Wie wir moderne Weblosungen bauen."
+      "description": "Wie wir moderne Weblosungen bauen — von der Beratung bis zum Launch. Protos Web, Zagreb."
     },
     "portfolio": {
       "title": "Portfolio",
-      "description": "Ausgewahlte Projekte und Fallstudien."
+      "description": "Ausgewahlte Webprojekte und Fallstudien — individuelles Design und Entwicklung aus Zagreb."
     },
     "showcase": {
       "title": "3D Portfolio Showcase",
@@ -549,15 +549,15 @@
     },
     "services": {
       "title": "Leistungen",
-      "description": "Webdesign, Entwicklung, SEO und mehr."
+      "description": "Individuelles Webdesign, Entwicklung, UI/UX, SEO und Wartung — Protos Web, Zagreb."
     },
     "blog": {
       "title": "Blog",
-      "description": "Kostenlose Leitfaden zur Web-Praesenz."
+      "description": "Leitfaden zu Webdesign, SEO und digitaler Prasenz fur Unternehmer in Kroatien und der EU."
     },
     "contact": {
       "title": "Kontakt",
-      "description": "Kontaktieren Sie uns fur Ihr nachstes Projekt."
+      "description": "Protos Web in Zagreb kontaktieren — kostenlose Beratung fur Ihre Website oder Webanwendung."
     }
   },
   "aboutPage": {

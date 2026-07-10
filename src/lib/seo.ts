@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { locales, defaultLocale, type Locale } from '@/i18n'
 import { buildBlogAuthorGraph } from '@/lib/creator-seo'
 
-import { CONTACT_EMAIL, SITE_URL } from '@/lib/site'
+import { SITE_URL } from '@/lib/site'
 
 const DEFAULT_SITE_URL = SITE_URL
 
@@ -157,5 +157,91 @@ export function faqPageJsonLd(
       },
     })),
     url: pageUrl,
+  }
+}
+
+type BreadcrumbItem = { name: string; path?: string }
+
+export function breadcrumbListJsonLd(items: BreadcrumbItem[], locale: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      ...(item.path !== undefined ? { item: buildLocaleUrl(locale, item.path) } : {}),
+    })),
+  }
+}
+
+export function servicesPageJsonLd(
+  locale: string,
+  pageTitle: string,
+  description: string,
+) {
+  const url = buildLocaleUrl(locale, '/usluge')
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: pageTitle,
+    description,
+    inLanguage: locale,
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    about: { '@id': `${SITE_URL}/#professional-service` },
+  }
+}
+
+export function contactPageJsonLd(
+  locale: string,
+  pageTitle: string,
+  description: string,
+) {
+  const url = buildLocaleUrl(locale, '/kontakt')
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: pageTitle,
+    description,
+    inLanguage: locale,
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    mainEntity: { '@id': `${SITE_URL}/#professional-service` },
+  }
+}
+
+export function portfolioItemListJsonLd(
+  items: Array<{
+    title: string
+    description: string | null
+    image_url: string | null
+    project_url: string | null
+  }>,
+  locale: string,
+) {
+  if (items.length === 0) return null
+
+  const pageUrl = buildLocaleUrl(locale, '/portfolio')
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    url: pageUrl,
+    numberOfItems: items.length,
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'CreativeWork',
+        name: item.title,
+        ...(item.description ? { description: item.description } : {}),
+        ...(item.image_url ? { image: item.image_url } : {}),
+        url: item.project_url ?? pageUrl,
+        creator: { '@id': `${SITE_URL}/#dario-imsirovic` },
+        contributor: { '@id': `${SITE_URL}/#martina-markulin` },
+      },
+    })),
   }
 }

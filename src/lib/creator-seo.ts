@@ -135,6 +135,17 @@ export function buildCreatorSeoGraph(locale: string) {
         inLanguage: locale,
         publisher: { '@id': orgId },
         creator: [{ '@id': dario.id }, { '@id': martina.id }],
+        potentialAction: {
+          '@type': 'ContactAction',
+          target: {
+            '@type': 'EntryPoint',
+            urlTemplate: `${SITE_URL}/kontakt`,
+          },
+          description:
+            loc === 'hr'
+              ? 'Kontaktirajte Protos Web za ponudu'
+              : 'Contact Protos Web for a quote',
+        },
       },
       {
         '@type': 'ProfessionalService',

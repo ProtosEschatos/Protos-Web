@@ -537,11 +537,11 @@
     },
     "process": {
       "title": "Il nostro processo",
-      "description": "Come costruiamo soluzioni web moderne."
+      "description": "Come costruiamo soluzioni web moderne — dalla consulenza al lancio. Protos Web, Zagabria."
     },
     "portfolio": {
       "title": "Portfolio",
-      "description": "Progetti selezionati e case study."
+      "description": "Progetti web selezionati e case study — design e sviluppo su misura da Zagabria."
     },
     "showcase": {
       "title": "3D Portfolio Showcase",
@@ -549,15 +549,15 @@
     },
     "services": {
       "title": "Servizi",
-      "description": "Web design, sviluppo, SEO e altro."
+      "description": "Web design, sviluppo, UI/UX, SEO e manutenzione su misura — Protos Web, Zagabria."
     },
     "blog": {
       "title": "Blog",
-      "description": "Guide gratuite sulla presenza web."
+      "description": "Guide su web design, SEO e presenza digitale per imprenditori in Croazia e UE."
     },
     "contact": {
       "title": "Contatto",
-      "description": "Contattaci per il tuo prossimo progetto."
+      "description": "Contatta Protos Web a Zagabria — consulenza gratuita per il tuo sito o applicazione web."
     }
   },
   "aboutPage": {

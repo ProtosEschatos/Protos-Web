@@ -656,11 +656,11 @@
     },
     "process": {
       "title": "Our Process",
-      "description": "How we build modern web solutions."
+      "description": "How we build modern web solutions — from consultation to launch. Protos Web, Zagreb."
     },
     "portfolio": {
       "title": "Portfolio",
-      "description": "Selected projects and case studies."
+      "description": "Selected web projects and case studies — custom design and development from Zagreb."
     },
     "showcase": {
       "title": "3D Portfolio Showcase",
@@ -668,15 +668,15 @@
     },
     "services": {
       "title": "Services",
-      "description": "Web design, development, SEO and more."
+      "description": "Custom web design, development, UI/UX, SEO and maintenance — Protos Web, Zagreb."
     },
     "blog": {
       "title": "Blog",
-      "description": "Free guides on web presence for entrepreneurs."
+      "description": "Guides on web design, SEO and digital presence for entrepreneurs in Croatia and the EU."
     },
     "contact": {
       "title": "Contact",
-      "description": "Get in touch about your next project."
+      "description": "Contact Protos Web in Zagreb — free consultation for your website or web application."
     }
   }
 }

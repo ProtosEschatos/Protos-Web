@@ -656,11 +656,11 @@
     },
     "process": {
       "title": "Nas proces",
-      "description": "Kako gradimo moderna web rjesenja."
+      "description": "Kako gradimo moderna web rjesenja — od konzultacija do lansiranja. Protos Web, Zagreb."
     },
     "portfolio": {
       "title": "Portfolio",
-      "description": "Odabrani projekti i studije slucaja."
+      "description": "Odabrani web projekti i studije slucaja — custom dizajn i razvoj iz Zagreba."
     },
     "showcase": {
       "title": "3D Portfolio Showcase",
@@ -672,11 +672,11 @@
     },
     "blog": {
       "title": "Blog",
-      "description": "Besplatni vodicima o web prisutnosti za poduzetnike."
+      "description": "Vodici o web dizajnu, SEO-u i digitalnoj prisutnosti za poduzetnike u Hrvatskoj i EU."
     },
     "contact": {
       "title": "Kontakt",
-      "description": "Javite nam se za vas sljedeci projekt."
+      "description": "Kontaktirajte Protos Web u Zagrebu — besplatna konzultacija za izradu web stranice ili aplikacije."
     }
   }
 }

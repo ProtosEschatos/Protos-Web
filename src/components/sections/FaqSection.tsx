@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
 import { faqPageJsonLd, buildLocaleUrl } from '@/lib/seo'
 
@@ -48,22 +47,17 @@ export default function FaqSection({ title, subtitle, items, locale, pagePath = 
                     className={`w-4 h-4 shrink-0 text-[var(--primary)] transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
                   />
                 </button>
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      id={`faq-a-${index}`}
-                      role="region"
-                      aria-labelledby={`faq-q-${index}`}
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.25 }}
-                      className="overflow-hidden"
-                    >
-                      <p className="px-6 pb-5 text-sm text-[var(--light-muted)] leading-relaxed">{item.answer}</p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <div
+                  id={`faq-a-${index}`}
+                  role="region"
+                  aria-labelledby={`faq-q-${index}`}
+                  className="grid transition-[grid-template-rows] duration-300 ease-out"
+                  style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}
+                >
+                  <div className="overflow-hidden">
+                    <p className="px-6 pb-5 text-sm text-[var(--light-muted)] leading-relaxed">{item.answer}</p>
+                  </div>
+                </div>
               </div>
             )
           })}

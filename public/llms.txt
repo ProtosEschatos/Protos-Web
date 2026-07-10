@@ -18,7 +18,7 @@
 ## Key pages
 - Home: https://www.protosweb.eu/
 - About us: https://www.protosweb.eu/o-meni
-- Services: https://www.protosweb.eu/usluge
+- Services: https://www.protosweb.eu/usluge (includes FAQ — pricing, timelines, languages)
 - Process: https://www.protosweb.eu/proces
 - Portfolio: https://www.protosweb.eu/portfolio
 - Blog: https://www.protosweb.eu/blog

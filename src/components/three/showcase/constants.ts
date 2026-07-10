@@ -1,5 +1,3 @@
-import { getShowcaseStorageUrl, SHOWCASE_STORAGE } from '@/lib/showcase-storage'
-
 export const SHOWCASE_CONFIG = {
   /** Units per second (legacy was 0.35/frame @ ~60fps) */
   moveSpeed: 21,
@@ -15,32 +13,17 @@ export const SHOWCASE_CONFIG = {
   characterHeight: 2,
 } as const
 
-export const PROJECT_LINKS = [
-  {
-    color: 0x6366f1,
-    link: 'https://bodulica.shop',
-    screenshotMobile: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('bodulica', 'mobile')),
-    screenshotDesktop: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('bodulica', 'desktop')),
-  },
-  {
-    color: 0x06b6d4,
-    link: 'https://zeustrading.online',
-    screenshotMobile: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('zeustrading', 'mobile')),
-    screenshotDesktop: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('zeustrading', 'desktop')),
-  },
-  {
-    color: 0xf59e0b,
-    link: 'https://cosmic-blueprint.net',
-    screenshotMobile: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('cosmic-blueprint', 'mobile')),
-    screenshotDesktop: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('cosmic-blueprint', 'desktop')),
-  },
-  {
-    color: 0x818cf8,
-    link: 'https://protosweb.eu',
-    screenshotMobile: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('protosweb', 'mobile')),
-    screenshotDesktop: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('protosweb', 'desktop')),
-  },
-] as const
+export type ProjectLink = {
+  color: number
+  link: string
+  screenshotMobile: string
+  screenshotDesktop: string
+}
+
+// Empty until real projects are ready to publish. Add entries here (screenshots via
+// getShowcaseStorageUrl from '@/lib/showcase-storage') to populate the gallery; any
+// remaining FRAME_SLOTS render as empty placeholder frames.
+export const PROJECT_LINKS: ProjectLink[] = []
 
 export const INITIAL_CHARACTER_HEADING = 0
 

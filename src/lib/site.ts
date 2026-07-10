@@ -20,5 +20,7 @@ export const LEGAL_BUSINESS_NAME = 'Protos Web Mark23'
 export const LEGAL_OIB = '23732814520'
 export const LEGAL_LOCATION = 'Zagreb, Republika Hrvatska'
 export const LEGAL_LAST_UPDATED = '2026-07-11'
+/** Bump when terms text changes — forces re-acceptance on next visit */
+export const LEGAL_TERMS_VERSION = '2026-07-11-v3'
 /** Google Search Console — HTML meta verification (DNS TXT also on Cloudflare). */
 export const GOOGLE_SITE_VERIFICATION = '6SnN-0ojdBd99Wr_5Y5WmgDFSGUwtg-U0PgrDz7HL1A'

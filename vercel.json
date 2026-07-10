@@ -1,13 +1,5 @@
 {
   "framework": "nextjs",
   "buildCommand": "npm run build",
-  "installCommand": "npm install",
-  "redirects": [
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.protosweb.eu" }],
-      "destination": "https://protosweb.eu/:path*",
-      "permanent": true
-    }
-  ]
+  "installCommand": "npm install"
 }

@@ -1,13 +1,21 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { getBlogPostBySlug } from '@/actions/blog'
+import { getBlogPostBySlug, getAllBlogSlugs } from '@/actions/blog'
 import BlogPostContent from '@/components/blog/BlogPostContent'
 import { Link } from '@/routing'
 import { ArrowLeft, Calendar } from 'lucide-react'
 import { buildBlogPostMetadata, blogPostingJsonLd } from '@/lib/seo'
 
 type Props = { params: { locale: string; slug: string } }
+
+export async function generateStaticParams() {
+  const slugs = await getAllBlogSlugs()
+  return slugs.map((post) => ({
+    locale: post.language,
+    slug: post.slug,
+  }))
+}
 
 export async function generateMetadata({ params: { locale, slug } }: Props): Promise<Metadata> {
   setRequestLocale(locale)

@@ -1,0 +1,176 @@
+{
+  "lastUpdated": "Last updated",
+  "lastUpdatedDate": "11 July 2026",
+  "privacyTitle": "Privacy Policy",
+  "privacyDescription": "How Protos Web handles your personal data in accordance with GDPR.",
+  "termsTitle": "Terms of Service",
+  "termsDescription": "Terms for using the Protos Web website, including intellectual property protection.",
+  "cookiesTitle": "Cookie Policy",
+  "cookiesDescription": "How Protos Web uses cookies and similar technologies.",
+  "termsSections": [
+    {
+      "title": "1. Introduction and acceptance",
+      "paragraphs": [
+        "These Terms of Service (\"Terms\") govern access to and use of the website www.protosweb.eu (the \"Site\") operated by Dario Imsirović — Protos Web, trade registration in progress as Protos Web Mark23 (OIB: 23732814520), Zagreb, Republic of Croatia (\"Protos Web\", \"we\", \"us\").",
+        "Access to the Site, its subpages, 3D showcase, contact form, newsletter, and any interaction is permitted only after you expressly accept these Terms and the Privacy Policy via the mandatory consent screen on entry. Without that acceptance you may not use the Site or proceed further.",
+        "By accessing after acceptance you confirm that you have read, understood, and fully accept these Terms. If you do not agree, close the Site and do not use it."
+      ]
+    },
+    {
+      "title": "2. Intellectual property and copyright",
+      "paragraphs": [
+        "All content on the Site — including but not limited to: visual identity and branding; user interface and UX/UI design; page layout, typography, color palettes, and graphic elements; illustrations, photographs, icons, and animations; 3D models, scenes, and interactive presentations; source code, architecture, components, and databases; texts, translations, blog posts, and marketing materials; SEO metadata, structured data (JSON-LD), and technical implementations — constitutes original intellectual property of Dario Imsirović, Martina Markulin (UI design and creative contribution), and/or Protos Web, unless expressly stated otherwise.",
+        "All designs, templates, code, and creative works remain the property of their authors as sovereign, free persons and creators, regardless of trade or business registration. Business registration does not diminish or transfer copyright without an express written agreement.",
+        "All such elements are protected under the laws of the Republic of Croatia and the European Union on copyright, related rights, and intellectual property, including the Croatian Copyright and Related Rights Act and applicable international treaties.",
+        "No part of the Site shall be deemed dedicated to the public domain, nor shall any licence for use be implied without prior express written consent from Dario Imsirović / Protos Web."
+      ]
+    },
+    {
+      "title": "3. Prohibited activities",
+      "paragraphs": [
+        "Without prior express written permission, it is prohibited to: copy, download, reproduce, distribute, or publicly display any part of the Site; automatically collect content (scraping, crawling, harvesting); clone the design, appearance, structure, or functionality of the Site; reverse engineer, decompile, or extract source code; remove, hide, or alter copyright notices; use content for commercial, competitive, or misleading purposes; falsely claim ownership of Protos Web design, code, or brand.",
+        "Creating derivative works, adaptations, or integrating our design, code, or visual identity into third-party products, services, templates, themes, or platforms without written consent is prohibited."
+      ]
+    },
+    {
+      "title": "4. Civil and criminal liability",
+      "paragraphs": [
+        "Any unauthorised use, misappropriation, copying, or abuse of Protos Web intellectual property may result in full civil liability, including claims for injunctive relief, damages, disgorgement of profits, and recovery of legal costs.",
+        "Depending on severity and circumstances, the same conduct may constitute a misdemeanour or criminal offence under applicable law of the Republic of Croatia, including provisions on protection of copyright and related rights and on unauthorised use of another's intellectual or industrial property. In such cases we reserve the right to report the matter to competent authorities and pursue all permitted legal remedies.",
+        "Protos Web actively protects its copyrights and original works. Any proven infringement will be pursued to the fullest extent permitted by law."
+      ]
+    },
+    {
+      "title": "5. Templates, components, and client deliverables",
+      "paragraphs": [
+        "All templates, themes, components, UI kits, code libraries, design systems, wireframes, prototypes, configurations, documentation, and any other deliverable created by Protos Web for clients or internal use constitutes original intellectual property of Dario Imsirović, Martina Markulin, and/or Protos Web, unless expressly agreed otherwise in a written contract with a specific client.",
+        "A client ordering a website, application, design, or other service acquires only the usage rights clearly defined in a written contract or quote — typically: the right to use the finished project for their own business purposes. The client does not acquire ownership of underlying templates, reusable code, architecture, design system, methodology, or tools used in production, unless expressly agreed and compensated.",
+        "Clients, visitors, and third parties must be aware that unauthorised copying, downloading, adaptation, resale, or distribution of any Protos Web template, component, or client deliverable is prohibited and may result in civil and criminal liability, whether the work is shown in the portfolio or delivered to a client.",
+        "Display of work in portfolio, 3D showcase, or demo environments does not grant a licence to reproduce. Every client confirms awareness of these Terms when using the Site and/or entering a business relationship with Protos Web."
+      ]
+    },
+    {
+      "title": "6. Portfolio, demo content, and presentations",
+      "paragraphs": [
+        "Portfolio displays, 3D showcase, and demo experiences are for presentation only and do not grant permission to reproduce or appropriate the solutions shown.",
+        "Unauthorised copying of displayed work — including work created for clients — is equally prohibited and subject to the same legal remedies."
+      ]
+    },
+    {
+      "title": "7. External links and third-party services",
+      "paragraphs": [
+        "The Site may contain links to third-party websites. Protos Web does not control their content and is not responsible for their terms of use or privacy policies.",
+        "Use of third-party services (e.g. hosting, email, payments) is subject to those providers' terms."
+      ]
+    },
+    {
+      "title": "8. Limitation of liability",
+      "paragraphs": [
+        "The Site is provided \"as is\". To the extent permitted by law, Protos Web is not liable for indirect damages, downtime, or data loss arising from use of the Site, except in cases of intent or gross negligence.",
+        "Nothing in these Terms limits liability that cannot be excluded under mandatory law of the Republic of Croatia."
+      ]
+    },
+    {
+      "title": "9. Changes to terms",
+      "paragraphs": [
+        "We may update these Terms from time to time. The last updated date is shown at the top of this page. Continued use of the Site after changes constitutes acceptance of the updated Terms."
+      ]
+    },
+    {
+      "title": "10. Governing law and jurisdiction",
+      "paragraphs": [
+        "These Terms are governed by the law of the Republic of Croatia. Disputes shall be subject to the competent courts in the Republic of Croatia, unless mandatory provisions provide otherwise.",
+        "For questions about intellectual property and these Terms, contact: dario.admin@protosweb.eu."
+      ]
+    }
+  ],
+  "privacySections": [
+    {
+      "title": "1. Data controller",
+      "paragraphs": [
+        "The data controller is Dario Imsirović — Protos Web / Protos Web Mark23 (registration in progress), OIB: 23732814520, Zagreb, Republic of Croatia. Data protection contact: dario.admin@protosweb.eu."
+      ]
+    },
+    {
+      "title": "2. Data we collect",
+      "paragraphs": [
+        "Contact form: name, email address, message, and technical metadata needed to deliver your inquiry.",
+        "Newsletter: email address and subscription timestamp.",
+        "Cookies and analytics: visit and interaction data, only with your consent for non-essential cookies (see Cookie Policy).",
+        "Technical logs: IP address, browser type, access time — for security and infrastructure operation."
+      ]
+    },
+    {
+      "title": "3. Purpose and legal basis",
+      "paragraphs": [
+        "Responding to inquiries and communication — legitimate interest or performance of a service at your request.",
+        "Newsletter — your explicit consent; you may withdraw at any time.",
+        "Security, maintenance, and improvement of the Site — legitimate interest.",
+        "Analytics cookies — your consent where required."
+      ]
+    },
+    {
+      "title": "4. Recipients and processors",
+      "paragraphs": [
+        "We share personal data only with trusted service providers necessary to operate the Site: Vercel (hosting), Supabase (database), Resend and/or Brevo (email), Cloudflare (DNS and security). All processors are contractually bound to protect data.",
+        "We do not sell your personal data to third parties."
+      ]
+    },
+    {
+      "title": "5. Storage and retention",
+      "paragraphs": [
+        "Contact inquiries are kept as long as needed to respond and maintain communication records, then deleted or anonymised when no longer necessary.",
+        "Newsletter subscriptions are kept until you unsubscribe.",
+        "Technical logs are retained for a reasonable period required for security and maintenance."
+      ]
+    },
+    {
+      "title": "6. Your rights (GDPR)",
+      "paragraphs": [
+        "You have the right to access, rectification, erasure, restriction of processing, objection, data portability, and withdrawal of consent (where processing is based on consent).",
+        "To exercise your rights, email dario.admin@protosweb.eu. We respond within the timeframe required by GDPR.",
+        "You may lodge a complaint with the Croatian Personal Data Protection Agency (AZOP), Ulica grada Vukovara 54, 10000 Zagreb."
+      ]
+    },
+    {
+      "title": "7. Intellectual property and privacy",
+      "paragraphs": [
+        "Protection of Protos Web original designs, code, and creative works is governed by the Terms of Service. This Privacy Policy applies solely to personal data and does not diminish copyright or ownership of Site content."
+      ]
+    },
+    {
+      "title": "8. Changes to this policy",
+      "paragraphs": [
+        "We may update this Privacy Policy. The last updated date is shown at the top of this page. Material changes will be published on the Site."
+      ]
+    }
+  ],
+  "cookiesSections": [
+    {
+      "title": "1. What are cookies",
+      "paragraphs": [
+        "Cookies are small text files stored in your browser. They are used for basic Site operation, remembering settings, and — with consent — visit analytics."
+      ]
+    },
+    {
+      "title": "2. Types of cookies we use",
+      "paragraphs": [
+        "Essential cookies: required for security, session, language settings, and storing your cookie choice. Always active.",
+        "Analytics cookies (optional): help us understand Site usage and improve user experience. Activated only with your consent."
+      ]
+    },
+    {
+      "title": "3. Managing consent",
+      "paragraphs": [
+        "On first entry you may accept or decline non-essential cookies via the modal or banner. Your choice is stored locally in your browser.",
+        "You may delete or block cookies in browser settings. Deleting essential cookies may affect Site functionality."
+      ]
+    },
+    {
+      "title": "4. Relation to other policies",
+      "paragraphs": [
+        "Processing of personal data via cookies is described in the Privacy Policy. By using the Site in accordance with your cookie choice, you also accept the Terms of Service protecting Protos Web intellectual property."
+      ]
+    }
+  ]
+}

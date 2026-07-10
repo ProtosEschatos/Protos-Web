@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { locales, defaultLocale, type Locale } from '@/i18n'
+import { buildBlogAuthorGraph } from '@/lib/creator-seo'
 
 import { CONTACT_EMAIL, SITE_URL } from '@/lib/site'
 
@@ -128,10 +129,7 @@ export function blogPostingJsonLd(post: {
     description: post.description,
     datePublished: post.createdAt,
     url: buildLocaleUrl(post.locale, `/blog/${post.slug}`),
-    author: {
-      '@type': 'Organization',
-      name: 'Protos Web',
-    },
+    author: buildBlogAuthorGraph(post.locale),
     publisher: {
       '@type': 'Organization',
       name: 'Protos Web',
@@ -143,18 +141,21 @@ export function blogPostingJsonLd(post: {
   }
 }
 
-export const organizationJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'Protos Web',
-  url: siteUrl,
-  logo: `${siteUrl}/favicon.svg`,
-  description:
-    'Web design studio from Zagreb crafting fast, modern websites with soul — built with love and care for businesses across Croatia and Europe.',
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'Zagreb',
-    addressCountry: 'HR',
-  },
-  sameAs: [] as string[],
+export function faqPageJsonLd(
+  items: Array<{ question: string; answer: string }>,
+  pageUrl: string,
+) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+    url: pageUrl,
+  }
 }

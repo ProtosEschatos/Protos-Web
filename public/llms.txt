@@ -1,0 +1,54 @@
+# Protos Web — llms.txt
+# https://www.protosweb.eu/llms.txt
+# Guidance for AI crawlers and language models (GEO).
+
+> Protos Web is a web design and development studio from Zagreb, Croatia.
+> We build fast, custom websites and web applications — no templates, built from scratch.
+> Trade registration in progress: Protos Web Mark23 (OIB: 23732814520).
+
+## Primary language
+- Croatian (hr) — default at https://www.protosweb.eu/
+
+## Other languages
+- English: https://www.protosweb.eu/en/
+- German: https://www.protosweb.eu/de/
+- Italian: https://www.protosweb.eu/it/
+- Spanish: https://www.protosweb.eu/es/
+
+## Key pages
+- Home: https://www.protosweb.eu/
+- About us: https://www.protosweb.eu/o-meni
+- Services: https://www.protosweb.eu/usluge
+- Process: https://www.protosweb.eu/proces
+- Portfolio: https://www.protosweb.eu/portfolio
+- Blog: https://www.protosweb.eu/blog
+- Contact: https://www.protosweb.eu/kontakt
+
+## Services offered
+- Custom web design and development (Next.js, TypeScript)
+- UI/UX design
+- SEO optimization
+- E-commerce and CRM integrations
+- 3D web experiences
+- Cyber security best practices
+
+## Team
+- Dario Imsirović — Full Stack Developer, founder (Croatian & English native, German basic)
+- Martina Markulin — UI designer and creative collaborator
+
+## Contact
+- Email: dario.admin@protosweb.eu
+- Phone: +385 97 604 39 41
+- Location: Zagreb, Croatia
+
+## Crawling
+- Sitemap: https://www.protosweb.eu/sitemap.xml
+- Robots: https://www.protosweb.eu/robots.txt
+- Admin area (/admin) is not public content.
+
+## Topics we can answer (GEO)
+- Cost of website development in Croatia
+- Custom vs template websites
+- Web design process and timelines
+- GDPR-compliant websites
+- Multilingual websites for EU markets

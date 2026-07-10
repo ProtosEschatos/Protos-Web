@@ -4,10 +4,14 @@ import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
-import { ArrowRight, BookOpen } from 'lucide-react'
+import { ArrowRight, BookOpen, Instagram } from 'lucide-react'
 import OnlinePresence from '@/components/sections/OnlinePresence'
 
-const infoKeys = ['name', 'location', 'experience', 'email', 'phone', 'languages'] as const
+const TEAM_MEMBERS = ['dario', 'martina'] as const
+type TeamMemberId = (typeof TEAM_MEMBERS)[number]
+
+const DARIO_FIELDS = ['location', 'experience', 'email', 'phone', 'languages'] as const
+const MARTINA_FIELDS = ['focus', 'contribution', 'instagram'] as const
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -21,6 +25,35 @@ const supportBtnColors = [
   'bg-green-500 hover:bg-green-600',
   'bg-green-500 hover:bg-green-600',
 ]
+
+function TeamInfoField({
+  label,
+  value,
+  href,
+}: {
+  label: string
+  value: string
+  href?: string
+}) {
+  return (
+    <div>
+      <div className="text-[0.7rem] text-[var(--light-muted)] uppercase tracking-[0.15em] mb-1">{label}</div>
+      {href ? (
+        <a
+          href={href}
+          target={href.startsWith('http') ? '_blank' : undefined}
+          rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+          className="text-base font-semibold text-[var(--primary)] inline-flex items-center gap-1.5 hover:opacity-90"
+        >
+          {href.includes('instagram') ? <Instagram className="w-4 h-4" /> : null}
+          {value}
+        </a>
+      ) : (
+        <div className="text-base font-semibold text-[var(--light)]">{value}</div>
+      )}
+    </div>
+  )
+}
 
 export default function AboutPage() {
   const t = useTranslations('aboutPage')
@@ -36,7 +69,6 @@ export default function AboutPage() {
   useEffect(() => {
     if (typeof window === 'undefined' || window.location.hash !== '#online-presence') return
     const scroll = () => document.getElementById('online-presence')?.scrollIntoView({ behavior: 'smooth' })
-    // wait for the page transition overlay to finish before scrolling
     const timer = window.setTimeout(scroll, 1400)
     return () => window.clearTimeout(timer)
   }, [])
@@ -49,7 +81,7 @@ export default function AboutPage() {
           <h1 className="text-[clamp(2.2rem,5vw,3.5rem)] font-extrabold leading-tight mb-5">
             {t('heroTitleLine1')}<br /><span className="gradient-text">{t('heroTitleHighlight')}</span><br />{t('heroTitleLine2')}
           </h1>
-          <p className="text-base text-[var(--light-muted)] max-w-[600px] mx-auto leading-7">
+          <p className="text-base text-[var(--light-muted)] max-w-[640px] mx-auto leading-7">
             {t('heroSubtitle')}
           </p>
         </div>
@@ -57,36 +89,67 @@ export default function AboutPage() {
 
       <section className="py-16">
         <div className="max-w-[1200px] mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
-              <h3 className="text-xl font-bold mb-5">{t('whoTitle')}</h3>
-              <div className="space-y-4 text-sm text-[var(--light-muted)] leading-7">
-                <p>{t('bio1')}</p>
-                <p>{t('bio2')}</p>
-                <p>{t('bio3')}</p>
-                <p>{t('bio4')}</p>
-                <p>
-                  <Link href="/blog" className="text-[var(--primary)] underline inline-flex items-center gap-1.5">
-                    <BookOpen className="w-3.5 h-3.5" /> {t('guideLink')} <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-                </p>
-              </div>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }}>
-              <h3 className="text-xl font-bold mb-6">{t('infoTitle')}</h3>
-              <div className="flex flex-col gap-5">
-                {infoKeys.map((key) => (
-                  <div key={key}>
-                    <div className="text-[0.7rem] text-[var(--light-muted)] uppercase tracking-[0.15em] mb-1">{t(`infoLabels.${key}`)}</div>
-                    {key === 'email' ? (
-                      <a href={`mailto:${t(`infoValues.${key}`)}`} className="text-base font-semibold text-[var(--primary)]">{t(`infoValues.${key}`)}</a>
-                    ) : (
-                      <div className="text-base font-semibold text-[var(--light)]">{t(`infoValues.${key}`)}</div>
-                    )}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mb-10 text-center max-w-3xl mx-auto"
+          >
+            <h3 className="text-xl font-bold mb-4">{t('whoTitle')}</h3>
+            <p className="text-sm text-[var(--light-muted)] leading-7">{t('studioIntro')}</p>
+          </motion.div>
+
+          <h3 className="text-xl font-bold mb-8 text-center">{t('teamTitle')}</h3>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+            {TEAM_MEMBERS.map((member, index) => {
+              const fields = member === 'dario' ? DARIO_FIELDS : MARTINA_FIELDS
+              const instagramUrl = member === 'martina' ? t('team.martina.instagramUrl') : undefined
+
+              return (
+                <motion.div
+                  key={member}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: index * 0.12 }}
+                  className="cosmic-panel rounded-2xl p-8 h-full flex flex-col"
+                >
+                  <div className="mb-5">
+                    <p className="text-[0.7rem] uppercase tracking-[0.18em] text-[var(--primary)] mb-2">
+                      {t(`team.${member}.label`)}
+                    </p>
+                    <h4 className="text-2xl font-extrabold text-[var(--light)] mb-1">{t(`team.${member}.name`)}</h4>
+                    <p className="text-sm font-semibold text-cyan-200/90">{t(`team.${member}.role`)}</p>
                   </div>
-                ))}
-              </div>
-            </motion.div>
+
+                  <p className="text-sm text-[var(--light-muted)] leading-7 mb-6 flex-1">{t(`team.${member}.bio`)}</p>
+
+                  <div className="flex flex-col gap-5 pt-5 border-t border-white/10">
+                    {fields.map((field) => {
+                      const value = t(`team.${member}.fields.${field}`)
+                      const label = t(`teamFieldLabels.${field}`)
+                      const href =
+                        field === 'email'
+                          ? `mailto:${value}`
+                          : field === 'instagram'
+                            ? instagramUrl
+                            : undefined
+
+                      return <TeamInfoField key={field} label={label} value={value} href={href} />
+                    })}
+                  </div>
+
+                  {member === 'dario' && (
+                    <p className="mt-6 text-sm">
+                      <Link href="/blog" className="text-[var(--primary)] underline inline-flex items-center gap-1.5">
+                        <BookOpen className="w-3.5 h-3.5" /> {t('guideLink')} <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+                    </p>
+                  )}
+                </motion.div>
+              )
+            })}
           </div>
         </div>
       </section>

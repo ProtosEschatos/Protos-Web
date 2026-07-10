@@ -86,7 +86,37 @@
     "pageSubtitle": "Soluciones web profesionales adaptadas a tu negocio. Del concepto al lanzamiento y mas alla.",
     "ctaTitle": "Listo para empezar tu proyecto?",
     "ctaText": "Consulta y presupuesto gratuitos — sin compromiso.",
-    "ctaButton": "Solicitar presupuesto"
+    "ctaButton": "Solicitar presupuesto",
+    "faq": {
+      "title": "Preguntas frecuentes",
+      "subtitle": "Respuestas a preguntas comunes sobre desarrollo web en Croacia y trabajo con Protos Web.",
+      "items": [
+        {
+          "question": "Cuanto cuesta una web en Croacia?",
+          "answer": "El coste depende del alcance — landing, sitio corporativo o plataforma custom. Cada proyecto es a medida. Tras una breve llamada recibes un presupuesto claro sin costes ocultos."
+        },
+        {
+          "question": "Cuanto tarda el desarrollo?",
+          "answer": "Un sitio simple puede estar listo en 2–4 semanas. Proyectos complejos tardan mas. Acordamos plazos de antemano."
+        },
+        {
+          "question": "Trabajan en ingles y aleman?",
+          "answer": "Si. Dario habla croata e ingles nativamente y aleman a nivel basico. Podemos entregar sitios multilingues."
+        },
+        {
+          "question": "Usan plantillas listas?",
+          "answer": "No. Todo se construye desde cero. Las plantillas son propiedad intelectual del estudio."
+        },
+        {
+          "question": "Incluye SEO?",
+          "answer": "Si — SEO tecnico (velocidad, estructura, meta tags, schema, sitemap) incluido en cada proyecto."
+        },
+        {
+          "question": "Ofrecen mantenimiento tras el lanzamiento?",
+          "answer": "Si — soporte continuo, actualizaciones de seguridad y monitorizacion de rendimiento."
+        }
+      ]
+    }
   },
   "process": {
     "label": "PROCESO",
@@ -295,8 +325,15 @@
   "loader": {
     "subtitle": "Cargando experiencia",
     "enter": "Enter",
+    "consentModalTitle": "Aceptacion de terminos obligatoria",
+    "consentModalRequired": "Sin aceptar los Terminos de servicio y la Politica de privacidad no puede entrar al sitio ni usar su contenido.",
+    "consentModalIntro": "Lea y acepte nuestros",
+    "termsAcceptLabel": "Acepto los Terminos de servicio",
+    "termsAcceptDesc": "Confirmo que he leido los Terminos, incluida la proteccion de todas las obras originales, plantillas, disenos y entregas a clientes de Protos Web, y entiendo que la copia no autorizada puede ser punible.",
+    "consentModalAccept": "Aceptar y entrar al sitio",
+    "consentModalBlocked": "Debe aceptar los Terminos de servicio para continuar.",
     "cookieModalTitle": "Se requiere consentimiento de cookies",
-    "cookieModalIntro": "Para entrar al sitio debes aceptar las cookies esenciales. Las opcionales puedes seleccionarlas abajo. Lee nuestros",
+    "cookieModalIntro": "Lee nuestros",
     "cookieModalTerms": "Terminos de servicio",
     "cookieModalLegalAnd": "y",
     "cookieModalPrivacy": "Politica de privacidad",
@@ -341,24 +378,162 @@
     "webglViewPortfolio": "Ver portfolio completo"
   },
   "legalPages": {
+    "lastUpdated": "Ultima actualizacion",
+    "lastUpdatedDate": "11 de julio de 2026",
     "privacyTitle": "Politica de privacidad",
-    "privacyDescription": "Como Protos Web trata tus datos personales.",
-    "privacyBody": "Protos Web respeta tu privacidad. Solo recopilamos datos necesarios para operar el sitio, responder consultas y mejorar servicios.\n\nNo vendemos datos personales a terceros. Analytics y cookies se usan solo con tu consentimiento cuando es necesario.\n\nPreguntas: dario.admin@protosweb.eu.",
+    "privacyDescription": "Como Protos Web trata sus datos personales conforme al RGPD.",
     "termsTitle": "Terminos de servicio",
-    "termsDescription": "Terminos de uso del sitio Protos Web.",
-    "termsBody": "Al usar este sitio aceptas estos terminos. Contenido y codigo pertenecen a Protos Web salvo indicacion contraria.\n\nLas demos portfolio son demostrativas. Enlaces externos tienen sus propios terminos.\n\nLos terminos pueden actualizarse.",
+    "termsDescription": "Condiciones de uso del sitio Protos Web, incluida la proteccion de la propiedad intelectual.",
     "cookiesTitle": "Politica de cookies",
-    "cookiesDescription": "Como Protos Web usa cookies.",
-    "cookiesBody": "Usamos cookies esenciales y, con consentimiento, cookies analiticas.\n\nTu eleccion se guarda localmente en el navegador.\n\nPuedes borrar cookies en la configuracion del navegador."
+    "cookiesDescription": "Como Protos Web utiliza cookies y tecnologias similares.",
+    "termsSections": [
+      {
+        "title": "1. Introduccion y aceptacion",
+        "paragraphs": [
+          "Estos Terminos de servicio (\"Terminos\") regulan el acceso y uso del sitio www.protosweb.eu (el \"Sitio\") operado por Dario Imsirovic — Protos Web, Zagreb, Republica de Croacia (\"Protos Web\", \"nosotros\").",
+          "Al acceder al Sitio confirma que ha leido, entendido y aceptado plenamente estos Terminos. Si no esta de acuerdo, no utilice el Sitio."
+        ]
+      },
+      {
+        "title": "2. Propiedad intelectual y derechos de autor",
+        "paragraphs": [
+          "Todo el contenido del Sitio — identidad visual, diseno UI/UX, disposicion, tipografia, graficos, animaciones, contenido 3D, codigo fuente, textos, traducciones, blog, metadatos SEO e implementaciones tecnicas — es propiedad intelectual original de Dario Imsirovic y/o Protos Web, salvo indicacion expresa.",
+          "Todos los elementos estan protegidos por las leyes de Croacia y la UE sobre derechos de autor y propiedad intelectual.",
+          "No se concede ninguna licencia implicita sin consentimiento escrito previo."
+        ]
+      },
+      {
+        "title": "3. Actividades prohibidas",
+        "paragraphs": [
+          "Sin autorizacion escrita previa esta prohibido: copiar, descargar, reproducir o distribuir contenido; scraping automatizado; clonar diseno o funcionalidad; ingenieria inversa; eliminar avisos de copyright; uso comercial o enganoso; reclamar falsamente la propiedad.",
+          "Obras derivadas o integracion de nuestro diseno/codigo en productos de terceros sin consentimiento escrito esta prohibida."
+        ]
+      },
+      {
+        "title": "4. Responsabilidad civil y penal",
+        "paragraphs": [
+          "El uso no autorizado puede acarrear responsabilidad civil (medidas cautelares, danos, costas legales).",
+          "Segun la gravedad puede constituir infraccion o delito segun la ley croata. Nos reservamos el derecho de denunciar a las autoridades y actuar legalmente.",
+          "Protos Web protege activamente sus derechos. Toda infraccion comprobada sera perseguida en la maxima medida permitida por la ley."
+        ]
+      },
+      {
+        "title": "5. Portfolio y contenido demo",
+        "paragraphs": [
+          "Portfolio y demos son solo demostrativos y no autorizan la reproduccion de las soluciones mostradas.",
+          "Proyectos de clientes se muestran con consentimiento; los derechos se definen en contratos individuales."
+        ]
+      },
+      {
+        "title": "6. Enlaces externos",
+        "paragraphs": [
+          "Los enlaces a terceros estan sujetos a sus propias condiciones. Protos Web no controla su contenido."
+        ]
+      },
+      {
+        "title": "7. Limitacion de responsabilidad",
+        "paragraphs": [
+          "El Sitio se proporciona \"tal cual\". La responsabilidad por danos indirectos queda excluida en la medida permitida por la ley."
+        ]
+      },
+      {
+        "title": "8. Cambios",
+        "paragraphs": [
+          "Podemos actualizar estos Terminos. El uso continuado implica aceptacion de los cambios."
+        ]
+      },
+      {
+        "title": "9. Ley aplicable",
+        "paragraphs": [
+          "Se aplica la ley de la Republica de Croacia. Jurisdiccion: tribunales competentes en Croacia. Contacto: dario.admin@protosweb.eu."
+        ]
+      }
+    ],
+    "privacySections": [
+      {
+        "title": "1. Responsable del tratamiento",
+        "paragraphs": [
+          "Responsable: Dario Imsirovic — Protos Web, Zagreb, Republica de Croacia. Contacto: dario.admin@protosweb.eu."
+        ]
+      },
+      {
+        "title": "2. Datos que recopilamos",
+        "paragraphs": [
+          "Formulario de contacto, newsletter, cookies (con consentimiento), registros tecnicos para seguridad y funcionamiento."
+        ]
+      },
+      {
+        "title": "3. Finalidad y base legal",
+        "paragraphs": [
+          "Comunicacion (interes legitimo/servicio), newsletter (consentimiento), seguridad (interes legitimo), cookies analiticas (consentimiento)."
+        ]
+      },
+      {
+        "title": "4. Destinatarios",
+        "paragraphs": [
+          "Vercel, Supabase, Resend/Brevo, Cloudflare — vinculados contractualmente. No vendemos datos personales."
+        ]
+      },
+      {
+        "title": "5. Conservacion",
+        "paragraphs": [
+          "Los datos se conservan solo el tiempo necesario para cada finalidad."
+        ]
+      },
+      {
+        "title": "6. Sus derechos",
+        "paragraphs": [
+          "Acceso, rectificacion, supresion, limitacion, oposicion, portabilidad, retirada del consentimiento. Reclamacion ante AZOP, Zagreb."
+        ]
+      },
+      {
+        "title": "7. Propiedad intelectual",
+        "paragraphs": [
+          "La proteccion de diseno y codigo esta en los Terminos de servicio. Esta politica trata solo datos personales."
+        ]
+      },
+      {
+        "title": "8. Cambios",
+        "paragraphs": [
+          "Las actualizaciones se publicaran en el Sitio."
+        ]
+      }
+    ],
+    "cookiesSections": [
+      {
+        "title": "1. Que son las cookies",
+        "paragraphs": [
+          "Pequenos archivos de texto en el navegador para funcionamiento, ajustes y — con consentimiento — analitica."
+        ]
+      },
+      {
+        "title": "2. Tipos de cookies",
+        "paragraphs": [
+          "Cookies esenciales (siempre activas) y cookies analiticas opcionales (solo con consentimiento)."
+        ]
+      },
+      {
+        "title": "3. Gestion del consentimiento",
+        "paragraphs": [
+          "Eleccion mediante modal/banner, guardada localmente. Eliminacion en ajustes del navegador."
+        ]
+      },
+      {
+        "title": "4. Otras politicas",
+        "paragraphs": [
+          "Detalles en la Politica de privacidad. Los Terminos protegen la propiedad intelectual de Protos Web."
+        ]
+      }
+    ]
   },
   "metadata": {
     "home": {
       "title": "Sitios web con alma. Velocidad en el código. Amor en los detalles.",
-      "description": "Agencia profesional de diseno web de Zagreb."
+      "description": "Protos Web — estudio web de Zagreb. Webs a medida, diseno UI/UX y SEO. Dario Imsirović (desarrollo) y Martina Markulin (diseno)."
     },
     "about": {
-      "title": "Sobre mi",
-      "description": "Full Stack Developer y Web Designer de Zagreb."
+      "title": "Sobre nosotros — Dario Imsirović & Martina Markulin",
+      "description": "Equipo Protos Web de Zagreb: Dario Imsirović, Full Stack Developer y Martina Markulin, disenadora UI."
     },
     "process": {
       "title": "Nuestro proceso",
@@ -386,34 +561,52 @@
     }
   },
   "aboutPage": {
-    "label": "SOBRE MÍ",
+    "label": "SOBRE NOSOTROS",
     "heroTitleLine1": "Construimos soluciones",
     "heroTitleHighlight": "digitales que crecen",
     "heroTitleLine2": "contigo.",
-    "heroSubtitle": "Full Stack Developer y Web Designer de Zagreb. Creo sitios web modernos, rápidos y visualmente impactantes — cada uno con alma y cuidado hasta el último detalle.",
-    "whoTitle": "Quién soy",
-    "bio1": "Full Stack Developer de Zagreb con 5 años de experiencia creando soluciones web modernas. Trabajo con emprendedores y empresas en Croacia y Europa — desde landing pages rápidas hasta plataformas custom complejas, tiendas online y sistemas CRM.",
-    "bio2": "Todo lo construyo a medida — sin temas prefabricados, sin comprometer la calidad. Cada proyecto empieza desde cero, adaptado exactamente a tus necesidades y objetivos.",
-    "bio3": "Intereses: Desarrollo full stack, Web multiplataforma, Experiencias web 3D, Construcción de plataformas, Diseño web, Ciberseguridad.",
-    "bio4": "Objetivo: Ayudar a empresas locales y europeas a encontrar la solución web adecuada — sin complejidad innecesaria, con una interfaz moderna.",
+    "heroSubtitle": "Full Stack Developer y diseñadora UI de Zagreb. Creamos sitios modernos, rápidos y visualmente impactantes — con alma, colaboración y cuidado hasta el último detalle.",
+    "whoTitle": "Quiénes somos",
+    "studioIntro": "Protos Web es un estudio en formación — negocio Protos Web Mark23 en registro (OIB: 23732814520). Todos los diseños, plantillas y obras creativas siguen siendo propiedad original de sus autores como creadores soberanos, independientemente del registro comercial.",
+    "teamTitle": "Info",
+    "teamFieldLabels": {
+      "location": "Ubicación",
+      "experience": "Experiencia",
+      "email": "Email",
+      "phone": "Teléfono",
+      "languages": "Idiomas",
+      "focus": "Enfoque",
+      "contribution": "Contribución",
+      "instagram": "Instagram"
+    },
+    "team": {
+      "dario": {
+        "label": "Fundador & desarrollo",
+        "name": "Dario Imsirović",
+        "role": "Full Stack Developer & fundador de Protos Web",
+        "bio": "Full Stack Developer de Zagreb con 5 años de experiencia. Trabajo con emprendedores en Croacia y Europa — desde landing pages hasta plataformas custom, tiendas online y CRM. Todo a medida, sin temas prefabricados.",
+        "fields": {
+          "location": "Zagreb, Croacia",
+          "experience": "5 años",
+          "email": "dario.admin@protosweb.eu",
+          "phone": "+385 97 604 39 41",
+          "languages": "Croata (nativo), Ingles (nativo), Aleman (basico)"
+        }
+      },
+      "martina": {
+        "label": "Diseño UI & colaboración creativa",
+        "name": "Martina Markulin",
+        "role": "Diseñadora UI & colaboradora creativa",
+        "bio": "Martina es el corazón de la identidad visual y la experiencia emocional de nuestros proyectos. Como diseñadora UI define interfaces, paletas y tipografía — como colaboradora creativa y pareja aporta ideas, conceptos y estética a cada obra del estudio.",
+        "instagramUrl": "https://www.instagram.com/everybodycries/",
+        "fields": {
+          "focus": "Diseño UI/UX, conceptos visuales, branding",
+          "contribution": "Ideas creativas, estética y diseño de todos los proyectos",
+          "instagram": "@everybodycries"
+        }
+      }
+    },
     "guideLink": "Guías gratuitas sobre presencia web para emprendedores",
-    "infoTitle": "Info",
-    "infoLabels": {
-      "name": "NOMBRE",
-      "location": "UBICACIÓN",
-      "experience": "EXPERIENCIA",
-      "email": "EMAIL",
-      "phone": "TELÉFONO",
-      "languages": "IDIOMAS"
-    },
-    "infoValues": {
-      "name": "Dario Imsirović",
-      "location": "Zagreb, Croacia",
-      "experience": "5 años",
-      "email": "dario.admin@protosweb.eu",
-      "phone": "+385 97 604 39 41",
-      "languages": "Croata, Inglés, Alemán (básico)"
-    },
     "goalsTitle": "Objetivos",
     "goals": [
       {

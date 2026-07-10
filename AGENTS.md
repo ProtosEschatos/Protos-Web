@@ -30,4 +30,14 @@ Next.js 14 App Router · TypeScript · Tailwind · next-intl (hr/en/de/it/es) ·
 
 ## Deploy
 
-Push to `main` → Vercel production. Preview envs need same secrets as production for admin CMS.
+Push to `main` → Vercel production. **After every push verify live** (`vercel ls` or curl) — GitHub green ≠ Vercel deployed; webhook can lag (use `vercel redeploy` if needed). Preview envs need same secrets as production for admin CMS.
+
+**Critical:** `ADMIN_SECRET` lives on Vercel only — git revert does **not** restore it.
+
+## Current state (2026-07-10)
+
+- Base revert: `e4a264c` (6 Jul evening); fixes through `3bc309c`
+- Portfolio demo items deactivated in DB; showcase empty frames
+- Hydration fixed (`4834a6b`); navbar decluttered (`9861587`)
+- Open: `/admin` dashboard 500 (login works separately)
+- Full memory: **Protos-Agent** `memory/projects/protos-web.md` + `memory/sessions/2026-07-10-incident-recovery.md`

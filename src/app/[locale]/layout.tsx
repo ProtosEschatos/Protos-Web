@@ -13,7 +13,7 @@ import { locales, type Locale } from '@/i18n'
 import { ogImage, siteUrl } from '@/lib/config/seo'
 import { LEGAL_OWNER, LEGAL_COLLABORATOR, SITE_URL, GOOGLE_SITE_VERIFICATION } from '@/lib/config/site'
 import LocaleCreatorSeo from '@/components/seo/LocaleCreatorSeo'
-import { BOOT_GATE_INIT_SCRIPT, BOOT_VIDEO } from '@/lib/config/boot-gate'
+import { BOOT_GATE_INIT_SCRIPT } from '@/lib/config/boot-gate'
 
 const inter = Inter({
   subsets: ['latin', 'latin-ext'],
@@ -106,7 +106,6 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={inter.className}>
       <head>
-        <link rel="preload" href={BOOT_VIDEO} as="fetch" type="video/mp4" crossOrigin="anonymous" />
         <LocaleCreatorSeo locale={locale} />
       </head>
       <body className="site-body">

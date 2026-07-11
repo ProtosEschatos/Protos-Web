@@ -101,7 +101,7 @@ export default function AdminSidebar() {
       ) : null}
 
       <aside
-        className={`fixed lg:sticky top-16 z-40 h-[calc(100vh-4rem)] w-[min(18rem,88vw)] shrink-0 border-r border-white/5 bg-[#0d0614]/85 backdrop-blur-xl transition-transform duration-300 ${
+        className={`fixed lg:sticky top-16 z-40 h-[calc(100vh-4rem)] w-[min(18rem,88vw)] shrink-0 border-r border-white/5 bg-[#0d0614]/95 transition-transform duration-200 ${
           mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
       >

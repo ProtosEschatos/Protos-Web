@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import ProtosLogo from '@/components/ui/ProtosLogo'
+import AdminBrandMark from '@/components/features/admin/AdminBrandMark'
 
 export default function AdminLoginForm() {
   const router = useRouter()
@@ -43,7 +43,7 @@ export default function AdminLoginForm() {
     <div className="min-h-screen flex items-center justify-center px-6 py-12">
       <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[var(--dark-card)]/75 backdrop-blur-md p-8 shadow-2xl shadow-black/40">
         <div className="flex items-center gap-3 mb-8">
-          <ProtosLogo size={40} />
+          <AdminBrandMark className="h-10 w-10" />
           <div>
             <p className="text-sm text-[var(--light-muted)]">Protos Web</p>
             <h1 className="text-xl font-bold text-[var(--light)]">Admin prijava</h1>

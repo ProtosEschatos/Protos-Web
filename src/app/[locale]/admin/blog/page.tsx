@@ -1,8 +1,8 @@
 import { setRequestLocale } from 'next-intl/server'
 import { Plus } from 'lucide-react'
-import { adminListBlogPosts } from '@/lib/admin/blog-queries'
-import AdminPageShell from '@/components/admin/AdminPageShell'
-import AdminLink from '@/components/admin/AdminLink'
+import { adminListBlogPosts } from '@/lib/queries/admin/blog'
+import AdminPageShell from '@/components/features/admin/AdminPageShell'
+import AdminLink from '@/components/features/admin/AdminLink'
 
 type Props = { params: { locale: string } }
 

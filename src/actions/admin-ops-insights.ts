@@ -2,7 +2,7 @@
 
 import { getAdminStatus } from '@/actions/admin-status'
 import type { AdminNotifications } from '@/actions/admin-notifications'
-import { requireAdmin } from '@/lib/require-admin'
+import { requireAdmin } from '@/lib/auth/require-admin'
 import type {
   AdminCommsChannel,
   AdminCommsSnapshot,
@@ -10,8 +10,8 @@ import type {
   AdminInsightsSnapshot,
   InsightStatus,
 } from '@/lib/admin-insight-types'
-import { ADMIN_COMMS_EMAIL, ADMIN_COMMS_SERVICES } from '@/lib/admin-services'
-import { SITE_DOMAIN, SITE_URL } from '@/lib/site'
+import { ADMIN_COMMS_EMAIL, ADMIN_COMMS_SERVICES } from '@/lib/config/admin-links'
+import { SITE_DOMAIN, SITE_URL } from '@/lib/config/site'
 
 const NOTIFICATION_PREVIEW = 3
 

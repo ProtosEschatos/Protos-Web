@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next'
-import { getAllBlogSlugs } from '@/actions/blog'
+import { getAllBlogSlugs } from '@/lib/queries/blog'
 import { locales } from '@/i18n'
-import { buildLocaleUrl } from '@/lib/seo'
+import { buildLocaleUrl } from '@/lib/config/seo'
 
 type PathConfig = {
   path: string

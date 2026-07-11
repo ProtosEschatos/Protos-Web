@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import { getPortfolioItems } from '@/actions/portfolio'
+import { getPortfolioItems } from '@/lib/queries/portfolio'
 import { ShowcaseBootLoader } from '@/components/three/showcase/ShowcaseBootLoader'
 import { setRequestLocale } from 'next-intl/server'
 

@@ -4,8 +4,8 @@ import { useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import AmbientBackgroundShell from '@/components/three/backgrounds/AmbientBackgroundShell'
-import type { PageBackgroundProps } from '@/lib/site-background-routes'
-import { BACKGROUND_FOG, BACKGROUND_GLOW } from '@/lib/site-background-routes'
+import type { PageBackgroundProps } from '@/lib/showcase/site-background-routes'
+import { BACKGROUND_FOG, BACKGROUND_GLOW } from '@/lib/showcase/site-background-routes'
 
 function DataStreams({ count, isMobile }: { count: number; isMobile: boolean }) {
   const pointsRef = useRef<THREE.Points>(null)

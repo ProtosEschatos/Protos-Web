@@ -5,8 +5,8 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import AmbientBackgroundShell from '@/components/three/backgrounds/AmbientBackgroundShell'
 import { lerpAlongPath, pulseOpacity, type Vec3 } from '@/components/three/backgrounds/live-utils'
-import type { PageBackgroundProps } from '@/lib/site-background-routes'
-import { BACKGROUND_FOG, BACKGROUND_GLOW } from '@/lib/site-background-routes'
+import type { PageBackgroundProps } from '@/lib/showcase/site-background-routes'
+import { BACKGROUND_FOG, BACKGROUND_GLOW } from '@/lib/showcase/site-background-routes'
 
 const NODES = [
   { x: -4, y: 1.2, z: -4, color: '#ff6600', speed: 0.35 },

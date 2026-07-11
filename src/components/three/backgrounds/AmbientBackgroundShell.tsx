@@ -4,7 +4,7 @@ import { useRef, type ReactNode } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { SafeCanvas } from '@/components/three/SafeCanvas'
-import type { PageBackgroundProps } from '@/lib/site-background-routes'
+import type { PageBackgroundProps } from '@/lib/showcase/site-background-routes'
 
 type AmbientBackgroundShellProps = PageBackgroundProps & {
   children: ReactNode

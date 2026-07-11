@@ -1,8 +1,8 @@
 import { setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
-import { adminGetBlogPost } from '@/lib/admin/blog-queries'
-import AdminPageShell from '@/components/admin/AdminPageShell'
-import BlogAdminForm from '@/components/admin/BlogAdminForm'
+import { adminGetBlogPost } from '@/lib/queries/admin/blog'
+import AdminPageShell from '@/components/features/admin/AdminPageShell'
+import BlogAdminForm from '@/components/features/admin/BlogAdminForm'
 
 type Props = { params: { locale: string; id: string } }
 

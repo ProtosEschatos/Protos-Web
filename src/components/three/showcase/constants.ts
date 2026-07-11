@@ -21,7 +21,7 @@ export type ProjectLink = {
 }
 
 // Empty until real projects are ready to publish. Add entries here (screenshots via
-// getShowcaseStorageUrl from '@/lib/showcase-storage') to populate the gallery; any
+// getShowcaseStorageUrl from '@/lib/showcase/showcase-storage') to populate the gallery; any
 // remaining FRAME_SLOTS render as empty placeholder frames.
 export const PROJECT_LINKS: ProjectLink[] = []
 

@@ -1,8 +1,8 @@
 import { setRequestLocale } from 'next-intl/server'
 import { Bell, Globe, Share2, Shield } from 'lucide-react'
-import AdminPageShell from '@/components/admin/AdminPageShell'
-import AdminHubCard from '@/components/admin/AdminHubCard'
-import AdminSection from '@/components/admin/AdminSection'
+import AdminPageShell from '@/components/features/admin/AdminPageShell'
+import AdminHubCard from '@/components/features/admin/AdminHubCard'
+import AdminSection from '@/components/features/admin/AdminSection'
 import { getAdminStatus } from '@/actions/admin-status'
 import {
   adminCommsLinks,
@@ -10,7 +10,7 @@ import {
   adminMarketingLinks,
   adminPlatformLinks,
   adminSocialLinks,
-} from '@/lib/admin-hub-links'
+} from '@/lib/config/admin-links'
 import { Inbox, Mail, Megaphone, Send } from 'lucide-react'
 
 type Props = { params: { locale: string } }

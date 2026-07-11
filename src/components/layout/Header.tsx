@@ -8,16 +8,8 @@ import { localeLabels, localeFlags, locales, type Locale } from '@/i18n'
 import MobileMenu from './MobileMenu'
 import { ChevronDown, Globe, MousePointer2 } from 'lucide-react'
 import ProtosLogo from '@/components/ui/ProtosLogo'
-import AdminNavLink from '@/components/admin/AdminNavLink'
-
-const navLinks = [
-  { href: '/', key: 'home' as const },
-  { href: '/o-meni', key: 'about' as const },
-  { href: '/proces', key: 'process' as const },
-  { href: '/portfolio', key: 'portfolio' as const },
-  { href: '/usluge', key: 'services' as const },
-  { href: '/blog', key: 'blog' as const },
-]
+import AdminNavLink from '@/components/features/admin/AdminNavLink'
+import { MAIN_NAV_ITEMS } from '@/lib/routes/main-nav'
 
 export default function Header() {
   const t = useTranslations('nav')
@@ -75,7 +67,7 @@ export default function Header() {
             </TransitionLink>
 
             <nav className="hidden lg:flex items-center gap-9">
-              {navLinks.map((link) => (
+              {MAIN_NAV_ITEMS.map((link) => (
                 <TransitionLink
                   key={link.href}
                   href={link.href}

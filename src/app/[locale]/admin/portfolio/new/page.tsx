@@ -1,6 +1,6 @@
 import { setRequestLocale } from 'next-intl/server'
-import AdminPageShell from '@/components/admin/AdminPageShell'
-import PortfolioAdminForm from '@/components/admin/PortfolioAdminForm'
+import AdminPageShell from '@/components/features/admin/AdminPageShell'
+import PortfolioAdminForm from '@/components/features/admin/PortfolioAdminForm'
 
 type Props = { params: { locale: string } }
 

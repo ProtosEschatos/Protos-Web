@@ -1,5 +1,5 @@
-import { buildCreatorSeoGraph, CREATOR_ME_LINKS, getCreatorKeywords } from '@/lib/creator-seo'
-import { LEGAL_COLLABORATOR, LEGAL_OWNER } from '@/lib/site'
+import { buildCreatorSeoGraph, CREATOR_ME_LINKS, getCreatorKeywords } from '@/lib/config/creator-seo'
+import { LEGAL_COLLABORATOR, LEGAL_OWNER } from '@/lib/config/site'
 
 type Props = { locale: string }
 

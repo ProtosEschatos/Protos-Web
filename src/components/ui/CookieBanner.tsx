@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations } from 'next-intl'
-import { saveCookiePreferences, hasCookieConsent, COOKIE_CONSENT_EVENT } from '@/lib/cookie-consent'
+import { saveCookiePreferences, hasCookieConsent, COOKIE_CONSENT_EVENT } from '@/lib/config/cookie-consent'
 import { BOOT_COMPLETE_EVENT } from '@/components/ui/PageLoader'
 
 export default function CookieBanner() {

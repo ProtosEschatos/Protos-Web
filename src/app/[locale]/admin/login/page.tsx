@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 import { setRequestLocale } from 'next-intl/server'
-import AdminLoginForm from '@/components/admin/AdminLoginForm'
+import AdminLoginForm from '@/components/features/admin/AdminLoginForm'
 
 type Props = { params: { locale: string } }
 

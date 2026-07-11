@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { buildPageMetadata } from '@/lib/seo'
+import { buildPageMetadata } from '@/lib/config/seo'
 import LegalDocument from '@/components/legal/LegalDocument'
 
 type Props = { params: { locale: string } }

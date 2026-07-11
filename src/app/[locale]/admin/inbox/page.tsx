@@ -1,9 +1,9 @@
 import { setRequestLocale } from 'next-intl/server'
 import { adminListContacts } from '@/actions/admin-notifications'
-import AdminPageShell from '@/components/admin/AdminPageShell'
-import AdminLink from '@/components/admin/AdminLink'
-import { ADMIN_COMMS_SERVICES } from '@/lib/admin-services'
-import { CONTACT_EMAIL } from '@/lib/site'
+import AdminPageShell from '@/components/features/admin/AdminPageShell'
+import AdminLink from '@/components/features/admin/AdminLink'
+import { ADMIN_COMMS_SERVICES } from '@/lib/config/admin-links'
+import { CONTACT_EMAIL } from '@/lib/config/site'
 
 type Props = { params: { locale: string } }
 

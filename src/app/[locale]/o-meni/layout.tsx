@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { buildPageMetadata } from '@/lib/seo'
-import { buildAboutPageJsonLd } from '@/lib/creator-seo'
+import { buildPageMetadata } from '@/lib/config/seo'
+import { buildAboutPageJsonLd } from '@/lib/config/creator-seo'
 
 type Props = {
   params: { locale: string }

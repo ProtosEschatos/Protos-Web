@@ -13,9 +13,9 @@ import {
   setBootPending,
   removeBootSsrVeil,
   isBootComplete,
-} from '@/lib/boot-gate'
+} from '@/lib/config/boot-gate'
 
-export { BOOT_SESSION_KEY, BOOT_COMPLETE_EVENT } from '@/lib/boot-gate'
+export { BOOT_SESSION_KEY, BOOT_COMPLETE_EVENT } from '@/lib/config/boot-gate'
 
 function BootVideoBackground({ active }: { active: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null)

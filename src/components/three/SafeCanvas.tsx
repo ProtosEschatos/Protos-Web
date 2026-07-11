@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Canvas, type CanvasProps } from '@react-three/fiber'
 import { useThree } from '@react-three/fiber'
 import { Perf } from 'r3f-perf'
-import { isWebGLAvailable } from '@/lib/webgl'
+import { isWebGLAvailable } from '@/lib/showcase/webgl'
 
 function WebGLContextGuard({
   onContextLost,

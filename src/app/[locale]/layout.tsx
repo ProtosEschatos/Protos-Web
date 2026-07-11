@@ -10,10 +10,10 @@ import LenisProvider from '@/components/providers/LenisProvider'
 import Analytics from '@/components/providers/Analytics'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { locales, type Locale } from '@/i18n'
-import { ogImage, siteUrl } from '@/lib/seo'
-import { LEGAL_OWNER, LEGAL_COLLABORATOR, SITE_URL, GOOGLE_SITE_VERIFICATION } from '@/lib/site'
+import { ogImage, siteUrl } from '@/lib/config/seo'
+import { LEGAL_OWNER, LEGAL_COLLABORATOR, SITE_URL, GOOGLE_SITE_VERIFICATION } from '@/lib/config/site'
 import LocaleCreatorSeo from '@/components/seo/LocaleCreatorSeo'
-import { BOOT_GATE_INIT_SCRIPT, BOOT_VIDEO } from '@/lib/boot-gate'
+import { BOOT_GATE_INIT_SCRIPT, BOOT_VIDEO } from '@/lib/config/boot-gate'
 
 const inter = Inter({
   subsets: ['latin', 'latin-ext'],

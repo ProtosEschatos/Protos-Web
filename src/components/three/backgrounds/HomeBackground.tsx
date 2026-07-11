@@ -6,7 +6,7 @@ import { Stars } from '@react-three/drei'
 import * as THREE from 'three'
 import AmbientBackgroundShell from '@/components/three/backgrounds/AmbientBackgroundShell'
 import { pulseOpacity } from '@/components/three/backgrounds/live-utils'
-import type { PageBackgroundProps } from '@/lib/site-background-routes'
+import type { PageBackgroundProps } from '@/lib/showcase/site-background-routes'
 
 function DistantParticleSphere({ isMobile }: { isMobile: boolean }) {
   const meshRef = useRef<THREE.Points>(null)

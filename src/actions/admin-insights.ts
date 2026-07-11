@@ -1,12 +1,12 @@
 'use server'
 
-import { requireAdmin } from '@/lib/require-admin'
+import { requireAdmin } from '@/lib/auth/require-admin'
 import type { AdminInsight, AdminInsightsSnapshot } from '@/lib/admin-insight-types'
 import {
   GOOGLE_SITE_VERIFICATION,
   SITE_DOMAIN,
   SITE_URL,
-} from '@/lib/site'
+} from '@/lib/config/site'
 
 export type { AdminInsight, AdminInsightsSnapshot, InsightStatus } from '@/lib/admin-insight-types'
 

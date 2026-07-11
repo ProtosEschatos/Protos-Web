@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { getBlogPostBySlug, getAllBlogSlugs } from '@/actions/blog'
-import BlogPostContent from '@/components/blog/BlogPostContent'
+import { getBlogPostBySlug, getAllBlogSlugs } from '@/lib/queries/blog'
+import BlogPostContent from '@/components/features/blog/BlogPostContent'
 import { Link } from '@/routing'
 import { ArrowLeft, Calendar } from 'lucide-react'
-import { buildBlogPostMetadata, blogPostingJsonLd, normalizeAuthorSlug } from '@/lib/seo'
+import { buildBlogPostMetadata, blogPostingJsonLd, normalizeAuthorSlug } from '@/lib/config/seo'
 
 type Props = { params: { locale: string; slug: string } }
 

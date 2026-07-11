@@ -1,6 +1,6 @@
 import { setRequestLocale } from 'next-intl/server'
-import AdminAiPanel from '@/components/admin/AdminAiPanel'
-import AdminPageShell from '@/components/admin/AdminPageShell'
+import AdminAiPanel from '@/components/features/admin/AdminAiPanel'
+import AdminPageShell from '@/components/features/admin/AdminPageShell'
 import { getAiProviderStatus } from '@/lib/ai/providers'
 import { CheckCircle2, XCircle } from 'lucide-react'
 

@@ -1,10 +1,10 @@
 import { setRequestLocale } from 'next-intl/server'
 import { BookOpen, ExternalLink } from 'lucide-react'
-import AdminMemoryList, { memoryDocHref } from '@/components/admin/AdminMemoryList'
-import AdminPageShell from '@/components/admin/AdminPageShell'
-import AdminSection from '@/components/admin/AdminSection'
-import AdminLink from '@/components/admin/AdminLink'
-import { adminGetMemorySnapshot } from '@/lib/admin/memory-queries'
+import AdminMemoryList, { memoryDocHref } from '@/components/features/admin/AdminMemoryList'
+import AdminPageShell from '@/components/features/admin/AdminPageShell'
+import AdminSection from '@/components/features/admin/AdminSection'
+import AdminLink from '@/components/features/admin/AdminLink'
+import { adminGetMemorySnapshot } from '@/lib/queries/admin/memory'
 
 type Props = { params: { locale: string } }
 

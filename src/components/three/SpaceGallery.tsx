@@ -11,14 +11,14 @@ import { ShowcaseFallback } from './showcase/ShowcaseFallback'
 import { ShowcaseBootLoader } from './showcase/ShowcaseBootLoader'
 import { ShowcaseJoystick } from './showcase/ShowcaseJoystick'
 import { SafeCanvas } from '@/components/three/SafeCanvas'
-import { isWebGLAvailable } from '@/lib/webgl'
+import { isWebGLAvailable } from '@/lib/showcase/webgl'
 import {
   INITIAL_TOUCH_INPUT,
   useShowcaseViewport,
   useTouchControlsEnabled,
   type TouchInput,
-} from '@/lib/showcase-viewport'
-import type { PortfolioItem } from '@/actions/portfolio'
+} from '@/hooks/use-showcase-viewport'
+import type { PortfolioItem } from '@/types/portfolio'
 
 type Phase = 'loading' | 'intro' | 'playing'
 
@@ -29,7 +29,7 @@ type SpaceGalleryProps = {
 type ShowcaseCanvasLayerProps = {
   projects: ShowcaseProject[]
   isPlaying: boolean
-  viewport: import('@/lib/showcase-viewport').ShowcaseViewport
+  viewport: import('@/hooks/use-showcase-viewport').ShowcaseViewport
   keys: React.MutableRefObject<Record<string, boolean>>
   touchInput: React.MutableRefObject<TouchInput>
   characterRef: React.RefObject<THREE.Group | null>

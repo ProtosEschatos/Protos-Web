@@ -5,7 +5,7 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import AmbientBackgroundShell from '@/components/three/backgrounds/AmbientBackgroundShell'
 import { pulseOpacity, smoothStep } from '@/components/three/backgrounds/live-utils'
-import type { PageBackgroundProps } from '@/lib/site-background-routes'
+import type { PageBackgroundProps } from '@/lib/showcase/site-background-routes'
 
 function SignalPulse({ delay, color, z }: { delay: number; color: string; z: number }) {
   const ref = useRef<THREE.Mesh>(null)

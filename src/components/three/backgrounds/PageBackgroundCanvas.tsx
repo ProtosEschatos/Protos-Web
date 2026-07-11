@@ -3,13 +3,13 @@
 import type { ComponentType } from 'react'
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
-import { isWebGLAvailable } from '@/lib/webgl'
+import { isWebGLAvailable } from '@/lib/showcase/webgl'
 import { BackgroundErrorBoundary } from '@/components/three/backgrounds/BackgroundErrorBoundary'
 import {
   BACKGROUND_FALLBACKS,
   type BackgroundRouteKey,
   type PageBackgroundProps,
-} from '@/lib/site-background-routes'
+} from '@/lib/showcase/site-background-routes'
 
 const Backgrounds: Record<BackgroundRouteKey, ComponentType<PageBackgroundProps>> = {
   home: dynamic(() => import('@/components/three/backgrounds/HomeBackground'), { ssr: false, loading: () => null }),

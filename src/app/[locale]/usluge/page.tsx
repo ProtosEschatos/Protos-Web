@@ -4,8 +4,8 @@ import { motion } from 'framer-motion'
 import { useTranslations, useLocale } from 'next-intl'
 import { Link } from '@/routing'
 import { ArrowRight } from 'lucide-react'
-import { SERVICE_ICONS } from '@/lib/section-icons'
-import FaqSection from '@/components/sections/FaqSection'
+import { SERVICE_ICONS } from '@/components/ui/section-icons'
+import FaqSection from '@/components/features/home/sections/FaqSection'
 
 const colors = [
   'bg-[var(--primary)]/15 text-[var(--primary)]',

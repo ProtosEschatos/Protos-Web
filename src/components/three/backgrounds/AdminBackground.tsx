@@ -5,7 +5,7 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import AmbientBackgroundShell from '@/components/three/backgrounds/AmbientBackgroundShell'
 import { pulseOpacity } from '@/components/three/backgrounds/live-utils'
-import type { PageBackgroundProps } from '@/lib/site-background-routes'
+import type { PageBackgroundProps } from '@/lib/showcase/site-background-routes'
 
 const ADMIN_FOG = '#100818'
 const ADMIN_GLOW = '#8b5cf6'

@@ -4,8 +4,8 @@ import {
   adminCookieOptions,
   getAdminSessionToken,
   verifyAdminPassword,
-} from '@/lib/admin-auth'
-import { checkRateLimit, getClientIp, recordFailedAttempt } from '@/lib/admin-rate-limit'
+} from '@/lib/auth/admin-auth'
+import { checkRateLimit, getClientIp, recordFailedAttempt } from '@/lib/auth/admin-rate-limit'
 
 const GENERIC_ERROR = 'Neispravna lozinka ili pristup trenutno nije dostupan.'
 

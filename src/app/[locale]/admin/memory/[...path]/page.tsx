@@ -1,8 +1,8 @@
 import { setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
-import AdminMemoryViewer from '@/components/admin/AdminMemoryViewer'
-import AdminPageShell from '@/components/admin/AdminPageShell'
-import { adminGetMemoryDoc } from '@/lib/admin/memory-queries'
+import AdminMemoryViewer from '@/components/features/admin/AdminMemoryViewer'
+import AdminPageShell from '@/components/features/admin/AdminPageShell'
+import { adminGetMemoryDoc } from '@/lib/queries/admin/memory'
 import { memoryPath } from '@/lib/agent-memory'
 
 type Props = {

@@ -11,10 +11,10 @@ import SiteShell from '@/components/ui/SiteShell'
 import SiteBackground from '@/components/ui/SiteBackground'
 import { PageTransitionProvider } from '@/components/navigation/PageTransitionProvider'
 import PageTransitionOverlay from '@/components/navigation/PageTransitionOverlay'
-import AdminShell from '@/components/admin/AdminShell'
+import AdminShell from '@/components/features/admin/AdminShell'
 import SiteConsentModal from '@/components/legal/SiteConsentModal'
-import { clearBootPending, isBootComplete, removeBootSsrVeil, BOOT_SESSION_KEY, BOOT_COMPLETE_EVENT } from '@/lib/boot-gate'
-import { hasSiteConsent } from '@/lib/site-consent'
+import { clearBootPending, isBootComplete, removeBootSsrVeil, BOOT_SESSION_KEY, BOOT_COMPLETE_EVENT } from '@/lib/config/boot-gate'
+import { hasSiteConsent } from '@/lib/config/site-consent'
 
 const LEGAL_PATH = /\/(terms|privacy|cookies)$/
 

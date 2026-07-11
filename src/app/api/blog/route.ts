@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { getBlogPosts } from '@/actions/blog'
+import { getBlogPosts } from '@/lib/queries/blog'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)

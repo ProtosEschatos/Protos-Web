@@ -1,9 +1,9 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { getPortfolioItems } from '@/actions/portfolio'
-import PortfolioGrid from '@/components/portfolio/PortfolioGrid'
+import { getPortfolioItems } from '@/lib/queries/portfolio'
+import PortfolioGrid from '@/components/features/portfolio/PortfolioGrid'
 import JsonLd from '@/components/seo/JsonLd'
-import { portfolioItemListJsonLd } from '@/lib/seo'
-import { PROTOS_WEB_MARQUEE } from '@/lib/tech-stacks'
+import { portfolioItemListJsonLd } from '@/lib/config/seo'
+import { PROTOS_WEB_MARQUEE } from '@/lib/config/tech-stacks'
 import { Link } from '@/routing'
 import { ArrowRight, Layers } from 'lucide-react'
 

@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
-import { useShowcaseViewport } from '@/lib/showcase-viewport'
+import { useShowcaseViewport } from '@/hooks/use-showcase-viewport'
 import type { ShowcaseProject } from './constants'
 
 const edgeColors = ['#ff0099', '#00eaff', '#ff8800', '#ff66cc']

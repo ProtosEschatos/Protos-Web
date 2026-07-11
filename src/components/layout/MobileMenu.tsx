@@ -3,18 +3,10 @@
 import { useTranslations } from 'next-intl'
 import TransitionLink from '@/components/navigation/TransitionLink'
 import { SocialLinksInline } from '@/components/ui/SocialLinks'
-import { CONTACT_EMAIL } from '@/lib/site'
+import { CONTACT_EMAIL } from '@/lib/config/site'
 import { motion, AnimatePresence } from 'framer-motion'
-import AdminNavLink from '@/components/admin/AdminNavLink'
-
-const navLinks = [
-  { href: '/', key: 'home' as const },
-  { href: '/o-meni', key: 'about' as const },
-  { href: '/proces', key: 'process' as const },
-  { href: '/portfolio', key: 'portfolio' as const },
-  { href: '/usluge', key: 'services' as const },
-  { href: '/blog', key: 'blog' as const },
-]
+import AdminNavLink from '@/components/features/admin/AdminNavLink'
+import { MAIN_NAV_ITEMS } from '@/lib/routes/main-nav'
 
 const linkVariant = {
   hidden: { opacity: 0, x: 50 },
@@ -46,7 +38,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
         >
           <div className="max-w-lg mx-auto px-6 h-full flex flex-col justify-center">
             <nav className="space-y-4">
-              {navLinks.map((link, i) => (
+              {MAIN_NAV_ITEMS.map((link, i) => (
                 <motion.div
                   key={link.href}
                   custom={i}
@@ -65,7 +57,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 </motion.div>
               ))}
               <motion.div
-                custom={navLinks.length}
+                custom={MAIN_NAV_ITEMS.length}
                 initial="hidden"
                 animate="visible"
                 exit="exit"
@@ -74,7 +66,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 <AdminNavLink variant="mobile" onClick={onClose} />
               </motion.div>
               <motion.div
-                custom={navLinks.length + 1}
+                custom={MAIN_NAV_ITEMS.length + 1}
                 initial="hidden"
                 animate="visible"
                 exit="exit"

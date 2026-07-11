@@ -1,4 +1,4 @@
-import type { TransitionDestinationKey } from '@/lib/main-nav-routes'
+import type { TransitionDestinationKey } from '@/lib/routes/main-nav'
 
 export type TransitionVariant = {
   primary: string

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
-import { verifyAdminSession, ADMIN_COOKIE } from '@/lib/admin-auth'
-import { adminGetMemoryDoc } from '@/lib/admin/memory-queries'
+import { verifyAdminSession, ADMIN_COOKIE } from '@/lib/auth/admin-auth'
+import { adminGetMemoryDoc } from '@/lib/queries/admin/memory'
 import { memoryPath } from '@/lib/agent-memory'
 import {
   buildContentPrompt,

@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import type { TransitionPhase } from '@/components/navigation/PageTransitionProvider'
-import type { TransitionDestinationKey } from '@/lib/main-nav-routes'
+import type { TransitionDestinationKey } from '@/lib/routes/main-nav'
 import { getTransitionVariant } from '@/lib/transition-variants'
 
 type TransitionVisualProps = {

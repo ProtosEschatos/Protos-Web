@@ -1,14 +1,14 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { getBlogPosts } from '@/actions/blog'
-import { getPortfolioItems } from '@/actions/portfolio'
-import { buildPageMetadata } from '@/lib/seo'
-import Hero from '@/components/sections/Hero'
-import Services from '@/components/sections/Services'
-import Process from '@/components/sections/Process'
-import Portfolio from '@/components/sections/Portfolio'
-import Blog from '@/components/sections/Blog'
-import Contact from '@/components/sections/Contact'
+import { getBlogPosts } from '@/lib/queries/blog'
+import { getPortfolioItems } from '@/lib/queries/portfolio'
+import { buildPageMetadata } from '@/lib/config/seo'
+import Hero from '@/components/features/home/sections/Hero'
+import Services from '@/components/features/home/sections/Services'
+import Process from '@/components/features/home/sections/Process'
+import Portfolio from '@/components/features/home/sections/Portfolio'
+import Blog from '@/components/features/home/sections/Blog'
+import Contact from '@/components/features/home/sections/Contact'
 
 type Props = { params: { locale: string } }
 

@@ -6,7 +6,7 @@ import {
   isAdminLoginPath,
   isAdminPath,
   verifyAdminSessionEdge,
-} from './lib/admin-auth-shared'
+} from './lib/auth/admin-auth-shared'
 
 const intlMiddleware = createMiddleware(routing)
 

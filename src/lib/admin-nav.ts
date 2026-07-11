@@ -35,14 +35,14 @@ export const ADMIN_NAV_SECTIONS: AdminNavSection[] = [
     items: [
       {
         id: 'about',
-        href: '/admin/pages/o-meni',
+        href: '/admin/stranice/o-meni',
         label: 'O nama',
         publicHref: '/o-meni',
         description: 'Tim, misija i hero sekcija',
       },
       {
         id: 'process',
-        href: '/admin/pages/proces',
+        href: '/admin/stranice/proces',
         label: 'Proces',
         publicHref: '/proces',
         description: 'Koraci suradnje i timeline',
@@ -56,7 +56,7 @@ export const ADMIN_NAV_SECTIONS: AdminNavSection[] = [
       },
       {
         id: 'services',
-        href: '/admin/pages/usluge',
+        href: '/admin/stranice/usluge',
         label: 'Usluge',
         publicHref: '/usluge',
         description: 'Ponuda i paketi usluga',

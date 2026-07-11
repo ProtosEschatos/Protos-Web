@@ -3,7 +3,7 @@
 import type { ComponentProps, MouseEvent } from 'react'
 import { Link, usePathname } from '@/routing'
 import { usePageTransition } from '@/components/navigation/PageTransitionProvider'
-import { isMainNavHref, normalizeHref } from '@/lib/main-nav-routes'
+import { isMainNavHref, normalizeHref } from '@/lib/routes/main-nav'
 
 type TransitionLinkProps = ComponentProps<typeof Link>
 

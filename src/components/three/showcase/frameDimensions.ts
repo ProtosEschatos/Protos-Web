@@ -1,4 +1,4 @@
-import type { ShowcaseViewport } from '@/lib/showcase-viewport'
+import type { ShowcaseViewport } from '@/hooks/use-showcase-viewport'
 
 export type FrameDimensions = {
   viewW: number

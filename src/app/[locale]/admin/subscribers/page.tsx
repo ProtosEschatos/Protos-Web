@@ -1,8 +1,8 @@
 import { setRequestLocale } from 'next-intl/server'
 import { adminListSubscribers } from '@/actions/admin-notifications'
-import AdminPageShell from '@/components/admin/AdminPageShell'
-import AdminLink from '@/components/admin/AdminLink'
-import { ADMIN_COMMS_SERVICES } from '@/lib/admin-services'
+import AdminPageShell from '@/components/features/admin/AdminPageShell'
+import AdminLink from '@/components/features/admin/AdminLink'
+import { ADMIN_COMMS_SERVICES } from '@/lib/config/admin-links'
 import { Mail } from 'lucide-react'
 
 type Props = { params: { locale: string } }

@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useRef } from 'react'
-import type { TouchInput } from '@/lib/showcase-viewport'
+import type { TouchInput } from '@/hooks/use-showcase-viewport'
 
 type ShowcaseJoystickProps = {
   touchInput: React.MutableRefObject<TouchInput>

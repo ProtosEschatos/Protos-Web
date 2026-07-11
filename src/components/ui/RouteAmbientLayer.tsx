@@ -1,6 +1,6 @@
 'use client'
 
-import { BACKGROUND_AMBIENT, type BackgroundRouteKey } from '@/lib/site-background-routes'
+import { BACKGROUND_AMBIENT, type BackgroundRouteKey } from '@/lib/showcase/site-background-routes'
 
 type RouteAmbientLayerProps = {
   routeKey: BackgroundRouteKey

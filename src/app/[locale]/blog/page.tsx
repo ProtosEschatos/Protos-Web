@@ -1,7 +1,7 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { getBlogPosts } from '@/actions/blog'
-import BlogGrid from '@/components/blog/BlogGrid'
-import { blogIndexJsonLd } from '@/lib/seo'
+import { getBlogPosts } from '@/lib/queries/blog'
+import BlogGrid from '@/components/features/blog/BlogGrid'
+import { blogIndexJsonLd } from '@/lib/config/seo'
 
 type Props = { params: { locale: string } }
 

@@ -1,7 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { requireAdmin } from '@/lib/require-admin'
+import { requireAdmin } from '@/lib/auth/require-admin'
 import { slugify } from '@/lib/slug'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import type { Database } from '@/lib/database.types'

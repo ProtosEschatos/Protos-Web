@@ -1,5 +1,5 @@
 import JsonLd from '@/components/seo/JsonLd'
-import { breadcrumbListJsonLd } from '@/lib/seo'
+import { breadcrumbListJsonLd } from '@/lib/config/seo'
 
 type Props = {
   locale: string

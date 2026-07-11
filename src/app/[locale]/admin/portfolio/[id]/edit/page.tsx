@@ -1,8 +1,8 @@
 import { setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
-import { adminGetPortfolioItem } from '@/lib/admin/portfolio-queries'
-import AdminPageShell from '@/components/admin/AdminPageShell'
-import PortfolioAdminForm from '@/components/admin/PortfolioAdminForm'
+import { adminGetPortfolioItem } from '@/lib/queries/admin/portfolio'
+import AdminPageShell from '@/components/features/admin/AdminPageShell'
+import PortfolioAdminForm from '@/components/features/admin/PortfolioAdminForm'
 
 type Props = { params: { locale: string; id: string } }
 

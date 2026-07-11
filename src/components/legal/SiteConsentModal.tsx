@@ -3,8 +3,8 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations, useLocale } from 'next-intl'
 import { useState } from 'react'
-import { buildLocalePath } from '@/lib/seo'
-import { saveSiteConsent } from '@/lib/site-consent'
+import { buildLocalePath } from '@/lib/config/seo'
+import { saveSiteConsent } from '@/lib/config/site-consent'
 
 type SiteConsentModalProps = {
   open: boolean

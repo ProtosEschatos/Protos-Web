@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import PageBreadcrumbSeo from '@/components/seo/PageBreadcrumbSeo'
-import { buildPageMetadata } from '@/lib/seo'
+import { buildPageMetadata } from '@/lib/config/seo'
 
 type Props = { params: { locale: string }; children: React.ReactNode }
 

@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react'
 import { usePathname } from '@/routing'
-import { BACKGROUND_FALLBACKS, getBackgroundKey } from '@/lib/site-background-routes'
+import { BACKGROUND_FALLBACKS, getBackgroundKey } from '@/lib/showcase/site-background-routes'
 import PageBackgroundCanvas from '@/components/three/backgrounds/PageBackgroundCanvas'
-import { BOOT_COMPLETE_EVENT, isBootComplete } from '@/lib/boot-gate'
+import { BOOT_COMPLETE_EVENT, isBootComplete } from '@/lib/config/boot-gate'
 
 const TWINKLE_BG = `
   radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.4), transparent),

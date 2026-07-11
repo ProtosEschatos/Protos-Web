@@ -1,6 +1,6 @@
 'use server'
 
-import { requireAdmin } from '@/lib/require-admin'
+import { requireAdmin } from '@/lib/auth/require-admin'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { getAdminStatus } from '@/actions/admin-status'
 import { mergeActivity, type AdminActivityItem } from '@/lib/admin-activity'

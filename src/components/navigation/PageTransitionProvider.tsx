@@ -14,7 +14,7 @@ import {
   getTransitionDestinationKey,
   normalizeHref,
   type TransitionDestinationKey,
-} from '@/lib/main-nav-routes'
+} from '@/lib/routes/main-nav'
 
 type TransitionPhase = 'idle' | 'exit' | 'loading' | 'enter'
 

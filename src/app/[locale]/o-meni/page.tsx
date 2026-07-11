@@ -5,9 +5,9 @@ import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
 import { ArrowRight, BookOpen, Instagram } from 'lucide-react'
-import OnlinePresence from '@/components/sections/OnlinePresence'
-import DualStacksSection from '@/components/sections/DualStacksSection'
-import { DARIO_INSTAGRAM_URL, MARTINA_INSTAGRAM_URL } from '@/lib/site'
+import OnlinePresence from '@/components/features/home/sections/OnlinePresence'
+import DualStacksSection from '@/components/features/home/sections/DualStacksSection'
+import { DARIO_INSTAGRAM_URL, MARTINA_INSTAGRAM_URL } from '@/lib/config/site'
 
 const TEAM_MEMBERS = ['dario', 'martina'] as const
 type TeamMemberId = (typeof TEAM_MEMBERS)[number]

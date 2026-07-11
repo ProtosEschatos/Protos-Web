@@ -1,8 +1,13 @@
 import { NextResponse } from 'next/server'
+import { aboutPublicPathForLocale } from '@/lib/routes/localized-paths'
 import { DONATION_MAX_EUR, DONATION_MIN_EUR, isDonationCause } from '@/lib/donations'
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+function siteBaseUrl(): string {
+  return (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.protosweb.eu').replace(/\/$/, '')
+}
 
 export async function POST(request: Request) {
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
@@ -32,13 +37,18 @@ export async function POST(request: Request) {
       )
     }
 
+    const base = siteBaseUrl()
+    const aboutPath = aboutPublicPathForLocale(locale)
+    const successUrl = `${base}${aboutPath}?donation=success&session_id={CHECKOUT_SESSION_ID}`
+    const cancelUrl = `${base}${aboutPath}?donation=cancelled`
+
     const edgeRes = await fetch(`${SUPABASE_URL}/functions/v1/donation-checkout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
       },
-      body: JSON.stringify({ amount, email, name, cause, locale }),
+      body: JSON.stringify({ amount, email, name, cause, locale, successUrl, cancelUrl }),
     })
 
     const data = await edgeRes.json()

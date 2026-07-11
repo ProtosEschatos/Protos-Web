@@ -89,10 +89,20 @@ export default function AboutPage() {
   useEffect(() => {
     if (typeof window === 'undefined') return
     const params = new URLSearchParams(window.location.search)
-    if (params.get('donation') === 'success') {
+    const donation = params.get('donation')
+    const sessionId = params.get('session_id')
+
+    if (donation === 'success') {
+      if (sessionId?.startsWith('cs_')) {
+        void fetch('/api/donate/confirm', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sessionId }),
+        }).catch(() => {})
+      }
       setDonationNotice(donationLabels.successToast)
       window.history.replaceState({}, '', window.location.pathname + window.location.hash)
-    } else if (params.get('donation') === 'cancelled') {
+    } else if (donation === 'cancelled') {
       setDonationNotice(donationLabels.cancelledToast)
       window.history.replaceState({}, '', window.location.pathname + window.location.hash)
     }

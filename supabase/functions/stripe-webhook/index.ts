@@ -1,33 +1,7 @@
 import { createClient } from 'jsr:@supabase/supabase-js@2'
+import Stripe from 'npm:stripe@17.7.0'
 
-type StripeEvent = {
-  type: string
-  data: { object: Record<string, unknown> }
-}
-
-async function verifyStripeSignature(
-  payload: string,
-  header: string,
-  secret: string,
-): Promise<boolean> {
-  const parts = header.split(',').map((p) => p.split('=') as [string, string])
-  const timestamp = parts.find(([k]) => k === 't')?.[1]
-  const signatures = parts.filter(([k]) => k === 'v1').map(([, v]) => v)
-  if (!timestamp || signatures.length === 0) return false
-
-  const key = await crypto.subtle.importKey(
-    'raw',
-    new TextEncoder().encode(secret),
-    { name: 'HMAC', hash: 'SHA-256' },
-    false,
-    ['sign'],
-  )
-  const signed = `${timestamp}.${payload}`
-  const mac = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(signed))
-  const expected = [...new Uint8Array(mac)].map((b) => b.toString(16).padStart(2, '0')).join('')
-
-  return signatures.some((sig) => sig === expected)
-}
+type StripeEvent = Stripe.Event
 
 Deno.serve(async (req) => {
   if (req.method !== 'POST') {
@@ -35,8 +9,9 @@ Deno.serve(async (req) => {
   }
 
   const webhookSecret = Deno.env.get('STRIPE_WEBHOOK_SECRET')?.trim()
-  if (!webhookSecret) {
-    console.error('[stripe-webhook] STRIPE_WEBHOOK_SECRET missing')
+  const stripeSecret = Deno.env.get('STRIPE_SECRET_KEY')?.trim()
+  if (!webhookSecret || !stripeSecret) {
+    console.error('[stripe-webhook] missing STRIPE_WEBHOOK_SECRET or STRIPE_SECRET_KEY')
     return new Response('Webhook not configured', { status: 500 })
   }
 
@@ -46,17 +21,24 @@ Deno.serve(async (req) => {
   }
 
   const body = await req.text()
-  const valid = await verifyStripeSignature(body, signature, webhookSecret)
-  if (!valid) {
-    console.error('[stripe-webhook] invalid signature')
-    return new Response('Invalid signature', { status: 400 })
-  }
+
+  const stripe = new Stripe(stripeSecret, {
+    apiVersion: '2024-11-20.acacia',
+    httpClient: Stripe.createFetchHttpClient(),
+  })
 
   let event: StripeEvent
   try {
-    event = JSON.parse(body) as StripeEvent
-  } catch {
-    return new Response('Invalid JSON', { status: 400 })
+    event = await stripe.webhooks.constructEventAsync(
+      body,
+      signature,
+      webhookSecret,
+      undefined,
+      Stripe.createSubtleCryptoProvider(),
+    )
+  } catch (err) {
+    console.error('[stripe-webhook] signature verification failed:', err)
+    return new Response('Invalid signature', { status: 400 })
   }
 
   const supabaseUrl = Deno.env.get('SUPABASE_URL')!
@@ -64,65 +46,25 @@ Deno.serve(async (req) => {
   const supabase = createClient(supabaseUrl, serviceKey)
 
   try {
-    const obj = event.data.object
-
     switch (event.type) {
       case 'checkout.session.completed': {
-        const donationId = Number(
-          (obj.metadata as Record<string, string> | undefined)?.donation_id ??
-            obj.client_reference_id ??
-            0,
-        )
-        const amountTotal =
-          typeof obj.amount_total === 'number' ? obj.amount_total / 100 : null
-        const sessionId = String(obj.id ?? '')
-        const paymentIntent = obj.payment_intent
-        const paymentIntentId =
-          typeof paymentIntent === 'string'
-            ? paymentIntent
-            : paymentIntent && typeof paymentIntent === 'object'
-              ? String((paymentIntent as { id?: string }).id ?? '')
-              : null
-
-        if (!donationId) {
-          console.error('[stripe-webhook] missing donation_id', sessionId)
-          break
-        }
-
-        const customerDetails = obj.customer_details as { email?: string } | undefined
-        const customerEmail =
-          customerDetails?.email ??
-          (typeof obj.customer_email === 'string' ? obj.customer_email : undefined)
-
-        await supabase
-          .from('donations')
-          .update({
-            status: 'completed',
-            stripe_session_id: sessionId,
-            stripe_payment_intent_id: paymentIntentId,
-            ...(amountTotal != null ? { amount: Math.round(amountTotal) } : {}),
-            ...(customerEmail ? { email: customerEmail } : {}),
-          })
-          .eq('id', donationId)
-
-        console.log('[stripe-webhook] completed donation', donationId, sessionId)
+        const session = event.data.object as Stripe.Checkout.Session
+        await markDonationCompleted(supabase, session)
         break
       }
 
       case 'checkout.session.expired': {
-        const donationId = Number(
-          (obj.metadata as Record<string, string> | undefined)?.donation_id ??
-            obj.client_reference_id ??
-            0,
-        )
+        const session = event.data.object as Stripe.Checkout.Session
+        const donationId = donationIdFromSession(session)
         if (donationId) {
-          await supabase
+          const { error } = await supabase
             .from('donations')
             .update({
               status: 'expired',
-              stripe_session_id: String(obj.id ?? ''),
+              stripe_session_id: session.id,
             })
             .eq('id', donationId)
+          if (error) console.error('[stripe-webhook] expire update error:', error)
         }
         break
       }
@@ -140,3 +82,53 @@ Deno.serve(async (req) => {
     headers: { 'Content-Type': 'application/json' },
   })
 })
+
+function donationIdFromSession(session: Stripe.Checkout.Session): number {
+  const fromMeta = session.metadata?.donation_id
+  const raw = fromMeta ?? session.client_reference_id ?? '0'
+  return Number(raw)
+}
+
+async function markDonationCompleted(
+  supabase: ReturnType<typeof createClient>,
+  session: Stripe.Checkout.Session,
+) {
+  const donationId = donationIdFromSession(session)
+  const sessionId = session.id
+
+  if (!donationId) {
+    console.error('[stripe-webhook] missing donation_id', sessionId)
+    return
+  }
+
+  if (session.payment_status !== 'paid') {
+    console.log('[stripe-webhook] session not paid yet', sessionId, session.payment_status)
+    return
+  }
+
+  const amountTotal =
+    typeof session.amount_total === 'number' ? session.amount_total / 100 : null
+  const paymentIntentId =
+    typeof session.payment_intent === 'string'
+      ? session.payment_intent
+      : session.payment_intent?.id ?? null
+  const customerEmail = session.customer_details?.email ?? session.customer_email ?? undefined
+
+  const { error } = await supabase
+    .from('donations')
+    .update({
+      status: 'completed',
+      stripe_session_id: sessionId,
+      stripe_payment_intent_id: paymentIntentId,
+      ...(amountTotal != null ? { amount: Math.round(amountTotal) } : {}),
+      ...(customerEmail ? { email: customerEmail } : {}),
+    })
+    .eq('id', donationId)
+
+  if (error) {
+    console.error('[stripe-webhook] completed update error:', error, donationId)
+    throw error
+  }
+
+  console.log('[stripe-webhook] completed donation', donationId, sessionId)
+}

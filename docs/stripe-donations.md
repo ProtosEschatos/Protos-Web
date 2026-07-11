@@ -27,12 +27,14 @@ Varijabilni iznosi **1–1000 EUR** s `/o-meni` → Stripe Checkout → webhook 
 | Funkcija | Trigger | JWT |
 |----------|---------|-----|
 | `donation-checkout` | `POST /api/donate` | `--no-verify-jwt` |
+| `donation-confirm` | `POST /api/donate/confirm` (backup nakon Stripe redirecta) | `--no-verify-jwt` |
 | `stripe-webhook` | Stripe webhook | `--no-verify-jwt` |
 
 Deploy: push `supabase/functions/**` na `main` ili ručno:
 
 ```bash
 supabase functions deploy donation-checkout --no-verify-jwt --project-ref laqnnzavwbojntfiqmxj
+supabase functions deploy donation-confirm --no-verify-jwt --project-ref laqnnzavwbojntfiqmxj
 supabase functions deploy stripe-webhook --no-verify-jwt --project-ref laqnnzavwbojntfiqmxj
 ```
 

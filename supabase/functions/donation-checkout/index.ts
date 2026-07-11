@@ -9,6 +9,19 @@ const ALLOWED_CAUSES = new Set(['resources', 'cyber', 'education', 'platforms'])
 const MIN_EUR = 1
 const MAX_EUR = 1000
 
+const ABOUT_PATHS: Record<string, string> = {
+  hr: '/o-meni',
+  en: '/about',
+  de: '/ueber-uns',
+  it: '/chi-siamo',
+  es: '/sobre-nosotros',
+}
+
+function aboutPublicPath(locale: string): string {
+  const about = ABOUT_PATHS[locale] ?? ABOUT_PATHS.hr
+  return locale === 'hr' ? about : `/${locale}${about}`
+}
+
 type CheckoutBody = {
   amount?: number
   email?: string
@@ -154,11 +167,12 @@ Deno.serve(async (req) => {
     }
 
     const base = siteBaseUrl()
-    const localePath = locale === 'hr' ? '' : `/${locale}`
+    const aboutPath = aboutPublicPath(locale)
     const successUrl =
-      payload.successUrl?.trim() || `${base}${localePath}/o-meni?donation=success`
+      payload.successUrl?.trim() ||
+      `${base}${aboutPath}?donation=success&session_id={CHECKOUT_SESSION_ID}`
     const cancelUrl =
-      payload.cancelUrl?.trim() || `${base}${localePath}/o-meni?donation=cancelled`
+      payload.cancelUrl?.trim() || `${base}${aboutPath}?donation=cancelled`
 
     const session = await createStripeCheckoutSession({
       amountEur: Math.round(amountEur),

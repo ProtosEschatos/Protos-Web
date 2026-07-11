@@ -9,7 +9,6 @@ export const PROTOS_WEB_STACK: TechStack = {
   id: 'protos-web',
   items: [
     'TypeScript',
-    'JavaScript',
     'HTML',
     'CSS',
     'Next.js',

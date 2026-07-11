@@ -71,7 +71,8 @@ src/
 │   │   ├── backgrounds/     # Per-route R3F backgrounds
 │   │   └── showcase/        # SpaceGallery 3D room
 │   └── ui/
-│       ├── PageLoader.tsx   # Boot video + 4.5s gate + cookie modal
+│       ├── PageLoader.tsx   # Boot gate wrapper + consent modal
+│       ├── BootScreen.tsx   # Cinematic 5s orbit → nebula animation
 │       ├── SiteBackground.tsx
 │       ├── CustomCursor.tsx
 │       └── CookieBanner.tsx
@@ -79,7 +80,7 @@ src/
 │   ├── tech-stacks.ts       # Single source of truth for public stack badges
 │   ├── site.ts              # SITE_URL, social URL constants
 │   ├── team-profiles.ts     # Team + online presence tiles
-│   ├── boot-gate.ts         # BOOT_MIN_MS = 4500
+│   ├── boot-gate.ts         # BOOT_MIN_MS = 5000
 │   ├── admin/               # Admin queries, auth helpers
 │   ├── section-icons.tsx
 │   ├── social-links.ts
@@ -127,7 +128,7 @@ scripts/
 - [x] Header with desktop nav, language selector (5 langs), theme cycler, CTA, hamburger
 - [x] MobileMenu with Framer Motion slide-in animation
 - [x] Footer with brand, links, legal, social, Balkans causes
-- [x] PageLoader with boot video (`/loader/boot-bg.mp4`), 4.5s progress gate, and boot cookie modal
+- [x] PageLoader with cinematic 5s boot animation (orbit → impact → nebula) and consent modal
 - [x] CustomCursor with dot + follower
 - [x] Lucide React icons
 - [x] CookieBanner with localStorage persistence

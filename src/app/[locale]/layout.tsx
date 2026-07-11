@@ -107,7 +107,6 @@ export default async function LocaleLayout({
     <html lang={locale} className={inter.className}>
       <head>
         <LocaleCreatorSeo locale={locale} />
-        <link rel="preload" href="/loader/boot-bg.mp4" as="video" type="video/mp4" />
       </head>
       <body className="site-body">
         <Script id="boot-gate-init" strategy="beforeInteractive">

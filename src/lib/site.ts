@@ -2,6 +2,10 @@
 
 export const SITE_DOMAIN = 'protosweb.eu'
 export const SITE_URL = 'https://protosweb.eu'
+/** Studio / Dario — Protos Web brand */
+export const INSTAGRAM_URL = 'https://www.instagram.com/protos_eschatos/'
+export const DARIO_INSTAGRAM_URL = INSTAGRAM_URL
+export const MARTINA_INSTAGRAM_URL = 'https://www.instagram.com/everybodycries/'
 
 /** Public contact + Resend/Zoho mailbox on protosweb.eu */
 export const CONTACT_EMAIL = 'dario.admin@protosweb.eu'

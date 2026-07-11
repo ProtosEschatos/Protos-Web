@@ -6,12 +6,18 @@ import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
 import { ArrowRight, BookOpen, Instagram } from 'lucide-react'
 import OnlinePresence from '@/components/sections/OnlinePresence'
+import { DARIO_INSTAGRAM_URL, MARTINA_INSTAGRAM_URL } from '@/lib/site'
 
 const TEAM_MEMBERS = ['dario', 'martina'] as const
 type TeamMemberId = (typeof TEAM_MEMBERS)[number]
 
-const DARIO_FIELDS = ['location', 'experience', 'email', 'phone', 'languages'] as const
+const DARIO_FIELDS = ['location', 'experience', 'email', 'phone', 'languages', 'instagram'] as const
 const MARTINA_FIELDS = ['focus', 'contribution', 'instagram'] as const
+
+const TEAM_INSTAGRAM: Record<(typeof TEAM_MEMBERS)[number], string> = {
+  dario: DARIO_INSTAGRAM_URL,
+  martina: MARTINA_INSTAGRAM_URL,
+}
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -30,10 +36,12 @@ function TeamInfoField({
   label,
   value,
   href,
+  iconOnly,
 }: {
   label: string
   value: string
   href?: string
+  iconOnly?: boolean
 }) {
   return (
     <div>
@@ -43,10 +51,15 @@ function TeamInfoField({
           href={href}
           target={href.startsWith('http') ? '_blank' : undefined}
           rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
-          className="text-base font-semibold text-[var(--primary)] inline-flex items-center gap-1.5 hover:opacity-90"
+          aria-label={label}
+          className={
+            iconOnly
+              ? 'inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-[var(--primary)] transition-colors hover:border-[var(--primary)] hover:bg-white/[0.08]'
+              : 'text-base font-semibold text-[var(--primary)] inline-flex items-center gap-1.5 hover:opacity-90'
+          }
         >
           {href.includes('instagram') ? <Instagram className="w-4 h-4" /> : null}
-          {value}
+          {!iconOnly ? value : null}
         </a>
       ) : (
         <div className="text-base font-semibold text-[var(--light)]">{value}</div>
@@ -104,7 +117,6 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
             {TEAM_MEMBERS.map((member, index) => {
               const fields = member === 'dario' ? DARIO_FIELDS : MARTINA_FIELDS
-              const instagramUrl = member === 'martina' ? t('team.martina.instagramUrl') : undefined
 
               return (
                 <motion.div
@@ -133,10 +145,18 @@ export default function AboutPage() {
                         field === 'email'
                           ? `mailto:${value}`
                           : field === 'instagram'
-                            ? instagramUrl
+                            ? TEAM_INSTAGRAM[member]
                             : undefined
 
-                      return <TeamInfoField key={field} label={label} value={value} href={href} />
+                      return (
+                        <TeamInfoField
+                          key={field}
+                          label={label}
+                          value={value}
+                          href={href}
+                          iconOnly={field === 'instagram'}
+                        />
+                      )
                     })}
                   </div>
 

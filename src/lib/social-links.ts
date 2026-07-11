@@ -1,4 +1,4 @@
-import { CONTACT_EMAIL } from '@/lib/site'
+import { CONTACT_EMAIL, INSTAGRAM_URL } from '@/lib/site'
 
 export const SOCIAL_EMAIL = CONTACT_EMAIL
 export const SOCIAL_PHONE = '+385 97 604 39 41'
@@ -15,7 +15,7 @@ export type PresenceItem = {
 
 export const socialItems: PresenceItem[] = [
   { id: 'github', label: 'GitHub', href: 'https://github.com/ProtosEschatos', brand: '#e7e7f0', pending: true },
-  { id: 'instagram', label: 'Instagram', href: '#', brand: '#e1306c', pending: true },
+  { id: 'instagram', label: 'Instagram', href: INSTAGRAM_URL, brand: '#e1306c' },
   { id: 'facebook', label: 'Facebook', href: '#', brand: '#1877f2', pending: true },
   { id: 'whatsapp', label: 'WhatsApp', href: WHATSAPP_URL, brand: '#25d366' },
 ]

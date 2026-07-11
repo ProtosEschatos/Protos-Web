@@ -7,6 +7,8 @@ import {
   LEGAL_LOCATION,
   LEGAL_OIB,
   LEGAL_OWNER,
+  DARIO_INSTAGRAM_URL,
+  MARTINA_INSTAGRAM_URL,
   SITE_URL,
 } from '@/lib/site'
 
@@ -28,10 +30,7 @@ export const CREATOR_PROFILES = {
       'Cyber security',
       'SaaS platforms',
     ],
-    sameAs: [
-      'https://www.facebook.com/imsirovicdario23/',
-      'https://www.instagram.com/protos_eschatos/',
-    ],
+    sameAs: ['https://www.facebook.com/imsirovicdario23/', DARIO_INSTAGRAM_URL],
     speaks: ['hr', 'en', 'de'],
   },
   martina: {
@@ -50,7 +49,7 @@ export const CREATOR_PROFILES = {
       'Branding',
       'Creative direction',
     ],
-    sameAs: ['https://www.instagram.com/everybodycries/'],
+    sameAs: [MARTINA_INSTAGRAM_URL],
   },
 } as const
 

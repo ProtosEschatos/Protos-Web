@@ -590,7 +590,8 @@
           "experience": "5 Jahre",
           "email": "dario.admin@protosweb.eu",
           "phone": "+385 97 604 39 41",
-          "languages": "Kroatisch (Muttersprache), Englisch (Muttersprache), Deutsch (Grundkenntnisse)"
+          "languages": "Kroatisch (Muttersprache), Englisch (Muttersprache), Deutsch (Grundkenntnisse)",
+          "instagram": ""
         }
       },
       "martina": {
@@ -598,11 +599,10 @@
         "name": "Martina Markulin",
         "role": "UI-Designerin & kreative Mitarbeiterin",
         "bio": "Martina ist das Herz der visuellen Identität und des emotionalen Erlebnisses unserer Projekte. Als UI-Designerin gestaltet sie Interfaces, Farben und Typografie — als kreative Partnerin bringt sie Ideen, Konzepte und Ästhetik in jedes Werk des Studios ein.",
-        "instagramUrl": "https://www.instagram.com/everybodycries/",
         "fields": {
           "focus": "UI/UX-Design, visuelle Konzepte, Branding",
           "contribution": "Kreative Ideen, Ästhetik und Design aller Projekte",
-          "instagram": "@everybodycries"
+          "instagram": ""
         }
       }
     },

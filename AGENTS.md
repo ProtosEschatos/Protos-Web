@@ -21,6 +21,7 @@ Next.js 14 App Router · TypeScript · Tailwind · next-intl (hr/en/de/it/es) ·
 - Admin UI uses `AdminShell` (bypasses boot veil) and `AdminLink` (not `@/routing` on server pages)
 - CMS reads: `src/lib/admin/*-queries.ts` · writes: `src/actions/admin-*.ts`
 - Agent memory: `/admin/memory` — reads `Protos-Agent/memory/` via GitHub raw (see `src/lib/agent-memory.ts`)
+- AI assistant: `/admin/ai` — DeepSeek (+ opcionalno Gemini) via `DEEPSEEK_API_KEY` on Vercel
 - Social/platform structure: `src/lib/team-profiles.ts` (Studio/Dario/Martina + freelance); re-export via `social-links.ts` (`pending: true` until real URLs)
 - Public tech stacks (no infra): `src/lib/tech-stacks.ts`
 

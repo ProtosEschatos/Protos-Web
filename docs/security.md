@@ -14,6 +14,8 @@ Practical security map for `protosweb.eu`. No system is immune to every attack; 
 | `SUPABASE_SERVICE_ROLE_KEY` | **Vercel** (server) + **GitHub** | Server actions / CI only — never expose to browser |
 | `SUPABASE_ACCESS_TOKEN`, `SUPABASE_PROJECT_REF` | **GitHub** | Deploy edge functions on push |
 | `GITHUB_TOKEN` | **Vercel** (optional) | `/admin/memory` — **required** if Protos-Agent repo is private |
+| `DEEPSEEK_API_KEY` | **Vercel** | `/admin/ai` — DeepSeek chat (već postavljen) |
+| `GEMINI_API_KEY` | **Vercel** (optional) | `/admin/ai` — alternativni provider |
 | `AGENT_MEMORY_REPO` | **Vercel** (optional) | Default `ProtosEschatos/Protos-Agent` — override repo for memory fetch |
 | `AGENT_MEMORY_LOCAL_PATH` | **Local dev only** | Filesystem fallback (default `~/Protos-Agent/memory` in development) |
 

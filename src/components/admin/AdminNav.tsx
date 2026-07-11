@@ -5,6 +5,7 @@ import AdminLink from '@/components/admin/AdminLink'
 import type { LucideIcon } from 'lucide-react'
 import {
   BookOpen,
+  Bot,
   FileText,
   Inbox,
   LayoutGrid,
@@ -27,6 +28,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/admin/blog', label: 'Blog', icon: FileText },
   { href: '/admin/portfolio', label: 'Portfolio', icon: LayoutGrid },
   { href: '/admin/memory', label: 'Memorija', icon: BookOpen },
+  { href: '/admin/ai', label: 'AI', icon: Bot },
   { href: '/admin/tools', label: 'Alati', icon: Wrench },
 ]
 

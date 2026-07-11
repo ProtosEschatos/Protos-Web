@@ -1,5 +1,5 @@
 import { setRequestLocale } from 'next-intl/server'
-import { BookOpen, ExternalLink, FileText, LayoutGrid, Wrench } from 'lucide-react'
+import { BookOpen, Bot, ExternalLink, FileText, LayoutGrid, Wrench } from 'lucide-react'
 import AdminCommsInboxPanel from '@/components/admin/AdminCommsInboxPanel'
 import AdminHubCard from '@/components/admin/AdminHubCard'
 import AdminInsightGrid from '@/components/admin/AdminInsightGrid'
@@ -9,6 +9,7 @@ import { adminGetNotifications } from '@/actions/admin-notifications'
 import { adminGetInsights } from '@/actions/admin-insights'
 import { adminGetCommsChannels, adminGetSecurityInsights } from '@/actions/admin-ops-insights'
 import { adminGetMemorySnapshot } from '@/lib/admin/memory-queries'
+import { getAiProviderStatus } from '@/lib/ai/providers'
 import { SITE_DOMAIN, SITE_URL } from '@/lib/site'
 
 type Props = { params: { locale: string } }
@@ -22,6 +23,7 @@ export default async function AdminPage({ params: { locale } }: Props) {
     adminGetCommsChannels(notifications),
     adminGetMemorySnapshot(),
   ])
+  const aiStatus = getAiProviderStatus()
 
   return (
     <div className="py-8 md:py-10">
@@ -75,7 +77,7 @@ export default async function AdminPage({ params: { locale } }: Props) {
         </AdminSection>
 
         <AdminSection title="Sadržaj & alati" className="mt-10">
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             <AdminHubCard href="/admin/blog" label="Blog" description="Članci i objave" icon={FileText} />
             <AdminHubCard
               href="/admin/portfolio"
@@ -105,6 +107,13 @@ export default async function AdminPage({ params: { locale } }: Props) {
                     )
                   : undefined
               }
+            />
+            <AdminHubCard
+              href="/admin/ai"
+              label="AI asistent"
+              description={aiStatus.deepseek ? 'DeepSeek spreman' : 'Dodaj DEEPSEEK_API_KEY'}
+              icon={Bot}
+              pending={!aiStatus.deepseek}
             />
             <AdminHubCard
               href={SITE_URL}

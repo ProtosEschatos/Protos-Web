@@ -1,7 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { getBlogPosts } from '@/actions/blog'
 import BlogGrid from '@/components/blog/BlogGrid'
-import { blogIndexJsonLd } from '@/lib/seo'
 
 type Props = { params: { locale: string } }
 
@@ -9,23 +8,9 @@ export default async function BlogPage({ params: { locale } }: Props) {
   setRequestLocale(locale)
   const t = await getTranslations({ locale, namespace: 'blog' })
   const posts = await getBlogPosts(50, locale)
-  const jsonLd = blogIndexJsonLd(
-    locale,
-    t('title'),
-    t('subtitle'),
-    posts.map((post) => ({
-      title: post.title,
-      slug: post.slug,
-      createdAt: post.created_at,
-    })),
-  )
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
       <section className="pt-36 pb-16 text-center relative overflow-hidden cosmic-hero-band">
         <div className="max-w-[1200px] mx-auto px-6 relative z-10">
           <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[var(--primary)] mb-3">

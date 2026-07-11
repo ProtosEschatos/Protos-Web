@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 import { locales, defaultLocale, type Locale } from '@/i18n'
-import { buildBlogAuthorGraph } from '@/lib/creator-seo'
 
-import { SITE_URL } from '@/lib/site'
+import { CONTACT_EMAIL, SITE_URL } from '@/lib/site'
 
 const DEFAULT_SITE_URL = SITE_URL
 
@@ -11,8 +10,7 @@ export function normalizeSiteUrl(url?: string): string {
   return raw || DEFAULT_SITE_URL
 }
 
-/** Canonical site URL — single source of truth (see src/lib/site.ts). */
-export const siteUrl = SITE_URL
+export const siteUrl = normalizeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL)
 
 export const ogImage = {
   url: '/api/og',
@@ -57,11 +55,9 @@ export function buildPageMetadata({
   description,
   locale,
   path = '',
-  ogImagePath,
-}: PageMetadataInput & { ogImagePath?: string }): Metadata {
+}: PageMetadataInput): Metadata {
   const safeLocale = (locale in openGraphLocale ? locale : defaultLocale) as Locale
   const canonical = buildLocaleUrl(safeLocale, path)
-  const ogImageUrl = ogImagePath ? { ...ogImage, url: ogImagePath } : ogImage
 
   const languages: Record<string, string> = {}
   for (const loc of locales) {
@@ -88,13 +84,13 @@ export function buildPageMetadata({
       alternateLocale: alternateLocales,
       siteName: 'Protos Web',
       url: canonical,
-      images: [ogImageUrl],
+      images: [ogImage],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: [`${siteUrl}${ogImageUrl.url}`],
+      images: [`${siteUrl}${ogImage.url}`],
     },
   }
 }
@@ -118,23 +114,13 @@ export function buildBlogPostMetadata({
   })
 }
 
-export type AuthorSlug = 'dario' | 'martina' | 'both'
-
-export function normalizeAuthorSlug(value: string | null | undefined): AuthorSlug {
-  if (value === 'martina' || value === 'both') return value
-  return 'dario'
-}
-
 export function blogPostingJsonLd(post: {
   title: string
   description: string
   slug: string
   locale: string
   createdAt: string
-  authorSlug?: AuthorSlug | string | null
 }) {
-  const authorSlug = normalizeAuthorSlug(post.authorSlug)
-  const authors = buildBlogAuthorGraph(post.locale, authorSlug)
   return {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -142,7 +128,10 @@ export function blogPostingJsonLd(post: {
     description: post.description,
     datePublished: post.createdAt,
     url: buildLocaleUrl(post.locale, `/blog/${post.slug}`),
-    author: authors.length === 1 ? authors[0] : authors,
+    author: {
+      '@type': 'Organization',
+      name: 'Protos Web',
+    },
     publisher: {
       '@type': 'Organization',
       name: 'Protos Web',
@@ -154,147 +143,18 @@ export function blogPostingJsonLd(post: {
   }
 }
 
-export function blogIndexJsonLd(
-  locale: string,
-  pageTitle: string,
-  description: string,
-  posts: Array<{ title: string; slug: string; createdAt: string }>,
-) {
-  const url = buildLocaleUrl(locale, '/blog')
-  return {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'Blog',
-        '@id': `${url}#blog`,
-        url,
-        name: pageTitle,
-        description,
-        inLanguage: locale,
-        isPartOf: { '@id': `${SITE_URL}/#website` },
-        publisher: { '@id': `${SITE_URL}/#organization` },
-      },
-      {
-        '@type': 'ItemList',
-        '@id': `${url}#itemlist`,
-        url,
-        numberOfItems: posts.length,
-        itemListElement: posts.map((post, index) => ({
-          '@type': 'ListItem',
-          position: index + 1,
-          item: {
-            '@type': 'BlogPosting',
-            headline: post.title,
-            url: buildLocaleUrl(locale, `/blog/${post.slug}`),
-            datePublished: post.createdAt,
-          },
-        })),
-      },
-    ],
-  }
-}
-
-export function faqPageJsonLd(
-  items: Array<{ question: string; answer: string }>,
-  pageUrl: string,
-) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: items.map((item) => ({
-      '@type': 'Question',
-      name: item.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: item.answer,
-      },
-    })),
-    url: pageUrl,
-  }
-}
-
-type BreadcrumbItem = { name: string; path?: string }
-
-export function breadcrumbListJsonLd(items: BreadcrumbItem[], locale: string) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: items.map((item, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: item.name,
-      ...(item.path !== undefined ? { item: buildLocaleUrl(locale, item.path) } : {}),
-    })),
-  }
-}
-
-export function servicesPageJsonLd(
-  locale: string,
-  pageTitle: string,
-  description: string,
-) {
-  const url = buildLocaleUrl(locale, '/usluge')
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'WebPage',
-    '@id': `${url}#webpage`,
-    url,
-    name: pageTitle,
-    description,
-    inLanguage: locale,
-    isPartOf: { '@id': `${SITE_URL}/#website` },
-    about: { '@id': `${SITE_URL}/#professional-service` },
-  }
-}
-
-export function contactPageJsonLd(
-  locale: string,
-  pageTitle: string,
-  description: string,
-) {
-  const url = buildLocaleUrl(locale, '/kontakt')
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'ContactPage',
-    '@id': `${url}#webpage`,
-    url,
-    name: pageTitle,
-    description,
-    inLanguage: locale,
-    isPartOf: { '@id': `${SITE_URL}/#website` },
-    mainEntity: { '@id': `${SITE_URL}/#professional-service` },
-  }
-}
-
-export function portfolioItemListJsonLd(
-  items: Array<{
-    title: string
-    description: string | null
-    image_url: string | null
-    project_url: string | null
-  }>,
-  locale: string,
-) {
-  if (items.length === 0) return null
-
-  const pageUrl = buildLocaleUrl(locale, '/portfolio')
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    url: pageUrl,
-    numberOfItems: items.length,
-    itemListElement: items.map((item, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      item: {
-        '@type': 'CreativeWork',
-        name: item.title,
-        ...(item.description ? { description: item.description } : {}),
-        ...(item.image_url ? { image: item.image_url } : {}),
-        url: item.project_url ?? pageUrl,
-        creator: { '@id': `${SITE_URL}/#dario-imsirovic` },
-        contributor: { '@id': `${SITE_URL}/#martina-markulin` },
-      },
-    })),
-  }
+export const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Protos Web',
+  url: siteUrl,
+  logo: `${siteUrl}/favicon.svg`,
+  description:
+    'Web design studio from Zagreb crafting fast, modern websites with soul — built with love and care for businesses across Croatia and Europe.',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Zagreb',
+    addressCountry: 'HR',
+  },
+  sameAs: [] as string[],
 }

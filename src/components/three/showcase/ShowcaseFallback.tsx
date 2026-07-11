@@ -76,7 +76,6 @@ export function ShowcaseFallback({ projects, reason = 'unsupported', onRetry }: 
                       <img
                         src={project.imageUrl}
                         alt={project.title}
-                        loading="lazy"
                         className={`w-full object-cover object-top ${isDesktop ? 'aspect-video' : 'aspect-[195/422]'}`}
                       />
                     </div>

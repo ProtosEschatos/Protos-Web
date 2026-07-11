@@ -12,14 +12,10 @@
   },
   "onlinePresence": {
     "label": "VERBINDEN WIR UNS",
-    "title": "Unsere Online-Präsenz",
-    "subtitle": "Finden Sie uns im Web — Protos Web Studio, Dario und Martina. Vom Code bis zu Freelance-Plattformen.",
-    "studioTitle": "Protos Web Studio",
-    "darioTitle": "Dario Imsirović",
-    "martinaTitle": "Martina Markulin",
+    "title": "Meine Online-Präsenz",
+    "subtitle": "Finden Sie mich im ganzen Web — vom Code bis zu Freelance-Plattformen. Lassen Sie uns gemeinsam etwas aufbauen.",
     "socialsTitle": "Soziale Netzwerke",
-    "platformsTitle": "Freelance-Plattformen",
-    "pendingLabel": "Demnächst"
+    "platformsTitle": "Freelance-Plattformen"
   },
   "header": {
     "brand": "Protos Web",
@@ -90,37 +86,7 @@
     "pageSubtitle": "Professionelle Weblosungen fur Ihre Geschaftsanforderungen. Von der Idee bis zum Launch und daruber hinaus.",
     "ctaTitle": "Bereit, Ihr Projekt zu starten?",
     "ctaText": "Kostenlose Beratung und Angebot — unverbindlich.",
-    "ctaButton": "Angebot anfordern",
-    "faq": {
-      "title": "Haufig gestellte Fragen",
-      "subtitle": "Antworten auf haufige Fragen zur Website-Entwicklung in Kroatien und zur Zusammenarbeit mit Protos Web.",
-      "items": [
-        {
-          "question": "Was kostet eine Website in Kroatien?",
-          "answer": "Die Kosten hangen vom Umfang ab — Landing Page, Business-Website oder Custom-Plattform. Jedes Projekt ist massgeschneidert. Nach einem kurzen Gesprach erhalten Sie ein klares Angebot ohne versteckte Kosten."
-        },
-        {
-          "question": "Wie lange dauert die Entwicklung?",
-          "answer": "Einfachere Seiten sind in 2–4 Wochen moglich. Komplexere Projekte (E-Commerce, CRM, Mehrsprachigkeit) dauern langer. Zeitplane vereinbaren wir im Voraus."
-        },
-        {
-          "question": "Arbeiten Sie auf Englisch und Deutsch?",
-          "answer": "Ja. Dario spricht Kroatisch und Englisch muttersprachlich sowie Deutsch auf Grundniveau. Websites konnen in mehreren Sprachen geliefert werden."
-        },
-        {
-          "question": "Nutzen Sie fertige Themes?",
-          "answer": "Nein. Alles wird individuell entwickelt. Vorlagen bleiben geistiges Eigentum des Studios — Kunden erhalten Nutzungsrechte per Vertrag."
-        },
-        {
-          "question": "Ist SEO inklusive?",
-          "answer": "Ja — technisches SEO (Geschwindigkeit, Struktur, Meta-Tags, Schema, Sitemap) ist in jedem Projekt enthalten."
-        },
-        {
-          "question": "Bieten Sie Wartung nach dem Launch?",
-          "answer": "Ja — laufender Support, Sicherheitsupdates und Performance-Monitoring nach Vereinbarung."
-        }
-      ]
-    }
+    "ctaButton": "Angebot anfordern"
   },
   "process": {
     "label": "PROZESS",
@@ -223,8 +189,19 @@
         "label": "Custom Code, keine vorgefertigten Themes"
       }
     ],
-    "technologiesTitle": "Technologien — Protos Web Stack",
-    "technologiesNote": "Sprachen und Build-Tools. Infrastruktur-Services sind nicht öffentlich."
+    "technologiesTitle": "Technologien",
+    "technologies": [
+      "Next.js",
+      "TypeScript",
+      "Three.js",
+      "Tailwind CSS",
+      "Framer Motion",
+      "Supabase",
+      "Stripe",
+      "Drizzle ORM",
+      "Cloudflare",
+      "Linux / DevOps"
+    ]
   },
   "portfolio": {
     "label": "PORTFOLIO",
@@ -251,11 +228,7 @@
     "subtitle": "Kostenlose Leitfaden zur Web-Praesenz fur Unternehmer",
     "readMore": "Weiterlesen",
     "viewAll": "Alle Artikel ansehen",
-    "empty": "Noch keine Artikel veroffentlicht.",
-    "authorBy": "Von {author}",
-    "authorDario": "Dario Imsirović",
-    "authorMartina": "Martina Markulin",
-    "authorBoth": "Dario Imsirović & Martina Markulin"
+    "empty": "Noch keine Artikel veroffentlicht."
   },
   "contact": {
     "label": "KONTAKT",
@@ -322,15 +295,8 @@
   "loader": {
     "subtitle": "Erlebnis wird geladen",
     "enter": "Enter",
-    "consentModalTitle": "Zustimmung zu den Bedingungen erforderlich",
-    "consentModalRequired": "Ohne Akzeptanz der Nutzungsbedingungen und Datenschutzerklaerung koennen Sie die Website nicht betreten oder nutzen.",
-    "consentModalIntro": "Lesen und akzeptieren Sie unsere",
-    "termsAcceptLabel": "Ich akzeptiere die Nutzungsbedingungen",
-    "termsAcceptDesc": "Ich bestaetige, die Bedingungen gelesen zu haben, einschliesslich des Schutzes aller originalen Werke, Vorlagen, Designs und Kundenlieferungen von Protos Web, und verstehe, dass unbefugtes Kopieren strafbar sein kann.",
-    "consentModalAccept": "Akzeptieren und Website betreten",
-    "consentModalBlocked": "Sie muessen die Nutzungsbedingungen akzeptieren, um fortzufahren.",
     "cookieModalTitle": "Cookie-Zustimmung erforderlich",
-    "cookieModalIntro": "Lesen Sie unsere",
+    "cookieModalIntro": "Zum Betreten der Website muessen Sie essenzielle Cookies akzeptieren. Optionale Cookies koennen Sie unten auswaehlen. Lesen Sie unsere",
     "cookieModalTerms": "Nutzungsbedingungen",
     "cookieModalLegalAnd": "und",
     "cookieModalPrivacy": "Datenschutzerklaerung",
@@ -375,170 +341,32 @@
     "webglViewPortfolio": "Ganzes Portfolio ansehen"
   },
   "legalPages": {
-    "lastUpdated": "Zuletzt aktualisiert",
-    "lastUpdatedDate": "11. Juli 2026",
-    "privacyTitle": "Datenschutzerklärung",
-    "privacyDescription": "Wie Protos Web Ihre personenbezogenen Daten gemäß DSGVO verarbeitet.",
+    "privacyTitle": "Datenschutzerklarung",
+    "privacyDescription": "Wie Protos Web mit Ihren personenbezogenen Daten umgeht.",
+    "privacyBody": "Protos Web respektiert Ihre Privatsphare. Wir erheben nur Daten, die fur den Betrieb dieser Website, Kontaktanfragen und Serviceverbesserungen erforderlich sind.\n\nWir verkaufen keine personenbezogenen Daten an Dritte. Analyse und Cookies werden nur mit Ihrer Zustimmung verwendet, wo erforderlich.\n\nFragen: dario.admin@protosweb.eu.",
     "termsTitle": "Nutzungsbedingungen",
-    "termsDescription": "Bedingungen für die Nutzung der Protos-Web-Website, einschließlich Schutz des geistigen Eigentums.",
+    "termsDescription": "Bedingungen fur die Nutzung der Protos Web Website.",
+    "termsBody": "Mit der Nutzung dieser Website akzeptieren Sie diese Bedingungen. Inhalte und Code gehoren Protos Web, sofern nicht anders angegeben.\n\nPortfolio-Demos dienen der Prasentation. Externe Projektlinks unterliegen eigenen Bedingungen.\n\nAnderungen konnen jederzeit erfolgen.",
     "cookiesTitle": "Cookie-Richtlinie",
-    "cookiesDescription": "Wie Protos Web Cookies und ähnliche Technologien verwendet.",
-    "termsSections": [
-      {
-        "title": "1. Einleitung und Annahme",
-        "paragraphs": [
-          "Diese Nutzungsbedingungen (\"Bedingungen\") regeln den Zugang zu und die Nutzung der Website www.protosweb.eu (die \"Website\"), betrieben von Dario Imsirović — Protos Web, Zagreb, Republik Kroatien (\"Protos Web\", \"wir\", \"uns\").",
-          "Mit dem Zugriff auf die Website bestätigen Sie, dass Sie diese Bedingungen gelesen, verstanden und vollständig akzeptiert haben. Wenn Sie nicht einverstanden sind, nutzen Sie die Website nicht."
-        ]
-      },
-      {
-        "title": "2. Geistiges Eigentum und Urheberrecht",
-        "paragraphs": [
-          "Der gesamte Inhalt der Website — einschließlich visueller Identität, UI/UX-Design, Layout, Typografie, Grafiken, Animationen, 3D-Inhalte, Quellcode, Texte, Übersetzungen, Blogbeiträge, SEO-Metadaten und technischer Implementierungen — ist originales geistiges Eigentum von Dario Imsirović und/oder Protos Web, sofern nicht ausdrücklich anders angegeben.",
-          "Alle Elemente sind durch kroatisches und EU-Recht zum Urheberrecht und geistigen Eigentum geschützt.",
-          "Es wird keine stillschweigende Lizenz zur Nutzung ohne vorherige schriftliche Zustimmung gewährt."
-        ]
-      },
-      {
-        "title": "3. Verbotene Handlungen",
-        "paragraphs": [
-          "Ohne vorherige schriftliche Genehmigung ist es untersagt: Inhalte zu kopieren, herunterzuladen, zu vervielfältigen oder öffentlich darzustellen; automatisiertes Scraping; Klonen von Design oder Funktionalität; Reverse Engineering; Entfernen von Urheberrechtshinweisen; kommerzielle oder irreführende Nutzung; falsche Eigentumsansprüche.",
-          "Abgeleitete Werke oder Integration unseres Designs oder Codes in fremde Produkte ohne schriftliche Zustimmung sind verboten."
-        ]
-      },
-      {
-        "title": "4. Zivil- und Strafrechtliche Haftung",
-        "paragraphs": [
-          "Unbefugte Nutzung oder Aneignung kann zivilrechtliche Ansprüche (Unterlassung, Schadensersatz, Kosten) nach sich ziehen.",
-          "Je nach Schwere kann dies auch eine Ordnungswidrigkeit oder Straftat nach kroatischem Recht darstellen. Wir behalten uns vor, Behörden einzuschalten und alle rechtlichen Schritte einzuleiten.",
-          "Protos Web schützt seine Urheberrechte aktiv. Nachgewiesene Verstöße werden im gesetzlich zulässigen Umfang verfolgt."
-        ]
-      },
-      {
-        "title": "5. Portfolio und Demo-Inhalte",
-        "paragraphs": [
-          "Portfolio- und Demo-Anzeigen dienen nur der Präsentation und erlauben keine Reproduktion der gezeigten Lösungen.",
-          "Kundenprojekte werden mit Zustimmung angezeigt; Rechte ergeben sich aus jeweiligen Verträgen."
-        ]
-      },
-      {
-        "title": "6. Externe Links",
-        "paragraphs": [
-          "Links zu Drittanbietern unterliegen deren eigenen Bedingungen. Protos Web ist nicht für deren Inhalte verantwortlich."
-        ]
-      },
-      {
-        "title": "7. Haftungsbeschränkung",
-        "paragraphs": [
-          "Die Website wird \"wie besehen\" bereitgestellt. Haftung für indirekte Schäden ist im gesetzlich zulässigen Umfang ausgeschlossen."
-        ]
-      },
-      {
-        "title": "8. Änderungen",
-        "paragraphs": [
-          "Wir können diese Bedingungen aktualisieren. Fortgesetzte Nutzung gilt als Annahme der geänderten Bedingungen."
-        ]
-      },
-      {
-        "title": "9. Anwendbares Recht",
-        "paragraphs": [
-          "Es gilt das Recht der Republik Kroatien. Gerichtsstand: zuständige Gerichte in Kroatien. Kontakt: dario.admin@protosweb.eu."
-        ]
-      }
-    ],
-    "privacySections": [
-      {
-        "title": "1. Verantwortlicher",
-        "paragraphs": [
-          "Verantwortlicher: Dario Imsirović — Protos Web, Zagreb, Republik Kroatien. Kontakt: dario.admin@protosweb.eu."
-        ]
-      },
-      {
-        "title": "2. Erhobene Daten",
-        "paragraphs": [
-          "Kontaktformular, Newsletter, Cookies (mit Einwilligung), technische Protokolle für Sicherheit und Betrieb."
-        ]
-      },
-      {
-        "title": "3. Zweck und Rechtsgrundlage",
-        "paragraphs": [
-          "Kommunikation (berechtigtes Interesse/Vertrag), Newsletter (Einwilligung), Sicherheit (berechtigtes Interesse), Analyse-Cookies (Einwilligung)."
-        ]
-      },
-      {
-        "title": "4. Auftragsverarbeiter",
-        "paragraphs": [
-          "Vercel, Supabase, Resend/Brevo, Cloudflare — vertraglich gebunden. Kein Verkauf personenbezogener Daten."
-        ]
-      },
-      {
-        "title": "5. Speicherdauer",
-        "paragraphs": [
-          "Daten werden nur so lange gespeichert, wie für den jeweiligen Zweck erforderlich."
-        ]
-      },
-      {
-        "title": "6. Ihre Rechte",
-        "paragraphs": [
-          "Auskunft, Berichtigung, Löschung, Einschränkung, Widerspruch, Datenübertragbarkeit, Widerruf der Einwilligung. Beschwerde bei AZOP, Zagreb."
-        ]
-      },
-      {
-        "title": "7. Geistiges Eigentum",
-        "paragraphs": [
-          "Schutz von Design und Code regeln die Nutzungsbedingungen. Diese Datenschutzerklärung betrifft nur personenbezogene Daten."
-        ]
-      },
-      {
-        "title": "8. Änderungen",
-        "paragraphs": [
-          "Aktualisierungen werden auf der Website veröffentlicht."
-        ]
-      }
-    ],
-    "cookiesSections": [
-      {
-        "title": "1. Was sind Cookies",
-        "paragraphs": [
-          "Kleine Textdateien im Browser für Betrieb, Einstellungen und — mit Einwilligung — Analyse."
-        ]
-      },
-      {
-        "title": "2. Cookie-Arten",
-        "paragraphs": [
-          "Essenzielle Cookies (immer aktiv) und optionale Analyse-Cookies (nur mit Einwilligung)."
-        ]
-      },
-      {
-        "title": "3. Einwilligung",
-        "paragraphs": [
-          "Auswahl über Modal/Banner, lokal im Browser gespeichert. Löschung in Browsereinstellungen möglich."
-        ]
-      },
-      {
-        "title": "4. Weitere Richtlinien",
-        "paragraphs": [
-          "Details in der Datenschutzerklärung. Nutzungsbedingungen schützen das geistige Eigentum von Protos Web."
-        ]
-      }
-    ]
+    "cookiesDescription": "Wie Protos Web Cookies verwendet.",
+    "cookiesBody": "Wir verwenden notwendige Cookies fur Grundfunktionen und mit Zustimmung Analyse-Cookies.\n\nIhre Wahl wird lokal im Browser gespeichert.\n\nCookies konnen jederzeit in den Browser-Einstellungen geloscht werden."
   },
   "metadata": {
     "home": {
       "title": "Websites mit Seele. Geschwindigkeit im Code. Liebe im Detail.",
-      "description": "Protos Web — Webstudio aus Zagreb. Individuelle Websites, UI/UX-Design und SEO. Dario Imsirović (Entwicklung) und Martina Markulin (Design)."
+      "description": "Professionelle Webdesign-Agentur aus Zagreb."
     },
     "about": {
-      "title": "Uber uns — Dario Imsirović & Martina Markulin",
-      "description": "Protos Web Team aus Zagreb: Dario Imsirović, KI-Ingenieur & Full-Stack-Entwickler und Martina Markulin, Frontend-/Shop-UI-Designerin. Zwei Stacks — modernes Protos Web und vanilla Bodulica Shop."
+      "title": "Uber mich",
+      "description": "Full Stack Developer & Web Designer aus Zagreb."
     },
     "process": {
       "title": "Unser Prozess",
-      "description": "Wie wir moderne Weblosungen bauen — von der Beratung bis zum Launch. Protos Web, Zagreb."
+      "description": "Wie wir moderne Weblosungen bauen."
     },
     "portfolio": {
       "title": "Portfolio",
-      "description": "Ausgewahlte Webprojekte und Fallstudien — individuelles Design und Entwicklung aus Zagreb."
+      "description": "Ausgewahlte Projekte und Fallstudien."
     },
     "showcase": {
       "title": "3D Portfolio Showcase",
@@ -546,66 +374,46 @@
     },
     "services": {
       "title": "Leistungen",
-      "description": "Individuelles Webdesign, Entwicklung, UI/UX, SEO und Wartung — Protos Web, Zagreb."
+      "description": "Webdesign, Entwicklung, SEO und mehr."
     },
     "blog": {
       "title": "Blog",
-      "description": "Leitfaden zu Webdesign, SEO und digitaler Prasenz fur Unternehmer in Kroatien und der EU."
+      "description": "Kostenlose Leitfaden zur Web-Praesenz."
     },
     "contact": {
       "title": "Kontakt",
-      "description": "Protos Web in Zagreb kontaktieren — kostenlose Beratung fur Ihre Website oder Webanwendung."
+      "description": "Kontaktieren Sie uns fur Ihr nachstes Projekt."
     }
   },
   "aboutPage": {
-    "label": "ÜBER UNS",
-    "heroTitleLine1": "Dario Imsirović & Martina Markulin",
-    "heroTitleHighlight": "Protos Web Studio",
-    "heroTitleLine2": "aus Zagreb.",
-    "heroSubtitle": "KI-Engineering, Full Stack Cross-Web-Entwicklung und Frontend/Shop-Design — mit 3D-Erlebnissen in jedem Projekt.",
-    "whoTitle": "Wer wir sind",
-    "studioIntro": "Protos Web ist ein Studio in Gründung — Gewerbe Protos Web Mark23 in Registrierung (OIB: 23732814520). Alle Designs, Vorlagen und kreativen Werke bleiben originales Eigentum der Autoren als souveräne Schöpfer, unabhängig von der Gewerbeanmeldung.",
-    "teamTitle": "Info",
-    "teamFieldLabels": {
-      "location": "Standort",
-      "experience": "Erfahrung",
-      "email": "E-Mail",
-      "phone": "Telefon",
-      "languages": "Sprachen",
-      "focus": "Fokus",
-      "contribution": "Beitrag",
-      "instagram": "Instagram"
-    },
-    "team": {
-      "dario": {
-        "label": "Gründer & Entwicklung",
-        "name": "Dario Imsirović",
-        "role": "KI-Ingenieur & Full Stack Cross-Web Developer",
-        "bio": "KI-Ingenieur und Full Stack Developer aus Zagreb mit 5 Jahren Erfahrung. Custom-Plattformen, Webshops, CRM und 3D-Web-Erlebnisse — von Landing Pages bis zu komplexen Cross-Web-Lösungen.",
-        "expertise": ["KI-Engineering", "Full Stack", "3D / WebGL", "Cyber Security"],
-        "fields": {
-          "location": "Zagreb, Kroatien",
-          "experience": "5 Jahre",
-          "email": "dario.admin@protosweb.eu",
-          "phone": "+385 97 604 39 41",
-          "languages": "Kroatisch (Muttersprache), Englisch (Muttersprache), Deutsch (Grundkenntnisse)",
-          "instagram": ""
-        }
-      },
-      "martina": {
-        "label": "Frontend & Shop-Design",
-        "name": "Martina Markulin",
-        "role": "Frontend-Expertin & Top Shop/UI-Designerin",
-        "bio": "Martina ist das Herz der visuellen Identität und des emotionalen Erlebnisses unserer Projekte. Als Frontend-Expertin und Shop-Designerin gestaltet sie Interfaces, Farben, Typografie und UX — inklusive 3D-Visuals.",
-        "expertise": ["Frontend", "Shop-Design", "UI/UX", "3D-Visuals"],
-        "fields": {
-          "focus": "UI/UX-Design, visuelle Konzepte, Branding",
-          "contribution": "Kreative Ideen, Ästhetik und Design aller Projekte",
-          "instagram": ""
-        }
-      }
-    },
+    "label": "ÜBER MICH",
+    "heroTitleLine1": "Wir bauen digitale",
+    "heroTitleHighlight": "Lösungen, die mit Ihnen wachsen",
+    "heroTitleLine2": "und sich weiterentwickeln.",
+    "heroSubtitle": "Full Stack Developer & Web Designer aus Zagreb. Ich baue moderne, schnelle und visuell beeindruckende Websites — jede mit Seele und Sorgfalt bis ins letzte Detail.",
+    "whoTitle": "Wer ich bin",
+    "bio1": "Full Stack Developer aus Zagreb mit 5 Jahren Erfahrung im Aufbau moderner Web-Lösungen. Ich arbeite mit Unternehmern und Firmen in Kroatien und Europa — von schnellen Landing Pages bis zu komplexen Custom-Plattformen, Webshops und CRM-Systemen.",
+    "bio2": "Alles wird individuell entwickelt — ohne vorgefertigte Themes, ohne Kompromisse bei der Qualität. Jedes Projekt beginnt bei null und wird genau auf Ihre Bedürfnisse und Ziele zugeschnitten.",
+    "bio3": "Interessen: Full Stack Entwicklung, Cross-Platform Web, 3D Web-Erlebnisse, Plattform-Entwicklung, Webdesign, Cyber Security.",
+    "bio4": "Ziel: Lokalen und europäischen Unternehmen helfen, die richtige Web-Lösung zu finden — ohne unnötige Komplexität, mit modernem Interface.",
     "guideLink": "Kostenlose Leitfäden zur Web-Präsenz für Unternehmer",
+    "infoTitle": "Info",
+    "infoLabels": {
+      "name": "NAME",
+      "location": "STANDORT",
+      "experience": "ERFAHRUNG",
+      "email": "E-MAIL",
+      "phone": "TELEFON",
+      "languages": "SPRACHEN"
+    },
+    "infoValues": {
+      "name": "Dario Imsirović",
+      "location": "Zagreb, Kroatien",
+      "experience": "5 Jahre",
+      "email": "dario.admin@protosweb.eu",
+      "phone": "+385 97 604 39 41",
+      "languages": "Kroatisch, Englisch, Deutsch (Grundkenntnisse)"
+    },
     "goalsTitle": "Ziele",
     "goals": [
       {
@@ -649,16 +457,6 @@
       }
     ],
     "currencyZero": "0 €",
-    "currencyOf": "von {target} €",
-    "dualStacks": {
-      "label": "STACKS",
-      "title": "Zwei Stacks, gleiche Expertise",
-      "subtitle": "Protos Web und Kundenprojekte zeigen, dass wir in verschiedenen Build-Ansätzen arbeiten — von modernem TypeScript/React bis zu leichten Vanilla-Lösungen.",
-      "protosTitle": "Protos Web — moderner Stack",
-      "protosDescription": "TypeScript, React, Next.js, 3D/WebGL und Animationen. Custom Studio-Site und massgeschneiderte Plattformen.",
-      "bodulicaTitle": "Bodulica Shop — Vanilla Stack",
-      "bodulicaDescription": "Erster Kunden-Webshop — HTML, CSS und Vanilla JavaScript. Gegenteiliger Build zu Protos Web. Martina: Shop- und UI-Design. Dario: Implementierung.",
-      "bodulicaNote": "Studio-Showcase verschiedener Ansätze — ohne öffentlichen Shop-Link."
-    }
+    "currencyOf": "von {target} €"
   }
 }

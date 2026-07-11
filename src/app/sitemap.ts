@@ -1,39 +1,19 @@
 import type { MetadataRoute } from 'next'
 import { getAllBlogSlugs } from '@/actions/blog'
-import { locales } from '@/i18n'
+import { locales, defaultLocale } from '@/i18n'
 import { buildLocaleUrl } from '@/lib/seo'
 
-type PathConfig = {
-  path: string
-  priority: number
-  changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency']
-}
-
-const pathConfigs: PathConfig[] = [
-  { path: '', priority: 1, changeFrequency: 'weekly' },
-  { path: '/usluge', priority: 0.9, changeFrequency: 'monthly' },
-  { path: '/kontakt', priority: 0.9, changeFrequency: 'monthly' },
-  { path: '/o-meni', priority: 0.85, changeFrequency: 'monthly' },
-  { path: '/proces', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/portfolio', priority: 0.8, changeFrequency: 'monthly' },
-  { path: '/blog', priority: 0.75, changeFrequency: 'daily' },
-  { path: '/portfolio-showcase', priority: 0.4, changeFrequency: 'monthly' },
-  { path: '/privacy', priority: 0.3, changeFrequency: 'yearly' },
-  { path: '/terms', priority: 0.3, changeFrequency: 'yearly' },
-  { path: '/cookies', priority: 0.3, changeFrequency: 'yearly' },
-]
+const paths = ['', '/o-meni', '/proces', '/portfolio', '/portfolio-showcase', '/usluge', '/blog', '/kontakt', '/privacy', '/terms', '/cookies']
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = []
-  const now = new Date()
 
   for (const locale of locales) {
-    for (const { path, priority, changeFrequency } of pathConfigs) {
+    for (const path of paths) {
       entries.push({
         url: buildLocaleUrl(locale, path),
-        lastModified: now,
-        changeFrequency,
-        priority,
+        changeFrequency: path === '' ? 'weekly' : 'monthly',
+        priority: path === '' ? 1 : 0.8,
       })
     }
   }

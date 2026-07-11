@@ -1,11 +1,10 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useTranslations, useLocale } from 'next-intl'
+import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
 import { ArrowRight } from 'lucide-react'
 import { SERVICE_ICONS } from '@/lib/section-icons'
-import FaqSection from '@/components/sections/FaqSection'
 
 const colors = [
   'bg-[var(--primary)]/15 text-[var(--primary)]',
@@ -23,9 +22,7 @@ const fadeUp = {
 
 export default function ServicesPage() {
   const t = useTranslations('services')
-  const locale = useLocale()
   const items = t.raw('items') as Array<{ title: string; text: string }>
-  const faqItems = t.raw('faq.items') as Array<{ question: string; answer: string }>
 
   return (
     <>
@@ -60,13 +57,6 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
-
-      <FaqSection
-        title={t('faq.title')}
-        subtitle={t('faq.subtitle')}
-        items={faqItems}
-        locale={locale}
-      />
 
       <section className="py-16 text-center">
         <div className="max-w-[1200px] mx-auto px-6">

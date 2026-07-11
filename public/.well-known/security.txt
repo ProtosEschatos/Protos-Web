@@ -1,4 +1,4 @@
 Contact: mailto:dario.admin@protosweb.eu
 Preferred-Languages: hr, en
 Canonical: https://www.protosweb.eu/.well-known/security.txt
-Policy: https://www.protosweb.eu/privacy
+Policy: https://www.protosweb.eu/hr/politika-privatnosti

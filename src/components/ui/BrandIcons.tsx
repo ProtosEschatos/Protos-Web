@@ -69,8 +69,6 @@ export function brandGlyph(id: string, className?: string): ReactNode {
       return <InstagramIcon className={className} />
     case 'whatsapp':
       return <WhatsappIcon className={className} />
-    case 'tiktok':
-      return <Lettermark text="TT" className={className} />
     default:
       return <Lettermark text={LETTERMARKS[id] ?? id.slice(0, 2)} className={className} />
   }

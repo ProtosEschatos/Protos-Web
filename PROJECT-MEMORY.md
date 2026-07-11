@@ -1,57 +1,19 @@
 # Protos-Web — Project Memory
 
-> **Last updated:** 2026-07-11
-> **Live:** https://protosweb.eu
+> **Last updated:** 2026-07-06 (večer)
+> **Live:** https://www.protosweb.eu
 > **Repo:** `ProtosEschatos/Protos-Web`
-> **Latest commit:** `1baa74d` — branding, dual stacks, SEO entities, blog authorship
+> **Latest commit:** `778db23` — security.txt + DNS fix script + docs
 
 ---
 
 ## Gdje si stao (TL;DR)
 
-**Branding + SEO (2026-07-11):** Kompletan plan implementiran i pushan na `main`. Tim uloge (Dario/Martina), dual stack showcase (Protos Web vs Bodulica vanilla), `team-profiles.ts` struktura (Studio/Dario/Martina + freelance slotovi), AboutPage schema, blog `author_slug`, branch protection CI. Instagram live; ostali sociali `#` pending.
+**Email + DNS (2026-07-06):** Sve na `dario.admin@protosweb.eu`. Zoho inbox (MX) ✅. Resend verified (eu-west-1), DNS na `send` + `resend._domainkey` ✅. Brevo DKIM + brevo-code ✅. DMARC `rua` → `dario.admin@protosweb.eu` ✅. SPF apex Zoho+Brevo ✅. Nema duplih TXT zapisa.
 
-**SEO cilj:** #1 za brand upite (`Protos Web`, `protosweb`); osobna imena; dugoročno i `protos` (generička riječ — treba off-page + vrijeme).
+**Security:** `public/.well-known/security.txt` live ✅. `ADMIN_SECRET` samo Vercel (nije u Supabase secrets). Edge fn redeployane.
 
-**Sutra:** resubmit sitemap GSC/Bing; korisnik pošalje URL-ove → `team-profiles.ts`; portfolio projekti; blog authorship po autoru.
-
-**Ne commitati:** `public/design/` (untracked).
-
----
-
-## 2026-07-11 — Branding, stackovi, SEO entiteti (`1baa74d`)
-
-### Novi moduli
-- `src/lib/tech-stacks.ts` — javni stack (jezici/framework), bez Supabase/Stripe/Cloudflare u UI
-- `src/lib/team-profiles.ts` — Studio / Dario / Martina social + freelance platforme
-- `src/components/sections/DualStacksSection.tsx` — Bodulica vanilla vs Protos Web na `/o-meni`
-
-### SEO
-- Fragment IDs: `#dario-imsirovic`, `#martina-markulin`
-- `AboutPage` JSON-LD (`o-meni/layout.tsx`), OG `/api/og?type=about`
-- Root `authors` + keywords (`protos`, `protosweb`, ASCII imena)
-- Blog: `author_slug` migracija (remote ✅), byline UI, `Blog`+`ItemList` na indexu
-- `public/llms.txt` — tim, dva stacka
-
-### Instagram
-- Studio/Dario: `protos_eschatos`
-- Martina: `everybodycries`
-
-### GitHub
-- Branch protection `main` → required **CI**
-- `security.yml` bez `continue-on-error` na critical audit
-
-Detalji: **Protos-Agent** `memory/sessions/2026-07-11-branding-seo-stack.md`
-
----
-
-## Povijest — Email + DNS (2026-07-06)
-
-**Email + DNS:** Sve na `dario.admin@protosweb.eu`. Zoho inbox (MX) ✅. Resend verified (eu-west-1), DNS na `send` + `resend._domainkey` ✅. Brevo DKIM + brevo-code ✅. DMARC `rua` → `dario.admin@protosweb.eu` ✅. SPF apex Zoho+Brevo ✅.
-
-**Security:** `public/.well-known/security.txt` live ✅. `ADMIN_SECRET` samo Vercel.
-
-**Preostalo (starije):** Cloudflare MFA (ručno); design asset slike u bucket.
+**Preostalo:** live test kontakt + newsletter; Cloudflare MFA (ručno); social URL-ovi placeholderi; design asset slike.
 
 ---
 

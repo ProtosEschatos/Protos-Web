@@ -5,7 +5,6 @@ import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
 import { ArrowRight } from 'lucide-react'
 import { PROCESS_FEATURE_ICONS } from '@/lib/section-icons'
-import { PROTOS_WEB_STACK } from '@/lib/tech-stacks'
 
 const featureColors = [
   'bg-[var(--primary)]/15 text-[var(--primary)]',
@@ -23,7 +22,7 @@ export default function ProcessPage() {
   const steps = t.raw('steps') as Array<{ num: string; title: string; text: string }>
   const features = t.raw('features') as Array<{ title: string; text: string }>
   const stats = t.raw('stats') as Array<{ value: string; label: string }>
-  const techs = PROTOS_WEB_STACK.items
+  const techs = t.raw('technologies') as string[]
 
   return (
     <>
@@ -94,8 +93,7 @@ export default function ProcessPage() {
 
       <section className="py-16 text-center">
         <div className="max-w-[1200px] mx-auto px-6">
-          <h2 className="text-[clamp(2rem,5vw,3rem)] font-extrabold mb-4">{t('technologiesTitle')}</h2>
-          <p className="text-sm text-[var(--light-muted)] mb-8 max-w-xl mx-auto">{t('technologiesNote')}</p>
+          <h2 className="text-[clamp(2rem,5vw,3rem)] font-extrabold mb-8">{t('technologiesTitle')}</h2>
           <div className="flex flex-wrap gap-3 justify-center">
             {techs.map((tech) => (
               <span key={tech} className="cosmic-panel px-6 py-2.5 rounded-full text-sm font-medium text-[var(--light)] hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all duration-300">

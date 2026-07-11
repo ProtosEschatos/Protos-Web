@@ -12,14 +12,10 @@
   },
   "onlinePresence": {
     "label": "LET'S CONNECT",
-    "title": "Our Online Presence",
-    "subtitle": "Find us across the web — Protos Web studio, Dario and Martina. From code to freelance platforms.",
-    "studioTitle": "Protos Web studio",
-    "darioTitle": "Dario Imsirović",
-    "martinaTitle": "Martina Markulin",
+    "title": "My Online Presence",
+    "subtitle": "Find me across the web — from code to freelance platforms. Let's build something together.",
     "socialsTitle": "Socials",
-    "platformsTitle": "Freelance platforms",
-    "pendingLabel": "Coming soon"
+    "platformsTitle": "Freelance platforms"
   },
   "header": {
     "brand": "Protos Web",
@@ -35,26 +31,10 @@
     "cta_primary": "Start build",
     "cta_secondary": "View Portfolio",
     "stats": {
-      "projects": {
-        "value": "50",
-        "suffix": "+",
-        "label": "Projects delivered"
-      },
-      "satisfaction": {
-        "value": "98",
-        "suffix": "%",
-        "label": "Client satisfaction"
-      },
-      "languages": {
-        "value": "5",
-        "suffix": " langs",
-        "label": "Multilingual support"
-      },
-      "webgl": {
-        "value": "3D & WebGL",
-        "suffix": "",
-        "label": "Interactive experiences"
-      }
+      "projects": { "value": "50", "suffix": "+", "label": "Projects delivered" },
+      "satisfaction": { "value": "98", "suffix": "%", "label": "Client satisfaction" },
+      "languages": { "value": "5", "suffix": " langs", "label": "Multilingual support" },
+      "webgl": { "value": "3D & WebGL", "suffix": "", "label": "Interactive experiences" }
     }
   },
   "services": {
@@ -62,105 +42,32 @@
     "title": "What",
     "titleHighlight": "we offer",
     "items": [
-      {
-        "title": "Custom Web Solutions",
-        "text": "Tailored websites built from scratch with modern technologies, optimized for performance and conversions."
-      },
-      {
-        "title": "UI/UX Design",
-        "text": "Beautiful, intuitive interfaces designed with the user journey in mind. Every pixel has a purpose."
-      },
-      {
-        "title": "E-Commerce & Web Apps",
-        "text": "Full-featured online stores and web applications with payment integration and inventory management."
-      },
-      {
-        "title": "SEO & Marketing",
-        "text": "Search engine optimization and digital marketing strategies to increase your online visibility."
-      },
-      {
-        "title": "AI & Scheduling",
-        "text": "Smart integrations including AI chatbots, automated booking systems, and intelligent workflows."
-      },
-      {
-        "title": "Maintenance",
-        "text": "Ongoing support, updates, security patches, and performance monitoring to keep your site running smoothly."
-      }
+      { "title": "Custom Web Solutions", "text": "Tailored websites built from scratch with modern technologies, optimized for performance and conversions." },
+      { "title": "UI/UX Design", "text": "Beautiful, intuitive interfaces designed with the user journey in mind. Every pixel has a purpose." },
+      { "title": "E-Commerce & Web Apps", "text": "Full-featured online stores and web applications with payment integration and inventory management." },
+      { "title": "SEO & Marketing", "text": "Search engine optimization and digital marketing strategies to increase your online visibility." },
+      { "title": "AI & Scheduling", "text": "Smart integrations including AI chatbots, automated booking systems, and intelligent workflows." },
+      { "title": "Maintenance", "text": "Ongoing support, updates, security patches, and performance monitoring to keep your site running smoothly." }
     ],
     "pageSubtitle": "Professional web solutions tailored to your business needs. From concept to launch and beyond.",
     "ctaTitle": "Ready to start your project?",
     "ctaText": "Get a free consultation and quote — no strings attached.",
-    "ctaButton": "Get a Quote",
-    "faq": {
-      "title": "Frequently asked questions",
-      "subtitle": "Answers to common questions about website development in Croatia and working with Protos Web.",
-      "items": [
-        {
-          "question": "How much does a website cost in Croatia?",
-          "answer": "Cost depends on scope — landing page, business site, or custom platform. Every project is bespoke, no off-the-shelf themes. After a short call you receive a clear quote with no hidden fees."
-        },
-        {
-          "question": "How long does website development take?",
-          "answer": "A simpler site can be ready in 2–4 weeks. Complex projects (e-commerce, CRM, multilingual) take longer. We agree timelines upfront and keep you updated throughout."
-        },
-        {
-          "question": "Do you work in English and German?",
-          "answer": "Yes. Dario speaks Croatian and English natively and German at a basic level. We can deliver sites in multiple languages — ideal for clients in Croatia and the EU."
-        },
-        {
-          "question": "Do you use ready-made themes or templates?",
-          "answer": "No. Everything is built from scratch for your brand and goals. Templates and reusable components remain studio IP — clients receive usage rights per contract."
-        },
-        {
-          "question": "Is SEO optimization included?",
-          "answer": "Yes — technical SEO (speed, structure, meta tags, schema markup, sitemap) is included in every project. Additional SEO strategy and content can be agreed separately."
-        },
-        {
-          "question": "Do you offer maintenance after launch?",
-          "answer": "Yes. We offer ongoing support, security updates, performance monitoring, and minor content changes — monthly or ad-hoc as agreed."
-        }
-      ]
-    }
+    "ctaButton": "Get a Quote"
   },
   "process": {
     "label": "PROCESS",
     "title": "How we",
     "titleHighlight": "work",
     "steps": [
-      {
-        "num": "01",
-        "title": "Discovery",
-        "text": "We learn about your business, goals, and target audience."
-      },
-      {
-        "num": "02",
-        "title": "Design",
-        "text": "Wireframes and visual design tailored to your brand."
-      },
-      {
-        "num": "03",
-        "title": "Development",
-        "text": "Clean code, modern stack, performance-first approach."
-      },
-      {
-        "num": "04",
-        "title": "Launch",
-        "text": "Testing, deployment, and ongoing support."
-      }
+      { "num": "01", "title": "Discovery", "text": "We learn about your business, goals, and target audience." },
+      { "num": "02", "title": "Design", "text": "Wireframes and visual design tailored to your brand." },
+      { "num": "03", "title": "Development", "text": "Clean code, modern stack, performance-first approach." },
+      { "num": "04", "title": "Launch", "text": "Testing, deployment, and ongoing support." }
     ],
     "features": [
-      {
-        "title": "Fast delivery",
-        "text": "Most projects delivered within 2-4 weeks."
-      },
-      {
-        "title": "Transparent pricing",
-        "text": "Clear quotes with no hidden costs."
-      },
-      {
-        "title": "Long-term support",
-        "text": "We stay with you after launch."
-      }
+      { "title": "Fast delivery", "text": "Most projects delivered within 2-4 weeks." },
+      { "title": "Transparent pricing", "text": "Clear quotes with no hidden costs." },
+      { "title": "Long-term support", "text": "We stay with you after launch." }
     ]
   },
   "processPage": {
@@ -170,61 +77,24 @@
     "subtitle": "A transparent process from first contact to launch. Every step is clear, measurable, and tailored to your needs.",
     "cta": "Contact",
     "steps": [
-      {
-        "num": "01",
-        "title": "Discovery",
-        "text": "We learn about your business, goals, and target audience."
-      },
-      {
-        "num": "02",
-        "title": "Design",
-        "text": "Wireframes and visual design tailored to your brand."
-      },
-      {
-        "num": "03",
-        "title": "Development",
-        "text": "Clean code, modern stack, performance-first approach."
-      },
-      {
-        "num": "04",
-        "title": "Launch",
-        "text": "Testing, deployment, and ongoing support."
-      }
+      { "num": "01", "title": "Discovery", "text": "We learn about your business, goals, and target audience." },
+      { "num": "02", "title": "Design", "text": "Wireframes and visual design tailored to your brand." },
+      { "num": "03", "title": "Development", "text": "Clean code, modern stack, performance-first approach." },
+      { "num": "04", "title": "Launch", "text": "Testing, deployment, and ongoing support." }
     ],
     "features": [
-      {
-        "title": "Fast delivery",
-        "text": "Most projects delivered within 2-4 weeks."
-      },
-      {
-        "title": "Transparent pricing",
-        "text": "Clear quotes with no hidden costs."
-      },
-      {
-        "title": "Long-term support",
-        "text": "We stay with you after launch."
-      }
+      { "title": "Fast delivery", "text": "Most projects delivered within 2-4 weeks." },
+      { "title": "Transparent pricing", "text": "Clear quotes with no hidden costs." },
+      { "title": "Long-term support", "text": "We stay with you after launch." }
     ],
     "stats": [
-      {
-        "value": "5+",
-        "label": "Years of experience"
-      },
-      {
-        "value": "30+",
-        "label": "Completed projects"
-      },
-      {
-        "value": "1",
-        "label": "Cross web app in development"
-      },
-      {
-        "value": "100%",
-        "label": "Custom code, zero pre-made themes"
-      }
+      { "value": "5+", "label": "Years of experience" },
+      { "value": "30+", "label": "Completed projects" },
+      { "value": "1", "label": "Cross web app in development" },
+      { "value": "100%", "label": "Custom code, zero pre-made themes" }
     ],
-    "technologiesTitle": "Technologies — Protos Web stack",
-    "technologiesNote": "Languages and build tools. Infrastructure services are not publicly exposed."
+    "technologiesTitle": "Technologies",
+    "technologies": ["Next.js", "TypeScript", "Three.js", "Tailwind CSS", "Framer Motion", "Supabase", "Stripe", "Drizzle ORM", "Cloudflare", "Linux / DevOps"]
   },
   "portfolio": {
     "label": "PORTFOLIO",
@@ -251,11 +121,7 @@
     "subtitle": "Free guides on web presence for entrepreneurs",
     "readMore": "Read more",
     "viewAll": "View all articles",
-    "empty": "No articles published yet.",
-    "authorBy": "By {author}",
-    "authorDario": "Dario Imsirović",
-    "authorMartina": "Martina Markulin",
-    "authorBoth": "Dario Imsirović & Martina Markulin"
+    "empty": "No articles published yet."
   },
   "contact": {
     "label": "CONTACT",
@@ -277,14 +143,7 @@
     "sending": "Sending...",
     "success": "Message sent! We will get back to you soon.",
     "error": "Something went wrong. Please try again.",
-    "serviceOptions": [
-      "Custom Website",
-      "E-Commerce",
-      "Web Application",
-      "UI/UX Design",
-      "SEO & Marketing",
-      "Maintenance"
-    ]
+    "serviceOptions": ["Custom Website", "E-Commerce", "Web Application", "UI/UX Design", "SEO & Marketing", "Maintenance"]
   },
   "transition": {
     "loading": "Loading...",
@@ -322,15 +181,8 @@
   "loader": {
     "subtitle": "Loading experience",
     "enter": "Enter",
-    "consentModalTitle": "Terms acceptance required",
-    "consentModalRequired": "Without accepting the Terms of Service and Privacy Policy you cannot enter the site or use any of its content.",
-    "consentModalIntro": "Read and accept our",
-    "termsAcceptLabel": "I accept the Terms of Service",
-    "termsAcceptDesc": "I confirm I have read the Terms, including protection of all original Protos Web works, templates, designs, and client deliverables, and understand that unauthorised copying or misuse may be punishable.",
-    "consentModalAccept": "Accept and enter the site",
-    "consentModalBlocked": "You must accept the Terms of Service to continue.",
     "cookieModalTitle": "Cookie consent required",
-    "cookieModalIntro": "Read our",
+    "cookieModalIntro": "To enter the site you must accept essential cookies. Optional cookies can be selected below. Read our",
     "cookieModalTerms": "Terms of Service",
     "cookieModalLegalAnd": "and",
     "cookieModalPrivacy": "Privacy Policy",
@@ -375,317 +227,71 @@
     "webglViewPortfolio": "View full portfolio"
   },
   "aboutPage": {
-    "label": "ABOUT US",
-    "heroTitleLine1": "Dario Imsirović & Martina Markulin",
-    "heroTitleHighlight": "Protos Web studio",
-    "heroTitleLine2": "from Zagreb.",
-    "heroSubtitle": "AI engineering, full stack cross-web development and frontend/shop design — with 3D experiences in every project. We build modern, fast and visually stunning solutions.",
-    "whoTitle": "Who we are",
-    "studioIntro": "Protos Web is a studio in formation — trade Protos Web Mark23 registration in progress (OIB: 23732814520). All designs, templates, and creative works remain the original property of their authors as sovereign creators, regardless of business registration.",
-    "teamTitle": "Info",
-    "teamFieldLabels": {
-      "location": "Location",
-      "experience": "Experience",
-      "email": "Email",
-      "phone": "Phone",
-      "languages": "Languages",
-      "focus": "Focus",
-      "contribution": "Contribution",
-      "instagram": "Instagram"
-    },
-    "team": {
-      "dario": {
-        "label": "Founder & development",
-        "name": "Dario Imsirović",
-        "role": "AI Engineer & Full Stack Cross-Web Developer",
-        "bio": "AI engineer and Full Stack Developer from Zagreb with 5 years of experience. I build custom platforms, web shops, CRM systems and 3D web experiences — from landing pages to complex cross-web solutions. No pre-made themes, with a focus on security and performance.",
-        "expertise": ["AI engineering", "Full stack", "3D / WebGL", "Cyber security"],
-        "fields": {
-          "location": "Zagreb, Croatia",
-          "experience": "5 years",
-          "email": "dario.admin@protosweb.eu",
-          "phone": "+385 97 604 39 41",
-          "languages": "Croatian (native), English (native), German (basic)",
-          "instagram": ""
-        }
-      },
-      "martina": {
-        "label": "Frontend & shop design",
-        "name": "Martina Markulin",
-        "role": "Frontend expert & top-tier shop/UI designer",
-        "bio": "Martina is the heart of our visual identity and emotional experience in every project. As a frontend expert and shop designer she shapes interfaces, palettes, typography and UX — including 3D visuals. Creative collaborator on every studio work.",
-        "expertise": ["Frontend", "Shop design", "UI/UX", "3D visuals"],
-        "fields": {
-          "focus": "UI/UX design, visual concepts, branding",
-          "contribution": "Creative ideas, aesthetics, and design across all projects",
-          "instagram": ""
-        }
-      }
-    },
+    "label": "ABOUT ME",
+    "heroTitleLine1": "We build digital",
+    "heroTitleHighlight": "solutions that grow",
+    "heroTitleLine2": "together with you.",
+    "heroSubtitle": "Full Stack Developer & Web Designer from Zagreb. I build modern, fast and visually stunning websites — each one crafted with soul and care down to the last detail.",
+    "whoTitle": "Who I am",
+    "bio1": "Full Stack Developer from Zagreb with 5 years of experience building modern web solutions. I work with entrepreneurs and companies across Croatia and Europe — from fast landing pages to complex custom platforms, web shops, and CRM systems.",
+    "bio2": "Everything I build is custom — no pre-made themes, no compromises on quality. Every project starts from scratch, tailored exactly to your needs and goals.",
+    "bio3": "Interests: Full stack development, Cross platform web, 3D web experiences, Platform building, Web design, Cyber security.",
+    "bio4": "Goal: Help local and European businesses find the right web solution — without unnecessary complexity, with a modern interface.",
     "guideLink": "Free web presence guides for entrepreneurs",
+    "infoTitle": "Info",
+    "infoLabels": {
+      "name": "NAME",
+      "location": "LOCATION",
+      "experience": "EXPERIENCE",
+      "email": "EMAIL",
+      "phone": "PHONE",
+      "languages": "LANGUAGES"
+    },
+    "infoValues": {
+      "name": "Dario Imsirović",
+      "location": "Zagreb, Croatia",
+      "experience": "5 years",
+      "email": "dario.admin@protosweb.eu",
+      "phone": "+385 97 604 39 41",
+      "languages": "Croatian, English, Deutsch (basic)"
+    },
     "goalsTitle": "Goals",
     "goals": [
-      {
-        "title": "European market",
-        "text": "Actively expanding to EU clients through multilingual offerings and knowledge of European standards — GDPR, accessibility, localization."
-      },
-      {
-        "title": "Custom platforms",
-        "text": "Building SaaS and custom CRM solutions for niches that still lack a good digital solution in the local market."
-      },
-      {
-        "title": "Cyber security",
-        "text": "Integrating security standards into every project — ensure every website handling data must be protected."
-      }
+      { "title": "European market", "text": "Actively expanding to EU clients through multilingual offerings and knowledge of European standards — GDPR, accessibility, localization." },
+      { "title": "Custom platforms", "text": "Building SaaS and custom CRM solutions for niches that still lack a good digital solution in the local market." },
+      { "title": "Cyber security", "text": "Integrating security standards into every project — ensure every website handling data must be protected." }
     ],
     "supportLabel": "SUPPORT",
     "supportTitle": "Projects that change",
     "supportTitleHighlight": "the digital Balkans",
     "supportSubtitle": "Every donation contributes to developing a platform for protection against internet fraud and building a freer digital space for our region.",
     "supportCards": [
-      {
-        "title": "Cyber Security Education Equipment",
-        "text": "Help us acquire a server, laptop and software for free online cyber security education — for everyone who wants to learn how to protect themselves online.",
-        "target": "10,000",
-        "btnText": "Support education",
-        "progress": 5
-      },
-      {
-        "title": "Free Digital Education",
-        "text": "Fund free HR video tutorials and guides on web development, AI tools and digital security.",
-        "target": "10,000",
-        "btnText": "Support education",
-        "progress": 3
-      },
-      {
-        "title": "Regional Digital Platforms",
-        "text": "Building open source alternatives to global platforms — made for the Balkans, by the Balkans.",
-        "target": "20,000",
-        "btnText": "Invest in the region",
-        "progress": 2
-      }
+      { "title": "Cyber Security Education Equipment", "text": "Help us acquire a server, laptop and software for free online cyber security education — for everyone who wants to learn how to protect themselves online.", "target": "10,000", "btnText": "Support education", "progress": 5 },
+      { "title": "Free Digital Education", "text": "Fund free HR video tutorials and guides on web development, AI tools and digital security.", "target": "10,000", "btnText": "Support education", "progress": 3 },
+      { "title": "Regional Digital Platforms", "text": "Building open source alternatives to global platforms — made for the Balkans, by the Balkans.", "target": "20,000", "btnText": "Invest in the region", "progress": 2 }
     ],
     "currencyZero": "0 €",
-    "currencyOf": "of {target} €",
-    "dualStacks": {
-      "label": "STACKS",
-      "title": "Two stacks, same expertise",
-      "subtitle": "Protos Web and client projects show we work across different build approaches — from modern TypeScript/React to lightweight vanilla solutions.",
-      "protosTitle": "Protos Web — modern stack",
-      "protosDescription": "TypeScript, React, Next.js, 3D/WebGL and animations. Custom studio site and bespoke platforms.",
-      "bodulicaTitle": "Bodulica Shop — vanilla stack",
-      "bodulicaDescription": "First client webshop — HTML, CSS and vanilla JavaScript. Opposite build from Protos Web. Martina: shop and UI design. Dario: implementation.",
-      "bodulicaNote": "Studio showcase of different approaches — no public shop link."
-    }
+    "currencyOf": "of {target} €"
   },
   "legalPages": {
-    "lastUpdated": "Last updated",
-    "lastUpdatedDate": "11 July 2026",
     "privacyTitle": "Privacy Policy",
-    "privacyDescription": "How Protos Web handles your personal data in accordance with GDPR.",
+    "privacyDescription": "How Protos Web handles your personal data.",
+    "privacyBody": "Protos Web respects your privacy. We collect only the data necessary to operate this website, respond to contact requests, and improve our services.\n\nWe do not sell personal data to third parties. Analytics and cookies are used only with your consent where required.\n\nFor questions about your data, contact us at dario.admin@protosweb.eu.",
     "termsTitle": "Terms of Service",
-    "termsDescription": "Terms for using the Protos Web website, including intellectual property protection.",
+    "termsDescription": "Terms for using the Protos Web website and services.",
+    "termsBody": "By using this website you agree to these terms. Content, branding, and code on this site are owned by Protos Web unless otherwise stated.\n\nPortfolio demos and showcase experiences are provided for presentation purposes. External project links open third-party sites governed by their own terms.\n\nWe may update these terms; continued use after changes means acceptance of the updated terms.",
     "cookiesTitle": "Cookie Policy",
     "cookiesDescription": "How Protos Web uses cookies and similar technologies.",
-    "termsSections": [
-      {
-        "title": "1. Introduction and acceptance",
-        "paragraphs": [
-          "These Terms of Service (\"Terms\") govern access to and use of the website www.protosweb.eu (the \"Site\") operated by Dario Imsirović — Protos Web, trade registration in progress as Protos Web Mark23 (OIB: 23732814520), Zagreb, Republic of Croatia (\"Protos Web\", \"we\", \"us\").",
-          "Access to the Site, its subpages, 3D showcase, contact form, newsletter, and any interaction is permitted only after you expressly accept these Terms and the Privacy Policy via the mandatory consent screen on entry. Without that acceptance you may not use the Site or proceed further.",
-          "By accessing after acceptance you confirm that you have read, understood, and fully accept these Terms. If you do not agree, close the Site and do not use it."
-        ]
-      },
-      {
-        "title": "2. Intellectual property and copyright",
-        "paragraphs": [
-          "All content on the Site — including but not limited to: visual identity and branding; user interface and UX/UI design; page layout, typography, color palettes, and graphic elements; illustrations, photographs, icons, and animations; 3D models, scenes, and interactive presentations; source code, architecture, components, and databases; texts, translations, blog posts, and marketing materials; SEO metadata, structured data (JSON-LD), and technical implementations — constitutes original intellectual property of Dario Imsirović, Martina Markulin (UI design and creative contribution), and/or Protos Web, unless expressly stated otherwise.",
-          "All designs, templates, code, and creative works remain the property of their authors as sovereign, free persons and creators, regardless of trade or business registration. Business registration does not diminish or transfer copyright without an express written agreement.",
-          "All such elements are protected under the laws of the Republic of Croatia and the European Union on copyright, related rights, and intellectual property, including the Croatian Copyright and Related Rights Act and applicable international treaties.",
-          "No part of the Site shall be deemed dedicated to the public domain, nor shall any licence for use be implied without prior express written consent from Dario Imsirović / Protos Web."
-        ]
-      },
-      {
-        "title": "3. Prohibited activities",
-        "paragraphs": [
-          "Without prior express written permission, it is prohibited to: copy, download, reproduce, distribute, or publicly display any part of the Site; automatically collect content (scraping, crawling, harvesting); clone the design, appearance, structure, or functionality of the Site; reverse engineer, decompile, or extract source code; remove, hide, or alter copyright notices; use content for commercial, competitive, or misleading purposes; falsely claim ownership of Protos Web design, code, or brand.",
-          "Creating derivative works, adaptations, or integrating our design, code, or visual identity into third-party products, services, templates, themes, or platforms without written consent is prohibited."
-        ]
-      },
-      {
-        "title": "4. Civil and criminal liability",
-        "paragraphs": [
-          "Any unauthorised use, misappropriation, copying, or abuse of Protos Web intellectual property may result in full civil liability, including claims for injunctive relief, damages, disgorgement of profits, and recovery of legal costs.",
-          "Depending on severity and circumstances, the same conduct may constitute a misdemeanour or criminal offence under applicable law of the Republic of Croatia, including provisions on protection of copyright and related rights and on unauthorised use of another's intellectual or industrial property. In such cases we reserve the right to report the matter to competent authorities and pursue all permitted legal remedies.",
-          "Protos Web actively protects its copyrights and original works. Any proven infringement will be pursued to the fullest extent permitted by law."
-        ]
-      },
-      {
-        "title": "5. Templates, components, and client deliverables",
-        "paragraphs": [
-          "All templates, themes, components, UI kits, code libraries, design systems, wireframes, prototypes, configurations, documentation, and any other deliverable created by Protos Web for clients or internal use constitutes original intellectual property of Dario Imsirović, Martina Markulin, and/or Protos Web, unless expressly agreed otherwise in a written contract with a specific client.",
-          "A client ordering a website, application, design, or other service acquires only the usage rights clearly defined in a written contract or quote — typically: the right to use the finished project for their own business purposes. The client does not acquire ownership of underlying templates, reusable code, architecture, design system, methodology, or tools used in production, unless expressly agreed and compensated.",
-          "Clients, visitors, and third parties must be aware that unauthorised copying, downloading, adaptation, resale, or distribution of any Protos Web template, component, or client deliverable is prohibited and may result in civil and criminal liability, whether the work is shown in the portfolio or delivered to a client.",
-          "Display of work in portfolio, 3D showcase, or demo environments does not grant a licence to reproduce. Every client confirms awareness of these Terms when using the Site and/or entering a business relationship with Protos Web."
-        ]
-      },
-      {
-        "title": "6. Portfolio, demo content, and presentations",
-        "paragraphs": [
-          "Portfolio displays, 3D showcase, and demo experiences are for presentation only and do not grant permission to reproduce or appropriate the solutions shown.",
-          "Unauthorised copying of displayed work — including work created for clients — is equally prohibited and subject to the same legal remedies."
-        ]
-      },
-      {
-        "title": "7. External links and third-party services",
-        "paragraphs": [
-          "The Site may contain links to third-party websites. Protos Web does not control their content and is not responsible for their terms of use or privacy policies.",
-          "Use of third-party services (e.g. hosting, email, payments) is subject to those providers' terms."
-        ]
-      },
-      {
-        "title": "8. Limitation of liability",
-        "paragraphs": [
-          "The Site is provided \"as is\". To the extent permitted by law, Protos Web is not liable for indirect damages, downtime, or data loss arising from use of the Site, except in cases of intent or gross negligence.",
-          "Nothing in these Terms limits liability that cannot be excluded under mandatory law of the Republic of Croatia."
-        ]
-      },
-      {
-        "title": "9. Changes to terms",
-        "paragraphs": [
-          "We may update these Terms from time to time. The last updated date is shown at the top of this page. Continued use of the Site after changes constitutes acceptance of the updated Terms."
-        ]
-      },
-      {
-        "title": "10. Governing law and jurisdiction",
-        "paragraphs": [
-          "These Terms are governed by the law of the Republic of Croatia. Disputes shall be subject to the competent courts in the Republic of Croatia, unless mandatory provisions provide otherwise.",
-          "For questions about intellectual property and these Terms, contact: dario.admin@protosweb.eu."
-        ]
-      }
-    ],
-    "privacySections": [
-      {
-        "title": "1. Data controller",
-        "paragraphs": [
-          "The data controller is Dario Imsirović — Protos Web / Protos Web Mark23 (registration in progress), OIB: 23732814520, Zagreb, Republic of Croatia. Data protection contact: dario.admin@protosweb.eu."
-        ]
-      },
-      {
-        "title": "2. Data we collect",
-        "paragraphs": [
-          "Contact form: name, email address, message, and technical metadata needed to deliver your inquiry.",
-          "Newsletter: email address and subscription timestamp.",
-          "Cookies and analytics: visit and interaction data, only with your consent for non-essential cookies (see Cookie Policy).",
-          "Technical logs: IP address, browser type, access time — for security and infrastructure operation."
-        ]
-      },
-      {
-        "title": "3. Purpose and legal basis",
-        "paragraphs": [
-          "Responding to inquiries and communication — legitimate interest or performance of a service at your request.",
-          "Newsletter — your explicit consent; you may withdraw at any time.",
-          "Security, maintenance, and improvement of the Site — legitimate interest.",
-          "Analytics cookies — your consent where required."
-        ]
-      },
-      {
-        "title": "4. Recipients and processors",
-        "paragraphs": [
-          "We share personal data only with trusted service providers necessary to operate the Site: Vercel (hosting), Supabase (database), Resend and/or Brevo (email), Cloudflare (DNS and security). All processors are contractually bound to protect data.",
-          "We do not sell your personal data to third parties."
-        ]
-      },
-      {
-        "title": "5. Storage and retention",
-        "paragraphs": [
-          "Contact inquiries are kept as long as needed to respond and maintain communication records, then deleted or anonymised when no longer necessary.",
-          "Newsletter subscriptions are kept until you unsubscribe.",
-          "Technical logs are retained for a reasonable period required for security and maintenance."
-        ]
-      },
-      {
-        "title": "6. Your rights (GDPR)",
-        "paragraphs": [
-          "You have the right to access, rectification, erasure, restriction of processing, objection, data portability, and withdrawal of consent (where processing is based on consent).",
-          "To exercise your rights, email dario.admin@protosweb.eu. We respond within the timeframe required by GDPR.",
-          "You may lodge a complaint with the Croatian Personal Data Protection Agency (AZOP), Ulica grada Vukovara 54, 10000 Zagreb."
-        ]
-      },
-      {
-        "title": "7. Intellectual property and privacy",
-        "paragraphs": [
-          "Protection of Protos Web original designs, code, and creative works is governed by the Terms of Service. This Privacy Policy applies solely to personal data and does not diminish copyright or ownership of Site content."
-        ]
-      },
-      {
-        "title": "8. Changes to this policy",
-        "paragraphs": [
-          "We may update this Privacy Policy. The last updated date is shown at the top of this page. Material changes will be published on the Site."
-        ]
-      }
-    ],
-    "cookiesSections": [
-      {
-        "title": "1. What are cookies",
-        "paragraphs": [
-          "Cookies are small text files stored in your browser. They are used for basic Site operation, remembering settings, and — with consent — visit analytics."
-        ]
-      },
-      {
-        "title": "2. Types of cookies we use",
-        "paragraphs": [
-          "Essential cookies: required for security, session, language settings, and storing your cookie choice. Always active.",
-          "Analytics cookies (optional): help us understand Site usage and improve user experience. Activated only with your consent."
-        ]
-      },
-      {
-        "title": "3. Managing consent",
-        "paragraphs": [
-          "On first entry you may accept or decline non-essential cookies via the modal or banner. Your choice is stored locally in your browser.",
-          "You may delete or block cookies in browser settings. Deleting essential cookies may affect Site functionality."
-        ]
-      },
-      {
-        "title": "4. Relation to other policies",
-        "paragraphs": [
-          "Processing of personal data via cookies is described in the Privacy Policy. By using the Site in accordance with your cookie choice, you also accept the Terms of Service protecting Protos Web intellectual property."
-        ]
-      }
-    ]
+    "cookiesBody": "We use essential cookies required for basic site functionality and, with your consent, analytics cookies to understand how visitors use the site.\n\nYou can accept or decline non-essential cookies via the cookie banner or showcase entry modal. Your choice is stored locally in your browser.\n\nYou can clear cookies at any time through your browser settings."
   },
   "metadata": {
-    "home": {
-      "title": "Websites with soul. Speed in the code. Love in the details.",
-      "description": "Protos Web — web studio from Zagreb. Custom websites, UI/UX design and SEO. Dario Imsirović (development) and Martina Markulin (design). Fast, modern, bespoke."
-    },
-    "about": {
-      "title": "About us — Dario Imsirović & Martina Markulin",
-      "description": "Protos Web team from Zagreb: Dario Imsirović, AI engineer & full stack developer and Martina Markulin, frontend/shop UI designer. Two stacks — modern Protos Web and vanilla Bodulica shop."
-    },
-    "process": {
-      "title": "Our Process",
-      "description": "How we build modern web solutions — from consultation to launch. Protos Web, Zagreb."
-    },
-    "portfolio": {
-      "title": "Portfolio",
-      "description": "Selected web projects and case studies — custom design and development from Zagreb."
-    },
-    "showcase": {
-      "title": "3D Portfolio Showcase",
-      "description": "Interactive 3D gallery."
-    },
-    "services": {
-      "title": "Services",
-      "description": "Custom web design, development, UI/UX, SEO and maintenance — Protos Web, Zagreb."
-    },
-    "blog": {
-      "title": "Blog",
-      "description": "Guides on web design, SEO and digital presence for entrepreneurs in Croatia and the EU."
-    },
-    "contact": {
-      "title": "Contact",
-      "description": "Contact Protos Web in Zagreb — free consultation for your website or web application."
-    }
+    "home": { "title": "Websites with soul. Speed in the code. Love in the details.", "description": "Professional web design agency from Zagreb." },
+    "about": { "title": "About Me", "description": "Full Stack Developer & Web Designer from Zagreb." },
+    "process": { "title": "Our Process", "description": "How we build modern web solutions." },
+    "portfolio": { "title": "Portfolio", "description": "Selected projects and case studies." },
+    "showcase": { "title": "3D Portfolio Showcase", "description": "Interactive 3D gallery." },
+    "services": { "title": "Services", "description": "Web design, development, SEO and more." },
+    "blog": { "title": "Blog", "description": "Free guides on web presence for entrepreneurs." },
+    "contact": { "title": "Contact", "description": "Get in touch about your next project." }
   }
 }

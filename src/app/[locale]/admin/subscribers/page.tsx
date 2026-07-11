@@ -1,9 +1,9 @@
 import { setRequestLocale } from 'next-intl/server'
 import { adminListSubscribers } from '@/actions/admin-notifications'
 import AdminPageShell from '@/components/admin/AdminPageShell'
-import AdminHubCard from '@/components/admin/AdminHubCard'
-import { adminMarketingLinks } from '@/lib/admin-hub-links'
-import { Mail, Megaphone } from 'lucide-react'
+import AdminLink from '@/components/admin/AdminLink'
+import { ADMIN_COMMS_SERVICES } from '@/lib/admin-services'
+import { Mail } from 'lucide-react'
 
 type Props = { params: { locale: string } }
 
@@ -14,20 +14,23 @@ export default async function AdminSubscribersPage({ params: { locale } }: Props
   return (
     <AdminPageShell
       title="Newsletter pretplatnici"
-      description="Pretplate s footera web stranice. Na novu pretplatu dobivaš email na Zoho inbox + vidljivo ovdje."
+      description={ADMIN_COMMS_SERVICES.brevo.role}
     >
-      <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {adminMarketingLinks.map((link) => (
-          <AdminHubCard
-            key={link.id}
-            href={link.href}
-            label={link.label}
-            description={link.description}
-            icon={Megaphone}
-            external
-          />
-        ))}
-      </div>
+      <p className="text-sm text-[var(--light-muted)] mb-6">
+        Brevo liste:{' '}
+        <a
+          href={ADMIN_COMMS_SERVICES.brevo.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[var(--primary)] hover:underline"
+        >
+          otvori Brevo kontakte
+        </a>
+        {' · '}
+        <AdminLink href="/admin" className="text-[var(--primary)] hover:underline">
+          ← natrag na pregled
+        </AdminLink>
+      </p>
 
       <div className="flex items-center gap-2 mb-4">
         <Mail className="h-5 w-5 text-[var(--primary)]" />

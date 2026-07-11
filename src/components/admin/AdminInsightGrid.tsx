@@ -2,15 +2,20 @@ import {
   ArrowUpRight,
   BarChart3,
   Bug,
+  Database,
   FileSearch,
   Gauge,
+  Globe,
+  Lock,
+  Mail,
   Map,
   Radar,
   Search,
+  Shield,
   type LucideIcon,
 } from 'lucide-react'
 
-import type { AdminInsight, InsightStatus } from '@/actions/admin-insights'
+import type { AdminInsight, InsightStatus } from '@/lib/admin-insight-types'
 import AdminLink from '@/components/admin/AdminLink'
 
 const iconById: Record<string, LucideIcon> = {
@@ -21,6 +26,11 @@ const iconById: Record<string, LucideIcon> = {
   speed: Gauge,
   seo: Radar,
   plausible: BarChart3,
+  'admin-auth': Shield,
+  cms: Database,
+  'email-dns': Mail,
+  'dns-all': Globe,
+  https: Lock,
   sentry: Bug,
 }
 
@@ -34,6 +44,7 @@ const statusStyles: Record<InsightStatus, string> = {
 type Props = {
   insights: AdminInsight[]
   checkedAt: string
+  footnote?: string | false
 }
 
 function formatCheckedAt(iso: string): string {
@@ -47,7 +58,7 @@ function formatCheckedAt(iso: string): string {
   }
 }
 
-export default function AdminInsightGrid({ insights, checkedAt }: Props) {
+export default function AdminInsightGrid({ insights, checkedAt, footnote }: Props) {
   return (
     <div>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -99,9 +110,12 @@ export default function AdminInsightGrid({ insights, checkedAt }: Props) {
           )
         })}
       </div>
-      <p className="text-[10px] text-[var(--light-muted)] mt-3">
-        Live provjera: {formatCheckedAt(checkedAt)} · GA brojke su u Google Analyticsu (nakon pristanka korisnika)
-      </p>
+      {footnote !== false ? (
+        <p className="text-[10px] text-[var(--light-muted)] mt-3">
+          {footnote ??
+            `Live provjera: ${formatCheckedAt(checkedAt)} · GA brojke su u Google Analyticsu (nakon pristanka korisnika)`}
+        </p>
+      ) : null}
     </div>
   )
 }

@@ -5,11 +5,13 @@ import AdminHubCard from '@/components/admin/AdminHubCard'
 import AdminSection from '@/components/admin/AdminSection'
 import { getAdminStatus } from '@/actions/admin-status'
 import {
+  adminCommsLinks,
   adminFreelanceLinks,
   adminMarketingLinks,
   adminPlatformLinks,
   adminSocialLinks,
 } from '@/lib/admin-hub-links'
+import { Inbox, Mail, Megaphone, Send } from 'lucide-react'
 
 type Props = { params: { locale: string } }
 
@@ -27,7 +29,32 @@ export default async function AdminToolsPage({ params: { locale } }: Props) {
         </div>
       </AdminSection>
 
-      <AdminSection title="Marketing">
+      <AdminSection title="Email & inboxi">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {adminCommsLinks.map((link) => {
+            const icon =
+              link.id === 'zoho' || link.id === 'inbox-site'
+                ? Inbox
+                : link.id === 'resend'
+                  ? Send
+                  : link.id.startsWith('brevo')
+                    ? Megaphone
+                    : Mail
+            return (
+              <AdminHubCard
+                key={link.id}
+                href={link.href}
+                label={link.label}
+                description={link.description}
+                icon={icon}
+                external={link.external}
+              />
+            )
+          })}
+        </div>
+      </AdminSection>
+
+      <AdminSection title="Marketing & SEO">
         <div className="grid gap-3 sm:grid-cols-2">
           {adminMarketingLinks.map((link) => (
             <AdminHubCard

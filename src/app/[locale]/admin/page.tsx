@@ -1,29 +1,25 @@
 import { setRequestLocale } from 'next-intl/server'
-import { ExternalLink, FileText, Inbox, LayoutGrid, Mail, Wrench } from 'lucide-react'
-import AdminActivityFeed from '@/components/admin/AdminActivityFeed'
+import { ExternalLink, FileText, LayoutGrid, Wrench } from 'lucide-react'
+import AdminCommsInboxPanel from '@/components/admin/AdminCommsInboxPanel'
 import AdminHubCard from '@/components/admin/AdminHubCard'
 import AdminInsightGrid from '@/components/admin/AdminInsightGrid'
-import AdminLink from '@/components/admin/AdminLink'
 import AdminSection from '@/components/admin/AdminSection'
 import AdminStatGrid from '@/components/admin/AdminStatGrid'
 import { adminGetNotifications } from '@/actions/admin-notifications'
 import { adminGetInsights } from '@/actions/admin-insights'
+import { adminGetCommsChannels, adminGetSecurityInsights } from '@/actions/admin-ops-insights'
 import { SITE_DOMAIN, SITE_URL } from '@/lib/site'
 
 type Props = { params: { locale: string } }
 
-const ACTIVITY_PREVIEW_LIMIT = 4
-
 export default async function AdminPage({ params: { locale } }: Props) {
   setRequestLocale(locale)
-  const [notifications, insights] = await Promise.all([adminGetNotifications(), adminGetInsights()])
-  const activityPreview = notifications.activityFeed.slice(0, ACTIVITY_PREVIEW_LIMIT)
-  const hasMoreActivity = notifications.activityFeed.length > ACTIVITY_PREVIEW_LIMIT
-
-  const contactBadge =
-    notifications.contactsLast24Hours > 0 ? `${notifications.contactsLast24Hours} novo` : undefined
-  const subscriberBadge =
-    notifications.subscribersLast24Hours > 0 ? `${notifications.subscribersLast24Hours} novo` : undefined
+  const notifications = await adminGetNotifications()
+  const [marketing, security, comms] = await Promise.all([
+    adminGetInsights(),
+    adminGetSecurityInsights(),
+    adminGetCommsChannels(notifications),
+  ])
 
   return (
     <div className="py-8 md:py-10">
@@ -34,7 +30,7 @@ export default async function AdminPage({ params: { locale } }: Props) {
           </p>
           <h1 className="text-2xl md:text-3xl font-bold text-[var(--light)]">Admin pregled</h1>
           <p className="text-sm text-[var(--light-muted)] mt-2 max-w-xl">
-            Sažetak aktivnosti i brzi ulaz u sadržaj. Detalje vidi u odgovarajućem odjeljku iz navigacije.
+            Inboxi, sigurnost i marketing na jednom mjestu — bez duplih linkova.
           </p>
         </header>
 
@@ -60,32 +56,25 @@ export default async function AdminPage({ params: { locale } }: Props) {
           ]}
         />
 
-        <AdminSection title="Marketing & SEO" className="mt-10">
-          <AdminInsightGrid insights={insights.insights} checkedAt={insights.checkedAt} />
+        <AdminSection title="Poruke & inboxi" className="mt-10">
+          <AdminCommsInboxPanel channels={comms.channels} checkedAt={comms.checkedAt} />
         </AdminSection>
 
-        <AdminSection title="Brzi pristup" className="mt-10">
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            <AdminHubCard
-              href="/admin/inbox"
-              label="Kontakt forma"
-              description={`${notifications.contactsLast7Days} upita (7 dana)`}
-              icon={Inbox}
-              badge={contactBadge}
-            />
-            <AdminHubCard
-              href="/admin/subscribers"
-              label="Newsletter"
-              description={`${notifications.subscriberCount} pretplatnika`}
-              icon={Mail}
-              badge={subscriberBadge}
-            />
-            <AdminHubCard
-              href="/admin/blog"
-              label="Blog"
-              description="Članci i objave"
-              icon={FileText}
-            />
+        <AdminSection title="Sigurnost & infrastruktura" className="mt-10">
+          <AdminInsightGrid
+            insights={security.insights}
+            checkedAt={security.checkedAt}
+            footnote={`Provjera: ${new Intl.DateTimeFormat('hr-HR', { dateStyle: 'short', timeStyle: 'short' }).format(new Date(security.checkedAt))} · DNS, admin auth, CMS`}
+          />
+        </AdminSection>
+
+        <AdminSection title="Marketing & SEO" className="mt-10">
+          <AdminInsightGrid insights={marketing.insights} checkedAt={marketing.checkedAt} />
+        </AdminSection>
+
+        <AdminSection title="Sadržaj & alati" className="mt-10">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <AdminHubCard href="/admin/blog" label="Blog" description="Članci i objave" icon={FileText} />
             <AdminHubCard
               href="/admin/portfolio"
               label="Portfolio"
@@ -95,7 +84,7 @@ export default async function AdminPage({ params: { locale } }: Props) {
             <AdminHubCard
               href="/admin/tools"
               label="Alati i platforme"
-              description="Hosting, email, DNS, linkovi"
+              description="Cloudflare, Vercel, DNS detalji"
               icon={Wrench}
             />
             <AdminHubCard
@@ -107,44 +96,6 @@ export default async function AdminPage({ params: { locale } }: Props) {
             />
           </div>
         </AdminSection>
-
-        {activityPreview.length > 0 ? (
-          <AdminSection
-            title="Zadnja aktivnost"
-            actionHref="/admin/inbox"
-            actionLabel={hasMoreActivity ? 'Sve poruke →' : 'Inbox →'}
-            className="mt-10"
-          >
-            <AdminActivityFeed items={activityPreview} />
-          </AdminSection>
-        ) : null}
-
-        <div className="mt-10 flex flex-wrap items-center gap-2 rounded-xl border border-white/10 bg-[var(--dark-card)]/40 px-4 py-3 text-xs">
-          <span
-            className={
-              notifications.dnsIssues
-                ? 'rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-amber-300'
-                : 'rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-emerald-300'
-            }
-          >
-            DNS {notifications.dnsIssues ? `${notifications.dnsIssues} upozorenja` : 'OK'}
-          </span>
-          <span
-            className={
-              notifications.serviceRoleConfigured
-                ? 'rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-emerald-300'
-                : 'rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-amber-300'
-            }
-          >
-            CMS {notifications.serviceRoleConfigured ? 'OK' : 'provjeri service role'}
-          </span>
-          <AdminLink
-            href="/admin/tools"
-            className="ml-auto text-[var(--light-muted)] hover:text-[var(--primary)] transition-colors"
-          >
-            Alati i DNS →
-          </AdminLink>
-        </div>
       </div>
     </div>
   )

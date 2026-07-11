@@ -1,10 +1,9 @@
 import { setRequestLocale } from 'next-intl/server'
 import { adminListContacts } from '@/actions/admin-notifications'
 import AdminPageShell from '@/components/admin/AdminPageShell'
-import AdminHubCard from '@/components/admin/AdminHubCard'
-import { adminMarketingLinks } from '@/lib/admin-hub-links'
+import AdminLink from '@/components/admin/AdminLink'
+import { ADMIN_COMMS_SERVICES } from '@/lib/admin-services'
 import { CONTACT_EMAIL } from '@/lib/site'
-import { Inbox, Megaphone } from 'lucide-react'
 
 type Props = { params: { locale: string } }
 
@@ -15,27 +14,23 @@ export default async function AdminInboxPage({ params: { locale } }: Props) {
   return (
     <AdminPageShell
       title="Kontakt upiti"
-      description={`Email na ${CONTACT_EMAIL} (Zoho) + upiti spremljeni u bazi. Na svaki upit dobivaš obavijest mailom.`}
+      description={`${ADMIN_COMMS_SERVICES.webInbox.role} Email obavijest ide na ${CONTACT_EMAIL}.`}
     >
-      <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <AdminHubCard
-          href="https://mail.zoho.eu"
-          label="Otvori Zoho Mail"
-          description={CONTACT_EMAIL}
-          icon={Inbox}
-          external
-        />
-        {adminMarketingLinks.map((link) => (
-          <AdminHubCard
-            key={link.id}
-            href={link.href}
-            label={link.label}
-            description={link.description}
-            icon={Megaphone}
-            external
-          />
-        ))}
-      </div>
+      <p className="text-sm text-[var(--light-muted)] mb-6">
+        Zoho inbox:{' '}
+        <a
+          href={ADMIN_COMMS_SERVICES.zoho.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[var(--primary)] hover:underline"
+        >
+          {CONTACT_EMAIL}
+        </a>
+        {' · '}
+        <AdminLink href="/admin" className="text-[var(--primary)] hover:underline">
+          ← natrag na pregled
+        </AdminLink>
+      </p>
 
       <h2 className="text-lg font-semibold text-[var(--light)] mb-4">Upiti s web stranice</h2>
       <div className="rounded-2xl border border-white/10 divide-y divide-white/5">

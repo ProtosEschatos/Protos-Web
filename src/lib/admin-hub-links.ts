@@ -25,7 +25,7 @@ export const adminContentLinks: AdminHubLink[] = [
   },
 ]
 
-export const adminInboxLinks: AdminHubLink[] = [
+export const adminCommsLinks: AdminHubLink[] = [
   {
     id: 'zoho',
     label: 'Zoho Mail inbox',
@@ -34,12 +34,37 @@ export const adminInboxLinks: AdminHubLink[] = [
     external: true,
   },
   {
+    id: 'resend',
+    label: 'Resend',
+    href: 'https://resend.com/domains',
+    description: 'Transakcijsko slanje — kontakt forma',
+    external: true,
+  },
+  {
+    id: 'brevo-contacts',
+    label: 'Brevo kontakti',
+    href: 'https://app.brevo.com/contact/list',
+    description: 'Newsletter liste i kampanje',
+    external: true,
+  },
+  {
+    id: 'brevo-campaigns',
+    label: 'Brevo kampanje',
+    href: 'https://app.brevo.com/marketing/campaign',
+    description: 'Email marketing kampanje',
+    external: true,
+  },
+  {
     id: 'inbox-site',
     label: 'Upiti s web stranice',
     href: '/admin/inbox',
-    description: 'Kontakt forma → baza contacts',
+    description: 'Kontakt forma → Supabase contacts',
   },
 ]
+
+export const adminInboxLinks: AdminHubLink[] = adminCommsLinks.filter((l) =>
+  ['zoho', 'inbox-site'].includes(l.id),
+)
 
 export const adminMarketingLinks: AdminHubLink[] = [
   {
@@ -63,20 +88,6 @@ export const adminMarketingLinks: AdminHubLink[] = [
     description: 'Core Web Vitals iz produkcije',
     external: true,
   },
-  {
-    id: 'brevo-campaigns',
-    label: 'Brevo kampanje',
-    href: 'https://app.brevo.com/marketing/campaign',
-    description: 'Email marketing i newsletter kampanje',
-    external: true,
-  },
-  {
-    id: 'brevo-contacts',
-    label: 'Brevo kontakti',
-    href: 'https://app.brevo.com/contact/list',
-    description: 'Pretplatnici, liste i segmenti',
-    external: true,
-  },
 ]
 
 export const adminPlatformLinks: AdminHubLink[] = [
@@ -88,8 +99,6 @@ export const adminPlatformLinks: AdminHubLink[] = [
     href: `https://supabase.com/dashboard/project/${SUPABASE_PROJECT_REF}`,
     external: true,
   },
-  { id: 'resend', label: 'Resend', href: 'https://resend.com/domains', external: true },
-  { id: 'brevo', label: 'Brevo', href: 'https://app.brevo.com/marketing/campaign', external: true },
   { id: 'github', label: 'GitHub Repo', href: 'https://github.com/ProtosEschatos/Protos-Web', external: true },
   { id: 'live', label: 'Javna stranica', href: SITE_URL, external: true },
 ]

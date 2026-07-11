@@ -1,28 +1,14 @@
 'use server'
 
 import { requireAdmin } from '@/lib/require-admin'
+import type { AdminInsight, AdminInsightsSnapshot } from '@/lib/admin-insight-types'
 import {
   GOOGLE_SITE_VERIFICATION,
   SITE_DOMAIN,
   SITE_URL,
 } from '@/lib/site'
 
-export type InsightStatus = 'ok' | 'warn' | 'off' | 'info'
-
-export type AdminInsight = {
-  id: string
-  label: string
-  status: InsightStatus
-  statusLabel: string
-  detail: string
-  href: string
-  external?: boolean
-}
-
-export type AdminInsightsSnapshot = {
-  insights: AdminInsight[]
-  checkedAt: string
-}
+export type { AdminInsight, AdminInsightsSnapshot, InsightStatus } from '@/lib/admin-insight-types'
 
 const GSC_RESOURCE = encodeURIComponent(`sc-domain:${SITE_DOMAIN}`)
 const VERCEL_PROJECT_URL = 'https://vercel.com/protoseschatos-projects/protos-web'
@@ -59,7 +45,6 @@ export async function adminGetInsights(): Promise<AdminInsightsSnapshot> {
   const configuredVerification =
     process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || GOOGLE_SITE_VERIFICATION
   const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN
-  const sentryConfigured = Boolean(process.env.NEXT_PUBLIC_SENTRY_DSN || process.env.SENTRY_DSN)
 
   const [sitemapXml, robotsTxt, homepageHtml] = await Promise.all([
     fetchText(`${SITE_URL}/sitemap.xml`),
@@ -149,18 +134,6 @@ export async function adminGetInsights(): Promise<AdminInsightsSnapshot> {
       external: true,
     })
   }
-
-  insights.push({
-    id: 'sentry',
-    label: 'Sentry (greške)',
-    status: sentryConfigured ? 'ok' : 'off',
-    statusLabel: sentryConfigured ? 'Aktivan' : 'Nije konfiguriran',
-    detail: sentryConfigured
-      ? 'Production error monitoring'
-      : 'Opcionalno — postavi SENTRY_DSN na Vercel',
-    href: 'https://sentry.io/',
-    external: true,
-  })
 
   return {
     insights,

@@ -5,16 +5,16 @@ import { platformItems, socialItems } from '@/lib/config/social-links'
 export const ADMIN_COMMS_SERVICES = {
   zoho: {
     id: 'zoho',
-    label: 'Zoho Mail',
-    role: 'Primanje svih dolaznih mailova na tvoj pravi inbox.',
-    href: 'https://mail.zoho.eu',
-    external: true,
+    label: 'Inbox mail',
+    role: 'Svi dolazni mailovi na dario.admin@protosweb.eu — čitaju se u admin panelu (IMAP).',
+    href: '/admin/inbox',
+    external: false,
     dnsLabels: ['Zoho MX', 'Zoho SPF (apex)'],
   },
   webInbox: {
     id: 'web-inbox',
-    label: 'Upiti s web stranice',
-    role: 'Kontakt forma spremljena u bazu; isti upit stiže i mailom u Zoho.',
+    label: 'Kontakt forma',
+    role: 'Upiti s /kontakt spremljeni u bazu + email obavijest na dario.admin@protosweb.eu.',
     href: '/admin/inbox',
     external: false,
     dnsLabels: [] as string[],
@@ -65,11 +65,10 @@ export const adminContentLinks: AdminHubLink[] = [
 
 export const adminCommsLinks: AdminHubLink[] = [
   {
-    id: 'zoho',
-    label: 'Zoho Mail inbox',
-    href: 'https://mail.zoho.eu',
+    id: 'inbox-site',
+    label: 'Inbox (mail + web forma)',
+    href: '/admin/inbox',
     description: CONTACT_EMAIL,
-    external: true,
   },
   {
     id: 'resend',
@@ -92,16 +91,10 @@ export const adminCommsLinks: AdminHubLink[] = [
     description: 'Email marketing kampanje',
     external: true,
   },
-  {
-    id: 'inbox-site',
-    label: 'Upiti s web stranice',
-    href: '/admin/inbox',
-    description: 'Kontakt forma → Supabase contacts',
-  },
 ]
 
 export const adminInboxLinks: AdminHubLink[] = adminCommsLinks.filter((l) =>
-  ['zoho', 'inbox-site'].includes(l.id),
+  ['inbox-site'].includes(l.id),
 )
 
 export const adminMarketingLinks: AdminHubLink[] = [

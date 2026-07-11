@@ -76,7 +76,7 @@ export async function getAdminStatus(): Promise<AdminStatus> {
     },
     links: [
       { label: 'Cloudflare DNS', href: 'https://dash.cloudflare.com' },
-      { label: 'Zoho Mail', href: 'https://mail.zoho.eu' },
+      { label: 'Admin Inbox', href: '/admin/inbox' },
       { label: 'Resend', href: 'https://resend.com/domains' },
       { label: 'Brevo', href: 'https://app.brevo.com/senders/domain' },
       { label: 'Supabase', href: `https://supabase.com/dashboard/project/${SUPABASE_PROJECT_REF}` },

@@ -71,9 +71,9 @@ export const ADMIN_NAV_SECTIONS: AdminNavSection[] = [
       {
         id: 'contact',
         href: '/admin/inbox',
-        label: 'Kontakt',
+        label: 'Inbox',
         publicHref: '/kontakt',
-        description: 'Upiti s web forme',
+        description: 'Mail + kontakt forma',
       },
       {
         id: 'donations',

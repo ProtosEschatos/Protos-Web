@@ -19,13 +19,13 @@ Practical security map for `protosweb.eu`. No system is immune to every attack; 
 | `AGENT_MEMORY_REPO` | **Vercel** (optional) | Default `ProtosEschatos/Protos-Agent` — override repo for memory fetch |
 | `AGENT_MEMORY_LOCAL_PATH` | **Local dev only** | Filesystem fallback (default `~/Protos-Agent/memory` in development) |
 
-### Email — no Zoho env var
+### Email — Zoho inbox via IMAP (admin only)
 
-**Zoho Mail** (`dario.admin@protosweb.eu`) receives inbound mail via **Cloudflare DNS MX** (`mx.zoho.eu`, etc.). The Next.js app does not call Zoho APIs. Contact form → Supabase → Resend edge fn → mail lands in Zoho inbox. Admin webmail link: `src/lib/config/admin-links.ts` → `https://mail.zoho.eu`.
+**Zoho** receives at `dario.admin@protosweb.eu` via DNS MX. The admin panel reads mail through **IMAP** at `/admin/inbox` — not Zoho webmail.
 
 | Service | Secret location | Notes |
 |---------|-----------------|-------|
-| **Zoho** | None (DNS only) | MX records in Cloudflare; login via Zoho webmail |
+| **Zoho IMAP** | **Vercel** | `ZOHO_IMAP_USER`, `ZOHO_IMAP_PASSWORD` — enable IMAP Access in Zoho |
 | **Resend** | Supabase Edge | Outbound transactional mail (`submit-form`, `subscribe`) |
 | **Brevo** | Supabase Edge | Optional; DKIM on apex for deliverability |
 

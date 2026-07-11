@@ -12,6 +12,7 @@ import type {
 } from '@/lib/admin-insight-types'
 import { ADMIN_COMMS_EMAIL, ADMIN_COMMS_SERVICES } from '@/lib/config/admin-links'
 import { SITE_DOMAIN, SITE_URL } from '@/lib/config/site'
+import { fetchZohoInbox, isZohoImapConfigured } from '@/lib/mail/zoho-imap'
 
 const NOTIFICATION_PREVIEW = 3
 
@@ -151,13 +152,30 @@ export async function adminGetCommsChannels(
   const resendDns = dnsStatusForLabels(status.dns, ADMIN_COMMS_SERVICES.resend.dnsLabels)
   const brevoDns = dnsStatusForLabels(status.dns, ADMIN_COMMS_SERVICES.brevo.dnsLabels)
 
+  const mailPreview = isZohoImapConfigured()
+    ? await fetchZohoInbox(NOTIFICATION_PREVIEW)
+    : { messages: [] as Awaited<ReturnType<typeof fetchZohoInbox>>['messages'] }
+
+  const mailNotes: AdminCommsChannel['notifications'] = mailPreview.messages.map((m) => ({
+    id: `mail-${m.uid}`,
+    title: m.subject,
+    subtitle: m.from,
+    detail: null,
+    created_at: m.date ?? new Date(0).toISOString(),
+    href: '/admin/inbox',
+  }))
+
   const channels: AdminCommsChannel[] = [
     {
       ...ADMIN_COMMS_SERVICES.zoho,
       ...zohoDns,
-      detail: `${ADMIN_COMMS_EMAIL} · ${zohoDns.detail}`,
-      badge: undefined,
-      notifications: [],
+      status: isZohoImapConfigured() ? zohoDns.status : 'warn',
+      statusLabel: isZohoImapConfigured() ? zohoDns.statusLabel : 'IMAP nije spojen',
+      detail: isZohoImapConfigured()
+        ? `${ADMIN_COMMS_EMAIL} · čita se u /admin/inbox`
+        : 'Postavi ZOHO_IMAP_PASSWORD na Vercelu',
+      badge: mailNotes.length > 0 ? `${mailNotes.length} mail` : undefined,
+      notifications: mailNotes,
     },
     {
       ...ADMIN_COMMS_SERVICES.webInbox,

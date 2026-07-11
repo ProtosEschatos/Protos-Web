@@ -33,7 +33,7 @@ export default async function AdminToolsPage({ params: { locale } }: Props) {
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {adminCommsLinks.map((link) => {
             const icon =
-              link.id === 'zoho' || link.id === 'inbox-site'
+              link.id === 'inbox-site'
                 ? Inbox
                 : link.id === 'resend'
                   ? Send

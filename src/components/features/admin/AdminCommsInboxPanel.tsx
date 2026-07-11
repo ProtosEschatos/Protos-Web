@@ -124,7 +124,7 @@ export default function AdminCommsInboxPanel({ channels, checkedAt }: Props) {
                 </div>
               ) : channel.id === 'zoho' ? (
                 <p className="px-4 py-3 text-[11px] text-[var(--light-muted)] border-t border-white/5">
-                  Nepročitano vidi u Zoho Mailu — ovdje nema API pristupa inboxu.
+                  Otvori Inbox u adminu za sve dolazne mailove.
                 </p>
               ) : channel.id === 'resend' ? (
                 <p className="px-4 py-3 text-[11px] text-[var(--light-muted)] border-t border-white/5">
@@ -140,7 +140,7 @@ export default function AdminCommsInboxPanel({ channels, checkedAt }: Props) {
         })}
       </div>
       <p className="text-[10px] text-[var(--light-muted)] mt-3">
-        Provjera: {formatCheckedAt(checkedAt)} · Zoho prima mail, Resend/Brevo šalju, web upiti su u bazi
+        Provjera: {formatCheckedAt(checkedAt)} · Mail i web upiti u /admin/inbox
       </p>
     </div>
   )

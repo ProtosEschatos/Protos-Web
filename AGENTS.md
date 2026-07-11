@@ -62,12 +62,12 @@ Push to `main` → Vercel production. **After every push verify live** (`vercel 
 
 **Critical:** `ADMIN_SECRET` lives on Vercel only — git revert does **not** restore it.
 
-## Current state (2026-07-11)
+## Current state (2026-07-11 noć)
 
-- **Latest commit:** `7d18a6c` — multi-mailbox IMAP, Martina 5y/3D profil
+- **Latest commit:** `13a6083` — Stripe webhook fix + donation-confirm backup
 - **Live:** https://www.protosweb.eu
-- **Inbox:** `/admin/inbox` — Zoho + Gmail studio + Martina (placeholder); IMAP na Vercelu
-- **Donacije:** Stripe Checkout 1–1000 EUR (`e855ea3`); edge fn deployane; **čeka `STRIPE_SECRET_KEY` u Supabase**
-- **O nama:** Full Stack Duo; Martina 5 god, 3D inovacije, astronaut showcase
-- Instagram live; other socials `#` pending
+- **Inbox:** `/admin/inbox` — Zoho + Gmail studio + Martina (placeholder)
+- **Donacije:** Stripe Checkout LIVE 1–1000 EUR; jedan gumb `resources`; `/admin/donacije`
+- **O meni i18n:** lokalizirani URL-ovi (`/about`, `/ueber-uns`, …); HR „O MENI” / „O timu”
+- **Stripe secrets:** Supabase Edge — `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` (live `whsec_`), `SITE_URL`
 - Full memory: **Protos-Agent** `memory/sessions/2026-07-11-inbox-stripe-donations.md`

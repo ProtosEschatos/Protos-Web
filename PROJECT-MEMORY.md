@@ -3,24 +3,63 @@
 > **Kanonski izvor:** [Protos-Agent/memory/](https://github.com/ProtosEschatos/Protos-Agent/tree/main/memory) + pregled u adminu na `/admin/memory`.  
 > Ovaj fajl je lokalni TL;DR — ne dupliciraj punu memoriju ovdje.
 
-> **Last updated:** 2026-07-11 (večer)
+> **Last updated:** 2026-07-11 (noć)
 > **Live:** https://www.protosweb.eu
 > **Repo:** `ProtosEschatos/Protos-Web`
-> **Latest commit:** `7d18a6c` — multi-mailbox IMAP + Martina profil
+> **Latest commit:** `13a6083` — Stripe webhook fix + donation confirm backup
 
 ---
 
 ## Gdje si stao (TL;DR)
 
-**Inbox + donacije (2026-07-11):** Tri sandučića u `/admin/inbox` (Zoho ✅, Gmail studio ✅ na Vercelu, Martina placeholder). Stripe donacije u kodu (`e855ea3`) + edge fn deployane; **nedostaje samo `STRIPE_SECRET_KEY` u Supabase secrets** (user zalijepi `sk_test_...`). `SITE_URL` i `STRIPE_WEBHOOK_SECRET` već na Supabaseu.
+**Donacije LIVE (2026-07-11 noć):** Stripe Checkout radi (`sk_live_`, `cs_live_`). Jedan gumb „Podrži resurse studija” na `/o-meni`. Edge fn: `donation-checkout`, `donation-confirm` (backup), `stripe-webhook` (Stripe SDK). Success redirect → lokalizirani about URL + `session_id` potvrda. **Webhook mora biti LIVE `whsec_` u Supabase secrets** — inače admin ostaje `pending` (backup confirm popravlja nakon redirecta).
 
-**Refaktor + branding:** Faze A–F (`8f600e8`). O nama: **Full Stack Duo**. Martina: 5 god iskustva, 3D inovacije, astronaut iz privjeska.
+**i18n O meni (2026-07-11):** HR „O MENI” / „O timu”; lokalizirani URL-ovi: `/o-meni`, `/en/about`, `/de/ueber-uns`, `/it/chi-siamo`, `/es/sobre-nosotros` (middleware rewrite).
+
+**Inbox (2026-07-11):** Tri sandučića u `/admin/inbox` (Zoho ✅, Gmail studio ✅, Martina placeholder).
+
+**Refaktor + branding:** Faze A–F (`8f600e8`). Full Stack Duo. Martina: 5 god, 3D inovacije, astronaut showcase.
 
 **Ne commitati:** `public/design/` (untracked).
 
 ---
 
-## 2026-07-11 — Refaktor strukture (`8f600e8`)
+## 2026-07-11 — Stripe donacije LIVE + post-payment fix (`13a6083`)
+
+### Flow
+- `/o-meni` → `DonationModal` → `POST /api/donate` → edge `donation-checkout` → **checkout.stripe.com**
+- Success: lokalizirani about URL + `?donation=success&session_id={CHECKOUT_SESSION_ID}`
+- Backup: `POST /api/donate/confirm` → edge `donation-confirm` (ako webhook ne stigne)
+- Webhook: `stripe-webhook` — Stripe SDK `constructEventAsync`, ažurira `donations.status = completed`
+- Admin: `/admin/donacije`
+
+### Edge fn (Supabase, `--no-verify-jwt`)
+| Fn | Uloga |
+|----|-------|
+| `donation-checkout` | Kreira pending red + Stripe session |
+| `donation-confirm` | Backup: retrieve session → mark completed |
+| `stripe-webhook` | Primarni: `checkout.session.completed` / `expired` |
+
+### Supabase Edge secrets
+| Secret | Napomena |
+|--------|----------|
+| `STRIPE_SECRET_KEY` | `sk_live_...` (produkcija) |
+| `STRIPE_WEBHOOK_SECRET` | **LIVE** `whsec_...` iz Stripe webhook endpointa |
+| `SITE_URL` | `https://www.protosweb.eu` |
+
+### Commits (donacije + i18n, 2026-07-11)
+| SHA | Opis |
+|-----|------|
+| `41ddca3` | Jedan donation gumb, bez progress barova |
+| `48fc01c` | DB migracija + `resources` cause |
+| `287a547` | O meni i18n + lokalizirani about URL-ovi |
+| `13a6083` | Webhook SDK + donation-confirm + lokalizirani redirect |
+
+Docs: `docs/stripe-donations.md`
+
+---
+
+## 2026-07-11 — Multi-inbox + Martina (`7d18a6c`)
 
 ### Promjene
 - `admin/pages/` → `admin/stranice/` (o-meni, proces, usluge)
@@ -43,7 +82,7 @@
 - **Zoho IMAP** — `/admin/inbox` čita `dario.admin@protosweb.eu` (`ZOHO_IMAP_*` na Vercelu)
 - **Gmail studio IMAP** — `protoswebmark23@gmail.com` (`GMAIL_STUDIO_IMAP_*` na Vercelu)
 - **Martina IMAP** — placeholder `martina.admin@protosweb.eu` (`MARTINA_IMAP_*` kad bude live)
-- **Stripe donacije** — kod + edge fn deployane; **`STRIPE_SECRET_KEY` još u Supabase secrets**
+- **Stripe donacije** — LIVE Checkout 1–1000 EUR; edge fn deployane; secrets u Supabase (`STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `SITE_URL`); webhook mora biti **live mode** `whsec_`
 
 Detalji: **Protos-Agent** `memory/sessions/2026-07-11-inbox-stripe-donations.md`
 
@@ -203,7 +242,8 @@ Ključne datoteke: `src/components/three/SpaceGallery.tsx` (phase UI), `showcase
 
 - **Dodati nove dizajne u showcase:** dopiši unos u `PROJECT_LINKS` + odgovarajuće `projectN_title`/`projectN_desc` ključeve u `src/messages/*.json` + screenshoti u Supabase Storage (`showcase` bucket).
 - **Opcionalno:** spojiti DB sadržaj (`services`/`process`/`pricing`/`testimonials`) na frontend preko `content` edge funkcije umjesto hardkodiranog i18n.
-- **Opcionalno:** Stripe/donacije (`donations`, `stripe_price_id`) — trenutno neiskorišteni ostatak multi-tenant platforme.
+- **Opcionalno:** Turnstile, Upstash, Brevo list ID
+- ~~Stripe/donacije~~ — **LIVE** od 2026-07-11 (`13a6083`); vidi sekciju gore
 - **Sitno:** `NEXT_PUBLIC_SITE_URL` dodati i za Vercel Preview (točni canonical/sitemap na preview deployevima); razmisliti o `.gitignore` za `test-results/`.
 - **Cloudflare DNS:** sve email zapise ✅ (vidi [`docs/cloudflare-dns.md`](docs/cloudflare-dns.md))
 - **security.txt:** `public/.well-known/security.txt` ✅

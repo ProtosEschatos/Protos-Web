@@ -12,10 +12,14 @@
   },
   "onlinePresence": {
     "label": "POVEŽIMO SE",
-    "title": "Moja online prisutnost",
-    "subtitle": "Pronađite me diljem weba — od koda do freelance platformi. Izgradimo nešto zajedno.",
+    "title": "Naša online prisutnost",
+    "subtitle": "Pronađite nas diljem weba — studio Protos Web, Dario i Martina. Od koda do freelance platformi.",
+    "studioTitle": "Protos Web studio",
+    "darioTitle": "Dario Imsirović",
+    "martinaTitle": "Martina Markulin",
     "socialsTitle": "Društvene mreže",
-    "platformsTitle": "Freelance platforme"
+    "platformsTitle": "Freelance platforme",
+    "pendingLabel": "Uskoro"
   },
   "header": {
     "brand": "Protos Web",
@@ -219,19 +223,8 @@
         "label": "Custom kod, bez gotovih tema"
       }
     ],
-    "technologiesTitle": "Tehnologije",
-    "technologies": [
-      "Next.js",
-      "TypeScript",
-      "Three.js",
-      "Tailwind CSS",
-      "Framer Motion",
-      "Supabase",
-      "Stripe",
-      "Drizzle ORM",
-      "Cloudflare",
-      "Linux / DevOps"
-    ]
+    "technologiesTitle": "Tehnologije — Protos Web stack",
+    "technologiesNote": "Jezici i build alati. Infrastrukturni servisi nisu javno izloženi."
   },
   "portfolio": {
     "label": "PORTFOLIO",
@@ -258,7 +251,11 @@
     "subtitle": "Besplatni vodicima o web prisutnosti za poduzetnike",
     "readMore": "Citaj vise",
     "viewAll": "Pogledaj sve clanke",
-    "empty": "Jos nema objavljenih clanaka."
+    "empty": "Jos nema objavljenih clanaka.",
+    "authorBy": "Autor: {author}",
+    "authorDario": "Dario Imsirović",
+    "authorMartina": "Martina Markulin",
+    "authorBoth": "Dario Imsirović & Martina Markulin"
   },
   "contact": {
     "label": "KONTAKT",
@@ -379,10 +376,10 @@
   },
   "aboutPage": {
     "label": "O NAMA",
-    "heroTitleLine1": "Gradimo digitalna",
-    "heroTitleHighlight": "rjesenja koja rastu",
-    "heroTitleLine2": "zajedno sa Vama.",
-    "heroSubtitle": "Full Stack Developer i UI dizajnerica iz Zagreba. Gradimo moderna, brza i vizualno impresivna web rjesenja — svako s dusom, suradnjom i paznjom do zadnjeg detalja.",
+    "heroTitleLine1": "Dario Imsirović & Martina Markulin",
+    "heroTitleHighlight": "Protos Web studio",
+    "heroTitleLine2": "iz Zagreba.",
+    "heroSubtitle": "AI inženjering, full stack cross-web razvoj i frontend/shop dizajn — s 3D iskustvima u svakom projektu. Gradimo moderna, brza i vizualno impresivna rješenja.",
     "whoTitle": "Tko smo",
     "studioIntro": "Protos Web je studio u nastajanju — obrt Protos Web Mark23 u procesu registracije (OIB: 23732814520). Svi dizajni, predlosci i kreativni radovi ostaju originalno vlasnistvo autora kao suverenih stvaratelja, neovisno o poslovnoj registraciji.",
     "teamTitle": "Info",
@@ -400,8 +397,9 @@
       "dario": {
         "label": "Osnivac & razvoj",
         "name": "Dario Imsirović",
-        "role": "Full Stack Developer & osnivac Protos Weba",
-        "bio": "Full Stack Developer iz Zagreba s 5 godina iskustva u izradi modernih web rjesenja. Suradujem s poduzetnicima i tvrtkama sirom Hrvatske i Europe — od brzih landing stranica do slozenih custom platformi, web trgovina i CRM sustava. Sve gradim po mjeri, bez gotovih tema i bez kompromisa u kvaliteti.",
+        "role": "AI inženjer & Full Stack Cross-Web Developer",
+        "bio": "AI inženjer i Full Stack Developer iz Zagreba s 5 godina iskustva. Gradim custom platforme, web trgovine, CRM sustave i 3D web iskustva — od landing stranica do kompleksnih cross-web rješenja. Bez gotovih tema, s fokusom na sigurnost i performanse.",
+        "expertise": ["AI inženjering", "Full stack", "3D / WebGL", "Cyber sigurnost"],
         "fields": {
           "location": "Zagreb, Hrvatska",
           "experience": "5 godina",
@@ -412,10 +410,11 @@
         }
       },
       "martina": {
-        "label": "UI dizajn & kreativna suradnja",
+        "label": "Frontend & shop dizajn",
         "name": "Martina Markulin",
-        "role": "UI dizajnerica & kreativna suradnica",
-        "bio": "Martina je srce vizualnog identiteta i emocionalnog dozivljaja nasih projekata. Kao UI dizajnerica oblikuje sucelja, palete, tipografiju i korisnicko iskustvo — a kao kreativna suradnica i partnerica doprinosi idejama, konceptima i estetici svakog rada koji nastane u studiju.",
+        "role": "Frontend ekspert & vrhunska shop/UI dizajnerica",
+        "bio": "Martina je srce vizualnog identiteta i emocionalnog doživljaja naših projekata. Kao frontend ekspert i shop dizajnerica oblikuje sučelja, palete, tipografiju i korisničko iskustvo — uključujući 3D vizuale. Kreativna suradnica u svakom radu studija.",
+        "expertise": ["Frontend", "Shop dizajn", "UI/UX", "3D vizuali"],
         "fields": {
           "focus": "UI/UX dizajn, vizualni koncepti, branding",
           "contribution": "Kreativne ideje, estetika i dizajn svih projekata",
@@ -467,7 +466,17 @@
       }
     ],
     "currencyZero": "0 €",
-    "currencyOf": "od {target} €"
+    "currencyOf": "od {target} €",
+    "dualStacks": {
+      "label": "STACKOVI",
+      "title": "Dva stacka, ista stručnost",
+      "subtitle": "Protos Web i klijentski projekti pokazuju da tim radi u različitim build pristupima — od modernog TypeScript/React stacka do lightweight vanilla rješenja.",
+      "protosTitle": "Protos Web — moderni stack",
+      "protosDescription": "TypeScript, React, Next.js, 3D/WebGL i animacije. Custom studio stranica i platforme po mjeri.",
+      "bodulicaTitle": "Bodulica Shop — vanilla stack",
+      "bodulicaDescription": "Prvi klijentski webshop — HTML, CSS i vanilla JavaScript. Suprotan build od Protos Weba. Martina: shop i UI dizajn. Dario: implementacija.",
+      "bodulicaNote": "Studijski showcase različitih pristupa — bez javnog linka na shop."
+    }
   },
   "legalPages": {
     "lastUpdated": "Zadnje ažurirano",
@@ -652,7 +661,7 @@
     },
     "about": {
       "title": "O nama — Dario Imsirović i Martina Markulin",
-      "description": "Protos Web tim iz Zagreba: Dario Imsirović, Full Stack Developer i Martina Markulin, UI dizajnerica. Originalni web dizajn i razvoj."
+      "description": "Protos Web tim iz Zagreba: Dario Imsirović, AI inženjer & full stack developer i Martina Markulin, frontend/shop UI dizajnerica. Dva stacka — moderni Protos Web i vanilla Bodulica shop."
     },
     "process": {
       "title": "Nas proces",

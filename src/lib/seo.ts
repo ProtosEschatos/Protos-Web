@@ -57,9 +57,11 @@ export function buildPageMetadata({
   description,
   locale,
   path = '',
-}: PageMetadataInput): Metadata {
+  ogImagePath,
+}: PageMetadataInput & { ogImagePath?: string }): Metadata {
   const safeLocale = (locale in openGraphLocale ? locale : defaultLocale) as Locale
   const canonical = buildLocaleUrl(safeLocale, path)
+  const ogImageUrl = ogImagePath ? { ...ogImage, url: ogImagePath } : ogImage
 
   const languages: Record<string, string> = {}
   for (const loc of locales) {
@@ -86,13 +88,13 @@ export function buildPageMetadata({
       alternateLocale: alternateLocales,
       siteName: 'Protos Web',
       url: canonical,
-      images: [ogImage],
+      images: [ogImageUrl],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: [`${siteUrl}${ogImage.url}`],
+      images: [`${siteUrl}${ogImageUrl.url}`],
     },
   }
 }
@@ -116,13 +118,23 @@ export function buildBlogPostMetadata({
   })
 }
 
+export type AuthorSlug = 'dario' | 'martina' | 'both'
+
+export function normalizeAuthorSlug(value: string | null | undefined): AuthorSlug {
+  if (value === 'martina' || value === 'both') return value
+  return 'dario'
+}
+
 export function blogPostingJsonLd(post: {
   title: string
   description: string
   slug: string
   locale: string
   createdAt: string
+  authorSlug?: AuthorSlug | string | null
 }) {
+  const authorSlug = normalizeAuthorSlug(post.authorSlug)
+  const authors = buildBlogAuthorGraph(post.locale, authorSlug)
   return {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -130,7 +142,7 @@ export function blogPostingJsonLd(post: {
     description: post.description,
     datePublished: post.createdAt,
     url: buildLocaleUrl(post.locale, `/blog/${post.slug}`),
-    author: buildBlogAuthorGraph(post.locale),
+    author: authors.length === 1 ? authors[0] : authors,
     publisher: {
       '@type': 'Organization',
       name: 'Protos Web',
@@ -139,6 +151,46 @@ export function blogPostingJsonLd(post: {
         url: `${siteUrl}/favicon.svg`,
       },
     },
+  }
+}
+
+export function blogIndexJsonLd(
+  locale: string,
+  pageTitle: string,
+  description: string,
+  posts: Array<{ title: string; slug: string; createdAt: string }>,
+) {
+  const url = buildLocaleUrl(locale, '/blog')
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Blog',
+        '@id': `${url}#blog`,
+        url,
+        name: pageTitle,
+        description,
+        inLanguage: locale,
+        isPartOf: { '@id': `${SITE_URL}/#website` },
+        publisher: { '@id': `${SITE_URL}/#organization` },
+      },
+      {
+        '@type': 'ItemList',
+        '@id': `${url}#itemlist`,
+        url,
+        numberOfItems: posts.length,
+        itemListElement: posts.map((post, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          item: {
+            '@type': 'BlogPosting',
+            headline: post.title,
+            url: buildLocaleUrl(locale, `/blog/${post.slug}`),
+            datePublished: post.createdAt,
+          },
+        })),
+      },
+    ],
   }
 }
 

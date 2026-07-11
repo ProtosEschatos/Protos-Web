@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
 import { ArrowRight, BookOpen, Instagram } from 'lucide-react'
 import OnlinePresence from '@/components/sections/OnlinePresence'
+import DualStacksSection from '@/components/sections/DualStacksSection'
 import { DARIO_INSTAGRAM_URL, MARTINA_INSTAGRAM_URL } from '@/lib/site'
 
 const TEAM_MEMBERS = ['dario', 'martina'] as const
@@ -117,10 +118,12 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
             {TEAM_MEMBERS.map((member, index) => {
               const fields = member === 'dario' ? DARIO_FIELDS : MARTINA_FIELDS
+              const expertise = t.raw(`team.${member}.expertise`) as string[]
 
               return (
                 <motion.div
                   key={member}
+                  id={member === 'dario' ? 'dario-imsirovic' : 'martina-markulin'}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -135,7 +138,18 @@ export default function AboutPage() {
                     <p className="text-sm font-semibold text-cyan-200/90">{t(`team.${member}.role`)}</p>
                   </div>
 
-                  <p className="text-sm text-[var(--light-muted)] leading-7 mb-6 flex-1">{t(`team.${member}.bio`)}</p>
+                  <p className="text-sm text-[var(--light-muted)] leading-7 mb-4 flex-1">{t(`team.${member}.bio`)}</p>
+
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {expertise.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-[0.65rem] uppercase tracking-wider px-3 py-1 rounded-full border border-white/10 text-[var(--primary)]"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
 
                   <div className="flex flex-col gap-5 pt-5 border-t border-white/10">
                     {fields.map((field) => {
@@ -173,6 +187,8 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      <DualStacksSection />
 
       <OnlinePresence />
 

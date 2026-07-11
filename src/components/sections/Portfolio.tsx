@@ -6,8 +6,9 @@ import { Link } from '@/routing'
 import { ArrowRight, Layers } from 'lucide-react'
 import type { PortfolioItem } from '@/actions/portfolio'
 import PortfolioGrid from '@/components/portfolio/PortfolioGrid'
+import { PROTOS_WEB_MARQUEE } from '@/lib/tech-stacks'
 
-const marqueeItems = ['NEXT.JS', 'TYPESCRIPT', 'TAILWIND', 'THREE.JS', 'FRAMER MOTION', 'WEBGL', 'SUPABASE']
+const marqueeItems = PROTOS_WEB_MARQUEE
 
 type Props = {
   items: PortfolioItem[]

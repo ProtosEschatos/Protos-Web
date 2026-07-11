@@ -3,6 +3,7 @@ import { getPortfolioItems } from '@/actions/portfolio'
 import PortfolioGrid from '@/components/portfolio/PortfolioGrid'
 import JsonLd from '@/components/seo/JsonLd'
 import { portfolioItemListJsonLd } from '@/lib/seo'
+import { PROTOS_WEB_MARQUEE } from '@/lib/tech-stacks'
 import { Link } from '@/routing'
 import { ArrowRight, Layers } from 'lucide-react'
 
@@ -14,7 +15,7 @@ export default async function PortfolioPage({ params: { locale } }: Props) {
   const items = await getPortfolioItems(locale, 12)
   const itemListLd = portfolioItemListJsonLd(items, locale)
 
-  const marqueeItems = ['NEXT.JS', 'TYPESCRIPT', 'TAILWIND', 'THREE.JS', 'FRAMER MOTION', 'WEBGL', 'SUPABASE']
+  const marqueeItems = PROTOS_WEB_MARQUEE
 
   return (
     <>

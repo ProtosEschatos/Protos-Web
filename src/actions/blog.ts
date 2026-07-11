@@ -10,6 +10,7 @@ export type BlogPost = {
   content: string | null
   created_at: string
   language: string
+  author_slug: 'dario' | 'martina' | 'both'
 }
 
 export type BlogSlugEntry = {
@@ -23,7 +24,7 @@ export async function getBlogPosts(limit = 20, language = 'hr'): Promise<BlogPos
 
   const { data, error } = await supabase
     .from('blog_posts')
-    .select('id, title, slug, excerpt, content, created_at, language')
+    .select('id, title, slug, excerpt, content, created_at, language, author_slug')
     .eq('is_published', true)
     .eq('language', language)
     .order('created_at', { ascending: false })
@@ -34,7 +35,11 @@ export async function getBlogPosts(limit = 20, language = 'hr'): Promise<BlogPos
     return []
   }
 
-  return (data ?? []).map((post) => ({ ...post, created_at: post.created_at ?? '' }))
+  return (data ?? []).map((post) => ({
+    ...post,
+    created_at: post.created_at ?? '',
+    author_slug: (post.author_slug as BlogPost['author_slug']) ?? 'dario',
+  }))
 }
 
 export async function getBlogPostBySlug(
@@ -45,7 +50,7 @@ export async function getBlogPostBySlug(
 
   const { data, error } = await supabase
     .from('blog_posts')
-    .select('id, title, slug, excerpt, content, created_at, language')
+    .select('id, title, slug, excerpt, content, created_at, language, author_slug')
     .eq('is_published', true)
     .eq('language', language)
     .eq('slug', slug)
@@ -58,7 +63,11 @@ export async function getBlogPostBySlug(
 
   if (!data) return null
 
-  return { ...data, created_at: data.created_at ?? '' }
+  return {
+    ...data,
+    created_at: data.created_at ?? '',
+    author_slug: (data.author_slug as BlogPost['author_slug']) ?? 'dario',
+  }
 }
 
 export async function getAllBlogSlugs(): Promise<BlogSlugEntry[]> {

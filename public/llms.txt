@@ -25,16 +25,19 @@
 - Contact: https://protosweb.eu/kontakt
 
 ## Services offered
-- Custom web design and development (Next.js, TypeScript)
-- UI/UX design
+- Custom web design and development (Next.js, TypeScript, React)
+- UI/UX and shop design
 - SEO optimization
-- E-commerce and CRM integrations
-- 3D web experiences
-- Cyber security best practices
+- 3D web experiences (Three.js, WebGL)
+- Lightweight vanilla web solutions when appropriate
+
+## Tech stacks (public)
+- **Protos Web stack:** TypeScript, JavaScript, HTML, CSS, Next.js, React, Three.js/WebGL, Tailwind CSS, Framer Motion
+- **Bodulica shop stack:** HTML, CSS, JavaScript, vanilla JS — separate lightweight build for a client shop project (no live shop link on site)
 
 ## Team
-- Dario Imsirović — Full Stack Developer, founder (Croatian & English native, German basic)
-- Martina Markulin — UI designer and creative collaborator
+- Dario Imsirović — AI engineer & full stack cross-web developer (3D, security, custom platforms). About: https://protosweb.eu/o-meni#dario-imsirovic
+- Martina Markulin — frontend expert & shop/UI designer (3D, branding, UX). About: https://protosweb.eu/o-meni#martina-markulin
 
 ## Contact
 - Email: dario.admin@protosweb.eu
@@ -52,3 +55,4 @@
 - Web design process and timelines
 - GDPR-compliant websites
 - Multilingual websites for EU markets
+- Modern React/Next.js vs lightweight vanilla webshops

@@ -5,7 +5,7 @@ import { getBlogPostBySlug, getAllBlogSlugs } from '@/actions/blog'
 import BlogPostContent from '@/components/blog/BlogPostContent'
 import { Link } from '@/routing'
 import { ArrowLeft, Calendar } from 'lucide-react'
-import { buildBlogPostMetadata, blogPostingJsonLd } from '@/lib/seo'
+import { buildBlogPostMetadata, blogPostingJsonLd, normalizeAuthorSlug } from '@/lib/seo'
 
 type Props = { params: { locale: string; slug: string } }
 
@@ -39,6 +39,15 @@ function formatDate(dateStr: string, locale: string) {
   })
 }
 
+function authorLabel(
+  authorSlug: ReturnType<typeof normalizeAuthorSlug>,
+  t: Awaited<ReturnType<typeof getTranslations>>,
+) {
+  if (authorSlug === 'martina') return t('authorMartina')
+  if (authorSlug === 'both') return t('authorBoth')
+  return t('authorDario')
+}
+
 export default async function BlogPostPage({ params: { locale, slug } }: Props) {
   setRequestLocale(locale)
   const t = await getTranslations({ locale, namespace: 'blog' })
@@ -46,12 +55,14 @@ export default async function BlogPostPage({ params: { locale, slug } }: Props) 
 
   if (!post) notFound()
 
+  const authorSlug = normalizeAuthorSlug(post.author_slug)
   const jsonLd = blogPostingJsonLd({
     title: post.title,
     description: post.excerpt || post.title,
     slug: post.slug,
     locale,
     createdAt: post.created_at,
+    authorSlug,
   })
 
   return (
@@ -70,8 +81,13 @@ export default async function BlogPostPage({ params: { locale, slug } }: Props) 
           </Link>
 
           <div className="cosmic-panel rounded-3xl p-8 md:p-10">
-          <div className="flex items-center gap-1.5 text-xs text-[var(--primary)] mb-4">
-            <Calendar className="w-3.5 h-3.5" /> {formatDate(post.created_at, locale)}
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-[var(--primary)] mb-4">
+            <span className="inline-flex items-center gap-1.5">
+              <Calendar className="w-3.5 h-3.5" /> {formatDate(post.created_at, locale)}
+            </span>
+            <span className="text-[var(--light-muted)]">
+              {t('authorBy', { author: authorLabel(authorSlug, t) })}
+            </span>
           </div>
 
           <h1 className="text-[clamp(2rem,5vw,3rem)] font-extrabold leading-tight mb-6 text-[var(--light)]">

@@ -7,49 +7,59 @@ import {
   LEGAL_LOCATION,
   LEGAL_OIB,
   LEGAL_OWNER,
-  DARIO_INSTAGRAM_URL,
-  MARTINA_INSTAGRAM_URL,
   SITE_URL,
 } from '@/lib/site'
+import { getLiveProfileUrls, darioSocialItems, martinaSocialItems } from '@/lib/team-profiles'
+import { buildLocalePath } from '@/lib/seo'
 
-/** Verified public profiles — no unverified FB for Martina */
+const DARIO_PERSON_ID = `${SITE_URL}/#dario-imsirovic`
+const MARTINA_PERSON_ID = `${SITE_URL}/#martina-markulin`
+
+function personAboutUrl(locale: string, fragment: 'dario-imsirovic' | 'martina-markulin') {
+  return `${SITE_URL}${buildLocalePath(locale, '/o-meni')}#${fragment}`
+}
+/** Verified public profiles — live sameAs URLs only */
 export const CREATOR_PROFILES = {
   dario: {
-    id: `${SITE_URL}/#dario-imsirovic`,
+    id: DARIO_PERSON_ID,
     name: LEGAL_OWNER,
     givenName: 'Dario',
     familyName: 'Imsirović',
+    alternateName: ['Dario Imsirovic'],
     jobTitle: {
-      hr: 'Full Stack Developer i osnivač Protos Weba',
-      en: 'Full Stack Developer and founder of Protos Web',
+      hr: 'AI inženjer & Full Stack Cross-Web Developer',
+      en: 'AI Engineer & Full Stack Cross-Web Developer',
     },
     knowsAbout: [
+      'AI engineering',
       'Full stack web development',
-      'Web design',
       '3D web experiences',
       'Cyber security',
-      'SaaS platforms',
+      'Cross-web development',
     ],
-    sameAs: ['https://www.facebook.com/imsirovicdario23/', DARIO_INSTAGRAM_URL],
+    sameAs: getLiveProfileUrls(darioSocialItems),
     speaks: ['hr', 'en', 'de'],
   },
   martina: {
-    id: `${SITE_URL}/#martina-markulin`,
+    id: MARTINA_PERSON_ID,
     name: LEGAL_COLLABORATOR,
     givenName: 'Martina',
     familyName: 'Markulin',
+    alternateName: ['Martina Markulin'],
     jobTitle: {
-      hr: 'UI dizajnerica i kreativna suradnica',
-      en: 'UI designer and creative collaborator',
+      hr: 'Frontend ekspert & vrhunska shop/UI dizajnerica',
+      en: 'Frontend expert & top-tier shop/UI designer',
     },
     knowsAbout: [
+      'Frontend development',
+      'Shop design',
       'UI design',
       'UX design',
-      'Visual identity',
+      '3D visuals',
       'Branding',
-      'Creative direction',
     ],
-    sameAs: [MARTINA_INSTAGRAM_URL],
+    sameAs: getLiveProfileUrls(martinaSocialItems),
+    knowsLanguage: ['Croatian', 'English'],
   },
 } as const
 
@@ -60,30 +70,38 @@ export const CREATOR_ME_LINKS = [
 
 const KEYWORDS: Record<'hr' | 'en', string> = {
   hr: [
+    'Protos',
     'Protos Web',
+    'protosweb',
+    'protos web studio',
     'web dizajn Zagreb',
     'izrada web stranica',
     'Dario Imsirović',
+    'Dario Imsirovic',
     'Martina Markulin',
+    'AI inženjer',
+    'full stack developer Zagreb',
     'UI dizajn',
     'UX dizajn',
-    'full stack developer',
     'web studio Hrvatska',
-    'custom web rješenja',
     'SEO optimizacija',
     'Protos Web Mark23',
   ].join(', '),
   en: [
+    'Protos',
     'Protos Web',
+    'protosweb',
+    'protos web studio',
     'web design Zagreb',
     'website development Croatia',
     'Dario Imsirović',
+    'Dario Imsirovic',
     'Martina Markulin',
+    'AI engineer',
+    'full stack developer Zagreb',
     'UI design',
     'UX design',
-    'full stack developer',
     'web studio Croatia',
-    'custom web solutions',
     'SEO optimization',
     'Protos Web Mark23',
   ].join(', '),
@@ -100,9 +118,9 @@ export function getCreatorKeywords(locale: string): string {
 export function getCreatorMetaDescription(locale: string): string {
   const loc = resolveLocale(locale)
   if (loc === 'hr') {
-    return 'Protos Web — web studio iz Zagreba. Full stack razvoj: Dario Imsirović. UI/UX dizajn: Martina Markulin. Brze, moderne stranice s dušom.'
+    return 'Protos Web — web studio iz Zagreba. AI inženjer Dario Imsirović (full stack, 3D). Frontend/shop dizajn: Martina Markulin.'
   }
-  return 'Protos Web — web studio from Zagreb. Full stack development by Dario Imsirović. UI/UX design by Martina Markulin. Fast, modern websites with soul.'
+  return 'Protos Web — web studio from Zagreb. AI engineer Dario Imsirović (full stack, 3D). Frontend/shop design: Martina Markulin.'
 }
 
 type GraphLocale = 'hr' | 'en'
@@ -130,6 +148,7 @@ export function buildCreatorSeoGraph(locale: string) {
         '@id': websiteId,
         url: SITE_URL,
         name: LEGAL_BRAND,
+        alternateName: ['Protos Web Mark23', 'protosweb', 'Protos'],
         description: getCreatorMetaDescription(locale),
         inLanguage: locale,
         publisher: { '@id': orgId },
@@ -150,6 +169,7 @@ export function buildCreatorSeoGraph(locale: string) {
         '@type': 'ProfessionalService',
         '@id': serviceId,
         name: LEGAL_BRAND,
+        alternateName: ['Protos Web Mark23', 'protosweb', 'Protos'],
         legalName: LEGAL_BUSINESS_NAME,
         url: SITE_URL,
         image: `${SITE_URL}/favicon.svg`,
@@ -183,6 +203,7 @@ export function buildCreatorSeoGraph(locale: string) {
         '@type': 'Organization',
         '@id': orgId,
         name: LEGAL_BRAND,
+        alternateName: ['Protos Web Mark23', 'protosweb', 'Protos'],
         legalName: LEGAL_BUSINESS_NAME,
         url: SITE_URL,
         email: CONTACT_EMAIL,
@@ -204,12 +225,14 @@ export function buildCreatorSeoGraph(locale: string) {
         name: dario.name,
         givenName: dario.givenName,
         familyName: dario.familyName,
+        alternateName: [...dario.alternateName],
         jobTitle: dario.jobTitle[loc],
         knowsAbout: dario.knowsAbout,
         knowsLanguage: ['Croatian', 'English', 'German'],
         worksFor: { '@id': orgId },
+        colleague: { '@id': martina.id },
         sameAs: [...dario.sameAs],
-        url: SITE_URL,
+        url: personAboutUrl(locale, 'dario-imsirovic'),
       },
       {
         '@type': 'Person',
@@ -217,11 +240,14 @@ export function buildCreatorSeoGraph(locale: string) {
         name: martina.name,
         givenName: martina.givenName,
         familyName: martina.familyName,
+        alternateName: [...martina.alternateName],
         jobTitle: martina.jobTitle[loc],
         knowsAbout: martina.knowsAbout,
+        knowsLanguage: martina.knowsLanguage,
         worksFor: { '@id': orgId },
         colleague: { '@id': dario.id },
         sameAs: [...martina.sameAs],
+        url: personAboutUrl(locale, 'martina-markulin'),
       },
       {
         '@type': 'CreativeWork',
@@ -246,20 +272,44 @@ export function buildOrganizationJsonLd(locale: string) {
   return buildCreatorSeoGraph(locale)
 }
 
-export function buildBlogAuthorGraph(locale: string) {
+export function buildBlogAuthorGraph(
+  locale: string,
+  authorSlug: 'dario' | 'martina' | 'both' = 'dario',
+) {
   const loc = resolveLocale(locale)
-  return [
-    {
+  const authors = []
+  if (authorSlug === 'dario' || authorSlug === 'both') {
+    authors.push({
       '@type': 'Person',
       '@id': CREATOR_PROFILES.dario.id,
       name: CREATOR_PROFILES.dario.name,
       jobTitle: CREATOR_PROFILES.dario.jobTitle[loc],
-    },
-    {
+      url: personAboutUrl(locale, 'dario-imsirovic'),
+    })
+  }
+  if (authorSlug === 'martina' || authorSlug === 'both') {
+    authors.push({
       '@type': 'Person',
       '@id': CREATOR_PROFILES.martina.id,
       name: CREATOR_PROFILES.martina.name,
       jobTitle: CREATOR_PROFILES.martina.jobTitle[loc],
-    },
-  ]
+      url: personAboutUrl(locale, 'martina-markulin'),
+    })
+  }
+  return authors
+}
+
+export function buildAboutPageJsonLd(locale: string, title: string, description: string) {
+  const url = `${SITE_URL}${buildLocalePath(locale, '/o-meni')}`
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    '@id': `${url}#aboutpage`,
+    url,
+    name: title,
+    description,
+    inLanguage: locale,
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    mainEntity: [{ '@id': CREATOR_PROFILES.dario.id }, { '@id': CREATOR_PROFILES.martina.id }],
+  }
 }

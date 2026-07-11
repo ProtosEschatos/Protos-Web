@@ -11,7 +11,7 @@ import Analytics from '@/components/providers/Analytics'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { locales, type Locale } from '@/i18n'
 import { ogImage, siteUrl } from '@/lib/seo'
-import { LEGAL_OWNER, SITE_URL, GOOGLE_SITE_VERIFICATION } from '@/lib/site'
+import { LEGAL_OWNER, LEGAL_COLLABORATOR, SITE_URL, GOOGLE_SITE_VERIFICATION } from '@/lib/site'
 import LocaleCreatorSeo from '@/components/seo/LocaleCreatorSeo'
 import { BOOT_GATE_INIT_SCRIPT, BOOT_VIDEO } from '@/lib/boot-gate'
 
@@ -29,17 +29,25 @@ export const metadata: Metadata = {
   description:
     'Web design studio from Zagreb crafting fast, modern websites with soul — built with love and care for businesses across Croatia and Europe.',
   keywords: [
+    'protos',
+    'protos web',
+    'protosweb',
+    'protos web studio',
     'izrada web stranica',
     'web developer zagreb',
     'web dizajn zagreb',
+    'Dario Imsirović',
+    'Dario Imsirovic',
+    'Martina Markulin',
     'next.js developer',
     'react developer hrvatska',
-    'protosweb',
-    'protos web',
     'custom web stranice',
   ],
-  authors: [{ name: LEGAL_OWNER, url: SITE_URL }],
-  creator: `${LEGAL_OWNER} — Protos Web`,
+  authors: [
+    { name: LEGAL_OWNER, url: `${SITE_URL}/o-meni#dario-imsirovic` },
+    { name: LEGAL_COLLABORATOR, url: `${SITE_URL}/o-meni#martina-markulin` },
+  ],
+  creator: `${LEGAL_OWNER} & ${LEGAL_COLLABORATOR} — Protos Web`,
   openGraph: {
     type: 'website',
     locale: 'hr_HR',

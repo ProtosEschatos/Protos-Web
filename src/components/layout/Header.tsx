@@ -9,7 +9,7 @@ import MobileMenu from './MobileMenu'
 import { ChevronDown, Globe, MousePointer2 } from 'lucide-react'
 import ProtosLogo from '@/components/ui/ProtosLogo'
 import AdminNavLink from '@/components/features/admin/AdminNavLink'
-import { MAIN_NAV_ITEMS } from '@/lib/routes/main-nav'
+import { MAIN_NAV_ITEMS, isNavItemActive, navPublicHref } from '@/lib/routes/main-nav'
 
 export default function Header() {
   const t = useTranslations('nav')
@@ -67,19 +67,21 @@ export default function Header() {
             </TransitionLink>
 
             <nav className="hidden lg:flex items-center gap-9">
-              {MAIN_NAV_ITEMS.map((link) => (
+              {MAIN_NAV_ITEMS.map((link) => {
+                const href = navPublicHref(link.key, locale)
+                return (
                 <TransitionLink
                   key={link.href}
-                  href={link.href}
+                  href={href}
                   className={`text-xs font-medium uppercase tracking-[0.1em] transition-colors duration-300 relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:bg-[var(--primary)] after:transition-all after:duration-300 ${
-                    pathname === link.href
+                    isNavItemActive(pathname, href)
                       ? 'text-[var(--primary)] after:w-full'
                       : 'text-[var(--light-muted)] hover:text-[var(--primary)] after:w-0 hover:after:w-full'
                   }`}
                 >
                   {t(link.key)}
                 </TransitionLink>
-              ))}
+              )})}
               <AdminNavLink />
             </nav>
 

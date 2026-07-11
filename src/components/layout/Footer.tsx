@@ -7,6 +7,8 @@ import { Link } from '@/routing'
 import TransitionLink from '@/components/navigation/TransitionLink'
 import SocialLinks from '@/components/ui/SocialLinks'
 import ProtosLogo from '@/components/ui/ProtosLogo'
+import { navPublicHref } from '@/lib/routes/main-nav'
+import type { Locale } from '@/i18n'
 
 const footerLinks = [
   { href: '/', key: 'home' as const },
@@ -22,7 +24,7 @@ export default function Footer() {
   const t = useTranslations('footer')
   const tn = useTranslations('nav')
   const th = useTranslations('header')
-  const locale = useLocale()
+  const locale = useLocale() as Locale
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
 
@@ -101,7 +103,7 @@ export default function Footer() {
               <h4 className="font-bold mb-5">{t('links')}</h4>
               <div className="flex flex-col gap-3">
                 {footerLinks.map((l) => (
-                  <TransitionLink key={l.href} href={l.href} className="text-sm text-[var(--light-muted)] hover:text-[var(--primary)] transition-colors duration-300">
+                  <TransitionLink key={l.key} href={navPublicHref(l.key, locale)} className="text-sm text-[var(--light-muted)] hover:text-[var(--primary)] transition-colors duration-300">
                     {tn(l.key)}
                   </TransitionLink>
                 ))}

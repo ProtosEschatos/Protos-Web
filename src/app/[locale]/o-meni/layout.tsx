@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { buildPageMetadata } from '@/lib/config/seo'
 import { buildAboutPageJsonLd } from '@/lib/config/creator-seo'
+import { LOCALIZED_PATHS, aboutPathForLocale } from '@/lib/routes/localized-paths'
 
 type Props = {
   params: { locale: string }
@@ -15,7 +16,8 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
     title: t('title'),
     description: t('description'),
     locale,
-    path: '/o-meni',
+    path: aboutPathForLocale(locale),
+    pathsByLocale: LOCALIZED_PATHS.about,
     ogImagePath: '/api/og?type=about',
   })
 }

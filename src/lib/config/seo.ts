@@ -50,6 +50,8 @@ type PageMetadataInput = {
   locale: string
   /** Path without locale prefix, e.g. `/o-meni` or `` for home */
   path?: string
+  /** Per-locale paths for hreflang (e.g. about page) */
+  pathsByLocale?: Partial<Record<Locale, string>>
 }
 
 export function buildPageMetadata({
@@ -57,17 +59,19 @@ export function buildPageMetadata({
   description,
   locale,
   path = '',
+  pathsByLocale,
   ogImagePath,
 }: PageMetadataInput & { ogImagePath?: string }): Metadata {
   const safeLocale = (locale in openGraphLocale ? locale : defaultLocale) as Locale
-  const canonical = buildLocaleUrl(safeLocale, path)
+  const pathForLocale = (loc: Locale) => pathsByLocale?.[loc] ?? path
+  const canonical = buildLocaleUrl(safeLocale, pathForLocale(safeLocale))
   const ogImageUrl = ogImagePath ? { ...ogImage, url: ogImagePath } : ogImage
 
   const languages: Record<string, string> = {}
   for (const loc of locales) {
-    languages[loc] = buildLocaleUrl(loc, path)
+    languages[loc] = buildLocaleUrl(loc, pathForLocale(loc))
   }
-  languages['x-default'] = buildLocaleUrl(defaultLocale, path)
+  languages['x-default'] = buildLocaleUrl(defaultLocale, pathForLocale(defaultLocale))
 
   const alternateLocales = locales
     .filter((loc) => loc !== safeLocale)

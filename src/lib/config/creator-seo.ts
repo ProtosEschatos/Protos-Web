@@ -11,12 +11,13 @@ import {
 } from '@/lib/config/site'
 import { getLiveProfileUrls, darioSocialItems, martinaSocialItems } from '@/lib/config/team-profiles'
 import { buildLocalePath } from '@/lib/config/seo'
+import { aboutPathForLocale } from '@/lib/routes/localized-paths'
 
 const DARIO_PERSON_ID = `${SITE_URL}/#dario-imsirovic`
 const MARTINA_PERSON_ID = `${SITE_URL}/#martina-markulin`
 
 function personAboutUrl(locale: string, fragment: 'dario-imsirovic' | 'martina-markulin') {
-  return `${SITE_URL}${buildLocalePath(locale, '/o-meni')}#${fragment}`
+  return `${SITE_URL}${buildLocalePath(locale, aboutPathForLocale(locale))}#${fragment}`
 }
 /** Verified public profiles — live sameAs URLs only */
 export const CREATOR_PROFILES = {
@@ -300,7 +301,7 @@ export function buildBlogAuthorGraph(
 }
 
 export function buildAboutPageJsonLd(locale: string, title: string, description: string) {
-  const url = `${SITE_URL}${buildLocalePath(locale, '/o-meni')}`
+  const url = `${SITE_URL}${buildLocalePath(locale, aboutPathForLocale(locale))}`
   return {
     '@context': 'https://schema.org',
     '@type': 'AboutPage',

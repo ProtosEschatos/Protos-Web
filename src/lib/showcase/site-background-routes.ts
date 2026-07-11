@@ -1,3 +1,5 @@
+import { isAboutPath } from '@/lib/routes/localized-paths'
+
 export type BackgroundRouteKey =
   | 'home'
   | 'about'
@@ -27,7 +29,7 @@ export function getBackgroundKey(pathname: string): BackgroundRouteKey {
   const path = normalizeSitePath(pathname)
 
   if (path === '/') return 'home'
-  if (path.startsWith('/o-meni')) return 'about'
+  if (path.startsWith('/o-meni') || isAboutPath(path)) return 'about'
   if (path.startsWith('/proces')) return 'process'
   if (path.startsWith('/portfolio')) return 'portfolio'
   if (path.startsWith('/usluge')) return 'services'

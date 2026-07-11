@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next'
 import { getAllBlogSlugs } from '@/lib/queries/blog'
 import { locales } from '@/i18n'
 import { buildLocaleUrl } from '@/lib/config/seo'
+import { aboutPathForLocale } from '@/lib/routes/localized-paths'
 
 type PathConfig = {
   path: string
@@ -29,8 +30,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   for (const locale of locales) {
     for (const { path, priority, changeFrequency } of pathConfigs) {
+      const localizedPath = path === '/o-meni' ? aboutPathForLocale(locale) : path
       entries.push({
-        url: buildLocaleUrl(locale, path),
+        url: buildLocaleUrl(locale, localizedPath),
         lastModified: now,
         changeFrequency,
         priority,

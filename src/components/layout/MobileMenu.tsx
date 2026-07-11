@@ -1,12 +1,13 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import TransitionLink from '@/components/navigation/TransitionLink'
 import { SocialLinksInline } from '@/components/ui/SocialLinks'
 import { CONTACT_EMAIL } from '@/lib/config/site'
 import { motion, AnimatePresence } from 'framer-motion'
 import AdminNavLink from '@/components/features/admin/AdminNavLink'
-import { MAIN_NAV_ITEMS } from '@/lib/routes/main-nav'
+import { MAIN_NAV_ITEMS, navPublicHref } from '@/lib/routes/main-nav'
+import type { Locale } from '@/i18n'
 
 const linkVariant = {
   hidden: { opacity: 0, x: 50 },
@@ -25,6 +26,7 @@ interface MobileMenuProps {
 
 export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const t = useTranslations('nav')
+  const locale = useLocale() as Locale
 
   return (
     <AnimatePresence>
@@ -48,7 +50,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   variants={linkVariant}
                 >
                   <TransitionLink
-                    href={link.href}
+                    href={navPublicHref(link.key, locale)}
                     onClick={onClose}
                     className="block text-5xl sm:text-7xl font-extrabold text-[var(--light)] hover:text-[var(--primary)] transition-colors duration-300"
                   >

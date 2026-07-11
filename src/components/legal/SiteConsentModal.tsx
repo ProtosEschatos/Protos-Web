@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations, useLocale } from 'next-intl'
 import { useState } from 'react'
 import { buildLocalePath } from '@/lib/seo'
-import { saveSiteConsent } from '@/lib/site-consent'
+import { saveSiteTermsConsent, saveCookiePreferences } from '@/lib/site-consent'
 
 type SiteConsentModalProps = {
   open: boolean
@@ -113,7 +113,8 @@ export default function SiteConsentModal({ open, onAccepted }: SiteConsentModalP
               type="button"
               disabled={!termsAccepted}
               onClick={() => {
-                saveSiteConsent(analyticsOptIn)
+                saveSiteTermsConsent()
+                if (analyticsOptIn) saveCookiePreferences(true)
                 onAccepted()
               }}
               className="w-full px-6 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-emerald-500 text-white text-sm font-semibold hover:-translate-y-0.5 transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"

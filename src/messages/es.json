@@ -1,7 +1,7 @@
 {
   "nav": {
     "home": "INICIO",
-    "about": "SOBRE MI",
+    "about": "SOBRE NOSOTROS",
     "process": "PROCESO",
     "portfolio": "PORTFOLIO",
     "services": "SERVICIOS",
@@ -559,7 +559,7 @@
   },
   "aboutPage": {
     "label": "SOBRE NOSOTROS",
-    "heroTitleLine1": "Dario Imsirović & Martina Markulin",
+    "heroTitleLine1": "",
     "heroTitleHighlight": "estudio Protos Web",
     "heroTitleLine2": "desde Zagreb.",
     "heroSubtitle": "Ingenieria AI, desarrollo full stack cross-web y diseno frontend/shop — con experiencias 3D en cada proyecto.",

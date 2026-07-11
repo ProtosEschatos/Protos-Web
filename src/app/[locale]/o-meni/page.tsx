@@ -93,7 +93,19 @@ export default function AboutPage() {
         <div className="max-w-[1200px] mx-auto px-6 relative z-10">
           <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[var(--primary)] mb-3">{t('label')}</p>
           <h1 className="text-[clamp(2.2rem,5vw,3.5rem)] font-extrabold leading-tight mb-5">
-            {t('heroTitleLine1')}<br /><span className="gradient-text">{t('heroTitleHighlight')}</span><br />{t('heroTitleLine2')}
+            {t('heroTitleLine1') ? (
+              <>
+                {t('heroTitleLine1')}
+                <br />
+              </>
+            ) : null}
+            <span className="gradient-text">{t('heroTitleHighlight')}</span>
+            {t('heroTitleLine2') ? (
+              <>
+                <br />
+                {t('heroTitleLine2')}
+              </>
+            ) : null}
           </h1>
           <p className="text-base text-[var(--light-muted)] max-w-[640px] mx-auto leading-7">
             {t('heroSubtitle')}

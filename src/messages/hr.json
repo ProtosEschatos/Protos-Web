@@ -1,7 +1,7 @@
 {
   "nav": {
     "home": "POCETNA",
-    "about": "O MENI",
+    "about": "O NAMA",
     "process": "PROCES",
     "portfolio": "PORTFOLIO",
     "services": "USLUGE",
@@ -289,7 +289,7 @@
   "transition": {
     "loading": "Ucitavam...",
     "toHome": "Pocetna",
-    "toAbout": "O meni",
+    "toAbout": "O nama",
     "toProcess": "Proces",
     "toPortfolio": "Portfolio",
     "toServices": "Usluge",
@@ -376,7 +376,7 @@
   },
   "aboutPage": {
     "label": "O NAMA",
-    "heroTitleLine1": "Dario Imsirović & Martina Markulin",
+    "heroTitleLine1": "",
     "heroTitleHighlight": "Protos Web studio",
     "heroTitleLine2": "iz Zagreba.",
     "heroSubtitle": "AI inženjering, full stack cross-web razvoj i frontend/shop dizajn — s 3D iskustvima u svakom projektu. Gradimo moderna, brza i vizualno impresivna rješenja.",

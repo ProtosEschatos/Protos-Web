@@ -65,6 +65,9 @@ playwright-report/
 # local scrape/cache tooling
 .firecrawl/
 
+# design boards (local only, do not commit)
+public/design/
+
 # logs
 logs/
 *.log

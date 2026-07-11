@@ -5,12 +5,13 @@ type Props = {
   title: string
   actionHref?: string
   actionLabel?: string
+  className?: string
   children: ReactNode
 }
 
-export default function AdminSection({ title, actionHref, actionLabel, children }: Props) {
+export default function AdminSection({ title, actionHref, actionLabel, className = '', children }: Props) {
   return (
-    <section className="mb-10">
+    <section className={`mb-8 ${className}`.trim()}>
       <div className="flex items-center justify-between gap-4 mb-4">
         <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--primary)]">{title}</h2>
         {actionHref && actionLabel ? (

@@ -1,117 +1,144 @@
 import { setRequestLocale } from 'next-intl/server'
-import { FileText, Inbox, LayoutGrid, Mail } from 'lucide-react'
-import AdminHubCard from '@/components/admin/AdminHubCard'
+import { ExternalLink, FileText, Inbox, LayoutGrid, Mail, Wrench } from 'lucide-react'
 import AdminActivityFeed from '@/components/admin/AdminActivityFeed'
+import AdminHubCard from '@/components/admin/AdminHubCard'
+import AdminLink from '@/components/admin/AdminLink'
 import AdminSection from '@/components/admin/AdminSection'
 import AdminStatGrid from '@/components/admin/AdminStatGrid'
 import { adminGetNotifications } from '@/actions/admin-notifications'
-import { CONTACT_EMAIL } from '@/lib/site'
-import { adminContentLinks } from '@/lib/admin-hub-links'
+import { SITE_DOMAIN, SITE_URL } from '@/lib/site'
 
 type Props = { params: { locale: string } }
+
+const ACTIVITY_PREVIEW_LIMIT = 4
 
 export default async function AdminPage({ params: { locale } }: Props) {
   setRequestLocale(locale)
   const notifications = await adminGetNotifications()
+  const activityPreview = notifications.activityFeed.slice(0, ACTIVITY_PREVIEW_LIMIT)
+  const hasMoreActivity = notifications.activityFeed.length > ACTIVITY_PREVIEW_LIMIT
+
+  const contactBadge =
+    notifications.contactsLast24Hours > 0 ? `${notifications.contactsLast24Hours} novo` : undefined
+  const subscriberBadge =
+    notifications.subscribersLast24Hours > 0 ? `${notifications.subscribersLast24Hours} novo` : undefined
 
   return (
-    <div className="py-8 md:py-12">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="mb-10">
-          <h1 className="text-3xl md:text-4xl font-bold text-[var(--light)]">Pregled</h1>
-          <p className="text-[var(--light-muted)] mt-2">
-            Aktivnost s web stranice — kontakt forma, newsletter i brzi pristup sadržaju.
+    <div className="py-8 md:py-10">
+      <div className="max-w-5xl mx-auto px-6">
+        <header className="mb-8">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--primary)] mb-2">
+            Protos Web
           </p>
-        </div>
+          <h1 className="text-2xl md:text-3xl font-bold text-[var(--light)]">Admin pregled</h1>
+          <p className="text-sm text-[var(--light-muted)] mt-2 max-w-xl">
+            Sažetak aktivnosti i brzi ulaz u sadržaj. Detalje vidi u odgovarajućem odjeljku iz navigacije.
+          </p>
+        </header>
 
-        <AdminSection title="Aktivnost (zadnjih 24h)">
-          <div className="mb-6">
-            <AdminStatGrid
-              stats={[
-                {
-                  value: notifications.recentActivityCount,
-                  label: 'Nova aktivnost (24h)',
-                  tone: notifications.recentActivityCount > 0 ? 'ok' : 'default',
-                },
-                {
-                  value: notifications.contactsLast24Hours,
-                  label: 'Kontakt upiti (24h)',
-                },
-                {
-                  value: notifications.subscribersLast24Hours,
-                  label: 'Newsletter (24h)',
-                },
-                {
-                  value: notifications.contactsLast7Days + notifications.subscribersLast7Days,
-                  label: 'Ukupno (7 dana)',
-                },
-              ]}
-            />
-          </div>
-          <AdminActivityFeed items={notifications.activityFeed} />
-        </AdminSection>
+        <AdminStatGrid
+          stats={[
+            {
+              value: notifications.recentActivityCount,
+              label: 'Aktivnost (24h)',
+              tone: notifications.recentActivityCount > 0 ? 'ok' : 'default',
+            },
+            {
+              value: notifications.contactsLast24Hours,
+              label: 'Kontakt (24h)',
+            },
+            {
+              value: notifications.subscribersLast24Hours,
+              label: 'Newsletter (24h)',
+            },
+            {
+              value: notifications.subscriberCount,
+              label: 'Pretplatnika ukupno',
+            },
+          ]}
+        />
 
-        <AdminSection title="Poruke" actionHref="/admin/inbox" actionLabel="Sve poruke →">
-          <div className="grid gap-4 sm:grid-cols-2">
+        <AdminSection title="Brzi pristup" className="mt-10">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             <AdminHubCard
               href="/admin/inbox"
               label="Kontakt forma"
-              description={`${notifications.contactsLast7Days} upita u 7 dana · ${CONTACT_EMAIL}`}
+              description={`${notifications.contactsLast7Days} upita (7 dana)`}
               icon={Inbox}
-              badge={notifications.contactsLast24Hours > 0 ? `${notifications.contactsLast24Hours} novo` : undefined}
+              badge={contactBadge}
             />
             <AdminHubCard
               href="/admin/subscribers"
-              label="Newsletter pretplatnici"
-              description={`${notifications.subscriberCount} ukupno · Brevo welcome mail`}
+              label="Newsletter"
+              description={`${notifications.subscriberCount} pretplatnika`}
               icon={Mail}
-              badge={
-                notifications.subscribersLast24Hours > 0
-                  ? `${notifications.subscribersLast24Hours} novo`
-                  : undefined
-              }
+              badge={subscriberBadge}
+            />
+            <AdminHubCard
+              href="/admin/blog"
+              label="Blog"
+              description="Članci i objave"
+              icon={FileText}
+            />
+            <AdminHubCard
+              href="/admin/portfolio"
+              label="Portfolio"
+              description="Projekti i showcase"
+              icon={LayoutGrid}
+            />
+            <AdminHubCard
+              href="/admin/tools"
+              label="Alati i platforme"
+              description="Hosting, email, DNS, linkovi"
+              icon={Wrench}
+            />
+            <AdminHubCard
+              href={SITE_URL}
+              label="Javna stranica"
+              description={SITE_DOMAIN}
+              icon={ExternalLink}
+              external
             />
           </div>
         </AdminSection>
 
-        <AdminSection title="Sadržaj">
-          <div className="grid gap-4 sm:grid-cols-2">
-            {adminContentLinks.map((link) => (
-              <AdminHubCard
-                key={link.id}
-                href={link.href}
-                label={link.label}
-                description={link.description}
-                icon={link.id === 'blog' ? FileText : LayoutGrid}
-              />
-            ))}
-          </div>
-        </AdminSection>
+        {activityPreview.length > 0 ? (
+          <AdminSection
+            title="Zadnja aktivnost"
+            actionHref="/admin/inbox"
+            actionLabel={hasMoreActivity ? 'Sve poruke →' : 'Inbox →'}
+            className="mt-10"
+          >
+            <AdminActivityFeed items={activityPreview} />
+          </AdminSection>
+        ) : null}
 
-        <AdminSection title="Sustav" actionHref="/admin/tools" actionLabel="Alati i platforme →">
-          <AdminStatGrid
-            stats={[
-              {
-                value: notifications.dnsIssues,
-                label: 'DNS upozorenja',
-                tone: notifications.dnsIssues ? 'warn' : 'ok',
-              },
-              {
-                value: notifications.serviceRoleConfigured ? 'OK' : '!',
-                label: 'CMS (service role)',
-                tone: notifications.serviceRoleConfigured ? 'ok' : 'warn',
-              },
-              {
-                value: notifications.subscriberCount,
-                label: 'Pretplatnika ukupno',
-              },
-              {
-                value: notifications.contactsLast7Days,
-                label: 'Upita (7 dana)',
-              },
-            ]}
-          />
-        </AdminSection>
+        <div className="mt-10 flex flex-wrap items-center gap-2 rounded-xl border border-white/10 bg-[var(--dark-card)]/40 px-4 py-3 text-xs">
+          <span
+            className={
+              notifications.dnsIssues
+                ? 'rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-amber-300'
+                : 'rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-emerald-300'
+            }
+          >
+            DNS {notifications.dnsIssues ? `${notifications.dnsIssues} upozorenja` : 'OK'}
+          </span>
+          <span
+            className={
+              notifications.serviceRoleConfigured
+                ? 'rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-emerald-300'
+                : 'rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-amber-300'
+            }
+          >
+            CMS {notifications.serviceRoleConfigured ? 'OK' : 'provjeri service role'}
+          </span>
+          <AdminLink
+            href="/admin/tools"
+            className="ml-auto text-[var(--light-muted)] hover:text-[var(--primary)] transition-colors"
+          >
+            Alati i DNS →
+          </AdminLink>
+        </div>
       </div>
     </div>
   )

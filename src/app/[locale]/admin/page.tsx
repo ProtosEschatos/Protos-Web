@@ -31,19 +31,15 @@ export default async function AdminPage({ params: { locale } }: Props) {
   const systemSection = ADMIN_NAV_SECTIONS.find((s) => s.id === 'system')
 
   return (
-    <div className="py-6 md:py-8">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <header className="mb-8">
-          <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--primary)]">
-            Protos Web Admin
-          </p>
-          <h1 className="text-2xl font-bold text-[var(--light)] md:text-3xl">Pregled</h1>
-          <p className="mt-2 max-w-xl text-sm text-[var(--light-muted)]">
-            Ista struktura kao javni navbar — plus sustav alati s lijeve strane.
-          </p>
-        </header>
+    <div className="space-y-8">
+      <header>
+        <h2 className="text-lg font-bold tracking-tight text-slate-100">Korisnički nadzorni panel</h2>
+        <p className="admin-mono mt-1 text-xs text-slate-400">
+          Statistike, inboxi, sigurnost i marketing — Console v3.0 layout.
+        </p>
+      </header>
 
-        <AdminStatGrid
+      <AdminStatGrid
           stats={[
             {
               value: notifications.recentActivityCount,
@@ -128,7 +124,6 @@ export default async function AdminPage({ params: { locale } }: Props) {
             </div>
           </AdminSection>
         ) : null}
-      </div>
     </div>
   )
 }

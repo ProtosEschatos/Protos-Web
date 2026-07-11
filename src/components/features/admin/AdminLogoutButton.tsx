@@ -23,7 +23,7 @@ export default function AdminLogoutButton() {
       type="button"
       onClick={handleLogout}
       disabled={loading}
-      className="px-4 py-2 rounded-xl border border-white/10 text-sm text-[var(--light-muted)] hover:text-[var(--light)] hover:border-white/20 transition-colors disabled:opacity-50"
+      className="rounded-lg border border-slate-800 bg-slate-900 px-3 py-1.5 text-xs text-slate-400 transition-colors hover:border-slate-700 hover:text-slate-200 disabled:opacity-50 admin-mono"
     >
       {loading ? 'Odjava…' : 'Odjava'}
     </button>

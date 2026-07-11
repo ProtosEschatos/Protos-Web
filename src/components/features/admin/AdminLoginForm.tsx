@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import AdminBrandMark from '@/components/features/admin/AdminBrandMark'
+import { Monitor } from 'lucide-react'
 
 export default function AdminLoginForm() {
   const router = useRouter()
@@ -40,20 +40,22 @@ export default function AdminLoginForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-6 py-12">
-      <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[var(--dark-card)]/75 backdrop-blur-md p-8 shadow-2xl shadow-black/40">
-        <div className="flex items-center gap-3 mb-8">
-          <AdminBrandMark className="h-10 w-10" />
+    <div className="flex min-h-screen items-center justify-center px-6 py-12">
+      <div className="admin-card w-full max-w-md p-8 shadow-2xl">
+        <div className="mb-8 flex items-center gap-3">
+          <div className="rounded-lg border border-indigo-500/30 bg-indigo-600/10 p-2.5 text-indigo-400">
+            <Monitor className="h-6 w-6" />
+          </div>
           <div>
-            <p className="text-sm text-[var(--light-muted)]">Protos Web</p>
-            <h1 className="text-xl font-bold text-[var(--light)]">Admin prijava</h1>
+            <p className="admin-mono text-[10px] uppercase tracking-wider text-slate-500">Privatno</p>
+            <h1 className="text-xl font-bold text-slate-100">Console v3.0</h1>
           </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="admin-password" className="block text-sm text-[var(--light-muted)] mb-2">
-              Lozinka
+            <label htmlFor="admin-password" className="admin-mono mb-2 block text-xs text-slate-400">
+              Admin lozinka
             </label>
             <input
               id="admin-password"
@@ -61,17 +63,17 @@ export default function AdminLoginForm() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               autoComplete="current-password"
-              className="w-full px-4 py-3 rounded-xl bg-[var(--dark)]/80 border border-white/10 text-[var(--light)] focus:outline-none focus:border-[var(--primary)]/50"
+              className="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-3 text-slate-100 outline-none focus:border-indigo-500/50"
               required
             />
           </div>
 
-          {error && <p className="text-sm text-red-400">{error}</p>}
+          {error ? <p className="text-sm text-rose-400">{error}</p> : null}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-full bg-gradient-to-r from-[var(--primary)] to-[#ff8800] text-white font-semibold uppercase tracking-wider text-sm hover:-translate-y-0.5 transition-transform disabled:opacity-50"
+            className="w-full rounded-xl bg-indigo-600 py-3 text-sm font-semibold text-white transition-all hover:bg-indigo-500 disabled:opacity-50"
           >
             {loading ? 'Prijava…' : 'Prijavi se'}
           </button>

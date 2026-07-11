@@ -1,47 +1,100 @@
 'use client'
 
-import { Suspense } from 'react'
+import { Suspense, useEffect, useState, useTransition } from 'react'
+import { Monitor, RefreshCw } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import AdminLink from '@/components/features/admin/AdminLink'
 import AdminActivityBadge from '@/components/features/admin/AdminActivityBadge'
-import { SITE_URL } from '@/lib/config/site'
-import AdminBrandMark from '@/components/features/admin/AdminBrandMark'
 import AdminLogoutButton from '@/components/features/admin/AdminLogoutButton'
 import { findAdminNavItem } from '@/lib/admin-nav'
 import { usePathname } from '@/routing'
+import { SITE_URL } from '@/lib/config/site'
+
+function formatClock(): string {
+  return new Date().toLocaleString('hr-HR', {
+    weekday: 'short',
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    timeZoneName: 'short',
+  })
+}
 
 export default function AdminHeader() {
   const pathname = usePathname()
+  const router = useRouter()
   const current = findAdminNavItem(pathname)
+  const [clock, setClock] = useState('')
+  const [pending, startTransition] = useTransition()
+
+  useEffect(() => {
+    setClock(formatClock())
+    const timer = window.setInterval(() => setClock(formatClock()), 1000)
+    return () => window.clearInterval(timer)
+  }, [])
+
+  function handleRefresh() {
+    startTransition(() => {
+      router.refresh()
+    })
+  }
 
   return (
-    <header className="sticky top-0 z-[3] border-b border-white/5 bg-[#100818]/95">
-      <div className="flex h-16 items-center justify-between gap-4 px-4 lg:px-6">
-        <AdminLink href="/admin" className="group flex min-w-0 items-center gap-3">
-          <AdminBrandMark className="h-8 w-8" />
-          <div className="min-w-0">
-            <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--primary)]">Privatno</p>
-            <div className="flex items-center gap-2">
-              <p className="truncate text-sm font-semibold text-[var(--light)] group-hover:text-[var(--primary)] transition-colors">
-                {current?.label ?? 'Admin'}
-              </p>
-              <Suspense fallback={null}>
-                <AdminActivityBadge />
-              </Suspense>
-            </div>
-          </div>
-        </AdminLink>
-
-        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-          <a
-            href={SITE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden sm:inline-flex rounded-lg border border-white/10 px-3 py-1.5 text-xs text-[var(--light-muted)] transition-colors hover:border-white/20 hover:text-[var(--light)]"
-          >
-            protosweb.eu ↗
-          </a>
-          <AdminLogoutButton />
+    <header
+      id="admin-header"
+      className="sticky top-0 z-30 flex flex-wrap items-center justify-between gap-4 border-b border-slate-900 bg-slate-900/60 px-6 py-4 shadow-md backdrop-blur-md"
+    >
+      <div className="flex min-w-0 items-center gap-3">
+        <div className="rounded-lg border border-indigo-500/30 bg-indigo-600/10 p-2 text-indigo-400">
+          <Monitor className="h-5 w-5" />
         </div>
+        <div className="min-w-0">
+          <h1 className="flex flex-wrap items-center gap-2 text-base font-bold tracking-tight text-slate-100">
+            Protosweb
+            <span className="rounded border border-indigo-500/30 bg-indigo-500/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-indigo-400 admin-mono">
+              Console v3.0
+            </span>
+          </h1>
+          <p className="mt-0.5 truncate text-[10px] text-slate-500 admin-mono">
+            {current?.label ?? 'Admin'} · Creative Studio Suite
+          </p>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-4 text-xs admin-mono">
+        <div className="hidden flex-col items-end border-r border-slate-800 pr-4 xl:flex">
+          <span className="text-[10px] uppercase text-slate-500">Aktivno vrijeme</span>
+          <span className="font-medium text-slate-300">{clock || '…'}</span>
+        </div>
+
+        <Suspense fallback={null}>
+          <AdminActivityBadge />
+        </Suspense>
+
+        <button
+          type="button"
+          onClick={handleRefresh}
+          disabled={pending}
+          className="flex items-center gap-2 rounded-lg border border-slate-800 bg-slate-900 p-2 text-xs text-slate-400 transition-all hover:text-slate-200 disabled:opacity-60"
+          title="Osvježi podatke"
+        >
+          <RefreshCw className={`h-3.5 w-3.5 ${pending ? 'animate-spin text-indigo-400' : ''}`} />
+          <span className="hidden sm:inline">Sinkroniziraj</span>
+        </button>
+
+        <a
+          href={SITE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hidden rounded-lg border border-slate-800 px-3 py-1.5 text-slate-400 transition-colors hover:border-slate-700 hover:text-slate-200 sm:inline-flex"
+        >
+          protosweb.eu ↗
+        </a>
+
+        <AdminLogoutButton />
       </div>
     </header>
   )

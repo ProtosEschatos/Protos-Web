@@ -1,0 +1,72 @@
+/* Protos Admin — Console v3.0 (Google-AI-Studio-Github-Connect reference) */
+
+.admin-console {
+  --admin-bg: #020617;
+  --admin-panel: #0f172a;
+  --admin-border: #1e293b;
+  --admin-muted: #64748b;
+  --admin-text: #f1f5f9;
+  --admin-accent: #818cf8;
+  /* Override public-site tokens inside admin shell */
+  --primary: #818cf8;
+  --light: #f1f5f9;
+  --light-muted: #94a3b8;
+  --dark: #020617;
+  --dark-card: #0f172a;
+  background-color: var(--admin-bg);
+  color: var(--admin-text);
+  background-image: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.1) 0%, rgba(15, 23, 42, 0) 70%);
+}
+
+.admin-console ::selection {
+  background: rgb(99 102 241);
+  color: white;
+}
+
+.admin-console ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.admin-console ::-webkit-scrollbar-track {
+  background: #020617;
+}
+
+.admin-console ::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 9999px;
+}
+
+.admin-console ::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+.admin-console .admin-nav-active {
+  background: rgb(79 70 229 / 0.1);
+  border-color: rgb(99 102 241 / 0.2);
+  color: #a5b4fc;
+  box-shadow: inset 0 1px 0 rgb(99 102 241 / 0.08);
+  font-weight: 600;
+}
+
+.admin-console .admin-nav-idle {
+  background: transparent;
+  border-color: transparent;
+  color: #94a3b8;
+}
+
+.admin-console .admin-nav-idle:hover {
+  color: #e2e8f0;
+  background: rgb(15 23 42 / 0.4);
+}
+
+.admin-console .admin-card {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.2);
+}
+
+.admin-console .admin-mono {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+}

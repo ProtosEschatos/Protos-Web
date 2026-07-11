@@ -65,13 +65,13 @@ export default function AdminInsightGrid({ insights, checkedAt, footnote }: Prop
         {insights.map((insight) => {
           const Icon = iconById[insight.id] ?? Radar
           const className =
-            'group flex flex-col gap-3 rounded-2xl border border-white/10 bg-[var(--dark-card)]/55 p-4 hover:border-[var(--primary)]/35 hover:bg-[var(--dark-card)]/80 transition-all duration-300 h-full'
+            'admin-card group flex h-full flex-col gap-3 p-4 transition-all hover:border-indigo-500/30'
 
           const inner = (
             <>
               <div className="flex items-start justify-between gap-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--primary)]/10 border border-[var(--primary)]/20">
-                  <Icon className="h-4 w-4 text-[var(--primary)]" />
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-800 bg-slate-950 text-indigo-400">
+                  <Icon className="h-4 w-4" />
                 </div>
                 <div className="flex items-center gap-2">
                   <span
@@ -79,12 +79,12 @@ export default function AdminInsightGrid({ insights, checkedAt, footnote }: Prop
                   >
                     {insight.statusLabel}
                   </span>
-                  <ArrowUpRight className="h-3.5 w-3.5 text-[var(--light-muted)] group-hover:text-[var(--primary)] transition-colors shrink-0" />
+                  <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-slate-500 transition-colors group-hover:text-indigo-400" />
                 </div>
               </div>
               <div>
-                <h3 className="font-semibold text-sm text-[var(--light)]">{insight.label}</h3>
-                <p className="text-xs text-[var(--light-muted)] mt-1 leading-relaxed">{insight.detail}</p>
+                <h3 className="text-sm font-semibold text-slate-200">{insight.label}</h3>
+                <p className="mt-1 text-xs leading-relaxed text-slate-500">{insight.detail}</p>
               </div>
             </>
           )
@@ -111,7 +111,7 @@ export default function AdminInsightGrid({ insights, checkedAt, footnote }: Prop
         })}
       </div>
       {footnote !== false ? (
-        <p className="text-[10px] text-[var(--light-muted)] mt-3">
+        <p className="admin-mono mt-3 text-[10px] text-slate-500">
           {footnote ??
             `Live provjera: ${formatCheckedAt(checkedAt)} · GA brojke su u Google Analyticsu (nakon pristanka korisnika)`}
         </p>

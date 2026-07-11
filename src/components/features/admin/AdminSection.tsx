@@ -11,11 +11,11 @@ type Props = {
 
 export default function AdminSection({ title, actionHref, actionLabel, className = '', children }: Props) {
   return (
-    <section className={`mb-8 ${className}`.trim()}>
-      <div className="flex items-center justify-between gap-4 mb-4">
-        <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--primary)]">{title}</h2>
+    <section className={`space-y-4 ${className}`.trim()}>
+      <div className="flex items-center justify-between gap-4">
+        <h2 className="admin-mono text-xs font-semibold uppercase tracking-wider text-slate-400">{title}</h2>
         {actionHref && actionLabel ? (
-          <AdminLink href={actionHref} className="text-xs text-[var(--light-muted)] hover:text-[var(--primary)]">
+          <AdminLink href={actionHref} className="text-xs text-indigo-400 hover:text-indigo-300">
             {actionLabel}
           </AdminLink>
         ) : null}

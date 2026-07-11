@@ -3,13 +3,17 @@
 import { useState, useTransition } from 'react'
 import { Loader2, Mail, RefreshCw } from 'lucide-react'
 import { adminGetMailMessage, adminListMailbox } from '@/actions/admin-mail'
-import type { MailListItem } from '@/lib/mail/zoho-imap'
+import { mailboxSetupHint, type MailboxId, type MailboxProvider } from '@/lib/mail/mailboxes'
+import type { MailListItem } from '@/lib/mail/imap-client'
 
 type Props = {
+  mailboxId: MailboxId
+  title: string
   initialMessages: MailListItem[]
   initialError?: string
   configured: boolean
   mailbox: string
+  provider: MailboxProvider
 }
 
 function formatWhen(iso: string | null): string {
@@ -22,10 +26,13 @@ function formatWhen(iso: string | null): string {
 }
 
 export default function AdminMailboxPanel({
+  mailboxId,
+  title,
   initialMessages,
   initialError,
   configured,
   mailbox,
+  provider,
 }: Props) {
   const [messages, setMessages] = useState(initialMessages)
   const [error, setError] = useState(initialError)
@@ -36,7 +43,7 @@ export default function AdminMailboxPanel({
 
   function refresh() {
     startTransition(async () => {
-      const res = await adminListMailbox(40)
+      const res = await adminListMailbox(mailboxId, 40)
       setMessages(res.messages)
       setError(res.error)
       setSelectedUid(null)
@@ -49,7 +56,7 @@ export default function AdminMailboxPanel({
     setBody(null)
     setBodyError(null)
     startTransition(async () => {
-      const res = await adminGetMailMessage(uid)
+      const res = await adminGetMailMessage(mailboxId, uid)
       if (res.error) {
         setBodyError(res.error)
         return
@@ -61,11 +68,17 @@ export default function AdminMailboxPanel({
   if (!configured) {
     return (
       <div className="rounded-2xl border border-amber-500/30 bg-amber-500/10 p-6 text-sm text-amber-100">
-        <p className="font-semibold mb-2">IMAP nije spojen</p>
+        <p className="font-semibold mb-2">
+          {title} — IMAP nije spojen
+        </p>
         <p className="text-amber-100/90 leading-relaxed">
-          Postavi na <strong>Vercelu</strong>: <code className="text-xs">ZOHO_IMAP_PASSWORD</code> (Zoho lozinka
-          ili app password). U Zohu uključi <strong>IMAP Access</strong> za {mailbox}. Host:{' '}
-          <code className="text-xs">imappro.zoho.eu:993</code>
+          {mailboxSetupHint(mailboxId)}
+          {provider === 'gmail' ? (
+            <>
+              {' '}
+              Za <strong>{mailbox}</strong> kreiraj App Password u Google Account → Security.
+            </>
+          ) : null}
         </p>
       </div>
     )
@@ -75,7 +88,9 @@ export default function AdminMailboxPanel({
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="text-sm text-[var(--light-muted)]">
-          Sandučić <span className="text-[var(--light)]">{mailbox}</span> — čita se ovdje, bez Zoho webmaila.
+          <span className="text-[var(--light)] font-medium">{title}</span>
+          {' · '}
+          <span className="text-[var(--light)]">{mailbox}</span> — čita se ovdje, bez vanjskog webmaila.
         </p>
         <button
           type="button"

@@ -596,11 +596,12 @@
         "label": "Frontend & shop design",
         "name": "Martina Markulin",
         "role": "Esperta frontend & top shop/UI designer",
-        "bio": "Martina è il cuore dell'identità visiva e dell'esperienza emotiva dei nostri progetti. Come esperta frontend e shop designer modella interfacce, palette, tipografia e UX — inclusi visual 3D.",
-        "expertise": ["Frontend", "Shop design", "UI/UX", "Visual 3D"],
+        "bio": "Martina è il cuore dell'identità visiva e dell'esperienza emotiva dei nostri progetti. Esperta frontend e shop designer con 5 anni di esperienza, modella interfacce, palette, tipografia e UX. Guida le innovazioni 3D — l'astronauta nel portfolio showcase è ispirato al suo portachiavi.",
+        "expertise": ["Frontend", "Shop design", "UI/UX", "Innovazioni 3D"],
         "fields": {
-          "focus": "UI/UX design, concetti visivi, branding",
-          "contribution": "Idee creative, estetica e design di tutti i progetti",
+          "experience": "5 anni",
+          "focus": "UI/UX design, concetti visivi, branding, showcase 3D",
+          "contribution": "Idee creative, estetica, design e innovazioni 3D di tutti i progetti",
           "instagram": ""
         }
       }

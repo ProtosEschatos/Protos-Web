@@ -19,13 +19,15 @@ Practical security map for `protosweb.eu`. No system is immune to every attack; 
 | `AGENT_MEMORY_REPO` | **Vercel** (optional) | Default `ProtosEschatos/Protos-Agent` — override repo for memory fetch |
 | `AGENT_MEMORY_LOCAL_PATH` | **Local dev only** | Filesystem fallback (default `~/Protos-Agent/memory` in development) |
 
-### Email — Zoho inbox via IMAP (admin only)
+### Email — multi-mailbox IMAP (admin only)
 
 **Zoho** receives at `dario.admin@protosweb.eu` via DNS MX. The admin panel reads mail through **IMAP** at `/admin/inbox` — not Zoho webmail.
 
 | Service | Secret location | Notes |
 |---------|-----------------|-------|
-| **Zoho IMAP** | **Vercel** | `ZOHO_IMAP_USER`, `ZOHO_IMAP_PASSWORD` — enable IMAP Access in Zoho |
+| **Zoho IMAP (Dario)** | **Vercel** | `ZOHO_IMAP_USER`, `ZOHO_IMAP_PASSWORD` — enable IMAP Access in Zoho |
+| **Gmail IMAP (studio)** | **Vercel** | `GMAIL_STUDIO_IMAP_USER`, `GMAIL_STUDIO_IMAP_PASSWORD` — Google App Password for `protoswebmark23@gmail.com` |
+| **Zoho IMAP (Martina)** | **Vercel** | `MARTINA_IMAP_*` when `martina.admin@protosweb.eu` is live |
 | **Resend** | Supabase Edge | Outbound transactional mail (`submit-form`, `subscribe`) |
 | **Brevo** | Supabase Edge | Optional; DKIM on apex for deliverability |
 

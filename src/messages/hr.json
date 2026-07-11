@@ -413,11 +413,12 @@
         "label": "Frontend & shop dizajn",
         "name": "Martina Markulin",
         "role": "Frontend ekspert & vrhunska shop/UI dizajnerica",
-        "bio": "Martina je srce vizualnog identiteta i emocionalnog doživljaja naših projekata. Kao frontend ekspert i shop dizajnerica oblikuje sučelja, palete, tipografiju i korisničko iskustvo — uključujući 3D vizuale. Kreativna suradnica u svakom radu studija.",
-        "expertise": ["Frontend", "Shop dizajn", "UI/UX", "3D vizuali"],
+        "bio": "Martina je srce vizualnog identiteta i emocionalnog doživljaja naših projekata. Frontend ekspert i shop dizajnerica s 5 godina iskustva oblikuje sučelja, palete, tipografiju i korisničko iskustvo. Posebno vodi 3D inovacije — astronaut u portfolio showcaseu inspiriran je njezinim privjeskom za ključeve.",
+        "expertise": ["Frontend", "Shop dizajn", "UI/UX", "3D inovacije"],
         "fields": {
-          "focus": "UI/UX dizajn, vizualni koncepti, branding",
-          "contribution": "Kreativne ideje, estetika i dizajn svih projekata",
+          "experience": "5 godina",
+          "focus": "UI/UX dizajn, vizualni koncepti, branding, 3D showcase",
+          "contribution": "Kreativne ideje, estetika, dizajn i 3D inovacije svih projekata",
           "instagram": ""
         }
       }

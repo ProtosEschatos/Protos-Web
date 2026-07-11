@@ -1,43 +1,56 @@
 import { setRequestLocale } from 'next-intl/server'
 import { adminListContacts } from '@/actions/admin-notifications'
-import { adminGetImapStatus, adminListMailbox } from '@/actions/admin-mail'
+import { adminListMailbox, adminListMailboxStatuses } from '@/actions/admin-mail'
 import AdminPageShell from '@/components/features/admin/AdminPageShell'
 import AdminLink from '@/components/features/admin/AdminLink'
 import AdminMailboxPanel from '@/components/features/admin/AdminMailboxPanel'
-import { CONTACT_EMAIL } from '@/lib/config/site'
+import { ADMIN_MAILBOXES } from '@/lib/mail/mailboxes'
 
 type Props = { params: { locale: string } }
 
 export default async function AdminInboxPage({ params: { locale } }: Props) {
   setRequestLocale(locale)
-  const [contacts, imapStatus, mailbox] = await Promise.all([
+  const [contacts, mailboxStatuses, ...mailboxResults] = await Promise.all([
     adminListContacts(50),
-    adminGetImapStatus(),
-    adminListMailbox(40),
+    adminListMailboxStatuses(),
+    ...ADMIN_MAILBOXES.map((mailbox) => adminListMailbox(mailbox.id, 40)),
   ])
 
   return (
     <AdminPageShell
       title="Inbox"
-      description={`Svi mailovi i kontakt upiti za ${CONTACT_EMAIL} — sve na jednom mjestu u adminu.`}
+      description="Svi mail sandučići i kontakt upiti — sve na jednom mjestu u adminu."
     >
       <p className="text-sm text-[var(--light-muted)] mb-8">
-        Kontakt forma šalje obavijest na {CONTACT_EMAIL} i sprema upit u bazu ispod.
+        Zoho ({mailboxStatuses.find((m) => m.id === 'zoho')?.email}), Gmail studio i Martinin sandučić — bez vanjskog
+        webmaila.
         {' · '}
         <AdminLink href="/admin" className="text-[var(--primary)] hover:underline">
           ← pregled
         </AdminLink>
       </p>
 
-      <section className="mb-10">
-        <h2 className="text-lg font-semibold text-[var(--light)] mb-4">Dolazni mail</h2>
-        <AdminMailboxPanel
-          initialMessages={mailbox.messages}
-          initialError={mailbox.error}
-          configured={imapStatus.configured}
-          mailbox={imapStatus.mailbox}
-        />
-      </section>
+      <div className="space-y-10 mb-10">
+        {ADMIN_MAILBOXES.map((definition, index) => {
+          const status = mailboxStatuses.find((item) => item.id === definition.id)!
+          const mailbox = mailboxResults[index]
+
+          return (
+            <section key={definition.id}>
+              <h2 className="text-lg font-semibold text-[var(--light)] mb-4">{definition.title}</h2>
+              <AdminMailboxPanel
+                mailboxId={definition.id}
+                title={definition.title}
+                initialMessages={mailbox.messages}
+                initialError={mailbox.error}
+                configured={status.configured}
+                mailbox={status.email}
+                provider={definition.provider}
+              />
+            </section>
+          )
+        })}
+      </div>
 
       <section>
         <h2 className="text-lg font-semibold text-[var(--light)] mb-4">Kontakt forma (web)</h2>

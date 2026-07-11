@@ -8,7 +8,6 @@
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
-    "test:e2e": "playwright test",
     "upload:showcase-assets": "tsx scripts/upload-showcase-assets.ts",
     "cleanup:showcase-assets": "tsx scripts/cleanup-showcase-assets.ts"
   },
@@ -18,7 +17,6 @@
     "@supabase/supabase-js": "^2.110.2",
     "@vercel/speed-insights": "^2.0.0",
     "framer-motion": "^11.11.0",
-    "ldrs": "^1.1.9",
     "lenis": "^1.1.18",
     "lucide-react": "^0.454.0",
     "next": "^14.2.35",
@@ -31,7 +29,6 @@
     "zustand": "^5.0.14"
   },
   "devDependencies": {
-    "@playwright/test": "^1.49.1",
     "@types/node": "^22.8.4",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",

@@ -37,7 +37,7 @@ export default function Process() {
             <motion.div
               key={s.num}
               custom={i}
-                initial={false}
+              initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: '-50px' }}
               variants={cardVariant}
@@ -55,7 +55,7 @@ export default function Process() {
             <motion.div
               key={f.title}
               custom={i + 4}
-                initial={false}
+              initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
               variants={cardVariant}

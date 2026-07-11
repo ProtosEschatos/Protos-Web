@@ -9,8 +9,6 @@ import {
   LayoutGrid,
   LayoutDashboard,
   Mail,
-  Plug,
-  Sparkles,
   Wrench,
 } from 'lucide-react'
 
@@ -27,8 +25,6 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/admin/subscribers', label: 'Newsletter', icon: Mail },
   { href: '/admin/blog', label: 'Blog', icon: FileText },
   { href: '/admin/portfolio', label: 'Portfolio', icon: LayoutGrid },
-  { href: '/admin/ai', label: 'AI', icon: Sparkles },
-  { href: '/admin/integrations', label: 'Integracije', icon: Plug },
   { href: '/admin/tools', label: 'Alati', icon: Wrench },
 ]
 

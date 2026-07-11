@@ -37,7 +37,7 @@ export default function Services() {
             <motion.div
               key={s.title}
               custom={i}
-              initial={false}
+              initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: '-50px' }}
               variants={cardVariant}

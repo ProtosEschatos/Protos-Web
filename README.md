@@ -71,12 +71,7 @@ src/
 │   │   ├── backgrounds/     # Per-route R3F backgrounds
 │   │   └── showcase/        # SpaceGallery 3D room
 │   └── ui/
-│       ├── PageLoader.tsx   # Boot gate wrapper + consent modal
-│       ├── BootScreen.tsx   # Cinematic 5s orbit → nebula animation
-│       ├── ProtosLoader.tsx # LDRS brand loaders (forms, showcase)
-│       ├── ShimmerText.tsx  # Animated gradient text
-│       ├── GlowCard.tsx     # Hover glow + border beam cards
-│       ├── MagneticButton.tsx # CTA mouse-follow wrapper
+│       ├── PageLoader.tsx   # Boot video + 4.5s gate + cookie modal
 │       ├── SiteBackground.tsx
 │       ├── CustomCursor.tsx
 │       └── CookieBanner.tsx
@@ -84,7 +79,7 @@ src/
 │   ├── tech-stacks.ts       # Single source of truth for public stack badges
 │   ├── site.ts              # SITE_URL, social URL constants
 │   ├── team-profiles.ts     # Team + online presence tiles
-│   ├── boot-gate.ts         # BOOT_MIN_MS = 5000
+│   ├── boot-gate.ts         # BOOT_MIN_MS = 4500
 │   ├── admin/               # Admin queries, auth helpers
 │   ├── section-icons.tsx
 │   ├── social-links.ts
@@ -132,7 +127,7 @@ scripts/
 - [x] Header with desktop nav, language selector (5 langs), theme cycler, CTA, hamburger
 - [x] MobileMenu with Framer Motion slide-in animation
 - [x] Footer with brand, links, legal, social, Balkans causes
-- [x] PageLoader with cinematic 5s boot animation (orbit → impact → nebula) and consent modal
+- [x] PageLoader with boot video (`/loader/boot-bg.mp4`), 4.5s progress gate, and boot cookie modal
 - [x] CustomCursor with dot + follower
 - [x] Lucide React icons
 - [x] CookieBanner with localStorage persistence
@@ -155,18 +150,6 @@ scripts/
 - [x] Dynamic OG images, GA4 consent-gated analytics, Vercel Speed Insights
 - [x] All config files (tailwind, next, tsconfig, postcss, middleware, i18n)
 - [x] .cursorrules for Cursor AI
-- [x] UI motion layer: LDRS loaders, ShimmerText, GlowCard, MagneticButton (see [`docs/ui-motion-toolkit.md`](docs/ui-motion-toolkit.md))
-- [x] 3D agent toolkit: [`docs/3d-toolkit.md`](docs/3d-toolkit.md) + [`.cursor/rules/r3f-drei-recipes.mdc`](.cursor/rules/r3f-drei-recipes.mdc)
-
-### UI Motion & 3D docs
-
-| Doc | Purpose |
-|-----|---------|
-| [`docs/ui-motion-toolkit.md`](docs/ui-motion-toolkit.md) | When to use LDRS vs Framer vs R3F; approved UI primitives |
-| [`docs/3d-toolkit.md`](docs/3d-toolkit.md) | R3F + drei cheat sheet, perf budget, layer rules |
-| [`.cursor/rules/r3f-drei-recipes.mdc`](.cursor/rules/r3f-drei-recipes.mdc) | Copy-paste 3D recipes for agents |
-
-**Key deps:** `ldrs` (inline loaders), `framer-motion` (DOM motion), `@react-three/fiber` + `@react-three/drei` (3D). Boot screen stays custom — not LDRS.
 
 ### Backend
 - [x] Supabase client connection

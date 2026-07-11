@@ -321,10 +321,7 @@
   },
   "loader": {
     "subtitle": "Ucitavanje iskustva",
-    "welcome": "dobrodošli u protos web",
-    "welcomeTagline": "✦ savršena kombinacija ✦",
     "enter": "Ulaz",
-    "enterCta": "ENTER",
     "consentModalTitle": "Obavezno prihvacanje uvjeta",
     "consentModalRequired": "Bez prihvacanja Uvjeta koristenja i Pravila privatnosti ne mozete uci na stranicu niti koristiti bilo koji njezin sadrzaj.",
     "consentModalIntro": "Procitajte i prihvatite nase",

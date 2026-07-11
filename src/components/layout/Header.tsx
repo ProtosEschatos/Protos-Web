@@ -8,7 +8,6 @@ import { localeLabels, localeFlags, locales, type Locale } from '@/i18n'
 import MobileMenu from './MobileMenu'
 import { ChevronDown, Globe, MousePointer2 } from 'lucide-react'
 import ProtosLogo from '@/components/ui/ProtosLogo'
-import LiquidMorphMenuButton from '@/components/ui/LiquidMorphMenuButton'
 import AdminNavLink from '@/components/admin/AdminNavLink'
 
 const navLinks = [
@@ -149,11 +148,15 @@ export default function Header() {
                 <MousePointer2 className="w-4 h-4" />
                 <span>-50%</span>
               </a>
-              <LiquidMorphMenuButton
-                isOpen={mobileOpen}
+              <button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                ariaLabel={th('menu')}
-              />
+                className="w-12 h-12 flex flex-col items-center justify-center gap-[6px] p-2"
+                aria-label={th('menu')}
+              >
+                <span className={`block h-[2px] w-6 bg-[var(--light)] transition-all duration-300 ${mobileOpen ? 'rotate-45 translate-y-[8px]' : ''}`} />
+                <span className={`block h-[2px] w-6 bg-[var(--light)] transition-all duration-300 ${mobileOpen ? 'opacity-0' : ''}`} />
+                <span className={`block h-[2px] w-6 bg-[var(--light)] transition-all duration-300 ${mobileOpen ? '-rotate-45 -translate-y-[8px]' : ''}`} />
+              </button>
             </div>
           </div>
         </div>

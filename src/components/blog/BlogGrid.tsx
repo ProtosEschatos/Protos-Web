@@ -42,7 +42,7 @@ export default function BlogGrid({ posts, locale }: Props) {
         <motion.div
           key={p.id}
           custom={i}
-              initial={false}
+          initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-30px' }}
           variants={fadeUp}

@@ -40,7 +40,7 @@ export default function PortfolioGrid({ items }: Props) {
         <motion.div
           key={p.id}
           custom={i}
-          initial={false}
+          initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-50px' }}
           variants={cardVariant}

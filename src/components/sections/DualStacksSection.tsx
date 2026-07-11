@@ -23,7 +23,7 @@ function StackCard({
   return (
     <motion.div
       custom={index}
-        initial={false}
+      initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
       variants={fadeUp}

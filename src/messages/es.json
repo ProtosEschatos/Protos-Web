@@ -321,10 +321,7 @@
   },
   "loader": {
     "subtitle": "Cargando experiencia",
-    "welcome": "bienvenido a protos web",
-    "welcomeTagline": "✦ una combinacion perfecta ✦",
     "enter": "Enter",
-    "enterCta": "ENTER",
     "consentModalTitle": "Aceptacion de terminos obligatoria",
     "consentModalRequired": "Sin aceptar los Terminos de servicio y la Politica de privacidad no puede entrar al sitio ni usar su contenido.",
     "consentModalIntro": "Lea y acepte nuestros",

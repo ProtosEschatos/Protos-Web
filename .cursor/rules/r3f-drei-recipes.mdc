@@ -1,0 +1,102 @@
+---
+description: R3F + drei recipes for Protos Web 3D scenes
+alwaysApply: false
+globs: src/components/three/**/*
+---
+
+# R3F + drei Recipes (Protos Web)
+
+Read `docs/3d-toolkit.md` first. Use Context7 MCP for `@react-three/drei` / `@react-three/fiber` API details.
+
+## Ambient background shell
+
+Every route background should use the existing shell pattern:
+
+```tsx
+'use client'
+import AmbientBackgroundShell from '@/components/three/backgrounds/AmbientBackgroundShell'
+import type { PageBackgroundProps } from '@/lib/site-background-routes'
+
+export default function ExampleBackground({ isMobile }: PageBackgroundProps) {
+  return (
+    <AmbientBackgroundShell>
+      {/* lights + meshes here */}
+    </AmbientBackgroundShell>
+  )
+}
+```
+
+Register in `src/lib/site-background-routes.ts`.
+
+## Starfield (drei Stars)
+
+```tsx
+import { Stars } from '@react-three/drei'
+
+<Stars radius={80} depth={40} count={isMobile ? 1200 : 2500} factor={3} fade speed={0.4} />
+```
+
+## Floating orb
+
+```tsx
+import { Float } from '@react-three/drei'
+
+<Float speed={1.2} rotationIntensity={0.4} floatIntensity={0.8}>
+  <mesh>
+    <sphereGeometry args={[0.4, 32, 32]} />
+    <meshStandardMaterial color="#a855f7" emissive="#a855f7" emissiveIntensity={0.6} />
+  </mesh>
+</Float>
+```
+
+## Nebula plane (pulsing)
+
+Reuse `pulseOpacity` from `live-utils.ts`:
+
+```tsx
+import { useFrame } from '@react-three/fiber'
+import { useRef } from 'react'
+import * as THREE from 'three'
+import { pulseOpacity } from '@/components/three/backgrounds/live-utils'
+
+function NebulaPlane() {
+  const ref = useRef<THREE.Mesh>(null)
+  useFrame((state) => {
+    if (!ref.current) return
+    const mat = ref.current.material as THREE.MeshBasicMaterial
+    mat.opacity = pulseOpacity(state.clock.elapsedTime * 0.2, 0, 0.04, 0.14)
+  })
+  return (
+    <mesh ref={ref} position={[0, 0, -8]}>
+      <planeGeometry args={[16, 10]} />
+      <meshBasicMaterial color="#8b5cf6" transparent opacity={0.1} depthWrite={false} />
+    </mesh>
+  )
+}
+```
+
+## Dynamic import (required)
+
+```tsx
+import dynamic from 'next/dynamic'
+
+const ExampleBackground = dynamic(
+  () => import('@/components/three/backgrounds/ExampleBackground'),
+  { ssr: false, loading: () => <div className="fixed inset-0 bg-[var(--dark)]" /> },
+)
+```
+
+## Perf checklist
+
+- [ ] `isMobile` reduces particle counts
+- [ ] `depthWrite={false}` on transparent layers where possible
+- [ ] No `OrbitControls` on production site backgrounds
+- [ ] Canvas has `dpr={[1, 1.5]}` cap on mobile if added manually
+- [ ] Dev-only: wrap with `r3f-perf` `<Perf />` when tuning
+
+## Forbidden
+
+- Vanilla Three.js in page components
+- Multiple fullscreen fixed Canvases on one route
+- Site chrome (Header/Footer) inside showcase Canvas
+- GSAP for 3D

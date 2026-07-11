@@ -14,6 +14,8 @@
 - **DOM + Canvas layers**: see `.cursor/rules/dom-canvas-layers.mdc` — mandatory for any UI/3D work
 - **i18n**: `next-intl` (5 locales: hr, en, de, it, es)
 - **Icons**: `lucide-react` only (no Font Awesome, no icon CDN)
+- **Loaders**: `ldrs` via `ProtosLoader` for inline/form loading — **not** for boot screen
+- **UI motion**: React Bits patterns live in `src/components/ui/` (`ShimmerText`, `GlowCard`, `MagneticButton`) — see `docs/ui-motion-toolkit.md`
 - **Backend**: Supabase (blog, contact, portfolio, edge functions; see `supabase/functions/README.md`)
 
 ## File Structure Rules
@@ -90,6 +92,10 @@
 - Edge functions in `supabase/functions/` — see `supabase/functions/README.md`
 - Live schema managed via Supabase MCP/CLI — see `supabase/migrations/README.md`
 - **Public tech stack badges**: always read from `src/lib/tech-stacks.ts` — never hardcode stack lists in i18n prose or components
+
+## 3D Rules
+- Before new 3D work: read `docs/3d-toolkit.md` and `.cursor/rules/r3f-drei-recipes.mdc`
+- Use Context7 MCP for `@react-three/drei` / `@react-three/fiber` documentation
 
 ## i18n Rules
 - Default locale: `hr` (Croatian)

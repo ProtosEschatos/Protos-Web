@@ -8,6 +8,7 @@ Repo: ProtosEschatos/Protos-Web
 1. Read `docs/security.md` for secret placement (never put `ADMIN_SECRET` in Supabase).
 2. Site identity: `src/lib/site.ts` (`CONTACT_EMAIL`, `SITE_URL`, Supabase ref).
 3. For full project memory see **Protos-Agent** repo: `memory/projects/protos-web.md`.
+4. **Human UI:** browse memory at `/admin/memory` (read-only, loads from Protos-Agent GitHub).
 
 ## Stack
 
@@ -19,6 +20,7 @@ Next.js 14 App Router · TypeScript · Tailwind · next-intl (hr/en/de/it/es) ·
 - CMS writes need `SUPABASE_SERVICE_ROLE_KEY` on Vercel
 - Admin UI uses `AdminShell` (bypasses boot veil) and `AdminLink` (not `@/routing` on server pages)
 - CMS reads: `src/lib/admin/*-queries.ts` · writes: `src/actions/admin-*.ts`
+- Agent memory: `/admin/memory` — reads `Protos-Agent/memory/` via GitHub raw (see `src/lib/agent-memory.ts`)
 - Social/platform structure: `src/lib/team-profiles.ts` (Studio/Dario/Martina + freelance); re-export via `social-links.ts` (`pending: true` until real URLs)
 - Public tech stacks (no infra): `src/lib/tech-stacks.ts`
 

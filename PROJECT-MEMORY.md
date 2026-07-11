@@ -1,5 +1,8 @@
 # Protos-Web — Project Memory
 
+> **Kanonski izvor:** [Protos-Agent/memory/](https://github.com/ProtosEschatos/Protos-Agent/tree/main/memory) + pregled u adminu na `/admin/memory`.  
+> Ovaj fajl je lokalni TL;DR — ne dupliciraj punu memoriju ovdje.
+
 > **Last updated:** 2026-07-11
 > **Live:** https://protosweb.eu
 > **Repo:** `ProtosEschatos/Protos-Web`

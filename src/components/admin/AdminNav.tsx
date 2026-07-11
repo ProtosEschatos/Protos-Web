@@ -4,6 +4,7 @@ import { usePathname } from '@/routing'
 import AdminLink from '@/components/admin/AdminLink'
 import type { LucideIcon } from 'lucide-react'
 import {
+  BookOpen,
   FileText,
   Inbox,
   LayoutGrid,
@@ -25,6 +26,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/admin/subscribers', label: 'Newsletter', icon: Mail },
   { href: '/admin/blog', label: 'Blog', icon: FileText },
   { href: '/admin/portfolio', label: 'Portfolio', icon: LayoutGrid },
+  { href: '/admin/memory', label: 'Memorija', icon: BookOpen },
   { href: '/admin/tools', label: 'Alati', icon: Wrench },
 ]
 

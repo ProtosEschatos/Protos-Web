@@ -1,5 +1,5 @@
 import { setRequestLocale } from 'next-intl/server'
-import { ExternalLink, FileText, LayoutGrid, Wrench } from 'lucide-react'
+import { BookOpen, ExternalLink, FileText, LayoutGrid, Wrench } from 'lucide-react'
 import AdminCommsInboxPanel from '@/components/admin/AdminCommsInboxPanel'
 import AdminHubCard from '@/components/admin/AdminHubCard'
 import AdminInsightGrid from '@/components/admin/AdminInsightGrid'
@@ -8,6 +8,7 @@ import AdminStatGrid from '@/components/admin/AdminStatGrid'
 import { adminGetNotifications } from '@/actions/admin-notifications'
 import { adminGetInsights } from '@/actions/admin-insights'
 import { adminGetCommsChannels, adminGetSecurityInsights } from '@/actions/admin-ops-insights'
+import { adminGetMemorySnapshot } from '@/lib/admin/memory-queries'
 import { SITE_DOMAIN, SITE_URL } from '@/lib/site'
 
 type Props = { params: { locale: string } }
@@ -15,10 +16,11 @@ type Props = { params: { locale: string } }
 export default async function AdminPage({ params: { locale } }: Props) {
   setRequestLocale(locale)
   const notifications = await adminGetNotifications()
-  const [marketing, security, comms] = await Promise.all([
+  const [marketing, security, comms, memory] = await Promise.all([
     adminGetInsights(),
     adminGetSecurityInsights(),
     adminGetCommsChannels(notifications),
+    adminGetMemorySnapshot(),
   ])
 
   return (
@@ -73,7 +75,7 @@ export default async function AdminPage({ params: { locale } }: Props) {
         </AdminSection>
 
         <AdminSection title="Sadržaj & alati" className="mt-10">
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             <AdminHubCard href="/admin/blog" label="Blog" description="Članci i objave" icon={FileText} />
             <AdminHubCard
               href="/admin/portfolio"
@@ -86,6 +88,23 @@ export default async function AdminPage({ params: { locale } }: Props) {
               label="Alati i platforme"
               description="Cloudflare, Vercel, DNS detalji"
               icon={Wrench}
+            />
+            <AdminHubCard
+              href="/admin/memory"
+              label="Agent memorija"
+              description={
+                memory
+                  ? `${memory.sessionCount} sesija · ${memory.learningCount} learnings`
+                  : 'Trajno znanje o projektu'
+              }
+              icon={BookOpen}
+              badge={
+                memory?.latestDate
+                  ? new Intl.DateTimeFormat('hr-HR', { month: 'short', day: 'numeric' }).format(
+                      new Date(memory.latestDate),
+                    )
+                  : undefined
+              }
             />
             <AdminHubCard
               href={SITE_URL}

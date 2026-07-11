@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 const base = (process.env.NEXT_PUBLIC_SUPABASE_URL ?? process.env.SUPABASE_URL ?? '').replace(/\/$/, '')
 const key = process.env.SUPABASE_SERVICE_ROLE_KEY
 
@@ -18,7 +16,7 @@ const OBSOLETE_PATHS = [
   'synthwave-360-sheet.jpg',
 ]
 
-async function deletePath(storagePath) {
+async function deletePath(storagePath: string): Promise<void> {
   const res = await fetch(`${base}/storage/v1/object/showcase/${storagePath}`, {
     method: 'DELETE',
     headers: { Authorization: `Bearer ${key}` },
@@ -48,3 +46,5 @@ for (const path of OBSOLETE_PATHS) {
 }
 
 console.log('Cleanup done.')
+
+export {}

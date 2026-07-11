@@ -3,22 +3,22 @@
 > **Kanonski izvor:** [Protos-Agent/memory/](https://github.com/ProtosEschatos/Protos-Agent/tree/main/memory) + pregled u adminu na `/admin/memory`.  
 > Ovaj fajl je lokalni TL;DR — ne dupliciraj punu memoriju ovdje.
 
-> **Last updated:** 2026-07-11 (22:49, checkpoint)
+> **Last updated:** 2026-07-11 (23:10)
 > **Live:** https://www.protosweb.eu
 > **Repo:** `ProtosEschatos/Protos-Web`
-> **Latest commit:** `077e99f` (memorija) · kod donacija `13a6083`
+> **Latest commit:** `3c039ed` — Admin Console v3.0 UI
 
 ---
 
 ## Gdje si stao (TL;DR)
 
-**Donacije LIVE (2026-07-11 noć):** Stripe Checkout radi (`sk_live_`, `cs_live_`). Jedan gumb „Podrži resurse studija” na `/o-meni`. Edge fn: `donation-checkout`, `donation-confirm` (backup), `stripe-webhook` (Stripe SDK). Success redirect → lokalizirani about URL + `session_id` potvrda. **Webhook mora biti LIVE `whsec_` u Supabase secrets** — inače admin ostaje `pending` (backup confirm popravlja nakon redirecta).
+**Admin Console v3.0 (2026-07-11):** UI kao [Google-AI-Studio-Github-Connect](https://github.com/ProtosEschatos/Google-AI-Studio-Github-Connect) — slate/indigo, sidebar „Nadzorni moduli”, header sat + Sinkroniziraj. `src/styles/admin-console.css`. Perf: Next.js Link, bez Lenis/Three.js na adminu, boot gate bypass. Docs: `docs/admin-console.md`.
 
-**i18n O meni (2026-07-11):** HR „O MENI” / „O timu”; lokalizirani URL-ovi: `/o-meni`, `/en/about`, `/de/ueber-uns`, `/it/chi-siamo`, `/es/sobre-nosotros` (middleware rewrite).
+**Donacije LIVE:** Stripe Checkout, webhook SDK + `donation-confirm` backup. `/admin/donacije`.
 
-**Inbox (2026-07-11):** Tri sandučića u `/admin/inbox` (Zoho ✅, Gmail studio ✅, Martina placeholder).
+**i18n O meni:** lokalizirani about URL-ovi po jeziku.
 
-**Refaktor + branding:** Faze A–F (`8f600e8`). Full Stack Duo. Martina: 5 god, 3D inovacije, astronaut showcase.
+**Inbox:** Zoho + Gmail studio + Martina placeholder u `/admin/inbox`.
 
 **Ne commitati:** `public/design/` (untracked).
 
@@ -56,6 +56,26 @@
 | `13a6083` | Webhook SDK + donation-confirm + lokalizirani redirect |
 
 Docs: `docs/stripe-donations.md`
+
+---
+
+## 2026-07-11 — Admin Console v3.0 (`3c039ed`)
+
+### Referenca
+- UI izvor: **ProtosEschatos/Google-AI-Studio-Github-Connect** (Google AI Studio mock → ciljani admin izgled)
+- Tema: slate-950 + indigo (ne cosmic orange javnog sitea)
+
+### Fixevi iste večeri
+| SHA | Što |
+|-----|-----|
+| `0ba7201` | Boot veil ne blokira `/admin` (init script bypass) |
+| `0871c0e` | AdminLink → Next.js Link; Lenis off; bez WebGL bg |
+| `3c039ed` | Console v3.0 reskin — header, sidebar, kartice, login |
+
+### Ključne datoteke
+- `src/styles/admin-console.css`
+- `src/components/features/admin/AdminShell.tsx`, `AdminHeader.tsx`, `AdminSidebar.tsx`
+- `docs/admin-console.md`
 
 ---
 

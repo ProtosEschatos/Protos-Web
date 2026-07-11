@@ -49,6 +49,8 @@ Legacy multi-tenant columns may still exist elsewhere; active flow uses `donatio
 - Generic error messages on failed login (no hint whether secret is missing)
 - `/admin/memory` is admin-only; fetches public markdown from Protos-Agent (no secrets in content)
 
+Admin UI layout and Console v3.0 reference: [admin-console.md](./admin-console.md).
+
 ## Supabase / data
 
 - RLS enabled on sensitive tables; newsletter inserts via edge fn (not open anon INSERT)

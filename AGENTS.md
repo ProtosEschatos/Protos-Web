@@ -6,7 +6,7 @@ Repo: ProtosEschatos/Protos-Web
 ## Before you work
 
 1. Read `docs/security.md` for secret placement (never put `ADMIN_SECRET` in Supabase).
-2. Site identity: `src/lib/config/site.ts` (`CONTACT_EMAIL`, `SITE_URL`, Supabase ref).
+2. Admin UI: `docs/admin-console.md` + reference repo `Google-AI-Studio-Github-Connect`.
 3. For full project memory see **Protos-Agent** repo: `memory/projects/protos-web.md`.
 4. **Human UI:** browse memory at `/admin/memory` (read-only, loads from Protos-Agent GitHub).
 
@@ -37,9 +37,10 @@ src/
 
 ## Admin (`/admin`)
 
+- **Console v3.0** UI — referenca: `ProtosEschatos/Google-AI-Studio-Github-Connect`; docs: `docs/admin-console.md`
 - Password auth via `ADMIN_SECRET` on **Vercel only**
-- CMS writes need `SUPABASE_SERVICE_ROLE_KEY` on Vercel
-- Admin UI: `components/features/admin/` — `AdminShell`, `AdminSidebar`, `AdminLink`
+- Stil: `src/styles/admin-console.css` (`.admin-console` scope)
+- Admin UI: `AdminShell`, `AdminSidebar`, `AdminLink` (Next.js client nav)
 - CMS reads: `src/lib/queries/admin/` · writes: `src/actions/admin-*.ts`
 - Static pages: `/admin/stranice/*` (copy in `messages/*.json` + page components)
 - Agent memory: `/admin/memory` — reads `Protos-Agent/memory/` via GitHub raw
@@ -62,12 +63,12 @@ Push to `main` → Vercel production. **After every push verify live** (`vercel 
 
 **Critical:** `ADMIN_SECRET` lives on Vercel only — git revert does **not** restore it.
 
-## Current state (2026-07-11 noć)
+## Current state (2026-07-11 23:10)
 
-- **Latest commit:** `077e99f` (memorija sync) · donacije kod `13a6083`
-- **Live:** https://www.protosweb.eu
-- **Inbox:** `/admin/inbox` — Zoho + Gmail studio + Martina (placeholder)
-- **Donacije:** Stripe Checkout LIVE 1–1000 EUR; jedan gumb `resources`; `/admin/donacije`
-- **O meni i18n:** lokalizirani URL-ovi (`/about`, `/ueber-uns`, …); HR „O MENI” / „O timu”
-- **Stripe secrets:** Supabase Edge — `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` (live `whsec_`), `SITE_URL`
+- **Latest commit:** `3c039ed` — Admin Console v3.0 reskin
+- **Live:** https://www.protosweb.eu/admin
+- **Admin UI:** slate/indigo Console v3.0 (ref: Google-AI-Studio-Github-Connect)
+- **Donacije:** Stripe LIVE · `/admin/donacije`
+- **Inbox:** Zoho + Gmail studio + Martina placeholder
+- **Docs:** `docs/admin-console.md`, `docs/stripe-donations.md`
 - Full memory: **Protos-Agent** `memory/sessions/2026-07-11-inbox-stripe-donations.md`

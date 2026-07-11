@@ -5,8 +5,8 @@ export const BOOT_SESSION_KEY = 'protos-boot-gate-v11'
 export const BOOT_COMPLETE_EVENT = 'protos-boot-complete'
 export const BOOT_VIDEO = '/loader/boot-bg.mp4'
 export const BOOT_BG = '#020818'
-/** Cinematic boot timeline — Enter button at 5.0s (see BootScreen.tsx) */
-export const BOOT_MIN_MS = 5000
+/** Minimum boot screen duration before Enter is shown (ms) */
+export const BOOT_MIN_MS = 4500
 
 function readStoredConsent(): boolean {
   if (typeof window === 'undefined') return false

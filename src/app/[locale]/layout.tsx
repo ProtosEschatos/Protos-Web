@@ -109,8 +109,7 @@ export default async function LocaleLayout({
         <LocaleCreatorSeo locale={locale} />
         <link rel="preload" href="/loader/boot-bg.mp4" as="video" type="video/mp4" />
       </head>
-      <body className="site-body" style={{ backgroundColor: '#020818' }}>
-        <div aria-hidden className="fixed inset-0 -z-10 bg-[#020818]" />
+      <body className="site-body">
         <Script id="boot-gate-init" strategy="beforeInteractive">
           {BOOT_GATE_INIT_SCRIPT}
         </Script>

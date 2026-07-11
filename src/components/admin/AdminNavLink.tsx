@@ -35,7 +35,7 @@ export default function AdminNavLink({
 
   if (!authenticated) return null
 
-  const active = pathname === '/admin'
+  const active = pathname.includes('/admin')
 
   if (variant === 'mobile') {
     return (

@@ -1,37 +1,45 @@
+'use client'
+
 import AdminLink from '@/components/admin/AdminLink'
-import AdminNav from '@/components/admin/AdminNav'
 import AdminActivityBadge from '@/components/admin/AdminActivityBadge'
 import { SITE_URL } from '@/lib/site'
 import ProtosLogo from '@/components/ui/ProtosLogo'
 import AdminLogoutButton from '@/components/admin/AdminLogoutButton'
+import { findAdminNavItem } from '@/lib/admin-nav'
+import { usePathname } from '@/routing'
 
 export default function AdminHeader() {
+  const pathname = usePathname()
+  const current = findAdminNavItem(pathname)
+
   return (
-    <header className="relative z-[2] border-b border-white/5 bg-[#100818]/60 backdrop-blur-md">
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between gap-4">
-        <AdminLink href="/admin" className="flex items-center gap-3 group">
+    <header className="sticky top-0 z-[3] border-b border-white/5 bg-[#100818]/80 backdrop-blur-xl">
+      <div className="flex h-16 items-center justify-between gap-4 px-4 lg:px-6">
+        <AdminLink href="/admin" className="group flex min-w-0 items-center gap-3">
           <ProtosLogo size={32} />
-          <div>
+          <div className="min-w-0">
             <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--primary)]">Privatno</p>
             <div className="flex items-center gap-2">
-              <p className="text-sm font-semibold text-[var(--light)] group-hover:text-[var(--primary)] transition-colors">
-                Admin
+              <p className="truncate text-sm font-semibold text-[var(--light)] group-hover:text-[var(--primary)] transition-colors">
+                {current?.label ?? 'Admin'}
               </p>
               <AdminActivityBadge />
             </div>
           </div>
         </AdminLink>
-        <div className="flex items-center gap-3">
+
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
           <a
             href={SITE_URL}
-            className="hidden sm:inline-flex px-3 py-1.5 rounded-lg border border-white/10 text-xs text-[var(--light-muted)] hover:text-[var(--light)] hover:border-white/20 transition-colors"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:inline-flex rounded-lg border border-white/10 px-3 py-1.5 text-xs text-[var(--light-muted)] transition-colors hover:border-white/20 hover:text-[var(--light)]"
           >
-            Javna stranica
+            protosweb.eu ↗
           </a>
           <AdminLogoutButton />
         </div>
       </div>
-      <AdminNav />
     </header>
   )
 }

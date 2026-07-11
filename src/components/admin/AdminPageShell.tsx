@@ -7,29 +7,36 @@ type Props = {
   backHref?: string
   backLabel?: string
   children?: React.ReactNode
+  actions?: React.ReactNode
 }
 
 export default function AdminPageShell({
   title,
   description,
   backHref = '/admin',
-  backLabel = 'Kontrolna ploča',
+  backLabel = 'Početna',
   children,
+  actions,
 }: Props) {
   return (
-    <div className="py-8 md:py-12">
-      <div className="max-w-6xl mx-auto px-6">
-        <AdminLink
-          href={backHref}
-          className="inline-flex items-center gap-1.5 text-sm text-[var(--light-muted)] hover:text-[var(--primary)] mb-6 transition-colors"
-        >
-          <ChevronLeft className="h-4 w-4" />
-          {backLabel}
-        </AdminLink>
-        <div className="mb-8">
-          <h1 className="text-2xl md:text-3xl font-bold text-[var(--light)]">{title}</h1>
-          {description ? <p className="text-[var(--light-muted)] mt-2">{description}</p> : null}
+    <div className="py-6 md:py-8">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+          <AdminLink
+            href={backHref}
+            className="inline-flex items-center gap-1.5 text-sm text-[var(--light-muted)] transition-colors hover:text-[var(--primary)]"
+          >
+            <ChevronLeft className="h-4 w-4" />
+            {backLabel}
+          </AdminLink>
+          {actions}
         </div>
+
+        <header className="mb-8">
+          <h1 className="text-2xl font-bold text-[var(--light)] md:text-3xl">{title}</h1>
+          {description ? <p className="mt-2 max-w-2xl text-sm text-[var(--light-muted)]">{description}</p> : null}
+        </header>
+
         {children}
       </div>
     </div>

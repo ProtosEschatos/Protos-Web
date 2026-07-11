@@ -36,7 +36,7 @@ export default function AdminHubCard({
           <h3 className="font-semibold text-[var(--light)]">{label}</h3>
           {pending ? (
             <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full border border-amber-500/30 text-amber-400">
-              link uskoro
+              nema ključa
             </span>
           ) : null}
           {badge ? (

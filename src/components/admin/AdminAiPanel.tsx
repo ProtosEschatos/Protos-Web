@@ -169,7 +169,7 @@ export default function AdminAiPanel({ deepseekReady, geminiReady }: Props) {
           type="button"
           onClick={() => void send()}
           disabled={loading}
-          className="px-5 py-2 rounded-full bg-gradient-to-r from-cyan-500 to-emerald-500 text-white text-sm font-semibold disabled:opacity-50"
+          className="px-5 py-2.5 rounded-full bg-gradient-to-r from-[var(--primary)] to-[#ff8800] text-white text-sm font-semibold disabled:opacity-50 hover:-translate-y-0.5 transition-transform"
         >
           Pošalji
         </button>

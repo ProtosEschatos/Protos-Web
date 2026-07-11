@@ -1,5 +1,5 @@
 import { setRequestLocale } from 'next-intl/server'
-import { BookOpen, Bot, ExternalLink, FileText, LayoutGrid, Wrench } from 'lucide-react'
+import { ExternalLink } from 'lucide-react'
 import AdminCommsInboxPanel from '@/components/admin/AdminCommsInboxPanel'
 import AdminHubCard from '@/components/admin/AdminHubCard'
 import AdminInsightGrid from '@/components/admin/AdminInsightGrid'
@@ -10,6 +10,8 @@ import { adminGetInsights } from '@/actions/admin-insights'
 import { adminGetCommsChannels, adminGetSecurityInsights } from '@/actions/admin-ops-insights'
 import { adminGetMemorySnapshot } from '@/lib/admin/memory-queries'
 import { getAiProviderStatus } from '@/lib/ai/providers'
+import { ADMIN_NAV_SECTIONS } from '@/lib/admin-nav'
+import { adminNavIcon } from '@/lib/admin-nav-icons'
 import { SITE_DOMAIN, SITE_URL } from '@/lib/site'
 
 type Props = { params: { locale: string } }
@@ -24,17 +26,19 @@ export default async function AdminPage({ params: { locale } }: Props) {
     adminGetMemorySnapshot(),
   ])
   const aiStatus = getAiProviderStatus()
+  const pageSection = ADMIN_NAV_SECTIONS.find((s) => s.id === 'pages')
+  const systemSection = ADMIN_NAV_SECTIONS.find((s) => s.id === 'system')
 
   return (
-    <div className="py-8 md:py-10">
-      <div className="max-w-5xl mx-auto px-6">
+    <div className="py-6 md:py-8">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <header className="mb-8">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--primary)] mb-2">
-            Protos Web
+          <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--primary)]">
+            Protos Web Admin
           </p>
-          <h1 className="text-2xl md:text-3xl font-bold text-[var(--light)]">Admin pregled</h1>
-          <p className="text-sm text-[var(--light-muted)] mt-2 max-w-xl">
-            Inboxi, sigurnost i marketing na jednom mjestu — bez duplih linkova.
+          <h1 className="text-2xl font-bold text-[var(--light)] md:text-3xl">Pregled</h1>
+          <p className="mt-2 max-w-xl text-sm text-[var(--light-muted)]">
+            Ista struktura kao javni navbar — plus sustav alati s lijeve strane.
           </p>
         </header>
 
@@ -45,20 +49,27 @@ export default async function AdminPage({ params: { locale } }: Props) {
               label: 'Aktivnost (24h)',
               tone: notifications.recentActivityCount > 0 ? 'ok' : 'default',
             },
-            {
-              value: notifications.contactsLast24Hours,
-              label: 'Kontakt (24h)',
-            },
-            {
-              value: notifications.subscribersLast24Hours,
-              label: 'Newsletter (24h)',
-            },
-            {
-              value: notifications.subscriberCount,
-              label: 'Pretplatnika ukupno',
-            },
+            { value: notifications.contactsLast24Hours, label: 'Kontakt (24h)' },
+            { value: notifications.subscribersLast24Hours, label: 'Newsletter (24h)' },
+            { value: notifications.subscriberCount, label: 'Pretplatnika ukupno' },
           ]}
         />
+
+        {pageSection ? (
+          <AdminSection title="Stranice (kao na protosweb.eu)" className="mt-10">
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {pageSection.items.map((item) => (
+                <AdminHubCard
+                  key={item.id}
+                  href={item.href}
+                  label={item.label}
+                  description={item.description}
+                  icon={adminNavIcon(item.id)}
+                />
+              ))}
+            </div>
+          </AdminSection>
+        ) : null}
 
         <AdminSection title="Poruke & inboxi" className="mt-10">
           <AdminCommsInboxPanel channels={comms.channels} checkedAt={comms.checkedAt} />
@@ -68,7 +79,7 @@ export default async function AdminPage({ params: { locale } }: Props) {
           <AdminInsightGrid
             insights={security.insights}
             checkedAt={security.checkedAt}
-            footnote={`Provjera: ${new Intl.DateTimeFormat('hr-HR', { dateStyle: 'short', timeStyle: 'short' }).format(new Date(security.checkedAt))} · DNS, admin auth, CMS`}
+            footnote={`Provjera: ${new Intl.DateTimeFormat('hr-HR', { dateStyle: 'short', timeStyle: 'short' }).format(new Date(security.checkedAt))}`}
           />
         </AdminSection>
 
@@ -76,54 +87,46 @@ export default async function AdminPage({ params: { locale } }: Props) {
           <AdminInsightGrid insights={marketing.insights} checkedAt={marketing.checkedAt} />
         </AdminSection>
 
-        <AdminSection title="Sadržaj & alati" className="mt-10">
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            <AdminHubCard href="/admin/blog" label="Blog" description="Članci i objave" icon={FileText} />
-            <AdminHubCard
-              href="/admin/portfolio"
-              label="Portfolio"
-              description="Projekti i showcase"
-              icon={LayoutGrid}
-            />
-            <AdminHubCard
-              href="/admin/tools"
-              label="Alati i platforme"
-              description="Cloudflare, Vercel, DNS detalji"
-              icon={Wrench}
-            />
-            <AdminHubCard
-              href="/admin/memory"
-              label="Agent memorija"
-              description={
-                memory
-                  ? `${memory.sessionCount} sesija · ${memory.learningCount} learnings`
-                  : 'Trajno znanje o projektu'
-              }
-              icon={BookOpen}
-              badge={
-                memory?.latestDate
-                  ? new Intl.DateTimeFormat('hr-HR', { month: 'short', day: 'numeric' }).format(
-                      new Date(memory.latestDate),
-                    )
-                  : undefined
-              }
-            />
-            <AdminHubCard
-              href="/admin/ai"
-              label="AI asistent"
-              description={aiStatus.deepseek ? 'DeepSeek spreman' : 'Dodaj DEEPSEEK_API_KEY'}
-              icon={Bot}
-              pending={!aiStatus.deepseek}
-            />
-            <AdminHubCard
-              href={SITE_URL}
-              label="Javna stranica"
-              description={SITE_DOMAIN}
-              icon={ExternalLink}
-              external
-            />
-          </div>
-        </AdminSection>
+        {systemSection ? (
+          <AdminSection title="Sustav" className="mt-10">
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {systemSection.items.map((item) => {
+                const pending =
+                  item.id === 'ai' ? !aiStatus.deepseek : item.id === 'memory' ? !memory : false
+                const badge =
+                  item.id === 'memory' && memory?.latestDate
+                    ? new Intl.DateTimeFormat('hr-HR', { month: 'short', day: 'numeric' }).format(
+                        new Date(memory.latestDate),
+                      )
+                    : undefined
+                const description =
+                  item.id === 'ai'
+                    ? aiStatus.deepseek
+                      ? 'DeepSeek spreman'
+                      : 'Dodaj DEEPSEEK_API_KEY'
+                    : item.description
+                return (
+                  <AdminHubCard
+                    key={item.id}
+                    href={item.href}
+                    label={item.label}
+                    description={description}
+                    icon={adminNavIcon(item.id)}
+                    pending={pending}
+                    badge={badge}
+                  />
+                )
+              })}
+              <AdminHubCard
+                href={SITE_URL}
+                label="Javna stranica"
+                description={SITE_DOMAIN}
+                icon={ExternalLink}
+                external
+              />
+            </div>
+          </AdminSection>
+        ) : null}
       </div>
     </div>
   )

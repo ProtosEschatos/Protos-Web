@@ -88,7 +88,7 @@ export default async function AdminPage({ params: { locale } }: Props) {
           </div>
         </AdminSection>
 
-        <AdminSection title="Sustav" actionHref="/admin/tools" actionLabel="Alati i platforme →">
+        <AdminSection title="Sustav" actionHref="/admin/integrations" actionLabel="Integracije →">
           <AdminStatGrid
             stats={[
               {

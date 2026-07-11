@@ -13,7 +13,7 @@ import { PageTransitionProvider } from '@/components/navigation/PageTransitionPr
 import PageTransitionOverlay from '@/components/navigation/PageTransitionOverlay'
 import AdminShell from '@/components/features/admin/AdminShell'
 import SiteConsentModal from '@/components/legal/SiteConsentModal'
-import { clearBootPending, isBootComplete, removeBootSsrVeil, BOOT_SESSION_KEY, BOOT_COMPLETE_EVENT } from '@/lib/config/boot-gate'
+import { clearBootPending, isBootComplete, isBootGateBypassPath, removeBootSsrVeil, BOOT_SESSION_KEY, BOOT_COMPLETE_EVENT } from '@/lib/config/boot-gate'
 import { hasSiteConsent } from '@/lib/config/site-consent'
 
 const LEGAL_PATH = /\/(terms|privacy|cookies)$/
@@ -29,6 +29,13 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
   useLayoutEffect(() => {
     setShowcaseBlocked(!hasSiteConsent())
   }, [])
+
+  useLayoutEffect(() => {
+    if (isBootGateBypassPath(pathname)) {
+      clearBootPending()
+      removeBootSsrVeil()
+    }
+  }, [pathname])
 
   useEffect(() => {
     if (isShowcase || isAdmin || isLegal) {

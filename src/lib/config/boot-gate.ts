@@ -47,5 +47,17 @@ export function removeBootSsrVeil(): void {
   if (veil) veil.style.display = 'none'
 }
 
+/** Paths that must never show the public-site boot gate (admin, legal, showcase). */
+export function isBootGateBypassPath(pathname: string): boolean {
+  const path = pathname.split('?')[0].split('#')[0]
+  return (
+    path === '/admin' ||
+    path.startsWith('/admin/') ||
+    /^\/(en|de|it|es)\/admin(\/|$)/.test(path) ||
+    path.includes('portfolio-showcase') ||
+    /\/(terms|privacy|cookies)$/.test(path)
+  )
+}
+
 /** Inline script for layout — must stay in sync with BOOT_SESSION_KEY + SITE_CONSENT_KEY */
-export const BOOT_GATE_INIT_SCRIPT = `(function(){try{var k='${BOOT_SESSION_KEY}';var ck='${SITE_CONSENT_KEY}';var tv='${LEGAL_TERMS_VERSION}';var ok=false;if(sessionStorage.getItem(k)==='1')ok=true;else{var r=localStorage.getItem(ck);if(r){var p=JSON.parse(r);if(p&&p.termsAccepted&&p.essential&&p.termsVersion===tv)ok=true;}}if(ok){document.documentElement.classList.remove('boot-pending');document.documentElement.classList.add('boot-complete');document.body.style.overflow='';var v=document.getElementById('boot-ssr-veil');if(v)v.style.display='none';}else{document.documentElement.classList.add('boot-pending');}}catch(e){document.documentElement.classList.add('boot-pending');}})();`
+export const BOOT_GATE_INIT_SCRIPT = `(function(){try{var p=location.pathname;if(/^\\/admin(\\/|$)/.test(p)||/^\\/(en|de|it|es)\\/admin(\\/|$)/.test(p)||p.indexOf('portfolio-showcase')!==-1||\\/(terms|privacy|cookies)$/.test(p)){document.documentElement.classList.remove('boot-pending');document.documentElement.classList.add('boot-complete');document.body.style.overflow='';var v=document.getElementById('boot-ssr-veil');if(v)v.style.display='none';return;}var k='${BOOT_SESSION_KEY}';var ck='${SITE_CONSENT_KEY}';var tv='${LEGAL_TERMS_VERSION}';var ok=false;if(sessionStorage.getItem(k)==='1')ok=true;else{var r=localStorage.getItem(ck);if(r){var p=JSON.parse(r);if(p&&p.termsAccepted&&p.essential&&p.termsVersion===tv)ok=true;}}if(ok){document.documentElement.classList.remove('boot-pending');document.documentElement.classList.add('boot-complete');document.body.style.overflow='';var v=document.getElementById('boot-ssr-veil');if(v)v.style.display='none';}else{document.documentElement.classList.add('boot-pending');}}catch(e){document.documentElement.classList.add('boot-pending');}})();`

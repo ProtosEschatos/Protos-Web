@@ -19,12 +19,13 @@ type Props = { params: { locale: string } }
 export default async function AdminPage({ params: { locale } }: Props) {
   setRequestLocale(locale)
   const notifications = await adminGetNotifications()
-  const [marketing, security, comms, memory] = await Promise.all([
+  const [marketing, security, comms, memoryResult] = await Promise.all([
     adminGetInsights(),
     adminGetSecurityInsights(),
     adminGetCommsChannels(notifications),
-    adminGetMemorySnapshot(),
+    adminGetMemorySnapshot().catch(() => null),
   ])
+  const memory = memoryResult
   const aiStatus = getAiProviderStatus()
   const pageSection = ADMIN_NAV_SECTIONS.find((s) => s.id === 'pages')
   const systemSection = ADMIN_NAV_SECTIONS.find((s) => s.id === 'system')

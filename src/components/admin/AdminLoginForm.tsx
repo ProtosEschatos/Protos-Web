@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import ProtosLogo from '@/components/ui/ProtosLogo'
+import ProtosLoader from '@/components/ui/ProtosLoader'
 
 export default function AdminLoginForm() {
   const searchParams = useSearchParams()
@@ -69,9 +70,9 @@ export default function AdminLoginForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-full bg-gradient-to-r from-[var(--primary)] to-[#ff8800] text-white font-semibold uppercase tracking-wider text-sm hover:-translate-y-0.5 transition-transform disabled:opacity-50"
+            className="w-full py-3 rounded-full bg-gradient-to-r from-[var(--primary)] to-[#ff8800] text-white font-semibold uppercase tracking-wider text-sm hover:-translate-y-0.5 transition-transform disabled:opacity-50 flex items-center justify-center gap-2 min-h-12"
           >
-            {loading ? 'Prijava…' : 'Prijavi se'}
+            {loading ? <ProtosLoader variant="ring" size={22} color="orange" inline /> : 'Prijavi se'}
           </button>
         </form>
       </div>

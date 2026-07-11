@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { PROCESS_FEATURE_ICONS } from '@/lib/section-icons'
+import GlowCard from '@/components/ui/GlowCard'
+import ShimmerText from '@/components/ui/ShimmerText'
 const featureColors = ['primary', 'secondary', 'accent']
 
 const colorMap: Record<string, string> = {
@@ -29,38 +31,39 @@ export default function Process() {
     <section className="cosmic-section py-24 border-t border-b border-white/[0.06]">
       <div className="max-w-[1200px] mx-auto px-6 text-center">
         <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-tight mb-10">
-          {t('title')} <span className="gradient-text">{t('titleHighlight')}</span>
+          {t('title')} <ShimmerText as="span">{t('titleHighlight')}</ShimmerText>
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {steps.map((s, i) => (
-            <motion.div
-              key={s.num}
-              custom={i}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-50px' }}
-              variants={cardVariant}
-              className="cosmic-panel rounded-2xl p-7 hover:border-[var(--primary)]/30 hover:-translate-y-1 transition-all duration-300 text-left"
-            >
+            <GlowCard key={s.num} className="h-full rounded-2xl" glowColor="purple">
+              <motion.div
+                custom={i}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: '-50px' }}
+                variants={cardVariant}
+                className="cosmic-panel h-full rounded-2xl p-7 transition-all duration-300 text-left"
+              >
               <div className="text-4xl font-extrabold gradient-text mb-4 leading-none">{s.num}</div>
               <h3 className="text-base font-bold text-[var(--light)] mb-2">{s.title}</h3>
               <p className="text-sm text-[var(--light-muted)] leading-relaxed">{s.text}</p>
-            </motion.div>
+              </motion.div>
+            </GlowCard>
           ))}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
           {features.map((f, i) => (
-            <motion.div
-              key={f.title}
-              custom={i + 4}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={cardVariant}
-              className="cosmic-panel rounded-3xl p-8 text-center hover:border-[var(--primary)]/20 hover:-translate-y-1 transition-all duration-300"
-            >
+            <GlowCard key={f.title} className="h-full rounded-3xl" glowColor={featureColors[i] as 'primary' | 'secondary' | 'accent'}>
+              <motion.div
+                custom={i + 4}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={cardVariant}
+                className="cosmic-panel h-full rounded-3xl p-8 text-center transition-all duration-300"
+              >
               <div className={`w-14 h-14 rounded-full mx-auto mb-4 flex items-center justify-center text-xl ${colorMap[featureColors[i]]}`}>
                 {(() => {
                   const Icon = PROCESS_FEATURE_ICONS[i]
@@ -69,7 +72,8 @@ export default function Process() {
               </div>
               <h3 className="text-base font-bold text-[var(--light)] mb-2">{f.title}</h3>
               <p className="text-sm text-[var(--light-muted)] leading-relaxed">{f.text}</p>
-            </motion.div>
+              </motion.div>
+            </GlowCard>
           ))}
         </div>
       </div>

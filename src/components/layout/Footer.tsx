@@ -7,6 +7,7 @@ import { Link } from '@/routing'
 import TransitionLink from '@/components/navigation/TransitionLink'
 import SocialLinks from '@/components/ui/SocialLinks'
 import ProtosLogo from '@/components/ui/ProtosLogo'
+import ProtosLoader from '@/components/ui/ProtosLoader'
 
 const footerLinks = [
   { href: '/', key: 'home' as const },
@@ -80,9 +81,13 @@ export default function Footer() {
                 <button
                   type="submit"
                   disabled={status === 'loading'}
-                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[var(--primary)] to-[#ff8800] text-white text-sm font-semibold whitespace-nowrap hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-60"
+                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[var(--primary)] to-[#ff8800] text-white text-sm font-semibold whitespace-nowrap hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-60 min-w-[3.5rem] flex items-center justify-center"
                 >
-                  {status === 'loading' ? '…' : t('newsletter_submit')}
+                  {status === 'loading' ? (
+                    <ProtosLoader variant="ring" size={20} color="white" />
+                  ) : (
+                    t('newsletter_submit')
+                  )}
                 </button>
               </div>
               {status === 'success' && (

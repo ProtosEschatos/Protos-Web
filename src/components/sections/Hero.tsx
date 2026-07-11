@@ -4,6 +4,8 @@ import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { ArrowRight } from 'lucide-react'
 import TransitionLink from '@/components/navigation/TransitionLink'
+import ShimmerText from '@/components/ui/ShimmerText'
+import MagneticButton from '@/components/ui/MagneticButton'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -32,18 +34,22 @@ export default function Hero() {
           </motion.p>
           <motion.h1 custom={1} initial="hidden" animate="visible" variants={fadeUp} className="text-[clamp(2.8rem,6vw,5rem)] font-extrabold leading-[1.05] mb-6">
             {t('title_line1')}<br />{t('title_line2')}<br />
-            <span className="gradient-text">{t('title_line3')}</span>
+            <ShimmerText as="span">{t('title_line3')}</ShimmerText>
           </motion.h1>
           <motion.p custom={2} initial="hidden" animate="visible" variants={fadeUp} className="text-base text-[var(--light-muted)] mb-9 leading-7 max-w-[520px]">
             {t('subtitle')}
           </motion.p>
           <motion.div custom={3} initial="hidden" animate="visible" variants={fadeUp} className="flex gap-4 flex-wrap mb-16">
-            <TransitionLink href="/kontakt" className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-to-r from-[var(--primary)] to-[#ff8800] text-white text-xs font-semibold uppercase tracking-wider hover:-translate-y-0.5 hover:shadow-[0_8px_25px_var(--primary-glow)] transition-all duration-300">
-              {t('cta_primary')} <ArrowRight className="w-3 h-3" />
-            </TransitionLink>
-            <TransitionLink href="/portfolio" className="inline-flex items-center gap-2 px-7 py-3 rounded-full border border-[var(--border-card)] text-[var(--light)] text-xs font-semibold uppercase tracking-wider hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all duration-300">
-              {t('cta_secondary')} <ArrowRight className="w-3 h-3" />
-            </TransitionLink>
+            <MagneticButton>
+              <TransitionLink href="/kontakt" className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-to-r from-[var(--primary)] to-[#ff8800] text-white text-xs font-semibold uppercase tracking-wider hover:-translate-y-0.5 hover:shadow-[0_8px_25px_var(--primary-glow)] transition-all duration-300">
+                {t('cta_primary')} <ArrowRight className="w-3 h-3" />
+              </TransitionLink>
+            </MagneticButton>
+            <MagneticButton strength={0.15}>
+              <TransitionLink href="/portfolio" className="inline-flex items-center gap-2 px-7 py-3 rounded-full border border-[var(--border-card)] text-[var(--light)] text-xs font-semibold uppercase tracking-wider hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all duration-300">
+                {t('cta_secondary')} <ArrowRight className="w-3 h-3" />
+              </TransitionLink>
+            </MagneticButton>
           </motion.div>
           <motion.div custom={4} initial="hidden" animate="visible" variants={fadeUp} className="flex gap-10 flex-wrap">
             {stats.map((s, i) => (

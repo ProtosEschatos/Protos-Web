@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
 import { Calendar } from 'lucide-react'
 import type { BlogPost } from '@/actions/blog'
+import GlowCard from '@/components/ui/GlowCard'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -47,10 +48,11 @@ export default function BlogGrid({ posts, locale }: Props) {
           viewport={{ once: true, margin: '-30px' }}
           variants={fadeUp}
         >
-          <Link
-            href={`/blog/${p.slug}`}
-            className="cosmic-panel rounded-2xl p-7 flex flex-col h-full hover:border-[var(--primary)]/20 hover:-translate-y-1 transition-all duration-300 group"
-          >
+          <GlowCard className="h-full rounded-2xl" glowColor="secondary">
+            <Link
+              href={`/blog/${p.slug}`}
+              className="cosmic-panel rounded-2xl p-7 flex flex-col h-full transition-all duration-300 group"
+            >
             <div className="flex items-center gap-1.5 text-xs text-[var(--primary)] mb-3">
               <Calendar className="w-3.5 h-3.5" /> {formatDate(p.created_at, locale)}
             </div>
@@ -60,7 +62,8 @@ export default function BlogGrid({ posts, locale }: Props) {
             <p className="text-sm text-[var(--light-muted)] leading-relaxed flex-1">
               {p.excerpt}
             </p>
-          </Link>
+            </Link>
+          </GlowCard>
         </motion.div>
       ))}
     </div>

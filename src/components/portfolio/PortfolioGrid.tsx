@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { ExternalLink, ImageIcon } from 'lucide-react'
 import type { PortfolioItem } from '@/actions/portfolio'
+import GlowCard from '@/components/ui/GlowCard'
 
 const tagColors = [
   'text-[var(--primary)]',
@@ -37,15 +38,15 @@ export default function PortfolioGrid({ items }: Props) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
       {items.map((p, i) => (
-        <motion.div
-          key={p.id}
-          custom={i}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-50px' }}
-          variants={cardVariant}
-          className="cosmic-panel rounded-2xl overflow-hidden hover:-translate-y-1.5 hover:shadow-[0_4px_24px_rgba(0,0,0,0.3)] transition-all duration-300"
-        >
+        <GlowCard key={p.id} className="rounded-2xl" glowColor={i % 3 === 0 ? 'primary' : i % 3 === 1 ? 'secondary' : 'accent'}>
+          <motion.div
+            custom={i}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-50px' }}
+            variants={cardVariant}
+            className="cosmic-panel rounded-2xl overflow-hidden transition-all duration-300"
+          >
           {p.image_url ? (
             <div className="relative w-full aspect-[4/3]">
               <Image
@@ -83,7 +84,8 @@ export default function PortfolioGrid({ items }: Props) {
               </a>
             ) : null}
           </div>
-        </motion.div>
+          </motion.div>
+        </GlowCard>
       ))}
     </div>
   )

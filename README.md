@@ -73,6 +73,10 @@ src/
 │   └── ui/
 │       ├── PageLoader.tsx   # Boot gate wrapper + consent modal
 │       ├── BootScreen.tsx   # Cinematic 5s orbit → nebula animation
+│       ├── ProtosLoader.tsx # LDRS brand loaders (forms, showcase)
+│       ├── ShimmerText.tsx  # Animated gradient text
+│       ├── GlowCard.tsx     # Hover glow + border beam cards
+│       ├── MagneticButton.tsx # CTA mouse-follow wrapper
 │       ├── SiteBackground.tsx
 │       ├── CustomCursor.tsx
 │       └── CookieBanner.tsx
@@ -151,6 +155,18 @@ scripts/
 - [x] Dynamic OG images, GA4 consent-gated analytics, Vercel Speed Insights
 - [x] All config files (tailwind, next, tsconfig, postcss, middleware, i18n)
 - [x] .cursorrules for Cursor AI
+- [x] UI motion layer: LDRS loaders, ShimmerText, GlowCard, MagneticButton (see [`docs/ui-motion-toolkit.md`](docs/ui-motion-toolkit.md))
+- [x] 3D agent toolkit: [`docs/3d-toolkit.md`](docs/3d-toolkit.md) + [`.cursor/rules/r3f-drei-recipes.mdc`](.cursor/rules/r3f-drei-recipes.mdc)
+
+### UI Motion & 3D docs
+
+| Doc | Purpose |
+|-----|---------|
+| [`docs/ui-motion-toolkit.md`](docs/ui-motion-toolkit.md) | When to use LDRS vs Framer vs R3F; approved UI primitives |
+| [`docs/3d-toolkit.md`](docs/3d-toolkit.md) | R3F + drei cheat sheet, perf budget, layer rules |
+| [`.cursor/rules/r3f-drei-recipes.mdc`](.cursor/rules/r3f-drei-recipes.mdc) | Copy-paste 3D recipes for agents |
+
+**Key deps:** `ldrs` (inline loaders), `framer-motion` (DOM motion), `@react-three/fiber` + `@react-three/drei` (3D). Boot screen stays custom — not LDRS.
 
 ### Backend
 - [x] Supabase client connection

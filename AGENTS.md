@@ -64,14 +64,10 @@ Push to `main` → Vercel production. **After every push verify live** (`vercel 
 
 ## Current state (2026-07-11)
 
-- **Latest commit:** `8f600e8` — refactor lib/features/queries, `admin/stranice/`, unified main nav
-- **Live:** https://protosweb.eu (apex primary)
-- **O nama hero:** "Protos Web — Full Stack Duo iz Zagreba." (all 5 locales)
-- Team roles + "Naša online prisutnost" in all 5 locales; Bodulica vanilla showcase on `/o-meni`
-- SEO: AboutPage JSON-LD, person fragment IDs, blog byline + per-author JSON-LD, `llms.txt` updated
-- Instagram live: studio/Dario `protos_eschatos`, Martina `everybodycries`; other socials `#` pending
-- **Zoho Mail:** inbox via DNS MX — no API key / env var needed
-- **Stripe:** DB schema exists (`stripe_session_id`, `stripe_price_id`) — no app integration yet
-- GitHub: branch protection on `main` (required CI check)
-- Untracked (do not commit): `public/design/`
-- Full memory: **Protos-Agent** `memory/projects/protos-web.md` + `memory/sessions/2026-07-11-branding-seo-stack.md`
+- **Latest commit:** `7d18a6c` — multi-mailbox IMAP, Martina 5y/3D profil
+- **Live:** https://www.protosweb.eu
+- **Inbox:** `/admin/inbox` — Zoho + Gmail studio + Martina (placeholder); IMAP na Vercelu
+- **Donacije:** Stripe Checkout 1–1000 EUR (`e855ea3`); edge fn deployane; **čeka `STRIPE_SECRET_KEY` u Supabase**
+- **O nama:** Full Stack Duo; Martina 5 god, 3D inovacije, astronaut showcase
+- Instagram live; other socials `#` pending
+- Full memory: **Protos-Agent** `memory/sessions/2026-07-11-inbox-stripe-donations.md`

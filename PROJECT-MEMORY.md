@@ -3,22 +3,18 @@
 > **Kanonski izvor:** [Protos-Agent/memory/](https://github.com/ProtosEschatos/Protos-Agent/tree/main/memory) + pregled u adminu na `/admin/memory`.  
 > Ovaj fajl je lokalni TL;DR — ne dupliciraj punu memoriju ovdje.
 
-> **Last updated:** 2026-07-11
-> **Live:** https://protosweb.eu
+> **Last updated:** 2026-07-11 (večer)
+> **Live:** https://www.protosweb.eu
 > **Repo:** `ProtosEschatos/Protos-Web`
-> **Latest commit:** `8f600e8` — refactor lib/features/queries, `admin/stranice/`
+> **Latest commit:** `7d18a6c` — multi-mailbox IMAP + Martina profil
 
 ---
 
 ## Gdje si stao (TL;DR)
 
-**Refaktor + branding (2026-07-11):** Faze A–F commitane (`8f600e8`). Nova struktura: `components/features/`, `lib/config/`, `lib/queries/`, `lib/auth/`, `admin/stranice/`. O nama hero: **"Protos Web — Full Stack Duo iz Zagreba."** (5 jezika). Docs sync: AGENTS, README, security, `.env.example`.
+**Inbox + donacije (2026-07-11):** Tri sandučića u `/admin/inbox` (Zoho ✅, Gmail studio ✅ na Vercelu, Martina placeholder). Stripe donacije u kodu (`e855ea3`) + edge fn deployane; **nedostaje samo `STRIPE_SECRET_KEY` u Supabase secrets** (user zalijepi `sk_test_...`). `SITE_URL` i `STRIPE_WEBHOOK_SECRET` već na Supabaseu.
 
-**Branding + SEO (ranije):** Tim uloge (Dario/Martina), dual stack showcase, `team-profiles.ts`, AboutPage schema, blog `author_slug`, branch protection CI. Instagram live; ostali sociali `#` pending.
-
-**SEO cilj:** #1 za brand upite (`Protos Web`, `protosweb`); osobna imena; dugoročno i `protos` (generička riječ — treba off-page + vrijeme).
-
-**Sutra:** resubmit sitemap GSC/Bing; korisnik pošalje URL-ove → `team-profiles.ts`; portfolio projekti; blog authorship po autoru.
+**Refaktor + branding:** Faze A–F (`8f600e8`). O nama: **Full Stack Duo**. Martina: 5 god iskustva, 3D inovacije, astronaut iz privjeska.
 
 **Ne commitati:** `public/design/` (untracked).
 
@@ -44,10 +40,12 @@
 
 ### Integracije (status)
 - **DeepSeek** `/admin/ai` — aktivno (`DEEPSEEK_API_KEY` na Vercelu)
-- **Zoho** — DNS MX, bez env var; webmail link u adminu
-- **Stripe** — DB shema postoji, nema integracije u kodu
+- **Zoho IMAP** — `/admin/inbox` čita `dario.admin@protosweb.eu` (`ZOHO_IMAP_*` na Vercelu)
+- **Gmail studio IMAP** — `protoswebmark23@gmail.com` (`GMAIL_STUDIO_IMAP_*` na Vercelu)
+- **Martina IMAP** — placeholder `martina.admin@protosweb.eu` (`MARTINA_IMAP_*` kad bude live)
+- **Stripe donacije** — kod + edge fn deployane; **`STRIPE_SECRET_KEY` još u Supabase secrets**
 
-Detalji: **Protos-Agent** `memory/projects/protos-web.md` + `memory/sessions/2026-07-11-refactor-branding-deploy.md`
+Detalji: **Protos-Agent** `memory/sessions/2026-07-11-inbox-stripe-donations.md`
 
 ---
 

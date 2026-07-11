@@ -12,10 +12,14 @@
   },
   "onlinePresence": {
     "label": "POVEŽIMO SE",
-    "title": "Moja online prisutnost",
-    "subtitle": "Pronađite me diljem weba — od koda do freelance platformi. Izgradimo nešto zajedno.",
+    "title": "Naša online prisutnost",
+    "subtitle": "Pronađite nas diljem weba — studio Protos Web, Dario i Martina. Od koda do freelance platformi.",
+    "studioTitle": "Protos Web studio",
+    "darioTitle": "Dario Imsirović",
+    "martinaTitle": "Martina Markulin",
     "socialsTitle": "Društvene mreže",
-    "platformsTitle": "Freelance platforme"
+    "platformsTitle": "Freelance platforme",
+    "pendingLabel": "Uskoro"
   },
   "header": {
     "brand": "Protos Web",
@@ -31,10 +35,26 @@
     "cta_primary": "Zapocni projekt",
     "cta_secondary": "Pogledaj portfolio",
     "stats": {
-      "projects": { "value": "50", "suffix": "+", "label": "Isporucenih projekata" },
-      "satisfaction": { "value": "98", "suffix": "%", "label": "Zadovoljstvo klijenata" },
-      "languages": { "value": "5", "suffix": " jezika", "label": "Visjezicna podrska" },
-      "webgl": { "value": "3D & WebGL", "suffix": "", "label": "Interaktivna iskustva" }
+      "projects": {
+        "value": "50",
+        "suffix": "+",
+        "label": "Isporucenih projekata"
+      },
+      "satisfaction": {
+        "value": "98",
+        "suffix": "%",
+        "label": "Zadovoljstvo klijenata"
+      },
+      "languages": {
+        "value": "5",
+        "suffix": " jezika",
+        "label": "Visjezicna podrska"
+      },
+      "webgl": {
+        "value": "3D & WebGL",
+        "suffix": "",
+        "label": "Interaktivna iskustva"
+      }
     }
   },
   "services": {
@@ -42,32 +62,105 @@
     "title": "Sto",
     "titleHighlight": "nudimo",
     "items": [
-      { "title": "Prilagodena web rjesenja", "text": "Web stranice izradene po mjeri s modernim tehnologijama, optimizirane za performanse i konverzije." },
-      { "title": "UI/UX dizajn", "text": "Prekrasna, intuitivna sucelja dizajnirana s fokusom na korisnicko iskustvo." },
-      { "title": "E-trgovina i web aplikacije", "text": "Online trgovine i web aplikacije s integracijom placanja i upravljanjem zalihama." },
-      { "title": "SEO i marketing", "text": "Optimizacija za pretrazivace i digitalne marketing strategije za bolju vidljivost." },
-      { "title": "AI i automatizacija", "text": "Pametne integracije ukljucujuci AI chatbotove, sustave rezervacija i automatizirane procese." },
-      { "title": "Odrzavanje", "text": "Kontinuirana podrska, azuriranja, sigurnosne zakrpe i nadzor performansi." }
+      {
+        "title": "Prilagodena web rjesenja",
+        "text": "Web stranice izradene po mjeri s modernim tehnologijama, optimizirane za performanse i konverzije."
+      },
+      {
+        "title": "UI/UX dizajn",
+        "text": "Prekrasna, intuitivna sucelja dizajnirana s fokusom na korisnicko iskustvo."
+      },
+      {
+        "title": "E-trgovina i web aplikacije",
+        "text": "Online trgovine i web aplikacije s integracijom placanja i upravljanjem zalihama."
+      },
+      {
+        "title": "SEO i marketing",
+        "text": "Optimizacija za pretrazivace i digitalne marketing strategije za bolju vidljivost."
+      },
+      {
+        "title": "AI i automatizacija",
+        "text": "Pametne integracije ukljucujuci AI chatbotove, sustave rezervacija i automatizirane procese."
+      },
+      {
+        "title": "Odrzavanje",
+        "text": "Kontinuirana podrska, azuriranja, sigurnosne zakrpe i nadzor performansi."
+      }
     ],
     "pageSubtitle": "Profesionalna web rjesenja prilagodena vasim poslovnim potrebama. Od koncepta do lansiranja i dalje.",
     "ctaTitle": "Spremni zapoceti projekt?",
     "ctaText": "Besplatna konzultacija i ponuda — bez obveza.",
-    "ctaButton": "Zatrazi ponudu"
+    "ctaButton": "Zatrazi ponudu",
+    "faq": {
+      "title": "Cesta pitanja",
+      "subtitle": "Odgovori na najcesca pitanja o izradi web stranica u Hrvatskoj i suradnji s Protos Webom.",
+      "items": [
+        {
+          "question": "Koliko kosta izrada web stranice u Hrvatskoj?",
+          "answer": "Cijena ovisi o opsegu — landing stranica, poslovna stranica ili custom platforma. Svaki projekt kod nas je po mjeri, bez gotovih tema. Nakon kratkog razgovora dobivate jasnu ponudu bez skrivenih troskova."
+        },
+        {
+          "question": "Koliko traje izrada web stranice?",
+          "answer": "Jednostavnija stranica moze biti gotova u 2–4 tjedna. Slozeniji projekti (e-trgovina, CRM, visejezicnost) traju dulje. Rokove dogovaramo unaprijed i drzimo vas u tijeku razvoja."
+        },
+        {
+          "question": "Radite li na engleskom i njemackom?",
+          "answer": "Da. Dario govori hrvatski i engleski kao materinje te njemacki na osnovnoj razini. Stranice mozemo isporuciti na vise jezika — idealno za klijente u Hrvatskoj i EU."
+        },
+        {
+          "question": "Koristite li gotove teme ili predloske?",
+          "answer": "Ne. Sve gradimo od nule, prilagodeno vasem brendu i ciljevima. Predlosci i reusable komponente ostaju intelektualno vlasnistvo studija — klijent dobiva licencu korištenja prema ugovoru."
+        },
+        {
+          "question": "Ukljucuje li usluga SEO optimizaciju?",
+          "answer": "Da — tehnicki SEO (brzina, struktura, meta podaci, schema markup, sitemap) ukljucen je u svaki projekt. Dodatne SEO strategije i sadrzaj dogovaramo po potrebi."
+        },
+        {
+          "question": "Nudite li odrzavanje nakon lansiranja?",
+          "answer": "Da. Nudimo kontinuiranu podrsku, sigurnosna azuriranja, nadzor performansi i manje izmjene sadrzaja — po dogovoru kao mjesečna ili ad-hoc usluga."
+        }
+      ]
+    }
   },
   "process": {
     "label": "PROCES",
     "title": "Kako",
     "titleHighlight": "radimo",
     "steps": [
-      { "num": "01", "title": "Otkrivanje", "text": "Upoznajemo vas posao, ciljeve i ciljnu publiku." },
-      { "num": "02", "title": "Dizajn", "text": "Wireframeovi i vizualni dizajn prilagodeni vasem brendu." },
-      { "num": "03", "title": "Razvoj", "text": "Cist kod, moderni stack, pristup usmjeren na performanse." },
-      { "num": "04", "title": "Lansiranje", "text": "Testiranje, implementacija i kontinuirana podrska." }
+      {
+        "num": "01",
+        "title": "Otkrivanje",
+        "text": "Upoznajemo vas posao, ciljeve i ciljnu publiku."
+      },
+      {
+        "num": "02",
+        "title": "Dizajn",
+        "text": "Wireframeovi i vizualni dizajn prilagodeni vasem brendu."
+      },
+      {
+        "num": "03",
+        "title": "Razvoj",
+        "text": "Cist kod, moderni stack, pristup usmjeren na performanse."
+      },
+      {
+        "num": "04",
+        "title": "Lansiranje",
+        "text": "Testiranje, implementacija i kontinuirana podrska."
+      }
     ],
     "features": [
-      { "title": "Brza isporuka", "text": "Vecina projekata isporucena u 2-4 tjedna." },
-      { "title": "Transparentne cijene", "text": "Jasne ponude bez skrivenih troskova." },
-      { "title": "Dugorocna podrska", "text": "Ostajemo s vama i nakon lansiranja." }
+      {
+        "title": "Brza isporuka",
+        "text": "Vecina projekata isporucena u 2-4 tjedna."
+      },
+      {
+        "title": "Transparentne cijene",
+        "text": "Jasne ponude bez skrivenih troskova."
+      },
+      {
+        "title": "Dugorocna podrska",
+        "text": "Ostajemo s vama i nakon lansiranja."
+      }
     ]
   },
   "processPage": {
@@ -77,24 +170,61 @@
     "subtitle": "Transparentan proces od prvog kontakta do lansiranja. Svaki korak je jasan, mjerljiv i prilagoden vasim potrebama.",
     "cta": "Kontakt",
     "steps": [
-      { "num": "01", "title": "Otkrivanje", "text": "Upoznajemo vas posao, ciljeve i ciljnu publiku." },
-      { "num": "02", "title": "Dizajn", "text": "Wireframeovi i vizualni dizajn prilagodeni vasem brendu." },
-      { "num": "03", "title": "Razvoj", "text": "Cist kod, moderni stack, pristup usmjeren na performanse." },
-      { "num": "04", "title": "Lansiranje", "text": "Testiranje, implementacija i kontinuirana podrska." }
+      {
+        "num": "01",
+        "title": "Otkrivanje",
+        "text": "Upoznajemo vas posao, ciljeve i ciljnu publiku."
+      },
+      {
+        "num": "02",
+        "title": "Dizajn",
+        "text": "Wireframeovi i vizualni dizajn prilagodeni vasem brendu."
+      },
+      {
+        "num": "03",
+        "title": "Razvoj",
+        "text": "Cist kod, moderni stack, pristup usmjeren na performanse."
+      },
+      {
+        "num": "04",
+        "title": "Lansiranje",
+        "text": "Testiranje, implementacija i kontinuirana podrska."
+      }
     ],
     "features": [
-      { "title": "Brza isporuka", "text": "Vecina projekata isporucena u 2-4 tjedna." },
-      { "title": "Transparentne cijene", "text": "Jasne ponude bez skrivenih troskova." },
-      { "title": "Dugorocna podrska", "text": "Ostajemo s vama i nakon lansiranja." }
+      {
+        "title": "Brza isporuka",
+        "text": "Vecina projekata isporucena u 2-4 tjedna."
+      },
+      {
+        "title": "Transparentne cijene",
+        "text": "Jasne ponude bez skrivenih troskova."
+      },
+      {
+        "title": "Dugorocna podrska",
+        "text": "Ostajemo s vama i nakon lansiranja."
+      }
     ],
     "stats": [
-      { "value": "5+", "label": "Godina iskustva" },
-      { "value": "30+", "label": "Zavrsenih projekata" },
-      { "value": "1", "label": "Cross web app u razvoju" },
-      { "value": "100%", "label": "Custom kod, bez gotovih tema" }
+      {
+        "value": "5+",
+        "label": "Godina iskustva"
+      },
+      {
+        "value": "30+",
+        "label": "Zavrsenih projekata"
+      },
+      {
+        "value": "1",
+        "label": "Cross web app u razvoju"
+      },
+      {
+        "value": "100%",
+        "label": "Custom kod, bez gotovih tema"
+      }
     ],
-    "technologiesTitle": "Tehnologije",
-    "technologies": ["Next.js", "TypeScript", "Three.js", "Tailwind CSS", "Framer Motion", "Supabase", "Stripe", "Drizzle ORM", "Cloudflare", "Linux / DevOps"]
+    "technologiesTitle": "Tehnologije — Protos Web stack",
+    "technologiesNote": "Jezici i build alati. Infrastrukturni servisi nisu javno izloženi."
   },
   "portfolio": {
     "label": "PORTFOLIO",
@@ -121,7 +251,11 @@
     "subtitle": "Besplatni vodicima o web prisutnosti za poduzetnike",
     "readMore": "Citaj vise",
     "viewAll": "Pogledaj sve clanke",
-    "empty": "Jos nema objavljenih clanaka."
+    "empty": "Jos nema objavljenih clanaka.",
+    "authorBy": "Autor: {author}",
+    "authorDario": "Dario Imsirović",
+    "authorMartina": "Martina Markulin",
+    "authorBoth": "Dario Imsirović & Martina Markulin"
   },
   "contact": {
     "label": "KONTAKT",
@@ -143,7 +277,14 @@
     "sending": "Saljem...",
     "success": "Poruka poslana! Javit cemo vam se uskoro.",
     "error": "Nesto je poslo po krivu. Pokusajte ponovo.",
-    "serviceOptions": ["Prilagodena web stranica", "E-trgovina", "Web aplikacija", "UI/UX dizajn", "SEO i marketing", "Odrzavanje"]
+    "serviceOptions": [
+      "Prilagodena web stranica",
+      "E-trgovina",
+      "Web aplikacija",
+      "UI/UX dizajn",
+      "SEO i marketing",
+      "Odrzavanje"
+    ]
   },
   "transition": {
     "loading": "Ucitavam...",
@@ -181,8 +322,15 @@
   "loader": {
     "subtitle": "Ucitavanje iskustva",
     "enter": "Ulaz",
+    "consentModalTitle": "Obavezno prihvacanje uvjeta",
+    "consentModalRequired": "Bez prihvacanja Uvjeta koristenja i Pravila privatnosti ne mozete uci na stranicu niti koristiti bilo koji njezin sadrzaj.",
+    "consentModalIntro": "Procitajte i prihvatite nase",
+    "termsAcceptLabel": "Prihvacam Uvjete koristenja",
+    "termsAcceptDesc": "Potvrdujem da sam procitao/la Uvjete, ukljucujuci zastitu svih originalnih radova, predlozaka, dizajna i klijentskih isporuka Protos Weba te da razumijem da je neovlasteno kopiranje ili zloupotreba kaznjivo.",
+    "consentModalAccept": "Prihvati i udi na stranicu",
+    "consentModalBlocked": "Morate prihvatiti Uvjete koristenja da biste nastavili.",
     "cookieModalTitle": "Potrebna suglasnost za kolacice",
-    "cookieModalIntro": "Za ulazak na stranicu morate prihvatiti obavezne kolacice. Opcionalne mozete odabrati ispod. Procitajte nase",
+    "cookieModalIntro": "Procitajte nase",
     "cookieModalTerms": "Uvjete koristenja",
     "cookieModalLegalAnd": "i",
     "cookieModalPrivacy": "Pravila privatnosti",
@@ -227,71 +375,317 @@
     "webglViewPortfolio": "Pogledaj cijeli portfolio"
   },
   "aboutPage": {
-    "label": "O MENI",
-    "heroTitleLine1": "Gradimo digitalna",
-    "heroTitleHighlight": "rjesenja koja rastu",
-    "heroTitleLine2": "zajedno sa Vama.",
-    "heroSubtitle": "Full Stack Developer i Web Designer iz Zagreba. Gradim moderna, brza i vizualno impresivna web rjesenja — svako s dušom i pažljivo do zadnjeg detalja.",
-    "whoTitle": "Tko sam",
-    "bio1": "Full Stack Developer iz Zagreba s 5 godina iskustva u izradi modernih web rjesenja. Suradujem s poduzetnicima i tvrtkama sirom Hrvatske i Europe — od brzih landing stranica do slozenih custom platformi, web trgovina i CRM sustava.",
-    "bio2": "Sve gradim po mjeri — bez gotovih tema, bez kompromisa u kvaliteti. Svaki projekt pocinje od nule, prilagoden tocno vasim potrebama i ciljevima.",
-    "bio3": "Interesi: Full stack razvoj, Cross platform web, 3D web iskustva, Gradnja platformi, Web dizajn, Cyber sigurnost.",
-    "bio4": "Cilj: Pomoci lokalnim i europskim poduzecima pronaci pravo web rjesenje — bez nepotrebne slozenosti, s modernim suceljem.",
-    "guideLink": "Besplatni vodiči o web prisutnosti za poduzetnike",
-    "infoTitle": "Info",
-    "infoLabels": {
-      "name": "IME",
-      "location": "LOKACIJA",
-      "experience": "ISKUSTVO",
-      "email": "EMAIL",
-      "phone": "TELEFON",
-      "languages": "JEZICI"
+    "label": "O NAMA",
+    "heroTitleLine1": "Dario Imsirović & Martina Markulin",
+    "heroTitleHighlight": "Protos Web studio",
+    "heroTitleLine2": "iz Zagreba.",
+    "heroSubtitle": "AI inženjering, full stack cross-web razvoj i frontend/shop dizajn — s 3D iskustvima u svakom projektu. Gradimo moderna, brza i vizualno impresivna rješenja.",
+    "whoTitle": "Tko smo",
+    "studioIntro": "Protos Web je studio u nastajanju — obrt Protos Web Mark23 u procesu registracije (OIB: 23732814520). Svi dizajni, predlosci i kreativni radovi ostaju originalno vlasnistvo autora kao suverenih stvaratelja, neovisno o poslovnoj registraciji.",
+    "teamTitle": "Info",
+    "teamFieldLabels": {
+      "location": "Lokacija",
+      "experience": "Iskustvo",
+      "email": "Email",
+      "phone": "Telefon",
+      "languages": "Jezici",
+      "focus": "Fokus",
+      "contribution": "Doprinos",
+      "instagram": "Instagram"
     },
-    "infoValues": {
-      "name": "Dario Imsirović",
-      "location": "Zagreb, Hrvatska",
-      "experience": "5 godina",
-      "email": "dario.admin@protosweb.eu",
-      "phone": "+385 97 604 39 41",
-      "languages": "Hrvatski, Engleski, Deutsch (osnovno)"
+    "team": {
+      "dario": {
+        "label": "Osnivac & razvoj",
+        "name": "Dario Imsirović",
+        "role": "AI inženjer & Full Stack Cross-Web Developer",
+        "bio": "AI inženjer i Full Stack Developer iz Zagreba s 5 godina iskustva. Gradim custom platforme, web trgovine, CRM sustave i 3D web iskustva — od landing stranica do kompleksnih cross-web rješenja. Bez gotovih tema, s fokusom na sigurnost i performanse.",
+        "expertise": ["AI inženjering", "Full stack", "3D / WebGL", "Cyber sigurnost"],
+        "fields": {
+          "location": "Zagreb, Hrvatska",
+          "experience": "5 godina",
+          "email": "dario.admin@protosweb.eu",
+          "phone": "+385 97 604 39 41",
+          "languages": "Hrvatski (materinji), Engleski (materinji), Deutsch (osnovno)",
+          "instagram": ""
+        }
+      },
+      "martina": {
+        "label": "Frontend & shop dizajn",
+        "name": "Martina Markulin",
+        "role": "Frontend ekspert & vrhunska shop/UI dizajnerica",
+        "bio": "Martina je srce vizualnog identiteta i emocionalnog doživljaja naših projekata. Kao frontend ekspert i shop dizajnerica oblikuje sučelja, palete, tipografiju i korisničko iskustvo — uključujući 3D vizuale. Kreativna suradnica u svakom radu studija.",
+        "expertise": ["Frontend", "Shop dizajn", "UI/UX", "3D vizuali"],
+        "fields": {
+          "focus": "UI/UX dizajn, vizualni koncepti, branding",
+          "contribution": "Kreativne ideje, estetika i dizajn svih projekata",
+          "instagram": ""
+        }
+      }
     },
+    "guideLink": "Besplatni vodici o web prisutnosti za poduzetnike",
     "goalsTitle": "Ciljevi",
     "goals": [
-      { "title": "Europsko trziste", "text": "Aktivno siri poslovanje na EU klijente kroz visejezicnu ponudu i poznavanje europskih standarda — GDPR, pristupacnost, lokalizacija." },
-      { "title": "Custom platforme", "text": "Gradnja SaaS i custom CRM rjesenja za nise kojima na lokalnom trzistu jos nedostaje dobro digitalno rjesenje." },
-      { "title": "Cyber sigurnost", "text": "Integracija sigurnosnih standarda u svaki projekt — svaka stranica koja obraduje podatke mora biti zasticena." }
+      {
+        "title": "Europsko trziste",
+        "text": "Aktivno siri poslovanje na EU klijente kroz visejezicnu ponudu i poznavanje europskih standarda — GDPR, pristupacnost, lokalizacija."
+      },
+      {
+        "title": "Custom platforme",
+        "text": "Gradnja SaaS i custom CRM rjesenja za nise kojima na lokalnom trzistu jos nedostaje dobro digitalno rjesenje."
+      },
+      {
+        "title": "Cyber sigurnost",
+        "text": "Integracija sigurnosnih standarda u svaki projekt — svaka stranica koja obraduje podatke mora biti zasticena."
+      }
     ],
     "supportLabel": "PODRska",
     "supportTitle": "Projekti koji mijenjaju",
     "supportTitleHighlight": "digitalne Balkane",
     "supportSubtitle": "Svaka donacija doprinosi razvoju platforme za zastitu od internetskih prijevara i gradnji slobodnijeg digitalnog prostora za nasu regiju.",
     "supportCards": [
-      { "title": "Oprema za edukaciju o cyber sigurnosti", "text": "Pomozite nam nabaviti server, laptop i softver za besplatnu online edukaciju o cyber sigurnosti — za sve koji zele nauciti kako se zastititi online.", "target": "10.000", "btnText": "Podrzi edukaciju", "progress": 5 },
-      { "title": "Besplatna digitalna edukacija", "text": "Financirajte besplatne HR video tutoriale i vodiče o web razvoju, AI alatima i digitalnoj sigurnosti.", "target": "10.000", "btnText": "Podrzi edukaciju", "progress": 3 },
-      { "title": "Regionalne digitalne platforme", "text": "Gradnja open source alternativa globalnim platformama — napravljeno za Balkan, od Balkana.", "target": "20.000", "btnText": "Ulozi u regiju", "progress": 2 }
+      {
+        "title": "Oprema za edukaciju o cyber sigurnosti",
+        "text": "Pomozite nam nabaviti server, laptop i softver za besplatnu online edukaciju o cyber sigurnosti — za sve koji zele nauciti kako se zastititi online.",
+        "target": "10.000",
+        "btnText": "Podrzi edukaciju",
+        "progress": 5
+      },
+      {
+        "title": "Besplatna digitalna edukacija",
+        "text": "Financirajte besplatne HR video tutoriale i vodiče o web razvoju, AI alatima i digitalnoj sigurnosti.",
+        "target": "10.000",
+        "btnText": "Podrzi edukaciju",
+        "progress": 3
+      },
+      {
+        "title": "Regionalne digitalne platforme",
+        "text": "Gradnja open source alternativa globalnim platformama — napravljeno za Balkan, od Balkana.",
+        "target": "20.000",
+        "btnText": "Ulozi u regiju",
+        "progress": 2
+      }
     ],
     "currencyZero": "0 €",
-    "currencyOf": "od {target} €"
+    "currencyOf": "od {target} €",
+    "dualStacks": {
+      "label": "STACKOVI",
+      "title": "Dva stacka, ista stručnost",
+      "subtitle": "Protos Web i klijentski projekti pokazuju da tim radi u različitim build pristupima — od modernog TypeScript/React stacka do lightweight vanilla rješenja.",
+      "protosTitle": "Protos Web — moderni stack",
+      "protosDescription": "TypeScript, React, Next.js, 3D/WebGL i animacije. Custom studio stranica i platforme po mjeri.",
+      "bodulicaTitle": "Bodulica Shop — vanilla stack",
+      "bodulicaDescription": "Prvi klijentski webshop — HTML, CSS i vanilla JavaScript. Suprotan build od Protos Weba. Martina: shop i UI dizajn. Dario: implementacija.",
+      "bodulicaNote": "Studijski showcase različitih pristupa — bez javnog linka na shop."
+    }
   },
   "legalPages": {
+    "lastUpdated": "Zadnje ažurirano",
+    "lastUpdatedDate": "11. srpnja 2026.",
     "privacyTitle": "Pravila privatnosti",
-    "privacyDescription": "Kako Protos Web postupa s vasim osobnim podacima.",
-    "privacyBody": "Protos Web postuje vasu privatnost. Prikupljamo samo podatke potrebne za rad ove stranice, odgovore na upite i poboljsanje usluga.\n\nNe prodajemo osobne podatke trecim stranama. Analitika i kolacici koriste se samo uz vasu suglasnost gdje je to potrebno.\n\nZa pitanja o podacima kontaktirajte nas na dario.admin@protosweb.eu.",
-    "termsTitle": "Uvjeti koristenja",
-    "termsDescription": "Uvjeti koristenja web stranice i usluga Protos Web.",
-    "termsBody": "Koristenjem ove stranice prihvacate ove uvjete. Sadrzaj, branding i kod na stranici vlasnistvo su Protos Web osim ako nije drugacije navedeno.\n\nPortfolio demo i showcase iskustva sluze za prezentaciju. Vanjski linkovi projekata vode na stranice trecih strana s vlastitim uvjetima.\n\nUvjete mozemo azurirati; nastavak koristenja nakon promjena znaci prihvacanje novih uvjeta.",
-    "cookiesTitle": "Pravila o kolacicima",
-    "cookiesDescription": "Kako Protos Web koristi kolacice i slicne tehnologije.",
-    "cookiesBody": "Koristimo nužne kolacice za osnovno funkcioniranje stranice te, uz vasu suglasnost, analiticke kolacice za razumijevanje posjeta.\n\nNebitne kolacice mozete prihvatiti ili odbiti putem bannera ili modala pri ulasku u showcase. Odabir se sprema lokalno u pregledniku.\n\nKolacice mozete obrisati u postavkama preglednika."
+    "privacyDescription": "Kako Protos Web postupa s vašim osobnim podacima u skladu s GDPR-om.",
+    "termsTitle": "Uvjeti korištenja",
+    "termsDescription": "Uvjeti korištenja web stranice Protos Web, uključujući zaštitu intelektualnog vlasništva.",
+    "cookiesTitle": "Pravila o kolačićima",
+    "cookiesDescription": "Kako Protos Web koristi kolačiće i slične tehnologije.",
+    "termsSections": [
+      {
+        "title": "1. Uvod i prihvaćanje",
+        "paragraphs": [
+          "Ovi Uvjeti korištenja (\"Uvjeti\") reguliraju pristup i korištenje web stranice www.protosweb.eu (\"Stranica\") koju upravlja Dario Imsirović — Protos Web, obrt u procesu registracije pod nazivom Protos Web Mark23 (OIB: 23732814520), Zagreb, Republika Hrvatska (\"Protos Web\", \"mi\", \"nas\").",
+          "Pristup Stranici, njezinim podstranicama, 3D showcaseu, kontakt obrascu, newsletteru i bilo kojoj interakciji dopušten je isključivo nakon što izričito prihvatite ove Uvjete i Pravila privatnosti putem obveznog ekrana suglasnosti pri ulasku. Bez tog prihvaćanja ne smijete koristiti Stranicu niti nastaviti dalje.",
+          "Pristupom nakon prihvaćanja potvrđujete da ste pročitali, razumjeli i u potpunosti prihvatili ove Uvjete. Ako se ne slažete, zatvorite Stranicu i ne koristite je."
+        ]
+      },
+      {
+        "title": "2. Intelektualno vlasništvo i autorska prava",
+        "paragraphs": [
+          "Cjelokupni sadržaj Stranice — uključujući, ali ne ograničavajući se na: vizualni identitet i branding; korisničko sučelje i UX/UI dizajn; raspored stranica, tipografiju, palete boja i grafičke elemente; ilustracije, fotografije, ikone i animacije; 3D modele, scene i interaktivne prikaze; izvorni programski kod, arhitekturu, komponente i baze podataka; tekstove, prijevode, blog objave i marketinške materijale; SEO meta podatke, strukturirane podatke (JSON-LD) i tehničke implementacije — predstavlja originalno intelektualno vlasništvo Daria Imsirovića, Martine Markulin (UI dizajn i kreativni doprinos) i/ili Protos Weba, osim ako je izričito drugačije navedeno.",
+          "Svi dizajni, predlošci, kod i kreativni radovi ostaju vlasništvo njihovih autora kao suverenih, slobodnih osoba i stvaratelja, neovisno o registraciji obrta ili poslovnom entitetu. Poslovna registracija ne umanjuje niti prenosi autorska prava bez izričitog pisanog ugovora.",
+          "Svi navedeni elementi zaštićeni su zakonima Republike Hrvatske i Europske unije o autorskom pravu, srodnim pravima i intelektualnom vlasništvu, uključujući Zakon o autorskom pravu i srodnim pravima te primjenjive međunarodne ugovore.",
+          "Nijedan dio Stranice ne smije se smatrati prepuštenim u javnu domenu, niti se podrazumijeva bilo kakva licenca za korištenje bez prethodne izričite pisane suglasnosti Daria Imsirovića / Protos Weba."
+        ]
+      },
+      {
+        "title": "3. Zabranjene radnje",
+        "paragraphs": [
+          "Bez izričitog prethodnog pisanog odobrenja zabranjeno je: kopiranje, preuzimanje, reproduciranje, distribucija ili javno prikazivanje bilo kojeg dijela Stranice; automatsko prikupljanje sadržaja (scraping, crawling, harvesting); kloniranje dizajna, izgleda, strukture ili funkcionalnosti Stranice; obrnuti inženjering, dekompilacija ili izvlačenje izvornog koda; uklanjanje, skrivanje ili mijenjanje obavijesti o autorskim pravima; korištenje sadržaja u komercijalne, konkurentske ili obmanjujuće svrhe; lažno predstavljanje vlasništva nad dizajnom, kodom ili brendom Protos Weba.",
+          "Zabranjeno je stvaranje izvedenih djela, adaptacija ili integracija našeg dizajna, koda ili vizualnog identiteta u tuđe proizvode, usluge, predloške, teme ili portale bez pisane suglasnosti."
+        ]
+      },
+      {
+        "title": "4. Građanska i kaznena odgovornost",
+        "paragraphs": [
+          "Svako neovlašteno korištenje, prisvajanje, kopiranje ili zloupotreba intelektualnog vlasništva Protos Weba može povući punu građansko-pravnu odgovornost, uključujući zahtjev za zabranu povrednih radnji, naknadu štete, vraćanje ostvarene koristi i nadoknadu troškova postupka.",
+          "Ovisno o težini i okolnostima, ista radnja može predstavljati prekršaj ili kazneno djelo prema važećim propisima Republike Hrvatske, uključujući odredbe o zaštiti autorskih i srodnih prava te o neovlaštenoj uporabi tuđe intelektualne ili industrijske svojine. U takvim slučajevima zadržavamo pravo podnijeti prijavu nadležnim tijelima i pokrenuti sve dopuštene pravne korake.",
+          "Protos Web aktivno štiti svoja autorska prava i originalne radove. Svako utvrđeno kršenje bit će progonjeno u najvećoj mjeri dopuštenoj zakonom."
+        ]
+      },
+      {
+        "title": "5. Predlošci, komponente i klijentski radovi",
+        "paragraphs": [
+          "Svi predlošci (templates), teme, komponente, UI kitovi, kodne biblioteke, dizajn sustavi, wireframe-i, prototipi, konfiguracije, dokumentacija i bilo koja druga isporuka koju Protos Web izrađuje za klijente ili za vlastitu upotrebu predstavljaju originalno intelektualno vlasništvo Daria Imsirovića, Martine Markulin i/ili Protos Weba, osim ako je u pisanom ugovoru s konkretnim klijentom izričito drugačije dogovoreno.",
+          "Klijent koji naručuje web stranicu, aplikaciju, dizajn ili drugu uslugu stječe samo ona prava korištenja koja su jasno definirana u pisanom ugovoru ili ponudi — tipično: pravo korištenja gotovog projekta za vlastitu poslovnu svrhu. Klijent ne stječe vlasništvo nad osnovnim predlošcima, reusable kodom, arhitekturom, dizajn sustavom, metodologijom ni alatima korištenim pri izradi, osim ako je to izričito ugovoreno i kompenzirano.",
+          "Klijenti, posjetitelji i treće strane moraju biti svjesni da je neovlašteno kopiranje, preuzimanje, prilagodba, preprodaja ili distribucija bilo kojeg predloška, komponente ili klijentske isporuke Protos Weba zabranjena i može povući građansku i kaznenu odgovornost, neovisno o tome je li rad prikazan u portfoliju ili isporučen klijentu.",
+          "Prikaz radova u portfoliju, 3D showcaseu ili demo okruženju ne daje licencu za reprodukciju. Svaki klijent potvrđuje da je upoznat s ovim Uvjetima pri korištenju Stranice i/ili sklapanjem poslovnog odnosa s Protos Webom."
+        ]
+      },
+      {
+        "title": "6. Portfolio, demo sadržaj i prezentacije",
+        "paragraphs": [
+          "Prikazi u portfoliju, 3D showcaseu i demo iskustvima služe isključivo za prezentaciju i ne predstavljaju dozvolu za reprodukciju ili preuzimanje prikazanih rješenja.",
+          "Neovlašteno kopiranje prikazanih radova — uključujući radove izrađene za klijente — jednako je zabranjeno i podliježe istim pravnim mjerama."
+        ]
+      },
+      {
+        "title": "7. Vanjske poveznice i usluge trećih strana",
+        "paragraphs": [
+          "Stranica može sadržavati poveznice na web stranice trećih strana. Protos Web ne kontrolira njihov sadržaj niti je odgovoran za njihove uvjete korištenja ili politike privatnosti.",
+          "Korištenje usluga trećih strana (npr. hosting, e-mail, plaćanja) podliježe uvjetima tih pružatelja."
+        ]
+      },
+      {
+        "title": "8. Ograničenje odgovornosti",
+        "paragraphs": [
+          "Stranica se pruža \"kakva jest\". U mjeri dopuštenoj zakonom, Protos Web ne odgovara za neizravne štete, prekid rada ili gubitak podataka uzrokovan korištenjem Stranice, osim u slučajevima namjere ili grube nepažnje.",
+          "Ništa u ovim Uvjetima ne ograničava odgovornost koja se ne može isključiti prema obveznim propisima Republike Hrvatske."
+        ]
+      },
+      {
+        "title": "9. Promjene uvjeta",
+        "paragraphs": [
+          "Uvjete možemo povremeno ažurirati. Datum zadnjeg ažuriranja naveden je na vrhu ove stranice. Nastavak korištenja Stranice nakon objave promjena smatra se prihvaćanjem ažuriranih Uvjeta."
+        ]
+      },
+      {
+        "title": "10. Mjerodavno pravo i nadležnost",
+        "paragraphs": [
+          "Na ove Uvjete primjenjuje se pravo Republike Hrvatske. Za sporove je nadležan stvarno nadležan sud u Republici Hrvatskoj, osim ako obvezni propisi ne određuju drugačije.",
+          "Za pitanja o intelektualnom vlasništvu i ovim Uvjetima kontaktirajte: dario.admin@protosweb.eu."
+        ]
+      }
+    ],
+    "privacySections": [
+      {
+        "title": "1. Voditelj obrade",
+        "paragraphs": [
+          "Voditelj obrade osobnih podataka je Dario Imsirović — Protos Web / obrt Protos Web Mark23 (u registraciji), OIB: 23732814520, Zagreb, Republika Hrvatska. Kontakt za zaštitu podataka: dario.admin@protosweb.eu."
+        ]
+      },
+      {
+        "title": "2. Koje podatke prikupljamo",
+        "paragraphs": [
+          "Kontakt obrazac: ime, e-mail adresa, poruka i tehnički metapodaci potrebni za dostavu upita.",
+          "Newsletter: e-mail adresa i vrijeme pretplate.",
+          "Kolačići i analitika: podaci o posjetu i interakciji, samo uz vašu suglasnost za nebitne kolačiće (vidi Pravila o kolačićima).",
+          "Tehnički zapisi: IP adresa, tip preglednika, vrijeme pristupa — u svrhu sigurnosti i rada infrastrukture."
+        ]
+      },
+      {
+        "title": "3. Svrha i pravna osnova obrade",
+        "paragraphs": [
+          "Odgovor na upite i komunikacija — legitimni interes ili izvršenje usluge na vaš zahtjev.",
+          "Newsletter — vaša izričita suglasnost; možete je povući u bilo kojem trenutku.",
+          "Sigurnost, održavanje i poboljšanje Stranice — legitimni interes.",
+          "Analitički kolačići — vaša suglasnost, gdje je potrebna."
+        ]
+      },
+      {
+        "title": "4. Primatelji i obrađivači podataka",
+        "paragraphs": [
+          "Osobne podatke dijelimo samo s pouzdanim pružateljima usluga potrebnim za rad Stranice: Vercel (hosting), Supabase (baza podataka), Resend i/ili Brevo (e-mail), Cloudflare (DNS i sigurnost). Svi obrađivači su ugovorno obvezni štititi podatke.",
+          "Ne prodajemo vaše osobne podatke trećim stranama."
+        ]
+      },
+      {
+        "title": "5. Pohrana i rokovi čuvanja",
+        "paragraphs": [
+          "Kontakt upiti čuvaju se dok je potrebno za odgovor i evidenciju komunikacije, zatim se brišu ili anonimiziraju kada više nisu potrebni.",
+          "Newsletter pretplate čuvaju se do odjave.",
+          "Tehnički zapisi čuvaju se u razumnom roku potrebnom za sigurnost i održavanje."
+        ]
+      },
+      {
+        "title": "6. Vaša prava (GDPR)",
+        "paragraphs": [
+          "Imate pravo na pristup, ispravak, brisanje, ograničenje obrade, prigovor, prenosivost podataka i povlačenje suglasnosti (gdje se obrada temelji na suglasnosti).",
+          "Za ostvarivanje prava pošaljite zahtjev na dario.admin@protosweb.eu. Odgovaramo u roku propisanom GDPR-om.",
+          "Imate pravo podnijeti pritužbu Agenciji za zaštitu osobnih podataka (AZOP), Ulica grada Vukovara 54, 10000 Zagreb."
+        ]
+      },
+      {
+        "title": "7. Intelektualno vlasništvo i privatnost",
+        "paragraphs": [
+          "Zaštita originalnih dizajna, koda i kreativnih radova Protos Weba uređena je Uvjetima korištenja. Ova Pravila privatnosti odnose se isključivo na osobne podatke, a ne umanjuju autorska prava niti vlasništvo nad sadržajem Stranice."
+        ]
+      },
+      {
+        "title": "8. Promjene pravila privatnosti",
+        "paragraphs": [
+          "Pravila privatnosti možemo ažurirati. Datum zadnjeg ažuriranja naveden je na vrhu stranice. Značajne promjene bit će objavljene na Stranici."
+        ]
+      }
+    ],
+    "cookiesSections": [
+      {
+        "title": "1. Što su kolačići",
+        "paragraphs": [
+          "Kolačići su male tekstualne datoteke koje se pohranjuju u vašem pregledniku. Koriste se za osnovno funkcioniranje Stranice, pamćenje postavki i — uz suglasnost — analitiku posjeta."
+        ]
+      },
+      {
+        "title": "2. Vrste kolačića koje koristimo",
+        "paragraphs": [
+          "Nužni kolačići: potrebni za sigurnost, sesiju, jezične postavke i spremanje vašeg odabira kolačića. Uvijek su aktivni.",
+          "Analitički kolačići (opcionalni): pomažu nam razumjeti korištenje Stranice i poboljšati korisničko iskustvo. Aktiviraju se samo uz vašu suglasnost."
+        ]
+      },
+      {
+        "title": "3. Upravljanje suglasnošću",
+        "paragraphs": [
+          "Pri prvom ulasku na Stranicu možete prihvatiti ili odbiti nebitne kolačiće putem modala ili bannera. Vaš odabir pohranjuje se lokalno u pregledniku.",
+          "Kolačiće možete obrisati ili blokirati u postavkama preglednika. Brisanje nužnih kolačića može utjecati na funkcionalnost Stranice."
+        ]
+      },
+      {
+        "title": "4. Poveznica s drugim pravilima",
+        "paragraphs": [
+          "Obrada osobnih podataka putem kolačića opisana je u Pravilima privatnosti. Korištenjem Stranice u skladu s vašim odabirom kolačića prihvaćate i Uvjete korištenja koji štite intelektualno vlasništvo Protos Weba."
+        ]
+      }
+    ]
   },
   "metadata": {
-    "home": { "title": "Web stranice s dušom. Brzina u kodu. Ljubav u detaljima.", "description": "Profesionalna agencija za web dizajn iz Zagreba." },
-    "about": { "title": "O meni", "description": "Full Stack Developer i Web Designer iz Zagreba." },
-    "process": { "title": "Nas proces", "description": "Kako gradimo moderna web rjesenja." },
-    "portfolio": { "title": "Portfolio", "description": "Odabrani projekti i studije slucaja." },
-    "showcase": { "title": "3D Portfolio Showcase", "description": "Interaktivna 3D galerija." },
-    "services": { "title": "Usluge", "description": "Web dizajn, razvoj, SEO i vise." },
-    "blog": { "title": "Blog", "description": "Besplatni vodicima o web prisutnosti za poduzetnike." },
-    "contact": { "title": "Kontakt", "description": "Javite nam se za vas sljedeci projekt." }
+    "home": {
+      "title": "Web stranice s dušom. Brzina u kodu. Ljubav u detaljima.",
+      "description": "Protos Web — web studio iz Zagreba. Custom izrada web stranica, UI/UX dizajn i SEO. Dario Imsirović (razvoj) i Martina Markulin (dizajn). Brzo, moderno, po mjeri."
+    },
+    "about": {
+      "title": "O nama — Dario Imsirović i Martina Markulin",
+      "description": "Protos Web tim iz Zagreba: Dario Imsirović, AI inženjer & full stack developer i Martina Markulin, frontend/shop UI dizajnerica. Dva stacka — moderni Protos Web i vanilla Bodulica shop."
+    },
+    "process": {
+      "title": "Nas proces",
+      "description": "Kako gradimo moderna web rjesenja — od konzultacija do lansiranja. Protos Web, Zagreb."
+    },
+    "portfolio": {
+      "title": "Portfolio",
+      "description": "Odabrani web projekti i studije slucaja — custom dizajn i razvoj iz Zagreba."
+    },
+    "showcase": {
+      "title": "3D Portfolio Showcase",
+      "description": "Interaktivna 3D galerija."
+    },
+    "services": {
+      "title": "Usluge",
+      "description": "Custom web dizajn, razvoj, UI/UX, SEO optimizacija i odrzavanje — Protos Web, Zagreb."
+    },
+    "blog": {
+      "title": "Blog",
+      "description": "Vodici o web dizajnu, SEO-u i digitalnoj prisutnosti za poduzetnike u Hrvatskoj i EU."
+    },
+    "contact": {
+      "title": "Kontakt",
+      "description": "Kontaktirajte Protos Web u Zagrebu — besplatna konzultacija za izradu web stranice ili aplikacije."
+    }
   }
 }

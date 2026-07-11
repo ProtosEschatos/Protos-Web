@@ -6,7 +6,17 @@ const eclipseSvg = `data:image/svg+xml,${encodeURIComponent(
   `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><circle cx="100" cy="100" r="90" fill="#0d0d1a" stroke="#FF8800" stroke-width="5"/><path d="M100,10 A90,90 0 0,1 100,190 A90,90 0 0,0 100,10" fill="#FF6600"/></svg>`,
 )}`
 
-export function GET() {
+type OgVariant = 'default' | 'about'
+
+function resolveVariant(searchParams: URLSearchParams): OgVariant {
+  return searchParams.get('type') === 'about' ? 'about' : 'default'
+}
+
+export function GET(request: Request) {
+  const { searchParams } = new URL(request.url)
+  const variant = resolveVariant(searchParams)
+  const isAbout = variant === 'about'
+
   return new ImageResponse(
     (
       <div
@@ -30,22 +40,26 @@ export function GET() {
         >
           <div
             style={{
-              fontSize: 84,
+              fontSize: isAbout ? 72 : 84,
               fontWeight: 800,
               color: '#e8e8f0',
               letterSpacing: '-2px',
             }}
           >
-            Protos Web
+            {isAbout ? 'Protos Web — O nama' : 'Protos Web'}
           </div>
           <div
             style={{
               marginTop: '18px',
-              fontSize: 38,
+              fontSize: isAbout ? 30 : 38,
               color: '#8888aa',
+              maxWidth: 720,
+              lineHeight: 1.35,
             }}
           >
-            Websites with soul, built with love
+            {isAbout
+              ? 'Dario Imsirović — AI & Full Stack · Martina Markulin — Shop/UI Design'
+              : 'Websites with soul, built with love'}
           </div>
           <div
             style={{

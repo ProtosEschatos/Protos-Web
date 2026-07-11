@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { buildPageMetadata } from '@/lib/seo'
+import JsonLd from '@/components/seo/JsonLd'
+import PageBreadcrumbSeo from '@/components/seo/PageBreadcrumbSeo'
+import { buildPageMetadata, contactPageJsonLd } from '@/lib/seo'
 
-type Props = { params: { locale: string } }
+type Props = { params: { locale: string }; children: React.ReactNode }
 
 export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
   setRequestLocale(locale)
@@ -15,6 +17,15 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
   })
 }
 
-export default function ContactLayout({ children }: { children: React.ReactNode }) {
-  return children
+export default async function ContactLayout({ children, params: { locale } }: Props) {
+  setRequestLocale(locale)
+  const t = await getTranslations({ locale, namespace: 'metadata.contact' })
+
+  return (
+    <>
+      <PageBreadcrumbSeo locale={locale} path="/kontakt" pageTitle={t('title')} />
+      <JsonLd data={contactPageJsonLd(locale, t('title'), t('description'))} />
+      {children}
+    </>
+  )
 }

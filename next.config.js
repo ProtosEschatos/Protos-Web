@@ -33,8 +33,8 @@ const nextConfig = {
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: '**.supabase.co' },
-      { protocol: 'https', hostname: 'www.protosweb.eu' },
       { protocol: 'https', hostname: 'protosweb.eu' },
+      { protocol: 'https', hostname: 'www.protosweb.eu' },
     ],
   },
 

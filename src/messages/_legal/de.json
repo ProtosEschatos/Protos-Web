@@ -1,0 +1,149 @@
+{
+  "lastUpdated": "Zuletzt aktualisiert",
+  "lastUpdatedDate": "11. Juli 2026",
+  "privacyTitle": "Datenschutzerklärung",
+  "privacyDescription": "Wie Protos Web Ihre personenbezogenen Daten gemäß DSGVO verarbeitet.",
+  "termsTitle": "Nutzungsbedingungen",
+  "termsDescription": "Bedingungen für die Nutzung der Protos-Web-Website, einschließlich Schutz des geistigen Eigentums.",
+  "cookiesTitle": "Cookie-Richtlinie",
+  "cookiesDescription": "Wie Protos Web Cookies und ähnliche Technologien verwendet.",
+  "termsSections": [
+    {
+      "title": "1. Einleitung und Annahme",
+      "paragraphs": [
+        "Diese Nutzungsbedingungen (\"Bedingungen\") regeln den Zugang zu und die Nutzung der Website www.protosweb.eu (die \"Website\"), betrieben von Dario Imsirović — Protos Web, Zagreb, Republik Kroatien (\"Protos Web\", \"wir\", \"uns\").",
+        "Mit dem Zugriff auf die Website bestätigen Sie, dass Sie diese Bedingungen gelesen, verstanden und vollständig akzeptiert haben. Wenn Sie nicht einverstanden sind, nutzen Sie die Website nicht."
+      ]
+    },
+    {
+      "title": "2. Geistiges Eigentum und Urheberrecht",
+      "paragraphs": [
+        "Der gesamte Inhalt der Website — einschließlich visueller Identität, UI/UX-Design, Layout, Typografie, Grafiken, Animationen, 3D-Inhalte, Quellcode, Texte, Übersetzungen, Blogbeiträge, SEO-Metadaten und technischer Implementierungen — ist originales geistiges Eigentum von Dario Imsirović und/oder Protos Web, sofern nicht ausdrücklich anders angegeben.",
+        "Alle Elemente sind durch kroatisches und EU-Recht zum Urheberrecht und geistigen Eigentum geschützt.",
+        "Es wird keine stillschweigende Lizenz zur Nutzung ohne vorherige schriftliche Zustimmung gewährt."
+      ]
+    },
+    {
+      "title": "3. Verbotene Handlungen",
+      "paragraphs": [
+        "Ohne vorherige schriftliche Genehmigung ist es untersagt: Inhalte zu kopieren, herunterzuladen, zu vervielfältigen oder öffentlich darzustellen; automatisiertes Scraping; Klonen von Design oder Funktionalität; Reverse Engineering; Entfernen von Urheberrechtshinweisen; kommerzielle oder irreführende Nutzung; falsche Eigentumsansprüche.",
+        "Abgeleitete Werke oder Integration unseres Designs oder Codes in fremde Produkte ohne schriftliche Zustimmung sind verboten."
+      ]
+    },
+    {
+      "title": "4. Zivil- und Strafrechtliche Haftung",
+      "paragraphs": [
+        "Unbefugte Nutzung oder Aneignung kann zivilrechtliche Ansprüche (Unterlassung, Schadensersatz, Kosten) nach sich ziehen.",
+        "Je nach Schwere kann dies auch eine Ordnungswidrigkeit oder Straftat nach kroatischem Recht darstellen. Wir behalten uns vor, Behörden einzuschalten und alle rechtlichen Schritte einzuleiten.",
+        "Protos Web schützt seine Urheberrechte aktiv. Nachgewiesene Verstöße werden im gesetzlich zulässigen Umfang verfolgt."
+      ]
+    },
+    {
+      "title": "5. Portfolio und Demo-Inhalte",
+      "paragraphs": [
+        "Portfolio- und Demo-Anzeigen dienen nur der Präsentation und erlauben keine Reproduktion der gezeigten Lösungen.",
+        "Kundenprojekte werden mit Zustimmung angezeigt; Rechte ergeben sich aus jeweiligen Verträgen."
+      ]
+    },
+    {
+      "title": "6. Externe Links",
+      "paragraphs": [
+        "Links zu Drittanbietern unterliegen deren eigenen Bedingungen. Protos Web ist nicht für deren Inhalte verantwortlich."
+      ]
+    },
+    {
+      "title": "7. Haftungsbeschränkung",
+      "paragraphs": [
+        "Die Website wird \"wie besehen\" bereitgestellt. Haftung für indirekte Schäden ist im gesetzlich zulässigen Umfang ausgeschlossen."
+      ]
+    },
+    {
+      "title": "8. Änderungen",
+      "paragraphs": [
+        "Wir können diese Bedingungen aktualisieren. Fortgesetzte Nutzung gilt als Annahme der geänderten Bedingungen."
+      ]
+    },
+    {
+      "title": "9. Anwendbares Recht",
+      "paragraphs": [
+        "Es gilt das Recht der Republik Kroatien. Gerichtsstand: zuständige Gerichte in Kroatien. Kontakt: dario.admin@protosweb.eu."
+      ]
+    }
+  ],
+  "privacySections": [
+    {
+      "title": "1. Verantwortlicher",
+      "paragraphs": [
+        "Verantwortlicher: Dario Imsirović — Protos Web, Zagreb, Republik Kroatien. Kontakt: dario.admin@protosweb.eu."
+      ]
+    },
+    {
+      "title": "2. Erhobene Daten",
+      "paragraphs": [
+        "Kontaktformular, Newsletter, Cookies (mit Einwilligung), technische Protokolle für Sicherheit und Betrieb."
+      ]
+    },
+    {
+      "title": "3. Zweck und Rechtsgrundlage",
+      "paragraphs": [
+        "Kommunikation (berechtigtes Interesse/Vertrag), Newsletter (Einwilligung), Sicherheit (berechtigtes Interesse), Analyse-Cookies (Einwilligung)."
+      ]
+    },
+    {
+      "title": "4. Auftragsverarbeiter",
+      "paragraphs": [
+        "Vercel, Supabase, Resend/Brevo, Cloudflare — vertraglich gebunden. Kein Verkauf personenbezogener Daten."
+      ]
+    },
+    {
+      "title": "5. Speicherdauer",
+      "paragraphs": [
+        "Daten werden nur so lange gespeichert, wie für den jeweiligen Zweck erforderlich."
+      ]
+    },
+    {
+      "title": "6. Ihre Rechte",
+      "paragraphs": [
+        "Auskunft, Berichtigung, Löschung, Einschränkung, Widerspruch, Datenübertragbarkeit, Widerruf der Einwilligung. Beschwerde bei AZOP, Zagreb."
+      ]
+    },
+    {
+      "title": "7. Geistiges Eigentum",
+      "paragraphs": [
+        "Schutz von Design und Code regeln die Nutzungsbedingungen. Diese Datenschutzerklärung betrifft nur personenbezogene Daten."
+      ]
+    },
+    {
+      "title": "8. Änderungen",
+      "paragraphs": [
+        "Aktualisierungen werden auf der Website veröffentlicht."
+      ]
+    }
+  ],
+  "cookiesSections": [
+    {
+      "title": "1. Was sind Cookies",
+      "paragraphs": [
+        "Kleine Textdateien im Browser für Betrieb, Einstellungen und — mit Einwilligung — Analyse."
+      ]
+    },
+    {
+      "title": "2. Cookie-Arten",
+      "paragraphs": [
+        "Essenzielle Cookies (immer aktiv) und optionale Analyse-Cookies (nur mit Einwilligung)."
+      ]
+    },
+    {
+      "title": "3. Einwilligung",
+      "paragraphs": [
+        "Auswahl über Modal/Banner, lokal im Browser gespeichert. Löschung in Browsereinstellungen möglich."
+      ]
+    },
+    {
+      "title": "4. Weitere Richtlinien",
+      "paragraphs": [
+        "Details in der Datenschutzerklärung. Nutzungsbedingungen schützen das geistige Eigentum von Protos Web."
+      ]
+    }
+  ]
+}

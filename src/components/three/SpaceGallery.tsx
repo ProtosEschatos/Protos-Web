@@ -286,6 +286,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
                 <img
                   src={nearestProject.imageUrl}
                   alt={nearestProject.title}
+                  loading="lazy"
                   className="mx-auto h-36 w-auto max-w-full object-contain object-top"
                 />
               </div>

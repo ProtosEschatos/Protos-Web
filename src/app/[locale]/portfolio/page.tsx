@@ -1,6 +1,9 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { getPortfolioItems } from '@/actions/portfolio'
 import PortfolioGrid from '@/components/portfolio/PortfolioGrid'
+import JsonLd from '@/components/seo/JsonLd'
+import { portfolioItemListJsonLd } from '@/lib/seo'
+import { PROTOS_WEB_MARQUEE } from '@/lib/tech-stacks'
 import { Link } from '@/routing'
 import { ArrowRight, Layers } from 'lucide-react'
 
@@ -10,11 +13,13 @@ export default async function PortfolioPage({ params: { locale } }: Props) {
   setRequestLocale(locale)
   const t = await getTranslations({ locale, namespace: 'portfolioPage' })
   const items = await getPortfolioItems(locale, 12)
+  const itemListLd = portfolioItemListJsonLd(items, locale)
 
-  const marqueeItems = ['NEXT.JS', 'TYPESCRIPT', 'TAILWIND', 'THREE.JS', 'FRAMER MOTION', 'WEBGL', 'SUPABASE']
+  const marqueeItems = PROTOS_WEB_MARQUEE
 
   return (
     <>
+      <JsonLd data={itemListLd} />
       <section className="pt-36 pb-16 text-center relative overflow-hidden cosmic-hero-band">
         <div className="max-w-[1200px] mx-auto px-6 relative z-10">
           <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[var(--primary)] mb-3">{t('label')}</p>

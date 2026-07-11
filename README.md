@@ -30,43 +30,54 @@ src/
 │   ├── [locale]/              # Locale-based routing (hr/en/de/it/es)
 │   │   ├── layout.tsx         # Root layout (fonts, PageLoader, Header, Footer, CookieBanner)
 │   │   ├── page.tsx           # Home page (Hero, Process, Portfolio, Services, Blog, Contact)
-│   │   ├── o-meni/page.tsx    # About page
+│   │   ├── o-meni/page.tsx    # About page ("Full Stack Duo iz Zagreba")
 │   │   ├── proces/page.tsx    # Process page
 │   │   ├── portfolio/page.tsx # Portfolio page
 │   │   ├── portfolio-showcase/page.tsx # R3F 3D space gallery
 │   │   ├── usluge/page.tsx    # Services page
 │   │   ├── blog/page.tsx      # Blog listing (Supabase)
 │   │   ├── blog/[slug]/page.tsx # Blog post detail
-│   │   └── kontakt/page.tsx   # Contact page
+│   │   ├── kontakt/page.tsx   # Contact page
+│   │   └── admin/             # Admin panel (password auth)
+│   │       ├── stranice/      # Static page hints (o-meni, proces, usluge)
+│   │       ├── blog/          # Blog CMS
+│   │       ├── portfolio/     # Portfolio CMS
+│   │       ├── ai/            # DeepSeek assistant
+│   │       └── memory/        # Protos-Agent memory viewer
 │   └── api/
 │       ├── contact/route.ts   # POST contact form → Supabase RPC
 │       ├── subscribe/route.ts # POST newsletter → subscribe edge fn
-│       └── blog/route.ts      # GET blog API
+│       ├── blog/route.ts      # GET blog API
+│       └── og/route.tsx       # Dynamic OG images
 ├── components/
+│   ├── features/
+│   │   ├── admin/             # AdminShell, AdminSidebar, forms, panels
+│   │   ├── home/sections/     # Hero, Services, Process, Portfolio, Blog, Contact, etc.
+│   │   ├── blog/              # BlogGrid, BlogPostContent
+│   │   └── portfolio/         # PortfolioGrid
 │   ├── layout/
-│   │   ├── Header.tsx         # Navigation, lang selector, theme cycler
+│   │   ├── Header.tsx         # Navigation (MAIN_NAV_ITEMS), lang selector, theme cycler
 │   │   ├── Footer.tsx         # Footer with links, social, Balkans tags
 │   │   └── MobileMenu.tsx     # Framer Motion slide-in mobile menu
-│   ├── sections/
-│   │   ├── Hero.tsx           # Hero with dynamic HeroCanvas
-│   │   ├── Services.tsx       # 6 service cards grid
-│   │   ├── Process.tsx        # 4 steps + 3 feature cards
-│   │   ├── Portfolio.tsx      # Projects + showcase banner
-│   │   ├── Blog.tsx           # 3 preview cards
-│   │   └── Contact.tsx        # Form + contact info
 │   ├── three/
 │   │   ├── backgrounds/       # Per-route R3F backgrounds (Home, Process, etc.)
 │   │   └── showcase/          # SpaceGallery 3D room only
 │   └── ui/
 │       ├── PageLoader.tsx     # Cyber boot gate + cookie modal
 │       ├── SiteBackground.tsx # Route-aware background wrapper
-│       ├── PageBackgroundCanvas.tsx
+│       ├── section-icons.tsx  # Shared Lucide icons for services/process
 │       ├── CustomCursor.tsx   # Dot + follower cursor
 │       └── CookieBanner.tsx   # Cookie consent
 ├── lib/
-│   ├── section-icons.tsx      # Shared Lucide icons for services/process
-│   ├── social-links.ts        # Social profile URLs
-│   └── supabase.ts           # Supabase client (anon + service role)
+│   ├── auth/                  # Admin auth, rate limit, require-admin
+│   ├── config/                # site.ts, seo.ts, admin-links.ts, social-links.ts, tech-stacks.ts
+│   ├── queries/               # blog.ts, portfolio.ts, admin/ (CMS reads)
+│   ├── routes/                # main-nav.ts (public + admin nav)
+│   ├── showcase/              # showcase storage, webgl helpers
+│   └── supabase.ts            # Supabase client (anon + service role)
+├── actions/                   # Server actions (admin-blog, admin-portfolio, contact)
+├── hooks/                     # use-showcase-viewport.ts
+├── types/                     # blog.ts, portfolio.ts
 ├── messages/
 │   ├── hr.json               # Croatian translations
 │   ├── en.json               # English translations
@@ -76,7 +87,7 @@ src/
 ├── styles/
 │   └── globals.css            # Tailwind + CSS vars + reset
 ├── i18n.ts                    # next-intl configuration
-└── middleware.ts              # next-intl locale routing
+└── middleware.ts              # next-intl locale routing + admin auth
 ```
 
 ## Config Files
@@ -187,7 +198,11 @@ Email vars on Vercel are **legacy/unused** by Next.js (mail goes through Supabas
 
 ### Vercel — safe to remove (unused by current code)
 
-Stripe, Resend, Brevo, Sentry, Telegram, `DATABASE_URL` — leftovers from older setup; they do not break anything if left in place.
+Resend, Brevo, Sentry, Telegram, `DATABASE_URL` — leftovers from older setup; they do not break anything if left in place.
+
+**Stripe** — DB columns exist (`stripe_session_id`, `stripe_price_id`) but there is no Stripe SDK, API route, or env integration yet. Documented as future/inactive in `.env.example`.
+
+**Zoho Mail** — inbox receives mail via Cloudflare DNS MX records (`mail.zoho.eu`). No Zoho API key or env var is required for the site; admin links to webmail at `/admin/tools`.
 
 ## Supabase Edge Functions
 

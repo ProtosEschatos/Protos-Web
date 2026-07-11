@@ -58,7 +58,7 @@ export function GET(request: Request) {
             }}
           >
             {isAbout
-              ? 'Dario Imsirović — AI & Full Stack · Martina Markulin — Shop/UI Design'
+              ? 'Full Stack Duo iz Zagreba — AI & Full Stack · Shop/UI Design'
               : 'Websites with soul, built with love'}
           </div>
           <div

@@ -19,8 +19,8 @@ export default async function AdminProcessPage({ params: { locale } }: Props) {
         publicHref="/proces"
         sourceHint="Uredi korake i copy u process sekciji ili i18n ključevima."
         sourcePaths={[
-          { label: 'Process sekcija', path: 'src/components/sections/process/' },
-          { label: 'Prijevodi (hr)', path: 'messages/hr.json → process' },
+          { label: 'Process sekcija (home)', path: 'src/components/features/home/sections/Process.tsx' },
+          { label: 'Prijevodi (hr)', path: 'src/messages/hr.json → processPage' },
           { label: 'Javna ruta', path: 'src/app/[locale]/proces/page.tsx' },
         ]}
       />

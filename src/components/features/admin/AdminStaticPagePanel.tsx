@@ -1,3 +1,5 @@
+'use client'
+
 import AdminLink from '@/components/features/admin/AdminLink'
 import { ExternalLink, Eye } from 'lucide-react'
 import { Link } from '@/routing'

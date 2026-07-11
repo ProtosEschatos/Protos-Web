@@ -19,6 +19,20 @@ Practical security map for `protosweb.eu`. No system is immune to every attack; 
 | `AGENT_MEMORY_REPO` | **Vercel** (optional) | Default `ProtosEschatos/Protos-Agent` — override repo for memory fetch |
 | `AGENT_MEMORY_LOCAL_PATH` | **Local dev only** | Filesystem fallback (default `~/Protos-Agent/memory` in development) |
 
+### Email — no Zoho env var
+
+**Zoho Mail** (`dario.admin@protosweb.eu`) receives inbound mail via **Cloudflare DNS MX** (`mx.zoho.eu`, etc.). The Next.js app does not call Zoho APIs. Contact form → Supabase → Resend edge fn → mail lands in Zoho inbox. Admin webmail link: `src/lib/config/admin-links.ts` → `https://mail.zoho.eu`.
+
+| Service | Secret location | Notes |
+|---------|-----------------|-------|
+| **Zoho** | None (DNS only) | MX records in Cloudflare; login via Zoho webmail |
+| **Resend** | Supabase Edge | Outbound transactional mail (`submit-form`, `subscribe`) |
+| **Brevo** | Supabase Edge | Optional; DKIM on apex for deliverability |
+
+### Stripe — inactive
+
+Legacy multi-tenant columns (`stripe_session_id`, `stripe_price_id`) exist in Postgres. **No** `stripe` package, API routes, or `STRIPE_*` env vars in the app. Do not add Stripe secrets until integration is implemented.
+
 **Do not** store `ADMIN_SECRET` in Supabase — it is unused there and increases leak surface. Remove it from Supabase Dashboard → Edge Functions → Secrets if present.
 
 ## Admin panel

@@ -6,13 +6,15 @@
 > **Last updated:** 2026-07-11
 > **Live:** https://protosweb.eu
 > **Repo:** `ProtosEschatos/Protos-Web`
-> **Latest commit:** `1baa74d` — branding, dual stacks, SEO entities, blog authorship
+> **Latest commit:** `8f600e8` — refactor lib/features/queries, `admin/stranice/`
 
 ---
 
 ## Gdje si stao (TL;DR)
 
-**Branding + SEO (2026-07-11):** Kompletan plan implementiran i pushan na `main`. Tim uloge (Dario/Martina), dual stack showcase (Protos Web vs Bodulica vanilla), `team-profiles.ts` struktura (Studio/Dario/Martina + freelance slotovi), AboutPage schema, blog `author_slug`, branch protection CI. Instagram live; ostali sociali `#` pending.
+**Refaktor + branding (2026-07-11):** Faze A–F commitane (`8f600e8`). Nova struktura: `components/features/`, `lib/config/`, `lib/queries/`, `lib/auth/`, `admin/stranice/`. O nama hero: **"Protos Web — Full Stack Duo iz Zagreba."** (5 jezika). Docs sync: AGENTS, README, security, `.env.example`.
+
+**Branding + SEO (ranije):** Tim uloge (Dario/Martina), dual stack showcase, `team-profiles.ts`, AboutPage schema, blog `author_slug`, branch protection CI. Instagram live; ostali sociali `#` pending.
 
 **SEO cilj:** #1 za brand upite (`Protos Web`, `protosweb`); osobna imena; dugoročno i `protos` (generička riječ — treba off-page + vrijeme).
 
@@ -22,12 +24,39 @@
 
 ---
 
+## 2026-07-11 — Refaktor strukture (`8f600e8`)
+
+### Promjene
+- `admin/pages/` → `admin/stranice/` (o-meni, proces, usluge)
+- `components/sections/` → `components/features/home/sections/`
+- `components/admin/` → `components/features/admin/`
+- `lib/admin/*-queries.ts` → `lib/queries/admin/`
+- `lib/site.ts`, `seo.ts`, … → `lib/config/`
+- `lib/admin-auth*.ts` → `lib/auth/`
+- `actions/blog.ts`, `actions/portfolio.ts` → `lib/queries/` + `types/`
+- `main-nav-routes.ts` → `lib/routes/main-nav.ts`
+- Obrisan mrtvi `AdminActivityFeed`
+
+### O nama branding
+- `aboutPage.heroTitleHighlight`: "Protos Web"
+- `aboutPage.heroTitleLine2`: "Full Stack Duo iz Zagreba." (+ en/de/it/es)
+- OG `/api/og?type=about` — "Full Stack Duo iz Zagreba"
+
+### Integracije (status)
+- **DeepSeek** `/admin/ai` — aktivno (`DEEPSEEK_API_KEY` na Vercelu)
+- **Zoho** — DNS MX, bez env var; webmail link u adminu
+- **Stripe** — DB shema postoji, nema integracije u kodu
+
+Detalji: **Protos-Agent** `memory/projects/protos-web.md`
+
+---
+
 ## 2026-07-11 — Branding, stackovi, SEO entiteti (`1baa74d`)
 
 ### Novi moduli
-- `src/lib/tech-stacks.ts` — javni stack (jezici/framework), bez Supabase/Stripe/Cloudflare u UI
-- `src/lib/team-profiles.ts` — Studio / Dario / Martina social + freelance platforme
-- `src/components/sections/DualStacksSection.tsx` — Bodulica vanilla vs Protos Web na `/o-meni`
+- `src/lib/config/tech-stacks.ts` — javni stack (jezici/framework), bez Supabase/Stripe/Cloudflare u UI
+- `src/lib/config/team-profiles.ts` — Studio / Dario / Martina social + freelance platforme
+- `src/components/features/home/sections/DualStacksSection.tsx` — Bodulica vanilla vs Protos Web na `/o-meni`
 
 ### SEO
 - Fragment IDs: `#dario-imsirovic`, `#martina-markulin`
@@ -71,7 +100,7 @@ Detalji: **Protos-Agent** `memory/sessions/2026-07-11-branding-seo-stack.md`
   - Resend: `send` MX+SPF + `resend._domainkey` DKIM ✅; domena **Verified** (eu-west-1)
 
 ### Kod
-- `src/lib/site.ts` — `CONTACT_EMAIL`, `SITE_URL`, `SITE_DOMAIN`
+- `src/lib/config/site.ts` — `CONTACT_EMAIL`, `SITE_URL`, `SITE_DOMAIN`
 - Edge fn: `submit-form` (webhook INSERT → Resend), `subscribe` (newsletter)
 - Deploy workflow: `--no-verify-jwt` za submit-form + subscribe
 
@@ -95,7 +124,7 @@ Detalji: **Protos-Agent** `memory/sessions/2026-07-11-branding-seo-stack.md`
 ## 2026-07-06 — Logo, Online Presence & Design biblioteka
 
 - **Novi animirani logo** (`src/components/ui/ProtosLogo.tsx`): dvije neonske kugle (plava + narančasta) eliptično orbitiraju, spoje se u ljubičasto-zelenu neonsku kuglu, pa se razdvoje. Poštuje `prefers-reduced-motion`. Stari `ProtosEclipseLogo` obrisan.
-- **"Moja online prisutnost"** sekcija na `/o-meni` (`components/sections/OnlinePresence.tsx` + `ui/BrandIcons.tsx` + `lib/social-links.ts`) — socials + freelance platforme kao pločice. Nav gumb `PRISUTNOST` u headeru + mobilnom meniju (deep-link `#online-presence`). **Linkovi su placeholderi (`#`)** osim WhatsAppa — čekaju prave URL-ove.
+- **"Moja online prisutnost"** sekcija na `/o-meni` (`components/features/home/sections/OnlinePresence.tsx` + `ui/BrandIcons.tsx` + `lib/config/social-links.ts`) — socials + freelance platforme kao pločice. Nav gumb `PRISUTNOST` u headeru + mobilnom meniju (deep-link `#online-presence`). **Linkovi su placeholderi (`#`)** osim WhatsAppa — čekaju prave URL-ove.
 - **Design element library (baza):**
   - Repo: `design/references/README.md` (katalog 22 kategorije / ~232 elementa) + `design/references/{boards,elements}/` za slike.
   - Cursor pravilo `.cursor/rules/design-system.mdc` (`alwaysApply`) — vizualni jezik (cosmic/neon/glassmorphism) + popis kategorija; AI uvijek ima kontekst.
@@ -144,7 +173,7 @@ Ključne datoteke: `src/components/three/SpaceGallery.tsx` (phase UI), `showcase
 - `.github/workflows/supabase-deploy-functions.yml` generaliziran (petlja po `supabase/functions/*`).
 
 ### Shema kao source-of-truth
-- Generiran `src/lib/database.types.ts`, Supabase klijent tipiziran (`createClient<Database>`), `actions/blog.ts` usklađen s nullability.
+- Generiran `src/lib/database.types.ts`, Supabase klijent tipiziran (`createClient<Database>`), `lib/queries/blog.ts` usklađen s nullability.
 - Migracije checked-in + `supabase/migrations/README.md` ažuriran (povijest verzija, baseline dump + type-gen upute).
 
 ---

@@ -1,3 +1,5 @@
+'use client'
+
 import AdminBackground from '@/components/admin/AdminBackground'
 import AdminHeader from '@/components/admin/AdminHeader'
 

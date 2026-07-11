@@ -1,7 +1,7 @@
 {
   "nav": {
     "home": "HOME",
-    "about": "CHI SIAMO",
+    "about": "CHI SONO",
     "process": "PROCESSO",
     "portfolio": "PORTFOLIO",
     "services": "SERVIZI",
@@ -559,10 +559,10 @@
   },
   "aboutPage": {
     "label": "CHI SIAMO",
-    "heroTitleLine1": "Costruiamo soluzioni",
-    "heroTitleHighlight": "digitali che crescono",
-    "heroTitleLine2": "insieme a te.",
-    "heroSubtitle": "Full Stack Developer e UI designer da Zagabria. Creiamo siti moderni, veloci e visivamente sorprendenti — con anima, collaborazione e cura fino all'ultimo dettaglio.",
+    "heroTitleLine1": "Dario Imsirović & Martina Markulin",
+    "heroTitleHighlight": "studio Protos Web",
+    "heroTitleLine2": "da Zagabria.",
+    "heroSubtitle": "AI engineering, sviluppo full stack cross-web e design frontend/shop — con esperienze 3D in ogni progetto.",
     "whoTitle": "Chi siamo",
     "studioIntro": "Protos Web è uno studio in formazione — attività Protos Web Mark23 in registrazione (OIB: 23732814520). Tutti i design, template e opere creative restano proprietà originale degli autori come creatori sovrani, indipendentemente dalla registrazione commerciale.",
     "teamTitle": "Info",
@@ -574,9 +574,7 @@
       "languages": "Lingue",
       "focus": "Focus",
       "contribution": "Contributo",
-      "instagram": "Instagram",
-      "facebook": "Facebook",
-      "threads": "Threads"
+      "instagram": "Instagram"
     },
     "team": {
       "dario": {
@@ -603,9 +601,7 @@
         "fields": {
           "focus": "UI/UX design, concetti visivi, branding",
           "contribution": "Idee creative, estetica e design di tutti i progetti",
-          "instagram": "",
-          "facebook": "",
-          "threads": ""
+          "instagram": ""
         }
       }
     },
@@ -657,11 +653,11 @@
     "dualStacks": {
       "label": "STACK",
       "title": "Due stack, stessa competenza",
-      "subtitle": "Due approcci build — stack studio moderno e shop vanilla per clienti.",
+      "subtitle": "Protos Web e i progetti clienti dimostrano che lavoriamo con approcci build diversi — dal moderno TypeScript/React a soluzioni vanilla leggere.",
       "protosTitle": "Protos Web — stack moderno",
-      "protosDescription": "Sito studio custom e piattaforme su misura — con esperienze 3D e animazioni.",
+      "protosDescription": "TypeScript, React, Next.js, 3D/WebGL e animazioni. Sito studio custom e piattaforme su misura.",
       "bodulicaTitle": "Bodulica Shop — stack vanilla",
-      "bodulicaDescription": "Primo webshop cliente — build vanilla leggero. Martina: shop e UI design. Dario: implementazione.",
+      "bodulicaDescription": "Primo webshop cliente — HTML, CSS e vanilla JavaScript. Build opposto a Protos Web. Martina: shop e UI design. Dario: implementazione.",
       "bodulicaNote": "Showcase studio di approcci diversi — senza link pubblico allo shop."
     }
   }

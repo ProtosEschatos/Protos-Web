@@ -34,68 +34,49 @@ export function getSiteConsent(): SiteConsent | null {
   return null
 }
 
+/** @deprecated Use getSiteConsent — kept for Analytics compatibility */
 export function getCookiePreferences(): CookiePreferences | null {
-  if (typeof window === 'undefined') return null
-  const raw = localStorage.getItem(COOKIE_STORAGE_KEY)
-  if (!raw) return null
-  try {
-    const parsed = JSON.parse(raw) as CookiePreferences
-    if (parsed?.essential === true) return parsed
-  } catch {
-    return null
+  const consent = getSiteConsent()
+  if (!consent) return null
+  return {
+    essential: true,
+    analytics: consent.analytics,
+    acceptedAt: consent.acceptedAt,
   }
-  return null
 }
 
 export function hasSiteConsent(): boolean {
   return getSiteConsent() !== null
 }
 
+/** @deprecated Use hasSiteConsent */
 export function hasCookieConsent(): boolean {
-  return getCookiePreferences() !== null
+  return hasSiteConsent()
 }
 
-/** TOS + essential cookies — does not close the separate cookie banner step. */
-export function saveSiteTermsConsent(): void {
+export function saveSiteConsent(analytics: boolean): void {
   const acceptedAt = new Date().toISOString()
-  const existing = getSiteConsent()
   const consent: SiteConsent = {
     termsVersion: LEGAL_TERMS_VERSION,
     termsAccepted: true,
     essential: true,
-    analytics: existing?.analytics ?? false,
+    analytics,
     acceptedAt,
   }
-  localStorage.setItem(SITE_CONSENT_KEY, JSON.stringify(consent))
-  if (typeof window !== 'undefined') {
-    window.dispatchEvent(new CustomEvent(SITE_CONSENT_EVENT))
-  }
-}
-
-export function saveCookiePreferences(analytics: boolean): void {
-  const acceptedAt = new Date().toISOString()
   const cookiePrefs: CookiePreferences = {
     essential: true,
     analytics,
     acceptedAt,
   }
+  localStorage.setItem(SITE_CONSENT_KEY, JSON.stringify(consent))
   localStorage.setItem(COOKIE_STORAGE_KEY, JSON.stringify(cookiePrefs))
-
-  const site = getSiteConsent()
-  if (site) {
-    localStorage.setItem(
-      SITE_CONSENT_KEY,
-      JSON.stringify({ ...site, analytics, acceptedAt }),
-    )
-  }
-
   if (typeof window !== 'undefined') {
     window.dispatchEvent(new CustomEvent(COOKIE_CONSENT_EVENT))
+    window.dispatchEvent(new CustomEvent(SITE_CONSENT_EVENT))
   }
 }
 
-/** @deprecated Use saveSiteTermsConsent + saveCookiePreferences */
-export function saveSiteConsent(analytics: boolean): void {
-  saveSiteTermsConsent()
-  saveCookiePreferences(analytics)
+/** @deprecated Use saveSiteConsent */
+export function saveCookiePreferences(analytics: boolean): void {
+  saveSiteConsent(analytics)
 }

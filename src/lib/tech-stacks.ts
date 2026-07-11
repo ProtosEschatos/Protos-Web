@@ -9,6 +9,7 @@ export const PROTOS_WEB_STACK: TechStack = {
   id: 'protos-web',
   items: [
     'TypeScript',
+    'JavaScript',
     'HTML',
     'CSS',
     'Next.js',
@@ -23,7 +24,7 @@ export const PROTOS_WEB_STACK: TechStack = {
 
 export const BODULICA_STACK: TechStack = {
   id: 'bodulica-shop',
-  items: ['HTML', 'CSS', 'Vanilla JavaScript'],
+  items: ['HTML', 'CSS', 'JavaScript', 'Vanilla JS'],
 }
 
 /** Uppercase labels for portfolio marquee */

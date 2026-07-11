@@ -4,7 +4,7 @@ import AdminHubCard from '@/components/admin/AdminHubCard'
 import AdminActivityFeed from '@/components/admin/AdminActivityFeed'
 import AdminSection from '@/components/admin/AdminSection'
 import AdminStatGrid from '@/components/admin/AdminStatGrid'
-import { adminGetNotifications } from '@/lib/admin/notifications'
+import { adminGetNotifications } from '@/actions/admin-notifications'
 import { CONTACT_EMAIL } from '@/lib/site'
 import { adminContentLinks } from '@/lib/admin-hub-links'
 

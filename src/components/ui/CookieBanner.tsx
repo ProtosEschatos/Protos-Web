@@ -19,10 +19,10 @@ export default function CookieBanner() {
       }
     }
 
-    maybeShow()
-
     if (!hasCookieConsent()) {
-      const timer = setTimeout(maybeShow, 2000)
+      const timer = setTimeout(() => {
+        if (!hasCookieConsent()) setVisible(true)
+      }, 2000)
       window.addEventListener(BOOT_COMPLETE_EVENT, maybeShow)
       window.addEventListener(COOKIE_CONSENT_EVENT, maybeShow)
       return () => {

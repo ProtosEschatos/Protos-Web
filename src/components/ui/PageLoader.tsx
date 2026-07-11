@@ -4,13 +4,11 @@ import { useState, useEffect, useLayoutEffect, useCallback, useRef } from 'react
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import SiteConsentModal from '@/components/legal/SiteConsentModal'
-import BootOrbitLogo from '@/components/ui/BootOrbitLogo'
 import {
   BOOT_SESSION_KEY,
   BOOT_COMPLETE_EVENT,
   BOOT_VIDEO,
   BOOT_BG,
-  BOOT_MIN_MS,
   clearBootPending,
   setBootPending,
   removeBootSsrVeil,
@@ -85,16 +83,16 @@ export default function PageLoader() {
 
   useEffect(() => {
     if (!loading) return
-    const start = Date.now()
     const interval = setInterval(() => {
-      const elapsed = Date.now() - start
-      const next = Math.min(100, (elapsed / BOOT_MIN_MS) * 100)
-      setProgress(next)
-      if (elapsed >= BOOT_MIN_MS) {
-        setReadyToEnter(true)
-        clearInterval(interval)
-      }
-    }, 50)
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval)
+          setReadyToEnter(true)
+          return 100
+        }
+        return Math.min(prev + Math.random() * 12 + 4, 100)
+      })
+    }, 120)
     return () => clearInterval(interval)
   }, [loading])
 
@@ -154,11 +152,6 @@ export default function PageLoader() {
               />
             </div>
 
-            <div
-              className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_at_center,rgba(2,8,24,0.35)_0%,rgba(2,8,24,0.92)_68%)]"
-              aria-hidden
-            />
-
             <div className="relative z-10 flex flex-col items-center justify-center px-10 py-12 min-w-[min(92vw,320px)]">
               <div
                 className="pointer-events-none absolute inset-0 -z-10 rounded-3xl border border-sky-200/25 bg-[#020818]/82 backdrop-blur-md shadow-[0_0_48px_rgba(125,211,252,0.35),0_16px_48px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.1)]"
@@ -168,8 +161,22 @@ export default function PageLoader() {
                 className="pointer-events-none absolute inset-3 -z-10 rounded-[1.35rem] bg-[radial-gradient(ellipse_at_center,rgba(186,230,253,0.28)_0%,transparent_68%)]"
                 aria-hidden
               />
-              <div className="relative mb-8 flex items-center justify-center">
-                <BootOrbitLogo size={112} />
+              <div className="relative w-24 h-24 mb-8">
+                <motion.div
+                  className="absolute inset-0 rounded-full border-2 border-[var(--primary)]"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+                />
+                <motion.div
+                  className="absolute inset-2 rounded-full border-2 border-[var(--secondary)] border-t-transparent"
+                  animate={{ rotate: -360 }}
+                  transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+                />
+                <motion.div
+                  className="absolute inset-4 rounded-full bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)]"
+                  animate={{ scale: [0.8, 1.1, 0.8] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                />
               </div>
 
               <h2
@@ -187,7 +194,7 @@ export default function PageLoader() {
                   className="h-full rounded-full bg-gradient-to-r from-[var(--primary)] via-[var(--secondary)] to-[var(--accent)]"
                   initial={{ width: '0%' }}
                   animate={{ width: `${Math.min(progress, 100)}%` }}
-                  transition={{ duration: 0.15, ease: 'linear' }}
+                  transition={{ duration: 0.3 }}
                 />
               </div>
 

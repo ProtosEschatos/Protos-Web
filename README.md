@@ -20,94 +20,75 @@ npm run build
 
 # Start production server
 npm start
-
-# Type-check (runs in CI)
-npm run type-check
-
-# Lint
-npm run lint
-
-# Showcase asset scripts (manual or via GitHub workflow)
-npm run upload:showcase-assets
-npm run cleanup:showcase-assets
 ```
 
 ## Project Structure
 
 ```
 src/
-├── actions/                 # Server actions (blog, contact, portfolio, admin-*)
 ├── app/
-│   ├── [locale]/            # Locale-based routing (hr/en/de/it/es)
-│   │   ├── layout.tsx       # Root layout (fonts, PageLoader, Header, Footer, CookieBanner)
-│   │   ├── page.tsx         # Home page (Hero, Process, Portfolio, Services, Blog, Contact)
-│   │   ├── o-meni/page.tsx  # About page (dual stacks, team cards, online presence)
-│   │   ├── proces/page.tsx
-│   │   ├── portfolio/page.tsx
-│   │   ├── portfolio-showcase/page.tsx  # R3F 3D space gallery
-│   │   ├── usluge/page.tsx
-│   │   ├── blog/page.tsx
-│   │   ├── blog/[slug]/page.tsx
-│   │   ├── kontakt/page.tsx
-│   │   └── admin/           # Private admin panel (blog, portfolio, inbox, subscribers)
+│   ├── [locale]/              # Locale-based routing (hr/en/de/it/es)
+│   │   ├── layout.tsx         # Root layout (fonts, PageLoader, Header, Footer, CookieBanner)
+│   │   ├── page.tsx           # Home page (Hero, Process, Portfolio, Services, Blog, Contact)
+│   │   ├── o-meni/page.tsx    # About page
+│   │   ├── proces/page.tsx    # Process page
+│   │   ├── portfolio/page.tsx # Portfolio page
+│   │   ├── portfolio-showcase/page.tsx # R3F 3D space gallery
+│   │   ├── usluge/page.tsx    # Services page
+│   │   ├── blog/page.tsx      # Blog listing (Supabase)
+│   │   ├── blog/[slug]/page.tsx # Blog post detail
+│   │   └── kontakt/page.tsx   # Contact page
 │   └── api/
-│       ├── admin/           # login, logout, session
-│       ├── blog/route.ts
-│       ├── contact/route.ts
-│       ├── subscribe/route.ts
-│       └── og/              # Dynamic OG images
+│       ├── contact/route.ts   # POST contact form → Supabase RPC
+│       ├── subscribe/route.ts # POST newsletter → subscribe edge fn
+│       └── blog/route.ts      # GET blog API
 ├── components/
-│   ├── admin/               # Admin shell, forms, nav
-│   ├── layout/              # Header, Footer, MobileMenu, AppChrome
-│   ├── legal/               # TOS, consent modals
-│   ├── navigation/          # Page transitions
-│   ├── providers/           # Lenis, Analytics
+│   ├── layout/
+│   │   ├── Header.tsx         # Navigation, lang selector, theme cycler
+│   │   ├── Footer.tsx         # Footer with links, social, Balkans tags
+│   │   └── MobileMenu.tsx     # Framer Motion slide-in mobile menu
 │   ├── sections/
-│   │   ├── Hero.tsx, Services.tsx, Process.tsx, Portfolio.tsx, Blog.tsx, Contact.tsx
-│   │   ├── DualStacksSection.tsx   # Protos vs Bodulica stacks
-│   │   └── OnlinePresence.tsx
-│   ├── seo/                 # JsonLd, breadcrumbs
+│   │   ├── Hero.tsx           # Hero with dynamic HeroCanvas
+│   │   ├── Services.tsx       # 6 service cards grid
+│   │   ├── Process.tsx        # 4 steps + 3 feature cards
+│   │   ├── Portfolio.tsx      # Projects + showcase banner
+│   │   ├── Blog.tsx           # 3 preview cards
+│   │   └── Contact.tsx        # Form + contact info
 │   ├── three/
-│   │   ├── backgrounds/     # Per-route R3F backgrounds
-│   │   └── showcase/        # SpaceGallery 3D room
+│   │   ├── backgrounds/       # Per-route R3F backgrounds (Home, Process, etc.)
+│   │   └── showcase/          # SpaceGallery 3D room only
 │   └── ui/
-│       ├── PageLoader.tsx   # Boot video + 4.5s gate + cookie modal
-│       ├── SiteBackground.tsx
-│       ├── CustomCursor.tsx
-│       └── CookieBanner.tsx
+│       ├── PageLoader.tsx     # Cyber boot gate + cookie modal
+│       ├── SiteBackground.tsx # Route-aware background wrapper
+│       ├── PageBackgroundCanvas.tsx
+│       ├── CustomCursor.tsx   # Dot + follower cursor
+│       └── CookieBanner.tsx   # Cookie consent
 ├── lib/
-│   ├── tech-stacks.ts       # Single source of truth for public stack badges
-│   ├── site.ts              # SITE_URL, social URL constants
-│   ├── team-profiles.ts     # Team + online presence tiles
-│   ├── boot-gate.ts         # BOOT_MIN_MS = 4500
-│   ├── admin/               # Admin queries, auth helpers
-│   ├── section-icons.tsx
-│   ├── social-links.ts
-│   └── supabase.ts
+│   ├── section-icons.tsx      # Shared Lucide icons for services/process
+│   ├── social-links.ts        # Social profile URLs
+│   └── supabase.ts           # Supabase client (anon + service role)
 ├── messages/
-│   ├── hr.json, en.json, de.json, it.json, es.json
-│   └── _legal/              # Legal copy split from main i18n
-├── styles/globals.css
-├── i18n.ts
-├── routing.ts               # next-intl routing (separate from middleware)
-└── middleware.ts
-scripts/
-├── upload-showcase-assets.ts
-└── cleanup-showcase-assets.ts
+│   ├── hr.json               # Croatian translations
+│   ├── en.json               # English translations
+│   ├── de.json               # German translations
+│   ├── it.json               # Italian translations
+│   └── es.json               # Spanish translations
+├── styles/
+│   └── globals.css            # Tailwind + CSS vars + reset
+├── i18n.ts                    # next-intl configuration
+└── middleware.ts              # next-intl locale routing
 ```
 
 ## Config Files
 
 | File | Purpose |
 |------|---------|
-| `next.config.mjs` | Next.js 14 config with next-intl plugin, security headers, Three.js transpile |
+| `next.config.js` | Next.js 14 config with next-intl plugin, Three.js transpile |
 | `tailwind.config.ts` | Tailwind with Protos theme colors, custom animations |
-| `tsconfig.json` | TypeScript strict mode, `@/*` path alias, `allowJs: false` |
-| `postcss.config.ts` | Tailwind + Autoprefixer |
+| `tsconfig.json` | TypeScript strict mode, `@/*` path alias |
+| `postcss.config.js` | Tailwind + Autoprefixer |
 | `.cursorrules` | Cursor AI coding standards |
 | `package.json` | All dependencies |
-
-**Note:** `next.config.mjs` is the only root JavaScript file. Next.js 14 does not support `next.config.ts`. All application code under `src/` is TypeScript.
 
 ## Theme Colors
 
@@ -127,7 +108,7 @@ scripts/
 - [x] Header with desktop nav, language selector (5 langs), theme cycler, CTA, hamburger
 - [x] MobileMenu with Framer Motion slide-in animation
 - [x] Footer with brand, links, legal, social, Balkans causes
-- [x] PageLoader with boot video (`/loader/boot-bg.mp4`), 4.5s progress gate, and boot cookie modal
+- [x] PageLoader with cyber background, progress gate, and boot cookie modal
 - [x] CustomCursor with dot + follower
 - [x] Lucide React icons
 - [x] CookieBanner with localStorage persistence
@@ -140,14 +121,12 @@ scripts/
 - [x] Blog section (preview) + full blog page from Supabase
 - [x] Blog post detail pages (`/blog/[slug]`) with markdown content
 - [x] Contact section with form
-- [x] About page with dual-stack section, team cards, online presence, Support Balkans; nav **O NAMA**
+- [x] About page with bio, goals, Support Balkans
 - [x] Services page
 - [x] Contact page
-- [x] Admin panel (`/admin/login`, blog/portfolio CRUD, inbox, subscribers) — requires `ADMIN_SECRET`
-- [x] API routes: POST /api/contact, GET /api/blog, POST /api/subscribe, /api/admin/*
+- [x] API routes: POST /api/contact, GET /api/blog
 - [x] i18n with next-intl (5 languages)
 - [x] hreflang alternates + dynamic sitemap with blog posts
-- [x] Dynamic OG images, GA4 consent-gated analytics, Vercel Speed Insights
 - [x] All config files (tailwind, next, tsconfig, postcss, middleware, i18n)
 - [x] .cursorrules for Cursor AI
 
@@ -157,8 +136,8 @@ scripts/
 - [x] Contact form submission to Supabase (`submit_contact` RPC) + `submit-form` edge fn emails via DB webhook
 - [x] Newsletter signup via `/api/subscribe` → `subscribe` edge fn
 - [x] Portfolio data from Supabase
-- [x] Supabase edge functions in repo: `keep-alive`, `submit-form`, `subscribe`, `content`
-- [x] GitHub workflows: CI, keep-alive cron, edge function deploy, security audit, Dependabot, showcase asset upload
+- [x] Supabase edge functions in repo: `keep-alive`, `submit-form`, `subscribe`
+- [x] GitHub workflows: CI, keep-alive cron, edge function deploy, security audit, Dependabot
 
 ### Future Enhancements
 - [ ] Design refinements (user will provide updates)
@@ -175,9 +154,7 @@ scripts/
 3. **3D components use React Three Fiber** — NOT vanilla Three.js
 4. **Dark theme only** — no light mode
 5. **All Three.js components are dynamically imported** with `ssr: false`
-6. **Public stack badges** come from [`src/lib/tech-stacks.ts`](src/lib/tech-stacks.ts) — do not duplicate tech lists in i18n prose or components. i18n provides descriptive copy only; UI reads badges from `tech-stacks.ts`.
-7. **100% TypeScript in `src/`** — `tsconfig.json` has `allowJs: false`
-8. **Performance** — R3F canvases use `next/dynamic` with `ssr: false`; production responses use `compress: true` in `next.config.mjs`; Inter loads with `display: swap`. Run Lighthouse against a production build (`npm run build && npm start`) for audit scores.
+6. **Performance** — R3F canvases use `next/dynamic` with `ssr: false`; production responses use `compress: true` in `next.config.js`; Inter loads with `display: swap`. Run Lighthouse against a production build (`npm run build && npm start`) for audit scores.
 
 ## Environment Variables — Where Things Live
 
@@ -188,22 +165,12 @@ Secrets are **not** duplicated everywhere on purpose. Each platform reads only w
 | **Cloudflare** | DNS for `protosweb.eu` — MX (Zoho), Resend DKIM/SPF, DMARC. See [`docs/cloudflare-dns.md`](docs/cloudflare-dns.md) |
 | **`.env.local`** (local dev, gitignored) | Your machine only | Copy from `.env.example` — never commit |
 | **Vercel** | Production/preview builds + runtime | All `NEXT_PUBLIC_*` + server keys the Next.js app uses |
-| **GitHub Secrets** | GitHub Actions workflows only | See breakdown below |
+| **GitHub Secrets** | GitHub Actions workflows only | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `KEEP_ALIVE_SECRET`, `SUPABASE_ACCESS_TOKEN`, `SUPABASE_PROJECT_REF` |
 | **Supabase Edge Secrets** | Edge functions only | `KEEP_ALIVE_SECRET`, `RESEND_API_KEY`, `CONTACT_EMAIL=dario.admin@protosweb.eu`, `RESEND_FROM_EMAIL=dario.admin@protosweb.eu` |
 
 **Why not one `.env` for everything?** `.env` files must never be pushed to git (security). Vercel injects vars at deploy time. GitHub and Supabase run separate services that never read Vercel's config.
 
-**Do GitHub secrets need `NEXT_PUBLIC_SUPABASE_URL`?** No — the site reads that from Vercel. GitHub uses `SUPABASE_URL` (same host, no `NEXT_PUBLIC_` prefix) for keep-alive and showcase asset workflows.
-
-### GitHub Secrets by workflow
-
-| Secret | Used by |
-|--------|---------|
-| `SUPABASE_URL` | keep-alive cron, upload-showcase-assets |
-| `KEEP_ALIVE_SECRET` | keep-alive cron |
-| `SUPABASE_SERVICE_ROLE_KEY` | upload-showcase-assets |
-| `SUPABASE_ACCESS_TOKEN` | deploy edge functions |
-| `SUPABASE_PROJECT_REF` | deploy edge functions |
+**Do GitHub secrets need `NEXT_PUBLIC_SUPABASE_URL`?** No — the site reads that from Vercel. GitHub only needs the base URL for the keep-alive curl (`SUPABASE_URL`, same host without `NEXT_PUBLIC_` prefix).
 
 ### Vercel — required for the live site
 
@@ -211,7 +178,6 @@ Secrets are **not** duplicated everywhere on purpose. Each platform reads only w
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
-- `ADMIN_SECRET` — private admin panel password
 
 Email vars on Vercel are **legacy/unused** by Next.js (mail goes through Supabase edge fn) but kept in sync: `CONTACT_EMAIL` and `RESEND_FROM_EMAIL` = `dario.admin@protosweb.eu`.
 
@@ -246,9 +212,3 @@ Free-tier Supabase projects pause after ~7 days of inactivity. A GitHub Actions 
 ## Vercel Build Warnings
 
 Yellow `npm warn deprecated` lines during `npm install` (e.g. `eslint@8`, `glob@7`, `three-mesh-bvh`) come from **transitive dependencies** — not errors. The build still succeeds. Safe to ignore until a planned Next.js / ESLint major upgrade. Do not force-upgrade Three.js or ESLint without testing the 3D showcase.
-
-## npm audit
-
-`npm audit` may report moderate/high issues in transitive deps (e.g. `glob` via `eslint-config-next@14`, nested `postcss` via `next@14`). The security workflow (`.github/workflows/security.yml`) only fails on **critical** severity — it passes today.
-
-**Do not run** `npm audit fix --force` — it pulls Next 16 / next-intl 4 (breaking). Safe patch bumps within the Next 14 ecosystem are fine (`@supabase/supabase-js`, `postcss`). Major upgrades require testing the 3D showcase first.

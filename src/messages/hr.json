@@ -1,7 +1,7 @@
 {
   "nav": {
     "home": "POCETNA",
-    "about": "O NAMA",
+    "about": "O MENI",
     "process": "PROCES",
     "portfolio": "PORTFOLIO",
     "services": "USLUGE",
@@ -376,10 +376,10 @@
   },
   "aboutPage": {
     "label": "O NAMA",
-    "heroTitleLine1": "Gradimo digitalna",
-    "heroTitleHighlight": "rjesenja koja rastu",
-    "heroTitleLine2": "zajedno sa Vama.",
-    "heroSubtitle": "Full Stack Developer i UI dizajnerica iz Zagreba. Gradimo moderna, brza i vizualno impresivna web rjesenja — svako s dusom, suradnjom i paznjom do zadnjeg detalja.",
+    "heroTitleLine1": "Dario Imsirović & Martina Markulin",
+    "heroTitleHighlight": "Protos Web studio",
+    "heroTitleLine2": "iz Zagreba.",
+    "heroSubtitle": "AI inženjering, full stack cross-web razvoj i frontend/shop dizajn — s 3D iskustvima u svakom projektu. Gradimo moderna, brza i vizualno impresivna rješenja.",
     "whoTitle": "Tko smo",
     "studioIntro": "Protos Web je studio u nastajanju — obrt Protos Web Mark23 u procesu registracije (OIB: 23732814520). Svi dizajni, predlosci i kreativni radovi ostaju originalno vlasnistvo autora kao suverenih stvaratelja, neovisno o poslovnoj registraciji.",
     "teamTitle": "Info",
@@ -391,9 +391,7 @@
       "languages": "Jezici",
       "focus": "Fokus",
       "contribution": "Doprinos",
-      "instagram": "Instagram",
-      "facebook": "Facebook",
-      "threads": "Threads"
+      "instagram": "Instagram"
     },
     "team": {
       "dario": {
@@ -420,9 +418,7 @@
         "fields": {
           "focus": "UI/UX dizajn, vizualni koncepti, branding",
           "contribution": "Kreativne ideje, estetika i dizajn svih projekata",
-          "instagram": "",
-          "facebook": "",
-          "threads": ""
+          "instagram": ""
         }
       }
     },
@@ -474,11 +470,11 @@
     "dualStacks": {
       "label": "STACKOVI",
       "title": "Dva stacka, ista stručnost",
-      "subtitle": "Dva pristupa gradnji — moderni studio stack i vanilla klijentski shop.",
+      "subtitle": "Protos Web i klijentski projekti pokazuju da tim radi u različitim build pristupima — od modernog TypeScript/React stacka do lightweight vanilla rješenja.",
       "protosTitle": "Protos Web — moderni stack",
-      "protosDescription": "Custom studio stranica i platforme po mjeri — s 3D iskustvima i animacijama.",
+      "protosDescription": "TypeScript, React, Next.js, 3D/WebGL i animacije. Custom studio stranica i platforme po mjeri.",
       "bodulicaTitle": "Bodulica Shop — vanilla stack",
-      "bodulicaDescription": "Prvi klijentski webshop — lightweight vanilla build. Martina: shop i UI dizajn. Dario: implementacija.",
+      "bodulicaDescription": "Prvi klijentski webshop — HTML, CSS i vanilla JavaScript. Suprotan build od Protos Weba. Martina: shop i UI dizajn. Dario: implementacija.",
       "bodulicaNote": "Studijski showcase različitih pristupa — bez javnog linka na shop."
     }
   },

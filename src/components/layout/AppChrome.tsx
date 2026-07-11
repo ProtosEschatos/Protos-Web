@@ -11,6 +11,7 @@ import SiteShell from '@/components/ui/SiteShell'
 import SiteBackground from '@/components/ui/SiteBackground'
 import { PageTransitionProvider } from '@/components/navigation/PageTransitionProvider'
 import PageTransitionOverlay from '@/components/navigation/PageTransitionOverlay'
+import AdminShell from '@/components/admin/AdminShell'
 import SiteConsentModal from '@/components/legal/SiteConsentModal'
 import { clearBootPending, isBootComplete, removeBootSsrVeil, BOOT_SESSION_KEY, BOOT_COMPLETE_EVENT } from '@/lib/boot-gate'
 import { hasSiteConsent } from '@/lib/site-consent'
@@ -21,6 +22,7 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const isShowcase = pathname.includes('portfolio-showcase')
   const isAdmin = pathname.includes('/admin')
+  const isAdminLogin = pathname.endsWith('/admin/login')
   const isLegal = LEGAL_PATH.test(pathname)
   const [showcaseBlocked, setShowcaseBlocked] = useState(true)
 
@@ -68,7 +70,11 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
   }
 
   if (isAdmin) {
-    return <>{children}</>
+    return (
+      <AdminShell variant={isAdminLogin ? 'login' : 'dashboard'}>
+        <main className="relative min-h-screen">{children}</main>
+      </AdminShell>
+    )
   }
 
   return (

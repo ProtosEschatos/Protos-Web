@@ -3,7 +3,7 @@ import { Bell, Globe, Share2, Shield } from 'lucide-react'
 import AdminPageShell from '@/components/admin/AdminPageShell'
 import AdminHubCard from '@/components/admin/AdminHubCard'
 import AdminSection from '@/components/admin/AdminSection'
-import { getAdminStatus } from '@/lib/admin/status'
+import { getAdminStatus } from '@/actions/admin-status'
 import {
   adminFreelanceLinks,
   adminMarketingLinks,

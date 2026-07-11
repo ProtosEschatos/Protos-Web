@@ -1,3 +1,5 @@
+'use server'
+
 import { promises as dns } from 'dns'
 import { CONTACT_EMAIL, SITE_DOMAIN, SITE_URL, SUPABASE_PROJECT_REF } from '@/lib/site'
 

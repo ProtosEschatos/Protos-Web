@@ -12,14 +12,12 @@ const intlMiddleware = createMiddleware(routing)
 
 const defaultLocale = routing.defaultLocale
 
-/** Croatian is default — never expose /hr in public URLs (SEO canonical = apex paths). */
 function redirectDefaultLocalePrefix(request: NextRequest): NextResponse | null {
   const { pathname, search } = request.nextUrl
   const prefix = `/${defaultLocale}`
   if (pathname === prefix || pathname.startsWith(`${prefix}/`)) {
     const stripped = pathname === prefix ? '/' : pathname.slice(prefix.length) || '/'
-    const target = new URL(`${stripped}${search}`, request.url)
-    return NextResponse.redirect(target, 308)
+    return NextResponse.redirect(new URL(`${stripped}${search}`, request.url), 308)
   }
   return null
 }

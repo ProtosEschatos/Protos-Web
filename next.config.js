@@ -1,4 +1,4 @@
-import createNextIntlPlugin from 'next-intl/plugin'
+const createNextIntlPlugin = require('next-intl/plugin')
 
 const withNextIntl = createNextIntlPlugin('./src/i18n.ts')
 
@@ -30,10 +30,6 @@ const nextConfig = {
   reactStrictMode: true,
   compress: true,
 
-  experimental: {
-    optimizePackageImports: ['lucide-react', 'framer-motion'],
-  },
-
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: '**.supabase.co' },
@@ -49,4 +45,4 @@ const nextConfig = {
   },
 }
 
-export default withNextIntl(nextConfig)
+module.exports = withNextIntl(nextConfig)

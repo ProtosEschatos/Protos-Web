@@ -5,8 +5,7 @@
 
 ## Project Stack
 - **Framework**: Next.js 14 (App Router) with `src/` directory
-- **Language**: TypeScript (strict mode, `allowJs: false` in `src/`)
-- **Config**: `next.config.mjs` — only root JS file (Next 14 does not support `next.config.ts`)
+- **Language**: TypeScript (strict mode)
 - **Styling**: Tailwind CSS with CSS custom properties
 - **Animations**: Framer Motion only — GSAP is NOT installed
 - **3D**: React Three Fiber (`@react-three/fiber`, `@react-three/drei`) — NOT vanilla Three.js
@@ -18,7 +17,7 @@
 
 ## File Structure Rules
 - All pages go in `src/app/[locale]/`
-- All components go in `src/components/` with subdirs: `layout/`, `sections/`, `three/`, `ui/`, `providers/`, `admin/`, `legal/`, `seo/`, `navigation/`
+- All components go in `src/components/` with subdirs: `layout/`, `sections/`, `three/`, `ui/`, `providers/`
 - All lib/utils go in `src/lib/`
 - All i18n messages go in `src/messages/{locale}.json`
 - API routes go in `src/app/api/`
@@ -83,13 +82,11 @@
 5. **Memoization**: Use `useMemo`/`useCallback` for expensive computations in R3F
 
 ## Backend Rules
-- API routes in `src/app/api/` — contact, blog, subscribe, admin (login/logout/session)
-- Admin auth via `ADMIN_SECRET` on Vercel — see `docs/security.md`
+- API routes in `src/app/api/` — contact, blog, subscribe
 - Server actions in `src/actions/` — Supabase reads/writes when env vars are set
 - Supabase client in `src/lib/supabase.ts`
 - Edge functions in `supabase/functions/` — see `supabase/functions/README.md`
 - Live schema managed via Supabase MCP/CLI — see `supabase/migrations/README.md`
-- **Public tech stack badges**: always read from `src/lib/tech-stacks.ts` — never hardcode stack lists in i18n prose or components
 
 ## i18n Rules
 - Default locale: `hr` (Croatian)

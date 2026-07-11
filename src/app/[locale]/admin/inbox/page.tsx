@@ -1,5 +1,5 @@
 import { setRequestLocale } from 'next-intl/server'
-import { adminListContacts } from '@/lib/admin/notifications'
+import { adminListContacts } from '@/actions/admin-notifications'
 import AdminPageShell from '@/components/admin/AdminPageShell'
 import AdminHubCard from '@/components/admin/AdminHubCard'
 import { adminMarketingLinks } from '@/lib/admin-hub-links'

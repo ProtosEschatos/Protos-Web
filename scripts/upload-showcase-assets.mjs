@@ -1,9 +1,9 @@
+#!/usr/bin/env node
 import { readFileSync, readdirSync, statSync } from 'node:fs'
-import { dirname, join } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { join } from 'node:path'
 
-const root = dirname(fileURLToPath(import.meta.url))
-const showcaseDir = join(root, '..', 'public/showcase')
+const root = new URL('..', import.meta.url).pathname
+const showcaseDir = join(root, 'public/showcase')
 
 const base = (process.env.NEXT_PUBLIC_SUPABASE_URL ?? process.env.SUPABASE_URL ?? '').replace(/\/$/, '')
 const key = process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -13,10 +13,8 @@ if (!base || !key) {
   process.exit(1)
 }
 
-type ShowcaseFile = { full: string; storagePath: string }
-
-function collectFiles(dir: string, prefix = ''): ShowcaseFile[] {
-  const entries: ShowcaseFile[] = []
+function collectFiles(dir, prefix = '') {
+  const entries = []
   for (const name of readdirSync(dir)) {
     const full = join(dir, name)
     const rel = prefix ? `${prefix}/${name}` : name
@@ -25,7 +23,8 @@ function collectFiles(dir: string, prefix = ''): ShowcaseFile[] {
     } else if (/\.(jpe?g|png|webp)$/i.test(name)) {
       let storagePath = rel
       if (!rel.includes('/')) {
-        storagePath = `projects/${name}`
+        if (/^(desktop|mobile)-/i.test(name)) storagePath = `projects/${name}`
+        else storagePath = `projects/${name}`
       }
       entries.push({ full, storagePath })
     }

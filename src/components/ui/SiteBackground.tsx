@@ -30,25 +30,27 @@ export default function SiteBackground() {
     return () => window.removeEventListener(BOOT_COMPLETE_EVENT, sync)
   }, [])
 
-  if (!bootDone) return null
-
   return (
     <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden>
       <div className="absolute inset-0 bg-[var(--dark)]" />
-      {routeKey !== 'home' ? (
-        <div
-          className="pointer-events-none absolute inset-0 opacity-100"
-          style={{ background: BACKGROUND_FALLBACKS[routeKey] }}
-        />
+      {bootDone ? (
+        <>
+          {routeKey !== 'home' ? (
+            <div
+              className="pointer-events-none absolute inset-0 opacity-100"
+              style={{ background: BACKGROUND_FALLBACKS[routeKey] }}
+            />
+          ) : null}
+          <div
+            className="pointer-events-none absolute inset-0 animate-[twinkle_8s_ease-in-out_infinite_alternate] opacity-90"
+            style={{ backgroundImage: TWINKLE_BG }}
+          />
+          <div className="pointer-events-none absolute inset-0 [&_canvas]:pointer-events-none">
+            <PageBackgroundCanvas key={routeKey} routeKey={routeKey} />
+          </div>
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[var(--dark)]/0 via-transparent to-[var(--dark)]/20" />
+        </>
       ) : null}
-      <div
-        className="pointer-events-none absolute inset-0 animate-[twinkle_8s_ease-in-out_infinite_alternate] opacity-90"
-        style={{ backgroundImage: TWINKLE_BG }}
-      />
-      <div className="pointer-events-none absolute inset-0 [&_canvas]:pointer-events-none">
-        <PageBackgroundCanvas key={routeKey} routeKey={routeKey} />
-      </div>
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[var(--dark)]/0 via-transparent to-[var(--dark)]/20" />
     </div>
   )
 }

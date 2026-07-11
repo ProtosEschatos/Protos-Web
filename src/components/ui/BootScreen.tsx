@@ -69,9 +69,11 @@ function useBootLayout() {
 type BootScreenProps = {
   onEnter: () => void
   onEnterReady?: () => void
+  /** When true, renders as overlay inside PageLoader (video visible underneath). */
+  embedded?: boolean
 }
 
-export default function BootScreen({ onEnter, onEnterReady }: BootScreenProps) {
+export default function BootScreen({ onEnter, onEnterReady, embedded = false }: BootScreenProps) {
   const t = useTranslations('loader')
   const { reduceMotion, tier, scale, entryOff } = useBootLayout()
   const [phase, setPhase] = useState<Phase>(reduceMotion ? 'welcome' : 'entry')
@@ -152,7 +154,11 @@ export default function BootScreen({ onEnter, onEnterReady }: BootScreenProps) {
 
   return (
     <div
-      className="fixed inset-0 z-[99999] touch-none overscroll-none overflow-hidden bg-gradient-to-br from-[#020308] via-[#050815] to-[#020308] [min-height:100dvh] [min-width:100dvw]"
+      className={
+        embedded
+          ? 'absolute inset-0 touch-none overscroll-none overflow-hidden bg-transparent [min-height:100dvh] [min-width:100dvw]'
+          : 'fixed inset-0 z-[99999] touch-none overscroll-none overflow-hidden bg-gradient-to-br from-[#020308] via-[#050815] to-[#020308] [min-height:100dvh] [min-width:100dvw]'
+      }
       role="dialog"
       aria-modal="true"
       aria-label={t('welcome')}
@@ -295,9 +301,13 @@ export default function BootScreen({ onEnter, onEnterReady }: BootScreenProps) {
 
             <motion.div
               initial={{ opacity: 0 }}
-              animate={{ opacity: [0, 0.8, 0] }}
-              transition={{ duration: 0.3 }}
-              className="absolute inset-0 bg-white"
+              animate={{ opacity: [0, 0.35, 0] }}
+              transition={{ duration: 0.35 }}
+              className="absolute inset-0"
+              style={{
+                background:
+                  'radial-gradient(circle at center, rgba(168,85,247,0.45) 0%, rgba(57,255,20,0.25) 35%, rgba(255,140,0,0.15) 55%, transparent 75%)',
+              }}
             />
           </motion.div>
         )}

@@ -30,6 +30,7 @@
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #020818;
 }
 
 html.boot-pending:not(.boot-complete),
@@ -47,7 +48,7 @@ html.boot-pending:not(.boot-complete) [data-boot-layer] {
 
 html.boot-complete body,
 html.boot-complete .site-body {
-  background: transparent !important;
+  background-color: #020818 !important;
   overflow-x: hidden;
   overflow-y: auto;
 }

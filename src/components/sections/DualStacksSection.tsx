@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { BODULICA_STACK, PROTOS_WEB_STACK } from '@/lib/tech-stacks'
-import GlowCard from '@/components/ui/GlowCard'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -15,24 +14,21 @@ function StackCard({
   description,
   items,
   index,
-  glowColor,
 }: {
   title: string
   description: string
   items: string[]
   index: number
-  glowColor: 'purple' | 'primary'
 }) {
   return (
-    <GlowCard className="h-full rounded-2xl" glowColor={glowColor}>
-      <motion.div
-        custom={index}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={fadeUp}
-        className="cosmic-panel rounded-2xl p-8 h-full flex flex-col text-left transition-all duration-300"
-      >
+    <motion.div
+      custom={index}
+        initial={false}
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={fadeUp}
+      className="cosmic-panel rounded-2xl p-8 h-full flex flex-col text-left"
+    >
       <h3 className="text-xl font-extrabold text-[var(--light)] mb-3">{title}</h3>
       <p className="text-sm text-[var(--light-muted)] leading-7 mb-6 flex-1">{description}</p>
       <div className="flex flex-wrap gap-2">
@@ -45,8 +41,7 @@ function StackCard({
           </span>
         ))}
       </div>
-      </motion.div>
-    </GlowCard>
+    </motion.div>
   )
 }
 
@@ -70,14 +65,12 @@ export default function DualStacksSection() {
             description={t('protosDescription')}
             items={PROTOS_WEB_STACK.items}
             index={0}
-            glowColor="purple"
           />
           <StackCard
             title={t('bodulicaTitle')}
             description={t('bodulicaDescription')}
             items={BODULICA_STACK.items}
             index={1}
-            glowColor="primary"
           />
         </div>
         <p className="text-center text-xs text-[var(--light-muted)] mt-6">{t('bodulicaNote')}</p>

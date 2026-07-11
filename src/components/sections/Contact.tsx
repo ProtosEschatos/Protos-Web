@@ -5,7 +5,6 @@ import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { ArrowRight, Mail, MapPin, Phone } from 'lucide-react'
 import { CONTACT_EMAIL } from '@/lib/site'
-import ProtosLoader from '@/components/ui/ProtosLoader'
 
 export default function Contact() {
   const t = useTranslations('contact')
@@ -48,7 +47,7 @@ export default function Contact() {
       <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary)]/[0.06] via-[var(--secondary)]/[0.06] to-[var(--accent)]/[0.06]" />
       <div className="max-w-[1200px] mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-          <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
+          <motion.div initial={false} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
             <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[var(--primary)] mb-3">{t('label')}</p>
             <h2 className="text-[clamp(2.5rem,5vw,3.8rem)] font-extrabold leading-tight mb-5">
               {t('title')}<br />{t('titleLine2')}
@@ -69,7 +68,7 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }} className="cosmic-panel rounded-3xl p-10">
+          <motion.div initial={false} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }} className="cosmic-panel rounded-3xl p-10">
             {!submitted ? (
               <form onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
@@ -86,13 +85,7 @@ export default function Contact() {
                   <textarea name="message" required placeholder={t('messagePlaceholder')} rows={4} className="w-full px-4 py-3.5 rounded-xl border border-[var(--border-card)] bg-white/[0.03] text-[var(--light)] text-sm outline-none focus:border-[var(--primary)] transition-colors resize-y min-h-[120px] placeholder:text-[var(--light-muted)]" />
                 </div>
                 <button type="submit" disabled={loading} className="w-full py-4 rounded-full bg-gradient-to-r from-[var(--secondary)] to-[var(--accent)] text-white text-sm font-semibold tracking-wider flex items-center justify-center gap-2 hover:-translate-y-0.5 hover:shadow-[0_8px_25px_var(--secondary-glow)] transition-all duration-300 disabled:opacity-50">
-                  {loading ? (
-                    <ProtosLoader variant="ring" size={22} color="white" inline />
-                  ) : (
-                    <>
-                      {t('submit')} <ArrowRight className="w-4 h-4" />
-                    </>
-                  )}
+                  {loading ? t('sending') : <>{t('submit')} <ArrowRight className="w-4 h-4" /></>}
                 </button>
               </form>
             ) : (

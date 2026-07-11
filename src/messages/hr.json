@@ -443,31 +443,7 @@
     "supportTitle": "Projekti koji mijenjaju",
     "supportTitleHighlight": "digitalne Balkane",
     "supportSubtitle": "Svaka donacija doprinosi razvoju platforme za zastitu od internetskih prijevara i gradnji slobodnijeg digitalnog prostora za nasu regiju.",
-    "supportCards": [
-      {
-        "title": "Oprema za edukaciju o cyber sigurnosti",
-        "text": "Pomozite nam nabaviti server, laptop i softver za besplatnu online edukaciju o cyber sigurnosti — za sve koji zele nauciti kako se zastititi online.",
-        "target": "10.000",
-        "btnText": "Podrzi edukaciju",
-        "progress": 5
-      },
-      {
-        "title": "Besplatna digitalna edukacija",
-        "text": "Financirajte besplatne HR video tutoriale i vodiče o web razvoju, AI alatima i digitalnoj sigurnosti.",
-        "target": "10.000",
-        "btnText": "Podrzi edukaciju",
-        "progress": 3
-      },
-      {
-        "title": "Regionalne digitalne platforme",
-        "text": "Gradnja open source alternativa globalnim platformama — napravljeno za Balkan, od Balkana.",
-        "target": "20.000",
-        "btnText": "Ulozi u regiju",
-        "progress": 2
-      }
-    ],
-    "currencyZero": "0 €",
-    "currencyOf": "od {target} €",
+    "supportButton": "Podrzi resurse studija",
     "donationForm": {
       "title": "Doniraj",
       "amountLabel": "Iznos (EUR)",

@@ -44,20 +44,13 @@ supabase db push --project-ref laqnnzavwbojntfiqmxj
 
 Ili primijeni `20260711150000_donations_stripe_integration.sql` u SQL Editoru.
 
-## Ciljevi donacija (cause)
+## Cilj donacije
 
-| Slug | Sekcija na /o-meni |
-|------|-------------------|
-| `cyber` | Cyber sigurnost edukacija |
-| `education` | Digitalna edukacija |
-| `platforms` | Regionalne platforme |
+Jedan gumb na `/o-meni` → cause slug `resources` (bez javnih ciljeva / progress barova).
 
-## Test
+## Produkcija (live)
 
-1. Postavi `sk_test_...` + webhook secret u Supabase.
-2. Otvori `/o-meni` → klikni „Podrži edukaciju”.
-3. Stripe test kartica: `4242 4242 4242 4242`.
-4. Provjeri `/admin/donacije` — status **Uspješno**.
+Koristi `sk_live_...` i live webhook `whsec_...` u Supabase secrets. Test kartice ne rade u live modu.
 
 ## Zoho IMAP
 

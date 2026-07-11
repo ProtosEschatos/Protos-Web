@@ -20,7 +20,7 @@ export default async function AdminDonationsPage({ params: { locale } }: Props) 
   return (
     <AdminPageShell
       title="Donacije"
-      description="Stripe uplate s /o-meni — iznosi 1–1000 EUR, praćenje po cilju."
+      description="Stripe uplate s /o-meni — iznosi 1–1000 EUR."
     >
       <div className="grid gap-4 sm:grid-cols-3 mb-8">
         <div className="rounded-2xl border border-white/10 bg-[var(--dark-card)]/55 p-5">
@@ -41,32 +41,6 @@ export default async function AdminDonationsPage({ params: { locale } }: Props) 
             {formatEuro(summary.totals.allTime)}
           </p>
         </div>
-      </div>
-
-      <div className="rounded-2xl border border-white/10 overflow-hidden mb-8">
-        <div className="border-b border-white/5 bg-[var(--dark-card)]/60 px-4 py-3">
-          <p className="text-xs uppercase tracking-[0.18em] text-[var(--light-muted)]">
-            Napredak po ciljevima
-          </p>
-        </div>
-        <ul className="divide-y divide-white/5">
-          {summary.stats.map((s) => (
-            <li key={s.cause} className="px-4 py-4">
-              <div className="flex justify-between text-sm mb-2">
-                <span className="text-[var(--light)]">{causeLabel(s.cause)}</span>
-                <span className="text-[var(--light-muted)]">
-                  {formatEuro(s.raised)} / {formatEuro(s.target)} ({s.progress}%)
-                </span>
-              </div>
-              <div className="h-1.5 rounded-full bg-white/[0.08] overflow-hidden">
-                <div
-                  className="h-full rounded-full bg-gradient-to-r from-[var(--primary)] to-[#ff8800]"
-                  style={{ width: `${s.progress}%` }}
-                />
-              </div>
-            </li>
-          ))}
-        </ul>
       </div>
 
       <h2 className="text-lg font-semibold text-[var(--light)] mb-4">Sve donacije</h2>

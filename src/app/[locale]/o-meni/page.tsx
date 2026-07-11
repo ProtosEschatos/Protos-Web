@@ -9,13 +9,7 @@ import OnlinePresence from '@/components/features/home/sections/OnlinePresence'
 import DualStacksSection from '@/components/features/home/sections/DualStacksSection'
 import DonationModal from '@/components/features/donations/DonationModal'
 import { DARIO_INSTAGRAM_URL, MARTINA_INSTAGRAM_URL } from '@/lib/config/site'
-import {
-  DONATION_CAUSES,
-  type DonationCause,
-  type DonationGoalStats,
-  buildDefaultStats,
-  formatEuro,
-} from '@/lib/donations'
+import { DONATION_DEFAULT_CAUSE } from '@/lib/donations'
 
 const TEAM_MEMBERS = ['dario', 'martina'] as const
 type TeamMemberId = (typeof TEAM_MEMBERS)[number]
@@ -34,12 +28,6 @@ const fadeUp = {
 }
 
 const goalEmojis = ['\u{1F30E}', '\u{1F4BB}', '\u{1F510}']
-const supportEmojis = ['\u{1F6E1}', '\u{1F4DA}', '\u{1F310}']
-const supportBtnColors = [
-  'bg-red-500 hover:bg-red-600',
-  'bg-green-500 hover:bg-green-600',
-  'bg-green-500 hover:bg-green-600',
-]
 
 function TeamInfoField({
   label,
@@ -80,13 +68,6 @@ function TeamInfoField({
 export default function AboutPage() {
   const t = useTranslations('aboutPage')
   const goals = t.raw('goals') as Array<{ title: string; text: string }>
-  const supportCards = t.raw('supportCards') as Array<{
-    title: string
-    text: string
-    target: string
-    btnText: string
-    progress: number
-  }>
   const donationLabels = t.raw('donationForm') as {
     title: string
     amountLabel: string
@@ -102,22 +83,8 @@ export default function AboutPage() {
     cancelledToast: string
   }
 
-  const [donationStats, setDonationStats] = useState<DonationGoalStats[]>(buildDefaultStats())
-  const [donationModal, setDonationModal] = useState<{
-    open: boolean
-    cause: DonationCause
-    title: string
-  }>({ open: false, cause: 'cyber', title: '' })
+  const [donationModalOpen, setDonationModalOpen] = useState(false)
   const [donationNotice, setDonationNotice] = useState<string | null>(null)
-
-  useEffect(() => {
-    fetch('/api/donations/stats')
-      .then((r) => r.json())
-      .then((data) => {
-        if (Array.isArray(data.stats)) setDonationStats(data.stats)
-      })
-      .catch(() => undefined)
-  }, [])
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -285,45 +252,21 @@ export default function AboutPage() {
               {donationNotice}
             </p>
           ) : null}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {supportCards.map((c, i) => {
-              const cause = DONATION_CAUSES[i]
-              const stat = donationStats.find((s) => s.cause === cause)
-              const progress = stat?.progress ?? c.progress
-              const raised = stat?.raised ?? 0
-              const target = stat?.target ?? (Number(c.target.replace(/\D/g, '')) || 0)
-              return (
-              <motion.div key={c.title} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-                className="cosmic-panel rounded-2xl p-7 flex flex-col text-left">
-                <div className="text-3xl mb-4">{supportEmojis[i]}</div>
-                <h3 className="text-base font-bold mb-2">{c.title}</h3>
-                <p className="text-sm text-[var(--light-muted)] leading-relaxed flex-1 mb-5">{c.text}</p>
-                <div className="flex justify-between text-xs text-[var(--light-muted)] mb-3">
-                  <span>{formatEuro(raised)}</span>
-                  <span>{t('currencyOf', { target: String(target) })}</span>
-                </div>
-                <div className="h-1 rounded-full bg-white/[0.08] overflow-hidden mb-5">
-                  <div className="h-full rounded-full bg-gradient-to-r from-[var(--primary)] to-[#ff8800]" style={{ width: `${progress}%` }} />
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setDonationModal({ open: true, cause, title: c.title })}
-                  className={`inline-flex items-center justify-center px-6 py-3 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:brightness-110 ${supportBtnColors[i]}`}
-                >
-                  {c.btnText}
-                </button>
-              </motion.div>
-            )})}
-          </div>
+          <button
+            type="button"
+            onClick={() => setDonationModalOpen(true)}
+            className="inline-flex items-center justify-center px-8 py-4 rounded-full text-sm font-semibold text-white bg-[var(--primary)] transition-all duration-300 hover:brightness-110"
+          >
+            {t('supportButton')}
+          </button>
         </div>
       </section>
 
       <DonationModal
-        open={donationModal.open}
-        cause={donationModal.cause}
-        causeTitle={donationModal.title}
+        open={donationModalOpen}
+        cause={DONATION_DEFAULT_CAUSE}
         labels={donationLabels}
-        onClose={() => setDonationModal((prev) => ({ ...prev, open: false }))}
+        onClose={() => setDonationModalOpen(false)}
       />
     </>
   )

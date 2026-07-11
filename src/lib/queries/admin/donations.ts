@@ -1,6 +1,6 @@
 import { requireAdmin } from '@/lib/auth/require-admin'
 import { supabaseAdmin } from '@/lib/supabase-admin'
-import { DONATION_TARGETS, formatEuro, isDonationCause, statsFromTotals } from '@/lib/donations'
+import { formatEuro } from '@/lib/donations'
 
 export type AdminDonationRow = {
   id: number
@@ -38,15 +38,11 @@ export async function adminListDonations(limit = 100): Promise<AdminDonationRow[
 export async function adminGetDonationSummary() {
   await requireAdmin()
   if (!supabaseAdmin) {
-    return { stats: statsFromTotals([]), totals: { completed: 0, pending: 0, allTime: 0 } }
+    return { totals: { completed: 0, pending: 0, allTime: 0 } }
   }
 
-  const [{ data: rows }, { data: agg }] = await Promise.all([
-    supabaseAdmin.rpc('get_donation_totals'),
-    supabaseAdmin.from('donations').select('amount, status'),
-  ])
+  const { data: agg } = await supabaseAdmin.from('donations').select('amount, status')
 
-  const stats = statsFromTotals(rows)
   let completed = 0
   let pending = 0
   let allTime = 0
@@ -61,20 +57,19 @@ export async function adminGetDonationSummary() {
   }
 
   return {
-    stats,
     totals: { completed, pending, allTime },
-    targets: DONATION_TARGETS,
   }
 }
 
 export function causeLabel(cause: string | null): string {
-  if (!cause || !isDonationCause(cause)) return cause ?? '—'
+  if (!cause) return '—'
   const labels: Record<string, string> = {
+    resources: 'Resursi studija',
     cyber: 'Cyber edukacija',
     education: 'Digitalna edukacija',
     platforms: 'Regionalne platforme',
   }
-  return labels[cause]
+  return labels[cause] ?? cause
 }
 
 export function statusBadge(status: string | null): string {

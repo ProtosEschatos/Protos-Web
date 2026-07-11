@@ -626,31 +626,7 @@
     "supportTitle": "Projekte, die den",
     "supportTitleHighlight": "digitalen Balkan verändern",
     "supportSubtitle": "Jede Spende trägt zur Entwicklung einer Plattform zum Schutz vor Internetbetrug und zum Aufbau eines freieren digitalen Raums für unsere Region bei.",
-    "supportCards": [
-      {
-        "title": "Ausstattung für Cyber-Security-Schulungen",
-        "text": "Helfen Sie uns, Server, Laptop und Software für kostenlose Online-Schulungen zur Cyber Security zu beschaffen.",
-        "target": "10.000",
-        "btnText": "Bildung unterstützen",
-        "progress": 5
-      },
-      {
-        "title": "Kostenlose digitale Bildung",
-        "text": "Finanzieren Sie kostenlose Video-Tutorials und Leitfäden zu Webentwicklung, KI-Tools und digitaler Sicherheit.",
-        "target": "10.000",
-        "btnText": "Bildung unterstützen",
-        "progress": 3
-      },
-      {
-        "title": "Regionale digitale Plattformen",
-        "text": "Open-Source-Alternativen zu globalen Plattformen — gemacht für den Balkan, vom Balkan.",
-        "target": "20.000",
-        "btnText": "In die Region investieren",
-        "progress": 2
-      }
-    ],
-    "currencyZero": "0 €",
-    "currencyOf": "von {target} €",
+    "supportButton": "Studio-Ressourcen unterstützen",
     "donationForm": {
       "title": "Spenden",
       "amountLabel": "Betrag (EUR)",

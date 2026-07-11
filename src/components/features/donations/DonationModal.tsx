@@ -13,7 +13,6 @@ type Props = {
   open: boolean
   onClose: () => void
   cause: DonationCause
-  causeTitle: string
   labels: {
     title: string
     amountLabel: string
@@ -28,7 +27,7 @@ type Props = {
   }
 }
 
-export default function DonationModal({ open, onClose, cause, causeTitle, labels }: Props) {
+export default function DonationModal({ open, onClose, cause, labels }: Props) {
   const locale = useLocale()
   const [amount, setAmount] = useState('25')
   const [email, setEmail] = useState('')
@@ -94,7 +93,6 @@ export default function DonationModal({ open, onClose, cause, causeTitle, labels
           <X className="h-5 w-5" />
         </button>
         <h3 className="text-lg font-bold text-[var(--light)] pr-8">{labels.title}</h3>
-        <p className="mt-1 text-sm text-[var(--light-muted)]">{causeTitle}</p>
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
           <div>

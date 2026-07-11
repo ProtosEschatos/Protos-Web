@@ -626,31 +626,7 @@
     "supportTitle": "Proyectos que cambian",
     "supportTitleHighlight": "los Balcanes digitales",
     "supportSubtitle": "Cada donación contribuye al desarrollo de una plataforma de protección contra fraudes online y a construir un espacio digital más libre para nuestra región.",
-    "supportCards": [
-      {
-        "title": "Equipamiento para formación en ciberseguridad",
-        "text": "Ayúdanos a adquirir servidor, portátil y software para formación online gratuita en ciberseguridad.",
-        "target": "10.000",
-        "btnText": "Apoyar la formación",
-        "progress": 5
-      },
-      {
-        "title": "Educación digital gratuita",
-        "text": "Financia tutoriales en video y guías gratuitas sobre desarrollo web, herramientas de IA y seguridad digital.",
-        "target": "10.000",
-        "btnText": "Apoyar la formación",
-        "progress": 3
-      },
-      {
-        "title": "Plataformas digitales regionales",
-        "text": "Construcción de alternativas open source a plataformas globales — hechas para los Balcanes, por los Balcanes.",
-        "target": "20.000",
-        "btnText": "Invertir en la región",
-        "progress": 2
-      }
-    ],
-    "currencyZero": "0 €",
-    "currencyOf": "de {target} €",
+    "supportButton": "Apoyar recursos del estudio",
     "donationForm": {
       "title": "Donar",
       "amountLabel": "Importe (EUR)",

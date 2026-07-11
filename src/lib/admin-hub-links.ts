@@ -43,6 +43,27 @@ export const adminInboxLinks: AdminHubLink[] = [
 
 export const adminMarketingLinks: AdminHubLink[] = [
   {
+    id: 'google-analytics',
+    label: 'Google Analytics 4',
+    href: 'https://analytics.google.com/analytics/web/',
+    description: 'Posjete, izvori prometa, konverzije',
+    external: true,
+  },
+  {
+    id: 'search-console',
+    label: 'Google Search Console',
+    href: 'https://search.google.com/search-console?resource_id=sc-domain%3Aprotosweb.eu',
+    description: 'Indeks, pretraga, Core Web Vitals',
+    external: true,
+  },
+  {
+    id: 'vercel-speed',
+    label: 'Vercel Speed Insights',
+    href: 'https://vercel.com/protoseschatos-projects/protos-web/speed-insights',
+    description: 'Core Web Vitals iz produkcije',
+    external: true,
+  },
+  {
     id: 'brevo-campaigns',
     label: 'Brevo kampanje',
     href: 'https://app.brevo.com/marketing/campaign',

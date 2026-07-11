@@ -2,10 +2,12 @@ import { setRequestLocale } from 'next-intl/server'
 import { ExternalLink, FileText, Inbox, LayoutGrid, Mail, Wrench } from 'lucide-react'
 import AdminActivityFeed from '@/components/admin/AdminActivityFeed'
 import AdminHubCard from '@/components/admin/AdminHubCard'
+import AdminInsightGrid from '@/components/admin/AdminInsightGrid'
 import AdminLink from '@/components/admin/AdminLink'
 import AdminSection from '@/components/admin/AdminSection'
 import AdminStatGrid from '@/components/admin/AdminStatGrid'
 import { adminGetNotifications } from '@/actions/admin-notifications'
+import { adminGetInsights } from '@/actions/admin-insights'
 import { SITE_DOMAIN, SITE_URL } from '@/lib/site'
 
 type Props = { params: { locale: string } }
@@ -14,7 +16,7 @@ const ACTIVITY_PREVIEW_LIMIT = 4
 
 export default async function AdminPage({ params: { locale } }: Props) {
   setRequestLocale(locale)
-  const notifications = await adminGetNotifications()
+  const [notifications, insights] = await Promise.all([adminGetNotifications(), adminGetInsights()])
   const activityPreview = notifications.activityFeed.slice(0, ACTIVITY_PREVIEW_LIMIT)
   const hasMoreActivity = notifications.activityFeed.length > ACTIVITY_PREVIEW_LIMIT
 
@@ -57,6 +59,10 @@ export default async function AdminPage({ params: { locale } }: Props) {
             },
           ]}
         />
+
+        <AdminSection title="Marketing & SEO" className="mt-10">
+          <AdminInsightGrid insights={insights.insights} checkedAt={insights.checkedAt} />
+        </AdminSection>
 
         <AdminSection title="Brzi pristup" className="mt-10">
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

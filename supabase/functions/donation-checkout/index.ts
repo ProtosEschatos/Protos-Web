@@ -5,7 +5,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
-const ALLOWED_CAUSES = new Set(['cyber', 'education', 'platforms'])
+const ALLOWED_CAUSES = new Set(['resources', 'cyber', 'education', 'platforms'])
 const MIN_EUR = 1
 const MAX_EUR = 1000
 
@@ -42,6 +42,7 @@ async function createStripeCheckoutSession(params: {
 
   const cents = Math.round(params.amountEur * 100)
   const causeLabels: Record<string, string> = {
+    resources: 'Resursi studija',
     cyber: 'Cyber sigurnost edukacija',
     education: 'Digitalna edukacija',
     platforms: 'Regionalne platforme',

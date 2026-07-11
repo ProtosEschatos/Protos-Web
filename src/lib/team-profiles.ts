@@ -1,7 +1,9 @@
 import {
   DARIO_INSTAGRAM_URL,
   INSTAGRAM_URL,
+  MARTINA_FACEBOOK_URL,
   MARTINA_INSTAGRAM_URL,
+  MARTINA_THREADS_URL,
 } from '@/lib/site'
 import type { PresenceItem } from '@/lib/social-links'
 
@@ -35,6 +37,8 @@ export const darioSocialItems: PresenceItem[] = [
 
 export const martinaSocialItems: PresenceItem[] = [
   profileLink('instagram', 'Instagram', MARTINA_INSTAGRAM_URL, '#e1306c'),
+  profileLink('facebook', 'Facebook', MARTINA_FACEBOOK_URL, '#1877f2'),
+  profileLink('threads', 'Threads', MARTINA_THREADS_URL, '#101010'),
   profileLink('tiktok', 'TikTok', '#', '#00f2ea'),
 ]
 

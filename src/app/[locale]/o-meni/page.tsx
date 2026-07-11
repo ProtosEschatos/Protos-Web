@@ -4,20 +4,32 @@ import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/routing'
-import { ArrowRight, BookOpen, Instagram } from 'lucide-react'
+import { ArrowRight, BookOpen } from 'lucide-react'
 import OnlinePresence from '@/components/sections/OnlinePresence'
 import DualStacksSection from '@/components/sections/DualStacksSection'
-import { DARIO_INSTAGRAM_URL, MARTINA_INSTAGRAM_URL } from '@/lib/site'
+import { brandGlyph, FacebookIcon, InstagramIcon } from '@/components/ui/BrandIcons'
+import {
+  DARIO_INSTAGRAM_URL,
+  MARTINA_FACEBOOK_URL,
+  MARTINA_INSTAGRAM_URL,
+  MARTINA_THREADS_URL,
+} from '@/lib/site'
 
 const TEAM_MEMBERS = ['dario', 'martina'] as const
-type TeamMemberId = (typeof TEAM_MEMBERS)[number]
 
 const DARIO_FIELDS = ['location', 'experience', 'email', 'phone', 'languages', 'instagram'] as const
-const MARTINA_FIELDS = ['focus', 'contribution', 'instagram'] as const
+const MARTINA_FIELDS = ['focus', 'contribution', 'instagram', 'facebook', 'threads'] as const
 
-const TEAM_INSTAGRAM: Record<(typeof TEAM_MEMBERS)[number], string> = {
-  dario: DARIO_INSTAGRAM_URL,
-  martina: MARTINA_INSTAGRAM_URL,
+type SocialField = 'instagram' | 'facebook' | 'threads'
+type TeamField = (typeof DARIO_FIELDS)[number] | (typeof MARTINA_FIELDS)[number]
+
+const TEAM_SOCIAL: Record<(typeof TEAM_MEMBERS)[number], Partial<Record<SocialField, string>>> = {
+  dario: { instagram: DARIO_INSTAGRAM_URL },
+  martina: {
+    instagram: MARTINA_INSTAGRAM_URL,
+    facebook: MARTINA_FACEBOOK_URL,
+    threads: MARTINA_THREADS_URL,
+  },
 }
 
 const fadeUp = {
@@ -33,16 +45,28 @@ const supportBtnColors = [
   'bg-green-500 hover:bg-green-600',
 ]
 
+function isSocialField(field: TeamField): field is SocialField {
+  return field === 'instagram' || field === 'facebook' || field === 'threads'
+}
+
+function SocialFieldIcon({ field }: { field: SocialField }) {
+  if (field === 'instagram') return <InstagramIcon className="w-4 h-4" />
+  if (field === 'facebook') return <FacebookIcon className="w-4 h-4" />
+  return brandGlyph('threads', 'w-4 h-4')
+}
+
 function TeamInfoField({
   label,
   value,
   href,
   iconOnly,
+  socialField,
 }: {
   label: string
   value: string
   href?: string
   iconOnly?: boolean
+  socialField?: SocialField
 }) {
   return (
     <div>
@@ -59,7 +83,7 @@ function TeamInfoField({
               : 'text-base font-semibold text-[var(--primary)] inline-flex items-center gap-1.5 hover:opacity-90'
           }
         >
-          {href.includes('instagram') ? <Instagram className="w-4 h-4" /> : null}
+          {socialField ? <SocialFieldIcon field={socialField} /> : null}
           {!iconOnly ? value : null}
         </a>
       ) : (
@@ -155,12 +179,19 @@ export default function AboutPage() {
                     {fields.map((field) => {
                       const value = t(`team.${member}.fields.${field}`)
                       const label = t(`teamFieldLabels.${field}`)
-                      const href =
-                        field === 'email'
-                          ? `mailto:${value}`
-                          : field === 'instagram'
-                            ? TEAM_INSTAGRAM[member]
-                            : undefined
+                      let href: string | undefined
+                      let iconOnly = false
+                      let socialField: SocialField | undefined
+
+                      if (field === 'email') {
+                        href = `mailto:${value}`
+                      } else if (isSocialField(field)) {
+                        const socialHref = TEAM_SOCIAL[member][field]
+                        if (!socialHref || socialHref === '#') return null
+                        href = socialHref
+                        iconOnly = true
+                        socialField = field
+                      }
 
                       return (
                         <TeamInfoField
@@ -168,7 +199,8 @@ export default function AboutPage() {
                           label={label}
                           value={value}
                           href={href}
-                          iconOnly={field === 'instagram'}
+                          iconOnly={iconOnly}
+                          socialField={socialField}
                         />
                       )
                     })}

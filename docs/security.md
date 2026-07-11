@@ -29,9 +29,11 @@ Practical security map for `protosweb.eu`. No system is immune to every attack; 
 | **Resend** | Supabase Edge | Outbound transactional mail (`submit-form`, `subscribe`) |
 | **Brevo** | Supabase Edge | Optional; DKIM on apex for deliverability |
 
-### Stripe — inactive
+### Stripe — donations (Supabase Edge)
 
-Legacy multi-tenant columns (`stripe_session_id`, `stripe_price_id`) exist in Postgres. **No** `stripe` package, API routes, or `STRIPE_*` env vars in the app. Do not add Stripe secrets until integration is implemented.
+`STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` live in **Supabase Edge secrets** only. Webhook URL: `https://laqnnzavwbojntfiqmxj.supabase.co/functions/v1/stripe-webhook`. See [stripe-donations.md](./stripe-donations.md).
+
+Legacy multi-tenant columns may still exist elsewhere; active flow uses `donations` table + edge fn `donation-checkout` / `stripe-webhook`.
 
 **Do not** store `ADMIN_SECRET` in Supabase — it is unused there and increases leak surface. Remove it from Supabase Dashboard → Edge Functions → Secrets if present.
 

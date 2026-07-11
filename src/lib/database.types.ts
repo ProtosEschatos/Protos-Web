@@ -152,33 +152,42 @@ export type Database = {
           amount: number
           cause: string | null
           created_at: string | null
+          currency: string
           email: string
           id: number
+          locale: string | null
           name: string | null
           site_id: string | null
           status: string | null
+          stripe_payment_intent_id: string | null
           stripe_session_id: string | null
         }
         Insert: {
           amount: number
           cause?: string | null
           created_at?: string | null
+          currency?: string
           email: string
           id?: number
+          locale?: string | null
           name?: string | null
           site_id?: string | null
           status?: string | null
+          stripe_payment_intent_id?: string | null
           stripe_session_id?: string | null
         }
         Update: {
           amount?: number
           cause?: string | null
           created_at?: string | null
+          currency?: string
           email?: string
           id?: number
+          locale?: string | null
           name?: string | null
           site_id?: string | null
           status?: string | null
+          stripe_payment_intent_id?: string | null
           stripe_session_id?: string | null
         }
         Relationships: [

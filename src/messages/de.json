@@ -650,6 +650,20 @@
     ],
     "currencyZero": "0 €",
     "currencyOf": "von {target} €",
+    "donationForm": {
+      "title": "Spenden",
+      "amountLabel": "Betrag (EUR)",
+      "amountHint": "Wähle einen Betrag zwischen 1 und 1000 EUR",
+      "emailLabel": "E-Mail",
+      "nameLabel": "Name",
+      "nameOptional": "optional",
+      "submit": "Weiter zu Stripe",
+      "cancel": "Abbrechen",
+      "processing": "Laden…",
+      "errorGeneric": "Spende fehlgeschlagen. Bitte erneut versuchen.",
+      "successToast": "Danke! Deine Spende wurde empfangen.",
+      "cancelledToast": "Zahlung abgebrochen. Du kannst es jederzeit erneut versuchen."
+    },
     "dualStacks": {
       "label": "STACKS",
       "title": "Zwei Stacks, gleiche Expertise",

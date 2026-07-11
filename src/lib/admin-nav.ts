@@ -75,6 +75,13 @@ export const ADMIN_NAV_SECTIONS: AdminNavSection[] = [
         publicHref: '/kontakt',
         description: 'Upiti s web forme',
       },
+      {
+        id: 'donations',
+        href: '/admin/donacije',
+        label: 'Donacije',
+        publicHref: '/o-meni',
+        description: 'Stripe uplate s O nama stranice',
+      },
     ],
   },
   {

@@ -8,6 +8,10 @@ Project ref: `laqnnzavwbojntfiqmxj`
 | `submit-form` | Database webhook on `contacts` INSERT | Contact emails: **Resend primary**, Brevo fallback → Zoho inbox |
 | `subscribe` | `POST /api/subscribe` from site footer | Newsletter: **Brevo primary**, Resend fallback |
 | `content` | `GET ?type=<t>&lang=<l>` (service role) | Generic read API for DB-backed content (services, portfolio, blog, testimonials, pricing, process) |
+| `donation-checkout` | `POST /api/donate` from site | Stripe Checkout session (1–1000 EUR), inserts `donations` pending row |
+| `stripe-webhook` | Stripe webhook | `checkout.session.completed` / `expired` → update `donations` status |
+
+See [docs/stripe-donations.md](../../docs/stripe-donations.md) for Stripe Dashboard setup.
 
 ## Deploy
 
@@ -47,6 +51,9 @@ Set in Supabase Dashboard → Edge Functions → Secrets:
 | `RESEND_FROM_EMAIL` | `submit-form`, `subscribe` — `dario.admin@protosweb.eu` |
 | `CONTACT_EMAIL` | `submit-form` — admin inbox `dario.admin@protosweb.eu` |
 | `BREVO_API_KEY` | `submit-form` (fallback), `subscribe` (primary) — REST API key `xkeysib-`, not SMTP |
+| `STRIPE_SECRET_KEY` | `donation-checkout`, `stripe-webhook` |
+| `STRIPE_WEBHOOK_SECRET` | `stripe-webhook` |
+| `SITE_URL` | `donation-checkout` — `https://www.protosweb.eu` for success/cancel redirects |
 
 See [docs/email-setup.md](../../docs/email-setup.md) for Zoho + Resend + Brevo wiring.
 

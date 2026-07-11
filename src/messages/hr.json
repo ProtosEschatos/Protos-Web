@@ -467,6 +467,20 @@
     ],
     "currencyZero": "0 €",
     "currencyOf": "od {target} €",
+    "donationForm": {
+      "title": "Doniraj",
+      "amountLabel": "Iznos (EUR)",
+      "amountHint": "Odaberi iznos između 1 i 1000 EUR",
+      "emailLabel": "Email",
+      "nameLabel": "Ime",
+      "nameOptional": "opcionalno",
+      "submit": "Nastavi na Stripe",
+      "cancel": "Odustani",
+      "processing": "Učitavanje…",
+      "errorGeneric": "Donacija nije uspjela. Pokušaj ponovo.",
+      "successToast": "Hvala! Donacija je uspješno zaprimljena.",
+      "cancelledToast": "Plaćanje je otkazano. Možeš pokušati ponovo kad god želiš."
+    },
     "dualStacks": {
       "label": "STACKOVI",
       "title": "Dva stacka, ista stručnost",

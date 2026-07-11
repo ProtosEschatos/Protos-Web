@@ -1,5 +1,9 @@
 {
   "framework": "nextjs",
   "buildCommand": "npm run build",
-  "installCommand": "npm install"
+  "installCommand": "npm install",
+  "redirects": [
+    { "source": "/hr", "destination": "/", "permanent": true },
+    { "source": "/hr/:path*", "destination": "/:path*", "permanent": true }
+  ]
 }

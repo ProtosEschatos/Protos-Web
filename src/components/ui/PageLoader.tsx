@@ -1,13 +1,13 @@
 'use client'
 
-import { useState, useEffect, useLayoutEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useLayoutEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import SiteConsentModal from '@/components/legal/SiteConsentModal'
+import BootOrbitLogo from '@/components/ui/BootOrbitLogo'
 import {
   BOOT_SESSION_KEY,
   BOOT_COMPLETE_EVENT,
-  BOOT_VIDEO,
   BOOT_BG,
   clearBootPending,
   setBootPending,
@@ -16,50 +16,6 @@ import {
 } from '@/lib/boot-gate'
 
 export { BOOT_SESSION_KEY, BOOT_COMPLETE_EVENT } from '@/lib/boot-gate'
-
-function BootVideoBackground({ active }: { active: boolean }) {
-  const videoRef = useRef<HTMLVideoElement>(null)
-
-  useEffect(() => {
-    if (!active) return
-    const video = videoRef.current
-    if (!video) return
-
-    video.muted = true
-    video.playsInline = true
-    video.loop = true
-    video.setAttribute('playsinline', '')
-    video.setAttribute('webkit-playsinline', '')
-
-    const play = () => {
-      void video.play().catch(() => {})
-    }
-
-    if (video.readyState >= 2) play()
-    else video.addEventListener('canplay', play, { once: true })
-
-    return () => {
-      video.removeEventListener('canplay', play)
-      video.pause()
-    }
-  }, [active])
-
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ backgroundColor: BOOT_BG }} aria-hidden>
-      <video
-        ref={videoRef}
-        src={BOOT_VIDEO}
-        className="absolute inset-0 h-full w-full object-cover object-center [transform:translateZ(0)_scale(1.02)]"
-        preload="auto"
-        autoPlay
-        muted
-        playsInline
-        loop
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020818]/30 pointer-events-none" />
-    </div>
-  )
-}
 
 export default function PageLoader() {
   const t = useTranslations('loader')
@@ -133,24 +89,10 @@ export default function PageLoader() {
             style={{ backgroundColor: BOOT_BG }}
             data-boot-layer
           >
-            <BootVideoBackground active={loading} />
-
             <div
-              className="pointer-events-none absolute inset-0 z-[5] flex items-center justify-center overflow-hidden"
+              className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_at_center,rgba(2,8,24,0.35)_0%,rgba(2,8,24,0.92)_68%)]"
               aria-hidden
-            >
-              <div className="absolute h-[540px] w-[min(94vw,460px)] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(2,8,24,0.82)_0%,rgba(2,8,24,0.45)_48%,transparent_76%)]" />
-              <motion.div
-                className="absolute h-[520px] w-[min(92vw,440px)] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(186,230,253,0.55)_0%,rgba(125,211,252,0.28)_42%,transparent_72%)] blur-3xl"
-                animate={{ scale: [1, 1.06, 1], opacity: [0.72, 0.92, 0.72] }}
-                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-              />
-              <motion.div
-                className="absolute h-[380px] w-[min(78vw,360px)] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(224,242,254,0.4)_0%,rgba(147,197,253,0.18)_50%,transparent_75%)] blur-2xl"
-                animate={{ scale: [1.04, 0.96, 1.04], opacity: [0.45, 0.65, 0.45] }}
-                transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-              />
-            </div>
+            />
 
             <div className="relative z-10 flex flex-col items-center justify-center px-10 py-12 min-w-[min(92vw,320px)]">
               <div
@@ -161,22 +103,8 @@ export default function PageLoader() {
                 className="pointer-events-none absolute inset-3 -z-10 rounded-[1.35rem] bg-[radial-gradient(ellipse_at_center,rgba(186,230,253,0.28)_0%,transparent_68%)]"
                 aria-hidden
               />
-              <div className="relative w-24 h-24 mb-8">
-                <motion.div
-                  className="absolute inset-0 rounded-full border-2 border-[var(--primary)]"
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-                />
-                <motion.div
-                  className="absolute inset-2 rounded-full border-2 border-[var(--secondary)] border-t-transparent"
-                  animate={{ rotate: -360 }}
-                  transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-                />
-                <motion.div
-                  className="absolute inset-4 rounded-full bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)]"
-                  animate={{ scale: [0.8, 1.1, 0.8] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                />
+              <div className="relative mb-8 flex items-center justify-center">
+                <BootOrbitLogo size={112} />
               </div>
 
               <h2

@@ -1,4 +1,4 @@
-import { adminGetActivityBadgeCount } from '@/actions/admin-notifications'
+import { adminGetActivityBadgeCount } from '@/lib/admin/notifications'
 
 export default async function AdminActivityBadge() {
   const count = await adminGetActivityBadgeCount()

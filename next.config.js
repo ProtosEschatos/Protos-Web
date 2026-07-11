@@ -30,6 +30,10 @@ const nextConfig = {
   reactStrictMode: true,
   compress: true,
 
+  experimental: {
+    optimizePackageImports: ['lucide-react', 'framer-motion'],
+  },
+
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: '**.supabase.co' },

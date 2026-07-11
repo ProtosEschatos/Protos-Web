@@ -1,4 +1,60 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36">
-  <circle cx="18" cy="18" r="17" fill="#0d0d1a" stroke="#FF8800" stroke-width="1.5"/>
-  <path d="M18,1 A17,17 0 0,1 18,35 A17,17 0 0,0 18,1" fill="#FF6600"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Protos Web">
+  <defs>
+    <linearGradient id="mFill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7df9ff"/>
+      <stop offset="45%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#0891b2"/>
+    </linearGradient>
+    <linearGradient id="mStroke" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ecfeff"/>
+      <stop offset="100%" stop-color="#67e8f9"/>
+    </linearGradient>
+    <filter id="neonGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="1.1" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="sparkleGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="0.35" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect x="1" y="1" width="30" height="30" rx="6" fill="#0a0a1a"/>
+  <rect
+    x="1.5"
+    y="1.5"
+    width="29"
+    height="29"
+    rx="5.5"
+    fill="none"
+    stroke="#22d3ee"
+    stroke-width="0.6"
+    opacity="0.45"
+  />
+
+  <g fill="#e0f2fe" filter="url(#sparkleGlow)" opacity="0.9">
+    <circle cx="7" cy="24" r="0.55"/>
+    <circle cx="10" cy="26" r="0.4"/>
+    <circle cx="22" cy="25" r="0.5"/>
+    <circle cx="25" cy="23" r="0.45"/>
+    <circle cx="16" cy="27" r="0.35"/>
+    <circle cx="13" cy="22" r="0.3" opacity="0.7"/>
+    <circle cx="19" cy="22" r="0.3" opacity="0.7"/>
+  </g>
+
+  <g filter="url(#neonGlow)">
+    <path
+      d="M9 23.5V8.5h4.2L16 15.2 18.8 8.5H23v15H19.4V12.2L16 18.5 12.6 12.2v11.3H9Z"
+      fill="url(#mFill)"
+      stroke="url(#mStroke)"
+      stroke-width="0.75"
+      stroke-linejoin="miter"
+    />
+  </g>
 </svg>

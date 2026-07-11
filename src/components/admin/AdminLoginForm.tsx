@@ -1,11 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import ProtosLogo from '@/components/ui/ProtosLogo'
 
 export default function AdminLoginForm() {
-  const router = useRouter()
   const searchParams = useSearchParams()
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -30,8 +29,7 @@ export default function AdminLoginForm() {
       }
 
       const from = searchParams.get('from') || '/admin'
-      router.push(from)
-      router.refresh()
+      window.location.href = from
     } catch {
       setError('Greška pri prijavi. Pokušaj ponovno.')
     } finally {

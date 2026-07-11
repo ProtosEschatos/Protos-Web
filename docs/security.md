@@ -34,7 +34,7 @@ Practical security map for `protosweb.eu`. No system is immune to every attack; 
 
 ## HTTP headers (Next.js)
 
-Set in `next.config.js`: HSTS, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, moderate CSP.
+Set in `next.config.mjs`: HSTS, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, moderate CSP.
 
 ## If a key was exposed in chat or logs
 

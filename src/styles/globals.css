@@ -36,6 +36,13 @@ html.boot-pending:not(.boot-complete),
 html.boot-pending:not(.boot-complete) body {
   background-color: #020818 !important;
   overflow: hidden !important;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+
+html.boot-pending:not(.boot-complete) [data-boot-layer] {
+  min-height: 100dvh;
+  min-width: 100dvw;
 }
 
 html.boot-complete body,

@@ -47,7 +47,7 @@
 - **Zoho** — DNS MX, bez env var; webmail link u adminu
 - **Stripe** — DB shema postoji, nema integracije u kodu
 
-Detalji: **Protos-Agent** `memory/projects/protos-web.md`
+Detalji: **Protos-Agent** `memory/projects/protos-web.md` + `memory/sessions/2026-07-11-refactor-branding-deploy.md`
 
 ---
 

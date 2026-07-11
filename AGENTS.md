@@ -64,7 +64,7 @@ Push to `main` → Vercel production. **After every push verify live** (`vercel 
 
 ## Current state (2026-07-11 noć)
 
-- **Latest commit:** `13a6083` — Stripe webhook fix + donation-confirm backup
+- **Latest commit:** `077e99f` (memorija sync) · donacije kod `13a6083`
 - **Live:** https://www.protosweb.eu
 - **Inbox:** `/admin/inbox` — Zoho + Gmail studio + Martina (placeholder)
 - **Donacije:** Stripe Checkout LIVE 1–1000 EUR; jedan gumb `resources`; `/admin/donacije`

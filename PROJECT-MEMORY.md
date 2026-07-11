@@ -3,10 +3,10 @@
 > **Kanonski izvor:** [Protos-Agent/memory/](https://github.com/ProtosEschatos/Protos-Agent/tree/main/memory) + pregled u adminu na `/admin/memory`.  
 > Ovaj fajl je lokalni TL;DR — ne dupliciraj punu memoriju ovdje.
 
-> **Last updated:** 2026-07-11 (noć)
+> **Last updated:** 2026-07-11 (22:49, checkpoint)
 > **Live:** https://www.protosweb.eu
 > **Repo:** `ProtosEschatos/Protos-Web`
-> **Latest commit:** `13a6083` — Stripe webhook fix + donation confirm backup
+> **Latest commit:** `077e99f` (memorija) · kod donacija `13a6083`
 
 ---
 

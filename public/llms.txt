@@ -39,7 +39,7 @@
 - **Bodulica shop stack:** HTML, CSS, JavaScript, vanilla JS — separate lightweight build for a client shop project (no live shop link on site)
 
 ## Team
-- Dario Imsirović — AI engineer & full stack cross-web developer (3D, security, custom platforms). About: https://protosweb.eu/o-meni#dario-imsirovic
+- Dario Imširović — AI engineer & full stack cross-web developer (3D, security, custom platforms). About: https://protosweb.eu/o-meni#dario-imsirovic
 - Martina Markulin — frontend expert & shop/UI designer (3D, branding, UX). About: https://protosweb.eu/o-meni#martina-markulin
 
 ## Contact

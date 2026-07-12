@@ -146,14 +146,21 @@ const protectedPattern = new RegExp(
   'g',
 )
 
+// Emails must never be transliterated — a Cyrillic mailto: address is dead.
+const EMAIL_PATTERN = /[\w.+-]+@[\w-]+\.[\w.-]+/g
+
 function convertString(value) {
-  // Mask protected brand/tech terms first so lexical fixes and
-  // transliteration never touch them (e.g. "Web" inside "Protos Web").
+  // Mask emails and protected brand/tech terms first so lexical fixes and
+  // transliteration never touch them (e.g. "Web" inside "Protos Web", or any
+  // "name@domain" address).
   const placeholders = []
-  const masked = value.replace(protectedPattern, (match) => {
-    placeholders.push(match)
-    return `\u0000${placeholders.length - 1}\u0000`
-  })
+  const maskWith = (text, pattern) =>
+    text.replace(pattern, (match) => {
+      placeholders.push(match)
+      return `\u0000${placeholders.length - 1}\u0000`
+    })
+
+  const masked = maskWith(maskWith(value, EMAIL_PATTERN), protectedPattern)
 
   let latin = masked
   for (const [pattern, replacement] of LEXICAL_FIXES) {

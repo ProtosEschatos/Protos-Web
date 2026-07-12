@@ -16,7 +16,7 @@ export const CONTACT_PHONE_DISPLAY = '+385 97 604 39 41'
 export const SUPABASE_PROJECT_REF = 'laqnnzavwbojntfiqmxj'
 
 /** Legal / imprint — used in privacy policy and terms references */
-export const LEGAL_OWNER = 'Dario Imsirović'
+export const LEGAL_OWNER = 'Dario Imširović'
 export const LEGAL_COLLABORATOR = 'Martina Markulin'
 export const LEGAL_BRAND = 'Protos Web'
 /** Obrt u procesu registracije */

@@ -15,7 +15,7 @@
     "title": "La nostra presenza online",
     "subtitle": "Trovaci sul web — studio Protos Web, Dario e Martina. Dal codice alle piattaforme freelance.",
     "studioTitle": "Studio Protos Web",
-    "darioTitle": "Dario Imsirović",
+    "darioTitle": "Dario Imširović",
     "martinaTitle": "Martina Markulin",
     "socialsTitle": "Social",
     "platformsTitle": "Piattaforme freelance",
@@ -253,9 +253,9 @@
     "viewAll": "Vedi tutti gli articoli",
     "empty": "Nessun articolo pubblicato ancora.",
     "authorBy": "Di {author}",
-    "authorDario": "Dario Imsirović",
+    "authorDario": "Dario Imširović",
     "authorMartina": "Martina Markulin",
-    "authorBoth": "Dario Imsirović & Martina Markulin"
+    "authorBoth": "Dario Imširović & Martina Markulin"
   },
   "contact": {
     "label": "CONTATTO",
@@ -387,14 +387,14 @@
       {
         "title": "1. Introduzione e accettazione",
         "paragraphs": [
-          "Questi Termini di servizio (\"Termini\") regolano l'accesso e l'uso del sito www.protosweb.eu (il \"Sito\") gestito da Dario Imsirović — Protos Web, Zagabria, Repubblica di Croazia (\"Protos Web\", \"noi\").",
+          "Questi Termini di servizio (\"Termini\") regolano l'accesso e l'uso del sito www.protosweb.eu (il \"Sito\") gestito da Dario Imširović — Protos Web, Zagabria, Repubblica di Croazia (\"Protos Web\", \"noi\").",
           "Accedendo al Sito confermi di aver letto, compreso e accettato integralmente questi Termini. In caso contrario, non utilizzare il Sito."
         ]
       },
       {
         "title": "2. Proprietà intellettuale e copyright",
         "paragraphs": [
-          "Tutti i contenuti del Sito — identità visiva, design UI/UX, layout, tipografia, grafica, animazioni, contenuti 3D, codice sorgente, testi, traduzioni, blog, metadati SEO e implementazioni tecniche — sono proprietà intellettuale originale di Dario Imsirović e/o Protos Web, salvo diversa indicazione.",
+          "Tutti i contenuti del Sito — identità visiva, design UI/UX, layout, tipografia, grafica, animazioni, contenuti 3D, codice sorgente, testi, traduzioni, blog, metadati SEO e implementazioni tecniche — sono proprietà intellettuale originale di Dario Imširović e/o Protos Web, salvo diversa indicazione.",
           "Tutti gli elementi sono protetti dalle leggi croate e dell'UE sul copyright e la proprietà intellettuale.",
           "Nessuna licenza implicita è concessa senza previo consenso scritto."
         ]
@@ -450,7 +450,7 @@
       {
         "title": "1. Titolare del trattamento",
         "paragraphs": [
-          "Titolare: Dario Imsirović — Protos Web, Zagabria, Repubblica di Croazia. Contatto: dario.admin@protosweb.eu."
+          "Titolare: Dario Imširović — Protos Web, Zagabria, Repubblica di Croazia. Contatto: dario.admin@protosweb.eu."
         ]
       },
       {
@@ -526,11 +526,11 @@
   "metadata": {
     "home": {
       "title": "Siti web con anima. Velocità nel codice. Amore nei dettagli.",
-      "description": "Protos Web — studio web da Zagabria. Siti custom, design UI/UX e SEO. Dario Imsirović (sviluppo) e Martina Markulin (design)."
+      "description": "Protos Web — studio web da Zagabria. Siti custom, design UI/UX e SEO. Dario Imširović (sviluppo) e Martina Markulin (design)."
     },
     "about": {
-      "title": "Chi siamo — Dario Imsirović & Martina Markulin",
-      "description": "Team Protos Web da Zagabria: Dario Imsirović, ingegnere AI & full stack developer e Martina Markulin, designer frontend/shop UI. Due stack — Protos Web moderno e shop Bodulica vanilla."
+      "title": "Chi siamo — Dario Imširović & Martina Markulin",
+      "description": "Team Protos Web da Zagabria: Dario Imširović, ingegnere AI & full stack developer e Martina Markulin, designer frontend/shop UI. Due stack — Protos Web moderno e shop Bodulica vanilla."
     },
     "process": {
       "title": "Il nostro processo",
@@ -579,7 +579,7 @@
     "team": {
       "dario": {
         "label": "Fondatore & sviluppo",
-        "name": "Dario Imsirović",
+        "name": "Dario Imširović",
         "role": "Ingegnere AI & Full Stack Cross-Web Developer",
         "bio": "Ingegnere AI e Full Stack Developer di Zagabria con 5 anni di esperienza. Piattaforme custom, webshop, CRM ed esperienze 3D — dalle landing page a soluzioni cross-web complesse.",
         "expertise": ["AI engineering", "Full stack", "3D / WebGL", "Cyber security"],

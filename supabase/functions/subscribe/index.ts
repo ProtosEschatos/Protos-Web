@@ -12,7 +12,7 @@ function welcomeHtml(): string {
     <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px">
       <h2 style="color:#6366f1">Pozdrav!</h2>
       <p>Uspješno ste se pretplatili na Protos Web novosti.</p>
-      <p style="color:#666">Srdačan pozdrav,<br><strong>Dario Imsirović</strong><br>Protos Web</p>
+      <p style="color:#666">Srdačan pozdrav,<br><strong>Dario Imširović</strong><br>Protos Web</p>
     </div>
   `
 }

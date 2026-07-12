@@ -218,7 +218,7 @@ function autoReplyHtml(name: string, message: string) {
       <p style="padding:16px;background:#f9f9f9;border-left:4px solid #6366f1;font-size:15px;line-height:1.6">${safeMessage}</p>
       <p style="margin-top:32px;font-size:15px;line-height:1.7">
         Srdačan pozdrav,<br>
-        <strong>Dario Imsirović</strong><br>
+        <strong>Dario Imširović</strong><br>
         Protos Web
       </p>
     </div>

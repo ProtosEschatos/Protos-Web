@@ -1,13 +1,13 @@
 'use client'
 
-import { useState, useEffect, useLayoutEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useLayoutEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import SiteConsentModal from '@/components/legal/SiteConsentModal'
+import BootSkyBackground from '@/components/ui/BootSkyBackground'
 import {
   BOOT_SESSION_KEY,
   BOOT_COMPLETE_EVENT,
-  BOOT_VIDEO,
   BOOT_BG,
   clearBootPending,
   setBootPending,
@@ -16,50 +16,6 @@ import {
 } from '@/lib/config/boot-gate'
 
 export { BOOT_SESSION_KEY, BOOT_COMPLETE_EVENT } from '@/lib/config/boot-gate'
-
-function BootVideoBackground({ active }: { active: boolean }) {
-  const videoRef = useRef<HTMLVideoElement>(null)
-
-  useEffect(() => {
-    if (!active) return
-    const video = videoRef.current
-    if (!video) return
-
-    video.muted = true
-    video.playsInline = true
-    video.loop = true
-    video.setAttribute('playsinline', '')
-    video.setAttribute('webkit-playsinline', '')
-
-    const play = () => {
-      void video.play().catch(() => {})
-    }
-
-    if (video.readyState >= 2) play()
-    else video.addEventListener('canplay', play, { once: true })
-
-    return () => {
-      video.removeEventListener('canplay', play)
-      video.pause()
-    }
-  }, [active])
-
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ backgroundColor: BOOT_BG }} aria-hidden>
-      <video
-        ref={videoRef}
-        src={BOOT_VIDEO}
-        className="absolute inset-0 h-full w-full object-cover object-center [transform:translateZ(0)_scale(1.02)]"
-        preload="auto"
-        autoPlay
-        muted
-        playsInline
-        loop
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020818]/30 pointer-events-none" />
-    </div>
-  )
-}
 
 export default function PageLoader() {
   const t = useTranslations('loader')
@@ -133,7 +89,7 @@ export default function PageLoader() {
             style={{ backgroundColor: BOOT_BG }}
             data-boot-layer
           >
-            <BootVideoBackground active={loading} />
+            <BootSkyBackground active={loading} />
 
             <div
               className="pointer-events-none absolute inset-0 z-[5] flex items-center justify-center overflow-hidden"

@@ -52,6 +52,8 @@ export async function adminGetSecurityInsights(): Promise<AdminInsightsSnapshot>
   const emailDnsOk = emailDns.filter((d) => d.ok).length
 
   const sentryConfigured = Boolean(process.env.NEXT_PUBLIC_SENTRY_DSN || process.env.SENTRY_DSN)
+  const githubTokenConfigured = Boolean(process.env.GITHUB_TOKEN?.trim())
+  const zohoImapConfigured = isZohoImapConfigured()
 
   const insights: AdminInsight[] = [
     {
@@ -113,6 +115,36 @@ export async function adminGetSecurityInsights(): Promise<AdminInsightsSnapshot>
         ? 'Production error monitoring'
         : 'Nije konfiguriran — postavi SENTRY_DSN ako želiš',
       href: 'https://sentry.io/',
+      external: true,
+    },
+    {
+      id: 'github-token',
+      label: 'GitHub (Protos-Agent memorija)',
+      status: githubTokenConfigured ? 'ok' : 'off',
+      statusLabel: githubTokenConfigured ? 'Aktivan' : 'Opcionalno',
+      detail: githubTokenConfigured
+        ? 'GITHUB_TOKEN postavljen · /admin/memory čita privatni repo'
+        : 'Potreban samo ako je Protos-Agent repo privatan — postavi GITHUB_TOKEN na Vercelu',
+      href: '/admin/memory',
+    },
+    {
+      id: 'zoho-imap',
+      label: 'Zoho IMAP (admin inbox)',
+      status: zohoImapConfigured ? 'ok' : 'warn',
+      statusLabel: zohoImapConfigured ? 'Spojen' : 'Nema kredencijala',
+      detail: zohoImapConfigured
+        ? 'ZOHO_IMAP_* postavljen · mail se čita u /admin/inbox'
+        : 'Postavi ZOHO_IMAP_USER i ZOHO_IMAP_PASSWORD na Vercelu',
+      href: '/admin/inbox',
+    },
+    {
+      id: 'stripe',
+      label: 'Stripe (donacije)',
+      status: 'info',
+      statusLabel: 'Provjeri na Supabase',
+      detail:
+        'STRIPE_SECRET_KEY i STRIPE_WEBHOOK_SECRET žive u Supabase Edge secrets (ne na Vercelu) — ne mogu se provjeriti odavde',
+      href: `https://supabase.com/dashboard/project/${status.supabaseProject}/settings/functions`,
       external: true,
     },
   ]

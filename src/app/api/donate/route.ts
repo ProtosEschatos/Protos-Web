@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { aboutPublicPathForLocale } from '@/lib/routes/localized-paths'
 import { DONATION_MAX_EUR, DONATION_MIN_EUR, isDonationCause } from '@/lib/donations'
+import { checkRateLimit, getClientIp } from '@/lib/security/rate-limit'
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -10,6 +11,14 @@ function siteBaseUrl(): string {
 }
 
 export async function POST(request: Request) {
+  const rate = checkRateLimit('donate', getClientIp(request), 8, 15 * 60 * 1000)
+  if (!rate.ok) {
+    return NextResponse.json(
+      { error: 'Previše zahtjeva. Pokušaj ponovno kasnije.' },
+      { status: 429, headers: { 'Retry-After': String(rate.retryAfterSec) } },
+    )
+  }
+
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
     return NextResponse.json({ error: 'Supabase nije konfiguriran' }, { status: 500 })
   }

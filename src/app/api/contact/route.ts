@@ -1,7 +1,16 @@
 import { NextResponse } from 'next/server'
 import { submitContact } from '@/actions/contact'
+import { checkRateLimit, getClientIp } from '@/lib/security/rate-limit'
 
 export async function POST(request: Request) {
+  const rate = checkRateLimit('contact', getClientIp(request), 5, 15 * 60 * 1000)
+  if (!rate.ok) {
+    return NextResponse.json(
+      { success: false, message: 'Previše zahtjeva. Pokušaj ponovno kasnije.' },
+      { status: 429, headers: { 'Retry-After': String(rate.retryAfterSec) } },
+    )
+  }
+
   try {
     const body = await request.json()
 

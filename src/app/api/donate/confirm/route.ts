@@ -1,9 +1,18 @@
 import { NextResponse } from 'next/server'
+import { checkRateLimit, getClientIp } from '@/lib/security/rate-limit'
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
 export async function POST(request: Request) {
+  const rate = checkRateLimit('donate-confirm', getClientIp(request), 20, 15 * 60 * 1000)
+  if (!rate.ok) {
+    return NextResponse.json(
+      { error: 'Previše zahtjeva. Pokušaj ponovno kasnije.' },
+      { status: 429, headers: { 'Retry-After': String(rate.retryAfterSec) } },
+    )
+  }
+
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
     return NextResponse.json({ error: 'Supabase nije konfiguriran' }, { status: 500 })
   }

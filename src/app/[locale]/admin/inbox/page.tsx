@@ -54,6 +54,7 @@ export default async function AdminInboxPage({ params: { locale } }: Props) {
                 title={definition.title}
                 initialMessages={mailbox.messages}
                 initialError={mailbox.error}
+                initialSyncedAt={mailbox.syncedAt}
                 configured={status.configured}
                 mailbox={status.email}
                 provider={definition.provider}

@@ -8,17 +8,23 @@ export default function AdminActivityBadge() {
   useEffect(() => {
     let cancelled = false
 
-    fetch('/api/admin/notifications/badge')
-      .then((res) => (res.ok ? res.json() : { count: 0 }))
-      .then((data: { count?: number }) => {
-        if (!cancelled) setCount(data.count ?? 0)
-      })
-      .catch(() => {
-        if (!cancelled) setCount(0)
-      })
+    const load = () => {
+      fetch('/api/admin/notifications/badge')
+        .then((res) => (res.ok ? res.json() : { count: 0 }))
+        .then((data: { count?: number }) => {
+          if (!cancelled) setCount(data.count ?? 0)
+        })
+        .catch(() => {
+          if (!cancelled) setCount(0)
+        })
+    }
+
+    load()
+    const timer = window.setInterval(load, 60_000)
 
     return () => {
       cancelled = true
+      window.clearInterval(timer)
     }
   }, [])
 

@@ -2,6 +2,12 @@
   "framework": "nextjs",
   "buildCommand": "npm run build",
   "installCommand": "npm install",
+  "crons": [
+    {
+      "path": "/api/cron/sync-inbox",
+      "schedule": "*/10 * * * *"
+    }
+  ],
   "redirects": [
     { "source": "/hr", "destination": "/", "permanent": true },
     { "source": "/hr/:path*", "destination": "/:path*", "permanent": true }

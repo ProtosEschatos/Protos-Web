@@ -14,6 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_mail_sync: {
+        Row: {
+          mailbox_id: string
+          messages: Json
+          error: string | null
+          synced_at: string
+        }
+        Insert: {
+          mailbox_id: string
+          messages?: Json
+          error?: string | null
+          synced_at?: string
+        }
+        Update: {
+          mailbox_id?: string
+          messages?: Json
+          error?: string | null
+          synced_at?: string
+        }
+        Relationships: []
+      }
       blog_posts: {
         Row: {
           author_slug: string

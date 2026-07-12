@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import type { ServiceRow } from '@/lib/queries/services'
-import { resolveFaIcon } from '@/components/ui/section-icons'
+import { resolveIcon } from '@/components/ui/section-icons'
 
 const colorMap: Record<string, string> = {
   primary: 'bg-[var(--primary)]/15 text-[var(--primary)]',
@@ -31,7 +31,7 @@ export default function ServicesGrid({ items }: Props) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {items.map((s, i) => {
-        const Icon = resolveFaIcon(s.icon)
+        const Icon = resolveIcon(s.icon)
         return (
           <motion.div
             key={s.id}

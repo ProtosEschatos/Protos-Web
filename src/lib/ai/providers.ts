@@ -23,7 +23,9 @@ export async function callAiProvider(
         Authorization: `Bearer ${key}`,
       },
       body: JSON.stringify({
-        model: 'deepseek-chat',
+        // `deepseek-chat` is a legacy alias (routes to V4-Flash, non-thinking)
+        // retiring 2026-07-24 — use the V4-Pro model id directly.
+        model: 'deepseek-v4-pro',
         messages,
         temperature: 0.7,
         max_tokens: 2048,

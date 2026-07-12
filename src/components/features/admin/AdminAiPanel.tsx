@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { Loader2 } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { Clock, Loader2 } from 'lucide-react'
 
 type Provider = 'deepseek' | 'gemini'
 
@@ -34,10 +34,11 @@ export default function AdminAiPanel({ deepseekReady, geminiReady }: Props) {
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [queue, setQueue] = useState<string[]>([])
 
   const providerReady = provider === 'deepseek' ? deepseekReady : geminiReady
 
-  const send = async (taskOverride?: string) => {
+  const send = async (taskOverride?: string, queuedContent?: string) => {
     if (!providerReady) {
       setError(
         provider === 'deepseek'
@@ -47,7 +48,7 @@ export default function AdminAiPanel({ deepseekReady, geminiReady }: Props) {
       return
     }
 
-    const userContent = taskOverride ?? (context.trim() || '')
+    const userContent = taskOverride ?? queuedContent ?? (context.trim() || '')
     if (!userContent && messages.length === 0) {
       setError('Unesi kontekst ili odaberi brzi zadatak.')
       return
@@ -94,6 +95,26 @@ export default function AdminAiPanel({ deepseekReady, geminiReady }: Props) {
     } finally {
       setLoading(false)
     }
+  }
+
+  // Auto-send the next queued message once the current request finishes.
+  useEffect(() => {
+    if (loading || queue.length === 0) return
+    const [next, ...rest] = queue
+    setQueue(rest)
+    void send(undefined, next)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, queue])
+
+  const submitText = () => {
+    const text = context.trim()
+    if (!text) return
+    setContext('')
+    if (loading) {
+      setQueue((q) => [...q, text])
+      return
+    }
+    void send(undefined, text)
   }
 
   return (
@@ -155,6 +176,17 @@ export default function AdminAiPanel({ deepseekReady, geminiReady }: Props) {
           ) : null}
         </div>
 
+        {queue.length > 0 ? (
+          <div className="flex items-center gap-2 rounded-xl border border-amber-500/25 bg-amber-500/10 px-4 py-2.5 text-xs text-amber-300">
+            <Clock className="h-3.5 w-3.5 shrink-0" />
+            <span>
+              {queue.length === 1
+                ? '1 poruka čeka u redu — šalje se automatski čim stigne odgovor.'
+                : `${queue.length} poruke čekaju u redu — šalju se automatski redom.`}
+            </span>
+          </div>
+        ) : null}
+
         {error ? <p className="text-sm text-red-400">{error}</p> : null}
 
         <textarea
@@ -163,22 +195,24 @@ export default function AdminAiPanel({ deepseekReady, geminiReady }: Props) {
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
               e.preventDefault()
-              if (!loading) void send()
+              submitText()
             }
           }}
           rows={4}
-          disabled={loading}
-          placeholder="Kontekst: naslov, bulleti, postojeći tekst, pitanje o projektu… (Enter za slanje, Shift+Enter za novi red)"
-          className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-sm text-slate-100 placeholder-slate-500 caret-indigo-400 focus:border-indigo-500 focus:outline-none disabled:opacity-60"
+          placeholder={
+            loading
+              ? 'Bot odgovara… nova poruka ide u red čekanja (Enter za slanje).'
+              : 'Kontekst: naslov, bulleti, postojeći tekst, pitanje o projektu… (Enter za slanje, Shift+Enter za novi red)'
+          }
+          className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-sm text-slate-100 placeholder-slate-500 caret-indigo-400 focus:border-indigo-500 focus:outline-none"
         />
 
         <button
           type="button"
-          onClick={() => void send()}
-          disabled={loading}
-          className="px-5 py-2.5 rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 text-white text-sm font-semibold disabled:opacity-50 hover:-translate-y-0.5 transition-transform"
+          onClick={submitText}
+          className="px-5 py-2.5 rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 text-white text-sm font-semibold hover:-translate-y-0.5 transition-transform"
         >
-          Pošalji
+          {loading ? 'Dodaj u red čekanja' : 'Pošalji'}
         </button>
       </div>
 

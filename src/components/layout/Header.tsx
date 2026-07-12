@@ -8,7 +8,6 @@ import { localeLabels, localeFlags, locales, type Locale } from '@/i18n'
 import MobileMenu from './MobileMenu'
 import { ChevronDown, Globe, MousePointer2 } from 'lucide-react'
 import ProtosLogo from '@/components/ui/ProtosLogo'
-import AdminNavLink from '@/components/features/admin/AdminNavLink'
 import { MAIN_NAV_ITEMS, isNavItemActive, navPublicHref } from '@/lib/routes/main-nav'
 
 export default function Header() {
@@ -82,7 +81,6 @@ export default function Header() {
                   {t(link.key)}
                 </TransitionLink>
               )})}
-              <AdminNavLink />
             </nav>
 
             <div className="hidden lg:flex items-center gap-2.5">

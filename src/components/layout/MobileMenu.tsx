@@ -5,7 +5,6 @@ import TransitionLink from '@/components/navigation/TransitionLink'
 import { SocialLinksInline } from '@/components/ui/SocialLinks'
 import { CONTACT_EMAIL } from '@/lib/config/site'
 import { motion, AnimatePresence } from 'framer-motion'
-import AdminNavLink from '@/components/features/admin/AdminNavLink'
 import { MAIN_NAV_ITEMS, navPublicHref } from '@/lib/routes/main-nav'
 import type { Locale } from '@/i18n'
 
@@ -60,15 +59,6 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               ))}
               <motion.div
                 custom={MAIN_NAV_ITEMS.length}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                variants={linkVariant}
-              >
-                <AdminNavLink variant="mobile" onClick={onClose} />
-              </motion.div>
-              <motion.div
-                custom={MAIN_NAV_ITEMS.length + 1}
                 initial="hidden"
                 animate="visible"
                 exit="exit"

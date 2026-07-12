@@ -1,40 +1,21 @@
 'use client'
 
-import { Suspense, useEffect, useState, useTransition } from 'react'
+import { Suspense, useTransition } from 'react'
 import { Monitor, RefreshCw } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import AdminLink from '@/components/features/admin/AdminLink'
 import AdminActivityBadge from '@/components/features/admin/AdminActivityBadge'
+import AdminClock from '@/components/features/admin/AdminClock'
 import AdminLogoutButton from '@/components/features/admin/AdminLogoutButton'
 import { findAdminNavItem } from '@/lib/admin-nav'
 import { usePathname } from '@/routing'
 import { SITE_URL } from '@/lib/config/site'
 
-function formatClock(): string {
-  return new Date().toLocaleString('hr-HR', {
-    weekday: 'short',
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    timeZoneName: 'short',
-  })
-}
-
 export default function AdminHeader() {
   const pathname = usePathname()
   const router = useRouter()
   const current = findAdminNavItem(pathname)
-  const [clock, setClock] = useState('')
   const [pending, startTransition] = useTransition()
-
-  useEffect(() => {
-    setClock(formatClock())
-    const timer = window.setInterval(() => setClock(formatClock()), 1000)
-    return () => window.clearInterval(timer)
-  }, [])
 
   function handleRefresh() {
     startTransition(() => {
@@ -65,10 +46,7 @@ export default function AdminHeader() {
       </div>
 
       <div className="flex items-center gap-4 text-xs admin-mono">
-        <div className="hidden flex-col items-end border-r border-slate-800 pr-4 xl:flex">
-          <span className="text-[10px] uppercase text-slate-500">Aktivno vrijeme</span>
-          <span className="font-medium text-slate-300">{clock || '…'}</span>
-        </div>
+        <AdminClock />
 
         <Suspense fallback={null}>
           <AdminActivityBadge />

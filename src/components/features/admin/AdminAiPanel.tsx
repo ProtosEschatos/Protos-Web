@@ -109,8 +109,8 @@ export default function AdminAiPanel({ deepseekReady, geminiReady }: Props) {
                 onClick={() => setProvider(p)}
                 className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider border transition-colors ${
                   provider === p
-                    ? 'border-[var(--primary)] bg-[var(--primary)]/15 text-[var(--primary)]'
-                    : 'border-white/10 text-[var(--light-muted)] hover:border-white/20'
+                    ? 'border-indigo-500 bg-indigo-500/15 text-indigo-300'
+                    : 'border-slate-700 text-slate-400 hover:border-slate-600'
                 }`}
               >
                 {p}
@@ -118,20 +118,20 @@ export default function AdminAiPanel({ deepseekReady, geminiReady }: Props) {
               </button>
             )
           })}
-          <label className="ml-auto flex items-center gap-2 text-xs text-[var(--light-muted)] cursor-pointer">
+          <label className="ml-auto flex items-center gap-2 text-xs text-slate-400 cursor-pointer">
             <input
               type="checkbox"
               checked={useMemory}
               onChange={(e) => setUseMemory(e.target.checked)}
-              className="rounded border-white/20"
+              className="rounded border-slate-600"
             />
             Uključi Protos-Agent memoriju
           </label>
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-[var(--dark-card)]/40 min-h-[280px] max-h-[420px] overflow-y-auto p-4 space-y-3">
+        <div className="rounded-2xl border border-slate-800 bg-slate-900/60 min-h-[280px] max-h-[420px] overflow-y-auto p-4 space-y-3">
           {messages.length === 0 ? (
-            <p className="text-sm text-[var(--light-muted)]">
+            <p className="text-sm text-slate-400">
               DeepSeek za tekst i planove. Uključi memoriju za kontekst projekta.
             </p>
           ) : (
@@ -140,8 +140,8 @@ export default function AdminAiPanel({ deepseekReady, geminiReady }: Props) {
                 key={i}
                 className={`rounded-xl px-4 py-3 text-sm whitespace-pre-wrap ${
                   m.role === 'user'
-                    ? 'bg-white/5 text-[var(--light-muted)]'
-                    : 'bg-[var(--primary)]/10 text-[var(--light)] border border-[var(--primary)]/20'
+                    ? 'bg-slate-800 text-slate-200'
+                    : 'bg-indigo-500/10 text-slate-100 border border-indigo-500/25'
                 }`}
               >
                 {m.content}
@@ -149,7 +149,7 @@ export default function AdminAiPanel({ deepseekReady, geminiReady }: Props) {
             ))
           )}
           {loading ? (
-            <div className="flex justify-center py-4 text-[var(--primary)]">
+            <div className="flex justify-center py-4 text-indigo-400">
               <Loader2 className="h-6 w-6 animate-spin" />
             </div>
           ) : null}
@@ -162,33 +162,33 @@ export default function AdminAiPanel({ deepseekReady, geminiReady }: Props) {
           onChange={(e) => setContext(e.target.value)}
           rows={4}
           placeholder="Kontekst: naslov, bulleti, postojeći tekst, pitanje o projektu…"
-          className="w-full px-4 py-3 rounded-xl bg-[var(--dark)]/80 border border-white/10 text-sm text-[var(--light)]"
+          className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-sm text-slate-100 placeholder-slate-500 caret-indigo-400 focus:border-indigo-500 focus:outline-none"
         />
 
         <button
           type="button"
           onClick={() => void send()}
           disabled={loading}
-          className="px-5 py-2.5 rounded-full bg-gradient-to-r from-[var(--primary)] to-[#ff8800] text-white text-sm font-semibold disabled:opacity-50 hover:-translate-y-0.5 transition-transform"
+          className="px-5 py-2.5 rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 text-white text-sm font-semibold disabled:opacity-50 hover:-translate-y-0.5 transition-transform"
         >
           Pošalji
         </button>
       </div>
 
       <aside className="space-y-3">
-        <h3 className="text-sm font-semibold text-[var(--light)]">Brzi zadaci</h3>
+        <h3 className="text-sm font-semibold text-slate-200">Brzi zadaci</h3>
         {TASK_PRESETS.map((preset) => (
           <button
             key={preset.id}
             type="button"
             disabled={loading}
             onClick={() => void send(preset.task)}
-            className="w-full text-left rounded-xl border border-white/10 bg-[var(--dark-card)]/50 px-4 py-3 text-sm hover:border-[var(--primary)]/40 disabled:opacity-50"
+            className="w-full text-left rounded-xl border border-slate-700 bg-slate-900/60 px-4 py-3 text-sm text-slate-300 hover:border-indigo-500/40 disabled:opacity-50"
           >
             {preset.label}
           </button>
         ))}
-        <p className="text-xs text-[var(--light-muted)] leading-relaxed">
+        <p className="text-xs text-slate-400 leading-relaxed">
           Vercel env: <code className="text-cyan-300">DEEPSEEK_API_KEY</code> (aktivan), opcionalno{' '}
           <code className="text-cyan-300">GEMINI_API_KEY</code>
         </p>

@@ -160,9 +160,16 @@ export default function AdminAiPanel({ deepseekReady, geminiReady }: Props) {
         <textarea
           value={context}
           onChange={(e) => setContext(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+              e.preventDefault()
+              if (!loading) void send()
+            }
+          }}
           rows={4}
-          placeholder="Kontekst: naslov, bulleti, postojeći tekst, pitanje o projektu…"
-          className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-sm text-slate-100 placeholder-slate-500 caret-indigo-400 focus:border-indigo-500 focus:outline-none"
+          disabled={loading}
+          placeholder="Kontekst: naslov, bulleti, postojeći tekst, pitanje o projektu… (Enter za slanje, Shift+Enter za novi red)"
+          className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-sm text-slate-100 placeholder-slate-500 caret-indigo-400 focus:border-indigo-500 focus:outline-none disabled:opacity-60"
         />
 
         <button

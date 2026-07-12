@@ -10,6 +10,9 @@ concurrency:
   group: supabase-keep-alive
   cancel-in-progress: false
 
+permissions:
+  contents: read
+
 jobs:
   ping:
     runs-on: ubuntu-latest

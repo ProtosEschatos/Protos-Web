@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Monitor } from 'lucide-react'
+import { Eye, EyeOff, Monitor } from 'lucide-react'
 
 export default function AdminLoginForm() {
   const router = useRouter()
@@ -10,6 +10,7 @@ export default function AdminLoginForm() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -57,15 +58,27 @@ export default function AdminLoginForm() {
             <label htmlFor="admin-password" className="admin-mono mb-2 block text-xs text-slate-400">
               Admin lozinka
             </label>
-            <input
-              id="admin-password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              autoComplete="current-password"
-              className="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-3 text-slate-100 outline-none focus:border-indigo-500/50"
-              required
-            />
+            <div className="relative">
+              <input
+                id="admin-password"
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password"
+                className="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-3 pr-11 text-slate-100 outline-none focus:border-indigo-500/50"
+                required
+              />
+              <button
+                type="button"
+                onMouseEnter={() => setShowPassword(true)}
+                onMouseLeave={() => setShowPassword(false)}
+                onClick={() => setShowPassword((v) => !v)}
+                aria-label={showPassword ? 'Sakrij lozinku' : 'Prikaži lozinku (drži miš preko oka)'}
+                className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-slate-500 transition-colors hover:text-indigo-400"
+              >
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            </div>
           </div>
 
           {error ? <p className="text-sm text-rose-400">{error}</p> : null}

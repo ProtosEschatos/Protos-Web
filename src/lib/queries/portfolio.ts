@@ -7,19 +7,25 @@ export async function getPortfolioItems(
 ): Promise<PortfolioItem[]> {
   if (!supabase) return []
 
-  const { data, error } = await supabase
-    .from('portfolio_items')
-    .select('id, title, tag, description, image_url, project_url, featured, sort_order, language')
-    .eq('active', true)
-    .eq('language', language)
-    .order('featured', { ascending: false })
-    .order('sort_order', { ascending: true })
-    .limit(limit)
+  const fetchByLanguage = async (lang: string) => {
+    const { data, error } = await supabase!
+      .from('portfolio_items')
+      .select('id, title, tag, description, image_url, project_url, featured, sort_order, language')
+      .eq('active', true)
+      .eq('language', lang)
+      .order('featured', { ascending: false })
+      .order('sort_order', { ascending: true })
+      .limit(limit)
 
-  if (error) {
-    console.error('getPortfolioItems error:', error)
-    return []
+    if (error) {
+      console.error('getPortfolioItems error:', error)
+      return []
+    }
+    return data ?? []
   }
 
-  return data ?? []
+  const rows = await fetchByLanguage(language)
+  if (rows.length > 0 || language === 'hr') return rows
+
+  return fetchByLanguage('hr')
 }

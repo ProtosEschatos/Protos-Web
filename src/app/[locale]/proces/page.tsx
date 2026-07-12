@@ -14,6 +14,10 @@ const featureColors = [
 
 type Props = { params: { locale: string } }
 
+// `process_steps` has no admin CRUD (and therefore no revalidatePath on
+// edit) yet, so re-fetch periodically rather than only at build/deploy time.
+export const revalidate = 300
+
 export default async function ProcessPage({ params: { locale } }: Props) {
   setRequestLocale(locale)
   const t = await getTranslations({ locale, namespace: 'processPage' })

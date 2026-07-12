@@ -7,6 +7,10 @@ import FaqSection from '@/components/features/home/sections/FaqSection'
 
 type Props = { params: { locale: string } }
 
+// `services` has no admin CRUD (and therefore no revalidatePath on edit)
+// yet, so re-fetch periodically rather than only at build/deploy time.
+export const revalidate = 300
+
 export default async function ServicesPage({ params: { locale } }: Props) {
   setRequestLocale(locale)
   const t = await getTranslations({ locale, namespace: 'services' })

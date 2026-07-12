@@ -18,6 +18,11 @@ import Contact from '@/components/features/home/sections/Contact'
 
 type Props = { params: { locale: string } }
 
+// Services/process/pricing/testimonials have no admin CRUD (and therefore no
+// revalidatePath on edit) yet, so re-fetch periodically rather than only at
+// build/deploy time.
+export const revalidate = 300
+
 export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
   setRequestLocale(locale)
   const t = await getTranslations({ locale, namespace: 'metadata.home' })

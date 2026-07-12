@@ -1,9 +1,8 @@
-'use client'
-
-import { motion } from 'framer-motion'
-import { useTranslations } from 'next-intl'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { Link } from '@/routing'
 import { ArrowRight } from 'lucide-react'
+import { getProcessSteps } from '@/lib/queries/process'
+import ProcessStepsGrid from '@/components/features/process/ProcessStepsGrid'
 import { PROCESS_FEATURE_ICONS } from '@/components/ui/section-icons'
 import { PROTOS_WEB_STACK } from '@/lib/config/tech-stacks'
 
@@ -13,14 +12,12 @@ const featureColors = [
   'bg-[var(--accent)]/15 text-[var(--accent)]',
 ]
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.6 } }),
-}
+type Props = { params: { locale: string } }
 
-export default function ProcessPage() {
-  const t = useTranslations('processPage')
-  const steps = t.raw('steps') as Array<{ num: string; title: string; text: string }>
+export default async function ProcessPage({ params: { locale } }: Props) {
+  setRequestLocale(locale)
+  const t = await getTranslations({ locale, namespace: 'processPage' })
+  const steps = await getProcessSteps(locale)
   const features = t.raw('features') as Array<{ title: string; text: string }>
   const stats = t.raw('stats') as Array<{ value: string; label: string }>
   const techs = PROTOS_WEB_STACK.items
@@ -39,16 +36,7 @@ export default function ProcessPage() {
 
       <section className="py-16">
         <div className="max-w-[1200px] mx-auto px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {steps.map((s, i) => (
-              <motion.div key={s.num} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-                className="cosmic-panel rounded-2xl p-7 hover:border-[var(--primary)]/30 hover:-translate-y-1 transition-all duration-300">
-                <div className="text-4xl font-extrabold gradient-text mb-4 leading-none">{s.num}</div>
-                <h3 className="text-base font-bold text-[var(--light)] mb-2">{s.title}</h3>
-                <p className="text-sm text-[var(--light-muted)] leading-relaxed">{s.text}</p>
-              </motion.div>
-            ))}
-          </div>
+          <ProcessStepsGrid steps={steps} />
         </div>
       </section>
 
@@ -56,8 +44,10 @@ export default function ProcessPage() {
         <div className="max-w-[1200px] mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {features.map((f, i) => (
-              <motion.div key={f.title} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-                className="cosmic-panel rounded-3xl p-8 text-center hover:-translate-y-1 transition-all duration-300">
+              <div
+                key={f.title}
+                className="cosmic-panel rounded-3xl p-8 text-center hover:-translate-y-1 transition-all duration-300"
+              >
                 <div className={`w-14 h-14 rounded-full mx-auto mb-4 flex items-center justify-center text-xl ${featureColors[i]}`}>
                   {(() => {
                     const Icon = PROCESS_FEATURE_ICONS[i]
@@ -66,7 +56,7 @@ export default function ProcessPage() {
                 </div>
                 <h3 className="text-base font-bold text-[var(--light)] mb-2">{f.title}</h3>
                 <p className="text-sm text-[var(--light-muted)] leading-relaxed">{f.text}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -82,11 +72,10 @@ export default function ProcessPage() {
         <div className="max-w-[1200px] mx-auto px-6">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             {stats.map((s, i) => (
-              <motion.div key={i} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-                className="cosmic-panel text-center p-8 rounded-3xl">
+              <div key={i} className="cosmic-panel text-center p-8 rounded-3xl">
                 <div className="text-4xl font-extrabold gradient-text mb-2">{s.value}</div>
                 <div className="text-xs text-[var(--light-muted)]">{s.label}</div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

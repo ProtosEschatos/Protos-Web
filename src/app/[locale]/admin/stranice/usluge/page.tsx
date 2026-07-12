@@ -15,12 +15,14 @@ export default async function AdminServicesPage({ params: { locale } }: Props) {
     >
       <AdminStaticPagePanel
         title="Stranica Usluge"
-        description="Lista usluga, cijene i CTA. Za dinamički sadržaj koristi blog ili portfolio; ovdje je statički marketing copy."
+        description="Lista usluga, ikone i CTA sada se dohvaćaju iz Supabase tablice `services` (po jeziku). Naslov sekcije, FAQ i CTA copy ostaju u prijevodima."
         publicHref="/usluge"
-        sourceHint="Uredi usluge u services sekciji ili messages datotekama."
+        sourceHint="Sadržaj kartica uređuje se u Supabase tablici `services`, ne u kodu ili JSON-u. Nema još CRUD ekrana ovdje — uređuje se direktno u bazi."
         sourcePaths={[
-          { label: 'Services sekcija (home)', path: 'src/components/features/home/sections/Services.tsx' },
-          { label: 'Prijevodi (hr)', path: 'src/messages/hr.json → services' },
+          { label: 'Supabase tablica', path: 'public.services (kolone: title, subtitle, icon, sort_order, language, active)' },
+          { label: 'Query helper', path: 'src/lib/queries/services.ts' },
+          { label: 'Grid komponenta', path: 'src/components/features/services/ServicesGrid.tsx' },
+          { label: 'Naslov/FAQ/CTA copy (hr)', path: 'src/messages/hr.json → services' },
           { label: 'Javna ruta', path: 'src/app/[locale]/usluge/page.tsx' },
         ]}
       />

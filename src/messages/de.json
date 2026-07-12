@@ -163,6 +163,19 @@
       }
     ]
   },
+  "pricing": {
+    "label": "PREISE",
+    "title": "Pakete &",
+    "titleHighlight": "Preise",
+    "subtitle": "Transparente Preise ohne versteckte Kosten. Wählen Sie das Paket, das zu Ihnen passt.",
+    "ctaDefault": "Angebot anfordern"
+  },
+  "testimonials": {
+    "label": "REFERENZEN",
+    "title": "Was unsere",
+    "titleHighlight": "Kunden sagen",
+    "subtitle": "Echtes Feedback von Kunden, mit denen wir zusammengearbeitet haben."
+  },
   "processPage": {
     "label": "PROZESS",
     "title": "Wie wir",

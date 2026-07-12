@@ -163,6 +163,19 @@
       }
     ]
   },
+  "pricing": {
+    "label": "CIJENE",
+    "title": "Paketi i",
+    "titleHighlight": "cijene",
+    "subtitle": "Transparentne cijene bez skrivenih troškova. Odaberite paket koji odgovara vašim potrebama.",
+    "ctaDefault": "Zatraži ponudu"
+  },
+  "testimonials": {
+    "label": "ISKUSTVA",
+    "title": "Što kažu",
+    "titleHighlight": "klijenti",
+    "subtitle": "Stvarna iskustva klijenata koji su radili s nama."
+  },
   "processPage": {
     "label": "PROCES",
     "title": "Kako",

@@ -163,6 +163,19 @@
       }
     ]
   },
+  "pricing": {
+    "label": "PRECIOS",
+    "title": "Planes y",
+    "titleHighlight": "precios",
+    "subtitle": "Precios transparentes sin costes ocultos. Elige el plan que se ajuste a tus necesidades.",
+    "ctaDefault": "Solicitar presupuesto"
+  },
+  "testimonials": {
+    "label": "TESTIMONIOS",
+    "title": "Lo que dicen nuestros",
+    "titleHighlight": "clientes",
+    "subtitle": "Opiniones reales de clientes con los que hemos trabajado."
+  },
   "processPage": {
     "label": "PROCESO",
     "title": "Como",

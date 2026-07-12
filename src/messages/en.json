@@ -163,6 +163,19 @@
       }
     ]
   },
+  "pricing": {
+    "label": "PRICING",
+    "title": "Plans &",
+    "titleHighlight": "pricing",
+    "subtitle": "Transparent pricing with no hidden costs. Choose the plan that fits your needs.",
+    "ctaDefault": "Get a quote"
+  },
+  "testimonials": {
+    "label": "TESTIMONIALS",
+    "title": "What our",
+    "titleHighlight": "clients say",
+    "subtitle": "Real feedback from clients we've worked with."
+  },
   "processPage": {
     "label": "OUR PROCESS",
     "title": "How",

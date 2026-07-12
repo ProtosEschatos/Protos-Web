@@ -163,6 +163,19 @@
       }
     ]
   },
+  "pricing": {
+    "label": "PREZZI",
+    "title": "Piani e",
+    "titleHighlight": "prezzi",
+    "subtitle": "Prezzi trasparenti senza costi nascosti. Scegli il piano più adatto a te.",
+    "ctaDefault": "Richiedi un preventivo"
+  },
+  "testimonials": {
+    "label": "TESTIMONIANZE",
+    "title": "Cosa dicono i",
+    "titleHighlight": "nostri clienti",
+    "subtitle": "Feedback reali dei clienti con cui abbiamo lavorato."
+  },
   "processPage": {
     "label": "PROCESSO",
     "title": "Come",

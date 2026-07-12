@@ -15,12 +15,14 @@ export default async function AdminProcessPage({ params: { locale } }: Props) {
     >
       <AdminStaticPagePanel
         title="Stranica Proces"
-        description="Prikaz koraka od prvog kontakta do isporuke. Sadržaj je statičan u komponentama; portfolio i blog imaju puni CMS."
+        description="Koraci (01-04) sada se dohvaćaju iz Supabase tablice `process_steps` (po jeziku). Feature kartice, stats i tehnologije ostaju u prijevodima."
         publicHref="/proces"
-        sourceHint="Uredi korake i copy u process sekciji ili i18n ključevima."
+        sourceHint="Koraci se uređuju u Supabase tablici `process_steps`, ne u kodu ili JSON-u. Nema još CRUD ekrana ovdje — uređuje se direktno u bazi."
         sourcePaths={[
-          { label: 'Process sekcija (home)', path: 'src/components/features/home/sections/Process.tsx' },
-          { label: 'Prijevodi (hr)', path: 'src/messages/hr.json → processPage' },
+          { label: 'Supabase tablica', path: 'public.process_steps (kolone: title, description, icon, step_number, language, active)' },
+          { label: 'Query helper', path: 'src/lib/queries/process.ts' },
+          { label: 'Grid komponenta', path: 'src/components/features/process/ProcessStepsGrid.tsx' },
+          { label: 'Features/stats copy (hr)', path: 'src/messages/hr.json → processPage' },
           { label: 'Javna ruta', path: 'src/app/[locale]/proces/page.tsx' },
         ]}
       />

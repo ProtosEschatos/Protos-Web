@@ -2,11 +2,17 @@ import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { getBlogPosts } from '@/lib/queries/blog'
 import { getPortfolioItems } from '@/lib/queries/portfolio'
+import { getServices } from '@/lib/queries/services'
+import { getProcessSteps } from '@/lib/queries/process'
+import { getPricingPlans } from '@/lib/queries/pricing'
+import { getTestimonials } from '@/lib/queries/testimonials'
 import { buildPageMetadata } from '@/lib/config/seo'
 import Hero from '@/components/features/home/sections/Hero'
 import Services from '@/components/features/home/sections/Services'
 import Process from '@/components/features/home/sections/Process'
 import Portfolio from '@/components/features/home/sections/Portfolio'
+import Pricing from '@/components/features/home/sections/Pricing'
+import Testimonials from '@/components/features/home/sections/Testimonials'
 import Blog from '@/components/features/home/sections/Blog'
 import Contact from '@/components/features/home/sections/Contact'
 
@@ -25,15 +31,25 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
 
 export default async function HomePage({ params: { locale } }: Props) {
   setRequestLocale(locale)
-  const blogPosts = await getBlogPosts(3, locale)
-  const portfolioItems = await getPortfolioItems(locale, 3)
+
+  const [blogPosts, portfolioItems, services, processSteps, pricingPlans, testimonials] =
+    await Promise.all([
+      getBlogPosts(3, locale),
+      getPortfolioItems(locale, 3),
+      getServices(locale),
+      getProcessSteps(locale),
+      getPricingPlans(locale),
+      getTestimonials(locale, 4),
+    ])
 
   return (
     <>
       <Hero />
-      <Process />
+      <Process steps={processSteps} />
       <Portfolio items={portfolioItems} />
-      <Services />
+      <Services items={services} />
+      <Pricing plans={pricingPlans} />
+      <Testimonials testimonials={testimonials} />
       <Blog posts={blogPosts} locale={locale} />
       <Contact />
     </>

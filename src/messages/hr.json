@@ -1,6 +1,6 @@
 {
   "nav": {
-    "home": "POCETNA",
+    "home": "POČETNA",
     "about": "O MENI",
     "process": "PROCES",
     "portfolio": "PORTFOLIO",
@@ -23,22 +23,22 @@
   },
   "header": {
     "brand": "Protos Web",
-    "cta": "ZATRAZI PONUDU",
+    "cta": "ZATRAŽI PONUDU",
     "menu": "Izbornik"
   },
   "hero": {
-    "label": "BRZO. ZA VAS POSAO",
+    "label": "BRZO. ZA VAŠ POSAO",
     "title_line1": "Web stranice s dušom.",
     "title_line2": "Brzina u kodu.",
     "title_line3": "Ljubav u detaljima.",
     "subtitle": "Brze, lagane i robusne web stranice koje rade za vas. Sve na jednom mjestu.",
-    "cta_primary": "Zapocni projekt",
+    "cta_primary": "Započni projekt",
     "cta_secondary": "Pogledaj portfolio",
     "stats": {
       "projects": {
         "value": "50",
         "suffix": "+",
-        "label": "Isporucenih projekata"
+        "label": "Isporučenih projekata"
       },
       "satisfaction": {
         "value": "98",
@@ -48,7 +48,7 @@
       "languages": {
         "value": "5",
         "suffix": " jezika",
-        "label": "Visjezicna podrska"
+        "label": "Višejezična podrška"
       },
       "webgl": {
         "value": "3D & WebGL",
@@ -59,65 +59,65 @@
   },
   "services": {
     "label": "USLUGE",
-    "title": "Sto",
+    "title": "Što",
     "titleHighlight": "nudimo",
     "items": [
       {
-        "title": "Prilagodena web rjesenja",
-        "text": "Web stranice izradene po mjeri s modernim tehnologijama, optimizirane za performanse i konverzije."
+        "title": "Prilagođena web rješenja",
+        "text": "Web stranice izrađene po mjeri s modernim tehnologijama, optimizirane za performanse i konverzije."
       },
       {
         "title": "UI/UX dizajn",
-        "text": "Prekrasna, intuitivna sucelja dizajnirana s fokusom na korisnicko iskustvo."
+        "text": "Prekrasna, intuitivna sučelja dizajnirana s fokusom na korisničko iskustvo."
       },
       {
         "title": "E-trgovina i web aplikacije",
-        "text": "Online trgovine i web aplikacije s integracijom placanja i upravljanjem zalihama."
+        "text": "Online trgovine i web aplikacije s integracijom plaćanja i upravljanjem zalihama."
       },
       {
         "title": "SEO i marketing",
-        "text": "Optimizacija za pretrazivace i digitalne marketing strategije za bolju vidljivost."
+        "text": "Optimizacija za pretraživače i digitalne marketinške strategije za bolju vidljivost."
       },
       {
         "title": "AI i automatizacija",
-        "text": "Pametne integracije ukljucujuci AI chatbotove, sustave rezervacija i automatizirane procese."
+        "text": "Pametne integracije uključujući AI chatbotove, sustave rezervacija i automatizirane procese."
       },
       {
-        "title": "Odrzavanje",
-        "text": "Kontinuirana podrska, azuriranja, sigurnosne zakrpe i nadzor performansi."
+        "title": "Održavanje",
+        "text": "Kontinuirana podrška, ažuriranja, sigurnosne zakrpe i nadzor performansi."
       }
     ],
-    "pageSubtitle": "Profesionalna web rjesenja prilagodena vasim poslovnim potrebama. Od koncepta do lansiranja i dalje.",
-    "ctaTitle": "Spremni zapoceti projekt?",
+    "pageSubtitle": "Profesionalna web rješenja prilagođena vašim poslovnim potrebama. Od koncepta do lansiranja i dalje.",
+    "ctaTitle": "Spremni započeti projekt?",
     "ctaText": "Besplatna konzultacija i ponuda — bez obveza.",
-    "ctaButton": "Zatrazi ponudu",
+    "ctaButton": "Zatraži ponudu",
     "faq": {
-      "title": "Cesta pitanja",
-      "subtitle": "Odgovori na najcesca pitanja o izradi web stranica u Hrvatskoj i suradnji s Protos Webom.",
+      "title": "Česta pitanja",
+      "subtitle": "Odgovori na najčešća pitanja o izradi web stranica u Hrvatskoj i suradnji s Protos Webom.",
       "items": [
         {
-          "question": "Koliko kosta izrada web stranice u Hrvatskoj?",
-          "answer": "Cijena ovisi o opsegu — landing stranica, poslovna stranica ili custom platforma. Svaki projekt kod nas je po mjeri, bez gotovih tema. Nakon kratkog razgovora dobivate jasnu ponudu bez skrivenih troskova."
+          "question": "Koliko košta izrada web stranice u Hrvatskoj?",
+          "answer": "Cijena ovisi o opsegu — landing stranica, poslovna stranica ili custom platforma. Svaki projekt kod nas je po mjeri, bez gotovih tema. Nakon kratkog razgovora dobivate jasnu ponudu bez skrivenih troškova."
         },
         {
           "question": "Koliko traje izrada web stranice?",
-          "answer": "Jednostavnija stranica moze biti gotova u 2–4 tjedna. Slozeniji projekti (e-trgovina, CRM, visejezicnost) traju dulje. Rokove dogovaramo unaprijed i drzimo vas u tijeku razvoja."
+          "answer": "Jednostavnija stranica može biti gotova u 2–4 tjedna. Složeniji projekti (e-trgovina, CRM, višejezičnost) traju dulje. Rokove dogovaramo unaprijed i držimo vas u tijeku tijekom razvoja."
         },
         {
-          "question": "Radite li na engleskom i njemackom?",
-          "answer": "Da. Dario govori hrvatski i engleski kao materinje te njemacki na osnovnoj razini. Stranice mozemo isporuciti na vise jezika — idealno za klijente u Hrvatskoj i EU."
+          "question": "Radite li na engleskom i njemačkom?",
+          "answer": "Da. Dario govori hrvatski i engleski kao materinji te njemački na osnovnoj razini. Stranice možemo isporučiti na više jezika — idealno za klijente u Hrvatskoj i EU."
         },
         {
-          "question": "Koristite li gotove teme ili predloske?",
-          "answer": "Ne. Sve gradimo od nule, prilagodeno vasem brendu i ciljevima. Predlosci i reusable komponente ostaju intelektualno vlasnistvo studija — klijent dobiva licencu korištenja prema ugovoru."
+          "question": "Koristite li gotove teme ili predloške?",
+          "answer": "Ne. Sve gradimo od nule, prilagođeno vašem brendu i ciljevima. Predlošci i reusable komponente ostaju intelektualno vlasništvo studija — klijent dobiva licencu korištenja prema ugovoru."
         },
         {
-          "question": "Ukljucuje li usluga SEO optimizaciju?",
-          "answer": "Da — tehnicki SEO (brzina, struktura, meta podaci, schema markup, sitemap) ukljucen je u svaki projekt. Dodatne SEO strategije i sadrzaj dogovaramo po potrebi."
+          "question": "Uključuje li usluga SEO optimizaciju?",
+          "answer": "Da — tehnički SEO (brzina, struktura, meta podaci, schema markup, sitemap) uključen je u svaki projekt. Dodatne SEO strategije i sadržaj dogovaramo po potrebi."
         },
         {
-          "question": "Nudite li odrzavanje nakon lansiranja?",
-          "answer": "Da. Nudimo kontinuiranu podrsku, sigurnosna azuriranja, nadzor performansi i manje izmjene sadrzaja — po dogovoru kao mjesečna ili ad-hoc usluga."
+          "question": "Nudite li održavanje nakon lansiranja?",
+          "answer": "Da. Nudimo kontinuiranu podršku, sigurnosna ažuriranja, nadzor performansi i manje izmjene sadržaja — po dogovoru kao mjesečna ili ad-hoc usluga."
         }
       ]
     }
@@ -130,35 +130,35 @@
       {
         "num": "01",
         "title": "Otkrivanje",
-        "text": "Upoznajemo vas posao, ciljeve i ciljnu publiku."
+        "text": "Upoznajemo vaš posao, ciljeve i ciljnu publiku."
       },
       {
         "num": "02",
         "title": "Dizajn",
-        "text": "Wireframeovi i vizualni dizajn prilagodeni vasem brendu."
+        "text": "Wireframeovi i vizualni dizajn prilagođeni vašem brendu."
       },
       {
         "num": "03",
         "title": "Razvoj",
-        "text": "Cist kod, moderni stack, pristup usmjeren na performanse."
+        "text": "Čist kod, moderni stack, pristup usmjeren na performanse."
       },
       {
         "num": "04",
         "title": "Lansiranje",
-        "text": "Testiranje, implementacija i kontinuirana podrska."
+        "text": "Testiranje, implementacija i kontinuirana podrška."
       }
     ],
     "features": [
       {
         "title": "Brza isporuka",
-        "text": "Vecina projekata isporucena u 2-4 tjedna."
+        "text": "Većina projekata isporučena u 2–4 tjedna."
       },
       {
         "title": "Transparentne cijene",
-        "text": "Jasne ponude bez skrivenih troskova."
+        "text": "Jasne ponude bez skrivenih troškova."
       },
       {
-        "title": "Dugorocna podrska",
+        "title": "Dugoročna podrška",
         "text": "Ostajemo s vama i nakon lansiranja."
       }
     ]
@@ -167,41 +167,41 @@
     "label": "PROCES",
     "title": "Kako",
     "titleHighlight": "radimo",
-    "subtitle": "Transparentan proces od prvog kontakta do lansiranja. Svaki korak je jasan, mjerljiv i prilagoden vasim potrebama.",
+    "subtitle": "Transparentan proces od prvog kontakta do lansiranja. Svaki korak je jasan, mjerljiv i prilagođen vašim potrebama.",
     "cta": "Kontakt",
     "steps": [
       {
         "num": "01",
         "title": "Otkrivanje",
-        "text": "Upoznajemo vas posao, ciljeve i ciljnu publiku."
+        "text": "Upoznajemo vaš posao, ciljeve i ciljnu publiku."
       },
       {
         "num": "02",
         "title": "Dizajn",
-        "text": "Wireframeovi i vizualni dizajn prilagodeni vasem brendu."
+        "text": "Wireframeovi i vizualni dizajn prilagođeni vašem brendu."
       },
       {
         "num": "03",
         "title": "Razvoj",
-        "text": "Cist kod, moderni stack, pristup usmjeren na performanse."
+        "text": "Čist kod, moderni stack, pristup usmjeren na performanse."
       },
       {
         "num": "04",
         "title": "Lansiranje",
-        "text": "Testiranje, implementacija i kontinuirana podrska."
+        "text": "Testiranje, implementacija i kontinuirana podrška."
       }
     ],
     "features": [
       {
         "title": "Brza isporuka",
-        "text": "Vecina projekata isporucena u 2-4 tjedna."
+        "text": "Većina projekata isporučena u 2–4 tjedna."
       },
       {
         "title": "Transparentne cijene",
-        "text": "Jasne ponude bez skrivenih troskova."
+        "text": "Jasne ponude bez skrivenih troškova."
       },
       {
-        "title": "Dugorocna podrska",
+        "title": "Dugoročna podrška",
         "text": "Ostajemo s vama i nakon lansiranja."
       }
     ],
@@ -212,7 +212,7 @@
       },
       {
         "value": "30+",
-        "label": "Zavrsenih projekata"
+        "label": "Završenih projekata"
       },
       {
         "value": "1",
@@ -231,27 +231,27 @@
     "title": "Odabrani",
     "titleHighlight": "projekti",
     "showcaseTitle": "3D Portfolio Showcase",
-    "showcaseText": "Istrazite nase radove u interaktivnoj 3D galeriji.",
-    "showcaseCta": "Udi u showcase",
+    "showcaseText": "Istražite naše radove u interaktivnoj 3D galeriji.",
+    "showcaseCta": "Uđi u showcase",
     "viewProject": "Pogledaj projekt",
-    "empty": "Jos nema projekata za prikaz."
+    "empty": "Još nema projekata za prikaz."
   },
   "portfolioPage": {
     "label": "PORTFOLIO",
     "title": "Digitalna",
     "titleHighlight": "inspiracija",
-    "subtitle": "Web stranice koje nas inspiriraju i standardi kvalitete koje tezimo",
+    "subtitle": "Web stranice koje nas inspiriraju i standardi kvalitete kojima težimo.",
     "showcaseTitle": "3D Portfolio Showcase",
-    "showcaseText": "Istrazite nase projekte kroz imerzivno 3D iskustvo",
+    "showcaseText": "Istražite naše projekte kroz imerzivno 3D iskustvo.",
     "showcaseCta": "OTVORI GALERIJU"
   },
   "blog": {
     "label": "BLOG",
     "title": "Web Akademija",
-    "subtitle": "Besplatni vodicima o web prisutnosti za poduzetnike",
-    "readMore": "Citaj vise",
-    "viewAll": "Pogledaj sve clanke",
-    "empty": "Jos nema objavljenih clanaka.",
+    "subtitle": "Besplatni vodiči o web prisutnosti za poduzetnike",
+    "readMore": "Čitaj više",
+    "viewAll": "Pogledaj sve članke",
+    "empty": "Još nema objavljenih članaka.",
     "authorBy": "Autor: {author}",
     "authorDario": "Dario Imsirović",
     "authorMartina": "Martina Markulin",
@@ -267,28 +267,28 @@
     "location": "Lokacija",
     "locationValue": "Zagreb, Hrvatska",
     "name": "Ime",
-    "namePlaceholder": "Vase ime",
+    "namePlaceholder": "Vaše ime",
     "emailPlaceholder": "vas@email.com",
     "service": "Usluga",
     "servicePlaceholder": "Odaberite uslugu",
     "message": "Poruka",
     "messagePlaceholder": "Recite nam o svom projektu...",
-    "submit": "Posalji poruku",
-    "sending": "Saljem...",
-    "success": "Poruka poslana! Javit cemo vam se uskoro.",
-    "error": "Nesto je poslo po krivu. Pokusajte ponovo.",
+    "submit": "Pošalji poruku",
+    "sending": "Šaljem...",
+    "success": "Poruka poslana! Javit ćemo vam se uskoro.",
+    "error": "Nešto je pošlo po krivu. Pokušajte ponovo.",
     "serviceOptions": [
-      "Prilagodena web stranica",
+      "Prilagođena web stranica",
       "E-trgovina",
       "Web aplikacija",
       "UI/UX dizajn",
       "SEO i marketing",
-      "Odrzavanje"
+      "Održavanje"
     ]
   },
   "transition": {
-    "loading": "Ucitavam...",
-    "toHome": "Pocetna",
+    "loading": "Učitavam...",
+    "toHome": "Početna",
     "toAbout": "O nama",
     "toProcess": "Proces",
     "toPortfolio": "Portfolio",
@@ -302,47 +302,47 @@
     "legal": "Pravno",
     "privacy": "Privatnost",
     "terms": "Uvjeti",
-    "cookies": "Kolacici",
+    "cookies": "Kolačići",
     "tools": "Moj editor",
     "cursor_cta": "Isprobaj Cursor",
     "cursor_badge": "50% popusta",
     "cursor_promo": "na prvi mjesec — AI editor kojim gradim ovu stranicu, brže od klasičnog koda.",
-    "causes_title": "Podrzite projekte koji mijenjaju digitalni Balkan",
+    "causes_title": "Podržite projekte koji mijenjaju digitalni Balkan",
     "cause_antiScam": "Anti-scam",
     "cause_education": "Edukacija",
     "cause_platforms": "Platforme",
-    "copyright": "2026 Protos Web. Sva prava pridrzana.",
+    "copyright": "2026 Protos Web. Sva prava pridržana.",
     "made_with": "Napravljeno s ljubavlju u Zagrebu, Hrvatska",
     "newsletter_title": "Pretplata na novosti",
-    "newsletter_placeholder": "Vasa email adresa",
+    "newsletter_placeholder": "Vaša email adresa",
     "newsletter_submit": "Pretplati se",
-    "newsletter_success": "Uspjesno ste se pretplatili!",
-    "newsletter_error": "Pretplata nije uspjela. Pokusajte ponovo."
+    "newsletter_success": "Uspješno ste se pretplatili!",
+    "newsletter_error": "Pretplata nije uspjela. Pokušajte ponovo."
   },
   "loader": {
-    "subtitle": "Ucitavanje iskustva",
+    "subtitle": "Učitavanje iskustva",
     "enter": "Ulaz",
-    "consentModalTitle": "Obavezno prihvacanje uvjeta",
-    "consentModalRequired": "Bez prihvacanja Uvjeta koristenja i Pravila privatnosti ne mozete uci na stranicu niti koristiti bilo koji njezin sadrzaj.",
-    "consentModalIntro": "Procitajte i prihvatite nase",
-    "termsAcceptLabel": "Prihvacam Uvjete koristenja",
-    "termsAcceptDesc": "Potvrdujem da sam procitao/la Uvjete, ukljucujuci zastitu svih originalnih radova, predlozaka, dizajna i klijentskih isporuka Protos Weba te da razumijem da je neovlasteno kopiranje ili zloupotreba kaznjivo.",
-    "consentModalAccept": "Prihvati i udi na stranicu",
-    "consentModalBlocked": "Morate prihvatiti Uvjete koristenja da biste nastavili.",
-    "cookieModalTitle": "Potrebna suglasnost za kolacice",
-    "cookieModalIntro": "Procitajte nase",
-    "cookieModalTerms": "Uvjete koristenja",
+    "consentModalTitle": "Obavezno prihvaćanje uvjeta",
+    "consentModalRequired": "Bez prihvaćanja Uvjeta korištenja i Pravila privatnosti ne možete ući na stranicu niti koristiti bilo koji njezin sadržaj.",
+    "consentModalIntro": "Pročitajte i prihvatite naše",
+    "termsAcceptLabel": "Prihvaćam Uvjete korištenja",
+    "termsAcceptDesc": "Potvrđujem da sam pročitao/la Uvjete, uključujući zaštitu svih originalnih radova, predložaka, dizajna i klijentskih isporuka Protos Weba te da razumijem da je neovlašteno kopiranje ili zloupotreba kažnjivo.",
+    "consentModalAccept": "Prihvati i uđi na stranicu",
+    "consentModalBlocked": "Morate prihvatiti Uvjete korištenja da biste nastavili.",
+    "cookieModalTitle": "Potrebna suglasnost za kolačiće",
+    "cookieModalIntro": "Pročitajte naše",
+    "cookieModalTerms": "Uvjete korištenja",
     "cookieModalLegalAnd": "i",
     "cookieModalPrivacy": "Pravila privatnosti",
-    "cookieModalCookies": "Pravila o kolacicima",
-    "cookieEssentialLabel": "Obavezni kolacici",
-    "cookieEssentialDesc": "Potrebni za rad stranice, sigurnost i pamcenje vasih postavki. Uvijek su aktivni.",
-    "cookieAnalyticsLabel": "Analiticki kolacici (opcionalno)",
-    "cookieAnalyticsDesc": "Pomazu nam razumjeti kako se stranica koristi kako bismo je poboljsali.",
-    "cookieModalAccept": "Prihvati i udi"
+    "cookieModalCookies": "Pravila o kolačićima",
+    "cookieEssentialLabel": "Obavezni kolačići",
+    "cookieEssentialDesc": "Potrebni za rad stranice, sigurnost i pamćenje vaših postavki. Uvijek su aktivni.",
+    "cookieAnalyticsLabel": "Analitički kolačići (opcionalno)",
+    "cookieAnalyticsDesc": "Pomažu nam razumjeti kako se stranica koristi kako bismo je poboljšali.",
+    "cookieModalAccept": "Prihvati i uđi"
   },
   "cookie": {
-    "text": "Koristimo kolacice kako bismo poboljsali vase iskustvo. Nastavkom posjeta ove stranice prihvacate nasu upotrebu kolacica.",
+    "text": "Koristimo kolačiće kako bismo poboljšali vaše iskustvo. Nastavkom posjeta ove stranice prihvaćate našu upotrebu kolačića.",
     "accept": "Prihvati",
     "decline": "Odbij"
   },
@@ -354,12 +354,12 @@
     "loaderTipArrows": "strelice",
     "loaderTipSuffix": "za kretanje",
     "instructionsTitle": "🌌 Space Gallery",
-    "instructionsSubtitle": "Istrazite nasu svemirsku stanicu kao astronaut",
+    "instructionsSubtitle": "Istražite našu svemirsku stanicu kao astronaut",
     "moveHint": "ili strelice za kretanje",
     "interactHint": "za interakciju sa slikom",
     "menuHint": "za otvaranje menija",
     "touchMoveHint": "Na mobitelu koristi joystick dolje za kretanje",
-    "start": "Zapocni razgledavanje",
+    "start": "Započni razgledavanje",
     "move": "Kretanje",
     "details": "Detalji",
     "menuLabel": "Menu",
@@ -370,8 +370,8 @@
     "webglUnsupportedTitle": "Portfolio galerija",
     "webglUnsupportedDesc": "3D prikaz nije dostupan u ovom pregledniku, ali svi projekti su u potpunosti dostupni ispod.",
     "webglContextLostTitle": "3D prikaz je pauziran",
-    "webglContextLostDesc": "Graficka kartica je privremeno oslobodila 3D prikaz. Mozete nastaviti pregledavati projekte ili pokusati ponovo.",
-    "webglRetry": "Pokusaj ponovo 3D",
+    "webglContextLostDesc": "Grafička kartica je privremeno oslobodila 3D prikaz. Možete nastaviti pregledavati projekte ili pokušati ponovo.",
+    "webglRetry": "Pokušaj ponovo 3D",
     "webglViewPortfolio": "Pogledaj cijeli portfolio"
   },
   "aboutPage": {
@@ -381,7 +381,7 @@
     "heroTitleLine2": "Full Stack Duo iz Zagreba.",
     "heroSubtitle": "AI inženjering, full stack cross-web razvoj i frontend/shop dizajn — s 3D iskustvima u svakom projektu. Gradimo moderna, brza i vizualno impresivna rješenja.",
     "whoTitle": "Tko smo",
-    "studioIntro": "Protos Web je studio u nastajanju — obrt Protos Web Mark23 u procesu registracije (OIB: 23732814520). Svi dizajni, predlosci i kreativni radovi ostaju originalno vlasnistvo autora kao suverenih stvaratelja, neovisno o poslovnoj registraciji.",
+    "studioIntro": "Protos Web je studio u nastajanju — obrt Protos Web Mark23 u procesu registracije (OIB: 23732814520). Svi dizajni, predlošci i kreativni radovi ostaju originalno vlasništvo autora kao suverenih stvaratelja, neovisno o poslovnoj registraciji.",
     "teamTitle": "O timu",
     "teamFieldLabels": {
       "location": "Lokacija",
@@ -395,7 +395,7 @@
     },
     "team": {
       "dario": {
-        "label": "Osnivac & razvoj",
+        "label": "Osnivač & razvoj",
         "name": "Dario Imsirović",
         "role": "AI inženjer & Full Stack Cross-Web Developer",
         "bio": "AI inženjer i Full Stack Developer iz Zagreba s 5 godina iskustva. Gradim custom platforme, web trgovine, CRM sustave i 3D web iskustva — od landing stranica do kompleksnih cross-web rješenja. Bez gotovih tema, s fokusom na sigurnost i performanse.",
@@ -423,27 +423,27 @@
         }
       }
     },
-    "guideLink": "Besplatni vodici o web prisutnosti za poduzetnike",
+    "guideLink": "Besplatni vodiči o web prisutnosti za poduzetnike",
     "goalsTitle": "Ciljevi",
     "goals": [
       {
-        "title": "Europsko trziste",
-        "text": "Aktivno siri poslovanje na EU klijente kroz visejezicnu ponudu i poznavanje europskih standarda — GDPR, pristupacnost, lokalizacija."
+        "title": "Europsko tržište",
+        "text": "Aktivno širimo poslovanje na EU klijente kroz višejezičnu ponudu i poznavanje europskih standarda — GDPR, pristupačnost, lokalizacija."
       },
       {
         "title": "Custom platforme",
-        "text": "Gradnja SaaS i custom CRM rjesenja za nise kojima na lokalnom trzistu jos nedostaje dobro digitalno rjesenje."
+        "text": "Gradnja SaaS i custom CRM rješenja za niše kojima na lokalnom tržištu još nedostaje dobro digitalno rješenje."
       },
       {
         "title": "Cyber sigurnost",
-        "text": "Integracija sigurnosnih standarda u svaki projekt — svaka stranica koja obraduje podatke mora biti zasticena."
+        "text": "Integracija sigurnosnih standarda u svaki projekt — svaka stranica koja obrađuje podatke mora biti zaštićena."
       }
     ],
-    "supportLabel": "PODRska",
+    "supportLabel": "PODRŠKA",
     "supportTitle": "Projekti koji mijenjaju",
     "supportTitleHighlight": "digitalne Balkane",
-    "supportSubtitle": "Svaka donacija doprinosi razvoju platforme za zastitu od internetskih prijevara i gradnji slobodnijeg digitalnog prostora za nasu regiju.",
-    "supportButton": "Podrzi resurse studija",
+    "supportSubtitle": "Svaka donacija doprinosi razvoju platforme za zaštitu od internetskih prijevara i gradnji slobodnijeg digitalnog prostora za našu regiju.",
+    "supportButton": "Podrži resurse studija",
     "donationForm": {
       "title": "Doniraj",
       "amountLabel": "Iznos (EUR)",
@@ -655,12 +655,12 @@
       "description": "Protos Web tim iz Zagreba: Dario Imsirović, AI inženjer & full stack developer i Martina Markulin, frontend/shop UI dizajnerica. Dva stacka — moderni Protos Web i vanilla Bodulica shop."
     },
     "process": {
-      "title": "Nas proces",
-      "description": "Kako gradimo moderna web rjesenja — od konzultacija do lansiranja. Protos Web, Zagreb."
+      "title": "Naš proces",
+      "description": "Kako gradimo moderna web rješenja — od konzultacija do lansiranja. Protos Web, Zagreb."
     },
     "portfolio": {
       "title": "Portfolio",
-      "description": "Odabrani web projekti i studije slucaja — custom dizajn i razvoj iz Zagreba."
+      "description": "Odabrani web projekti i studije slučaja — custom dizajn i razvoj iz Zagreba."
     },
     "showcase": {
       "title": "3D Portfolio Showcase",
@@ -668,11 +668,11 @@
     },
     "services": {
       "title": "Usluge",
-      "description": "Custom web dizajn, razvoj, UI/UX, SEO optimizacija i odrzavanje — Protos Web, Zagreb."
+      "description": "Custom web dizajn, razvoj, UI/UX, SEO optimizacija i održavanje — Protos Web, Zagreb."
     },
     "blog": {
       "title": "Blog",
-      "description": "Vodici o web dizajnu, SEO-u i digitalnoj prisutnosti za poduzetnike u Hrvatskoj i EU."
+      "description": "Vodiči o web dizajnu, SEO-u i digitalnoj prisutnosti za poduzetnike u Hrvatskoj i EU."
     },
     "contact": {
       "title": "Kontakt",

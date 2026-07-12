@@ -2,15 +2,18 @@ import {
   ArrowUpRight,
   BarChart3,
   Bug,
+  Cloud,
   Database,
   FileSearch,
   Gauge,
+  Github,
   Globe,
   Lock,
   Mail,
   Map,
   Radar,
   Search,
+  Server,
   Shield,
   type LucideIcon,
 } from 'lucide-react'
@@ -32,6 +35,9 @@ const iconById: Record<string, LucideIcon> = {
   'dns-all': Globe,
   https: Lock,
   sentry: Bug,
+  github: Github,
+  cloudflare: Cloud,
+  vercel: Server,
 }
 
 const statusStyles: Record<InsightStatus, string> = {

@@ -131,6 +131,9 @@ export const adminPlatformLinks: AdminHubLink[] = [
     external: true,
   },
   { id: 'github', label: 'GitHub Repo', href: 'https://github.com/ProtosEschatos/Protos-Web', external: true },
+  { id: 'stripe', label: 'Stripe', href: 'https://dashboard.stripe.com', external: true },
+  { id: 'sentry', label: 'Sentry', href: 'https://sentry.io/', external: true },
+  { id: 'zoho-admin', label: 'Zoho Mail', href: 'https://mail.zoho.eu', external: true },
   { id: 'live', label: 'Javna stranica', href: SITE_URL, external: true },
 ]
 

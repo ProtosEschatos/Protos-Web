@@ -8,6 +8,7 @@ import AdminStatGrid from '@/components/features/admin/AdminStatGrid'
 import { adminGetNotifications } from '@/actions/admin-notifications'
 import { adminGetInsights } from '@/actions/admin-insights'
 import { adminGetCommsChannels, adminGetSecurityInsights } from '@/actions/admin-ops-insights'
+import { adminGetLiveServiceStatus } from '@/actions/admin-live-status'
 import { adminGetMemorySnapshot } from '@/lib/queries/admin/memory'
 import { getAiProviderStatus } from '@/lib/ai/providers'
 import { ADMIN_NAV_SECTIONS } from '@/lib/admin-nav'
@@ -19,10 +20,11 @@ type Props = { params: { locale: string } }
 export default async function AdminPage({ params: { locale } }: Props) {
   setRequestLocale(locale)
   const notifications = await adminGetNotifications()
-  const [marketing, security, comms, memoryResult] = await Promise.all([
+  const [marketing, security, comms, liveServices, memoryResult] = await Promise.all([
     adminGetInsights(),
     adminGetSecurityInsights(),
     adminGetCommsChannels(notifications),
+    adminGetLiveServiceStatus(),
     adminGetMemorySnapshot().catch(() => null),
   ])
   const memory = memoryResult
@@ -77,6 +79,14 @@ export default async function AdminPage({ params: { locale } }: Props) {
             insights={security.insights}
             checkedAt={security.checkedAt}
             footnote={`Provjera: ${new Intl.DateTimeFormat('hr-HR', { dateStyle: 'short', timeStyle: 'short' }).format(new Date(security.checkedAt))}`}
+          />
+        </AdminSection>
+
+        <AdminSection title="Živi status servisa" className="mt-10">
+          <AdminInsightGrid
+            insights={liveServices.insights}
+            checkedAt={liveServices.checkedAt}
+            footnote="GitHub, Cloudflare, Sentry i Vercel — pravi podaci gdje je token postavljen, inače 'Nije podešeno'."
           />
         </AdminSection>
 

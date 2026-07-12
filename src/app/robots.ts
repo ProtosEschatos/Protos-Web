@@ -7,6 +7,7 @@ const ADMIN_DISALLOW = [
   '/de/admin',
   '/it/admin',
   '/es/admin',
+  '/sr/admin',
   '/api/',
 ]
 

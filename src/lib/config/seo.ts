@@ -28,6 +28,7 @@ const openGraphLocale: Record<Locale, string> = {
   de: 'de_DE',
   it: 'it_IT',
   es: 'es_ES',
+  sr: 'sr_RS',
 }
 
 /** Build a locale-aware path (no domain), respecting localePrefix: as-needed */

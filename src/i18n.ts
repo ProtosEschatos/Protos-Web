@@ -11,6 +11,7 @@ export const localeLabels: Record<Locale, string> = {
   de: 'Deutsch',
   it: 'Italiano',
   es: 'Español',
+  sr: 'Српски',
 }
 
 export const localeFlags: Record<Locale, string> = {
@@ -19,7 +20,11 @@ export const localeFlags: Record<Locale, string> = {
   de: '\u{1F1E9}\u{1F1EA}',
   it: '\u{1F1EE}\u{1F1F9}',
   es: '\u{1F1EA}\u{1F1F8}',
+  sr: '\u{1F1F7}\u{1F1F8}',
 }
+
+/** Locales rendered in Cyrillic script — used for html lang + font/script hints. */
+export const CYRILLIC_LOCALES: readonly Locale[] = ['sr']
 
 export default getRequestConfig(async ({ requestLocale }) => {
   let locale = await requestLocale

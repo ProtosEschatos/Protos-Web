@@ -9,7 +9,7 @@ import AppChrome from '@/components/layout/AppChrome'
 import LenisProvider from '@/components/providers/LenisProvider'
 import Analytics from '@/components/providers/Analytics'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import { locales, type Locale } from '@/i18n'
+import { locales, CYRILLIC_LOCALES, type Locale } from '@/i18n'
 import { ogImage, siteUrl } from '@/lib/config/seo'
 import { LEGAL_OWNER, LEGAL_COLLABORATOR, SITE_URL, GOOGLE_SITE_VERIFICATION } from '@/lib/config/site'
 import LocaleCreatorSeo from '@/components/seo/LocaleCreatorSeo'
@@ -103,8 +103,10 @@ export default async function LocaleLayout({
   setRequestLocale(locale)
   const messages = await getMessages()
 
+  const htmlLang = CYRILLIC_LOCALES.includes(locale as Locale) ? `${locale}-Cyrl` : locale
+
   return (
-    <html lang={locale} className={inter.className}>
+    <html lang={htmlLang} className={inter.className}>
       <head>
         <LocaleCreatorSeo locale={locale} />
       </head>

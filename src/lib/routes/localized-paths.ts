@@ -1,4 +1,4 @@
-export type SiteLocale = 'hr' | 'en' | 'de' | 'it' | 'es'
+export type SiteLocale = 'hr' | 'en' | 'de' | 'it' | 'es' | 'sr'
 
 /** Internal app route key → localized public path per locale */
 export const LOCALIZED_PATHS = {
@@ -8,6 +8,7 @@ export const LOCALIZED_PATHS = {
     de: '/ueber-uns',
     it: '/chi-siamo',
     es: '/sobre-nosotros',
+    sr: '/o-nama',
   },
 } as const satisfies Record<string, Record<SiteLocale, string>>
 

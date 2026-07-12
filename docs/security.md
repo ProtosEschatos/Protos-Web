@@ -10,7 +10,7 @@ Practical security map for `protosweb.eu`. No system is immune to every attack; 
 | `RESEND_API_KEY`, `BREVO_API_KEY` | **Supabase Edge secrets** | `submit-form`, `subscribe` |
 | `RESEND_FROM_EMAIL`, `CONTACT_EMAIL` | **Supabase Edge secrets** | Email from addresses |
 | `KEEP_ALIVE_SECRET` | **Supabase** + **GitHub** | `keep-alive` edge fn + cron |
-| `CRON_SECRET` | **Vercel** + **GitHub** | `/api/cron/sync-inbox` — Vercel cron + `admin-inbox-sync.yml` |
+| `CRON_SECRET` | **Vercel** + **GitHub** | `/api/cron/sync-inbox` — GitHub `admin-inbox-sync.yml` (every 10 min) |
 | `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` | **Vercel** | Client → Supabase (RLS-protected) |
 | `SUPABASE_SERVICE_ROLE_KEY` | **Vercel** (server) + **GitHub** | Server actions / CI only — never expose to browser |
 | `SUPABASE_ACCESS_TOKEN`, `SUPABASE_PROJECT_REF` | **GitHub** | Deploy edge functions on push |

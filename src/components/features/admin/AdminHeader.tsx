@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useTransition } from 'react'
+import { useTransition } from 'react'
 import { Monitor, RefreshCw } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import AdminLink from '@/components/features/admin/AdminLink'
@@ -48,9 +48,7 @@ export default function AdminHeader() {
       <div className="flex items-center gap-4 text-xs admin-mono">
         <AdminClock />
 
-        <Suspense fallback={null}>
-          <AdminActivityBadge />
-        </Suspense>
+        <AdminActivityBadge />
 
         <button
           type="button"

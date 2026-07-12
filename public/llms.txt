@@ -2,7 +2,9 @@
 # https://protosweb.eu/llms.txt
 # Guidance for AI crawlers and language models (GEO).
 
-> Protos Web is a web design and development studio from Zagreb, Croatia.
+> Protos Web is a web design and development studio from Zagreb, Croatia,
+> serving clients across Croatia, Serbia, Bosnia and Herzegovina, Montenegro,
+> North Macedonia, Slovenia and the wider Balkans, as well as the EU.
 > We build fast, custom websites and web applications — no templates, built from scratch.
 > Trade registration in progress: Protos Web Mark23 (OIB: 23732814520).
 
@@ -10,6 +12,7 @@
 - Croatian (hr) — default at https://protosweb.eu/
 
 ## Other languages
+- Serbian, Cyrillic (sr): https://protosweb.eu/sr/
 - English: https://protosweb.eu/en/
 - German: https://protosweb.eu/de/
 - Italian: https://protosweb.eu/it/

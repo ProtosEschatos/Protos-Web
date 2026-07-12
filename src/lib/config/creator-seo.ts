@@ -87,6 +87,14 @@ const KEYWORDS: Record<'hr' | 'en', string> = {
     'web studio Hrvatska',
     'SEO optimizacija',
     'Protos Web Mark23',
+    'izrada web stranica Srbija',
+    'izrada sajtova Beograd',
+    'web dizajn Bosna i Hercegovina',
+    'izrada web stranica Sarajevo',
+    'veb dizajn Crna Gora',
+    'izrada web stranica Podgorica',
+    'izrada web stranica region',
+    'izrada web stranica Balkan',
   ].join(', '),
   en: [
     'Protos',
@@ -109,7 +117,9 @@ const KEYWORDS: Record<'hr' | 'en', string> = {
 }
 
 function resolveLocale(locale: string): 'hr' | 'en' {
-  return locale === 'hr' ? 'hr' : 'en'
+  // Serbian reuses the Croatian (regionally closest) keywords/description —
+  // still far more relevant to sr readers than falling back to English.
+  return locale === 'hr' || locale === 'sr' ? 'hr' : 'en'
 }
 
 export function getCreatorKeywords(locale: string): string {
@@ -180,6 +190,11 @@ export function buildCreatorSeoGraph(locale: string) {
         description: getCreatorMetaDescription(locale),
         areaServed: [
           { '@type': 'Country', name: 'Croatia' },
+          { '@type': 'Country', name: 'Serbia' },
+          { '@type': 'Country', name: 'Bosnia and Herzegovina' },
+          { '@type': 'Country', name: 'Montenegro' },
+          { '@type': 'Country', name: 'North Macedonia' },
+          { '@type': 'Country', name: 'Slovenia' },
           { '@type': 'Place', name: 'European Union' },
         ],
         serviceType: serviceTypes,
@@ -191,8 +206,8 @@ export function buildCreatorSeoGraph(locale: string) {
           telephone: CONTACT_PHONE,
           email: CONTACT_EMAIL,
           contactType: 'customer service',
-          areaServed: ['HR', 'EU'],
-          availableLanguage: ['Croatian', 'English', 'German'],
+          areaServed: ['HR', 'RS', 'BA', 'ME', 'MK', 'SI', 'EU'],
+          availableLanguage: ['Croatian', 'Serbian', 'English', 'German'],
         },
         address: {
           '@type': 'PostalAddress',
@@ -217,7 +232,7 @@ export function buildCreatorSeoGraph(locale: string) {
         },
         founder: { '@id': dario.id },
         employee: [{ '@id': martina.id }],
-        knowsLanguage: ['hr', 'en', 'de', 'it', 'es'],
+        knowsLanguage: ['hr', 'en', 'de', 'it', 'es', 'sr'],
         makesOffer: { '@id': serviceId },
       },
       {

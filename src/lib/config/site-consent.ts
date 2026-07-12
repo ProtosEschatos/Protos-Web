@@ -49,34 +49,38 @@ export function hasSiteConsent(): boolean {
   return getSiteConsent() !== null
 }
 
-/** @deprecated Use hasSiteConsent */
+/**
+ * Whether the visitor has dismissed the cookie banner. This is intentionally
+ * separate from the terms gate (`hasSiteConsent`) so the cookie banner still
+ * appears after the entry consent modal instead of being silently skipped.
+ */
 export function hasCookieConsent(): boolean {
-  return hasSiteConsent()
+  if (typeof window === 'undefined') return false
+  return localStorage.getItem(COOKIE_STORAGE_KEY) !== null
 }
 
 export function saveSiteConsent(analytics: boolean): void {
-  const acceptedAt = new Date().toISOString()
   const consent: SiteConsent = {
     termsVersion: LEGAL_TERMS_VERSION,
     termsAccepted: true,
     essential: true,
     analytics,
-    acceptedAt,
+    acceptedAt: new Date().toISOString(),
   }
-  const cookiePrefs: CookiePreferences = {
-    essential: true,
-    analytics,
-    acceptedAt,
-  }
+  if (typeof window === 'undefined') return
   localStorage.setItem(SITE_CONSENT_KEY, JSON.stringify(consent))
-  localStorage.setItem(COOKIE_STORAGE_KEY, JSON.stringify(cookiePrefs))
-  if (typeof window !== 'undefined') {
-    window.dispatchEvent(new CustomEvent(COOKIE_CONSENT_EVENT))
-    window.dispatchEvent(new CustomEvent(SITE_CONSENT_EVENT))
-  }
+  window.dispatchEvent(new CustomEvent(COOKIE_CONSENT_EVENT))
+  window.dispatchEvent(new CustomEvent(SITE_CONSENT_EVENT))
 }
 
-/** @deprecated Use saveSiteConsent */
+/** Records the cookie-banner choice and marks the banner as dismissed. */
 export function saveCookiePreferences(analytics: boolean): void {
-  saveSiteConsent(analytics)
+  if (typeof window === 'undefined') return
+  const prefs: CookiePreferences = {
+    essential: true,
+    analytics,
+    acceptedAt: new Date().toISOString(),
+  }
+  localStorage.setItem(COOKIE_STORAGE_KEY, JSON.stringify(prefs))
+  window.dispatchEvent(new CustomEvent(COOKIE_CONSENT_EVENT))
 }

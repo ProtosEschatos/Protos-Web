@@ -2,7 +2,7 @@ name: Admin Inbox Sync
 
 on:
   schedule:
-    # Every 10 minutes — keeps Zoho/Gmail cache fresh for /admin/inbox
+    # Every 10 minutes — keeps Zoho inbox cache fresh for /admin/inbox
     - cron: '*/10 * * * *'
   workflow_dispatch:
 

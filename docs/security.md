@@ -27,7 +27,6 @@ Practical security map for `protosweb.eu`. No system is immune to every attack; 
 | Service | Secret location | Notes |
 |---------|-----------------|-------|
 | **Zoho IMAP (Dario)** | **Vercel** | `ZOHO_IMAP_USER`, `ZOHO_IMAP_PASSWORD` — enable IMAP Access in Zoho |
-| **Gmail IMAP (studio)** | **Vercel** | `GMAIL_STUDIO_IMAP_USER`, `GMAIL_STUDIO_IMAP_PASSWORD` — Google App Password for `protoswebmark23@gmail.com` |
 | **Zoho IMAP (Martina)** | **Vercel** | `MARTINA_IMAP_*` when `martina.admin@protosweb.eu` is live |
 | **Resend** | Supabase Edge | Outbound transactional mail (`submit-form`, `subscribe`) |
 | **Brevo** | Supabase Edge | Optional; DKIM on apex for deliverability |

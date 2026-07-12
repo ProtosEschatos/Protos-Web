@@ -6,7 +6,6 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import PageLoader from '@/components/ui/PageLoader'
 import CustomCursor from '@/components/ui/CustomCursor'
-import CookieBanner from '@/components/ui/CookieBanner'
 import SiteShell from '@/components/ui/SiteShell'
 import SiteBackground from '@/components/ui/SiteBackground'
 import { PageTransitionProvider } from '@/components/navigation/PageTransitionProvider'
@@ -97,7 +96,6 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
       <div className="relative z-[1]">
         <Footer />
       </div>
-      <CookieBanner />
     </PageTransitionProvider>
   )
 }

@@ -60,15 +60,24 @@ export function hasCookieConsent(): boolean {
 }
 
 export function saveSiteConsent(analytics: boolean): void {
+  const acceptedAt = new Date().toISOString()
   const consent: SiteConsent = {
     termsVersion: LEGAL_TERMS_VERSION,
     termsAccepted: true,
     essential: true,
     analytics,
-    acceptedAt: new Date().toISOString(),
+    acceptedAt,
+  }
+  const cookiePrefs: CookiePreferences = {
+    essential: true,
+    analytics,
+    acceptedAt,
   }
   if (typeof window === 'undefined') return
+  // The single entry modal is the mandatory gate for ToS + Privacy + Cookies,
+  // so cookie consent is recorded here — there is no separate cookie banner.
   localStorage.setItem(SITE_CONSENT_KEY, JSON.stringify(consent))
+  localStorage.setItem(COOKIE_STORAGE_KEY, JSON.stringify(cookiePrefs))
   window.dispatchEvent(new CustomEvent(COOKIE_CONSENT_EVENT))
   window.dispatchEvent(new CustomEvent(SITE_CONSENT_EVENT))
 }

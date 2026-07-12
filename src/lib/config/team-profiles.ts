@@ -29,8 +29,8 @@ export const darioSocialItems: PresenceItem[] = [
   profileLink('instagram', 'Instagram', DARIO_INSTAGRAM_URL, '#e1306c'),
   profileLink('facebook', 'Facebook', 'https://www.facebook.com/imsirovicdario23/', '#1877f2'),
   profileLink('tiktok', 'TikTok', '#', '#00f2ea'),
-  profileLink('golance', 'goLance', '#', '#25b14c'),
-  profileLink('upwork', 'Upwork', '#', '#14a800'),
+  profileLink('golance', 'goLance', 'https://golance.com/freelancer/home/', '#25b14c'),
+  profileLink('upwork', 'Upwork', 'https://www.upwork.com/freelancers/protos01eschatos', '#14a800'),
 ]
 
 export const martinaSocialItems: PresenceItem[] = [
@@ -39,8 +39,8 @@ export const martinaSocialItems: PresenceItem[] = [
 ]
 
 export const freelancePlatformItems: PresenceItem[] = [
-  profileLink('golance', 'goLance.com', '#', '#25b14c'),
-  profileLink('upwork', 'Upwork', '#', '#14a800'),
+  profileLink('golance', 'goLance.com', 'https://golance.com/freelancer/home/', '#25b14c'),
+  profileLink('upwork', 'Upwork', 'https://www.upwork.com/freelancers/protos01eschatos', '#14a800'),
   profileLink('freelancer', 'Freelancer.com', '#', '#29b2fe'),
   profileLink('malt', 'Malt.com', '#', '#fc5757'),
   profileLink('guru', 'Guru.com', '#', '#ff7300'),

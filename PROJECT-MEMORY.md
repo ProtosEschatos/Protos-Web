@@ -18,9 +18,32 @@
 
 **i18n O meni:** lokalizirani about URL-ovi po jeziku.
 
-**Inbox:** Zoho + Gmail studio + Martina placeholder u `/admin/inbox`.
+**Inbox:** Zoho + Gmail studio u `/admin/inbox` (Martina se prikazuje samo kad joj IMAP bude podešen).
 
 **Ne commitati:** `public/design/` (untracked).
+
+---
+
+## Preostalo — za tebe / za dalje (2026-07-12)
+
+### Za tebe (Vercel env — dodaj kad budeš spreman, svaka je opcionalna dok se ne postavi)
+
+| Varijabla | Za što | Kako dobiti |
+|---|---|---|
+| `GMAIL_STUDIO_IMAP_PASSWORD` | Aktivira Gmail studio inbox u `/admin/inbox` (kod već postoji, samo nedostaje lozinka) | Uključi 2FA na `protoswebmark23@gmail.com` → Google Account → App Passwords → generiraj za "Mail" |
+| `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ZONE_ID` | "Živi status servisa" na `/admin` — Cloudflare zona | dash.cloudflare.com → My Profile → API Tokens → **novi token, samo Zone → Zone → Read** (ne koristi DNS-edit token iz `docs/cloudflare-dns.md`) |
+| `SENTRY_AUTH_TOKEN` + `SENTRY_ORG_SLUG` + `SENTRY_PROJECT_SLUG` | Broj nerješenih grešaka na `/admin` | sentry.io → treba prvo napraviti projekt ako ga nemaš, zatim Settings → Auth Tokens |
+| `VERCEL_TOKEN` + `VERCEL_PROJECT_ID` (+ `VERCEL_TEAM_ID` ako je team projekt) | Status zadnjeg deploya na `/admin` | vercel.com/account/tokens |
+| `MARTINA_IMAP_PASSWORD` (+ `MARTINA_IMAP_USER` ako se razlikuje) | Vraća Martinin mailbox u `/admin/inbox` (skriven dok nije podešen) | Kad `martina.admin@protosweb.eu` postane live u Zohu |
+
+Sve navedeno je **opcionalno i ne blokira ništa** — svaka kartica na `/admin` samo pokazuje "Nije podešeno" dok token ne postaviš.
+
+### Za dalje (moj/agent nastavak)
+
+- Provjeriti da sve nove "Živi status servisa" kartice ispravno prikazuju podatke kad dodaš gornje tokene
+- Srpski (`sr.json`) je **transliteracija** hrvatskog teksta, ne izvorni prijevod — preporučam da netko izvorni govornik jednom pregleda tekst (posebno pravne stranice — Uvjeti/Privatnost/Kolačići)
+- Opcionalno: nova Supabase Edge funkcija za prave Resend/Brevo statistike slanja (trenutno samo link + DNS status, jer im API ključevi ostaju na Supabaseu po dizajnu)
+- Repo ostaje public (tvoja odluka) — ako se ikad predomisliš, promjena vidljivosti je u GitHub Settings → Danger Zone, traje 10 sekundi
 
 ---
 
@@ -171,7 +194,7 @@ Detalji: **Protos-Agent** `memory/sessions/2026-07-11-branding-seo-stack.md`
 
 ---
 
-- **GA4 Measurement ID:** `G-HR9HK4SR7Q` (property na `dario23imsirovic@gmail.com`).
+- **GA4 Measurement ID:** `G-HR9HK4SR7Q` (property na vlasnikovom Google računu).
 - **Kod:** `Analytics.tsx` učitava gtag samo nakon analytics cookie opt-in; SPA navigacije trackirane ručno (`page_view` event).
 - **Deploy:** ID je hardcodirani fallback u kodu — ne treba Vercel env var da bi radio na produkciji. Override: `NEXT_PUBLIC_GA_ID`.
 - **Provjera:** prihvati kolačiće na live siteu → GA4 Realtime report.

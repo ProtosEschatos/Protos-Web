@@ -33,7 +33,7 @@ Practical security map for `protosweb.eu`. No system is immune to every attack; 
 
 ### Stripe — donations (Supabase Edge)
 
-`STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` live in **Supabase Edge secrets** only. Webhook URL: `https://laqnnzavwbojntfiqmxj.supabase.co/functions/v1/stripe-webhook`. See [stripe-donations.md](./stripe-donations.md).
+`STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` live in **Supabase Edge secrets** only. Webhook URL: `https://<SUPABASE_PROJECT_REF>.supabase.co/functions/v1/stripe-webhook` (exact ref in the Supabase dashboard). See [stripe-donations.md](./stripe-donations.md).
 
 Legacy multi-tenant columns may still exist elsewhere; active flow uses `donations` table + edge fn `donation-checkout` / `stripe-webhook`.
 

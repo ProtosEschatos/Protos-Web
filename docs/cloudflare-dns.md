@@ -16,7 +16,7 @@ For agent/scripts to edit public DNS (`protosweb.eu`), the token needs:
 Store token in `CLOUDFLARE_API_TOKEN` (e.g. `~/.config/kilo/.env`), then:
 
 ```bash
-export CLOUDFLARE_ZONE_ID=76b7e8a0944ccdbca556b65956747930
+export CLOUDFLARE_ZONE_ID=<your-zone-id>  # Cloudflare dashboard → domain overview → API section
 ./scripts/fix-cloudflare-dns.sh
 ```
 

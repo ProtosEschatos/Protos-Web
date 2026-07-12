@@ -7,7 +7,7 @@ Varijabilni iznosi **1–1000 EUR** s `/o-meni` → Stripe Checkout → webhook 
 1. **Stripe račun** na [dashboard.stripe.com](https://dashboard.stripe.com) (EU, EUR).
 2. **Secret key** — Developers → API keys → `sk_test_...` (test) ili `sk_live_...` (produkcija).
 3. **Webhook** — Developers → Webhooks → Add endpoint:
-   - URL: `https://laqnnzavwbojntfiqmxj.supabase.co/functions/v1/stripe-webhook`
+   - URL: `https://<SUPABASE_PROJECT_REF>.supabase.co/functions/v1/stripe-webhook` (točan project ref vidi u Supabase dashboardu → Project Settings)
    - Events: `checkout.session.completed`, `checkout.session.expired`
    - Kopiraj **Signing secret** (`whsec_...`).
 4. Za **live** način: aktiviraj business profil u Stripeu (verifikacija firme/OIB).
@@ -33,15 +33,15 @@ Varijabilni iznosi **1–1000 EUR** s `/o-meni` → Stripe Checkout → webhook 
 Deploy: push `supabase/functions/**` na `main` ili ručno:
 
 ```bash
-supabase functions deploy donation-checkout --no-verify-jwt --project-ref laqnnzavwbojntfiqmxj
-supabase functions deploy donation-confirm --no-verify-jwt --project-ref laqnnzavwbojntfiqmxj
-supabase functions deploy stripe-webhook --no-verify-jwt --project-ref laqnnzavwbojntfiqmxj
+supabase functions deploy donation-checkout --no-verify-jwt --project-ref <SUPABASE_PROJECT_REF>
+supabase functions deploy donation-confirm --no-verify-jwt --project-ref <SUPABASE_PROJECT_REF>
+supabase functions deploy stripe-webhook --no-verify-jwt --project-ref <SUPABASE_PROJECT_REF>
 ```
 
 ## Migracija
 
 ```bash
-supabase db push --project-ref laqnnzavwbojntfiqmxj
+supabase db push --project-ref <SUPABASE_PROJECT_REF>
 ```
 
 Ili primijeni `20260711150000_donations_stripe_integration.sql` u SQL Editoru.

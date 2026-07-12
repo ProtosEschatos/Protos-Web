@@ -10,11 +10,23 @@ type Props = { params: { locale: string } }
 
 export default async function AdminInboxPage({ params: { locale } }: Props) {
   setRequestLocale(locale)
-  const [contacts, mailboxStatuses, ...mailboxResults] = await Promise.all([
+  const [contacts, mailboxStatuses] = await Promise.all([
     adminListContacts(50),
     adminListMailboxStatuses(),
-    ...ADMIN_MAILBOXES.map((mailbox) => adminListMailbox(mailbox.id, 40)),
   ])
+
+  // Only show Martina's mailbox once it's actually configured — otherwise
+  // the inbox page shows "Zoho" twice (hers is also a Zoho account) for a
+  // mailbox nobody uses yet. Reappears automatically once MARTINA_IMAP_* is set.
+  const visibleMailboxes = ADMIN_MAILBOXES.filter((mailbox) => {
+    if (mailbox.id === 'martina') {
+      return mailboxStatuses.find((s) => s.id === 'martina')?.configured ?? false
+    }
+    return true
+  })
+  const mailboxResults = await Promise.all(
+    visibleMailboxes.map((mailbox) => adminListMailbox(mailbox.id, 40)),
+  )
 
   return (
     <AdminPageShell
@@ -22,8 +34,7 @@ export default async function AdminInboxPage({ params: { locale } }: Props) {
       description="Svi mail sandučići i kontakt upiti — sve na jednom mjestu u adminu."
     >
       <p className="text-sm text-[var(--light-muted)] mb-8">
-        Zoho ({mailboxStatuses.find((m) => m.id === 'zoho')?.email}), Gmail studio i Martinin sandučić — bez vanjskog
-        webmaila.
+        Zoho ({mailboxStatuses.find((m) => m.id === 'zoho')?.email}) i Gmail studio — bez vanjskog webmaila.
         {' · '}
         <AdminLink href="/admin" className="text-[var(--primary)] hover:underline">
           ← pregled
@@ -31,7 +42,7 @@ export default async function AdminInboxPage({ params: { locale } }: Props) {
       </p>
 
       <div className="space-y-10 mb-10">
-        {ADMIN_MAILBOXES.map((definition, index) => {
+        {visibleMailboxes.map((definition, index) => {
           const status = mailboxStatuses.find((item) => item.id === definition.id)!
           const mailbox = mailboxResults[index]
 

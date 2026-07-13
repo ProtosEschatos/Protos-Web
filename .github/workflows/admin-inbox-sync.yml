@@ -1,9 +1,8 @@
 name: Admin Inbox Sync
 
 on:
-  schedule:
-    # Every 10 minutes — keeps Zoho inbox cache fresh for /admin/inbox
-    - cron: '*/10 * * * *'
+  # Manual only — scheduled runs were hitting Vercel serverless limits on Hobby.
+  # Trigger from GitHub Actions → "Run workflow" when you need a fresh inbox cache.
   workflow_dispatch:
 
 concurrency:

@@ -60,6 +60,10 @@ export default async function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
+  if (pathname === '/robots.txt' || pathname === '/sitemap.xml') {
+    return NextResponse.next()
+  }
+
   if (isAdminPath(pathname)) {
     if (!isAdminLoginPath(pathname)) {
       const token = request.cookies.get(ADMIN_COOKIE)?.value

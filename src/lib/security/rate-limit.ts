@@ -27,6 +27,12 @@ export function getClientIp(request: Request): string {
   return request.headers.get('x-real-ip') || 'unknown'
 }
 
+/** IP to persist for DB rate limits; null when the request has no usable client IP. */
+export function clientIpForStorage(ip: string): string | null {
+  if (!ip || ip === 'unknown') return null
+  return ip.slice(0, 45)
+}
+
 export function checkRateLimit(
   namespace: string,
   ip: string,

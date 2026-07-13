@@ -8,6 +8,7 @@ export async function submitContact(data: {
   service: string
   message: string
   language?: string
+  ip?: string | null
 }) {
   if (!supabase) {
     console.error('Contact submission failed: Supabase not configured')
@@ -21,7 +22,7 @@ export async function submitContact(data: {
     p_service: data.service || null,
     p_message: data.message,
     p_language: data.language || 'hr',
-    p_ip: null,
+    p_ip: data.ip ?? null,
   })
 
   if (error) {

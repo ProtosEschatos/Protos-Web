@@ -6,7 +6,7 @@ import {
   LOCALIZED_PATHS,
   type SiteLocale,
 } from '@/lib/routes/localized-paths'
-import { allLocalesMatcherPattern, isAdminLoginPath, isAdminPath } from './lib/auth/admin-paths'
+import { isAdminLoginPath, isAdminPath } from './lib/auth/admin-paths'
 import {
   ADMIN_COOKIE,
   verifyAdminSessionEdge,
@@ -55,7 +55,8 @@ export default async function middleware(request: NextRequest) {
   const localeRedirect = redirectDefaultLocalePrefix(request)
   if (localeRedirect) return localeRedirect
 
-  if (pathname.startsWith('/api/admin')) {
+  // Never run i18n/admin gates on API routes (cron, contact, webhooks, etc.)
+  if (pathname.startsWith('/api/')) {
     return NextResponse.next()
   }
 
@@ -74,14 +75,14 @@ export default async function middleware(request: NextRequest) {
   return intlMiddleware(request)
 }
 
-const localeMatcherSegment = allLocalesMatcherPattern()
+// Static literals only — Next.js cannot analyze dynamic template literals in matcher.
+const LOCALE_MATCHER = 'hr|en|de|it|es|sr'
 
 export const config = {
   matcher: [
     '/',
-    `/(${localeMatcherSegment})/:path*`,
+    `/(${LOCALE_MATCHER})/:path*`,
     '/admin/:path*',
-    '/api/admin/:path*',
     '/((?!api|_next|_vercel|.*\\..*).*)',
   ],
 }

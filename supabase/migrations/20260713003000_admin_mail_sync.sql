@@ -3,7 +3,7 @@
 
 create table if not exists public.admin_mail_sync (
   mailbox_id text primary key
-    check (mailbox_id in ('zoho', 'gmail-studio', 'martina')),
+    check (mailbox_id in ('zoho', 'martina')),
   messages jsonb not null default '[]'::jsonb,
   error text,
   synced_at timestamptz not null default now()

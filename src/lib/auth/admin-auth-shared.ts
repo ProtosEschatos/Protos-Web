@@ -9,20 +9,6 @@ export const adminCookieOptions = {
   maxAge: 60 * 60 * 24 * 7,
 }
 
-export function isAdminPath(pathname: string): boolean {
-  const path = pathname.split('?')[0]
-  return (
-    path === '/admin' ||
-    path.startsWith('/admin/') ||
-    /^\/(en|de|it|es)\/admin(\/|$)/.test(path)
-  )
-}
-
-export function isAdminLoginPath(pathname: string): boolean {
-  const path = pathname.split('?')[0]
-  return path === '/admin/login' || /^\/(en|de|it|es)\/admin\/login$/.test(path)
-}
-
 async function hmacHex(secret: string, message: string): Promise<string> {
   const enc = new TextEncoder()
   const key = await crypto.subtle.importKey(

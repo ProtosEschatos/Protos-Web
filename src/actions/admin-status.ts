@@ -1,6 +1,7 @@
 'use server'
 
 import { promises as dns } from 'dns'
+import { requireAdmin } from '@/lib/auth/require-admin'
 import { CONTACT_EMAIL, SITE_DOMAIN, SITE_URL, SUPABASE_PROJECT_REF } from '@/lib/config/site'
 
 export type DnsCheck = {
@@ -42,6 +43,8 @@ async function mxRecords(name: string): Promise<string[]> {
 }
 
 export async function getAdminStatus(): Promise<AdminStatus> {
+  await requireAdmin()
+
   const apexTxt = await txtRecords(SITE_DOMAIN)
   const dmarcTxt = await txtRecords(`_dmarc.${SITE_DOMAIN}`)
   const sendTxt = await txtRecords(`send.${SITE_DOMAIN}`)

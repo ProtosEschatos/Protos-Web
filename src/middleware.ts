@@ -6,10 +6,9 @@ import {
   LOCALIZED_PATHS,
   type SiteLocale,
 } from '@/lib/routes/localized-paths'
+import { allLocalesMatcherPattern, isAdminLoginPath, isAdminPath } from './lib/auth/admin-paths'
 import {
   ADMIN_COOKIE,
-  isAdminLoginPath,
-  isAdminPath,
   verifyAdminSessionEdge,
 } from './lib/auth/admin-auth-shared'
 
@@ -75,10 +74,12 @@ export default async function middleware(request: NextRequest) {
   return intlMiddleware(request)
 }
 
+const localeMatcherSegment = allLocalesMatcherPattern()
+
 export const config = {
   matcher: [
     '/',
-    '/(hr|en|de|it|es)/:path*',
+    `/(${localeMatcherSegment})/:path*`,
     '/admin/:path*',
     '/api/admin/:path*',
     '/((?!api|_next|_vercel|.*\\..*).*)',

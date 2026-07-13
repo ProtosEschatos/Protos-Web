@@ -8,9 +8,15 @@ import {
   statusBadge,
 } from '@/lib/queries/admin/donations'
 
-type Props = { params: { locale: string } }
+type Props = { params: Promise<{ locale: string }> }
 
-export default async function AdminDonationsPage({ params: { locale } }: Props) {
+export default async function AdminDonationsPage(props: Props) {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
   setRequestLocale(locale)
   const [donations, summary] = await Promise.all([
     adminListDonations(100),

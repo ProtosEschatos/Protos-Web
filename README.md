@@ -1,10 +1,10 @@
-# Protos Web — Next.js 14 Agency Website
+# Protos Web — Next.js 16 Agency Website
 
 ## Project Overview
 - **Name**: Protos Web
-- **Goal**: Complete agency website migrated from vanilla HTML/CSS/JS to Next.js 14 App Router
-- **Stack**: Next.js 14, TypeScript, Tailwind CSS, Framer Motion, React Three Fiber, Lenis, next-intl
-- **Languages**: Croatian (hr, default), English (en), German (de), Italian (it), Spanish (es)
+- **Goal**: Complete agency website migrated from vanilla HTML/CSS/JS to Next.js 16 App Router
+- **Stack**: Next.js 16, React 19, TypeScript, Tailwind CSS, Framer Motion, React Three Fiber, Lenis, next-intl 4
+- **Languages**: Croatian (hr, default), English (en), German (de), Italian (it), Spanish (es), Serbian (sr)
 
 ## Setup
 

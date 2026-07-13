@@ -1,4 +1,5 @@
 import { getRequestConfig } from 'next-intl/server'
+import { hasLocale } from 'next-intl'
 import { routing } from './routing'
 
 export const locales = routing.locales
@@ -27,11 +28,10 @@ export const localeFlags: Record<Locale, string> = {
 export const CYRILLIC_LOCALES: readonly Locale[] = ['sr']
 
 export default getRequestConfig(async ({ requestLocale }) => {
-  let locale = await requestLocale
-
-  if (!locale || !routing.locales.includes(locale as Locale)) {
-    locale = routing.defaultLocale
-  }
+  const requested = await requestLocale
+  const locale = hasLocale(routing.locales, requested)
+    ? requested
+    : routing.defaultLocale
 
   return {
     locale,

@@ -4,9 +4,15 @@ import { adminListPortfolioItems } from '@/lib/queries/admin/portfolio'
 import AdminPageShell from '@/components/features/admin/AdminPageShell'
 import AdminLink from '@/components/features/admin/AdminLink'
 
-type Props = { params: { locale: string } }
+type Props = { params: Promise<{ locale: string }> }
 
-export default async function AdminPortfolioPage({ params: { locale } }: Props) {
+export default async function AdminPortfolioPage(props: Props) {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
   setRequestLocale(locale)
   const items = await adminListPortfolioItems(locale)
 

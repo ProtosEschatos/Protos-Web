@@ -6,9 +6,15 @@ import AdminLink from '@/components/features/admin/AdminLink'
 import AdminMailboxPanel from '@/components/features/admin/AdminMailboxPanel'
 import { ADMIN_MAILBOXES } from '@/lib/mail/mailboxes'
 
-type Props = { params: { locale: string } }
+type Props = { params: Promise<{ locale: string }> }
 
-export default async function AdminInboxPage({ params: { locale } }: Props) {
+export default async function AdminInboxPage(props: Props) {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
   setRequestLocale(locale)
   const [contacts, mailboxStatuses] = await Promise.all([
     adminListContacts(50),

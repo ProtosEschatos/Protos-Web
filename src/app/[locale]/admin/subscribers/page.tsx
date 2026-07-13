@@ -5,9 +5,15 @@ import AdminLink from '@/components/features/admin/AdminLink'
 import { ADMIN_COMMS_SERVICES } from '@/lib/config/admin-links'
 import { Mail } from 'lucide-react'
 
-type Props = { params: { locale: string } }
+type Props = { params: Promise<{ locale: string }> }
 
-export default async function AdminSubscribersPage({ params: { locale } }: Props) {
+export default async function AdminSubscribersPage(props: Props) {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
   setRequestLocale(locale)
   const subscribers = await adminListSubscribers(100)
 

@@ -2,9 +2,15 @@ import { setRequestLocale } from 'next-intl/server'
 import AdminPageShell from '@/components/features/admin/AdminPageShell'
 import AdminStaticPagePanel from '@/components/features/admin/AdminStaticPagePanel'
 
-type Props = { params: { locale: string } }
+type Props = { params: Promise<{ locale: string }> }
 
-export default async function AdminServicesPage({ params: { locale } }: Props) {
+export default async function AdminServicesPage(props: Props) {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
   setRequestLocale(locale)
 
   return (

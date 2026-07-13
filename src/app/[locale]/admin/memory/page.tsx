@@ -6,7 +6,7 @@ import AdminSection from '@/components/features/admin/AdminSection'
 import AdminLink from '@/components/features/admin/AdminLink'
 import { adminGetMemorySnapshot } from '@/lib/queries/admin/memory'
 
-type Props = { params: { locale: string } }
+type Props = { params: Promise<{ locale: string }> }
 
 function formatDate(iso: string | null): string {
   if (!iso) return '—'
@@ -17,7 +17,13 @@ function formatDate(iso: string | null): string {
   }
 }
 
-export default async function AdminMemoryPage({ params: { locale } }: Props) {
+export default async function AdminMemoryPage(props: Props) {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
   setRequestLocale(locale)
   const snapshot = await adminGetMemorySnapshot()
 

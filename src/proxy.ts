@@ -47,7 +47,7 @@ function redirectDefaultLocalePrefix(request: NextRequest): NextResponse | null 
   return null
 }
 
-export default async function middleware(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   const aboutRewrite = handleLocalizedAboutUrls(request)
@@ -80,13 +80,10 @@ export default async function middleware(request: NextRequest) {
   return intlMiddleware(request)
 }
 
-// Static literals only — Next.js cannot analyze dynamic template literals in matcher.
-const LOCALE_MATCHER = 'hr|en|de|it|es|sr'
-
 export const config = {
   matcher: [
     '/',
-    `/(${LOCALE_MATCHER})/:path*`,
+    '/(hr|en|de|it|es|sr)/:path*',
     '/admin/:path*',
     '/((?!api|_next|_vercel|.*\\..*).*)',
   ],

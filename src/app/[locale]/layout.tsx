@@ -89,13 +89,22 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }))
 }
 
-export default async function LocaleLayout({
-  children,
-  params: { locale },
-}: {
-  children: React.ReactNode
-  params: { locale: string }
-}) {
+export default async function LocaleLayout(
+  props: {
+    children: React.ReactNode
+    params: Promise<{ locale: string }>
+  }
+) {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
+  const {
+    children
+  } = props;
+
   if (!locales.includes(locale as Locale)) {
     notFound()
   }
@@ -118,7 +127,7 @@ export default async function LocaleLayout({
           <div className="boot-ssr-spinner" />
           <p className="boot-ssr-title">Protos Web</p>
         </div>
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           <LenisProvider>
             <Analytics />
             <AppChrome>{children}</AppChrome>

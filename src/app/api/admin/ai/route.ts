@@ -19,7 +19,7 @@ type AiRequestBody = {
 }
 
 export async function POST(request: Request) {
-  const token = cookies().get(ADMIN_COOKIE)?.value
+  const token = (await cookies()).get(ADMIN_COOKIE)?.value
   if (!verifyAdminSession(token)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }

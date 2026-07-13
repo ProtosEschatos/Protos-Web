@@ -7,7 +7,7 @@ import { Link } from '@/routing'
 import { ArrowLeft, Calendar } from 'lucide-react'
 import { buildBlogPostMetadata, blogPostingJsonLd, normalizeAuthorSlug } from '@/lib/config/seo'
 
-type Props = { params: { locale: string; slug: string } }
+type Props = { params: Promise<{ locale: string; slug: string }> }
 
 export async function generateStaticParams() {
   const slugs = await getAllBlogSlugs()
@@ -17,7 +17,14 @@ export async function generateStaticParams() {
   }))
 }
 
-export async function generateMetadata({ params: { locale, slug } }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
+
+  const {
+    locale,
+    slug
+  } = params;
+
   setRequestLocale(locale)
   const post = await getBlogPostBySlug(slug, locale)
   if (!post) return {}
@@ -48,7 +55,14 @@ function authorLabel(
   return t('authorDario')
 }
 
-export default async function BlogPostPage({ params: { locale, slug } }: Props) {
+export default async function BlogPostPage(props: Props) {
+  const params = await props.params;
+
+  const {
+    locale,
+    slug
+  } = params;
+
   setRequestLocale(locale)
   const t = await getTranslations({ locale, namespace: 'blog' })
   const post = await getBlogPostBySlug(slug, locale)

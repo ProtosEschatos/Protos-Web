@@ -3,6 +3,6 @@ import { cookies } from 'next/headers'
 import { ADMIN_COOKIE, verifyAdminSession } from '@/lib/auth/admin-auth'
 
 export async function GET() {
-  const token = cookies().get(ADMIN_COOKIE)?.value
+  const token = (await cookies()).get(ADMIN_COOKIE)?.value
   return NextResponse.json({ authenticated: verifyAdminSession(token) })
 }

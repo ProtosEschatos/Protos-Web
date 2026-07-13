@@ -4,7 +4,7 @@ import AdminPageShell from '@/components/features/admin/AdminPageShell'
 import { getAiProviderStatus } from '@/lib/ai/providers'
 import { CheckCircle2, XCircle } from 'lucide-react'
 
-type Props = { params: { locale: string } }
+type Props = { params: Promise<{ locale: string }> }
 
 function ProviderPill({ label, ready }: { label: string; ready: boolean }) {
   return (
@@ -21,7 +21,13 @@ function ProviderPill({ label, ready }: { label: string; ready: boolean }) {
   )
 }
 
-export default async function AdminAiPage({ params: { locale } }: Props) {
+export default async function AdminAiPage(props: Props) {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
   setRequestLocale(locale)
   const status = getAiProviderStatus()
 

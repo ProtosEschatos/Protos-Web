@@ -5,11 +5,17 @@ import { buildAboutPageJsonLd } from '@/lib/config/creator-seo'
 import { LOCALIZED_PATHS, aboutPathForLocale } from '@/lib/routes/localized-paths'
 
 type Props = {
-  params: { locale: string }
+  params: Promise<{ locale: string }>
   children: React.ReactNode
 }
 
-export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
   setRequestLocale(locale)
   const t = await getTranslations({ locale, namespace: 'metadata.about' })
   return buildPageMetadata({
@@ -22,7 +28,17 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
   })
 }
 
-export default async function AboutLayout({ children, params: { locale } }: Props) {
+export default async function AboutLayout(props: Props) {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
+  const {
+    children
+  } = props;
+
   setRequestLocale(locale)
   const t = await getTranslations({ locale, namespace: 'metadata.about' })
   const jsonLd = buildAboutPageJsonLd(locale, t('title'), t('description'))

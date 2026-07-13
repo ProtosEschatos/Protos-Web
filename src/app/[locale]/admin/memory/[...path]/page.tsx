@@ -6,7 +6,7 @@ import { adminGetMemoryDoc } from '@/lib/queries/admin/memory'
 import { memoryPath } from '@/lib/agent-memory'
 
 type Props = {
-  params: { locale: string; path: string[] }
+  params: Promise<{ locale: string; path: string[] }>
 }
 
 function resolveDocPath(segments: string[]): string {
@@ -15,7 +15,14 @@ function resolveDocPath(segments: string[]): string {
   return memoryPath(...withMd.split('/'))
 }
 
-export default async function AdminMemoryDocPage({ params: { locale, path } }: Props) {
+export default async function AdminMemoryDocPage(props: Props) {
+  const params = await props.params;
+
+  const {
+    locale,
+    path
+  } = params;
+
   setRequestLocale(locale)
 
   if (!path?.length) notFound()
@@ -40,5 +47,5 @@ export default async function AdminMemoryDocPage({ params: { locale, path } }: P
         )}
       </p>
     </AdminPageShell>
-  )
+  );
 }

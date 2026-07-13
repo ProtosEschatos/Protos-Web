@@ -4,9 +4,16 @@ import { adminGetBlogPost } from '@/lib/queries/admin/blog'
 import AdminPageShell from '@/components/features/admin/AdminPageShell'
 import BlogAdminForm from '@/components/features/admin/BlogAdminForm'
 
-type Props = { params: { locale: string; id: string } }
+type Props = { params: Promise<{ locale: string; id: string }> }
 
-export default async function AdminBlogEditPage({ params: { locale, id } }: Props) {
+export default async function AdminBlogEditPage(props: Props) {
+  const params = await props.params;
+
+  const {
+    locale,
+    id
+  } = params;
+
   setRequestLocale(locale)
   const post = await adminGetBlogPost(id)
   if (!post) notFound()

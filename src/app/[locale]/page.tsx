@@ -10,9 +10,15 @@ import Portfolio from '@/components/features/home/sections/Portfolio'
 import Blog from '@/components/features/home/sections/Blog'
 import Contact from '@/components/features/home/sections/Contact'
 
-type Props = { params: { locale: string } }
+type Props = { params: Promise<{ locale: string }> }
 
-export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
   setRequestLocale(locale)
   const t = await getTranslations({ locale, namespace: 'metadata.home' })
   return buildPageMetadata({
@@ -23,7 +29,13 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
   })
 }
 
-export default async function HomePage({ params: { locale } }: Props) {
+export default async function HomePage(props: Props) {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
   setRequestLocale(locale)
   const blogPosts = await getBlogPosts(3, locale)
   const portfolioItems = await getPortfolioItems(locale, 3)

@@ -7,9 +7,15 @@ import { PROTOS_WEB_MARQUEE } from '@/lib/config/tech-stacks'
 import { Link } from '@/routing'
 import { ArrowRight, Layers } from 'lucide-react'
 
-type Props = { params: { locale: string } }
+type Props = { params: Promise<{ locale: string }> }
 
-export default async function PortfolioPage({ params: { locale } }: Props) {
+export default async function PortfolioPage(props: Props) {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
   setRequestLocale(locale)
   const t = await getTranslations({ locale, namespace: 'portfolioPage' })
   const items = await getPortfolioItems(locale, 12)

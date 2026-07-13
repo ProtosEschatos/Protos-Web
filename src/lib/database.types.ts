@@ -61,6 +61,27 @@ export type Database = {
           },
         ]
       }
+      admin_mail_sync: {
+        Row: {
+          mailbox_id: string
+          messages: Json
+          error: string | null
+          synced_at: string
+        }
+        Insert: {
+          mailbox_id: string
+          messages?: Json
+          error?: string | null
+          synced_at?: string
+        }
+        Update: {
+          mailbox_id?: string
+          messages?: Json
+          error?: string | null
+          synced_at?: string
+        }
+        Relationships: []
+      }
       contacts: {
         Row: {
           created_at: string | null

@@ -3,9 +3,15 @@ import { getBlogPosts } from '@/lib/queries/blog'
 import BlogGrid from '@/components/features/blog/BlogGrid'
 import { blogIndexJsonLd } from '@/lib/config/seo'
 
-type Props = { params: { locale: string } }
+type Props = { params: Promise<{ locale: string }> }
 
-export default async function BlogPage({ params: { locale } }: Props) {
+export default async function BlogPage(props: Props) {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
   setRequestLocale(locale)
   const t = await getTranslations({ locale, namespace: 'blog' })
   const posts = await getBlogPosts(50, locale)

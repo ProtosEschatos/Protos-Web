@@ -15,9 +15,15 @@ import { ADMIN_NAV_SECTIONS } from '@/lib/admin-nav'
 import { adminNavIcon } from '@/lib/admin-nav-icons'
 import { SITE_DOMAIN, SITE_URL } from '@/lib/config/site'
 
-type Props = { params: { locale: string } }
+type Props = { params: Promise<{ locale: string }> }
 
-export default async function AdminPage({ params: { locale } }: Props) {
+export default async function AdminPage(props: Props) {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
   setRequestLocale(locale)
   const notifications = await adminGetNotifications()
   const [marketing, security, comms, liveServices, memoryResult] = await Promise.all([

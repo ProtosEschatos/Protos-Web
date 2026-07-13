@@ -19,7 +19,7 @@
     "framer-motion": "^12.42.2",
     "imapflow": "^1.0.184",
     "lenis": "^1.1.18",
-    "lucide-react": "^0.454.0",
+    "lucide-react": "^1.24.0",
     "next": "^16.2.10",
     "next-intl": "^4.13.2",
     "r3f-perf": "^7.2.3",

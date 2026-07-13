@@ -1,4 +1,4 @@
-import { CONTACT_EMAIL, INSTAGRAM_URL } from '@/lib/config/site'
+import { CONTACT_EMAIL } from '@/lib/config/site'
 
 export const SOCIAL_EMAIL = CONTACT_EMAIL
 export const SOCIAL_PHONE = '+385 97 604 39 41'

@@ -12,6 +12,9 @@
 # Install dependencies
 npm install
 
+# Copy env template and fill in Supabase + admin keys
+cp .env.example .env.local
+
 # Run development server
 npm run dev
 
@@ -21,6 +24,20 @@ npm run build
 # Start production server
 npm start
 ```
+
+## Required environment (Vercel + local)
+
+| Variable | Required | Purpose |
+|----------|----------|---------|
+| `NEXT_PUBLIC_SUPABASE_URL` | Yes | Blog, portfolio, contact form |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes | Public Supabase client |
+| `SUPABASE_SERVICE_ROLE_KEY` | Yes | Admin panel, cron jobs |
+| `NEXT_PUBLIC_SITE_URL` | Yes | SEO, OG, sitemap (`https://protosweb.eu`) |
+| `ADMIN_SECRET` | Yes | `/admin` login password |
+
+**GitHub Actions CI** also needs repo secrets: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`.
+
+Live site: **https://protosweb.eu** · Repo: **https://github.com/ProtosEschatos/Protos-Web**
 
 ## Project Structure
 

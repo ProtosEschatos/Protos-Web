@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "type-check": "tsc --noEmit",
     "upload:showcase-assets": "node scripts/upload-showcase-assets.mjs",
     "cleanup:showcase-assets": "node scripts/cleanup-showcase-assets.mjs"

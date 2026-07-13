@@ -3,7 +3,7 @@
 import { useState, FormEvent } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { MousePointer2, Heart } from 'lucide-react'
-import { Link } from '@/routing'
+import { Link } from '@/navigation'
 import TransitionLink from '@/components/navigation/TransitionLink'
 import SocialLinks from '@/components/ui/SocialLinks'
 import ProtosLogo from '@/components/ui/ProtosLogo'

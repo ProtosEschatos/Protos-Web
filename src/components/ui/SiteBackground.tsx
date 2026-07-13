@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { usePathname } from '@/routing'
+import { usePathname } from '@/navigation'
 import { BACKGROUND_FALLBACKS, getBackgroundKey } from '@/lib/showcase/site-background-routes'
 import PageBackgroundCanvas from '@/components/three/backgrounds/PageBackgroundCanvas'
 import { BOOT_COMPLETE_EVENT, isBootComplete } from '@/lib/config/boot-gate'

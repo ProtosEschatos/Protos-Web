@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { usePathname } from '@/routing'
+import { usePathname } from '@/navigation'
 import { useTranslations } from 'next-intl'
 import TransitionLink from '@/components/navigation/TransitionLink'
 

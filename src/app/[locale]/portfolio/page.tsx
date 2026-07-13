@@ -4,7 +4,7 @@ import PortfolioGrid from '@/components/features/portfolio/PortfolioGrid'
 import JsonLd from '@/components/seo/JsonLd'
 import { portfolioItemListJsonLd } from '@/lib/config/seo'
 import { PROTOS_WEB_MARQUEE } from '@/lib/config/tech-stacks'
-import { Link } from '@/routing'
+import { Link } from '@/navigation'
 import { ArrowRight, Layers } from 'lucide-react'
 
 type Props = { params: Promise<{ locale: string }> }

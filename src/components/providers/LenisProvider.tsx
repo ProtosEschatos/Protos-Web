@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import Lenis from 'lenis'
-import { usePathname } from '@/routing'
+import { usePathname } from '@/navigation'
 
 export default function LenisProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()

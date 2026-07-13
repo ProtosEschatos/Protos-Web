@@ -9,7 +9,7 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import { usePathname, useRouter } from '@/routing'
+import { usePathname, useRouter } from '@/navigation'
 import {
   getTransitionDestinationKey,
   normalizeHref,

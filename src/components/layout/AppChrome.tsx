@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState, useLayoutEffect } from 'react'
-import { usePathname } from '@/routing'
+import { usePathname } from '@/navigation'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import PageLoader from '@/components/ui/PageLoader'

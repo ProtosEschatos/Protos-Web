@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
-import { usePathname, useRouter } from '@/routing'
+import { usePathname, useRouter } from '@/navigation'
 import TransitionLink from '@/components/navigation/TransitionLink'
 import { localeLabels, localeFlags, locales, type Locale } from '@/i18n'
 import MobileMenu from './MobileMenu'

@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
-import { Link } from '@/routing'
+import { Link } from '@/navigation'
 import { ArrowRight } from 'lucide-react'
 import { PROCESS_FEATURE_ICONS } from '@/components/ui/section-icons'
 import { PROTOS_WEB_STACK } from '@/lib/config/tech-stacks'

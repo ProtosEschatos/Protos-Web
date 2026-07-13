@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Link } from '@/routing'
+import { Link } from '@/navigation'
 import { useShowcaseViewport } from '@/hooks/use-showcase-viewport'
 import type { ShowcaseProject } from './constants'
 

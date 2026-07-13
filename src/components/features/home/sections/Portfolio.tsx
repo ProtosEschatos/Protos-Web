@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
-import { Link } from '@/routing'
+import { Link } from '@/navigation'
 import { ArrowRight, Layers } from 'lucide-react'
 import type { PortfolioItem } from '@/types/portfolio'
 import PortfolioGrid from '@/components/features/portfolio/PortfolioGrid'

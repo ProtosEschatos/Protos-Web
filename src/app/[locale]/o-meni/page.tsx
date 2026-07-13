@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
-import { Link } from '@/routing'
+import { Link } from '@/navigation'
 import { ArrowRight, BookOpen, Instagram } from 'lucide-react'
 import OnlinePresence from '@/components/features/home/sections/OnlinePresence'
 import DualStacksSection from '@/components/features/home/sections/DualStacksSection'

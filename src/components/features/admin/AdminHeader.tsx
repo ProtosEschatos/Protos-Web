@@ -8,7 +8,7 @@ import AdminActivityBadge from '@/components/features/admin/AdminActivityBadge'
 import AdminClock from '@/components/features/admin/AdminClock'
 import AdminLogoutButton from '@/components/features/admin/AdminLogoutButton'
 import { findAdminNavItem } from '@/lib/admin-nav'
-import { usePathname } from '@/routing'
+import { usePathname } from '@/navigation'
 import { SITE_URL } from '@/lib/config/site'
 
 export default function AdminHeader() {

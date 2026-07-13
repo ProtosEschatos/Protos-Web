@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
-import { Link } from '@/routing'
+import { Link } from '@/navigation'
 import { Calendar } from 'lucide-react'
 import type { BlogPost } from '@/types/blog'
 

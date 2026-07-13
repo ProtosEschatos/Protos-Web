@@ -1,7 +1,7 @@
 'use client'
 
 import type { ComponentProps, MouseEvent } from 'react'
-import { Link, usePathname } from '@/routing'
+import { Link, usePathname } from '@/navigation'
 import { usePageTransition } from '@/components/navigation/PageTransitionProvider'
 import { isMainNavHref, normalizeHref } from '@/lib/routes/main-nav'
 

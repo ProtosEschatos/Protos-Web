@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { Check } from 'lucide-react'
-import { Link } from '@/routing'
+import { Link } from '@/navigation'
 import type { PricingPlanRow } from '@/lib/queries/pricing'
 
 const cardVariant = {

@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useTranslations, useLocale } from 'next-intl'
-import { Link } from '@/routing'
+import { Link } from '@/navigation'
 import { ArrowRight } from 'lucide-react'
 import { SERVICE_ICONS } from '@/components/ui/section-icons'
 import FaqSection from '@/components/features/home/sections/FaqSection'

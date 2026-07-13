@@ -3,7 +3,7 @@
 import { useState, useRef, useMemo, useEffect, useCallback, memo } from 'react'
 import * as THREE from 'three'
 import { useTranslations } from 'next-intl'
-import { Link } from '@/routing'
+import { Link } from '@/navigation'
 import { type ShowcaseProject } from './showcase/constants'
 import { ShowcaseScene } from './showcase/GalleryScene'
 import { buildShowcaseProjects } from './showcase/buildProjects'

@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { getBlogPostBySlug, getAllBlogSlugs } from '@/lib/queries/blog'
 import BlogPostContent from '@/components/features/blog/BlogPostContent'
-import { Link } from '@/routing'
+import { Link } from '@/navigation'
 import { ArrowLeft, Calendar } from 'lucide-react'
 import { buildBlogPostMetadata, blogPostingJsonLd, normalizeAuthorSlug } from '@/lib/config/seo'
 

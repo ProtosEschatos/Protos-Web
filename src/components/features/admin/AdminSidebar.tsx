@@ -1,12 +1,12 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { usePathname } from '@/routing'
+import { usePathname } from '@/navigation'
 import { Activity, Cpu, Menu, X, Zap } from 'lucide-react'
 import AdminLink from '@/components/features/admin/AdminLink'
 import { ADMIN_NAV_SECTIONS, isAdminNavActive } from '@/lib/admin-nav'
 import { adminNavIcon } from '@/lib/admin-nav-icons'
-import { Link } from '@/routing'
+import { Link } from '@/navigation'
 
 export default function AdminSidebar() {
   const pathname = usePathname()

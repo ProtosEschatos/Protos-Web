@@ -45,15 +45,20 @@ src/
 - Only commit when the user asks
 - Croatian copy for user-facing admin strings
 
+## Repo root
+
+**Jedan folder:** `~/Protos-Web` (git root, push na `main` → Vercel). Nema ugniježđenog `Protos-Web/Protos-Web`.
+
 ## Deploy
 
-Push to `main` → Vercel production. Verify live after push (`vercel ls` or curl).
+Push to `main` → Vercel production → https://www.protosweb.eu
+
+Verify live after push: `curl -s -o /dev/null -w "%{http_code}" https://www.protosweb.eu/api/blog`
 
 **Critical:** `ADMIN_SECRET` lives on Vercel only — git revert does **not** restore it.
 
 ## Current state (2026-07-13)
 
-- **Latest commit:** `147ec2b` — middleware fix: `/api/*` routes work on production
-- **Live:** https://www.protosweb.eu/admin
-- **Inbox:** Zoho + Martina placeholder (no Gmail studio)
-- **Docs:** `docs/admin-console.md`, `docs/stripe-donations.md`, `docs/security.md`
+- **Latest commit:** `29e2873` — repo cleanup + middleware robots/sitemap fix
+- **Live:** https://www.protosweb.eu — API, robots, sitemap, inbox cron OK
+- **Inbox:** Zoho + Martina (no Gmail studio)

@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { getBlogPostBySlug, getAllBlogSlugs } from '@/lib/queries/blog'
+import { getBlogPostBySlug, getAllBlogSlugs, getAdjacentBlogPosts } from '@/lib/queries/blog'
 import BlogPostContent from '@/components/features/blog/BlogPostContent'
 import { Link } from '@/routing'
-import { ArrowLeft, Calendar } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Calendar } from 'lucide-react'
 import { buildBlogPostMetadata, blogPostingJsonLd, normalizeAuthorSlug } from '@/lib/config/seo'
 
 type Props = { params: { locale: string; slug: string } }
@@ -55,6 +55,8 @@ export default async function BlogPostPage({ params: { locale, slug } }: Props) 
 
   if (!post) notFound()
 
+  const { previous, next } = await getAdjacentBlogPosts(slug, locale)
+
   const authorSlug = normalizeAuthorSlug(post.author_slug)
   const jsonLd = blogPostingJsonLd({
     title: post.title,
@@ -102,6 +104,42 @@ export default async function BlogPostPage({ params: { locale, slug } }: Props) 
 
           {post.content ? <BlogPostContent content={post.content} /> : null}
           </div>
+
+          {(previous || next) ? (
+            <nav
+              className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4"
+              aria-label={t('postNavLabel')}
+            >
+              {previous ? (
+                <Link
+                  href={`/blog/${previous.slug}`}
+                  className="group cosmic-panel rounded-2xl p-5 text-left hover:border-[var(--primary)]/40 transition-colors"
+                >
+                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[var(--light-muted)] mb-2">
+                    <ArrowLeft className="w-3.5 h-3.5" /> {t('prevPost')}
+                  </span>
+                  <span className="block text-sm font-semibold text-[var(--light)] group-hover:text-[var(--primary)] transition-colors line-clamp-2">
+                    {previous.title}
+                  </span>
+                </Link>
+              ) : (
+                <div />
+              )}
+              {next ? (
+                <Link
+                  href={`/blog/${next.slug}`}
+                  className="group cosmic-panel rounded-2xl p-5 text-right hover:border-[var(--primary)]/40 transition-colors sm:col-start-2"
+                >
+                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[var(--light-muted)] mb-2">
+                    {t('nextPost')} <ArrowRight className="w-3.5 h-3.5" />
+                  </span>
+                  <span className="block text-sm font-semibold text-[var(--light)] group-hover:text-[var(--primary)] transition-colors line-clamp-2">
+                    {next.title}
+                  </span>
+                </Link>
+              ) : null}
+            </nav>
+          ) : null}
         </div>
       </article>
     </>

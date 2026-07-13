@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase'
 import type { PortfolioItem } from '@/types/portfolio'
+import { withPortfolioImageFallback } from '@/lib/config/portfolio-image-fallbacks'
 
 export async function getPortfolioItems(
   language = 'hr',
@@ -25,7 +26,6 @@ export async function getPortfolioItems(
   }
 
   const rows = await fetchByLanguage(language)
-  if (rows.length > 0 || language === 'hr') return rows
-
-  return fetchByLanguage('hr')
+  const result = rows.length > 0 || language === 'hr' ? rows : await fetchByLanguage('hr')
+  return result.map(withPortfolioImageFallback)
 }

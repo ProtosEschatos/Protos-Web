@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="Bodulica Shop preview">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#fb923c"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <rect x="48" y="48" width="704" height="504" rx="24" fill="#111827" stroke="#334155" stroke-width="2"/>
+  <rect x="96" y="96" width="240" height="28" rx="14" fill="url(#accent)" opacity="0.9"/>
+  <rect x="96" y="148" width="520" height="18" rx="9" fill="#475569"/>
+  <rect x="96" y="182" width="440" height="18" rx="9" fill="#334155"/>
+  <rect x="96" y="240" width="180" height="180" rx="16" fill="#1f2937" stroke="#475569"/>
+  <rect x="300" y="240" width="180" height="180" rx="16" fill="#1f2937" stroke="#475569"/>
+  <rect x="504" y="240" width="180" height="180" rx="16" fill="#1f2937" stroke="#475569"/>
+  <text x="400" y="500" text-anchor="middle" fill="#f8fafc" font-family="system-ui,sans-serif" font-size="28" font-weight="700">Bodulica Shop</text>
+  <text x="400" y="536" text-anchor="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="16">bodulica.shop</text>
+</svg>

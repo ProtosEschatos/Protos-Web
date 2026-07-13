@@ -55,6 +55,7 @@ export default function PortfolioGrid({ items }: Props) {
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 33vw"
                 loading={i === 0 ? 'eager' : 'lazy'}
+                unoptimized={p.image_url.endsWith('.svg')}
               />
             </div>
           ) : (

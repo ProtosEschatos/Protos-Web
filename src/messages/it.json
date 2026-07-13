@@ -268,7 +268,10 @@
     "authorBy": "Di {author}",
     "authorDario": "Dario Imširović",
     "authorMartina": "Martina Markulin",
-    "authorBoth": "Dario Imširović & Martina Markulin"
+    "authorBoth": "Dario Imširović & Martina Markulin",
+    "postNavLabel": "Navigazione tra articoli",
+    "prevPost": "Articolo precedente",
+    "nextPost": "Articolo successivo"
   },
   "contact": {
     "label": "CONTATTO",

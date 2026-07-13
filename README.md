@@ -229,7 +229,7 @@ Functions deploy automatically on push to `main` when `supabase/functions/**` ch
 
 ## Supabase Keep-Alive
 
-Free-tier Supabase projects pause after ~7 days of inactivity. A GitHub Actions cron (`.github/workflows/supabase-keep-alive.yml`) pings the `keep-alive` edge function **every 10 minutes**.
+Free-tier Supabase projects pause after ~7 days of inactivity. A GitHub Actions cron (`.github/workflows/supabase-keep-alive.yml`) pings the `keep-alive` edge function **every 5 minutes**.
 
 **One-time setup:**
 

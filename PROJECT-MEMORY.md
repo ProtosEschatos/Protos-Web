@@ -267,7 +267,7 @@ Ključne datoteke: `src/components/three/SpaceGallery.tsx` (phase UI), `showcase
 | Hardkodirano (i18n) | `services`, `process_steps`, `pricing_plans`, `testimonials` — NISU spojeni na frontend (namjerno). |
 | Edge funkcije | `submit-form` (v18), `subscribe` (v17), `content` (v13), `keep-alive` (v4) — deployane, submit/subscribe bez JWT |
 | API rute | `/api/contact`, `/api/subscribe`, `/api/blog`. |
-| CI/CD | GitHub Actions: `ci` (lint/type-check/build), `security`, `supabase-keep-alive` (cron 10min), `supabase-deploy-functions`. |
+| CI/CD | GitHub Actions: `ci` (lint/type-check/build), `security`, `supabase-keep-alive` (cron 5min), `supabase-deploy-functions`. |
 
 ### Config status (provjereno 2026-07-06)
 - **Supabase Edge secrets:** ✅ `RESEND_API_KEY`, `RESEND_FROM_EMAIL=dario.admin@protosweb.eu`, `CONTACT_EMAIL=dario.admin@protosweb.eu`, `KEEP_ALIVE_SECRET`, `BREVO_API_KEY`.

@@ -1,33 +1,7 @@
-'use client'
+import { adminGetActivityBadgeCount } from '@/actions/admin-notifications'
 
-import { useEffect, useState } from 'react'
-
-export default function AdminActivityBadge() {
-  const [count, setCount] = useState(0)
-
-  useEffect(() => {
-    let cancelled = false
-
-    const load = () => {
-      fetch('/api/admin/notifications/badge')
-        .then((res) => (res.ok ? res.json() : { count: 0 }))
-        .then((data: { count?: number }) => {
-          if (!cancelled) setCount(data.count ?? 0)
-        })
-        .catch(() => {
-          if (!cancelled) setCount(0)
-        })
-    }
-
-    load()
-    const timer = window.setInterval(load, 60_000)
-
-    return () => {
-      cancelled = true
-      window.clearInterval(timer)
-    }
-  }, [])
-
+export default async function AdminActivityBadge() {
+  const count = await adminGetActivityBadgeCount()
   if (count <= 0) return null
 
   return (

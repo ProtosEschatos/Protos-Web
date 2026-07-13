@@ -20,12 +20,6 @@ export default function SiteConsentModal({ open, onAccepted }: SiteConsentModalP
   const [termsAccepted, setTermsAccepted] = useState(false)
   const [analyticsOptIn, setAnalyticsOptIn] = useState(false)
 
-  const accept = () => {
-    if (!termsAccepted) return
-    saveSiteConsent(analyticsOptIn)
-    onAccepted()
-  }
-
   return (
     <AnimatePresence>
       {open && (
@@ -33,12 +27,6 @@ export default function SiteConsentModal({ open, onAccepted }: SiteConsentModalP
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onKeyDown={(e) => {
-            if (e.key !== 'Enter') return
-            if ((e.target as HTMLElement).tagName === 'A') return
-            e.preventDefault()
-            accept()
-          }}
           className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/70 backdrop-blur-sm px-6"
           role="dialog"
           aria-modal="true"
@@ -124,7 +112,10 @@ export default function SiteConsentModal({ open, onAccepted }: SiteConsentModalP
             <button
               type="button"
               disabled={!termsAccepted}
-              onClick={accept}
+              onClick={() => {
+                saveSiteConsent(analyticsOptIn)
+                onAccepted()
+              }}
               className="w-full px-6 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-emerald-500 text-white text-sm font-semibold hover:-translate-y-0.5 transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
             >
               {t('consentModalAccept')}

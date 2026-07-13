@@ -52,29 +52,6 @@ export async function getBlogPostBySlug(
   }
 }
 
-export type AdjacentBlogPosts = {
-  previous: Pick<BlogPost, 'slug' | 'title'> | null
-  next: Pick<BlogPost, 'slug' | 'title'> | null
-}
-
-/** Chronological neighbors: `previous` = older post, `next` = newer post. */
-export async function getAdjacentBlogPosts(
-  slug: string,
-  language = 'hr',
-): Promise<AdjacentBlogPosts> {
-  const posts = await getBlogPosts(100, language)
-  const index = posts.findIndex((post) => post.slug === slug)
-  if (index === -1) return { previous: null, next: null }
-
-  const previous =
-    index < posts.length - 1
-      ? { slug: posts[index + 1].slug, title: posts[index + 1].title }
-      : null
-  const next = index > 0 ? { slug: posts[index - 1].slug, title: posts[index - 1].title } : null
-
-  return { previous, next }
-}
-
 export async function getAllBlogSlugs(): Promise<BlogSlugEntry[]> {
   if (!supabase) return []
 

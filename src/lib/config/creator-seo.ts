@@ -25,11 +25,8 @@ export const CREATOR_PROFILES = {
     id: DARIO_PERSON_ID,
     name: LEGAL_OWNER,
     givenName: 'Dario',
-    familyName: 'Imširović',
-    // English/international keyboards can't type š/ć — cover both the fully
-    // ASCII spelling and the older partial-diacritic spelling that was live
-    // on the site before, so search matches regardless of how it's typed.
-    alternateName: ['Dario Imsirovic', 'Dario Imsirović'],
+    familyName: 'Imsirović',
+    alternateName: ['Dario Imsirovic'],
     jobTitle: {
       hr: 'AI inženjer & Full Stack Cross-Web Developer',
       en: 'AI Engineer & Full Stack Cross-Web Developer',
@@ -80,9 +77,8 @@ const KEYWORDS: Record<'hr' | 'en', string> = {
     'protos web studio',
     'web dizajn Zagreb',
     'izrada web stranica',
-    'Dario Imširović',
-    'Dario Imsirovic',
     'Dario Imsirović',
+    'Dario Imsirovic',
     'Martina Markulin',
     'AI inženjer',
     'full stack developer Zagreb',
@@ -107,9 +103,8 @@ const KEYWORDS: Record<'hr' | 'en', string> = {
     'protos web studio',
     'web design Zagreb',
     'website development Croatia',
-    'Dario Imširović',
-    'Dario Imsirovic',
     'Dario Imsirović',
+    'Dario Imsirovic',
     'Martina Markulin',
     'AI engineer',
     'full stack developer Zagreb',
@@ -134,9 +129,9 @@ export function getCreatorKeywords(locale: string): string {
 export function getCreatorMetaDescription(locale: string): string {
   const loc = resolveLocale(locale)
   if (loc === 'hr') {
-    return 'Protos Web — web studio iz Zagreba. AI inženjer Dario Imširović (full stack, 3D). Frontend/shop dizajn: Martina Markulin.'
+    return 'Protos Web — web studio iz Zagreba. AI inženjer Dario Imsirović (full stack, 3D). Frontend/shop dizajn: Martina Markulin.'
   }
-  return 'Protos Web — web studio from Zagreb. AI engineer Dario Imširović (full stack, 3D). Frontend/shop design: Martina Markulin.'
+  return 'Protos Web — web studio from Zagreb. AI engineer Dario Imsirović (full stack, 3D). Frontend/shop design: Martina Markulin.'
 }
 
 type GraphLocale = 'hr' | 'en'

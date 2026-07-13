@@ -3,9 +3,11 @@ import {
   ADMIN_COOKIE,
   SESSION_SALT,
   adminCookieOptions,
+  isAdminLoginPath,
+  isAdminPath,
 } from './admin-auth-shared'
 
-export { ADMIN_COOKIE, adminCookieOptions }
+export { ADMIN_COOKIE, adminCookieOptions, isAdminLoginPath, isAdminPath }
 
 export function getAdminSessionToken(): string {
   const secret = process.env.ADMIN_SECRET?.trim()

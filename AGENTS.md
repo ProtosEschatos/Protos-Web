@@ -1,42 +1,54 @@
 # Protos-Web — Agent Instructions
 
-Live: https://www.protosweb.eu  
+Live site: https://www.protosweb.eu  
 Repo: ProtosEschatos/Protos-Web
 
 ## Before you work
 
 1. Read `docs/security.md` for secret placement (never put `ADMIN_SECRET` in Supabase).
 2. Admin UI: `docs/admin-console.md` + reference repo `Google-AI-Studio-Github-Connect`.
-3. Full project memory: **Protos-Agent** repo `memory/projects/protos-web.md` — browse at `/admin/memory`.
+3. For full project memory see **Protos-Agent** repo: `memory/projects/protos-web.md`.
+4. **Human UI:** browse memory at `/admin/memory` (read-only, loads from Protos-Agent GitHub).
 
 ## Stack
 
-Next.js 14 App Router · TypeScript · Tailwind · next-intl (hr/en/de/it/es/sr) · Supabase · Vercel.
+Next.js 14 App Router · TypeScript · Tailwind · next-intl (hr/en/de/it/es) · Supabase · Vercel.
 
-## Project layout
+## Project layout (post-refactor)
 
 ```
 src/
-├── app/[locale]/          # Public + admin routes
-│   └── admin/stranice/    # Static page admin panels
+├── app/[locale]/          # Public + admin routes (App Router only)
+│   └── admin/stranice/    # Static page admin panels (o-meni, proces, usluge)
 ├── components/
 │   ├── features/          # admin/, home/sections/, blog/, portfolio/
 │   ├── layout/            # Header, Footer, MobileMenu
 │   ├── three/             # R3F backgrounds + showcase
-│   └── ui/
-├── lib/                   # auth, config, queries, routes, showcase
-├── hooks/
-└── types/
+│   └── ui/                # shared UI + section-icons.tsx
+├── lib/
+│   ├── auth/              # admin auth, rate limit, require-admin
+│   ├── config/            # site, seo, admin-links, social-links, tech-stacks
+│   ├── queries/           # blog, portfolio (+ admin/ subfolder)
+│   ├── routes/            # main-nav.ts
+│   └── showcase/          # showcase storage, webgl helpers
+├── hooks/                 # use-showcase-viewport.ts
+└── types/                 # blog.ts, portfolio.ts
 ```
 
 ## Admin (`/admin`)
 
-- Console v3.0 UI — `src/styles/admin-console.css` (`.admin-console` scope)
+- **Console v3.0** UI — referenca: `ProtosEschatos/Google-AI-Studio-Github-Connect`; docs: `docs/admin-console.md`
 - Password auth via `ADMIN_SECRET` on **Vercel only**
-- CMS: `src/lib/queries/admin/` reads · `src/actions/admin-*.ts` writes
-- Inbox: Zoho IMAP + Martina (when `MARTINA_IMAP_*` set) — cached via cron `/api/cron/sync-inbox`
-- Donations: Stripe LIVE · `/admin/donacije`
-- AI: `/admin/ai` — DeepSeek via `DEEPSEEK_API_KEY`
+- Stil: `src/styles/admin-console.css` (`.admin-console` scope)
+- Admin UI: `AdminShell`, `AdminSidebar`, `AdminLink` (Next.js client nav)
+- CMS reads: `src/lib/queries/admin/` · writes: `src/actions/admin-*.ts`
+- Static pages: `/admin/stranice/*` (copy in `messages/*.json` + page components)
+- Agent memory: `/admin/memory` — reads `Protos-Agent/memory/` via GitHub raw
+- AI assistant: `/admin/ai` — DeepSeek (+ opcionalno Gemini) via `DEEPSEEK_API_KEY` on Vercel
+- External tools: `/admin/tools` — Zoho/Resend/Brevo links (`src/lib/config/admin-links.ts`)
+- Social/platform structure: `src/lib/config/team-profiles.ts`; re-export via `social-links.ts` (`pending: true` until real URLs)
+- Public tech stacks (no infra): `src/lib/config/tech-stacks.ts`
+- Main nav (public + admin): `src/lib/routes/main-nav.ts`
 
 ## Conventions
 
@@ -45,20 +57,18 @@ src/
 - Only commit when the user asks
 - Croatian copy for user-facing admin strings
 
-## Repo root
-
-**Jedan folder:** `~/Protos-Web` (git root, push na `main` → Vercel). Nema ugniježđenog `Protos-Web/Protos-Web`.
-
 ## Deploy
 
-Push to `main` → Vercel production → https://www.protosweb.eu
-
-Verify live after push: `curl -s -o /dev/null -w "%{http_code}" https://www.protosweb.eu/api/blog`
+Push to `main` → Vercel production. **After every push verify live** (`vercel ls` or curl) — GitHub green ≠ Vercel deployed; webhook can lag (use `vercel redeploy` if needed). Preview envs need same secrets as production for admin CMS.
 
 **Critical:** `ADMIN_SECRET` lives on Vercel only — git revert does **not** restore it.
 
-## Current state (2026-07-13)
+## Current state (2026-07-11 23:10)
 
-- **Latest commit:** `29e2873` — repo cleanup + middleware robots/sitemap fix
-- **Live:** https://www.protosweb.eu — API, robots, sitemap, inbox cron OK
-- **Inbox:** Zoho + Martina (no Gmail studio)
+- **Latest commit:** `3c039ed` — Admin Console v3.0 reskin
+- **Live:** https://www.protosweb.eu/admin
+- **Admin UI:** slate/indigo Console v3.0 (ref: Google-AI-Studio-Github-Connect)
+- **Donacije:** Stripe LIVE · `/admin/donacije`
+- **Inbox:** Zoho + Gmail studio + Martina placeholder
+- **Docs:** `docs/admin-console.md`, `docs/stripe-donations.md`
+- Full memory: **Protos-Agent** `memory/sessions/2026-07-11-inbox-stripe-donations.md`

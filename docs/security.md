@@ -10,7 +10,6 @@ Practical security map for `protosweb.eu`. No system is immune to every attack; 
 | `RESEND_API_KEY`, `BREVO_API_KEY` | **Supabase Edge secrets** | `submit-form`, `subscribe` |
 | `RESEND_FROM_EMAIL`, `CONTACT_EMAIL` | **Supabase Edge secrets** | Email from addresses |
 | `KEEP_ALIVE_SECRET` | **Supabase** + **GitHub** | `keep-alive` edge fn + cron |
-| `CRON_SECRET` | **Vercel** + **GitHub** | `/api/cron/sync-inbox` — GitHub `admin-inbox-sync.yml` (every 10 min) |
 | `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` | **Vercel** | Client → Supabase (RLS-protected) |
 | `SUPABASE_SERVICE_ROLE_KEY` | **Vercel** (server) + **GitHub** | Server actions / CI only — never expose to browser |
 | `SUPABASE_ACCESS_TOKEN`, `SUPABASE_PROJECT_REF` | **GitHub** | Deploy edge functions on push |
@@ -27,6 +26,7 @@ Practical security map for `protosweb.eu`. No system is immune to every attack; 
 | Service | Secret location | Notes |
 |---------|-----------------|-------|
 | **Zoho IMAP (Dario)** | **Vercel** | `ZOHO_IMAP_USER`, `ZOHO_IMAP_PASSWORD` — enable IMAP Access in Zoho |
+| **Gmail IMAP (studio)** | **Vercel** | `GMAIL_STUDIO_IMAP_USER`, `GMAIL_STUDIO_IMAP_PASSWORD` — Google App Password for `protoswebmark23@gmail.com` |
 | **Zoho IMAP (Martina)** | **Vercel** | `MARTINA_IMAP_*` when `martina.admin@protosweb.eu` is live |
 | **Resend** | Supabase Edge | Outbound transactional mail (`submit-form`, `subscribe`) |
 | **Brevo** | Supabase Edge | Optional; DKIM on apex for deliverability |

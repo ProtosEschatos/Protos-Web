@@ -15,7 +15,7 @@
     "title": "La nostra presenza online",
     "subtitle": "Trovaci sul web — studio Protos Web, Dario e Martina. Dal codice alle piattaforme freelance.",
     "studioTitle": "Studio Protos Web",
-    "darioTitle": "Dario Imširović",
+    "darioTitle": "Dario Imsirović",
     "martinaTitle": "Martina Markulin",
     "socialsTitle": "Social",
     "platformsTitle": "Piattaforme freelance",
@@ -163,19 +163,6 @@
       }
     ]
   },
-  "pricing": {
-    "label": "PREZZI",
-    "title": "Piani e",
-    "titleHighlight": "prezzi",
-    "subtitle": "Prezzi trasparenti senza costi nascosti. Scegli il piano più adatto a te.",
-    "ctaDefault": "Richiedi un preventivo"
-  },
-  "testimonials": {
-    "label": "TESTIMONIANZE",
-    "title": "Cosa dicono i",
-    "titleHighlight": "nostri clienti",
-    "subtitle": "Feedback reali dei clienti con cui abbiamo lavorato."
-  },
   "processPage": {
     "label": "PROCESSO",
     "title": "Come",
@@ -266,12 +253,9 @@
     "viewAll": "Vedi tutti gli articoli",
     "empty": "Nessun articolo pubblicato ancora.",
     "authorBy": "Di {author}",
-    "authorDario": "Dario Imširović",
+    "authorDario": "Dario Imsirović",
     "authorMartina": "Martina Markulin",
-    "authorBoth": "Dario Imširović & Martina Markulin",
-    "postNavLabel": "Navigazione tra articoli",
-    "prevPost": "Articolo precedente",
-    "nextPost": "Articolo successivo"
+    "authorBoth": "Dario Imsirović & Martina Markulin"
   },
   "contact": {
     "label": "CONTATTO",
@@ -403,14 +387,14 @@
       {
         "title": "1. Introduzione e accettazione",
         "paragraphs": [
-          "Questi Termini di servizio (\"Termini\") regolano l'accesso e l'uso del sito www.protosweb.eu (il \"Sito\") gestito da Dario Imširović — Protos Web, Zagabria, Repubblica di Croazia (\"Protos Web\", \"noi\").",
+          "Questi Termini di servizio (\"Termini\") regolano l'accesso e l'uso del sito www.protosweb.eu (il \"Sito\") gestito da Dario Imsirović — Protos Web, Zagabria, Repubblica di Croazia (\"Protos Web\", \"noi\").",
           "Accedendo al Sito confermi di aver letto, compreso e accettato integralmente questi Termini. In caso contrario, non utilizzare il Sito."
         ]
       },
       {
         "title": "2. Proprietà intellettuale e copyright",
         "paragraphs": [
-          "Tutti i contenuti del Sito — identità visiva, design UI/UX, layout, tipografia, grafica, animazioni, contenuti 3D, codice sorgente, testi, traduzioni, blog, metadati SEO e implementazioni tecniche — sono proprietà intellettuale originale di Dario Imširović e/o Protos Web, salvo diversa indicazione.",
+          "Tutti i contenuti del Sito — identità visiva, design UI/UX, layout, tipografia, grafica, animazioni, contenuti 3D, codice sorgente, testi, traduzioni, blog, metadati SEO e implementazioni tecniche — sono proprietà intellettuale originale di Dario Imsirović e/o Protos Web, salvo diversa indicazione.",
           "Tutti gli elementi sono protetti dalle leggi croate e dell'UE sul copyright e la proprietà intellettuale.",
           "Nessuna licenza implicita è concessa senza previo consenso scritto."
         ]
@@ -466,7 +450,7 @@
       {
         "title": "1. Titolare del trattamento",
         "paragraphs": [
-          "Titolare: Dario Imširović — Protos Web, Zagabria, Repubblica di Croazia. Contatto: dario.admin@protosweb.eu."
+          "Titolare: Dario Imsirović — Protos Web, Zagabria, Repubblica di Croazia. Contatto: dario.admin@protosweb.eu."
         ]
       },
       {
@@ -542,11 +526,11 @@
   "metadata": {
     "home": {
       "title": "Siti web con anima. Velocità nel codice. Amore nei dettagli.",
-      "description": "Protos Web — studio web da Zagabria. Siti custom, design UI/UX e SEO. Dario Imširović (sviluppo) e Martina Markulin (design)."
+      "description": "Protos Web — studio web da Zagabria. Siti custom, design UI/UX e SEO. Dario Imsirović (sviluppo) e Martina Markulin (design)."
     },
     "about": {
-      "title": "Chi siamo — Dario Imširović & Martina Markulin",
-      "description": "Team Protos Web da Zagabria: Dario Imširović, ingegnere AI & full stack developer e Martina Markulin, designer frontend/shop UI. Due stack — Protos Web moderno e shop Bodulica vanilla."
+      "title": "Chi siamo — Dario Imsirović & Martina Markulin",
+      "description": "Team Protos Web da Zagabria: Dario Imsirović, ingegnere AI & full stack developer e Martina Markulin, designer frontend/shop UI. Due stack — Protos Web moderno e shop Bodulica vanilla."
     },
     "process": {
       "title": "Il nostro processo",
@@ -595,7 +579,7 @@
     "team": {
       "dario": {
         "label": "Fondatore & sviluppo",
-        "name": "Dario Imširović",
+        "name": "Dario Imsirović",
         "role": "Ingegnere AI & Full Stack Cross-Web Developer",
         "bio": "Ingegnere AI e Full Stack Developer di Zagabria con 5 anni di esperienza. Piattaforme custom, webshop, CRM ed esperienze 3D — dalle landing page a soluzioni cross-web complesse.",
         "expertise": ["AI engineering", "Full stack", "3D / WebGL", "Cyber security"],
@@ -665,7 +649,7 @@
       "protosDescription": "TypeScript, React, Next.js, 3D/WebGL e animazioni. Sito studio custom e piattaforme su misura.",
       "bodulicaTitle": "Bodulica Shop — stack vanilla",
       "bodulicaDescription": "Primo webshop cliente — HTML, CSS e vanilla JavaScript. Build opposto a Protos Web. Martina: shop e UI design. Dario: implementazione.",
-      "bodulicaNote": "Live su bodulica.shop — webshop cliente con pagamenti e CMS."
+      "bodulicaNote": "Showcase studio di approcci diversi — senza link pubblico allo shop."
     }
   }
 }

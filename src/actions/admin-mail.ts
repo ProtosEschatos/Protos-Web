@@ -2,7 +2,6 @@
 
 import { requireAdmin } from '@/lib/auth/require-admin'
 import { fetchMailboxInbox, fetchMailboxMessage, type MailListItem, type MailMessage } from '@/lib/mail/imap-client'
-import { getCachedMailboxInbox, syncMailboxToCache } from '@/lib/mail/inbox-sync'
 import {
   ADMIN_MAILBOXES,
   getMailbox,
@@ -43,30 +42,12 @@ export async function adminGetImapStatus(): Promise<{
 export async function adminListMailbox(
   mailboxId: MailboxId,
   limit = 40,
-  options?: { live?: boolean },
 ): Promise<{
   messages: MailListItem[]
   error?: string
-  syncedAt?: string
 }> {
   await requireAdmin()
-
-  if (options?.live) {
-    const live = await fetchMailboxInbox(mailboxId, limit)
-    await syncMailboxToCache(mailboxId)
-    return live
-  }
-
-  const cached = await getCachedMailboxInbox(mailboxId, limit)
-  if (cached.messages.length > 0 || cached.syncedAt) {
-    return cached
-  }
-
-  const live = await fetchMailboxInbox(mailboxId, limit)
-  if (live.messages.length > 0 || !live.error) {
-    await syncMailboxToCache(mailboxId)
-  }
-  return live
+  return fetchMailboxInbox(mailboxId, limit)
 }
 
 export async function adminGetMailMessage(

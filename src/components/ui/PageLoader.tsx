@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import SiteConsentModal from '@/components/legal/SiteConsentModal'
 import BootSkyBackground from '@/components/ui/BootSkyBackground'
+import { hasSiteConsent } from '@/lib/config/site-consent'
 import {
   BOOT_SESSION_KEY,
   BOOT_COMPLETE_EVENT,
@@ -62,8 +63,12 @@ export default function PageLoader() {
 
   const handleEnter = useCallback(() => {
     if (!readyToEnter) return
+    if (hasSiteConsent()) {
+      finishBoot()
+      return
+    }
     setShowConsentModal(true)
-  }, [readyToEnter])
+  }, [readyToEnter, finishBoot])
 
   useEffect(() => {
     if (!loading || !readyToEnter || showConsentModal) return

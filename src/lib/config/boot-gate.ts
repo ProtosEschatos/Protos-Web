@@ -1,31 +1,12 @@
-import { LEGAL_TERMS_VERSION } from '@/lib/config/site'
-import { SITE_CONSENT_KEY } from '@/lib/config/site-consent'
-
-export const BOOT_SESSION_KEY = 'protos-boot-gate-v11'
+export const BOOT_SESSION_KEY = 'protos-boot-gate-v12'
 export const BOOT_COMPLETE_EVENT = 'protos-boot-complete'
 export const BOOT_VIDEO = '/loader/boot-bg.mp4'
 export const BOOT_BG = '#020818'
 
-function readStoredConsent(): boolean {
-  if (typeof window === 'undefined') return false
-  const raw = localStorage.getItem(SITE_CONSENT_KEY)
-  if (!raw) return false
-  try {
-    const parsed = JSON.parse(raw) as { termsAccepted?: boolean; essential?: boolean; termsVersion?: string }
-    return (
-      parsed?.termsAccepted === true &&
-      parsed?.essential === true &&
-      parsed?.termsVersion === LEGAL_TERMS_VERSION
-    )
-  } catch {
-    return false
-  }
-}
-
+/** Boot animation finished this browser session (Enter clicked). */
 export function isBootComplete(): boolean {
   if (typeof window === 'undefined') return false
-  if (sessionStorage.getItem(BOOT_SESSION_KEY) === '1') return true
-  return readStoredConsent()
+  return sessionStorage.getItem(BOOT_SESSION_KEY) === '1'
 }
 
 export function setBootPending(): void {
@@ -59,5 +40,5 @@ export function isBootGateBypassPath(pathname: string): boolean {
   )
 }
 
-/** Inline script for layout — must stay in sync with BOOT_SESSION_KEY + SITE_CONSENT_KEY */
-export const BOOT_GATE_INIT_SCRIPT = `(function(){try{var p=location.pathname;if(/^\\/admin(\\/|$)/.test(p)||/^\\/(en|de|it|es)\\/admin(\\/|$)/.test(p)||p.indexOf('portfolio-showcase')!==-1||\\/(terms|privacy|cookies)$/.test(p)){document.documentElement.classList.remove('boot-pending');document.documentElement.classList.add('boot-complete');document.body.style.overflow='';var v=document.getElementById('boot-ssr-veil');if(v)v.style.display='none';return;}var k='${BOOT_SESSION_KEY}';var ck='${SITE_CONSENT_KEY}';var tv='${LEGAL_TERMS_VERSION}';var ok=false;if(sessionStorage.getItem(k)==='1')ok=true;else{var r=localStorage.getItem(ck);if(r){var p=JSON.parse(r);if(p&&p.termsAccepted&&p.essential&&p.termsVersion===tv)ok=true;}}if(ok){document.documentElement.classList.remove('boot-pending');document.documentElement.classList.add('boot-complete');document.body.style.overflow='';var v=document.getElementById('boot-ssr-veil');if(v)v.style.display='none';}else{document.documentElement.classList.add('boot-pending');}}catch(e){document.documentElement.classList.add('boot-pending');}})();`
+/** Inline script for layout — must stay in sync with BOOT_SESSION_KEY */
+export const BOOT_GATE_INIT_SCRIPT = `(function(){try{var p=location.pathname;if(/^\\/admin(\\/|$)/.test(p)||/^\\/(en|de|it|es)\\/admin(\\/|$)/.test(p)||p.indexOf('portfolio-showcase')!==-1||\\/(terms|privacy|cookies)$/.test(p)){document.documentElement.classList.remove('boot-pending');document.documentElement.classList.add('boot-complete');document.body.style.overflow='';var v=document.getElementById('boot-ssr-veil');if(v)v.style.display='none';return;}var k='${BOOT_SESSION_KEY}';var ok=sessionStorage.getItem(k)==='1';if(ok){document.documentElement.classList.remove('boot-pending');document.documentElement.classList.add('boot-complete');document.body.style.overflow='';var v=document.getElementById('boot-ssr-veil');if(v)v.style.display='none';}else{document.documentElement.classList.add('boot-pending');}}catch(e){document.documentElement.classList.add('boot-pending');}})();`

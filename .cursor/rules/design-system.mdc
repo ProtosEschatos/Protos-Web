@@ -6,8 +6,8 @@ alwaysApply: true
 # Protos Web — Design Language
 
 Protos Web is **cosmic / neon / glassmorphism** on a dark space background. When
-building or restyling UI, match this language and reuse patterns from Supabase
-(`public.design_elements` + `design-assets` bucket).
+building or restyling UI, match this language and reuse patterns from the element
+library (`design/references/README.md`).
 
 ## Palette (CSS vars, defined in globals)
 
@@ -26,8 +26,8 @@ building or restyling UI, match this language and reuse patterns from Supabase
 
 ## Element library (always available)
 
-Catalog of reusable element concepts lives in Supabase (`public.design_elements`
-table + `design-assets` storage bucket).
+Catalog of reusable element concepts lives in **`design/references/README.md`** and
+in Supabase (`public.design_elements` table + `design-assets` storage bucket).
 
 Categories: `text-animations`, `scroll-animations`, `page-transitions`, `card-layouts`,
 `card-hover`, `card-hover-themes`, `card-bg-textures`, `hero-backgrounds`,

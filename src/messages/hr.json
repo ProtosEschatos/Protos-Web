@@ -1,7 +1,7 @@
 {
   "nav": {
     "home": "POČETNA",
-    "about": "O NAMA",
+    "about": "O MENI",
     "process": "PROCES",
     "portfolio": "PORTFOLIO",
     "services": "USLUGE",
@@ -15,7 +15,7 @@
     "title": "Naša online prisutnost",
     "subtitle": "Pronađite nas diljem weba — studio Protos Web, Dario i Martina. Od koda do freelance platformi.",
     "studioTitle": "Protos Web studio",
-    "darioTitle": "Dario Imširović",
+    "darioTitle": "Dario Imsirović",
     "martinaTitle": "Martina Markulin",
     "socialsTitle": "Društvene mreže",
     "platformsTitle": "Freelance platforme",
@@ -163,19 +163,6 @@
       }
     ]
   },
-  "pricing": {
-    "label": "CIJENE",
-    "title": "Paketi i",
-    "titleHighlight": "cijene",
-    "subtitle": "Transparentne cijene bez skrivenih troškova. Odaberite paket koji odgovara vašim potrebama.",
-    "ctaDefault": "Zatraži ponudu"
-  },
-  "testimonials": {
-    "label": "ISKUSTVA",
-    "title": "Što kažu",
-    "titleHighlight": "klijenti",
-    "subtitle": "Stvarna iskustva klijenata koji su radili s nama."
-  },
   "processPage": {
     "label": "PROCES",
     "title": "Kako",
@@ -266,12 +253,9 @@
     "viewAll": "Pogledaj sve članke",
     "empty": "Još nema objavljenih članaka.",
     "authorBy": "Autor: {author}",
-    "authorDario": "Dario Imširović",
+    "authorDario": "Dario Imsirović",
     "authorMartina": "Martina Markulin",
-    "authorBoth": "Dario Imširović & Martina Markulin",
-    "postNavLabel": "Navigacija između članaka",
-    "prevPost": "Prethodni članak",
-    "nextPost": "Sljedeći članak"
+    "authorBoth": "Dario Imsirović & Martina Markulin"
   },
   "contact": {
     "label": "KONTAKT",
@@ -391,7 +375,7 @@
     "webglViewPortfolio": "Pogledaj cijeli portfolio"
   },
   "aboutPage": {
-    "label": "O NAMA",
+    "label": "O MENI",
     "heroTitleLine1": "",
     "heroTitleHighlight": "Protos Web",
     "heroTitleLine2": "Full Stack Duo iz Zagreba.",
@@ -412,7 +396,7 @@
     "team": {
       "dario": {
         "label": "Osnivač & razvoj",
-        "name": "Dario Imširović",
+        "name": "Dario Imsirović",
         "role": "AI inženjer & Full Stack Cross-Web Developer",
         "bio": "AI inženjer i Full Stack Developer iz Zagreba s 5 godina iskustva. Gradim custom platforme, web trgovine, CRM sustave i 3D web iskustva — od landing stranica do kompleksnih cross-web rješenja. Bez gotovih tema, s fokusom na sigurnost i performanse.",
         "expertise": ["AI inženjering", "Full stack", "3D / WebGL", "Cyber sigurnost"],
@@ -482,7 +466,7 @@
       "protosDescription": "TypeScript, React, Next.js, 3D/WebGL i animacije. Custom studio stranica i platforme po mjeri.",
       "bodulicaTitle": "Bodulica Shop — vanilla stack",
       "bodulicaDescription": "Prvi klijentski webshop — HTML, CSS i vanilla JavaScript. Suprotan build od Protos Weba. Martina: shop i UI dizajn. Dario: implementacija.",
-      "bodulicaNote": "Live na bodulica.shop — klijentski webshop s plaćanjem i CMS-om."
+      "bodulicaNote": "Studijski showcase različitih pristupa — bez javnog linka na shop."
     }
   },
   "legalPages": {
@@ -498,7 +482,7 @@
       {
         "title": "1. Uvod i prihvaćanje",
         "paragraphs": [
-          "Ovi Uvjeti korištenja (\"Uvjeti\") reguliraju pristup i korištenje web stranice www.protosweb.eu (\"Stranica\") koju upravlja Dario Imširović — Protos Web, obrt u procesu registracije pod nazivom Protos Web Mark23 (OIB: 23732814520), Zagreb, Republika Hrvatska (\"Protos Web\", \"mi\", \"nas\").",
+          "Ovi Uvjeti korištenja (\"Uvjeti\") reguliraju pristup i korištenje web stranice www.protosweb.eu (\"Stranica\") koju upravlja Dario Imsirović — Protos Web, obrt u procesu registracije pod nazivom Protos Web Mark23 (OIB: 23732814520), Zagreb, Republika Hrvatska (\"Protos Web\", \"mi\", \"nas\").",
           "Pristup Stranici, njezinim podstranicama, 3D showcaseu, kontakt obrascu, newsletteru i bilo kojoj interakciji dopušten je isključivo nakon što izričito prihvatite ove Uvjete i Pravila privatnosti putem obveznog ekrana suglasnosti pri ulasku. Bez tog prihvaćanja ne smijete koristiti Stranicu niti nastaviti dalje.",
           "Pristupom nakon prihvaćanja potvrđujete da ste pročitali, razumjeli i u potpunosti prihvatili ove Uvjete. Ako se ne slažete, zatvorite Stranicu i ne koristite je."
         ]
@@ -506,10 +490,10 @@
       {
         "title": "2. Intelektualno vlasništvo i autorska prava",
         "paragraphs": [
-          "Cjelokupni sadržaj Stranice — uključujući, ali ne ograničavajući se na: vizualni identitet i branding; korisničko sučelje i UX/UI dizajn; raspored stranica, tipografiju, palete boja i grafičke elemente; ilustracije, fotografije, ikone i animacije; 3D modele, scene i interaktivne prikaze; izvorni programski kod, arhitekturu, komponente i baze podataka; tekstove, prijevode, blog objave i marketinške materijale; SEO meta podatke, strukturirane podatke (JSON-LD) i tehničke implementacije — predstavlja originalno intelektualno vlasništvo Daria Imširovića, Martine Markulin (UI dizajn i kreativni doprinos) i/ili Protos Weba, osim ako je izričito drugačije navedeno.",
+          "Cjelokupni sadržaj Stranice — uključujući, ali ne ograničavajući se na: vizualni identitet i branding; korisničko sučelje i UX/UI dizajn; raspored stranica, tipografiju, palete boja i grafičke elemente; ilustracije, fotografije, ikone i animacije; 3D modele, scene i interaktivne prikaze; izvorni programski kod, arhitekturu, komponente i baze podataka; tekstove, prijevode, blog objave i marketinške materijale; SEO meta podatke, strukturirane podatke (JSON-LD) i tehničke implementacije — predstavlja originalno intelektualno vlasništvo Daria Imsirovića, Martine Markulin (UI dizajn i kreativni doprinos) i/ili Protos Weba, osim ako je izričito drugačije navedeno.",
           "Svi dizajni, predlošci, kod i kreativni radovi ostaju vlasništvo njihovih autora kao suverenih, slobodnih osoba i stvaratelja, neovisno o registraciji obrta ili poslovnom entitetu. Poslovna registracija ne umanjuje niti prenosi autorska prava bez izričitog pisanog ugovora.",
           "Svi navedeni elementi zaštićeni su zakonima Republike Hrvatske i Europske unije o autorskom pravu, srodnim pravima i intelektualnom vlasništvu, uključujući Zakon o autorskom pravu i srodnim pravima te primjenjive međunarodne ugovore.",
-          "Nijedan dio Stranice ne smije se smatrati prepuštenim u javnu domenu, niti se podrazumijeva bilo kakva licenca za korištenje bez prethodne izričite pisane suglasnosti Daria Imširovića / Protos Weba."
+          "Nijedan dio Stranice ne smije se smatrati prepuštenim u javnu domenu, niti se podrazumijeva bilo kakva licenca za korištenje bez prethodne izričite pisane suglasnosti Daria Imsirovića / Protos Weba."
         ]
       },
       {
@@ -530,7 +514,7 @@
       {
         "title": "5. Predlošci, komponente i klijentski radovi",
         "paragraphs": [
-          "Svi predlošci (templates), teme, komponente, UI kitovi, kodne biblioteke, dizajn sustavi, wireframe-i, prototipi, konfiguracije, dokumentacija i bilo koja druga isporuka koju Protos Web izrađuje za klijente ili za vlastitu upotrebu predstavljaju originalno intelektualno vlasništvo Daria Imširovića, Martine Markulin i/ili Protos Weba, osim ako je u pisanom ugovoru s konkretnim klijentom izričito drugačije dogovoreno.",
+          "Svi predlošci (templates), teme, komponente, UI kitovi, kodne biblioteke, dizajn sustavi, wireframe-i, prototipi, konfiguracije, dokumentacija i bilo koja druga isporuka koju Protos Web izrađuje za klijente ili za vlastitu upotrebu predstavljaju originalno intelektualno vlasništvo Daria Imsirovića, Martine Markulin i/ili Protos Weba, osim ako je u pisanom ugovoru s konkretnim klijentom izričito drugačije dogovoreno.",
           "Klijent koji naručuje web stranicu, aplikaciju, dizajn ili drugu uslugu stječe samo ona prava korištenja koja su jasno definirana u pisanom ugovoru ili ponudi — tipično: pravo korištenja gotovog projekta za vlastitu poslovnu svrhu. Klijent ne stječe vlasništvo nad osnovnim predlošcima, reusable kodom, arhitekturom, dizajn sustavom, metodologijom ni alatima korištenim pri izradi, osim ako je to izričito ugovoreno i kompenzirano.",
           "Klijenti, posjetitelji i treće strane moraju biti svjesni da je neovlašteno kopiranje, preuzimanje, prilagodba, preprodaja ili distribucija bilo kojeg predloška, komponente ili klijentske isporuke Protos Weba zabranjena i može povući građansku i kaznenu odgovornost, neovisno o tome je li rad prikazan u portfoliju ili isporučen klijentu.",
           "Prikaz radova u portfoliju, 3D showcaseu ili demo okruženju ne daje licencu za reprodukciju. Svaki klijent potvrđuje da je upoznat s ovim Uvjetima pri korištenju Stranice i/ili sklapanjem poslovnog odnosa s Protos Webom."
@@ -575,7 +559,7 @@
       {
         "title": "1. Voditelj obrade",
         "paragraphs": [
-          "Voditelj obrade osobnih podataka je Dario Imširović — Protos Web / obrt Protos Web Mark23 (u registraciji), OIB: 23732814520, Zagreb, Republika Hrvatska. Kontakt za zaštitu podataka: dario.admin@protosweb.eu."
+          "Voditelj obrade osobnih podataka je Dario Imsirović — Protos Web / obrt Protos Web Mark23 (u registraciji), OIB: 23732814520, Zagreb, Republika Hrvatska. Kontakt za zaštitu podataka: dario.admin@protosweb.eu."
         ]
       },
       {
@@ -664,11 +648,11 @@
   "metadata": {
     "home": {
       "title": "Web stranice s dušom. Brzina u kodu. Ljubav u detaljima.",
-      "description": "Protos Web — web studio iz Zagreba. Custom izrada web stranica, UI/UX dizajn i SEO. Dario Imširović (razvoj) i Martina Markulin (dizajn). Brzo, moderno, po mjeri."
+      "description": "Protos Web — web studio iz Zagreba. Custom izrada web stranica, UI/UX dizajn i SEO. Dario Imsirović (razvoj) i Martina Markulin (dizajn). Brzo, moderno, po mjeri."
     },
     "about": {
-      "title": "O meni — Dario Imširović i Martina Markulin",
-      "description": "Protos Web tim iz Zagreba: Dario Imširović, AI inženjer & full stack developer i Martina Markulin, frontend/shop UI dizajnerica. Dva stacka — moderni Protos Web i vanilla Bodulica shop."
+      "title": "O meni — Dario Imsirović i Martina Markulin",
+      "description": "Protos Web tim iz Zagreba: Dario Imsirović, AI inženjer & full stack developer i Martina Markulin, frontend/shop UI dizajnerica. Dva stacka — moderni Protos Web i vanilla Bodulica shop."
     },
     "process": {
       "title": "Naš proces",

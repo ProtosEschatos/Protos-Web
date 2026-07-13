@@ -1,10 +1,9 @@
 import { NextResponse } from 'next/server'
 import { submitContact } from '@/actions/contact'
-import { checkRateLimit, clientIpForStorage, getClientIp } from '@/lib/security/rate-limit'
+import { checkRateLimit, getClientIp } from '@/lib/security/rate-limit'
 
 export async function POST(request: Request) {
-  const clientIp = getClientIp(request)
-  const rate = checkRateLimit('contact', clientIp, 5, 15 * 60 * 1000)
+  const rate = checkRateLimit('contact', getClientIp(request), 5, 15 * 60 * 1000)
   if (!rate.ok) {
     return NextResponse.json(
       { success: false, message: 'Previše zahtjeva. Pokušaj ponovno kasnije.' },
@@ -24,7 +23,6 @@ export async function POST(request: Request) {
       email: String(body.email),
       service: String(body.service || ''),
       message: String(body.message),
-      ip: clientIpForStorage(clientIp),
     })
 
     if (!result.success) {

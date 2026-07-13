@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useTransition } from 'react'
+import { useState, useTransition } from 'react'
 import { Loader2, Mail, RefreshCw } from 'lucide-react'
 import { adminGetMailMessage, adminListMailbox } from '@/actions/admin-mail'
 import { mailboxSetupHint, type MailboxId, type MailboxProvider } from '@/lib/mail/mailboxes'
@@ -11,7 +11,6 @@ type Props = {
   title: string
   initialMessages: MailListItem[]
   initialError?: string
-  initialSyncedAt?: string
   configured: boolean
   mailbox: string
   provider: MailboxProvider
@@ -31,43 +30,26 @@ export default function AdminMailboxPanel({
   title,
   initialMessages,
   initialError,
-  initialSyncedAt,
   configured,
   mailbox,
   provider,
 }: Props) {
   const [messages, setMessages] = useState(initialMessages)
   const [error, setError] = useState(initialError)
-  const [syncedAt, setSyncedAt] = useState(initialSyncedAt)
   const [selectedUid, setSelectedUid] = useState<number | null>(null)
   const [body, setBody] = useState<string | null>(null)
   const [bodyError, setBodyError] = useState<string | null>(null)
   const [pending, startTransition] = useTransition()
 
-  function applyMailboxResult(res: Awaited<ReturnType<typeof adminListMailbox>>) {
-    setMessages(res.messages)
-    setError(res.error)
-    setSyncedAt(res.syncedAt)
-  }
-
-  function refresh(live = false) {
+  function refresh() {
     startTransition(async () => {
-      const res = await adminListMailbox(mailboxId, 40, { live })
-      applyMailboxResult(res)
+      const res = await adminListMailbox(mailboxId, 40)
+      setMessages(res.messages)
+      setError(res.error)
       setSelectedUid(null)
       setBody(null)
     })
   }
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      startTransition(async () => {
-        const res = await adminListMailbox(mailboxId, 40)
-        applyMailboxResult(res)
-      })
-    }, 60_000)
-    return () => window.clearInterval(timer)
-  }, [mailboxId])
 
   function openMessage(uid: number) {
     setSelectedUid(uid)
@@ -112,20 +94,14 @@ export default function AdminMailboxPanel({
         </p>
         <button
           type="button"
-          onClick={() => refresh(true)}
+          onClick={refresh}
           disabled={pending}
           className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-xs font-semibold text-[var(--light-muted)] hover:border-[var(--primary)]/40 hover:text-[var(--primary)]"
         >
           {pending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <RefreshCw className="h-3.5 w-3.5" />}
-          Osvježi (live IMAP)
+          Osvježi
         </button>
       </div>
-
-      {syncedAt ? (
-        <p className="text-[10px] text-[var(--light-muted)]">
-          Zadnji sync: {formatWhen(syncedAt)} · auto-refresh svake minute
-        </p>
-      ) : null}
 
       {error ? (
         <p className="text-sm text-red-400 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3">{error}</p>

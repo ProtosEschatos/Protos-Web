@@ -6,9 +6,10 @@ import {
   LOCALIZED_PATHS,
   type SiteLocale,
 } from '@/lib/routes/localized-paths'
-import { isAdminLoginPath, isAdminPath } from './lib/auth/admin-paths'
 import {
   ADMIN_COOKIE,
+  isAdminLoginPath,
+  isAdminPath,
   verifyAdminSessionEdge,
 } from './lib/auth/admin-auth-shared'
 

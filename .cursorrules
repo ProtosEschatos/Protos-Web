@@ -11,7 +11,7 @@
 - **3D**: React Three Fiber (`@react-three/fiber`, `@react-three/drei`) — NOT vanilla Three.js
 - **Smooth Scroll**: `lenis` (via LenisProvider)
 - **DOM + Canvas layers**: see `.cursor/rules/dom-canvas-layers.mdc` — mandatory for any UI/3D work
-- **i18n**: `next-intl` (6 locales: hr, en, de, it, es, sr)
+- **i18n**: `next-intl` (5 locales: hr, en, de, it, es)
 - **Icons**: `lucide-react` only (no Font Awesome, no icon CDN)
 - **Backend**: Supabase (blog, contact, portfolio, edge functions; see `supabase/functions/README.md`)
 
@@ -91,9 +91,9 @@
 ## i18n Rules
 - Default locale: `hr` (Croatian)
 - All user-facing text MUST use `useTranslations()` hook
-- Translation keys go in all 6 locale files
+- Translation keys go in all 5 locale files
 - Route segments stay in Croatian (e.g., `/proces`, `/o-meni`, `/usluge`, `/kontakt`)
-- Language selector must show all 6 languages with flag emojis
+- Language selector must show all 5 languages with flag emojis
 
 ## Accessibility Rules
 - All images must have `alt` text

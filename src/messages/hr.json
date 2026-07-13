@@ -1,7 +1,7 @@
 {
   "nav": {
     "home": "POČETNA",
-    "about": "O MENI",
+    "about": "O NAMA",
     "process": "PROCES",
     "portfolio": "PORTFOLIO",
     "services": "USLUGE",
@@ -375,7 +375,7 @@
     "webglViewPortfolio": "Pogledaj cijeli portfolio"
   },
   "aboutPage": {
-    "label": "O MENI",
+    "label": "O NAMA",
     "heroTitleLine1": "",
     "heroTitleHighlight": "Protos Web",
     "heroTitleLine2": "Full Stack Duo iz Zagreba.",

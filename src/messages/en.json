@@ -648,35 +648,35 @@
   "metadata": {
     "home": {
       "title": "Websites with soul. Speed in the code. Love in the details.",
-      "description": "Protos Web — web studio from Zagreb. Custom websites, UI/UX design and SEO. Dario Imsirović (development) and Martina Markulin (design). Fast, modern, bespoke."
+      "description": "Protos Web — web studio from Zagreb. Custom websites, UI/UX design, SEO and e-commerce for Croatia, Slovenia, Serbia, Bosnia, Montenegro, North Macedonia and the Balkans."
     },
     "about": {
       "title": "About us — Dario Imsirović & Martina Markulin",
-      "description": "Protos Web team from Zagreb: Dario Imsirović, AI engineer & full stack developer and Martina Markulin, frontend/shop UI designer. Two stacks — modern Protos Web and vanilla Bodulica shop."
+      "description": "Protos Web team from Zagreb: full stack developer and shop/UI designer. Web design and development for the Balkans — Croatia, Slovenia, Serbia, Bosnia and the EU."
     },
     "process": {
       "title": "Our Process",
-      "description": "How we build modern web solutions — from consultation to launch. Protos Web, Zagreb."
+      "description": "Website development process — from consultation to launch. Protos Web, Zagreb. Web design for clients in Croatia and Southeast Europe."
     },
     "portfolio": {
       "title": "Portfolio",
-      "description": "Selected web projects and case studies — custom design and development from Zagreb."
+      "description": "Web projects and case studies — custom design, development and 3D experiences. Protos Web studio, Zagreb — Balkans and EU."
     },
     "showcase": {
       "title": "3D Portfolio Showcase",
-      "description": "Interactive 3D gallery."
+      "description": "Interactive 3D web gallery — WebGL portfolio by Protos Web studio from Zagreb."
     },
     "services": {
       "title": "Services",
-      "description": "Custom web design, development, UI/UX, SEO and maintenance — Protos Web, Zagreb."
+      "description": "Website development, web design, UI/UX, SEO, e-commerce and maintenance — Protos Web Zagreb. Services for Croatia, Slovenia, Serbia, Bosnia and the region."
     },
     "blog": {
       "title": "Blog",
-      "description": "Guides on web design, SEO and digital presence for entrepreneurs in Croatia and the EU."
+      "description": "Web guides on design, SEO and digital presence for entrepreneurs in Croatia, Slovenia, Serbia, Bosnia and the EU."
     },
     "contact": {
       "title": "Contact",
-      "description": "Contact Protos Web in Zagreb — free consultation for your website or web application."
+      "description": "Contact Protos Web in Zagreb — free consultation for your website, web shop or application. We work with clients across the region and EU."
     }
   }
 }

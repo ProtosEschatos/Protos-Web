@@ -648,35 +648,35 @@
   "metadata": {
     "home": {
       "title": "Web stranice s dušom. Brzina u kodu. Ljubav u detaljima.",
-      "description": "Protos Web — web studio iz Zagreba. Custom izrada web stranica, UI/UX dizajn i SEO. Dario Imsirović (razvoj) i Martina Markulin (dizajn). Brzo, moderno, po mjeri."
+      "description": "Protos Web — web studio iz Zagreba. Izrada web stranica, UI/UX dizajn, SEO i e-trgovina za Hrvatsku, Sloveniju, Srbiju, Bosnu, Crnu Goru, Makedoniju i Balkan. Dario Imsirović (razvoj) i Martina Markulin (dizajn)."
     },
     "about": {
-      "title": "O meni — Dario Imsirović i Martina Markulin",
-      "description": "Protos Web tim iz Zagreba: Dario Imsirović, AI inženjer & full stack developer i Martina Markulin, frontend/shop UI dizajnerica. Dva stacka — moderni Protos Web i vanilla Bodulica shop."
+      "title": "O nama — Dario Imsirović i Martina Markulin",
+      "description": "Protos Web tim iz Zagreba: full stack developer i shop/UI dizajnerica. Web dizajn i development za regiju — Hrvatska, Slovenija, Srbija, Bosna i EU."
     },
     "process": {
       "title": "Naš proces",
-      "description": "Kako gradimo moderna web rješenja — od konzultacija do lansiranja. Protos Web, Zagreb."
+      "description": "Proces izrade web stranice — od konzultacija do lansiranja. Protos Web, Zagreb. Web dizajn i development za klijente u Hrvatskoj i ex-Yu regiji."
     },
     "portfolio": {
       "title": "Portfolio",
-      "description": "Odabrani web projekti i studije slučaja — custom dizajn i razvoj iz Zagreba."
+      "description": "Web projekti i studije slučaja — custom dizajn, development i 3D iskustva. Protos Web studio, Zagreb — Balkan i EU."
     },
     "showcase": {
       "title": "3D Portfolio Showcase",
-      "description": "Interaktivna 3D galerija."
+      "description": "Interaktivna 3D web galerija — WebGL portfolio Protos Web studija iz Zagreba."
     },
     "services": {
       "title": "Usluge",
-      "description": "Custom web dizajn, razvoj, UI/UX, SEO optimizacija i održavanje — Protos Web, Zagreb."
+      "description": "Izrada web stranica, web dizajn, UI/UX, SEO, e-trgovina i održavanje — Protos Web Zagreb. Usluge za Hrvatsku, Sloveniju, Srbiju, Bosnu i regiju."
     },
     "blog": {
       "title": "Blog",
-      "description": "Vodiči o web dizajnu, SEO-u i digitalnoj prisutnosti za poduzetnike u Hrvatskoj i EU."
+      "description": "Web Akademija — vodiči o web dizajnu, SEO-u i digitalnoj prisutnosti za poduzetnike u Hrvatskoj, Sloveniji, Srbiji, Bosni i EU."
     },
     "contact": {
       "title": "Kontakt",
-      "description": "Kontaktirajte Protos Web u Zagrebu — besplatna konzultacija za izradu web stranice ili aplikacije."
+      "description": "Kontaktirajte Protos Web u Zagrebu — besplatna konzultacija za izradu web stranice, web shopa ili aplikacije. Radimo za klijente u regiji i EU."
     }
   }
 }

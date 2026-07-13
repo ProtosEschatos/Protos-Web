@@ -25,6 +25,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     path: aboutPathForLocale(locale),
     pathsByLocale: LOCALIZED_PATHS.about,
     ogImagePath: '/api/og?type=about',
+    seoPage: 'about',
   })
 }
 

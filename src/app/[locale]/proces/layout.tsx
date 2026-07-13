@@ -18,6 +18,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     description: t('description'),
     locale,
     path: '/proces',
+    seoPage: 'process',
   })
 }
 

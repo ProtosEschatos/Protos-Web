@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { locales, defaultLocale, type Locale } from '@/i18n'
+import type { SeoPageKey } from '@/lib/config/seo-keywords'
+import { formatKeywords } from '@/lib/config/seo-keywords'
 import { buildBlogAuthorGraph } from '@/lib/config/creator-seo'
 
 import { SITE_URL } from '@/lib/config/site'
@@ -53,6 +55,8 @@ type PageMetadataInput = {
   path?: string
   /** Per-locale paths for hreflang (e.g. about page) */
   pathsByLocale?: Partial<Record<Locale, string>>
+  /** Merges global + page-specific regional/web-dev keywords */
+  seoPage?: SeoPageKey
 }
 
 export function buildPageMetadata({
@@ -62,6 +66,7 @@ export function buildPageMetadata({
   path = '',
   pathsByLocale,
   ogImagePath,
+  seoPage,
 }: PageMetadataInput & { ogImagePath?: string }): Metadata {
   const safeLocale = (locale in openGraphLocale ? locale : defaultLocale) as Locale
   const pathForLocale = (loc: Locale) => pathsByLocale?.[loc] ?? path
@@ -81,6 +86,7 @@ export function buildPageMetadata({
   return {
     title,
     description,
+    keywords: formatKeywords(safeLocale, seoPage),
     alternates: {
       canonical,
       languages,

@@ -1,4 +1,4 @@
-export const BOOT_SESSION_KEY = 'protos-boot-gate-v12'
+export const BOOT_SESSION_KEY = 'protos-boot-gate-v11'
 export const BOOT_COMPLETE_EVENT = 'protos-boot-complete'
 export const BOOT_VIDEO = '/loader/boot-bg.mp4'
 export const BOOT_BG = '#020818'

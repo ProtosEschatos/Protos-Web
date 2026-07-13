@@ -5,6 +5,7 @@ import { usePathname } from '@/navigation'
 import { BACKGROUND_FALLBACKS, getBackgroundKey } from '@/lib/showcase/site-background-routes'
 import PageBackgroundCanvas from '@/components/three/backgrounds/PageBackgroundCanvas'
 import { BOOT_COMPLETE_EVENT, isBootComplete } from '@/lib/config/boot-gate'
+import { hasSiteConsent, SITE_CONSENT_EVENT } from '@/lib/config/site-consent'
 
 const TWINKLE_BG = `
   radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.4), transparent),
@@ -21,13 +22,17 @@ const TWINKLE_BG = `
 export default function SiteBackground() {
   const pathname = usePathname()
   const routeKey = getBackgroundKey(pathname)
-  const [bootDone, setBootDone] = useState(() => isBootComplete())
+  const [bootDone, setBootDone] = useState(() => isBootComplete() && hasSiteConsent())
 
   useEffect(() => {
-    const sync = () => setBootDone(isBootComplete())
+    const sync = () => setBootDone(isBootComplete() && hasSiteConsent())
     sync()
     window.addEventListener(BOOT_COMPLETE_EVENT, sync)
-    return () => window.removeEventListener(BOOT_COMPLETE_EVENT, sync)
+    window.addEventListener(SITE_CONSENT_EVENT, sync)
+    return () => {
+      window.removeEventListener(BOOT_COMPLETE_EVENT, sync)
+      window.removeEventListener(SITE_CONSENT_EVENT, sync)
+    }
   }, [])
 
   if (!bootDone) return null

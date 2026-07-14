@@ -178,7 +178,7 @@ export default function PageLoader() {
         )}
       </AnimatePresence>
 
-      <SiteConsentModal open={loading && showConsentModal} onAccepted={finishBoot} />
+      <SiteConsentModal open={showConsentModal} onAccepted={finishBoot} />
     </>
   )
 }

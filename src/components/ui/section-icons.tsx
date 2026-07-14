@@ -11,18 +11,7 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 
-export const SERVICE_ICONS: LucideIcon[] = [
-  Code,
-  Palette,
-  ShoppingCart,
-  Search,
-  Bot,
-  Wrench,
-]
-
-export const PROCESS_FEATURE_ICONS: LucideIcon[] = [Bolt, Clock, Shield]
-
-const ICON_MAP: Record<string, LucideIcon> = {
+const ICON_BY_NAME: Record<string, LucideIcon> = {
   code: Code,
   palette: Palette,
   shoppingcart: ShoppingCart,
@@ -35,8 +24,19 @@ const ICON_MAP: Record<string, LucideIcon> = {
   shield: Shield,
 }
 
-export function resolveIcon(name: string | null | undefined): LucideIcon {
-  if (!name) return Code
-  const key = name.toLowerCase().replace(/[^a-z0-9]/g, '')
-  return ICON_MAP[key] ?? Code
+export const SERVICE_ICONS: LucideIcon[] = [
+  Code,
+  Palette,
+  ShoppingCart,
+  Search,
+  Bot,
+  Wrench,
+]
+
+export function resolveIcon(name: string | null | undefined, fallbackIndex = 0): LucideIcon {
+  const key = (name ?? '').trim().toLowerCase().replace(/[^a-z0-9]/g, '')
+  if (key && ICON_BY_NAME[key]) return ICON_BY_NAME[key]
+  return SERVICE_ICONS[fallbackIndex % SERVICE_ICONS.length] ?? Code
 }
+
+export const PROCESS_FEATURE_ICONS: LucideIcon[] = [Bolt, Clock, Shield]

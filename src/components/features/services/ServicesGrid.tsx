@@ -31,7 +31,7 @@ export default function ServicesGrid({ items }: Props) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {items.map((s, i) => {
-        const Icon = resolveIcon(s.icon)
+        const Icon = resolveIcon(s.icon, i)
         return (
           <motion.div
             key={s.id}

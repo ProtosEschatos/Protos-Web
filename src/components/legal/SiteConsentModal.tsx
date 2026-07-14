@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations, useLocale } from 'next-intl'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { buildLocalePath } from '@/lib/config/seo'
 import { saveSiteConsent } from '@/lib/config/site-consent'
 
@@ -20,6 +20,39 @@ export default function SiteConsentModal({ open, onAccepted }: SiteConsentModalP
   const [termsAccepted, setTermsAccepted] = useState(false)
   const [analyticsOptIn, setAnalyticsOptIn] = useState(false)
 
+  useEffect(() => {
+    if (!open) return
+    setTermsAccepted(false)
+    setAnalyticsOptIn(false)
+  }, [open])
+
+  useEffect(() => {
+    if (!open || typeof document === 'undefined') return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = prev
+    }
+  }, [open])
+
+  const handleAccept = useCallback(() => {
+    if (!termsAccepted) return
+    saveSiteConsent(analyticsOptIn)
+    onAccepted()
+  }, [analyticsOptIn, onAccepted, termsAccepted])
+
+  useEffect(() => {
+    if (!open) return
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Enter' && termsAccepted) {
+        e.preventDefault()
+        handleAccept()
+      }
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [open, termsAccepted, handleAccept])
+
   return (
     <AnimatePresence>
       {open && (
@@ -27,7 +60,7 @@ export default function SiteConsentModal({ open, onAccepted }: SiteConsentModalP
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/70 backdrop-blur-sm px-6"
+          className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/75 backdrop-blur-sm px-4 sm:px-6"
           role="dialog"
           aria-modal="true"
           aria-labelledby="site-consent-title"
@@ -36,7 +69,7 @@ export default function SiteConsentModal({ open, onAccepted }: SiteConsentModalP
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
-            className="cosmic-panel max-w-lg w-full max-h-[90vh] overflow-y-auto rounded-2xl border border-cyan-400/25 p-8 shadow-2xl"
+            className="cosmic-panel max-w-lg w-full max-h-[min(90vh,720px)] overflow-y-auto rounded-2xl border border-cyan-400/25 p-6 sm:p-8 shadow-2xl"
           >
             <h3 id="site-consent-title" className="text-lg font-bold text-[var(--light)] mb-2">
               {t('consentModalTitle')}
@@ -78,7 +111,7 @@ export default function SiteConsentModal({ open, onAccepted }: SiteConsentModalP
                 type="checkbox"
                 checked={termsAccepted}
                 onChange={(e) => setTermsAccepted(e.target.checked)}
-                className="mt-1 accent-amber-400"
+                className="mt-1 accent-amber-400 shrink-0"
                 required
               />
               <span>
@@ -89,7 +122,7 @@ export default function SiteConsentModal({ open, onAccepted }: SiteConsentModalP
 
             <div className="space-y-3 mb-6">
               <label className="flex gap-3 items-start rounded-xl border border-white/10 bg-white/5 p-4 opacity-90">
-                <input type="checkbox" checked disabled className="mt-1 accent-cyan-400" />
+                <input type="checkbox" checked disabled className="mt-1 accent-cyan-400 shrink-0" />
                 <span>
                   <span className="block text-sm font-semibold text-[var(--light)]">{t('cookieEssentialLabel')}</span>
                   <span className="block text-xs text-[var(--light-muted)] mt-1 leading-relaxed">{t('cookieEssentialDesc')}</span>
@@ -100,7 +133,7 @@ export default function SiteConsentModal({ open, onAccepted }: SiteConsentModalP
                   type="checkbox"
                   checked={analyticsOptIn}
                   onChange={(e) => setAnalyticsOptIn(e.target.checked)}
-                  className="mt-1 accent-cyan-400"
+                  className="mt-1 accent-cyan-400 shrink-0"
                 />
                 <span>
                   <span className="block text-sm font-semibold text-[var(--light)]">{t('cookieAnalyticsLabel')}</span>
@@ -112,10 +145,7 @@ export default function SiteConsentModal({ open, onAccepted }: SiteConsentModalP
             <button
               type="button"
               disabled={!termsAccepted}
-              onClick={() => {
-                saveSiteConsent(analyticsOptIn)
-                onAccepted()
-              }}
+              onClick={handleAccept}
               className="w-full px-6 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-emerald-500 text-white text-sm font-semibold hover:-translate-y-0.5 transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
             >
               {t('consentModalAccept')}

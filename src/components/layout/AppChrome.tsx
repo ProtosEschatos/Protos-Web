@@ -12,7 +12,15 @@ import { PageTransitionProvider } from '@/components/navigation/PageTransitionPr
 import PageTransitionOverlay from '@/components/navigation/PageTransitionOverlay'
 import AdminShell from '@/components/features/admin/AdminShell'
 import SiteConsentModal from '@/components/legal/SiteConsentModal'
-import { clearBootPending, isBootComplete, isBootGateBypassPath, removeBootSsrVeil, BOOT_SESSION_KEY, BOOT_COMPLETE_EVENT } from '@/lib/config/boot-gate'
+import {
+  clearBootPending,
+  isBootComplete,
+  isBootGateBypassPath,
+  isLegalPath,
+  removeBootSsrVeil,
+  BOOT_SESSION_KEY,
+  BOOT_COMPLETE_EVENT,
+} from '@/lib/config/boot-gate'
 import { hasSiteConsent, SITE_CONSENT_EVENT } from '@/lib/config/site-consent'
 
 const LEGAL_PATH = /\/(terms|privacy|cookies)$/
@@ -22,7 +30,7 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
   const isShowcase = pathname.includes('portfolio-showcase')
   const isAdmin = pathname.includes('/admin')
   const isAdminLogin = pathname.endsWith('/admin/login')
-  const isLegal = LEGAL_PATH.test(pathname)
+  const isLegal = isLegalPath(pathname) || LEGAL_PATH.test(pathname)
   const [consentGranted, setConsentGranted] = useState(true)
   const [bootDone, setBootDone] = useState(true)
   const [showcaseBlocked, setShowcaseBlocked] = useState(true)
@@ -34,7 +42,11 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
   }, [])
 
   useEffect(() => {
-    const syncConsent = () => setConsentGranted(hasSiteConsent())
+    const syncConsent = () => {
+      const ok = hasSiteConsent()
+      setConsentGranted(ok)
+      setShowcaseBlocked(!ok)
+    }
     const syncBoot = () => setBootDone(isBootComplete())
     window.addEventListener(SITE_CONSENT_EVENT, syncConsent)
     window.addEventListener(BOOT_COMPLETE_EVENT, syncBoot)
@@ -64,10 +76,10 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
 
   const finishConsent = useCallback(() => {
     setConsentGranted(true)
+    setShowcaseBlocked(false)
     sessionStorage.setItem(BOOT_SESSION_KEY, '1')
     clearBootPending()
     window.dispatchEvent(new Event(BOOT_COMPLETE_EVENT))
-    setShowcaseBlocked(false)
   }, [])
 
   const siteLocked = !consentGranted

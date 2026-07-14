@@ -44,7 +44,7 @@ Live site: **https://protosweb.eu** · Repo: **https://github.com/ProtosEschatos
 ```
 src/
 ├── app/
-│   ├── [locale]/              # Locale-based routing (hr/en/de/it/es)
+│   ├── [locale]/              # Locale-based routing (hr/en/de/it/es/sr)
 │   │   ├── layout.tsx         # Root layout (fonts, PageLoader, Header, Footer, CookieBanner)
 │   │   ├── page.tsx           # Home page (Hero, Process, Portfolio, Services, Blog, Contact)
 │   │   ├── o-meni/page.tsx    # About page ("Full Stack Duo iz Zagreba")
@@ -111,11 +111,11 @@ src/
 
 | File | Purpose |
 |------|---------|
-| `next.config.js` | Next.js 14 config with next-intl plugin, Three.js transpile |
+| `next.config.js` | Next.js 16 config with next-intl plugin, Three.js transpile |
 | `tailwind.config.ts` | Tailwind with Protos theme colors, custom animations |
 | `tsconfig.json` | TypeScript strict mode, `@/*` path alias |
 | `postcss.config.js` | Tailwind + Autoprefixer |
-| `.cursorrules` | Cursor AI coding standards |
+| `AGENTS.md` + `.cursor/rules/` | Cursor/agent workflow and project rules |
 | `package.json` | All dependencies |
 
 ## Theme Colors
@@ -153,10 +153,10 @@ src/
 - [x] Services page
 - [x] Contact page
 - [x] API routes: POST /api/contact, GET /api/blog
-- [x] i18n with next-intl (5 languages)
+- [x] i18n with next-intl (6 languages)
 - [x] hreflang alternates + dynamic sitemap with blog posts
 - [x] All config files (tailwind, next, tsconfig, postcss, middleware, i18n)
-- [x] .cursorrules for Cursor AI
+- [x] Agent docs (`AGENTS.md`, `.cursor/rules/`)
 
 ### Backend
 - [x] Supabase client connection

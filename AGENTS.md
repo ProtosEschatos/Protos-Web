@@ -7,28 +7,29 @@ Repo: ProtosEschatos/Protos-Web
 
 1. Read `docs/security.md` for secret placement (never put `ADMIN_SECRET` in Supabase).
 2. Admin UI: `docs/admin-console.md` + reference repo `Google-AI-Studio-Github-Connect`.
-3. For full project memory see **Protos-Agent** repo: `memory/projects/protos-web.md`.
-4. **Human UI:** browse memory at `/admin/memory` (read-only, loads from Protos-Agent GitHub).
+3. Full project memory: **Protos-Agent** `memory/projects/protos-web.md` (not `PROJECT-MEMORY.md` — that file is TL;DR only).
+4. Human UI: browse memory at `/admin/memory` (read-only, loads from Protos-Agent GitHub).
+5. Cursor rules: `.cursor/rules/*.mdc` (showcase layers, fix-not-remove, design system).
 
 ## Stack
 
-Next.js 14 App Router · TypeScript · Tailwind · next-intl (hr/en/de/it/es) · Supabase · Vercel.
+Next.js 16 App Router · React 19 · TypeScript · Tailwind · next-intl (hr/en/de/it/es/sr) · Supabase · Vercel.
 
-## Project layout (post-refactor)
+## Project layout
 
 ```
 src/
-├── app/[locale]/          # Public + admin routes (App Router only)
+├── app/[locale]/          # Public + admin routes
 │   └── admin/stranice/    # Static page admin panels (o-meni, proces, usluge)
 ├── components/
 │   ├── features/          # admin/, home/sections/, blog/, portfolio/
 │   ├── layout/            # Header, Footer, MobileMenu
-│   ├── three/             # R3F backgrounds + showcase
-│   └── ui/                # shared UI + section-icons.tsx
+│   ├── three/             # R3F backgrounds + showcase (SpaceGallery)
+│   └── ui/
 ├── lib/
 │   ├── auth/              # admin auth, rate limit, require-admin
 │   ├── config/            # site, seo, admin-links, social-links, tech-stacks
-│   ├── queries/           # blog, portfolio (+ admin/ subfolder)
+│   ├── queries/           # blog, portfolio (+ admin/)
 │   ├── routes/            # main-nav.ts
 │   └── showcase/          # showcase storage, webgl helpers
 ├── hooks/                 # use-showcase-viewport.ts
@@ -37,18 +38,11 @@ src/
 
 ## Admin (`/admin`)
 
-- **Console v3.0** UI — referenca: `ProtosEschatos/Google-AI-Studio-Github-Connect`; docs: `docs/admin-console.md`
+- Console v3.0 UI — ref: `Google-AI-Studio-Github-Connect`; docs: `docs/admin-console.md`
 - Password auth via `ADMIN_SECRET` on **Vercel only**
-- Stil: `src/styles/admin-console.css` (`.admin-console` scope)
-- Admin UI: `AdminShell`, `AdminSidebar`, `AdminLink` (Next.js client nav)
 - CMS reads: `src/lib/queries/admin/` · writes: `src/actions/admin-*.ts`
-- Static pages: `/admin/stranice/*` (copy in `messages/*.json` + page components)
-- Agent memory: `/admin/memory` — reads `Protos-Agent/memory/` via GitHub raw
-- AI assistant: `/admin/ai` — DeepSeek (+ opcionalno Gemini) via `DEEPSEEK_API_KEY` on Vercel
-- External tools: `/admin/tools` — Zoho/Resend/Brevo links (`src/lib/config/admin-links.ts`)
-- Social/platform structure: `src/lib/config/team-profiles.ts`; re-export via `social-links.ts` (`pending: true` until real URLs)
-- Public tech stacks (no infra): `src/lib/config/tech-stacks.ts`
-- Main nav (public + admin): `src/lib/routes/main-nav.ts`
+- Agent memory: `/admin/memory` — Protos-Agent via GitHub raw
+- AI assistant: `/admin/ai` — `DEEPSEEK_API_KEY` on Vercel
 
 ## Conventions
 
@@ -56,19 +50,27 @@ src/
 - Minimize diff scope; no drive-by refactors
 - Only commit when the user asks
 - Croatian copy for user-facing admin strings
+- **Fix, don't remove** broken features (see `.cursor/rules/fix-not-remove.mdc`)
+
+## Showcase (`/portfolio-showcase`)
+
+- No Header/Footer/SiteBackground — handled in `AppChrome`
+- `PortfolioShowcaseClient` → dynamic `SpaceGallery` with `ShowcaseBootLoader` (never `loading: () => null`)
+- Phases: `loading` | `intro` | `playing` — one visible at a time
 
 ## Deploy
 
-Push to `main` → Vercel production. **After every push verify live** (`vercel ls` or curl) — GitHub green ≠ Vercel deployed; webhook can lag (use `vercel redeploy` if needed). Preview envs need same secrets as production for admin CMS.
+**GitHub only:** push to `main` → Vercel production auto-deploy.
+
+- Do **not** use Vercel CLI (`vercel deploy`, `vercel ls`, `vercel redeploy`) or custom deploy scripts
+- After push, verify live: `curl -sS -o /dev/null -w "%{http_code}" https://www.protosweb.eu/portfolio-showcase`
+- GitHub CI green ≠ instant Vercel READY — wait for deploy, then curl
 
 **Critical:** `ADMIN_SECRET` lives on Vercel only — git revert does **not** restore it.
 
-## Current state (2026-07-11 23:10)
+## Current state (2026-07-14)
 
-- **Latest commit:** `3c039ed` — Admin Console v3.0 reskin
-- **Live:** https://www.protosweb.eu/admin
-- **Admin UI:** slate/indigo Console v3.0 (ref: Google-AI-Studio-Github-Connect)
+- **Latest commit:** `40b0514` — showcase boot loader restored
+- **Supabase:** `laqnnzavwbojntfiqmxj` — blog/portfolio/contact live
 - **Donacije:** Stripe LIVE · `/admin/donacije`
-- **Inbox:** Zoho + Gmail studio + Martina placeholder
-- **Docs:** `docs/admin-console.md`, `docs/stripe-donations.md`
-- Full memory: **Protos-Agent** `memory/sessions/2026-07-11-inbox-stripe-donations.md`
+- Full session history: **Protos-Agent** `memory/sessions/`

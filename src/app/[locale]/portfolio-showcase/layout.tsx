@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { buildPageMetadata } from '@/lib/config/seo'
+import { ShowcaseBootBypass } from '@/components/features/portfolio/ShowcaseBootBypass'
 
 type Props = { params: Promise<{ locale: string }> }
 
@@ -23,5 +24,10 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 }
 
 export default function ShowcaseLayout({ children }: { children: React.ReactNode }) {
-  return children
+  return (
+    <>
+      <ShowcaseBootBypass />
+      {children}
+    </>
+  )
 }

@@ -18,5 +18,9 @@ type Props = {
 }
 
 export default function PortfolioShowcaseClient({ portfolioItems, focusPoklon = false }: Props) {
-  return <SpaceGallery portfolioItems={portfolioItems} focusPoklon={focusPoklon} />
+  return (
+    <div data-showcase-root className="min-h-screen">
+      <SpaceGallery portfolioItems={portfolioItems} focusPoklon={focusPoklon} />
+    </div>
+  )
 }

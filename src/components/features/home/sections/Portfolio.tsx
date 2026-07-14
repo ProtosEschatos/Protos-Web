@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
-import { Link } from '@/navigation'
+import ShowcasePrefetchLink from '@/components/features/portfolio/ShowcasePrefetchLink'
 import { ArrowRight, Layers } from 'lucide-react'
 import type { PortfolioItem } from '@/types/portfolio'
 import PortfolioGrid from '@/components/features/portfolio/PortfolioGrid'
@@ -55,9 +55,9 @@ export default function Portfolio({ items }: Props) {
           </div>
           <div className="flex items-center gap-4">
             <span className="text-xs font-semibold tracking-[0.1em] uppercase text-[var(--accent)]">{t('showcaseCta')}</span>
-            <Link href="/portfolio-showcase" className="w-11 h-11 rounded-full bg-[var(--primary)] flex items-center justify-center text-white hover:scale-110 transition-transform duration-300" aria-label={t('showcaseCta')}>
+            <ShowcasePrefetchLink href="/portfolio-showcase" className="w-11 h-11 rounded-full bg-[var(--primary)] flex items-center justify-center text-white hover:scale-110 transition-transform duration-300" aria-label={t('showcaseCta')}>
               <ArrowRight className="w-4 h-4" />
-            </Link>
+            </ShowcasePrefetchLink>
           </div>
         </motion.div>
       </div>

@@ -29,10 +29,9 @@ There is no Prisma, Firebase, or separate Node API server. Next.js API routes ca
 
 Public site reads: `src/lib/queries/blog.ts`, `portfolio.ts` via anon client (`src/lib/supabase.ts`).
 
-## Secrets & local dev
+## Secrets & deployment
 
-Full secret placement table: [`docs/security.md`](security.md).  
-Local setup: copy `.env.example` → `.env.local` (gitignored, managed by you).
+Full secret placement table: [`docs/security.md`](security.md).
 
 ## UI zones (no mixing)
 
@@ -45,8 +44,4 @@ Local setup: copy `.env.example` → `.env.local` (gitignored, managed by you).
 
 Consent: one `SiteConsentModal` (terms + privacy + cookies), not a separate cookie banner.
 
-See [`.cursor/rules/dom-canvas-layers.mdc`](../.cursor/rules/dom-canvas-layers.mdc).
-
-## Secret map
-
-Full table: [`docs/security.md`](security.md).
+DOM = UI chrome; Canvas = 3D only (`src/components/three/**`). See [`.cursor/rules/protos-web.mdc`](../.cursor/rules/protos-web.mdc).

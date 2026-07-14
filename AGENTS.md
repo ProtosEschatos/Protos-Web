@@ -64,13 +64,18 @@ src/
 
 - No Header/Footer/SiteBackground — handled in `AppChrome`
 - `PortfolioShowcaseClient` → dynamic `SpaceGallery` with `ShowcaseBootLoader` (never `loading: () => null`)
-- Phases: `loading` | `intro` | `playing` — one visible at a time
+- `ShowcaseBootBypass` in layout — hides site boot veil; never stack PageLoader on showcase
+- `ShowcasePrefetchLink` on entry CTAs — prefetches SpaceGallery chunk on hover/focus
+- Phases: `loading` | `intro` | `playing` — one visible at a time; canvas `onReady` → intro
 
 ## Deploy
 
 **GitHub only:** push to `main` → Vercel production auto-deploy.
 
 - Do **not** use Vercel CLI (`vercel deploy`, `vercel ls`, `vercel redeploy`) or custom deploy scripts
+- **Supabase backend unchanged** — `ci.yml` build-only; Supabase ops in dedicated workflows
+- Cloudflare DNS: manual `cloudflare-dns-check.yml` only
+- Cursor plugins: see `docs/cursor-stack.md` — disable Convex/Prisma/Firebase
 - After push, verify live: `curl -sS -o /dev/null -w "%{http_code}" https://www.protosweb.eu/portfolio-showcase`
 - GitHub CI green ≠ instant Vercel READY — wait for deploy, then curl
 

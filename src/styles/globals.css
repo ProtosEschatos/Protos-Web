@@ -49,6 +49,16 @@ html.boot-complete #boot-ssr-veil {
   display: none !important;
 }
 
+html[data-route="showcase"] #boot-ssr-veil {
+  display: none !important;
+}
+
+html[data-route="showcase"].boot-pending,
+html[data-route="showcase"].boot-pending body {
+  background-color: #0a0a1a !important;
+  overflow: hidden !important;
+}
+
 #boot-ssr-veil {
   position: fixed;
   inset: 0;

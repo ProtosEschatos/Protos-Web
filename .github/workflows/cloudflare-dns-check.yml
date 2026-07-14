@@ -1,0 +1,38 @@
+name: Cloudflare DNS Check
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dns:
+    name: Verify zone (manual)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify Cloudflare zone (read-only)
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ZONE_ID" ]; then
+            echo "Missing CLOUDFLARE_API_TOKEN or CLOUDFLARE_ZONE_ID — add to GitHub secrets."
+            exit 1
+          fi
+          response=$(curl -sS -w "\n%{http_code}" \
+            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
+            "https://api.cloudflare.com/client/v4/zones/${CLOUDFLARE_ZONE_ID}")
+          body=$(echo "$response" | head -n -1)
+          code=$(echo "$response" | tail -n 1)
+          echo "$body" | head -c 500
+          if [ "$code" != "200" ]; then
+            echo "Cloudflare API request failed with status $code"
+            exit 1
+          fi
+          status=$(echo "$body" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('result',{}).get('status','unknown'))" 2>/dev/null || echo "unknown")
+          echo "Zone status: $status"
+          if [ "$status" != "active" ]; then
+            echo "Cloudflare zone is not active"
+            exit 1
+          fi
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}

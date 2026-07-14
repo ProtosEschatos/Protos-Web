@@ -8,6 +8,7 @@ import { type ShowcaseProject } from './showcase/constants'
 import { ShowcaseScene } from './showcase/GalleryScene'
 import { buildShowcaseProjects } from './showcase/buildProjects'
 import { ShowcaseFallback } from './showcase/ShowcaseFallback'
+import { ShowcaseBootLoader } from './showcase/ShowcaseBootLoader'
 import { ShowcaseJoystick } from './showcase/ShowcaseJoystick'
 import { SafeCanvas } from '@/components/three/SafeCanvas'
 import { isWebGLAvailable } from '@/lib/showcase/webgl'
@@ -44,6 +45,7 @@ type ShowcaseCanvasLayerProps = {
   onNearFeaturedDemo: (near: boolean) => void
   mountKey: number
   onContextLost: () => void
+  onCanvasReady: () => void
 }
 
 const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
@@ -59,6 +61,7 @@ const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
   onNearFeaturedDemo,
   mountKey,
   onContextLost,
+  onCanvasReady,
 }: ShowcaseCanvasLayerProps) {
   return (
     <div className="absolute inset-0 z-[1]">
@@ -67,6 +70,7 @@ const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
         camera={{ fov: 70, near: 0.1, far: 1000 }}
         gl={{ toneMapping: THREE.NoToneMapping }}
         onContextLost={onContextLost}
+        onReady={onCanvasReady}
         fallback={null}
       >
         <ShowcaseScene
@@ -100,7 +104,7 @@ export function SpaceGallery({ portfolioItems = [], focusPoklon = false }: Space
   const [webglReady] = useState(() => isWebGLAvailable())
   const [contextLost, setContextLost] = useState(false)
   const [canvasKey, setCanvasKey] = useState(0)
-  const [phase, setPhase] = useState<Phase>('intro')
+  const [phase, setPhase] = useState<Phase>('loading')
   const [showMenu, setShowMenu] = useState(false)
   const [nearestProject, setNearestProject] = useState<ShowcaseProject | null>(null)
   const [nearFeaturedDemo, setNearFeaturedDemo] = useState(false)
@@ -188,10 +192,14 @@ export function SpaceGallery({ portfolioItems = [], focusPoklon = false }: Space
     setContextLost(true)
   }, [])
 
+  const handleCanvasReady = useCallback(() => {
+    setPhase((current) => (current === 'loading' ? 'intro' : current))
+  }, [])
+
   const handleRetryWebGL = useCallback(() => {
     setContextLost(false)
     setCanvasKey((key) => key + 1)
-    setPhase('intro')
+    setPhase('loading')
     setShowMenu(false)
   }, [])
 
@@ -218,6 +226,8 @@ export function SpaceGallery({ portfolioItems = [], focusPoklon = false }: Space
 
   return (
     <div className="fixed inset-0 bg-[#0a0a1a]">
+      {phase === 'loading' && <ShowcaseBootLoader />}
+
       <ShowcaseCanvasLayer
         projects={projects}
         isPlaying={phase === 'playing'}
@@ -231,6 +241,7 @@ export function SpaceGallery({ portfolioItems = [], focusPoklon = false }: Space
         onNearFeaturedDemo={handleNearFeaturedDemo}
         mountKey={canvasKey}
         onContextLost={handleContextLost}
+        onCanvasReady={handleCanvasReady}
       />
 
       <ShowcaseFullscreenDemo

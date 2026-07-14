@@ -24,9 +24,13 @@ Next.js 16 App Router · React 19 · TypeScript · Tailwind · next-intl · **Su
 
 - **GitHub only:** `git push origin main` → Vercel production auto-deploy
 - **Never** Vercel CLI (`vercel deploy`, etc.)
-- Supabase migrations: `supabase/migrations/` → GitHub Actions `supabase-db-push.yml` (`supabase db push`)
-- Edge functions: `supabase-deploy-functions.yml` on `supabase/functions/**`
+- **Supabase backend stays** — only removed duplicate jobs from `ci.yml`; workflows `supabase-db-push.yml`, `supabase-deploy-functions.yml`, `supabase-keep-alive.yml` remain
+- Cloudflare = DNS only; manual check via `cloudflare-dns-check.yml` (`workflow_dispatch`)
 - Commit only when the user asks
+
+## Cursor plugins
+
+Disable Convex, Prisma, Firebase, Pinecone, Render for this repo. Full list: `docs/cursor-stack.md`
 
 ## Supabase clients
 
@@ -49,6 +53,7 @@ Next.js 16 App Router · React 19 · TypeScript · Tailwind · next-intl · **Su
 
 - **Fix, don't remove** user-facing features (3D showcase, backgrounds, nav) without explicit user approval
 - Showcase `/portfolio-showcase`: no Header/Footer/SiteBackground; phases `loading` | `intro` | `playing`
+- Showcase must bypass site boot veil (`ShowcaseBootBypass`); use `ShowcasePrefetchLink` for entry links
 - DOM = UI chrome; Canvas = 3D only (`src/components/three/**`)
 - Minimize diff scope; match existing style and CSS variables
 - Croatian copy for admin-facing strings

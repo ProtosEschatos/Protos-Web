@@ -38,6 +38,23 @@ Legacy multi-tenant columns may still exist elsewhere; active flow uses `donatio
 
 **Do not** store `ADMIN_SECRET` in Supabase — it is unused there and increases leak surface. Remove it from Supabase Dashboard → Edge Functions → Secrets if present.
 
+## GitHub Actions secrets
+
+| Secret | Required for | Notes |
+|--------|--------------|-------|
+| `SUPABASE_URL` | `ci.yml` build | Same as `NEXT_PUBLIC_SUPABASE_URL` |
+| `SUPABASE_ANON_KEY` | `ci.yml` build | Publishable anon key for Next.js compile |
+| `SUPABASE_SERVICE_ROLE_KEY` | `ci.yml` build | Server-side compile only — never in browser |
+| `SUPABASE_ACCESS_TOKEN` | `supabase-db-push.yml`, `supabase-deploy-functions.yml` | CLI deploy |
+| `SUPABASE_PROJECT_REF` | Supabase workflows | `laqnnzavwbojntfiqmxj` |
+| `KEEP_ALIVE_SECRET` | `supabase-keep-alive.yml` | Edge fn auth |
+| `CLOUDFLARE_API_TOKEN` | `cloudflare-dns-check.yml` (manual only) | Optional — DNS check, not CI gate |
+| `CLOUDFLARE_ZONE_ID` | `cloudflare-dns-check.yml` (manual only) | Optional |
+
+**Not in `ci.yml`:** Supabase keep-alive and REST probes run in dedicated workflows (`supabase-keep-alive.yml`, `supabase-db-push.yml`). Cloudflare is DNS-only — see [cloudflare-dns.md](./cloudflare-dns.md).
+
+Cursor plugin allowlist: [cursor-stack.md](./cursor-stack.md).
+
 ## Admin panel
 
 - Password auth via `ADMIN_SECRET` on Vercel

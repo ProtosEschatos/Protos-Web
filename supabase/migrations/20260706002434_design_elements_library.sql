@@ -1,5 +1,5 @@
 -- Internal design reference library: catalog table + storage bucket.
--- See design/references/README.md and .cursor/rules/design-system.mdc.
+-- See design/references/README.md and .cursor/rules/protos-web.mdc.
 
 CREATE TABLE IF NOT EXISTS public.design_elements (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),

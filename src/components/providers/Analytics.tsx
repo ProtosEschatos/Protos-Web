@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import Script from 'next/script'
-import { getCookiePreferences, COOKIE_CONSENT_EVENT } from '@/lib/config/cookie-consent'
+import { getCookiePreferences, COOKIE_CONSENT_EVENT } from '@/lib/config/site-consent'
 
 export default function Analytics() {
   const [allowed, setAllowed] = useState(false)

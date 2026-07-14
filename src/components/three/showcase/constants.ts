@@ -1,3 +1,5 @@
+import { getShowcaseStorageUrl, SHOWCASE_STORAGE } from '@/lib/showcase/showcase-storage'
+
 export const SHOWCASE_CONFIG = {
   /** Units per second (legacy was 0.35/frame @ ~60fps) */
   moveSpeed: 21,
@@ -20,17 +22,53 @@ export type ProjectLink = {
   screenshotDesktop: string
 }
 
-// Empty until real projects are ready to publish. Add entries here (screenshots via
-// getShowcaseStorageUrl from '@/lib/showcase/showcase-storage') to populate the gallery; any
-// remaining FRAME_SLOTS render as empty placeholder frames.
-export const PROJECT_LINKS: ProjectLink[] = []
+/**
+ * Screenshot + color fallbacks keyed by live project URL.
+ * Which projects appear in the 3D room is driven by active `portfolio_items` in Supabase;
+ * this list only supplies assets when `image_url` is missing in the database.
+ */
+export const PROJECT_LINKS: ProjectLink[] = [
+  {
+    color: 0x6366f1,
+    link: 'https://bodulica.shop',
+    screenshotMobile: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('bodulica', 'mobile')),
+    screenshotDesktop: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('bodulica', 'desktop')),
+  },
+  {
+    color: 0x06b6d4,
+    link: 'https://zeustrading.online',
+    screenshotMobile: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('zeustrading', 'mobile')),
+    screenshotDesktop: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('zeustrading', 'desktop')),
+  },
+  {
+    color: 0xf59e0b,
+    link: 'https://cosmic-blueprint.net',
+    screenshotMobile: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('cosmic-blueprint', 'mobile')),
+    screenshotDesktop: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('cosmic-blueprint', 'desktop')),
+  },
+  {
+    color: 0x818cf8,
+    link: 'https://protosweb.eu',
+    screenshotMobile: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('protosweb', 'mobile')),
+    screenshotDesktop: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('protosweb', 'desktop')),
+  },
+  {
+    color: 0xec4899,
+    link: 'https://golden-pawn.vercel.app',
+    screenshotMobile: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('golden-pawn', 'mobile')),
+    screenshotDesktop: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('golden-pawn', 'desktop')),
+  },
+]
+
+export const SHOWCASE_FRAME_COLORS = [
+  0x6366f1, 0x06b6d4, 0xf59e0b, 0x818cf8, 0xec4899, 0x10b981, 0xf97316, 0x8b5cf6,
+] as const
 
 export const INITIAL_CHARACTER_HEADING = 0
 
 /**
  * Total frame slots rendered on the gallery walls (2 per side per row).
- * Filled from PROJECT_LINKS in order; remaining slots render as empty
- * placeholders ready for future designs.
+ * Filled from active portfolio_items; remaining slots render as empty placeholders.
  */
 export const FRAME_SLOTS = 8
 
@@ -80,13 +118,13 @@ export function getFrameTransform(index: number, centerY = 2.45): FrameTransform
   }
 }
 
-export function getFrameMarkers(): FrameMarker[] {
-  return PROJECT_LINKS.map((meta, index) => {
+export function getFrameMarkers(projects: ShowcaseProject[]): FrameMarker[] {
+  return projects.map((project, index) => {
     const { z, floorX } = getFrameTransform(index)
     return {
       x: floorX,
       z,
-      color: meta.color,
+      color: project.color,
     }
   })
 }

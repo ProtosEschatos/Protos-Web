@@ -19,7 +19,6 @@ const eslintConfig = defineConfig([
     'next-env.d.ts',
     'node_modules/**',
     'next.config.js',
-    'public/demos/**',
   ]),
 ])
 

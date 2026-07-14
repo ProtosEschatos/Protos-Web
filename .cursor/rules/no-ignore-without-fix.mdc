@@ -1,0 +1,33 @@
+---
+description: Fix root cause instead of adding ignores; single source for secrets docs
+alwaysApply: true
+---
+
+# No Ignore Without Fix
+
+## Golden rules
+
+1. **Never add `.gitignore`, ESLint `globalIgnores`, or “skip lint”** to hide a broken file — fix the file or remove dead code.
+2. **Never duplicate env/secret/API-key tables** — canonical: `docs/security.md`. Link from README/AGENTS; do not copy full tables.
+3. **Never touch `.env*` files** unless the user explicitly asks — they manage local secrets.
+4. **Supabase is the sole backend** — no Prisma/Firebase for app data. Edge secrets on Supabase; Next reads via `src/lib/supabase.ts`.
+
+## ESLint / vendor assets
+
+- Prebuilt bundles in `public/demos/**`: file-level `/* eslint-disable */` on the minified asset, not repo-wide ignore.
+- Rebuild and replace the bundle if the demo source changes.
+
+## Docs
+
+| Topic | Canonical file |
+|-------|----------------|
+| Secrets placement | `docs/security.md` |
+| Stack + Supabase | `docs/architecture.md` |
+| Agent workflow | `AGENTS.md` |
+| TL;DR only | `PROJECT-MEMORY.md` |
+
+## Forbidden
+
+- Copy-pasting Vercel/GitHub/Supabase env tables into new markdown files
+- `globalIgnores(['public/demos/**'])` instead of fixing the vendor file
+- Deleting user-facing features to “fix” lint or CI

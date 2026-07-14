@@ -1,3 +1,4 @@
+/* eslint-disable -- prebuilt Vite vendor bundle; do not lint or hand-edit */
 (function(){const _=document.createElement("link").relList;if(_&&_.supports&&_.supports("modulepreload"))return;for(const A of document.querySelectorAll('link[rel="modulepreload"]'))m(A);new MutationObserver(A=>{for(const R of A)if(R.type==="childList")for(const ae of R.addedNodes)ae.tagName==="LINK"&&ae.rel==="modulepreload"&&m(ae)}).observe(document,{childList:!0,subtree:!0});function U(A){const R={};return A.integrity&&(R.integrity=A.integrity),A.referrerPolicy&&(R.referrerPolicy=A.referrerPolicy),A.crossOrigin==="use-credentials"?R.credentials="include":A.crossOrigin==="anonymous"?R.credentials="omit":R.credentials="same-origin",R}function m(A){if(A.ep)return;A.ep=!0;const R=U(A);fetch(A.href,R)}})();var Ss={exports:{}},En={};/**
  * @license React
  * react-jsx-runtime.production.js

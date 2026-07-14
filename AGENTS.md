@@ -9,7 +9,7 @@ Repo: ProtosEschatos/Protos-Web
 2. Admin UI: `docs/admin-console.md` + reference repo `Google-AI-Studio-Github-Connect`.
 3. Full project memory: **Protos-Agent** `memory/projects/protos-web.md` (not `PROJECT-MEMORY.md` — that file is TL;DR only).
 4. Human UI: browse memory at `/admin/memory` (read-only, loads from Protos-Agent GitHub).
-5. Cursor rules: `.cursor/rules/*.mdc` (showcase layers, fix-not-remove, design system).
+5. Cursor rules: `.cursor/rules/*.mdc` (showcase layers, fix-not-remove, design system, no-ignore-without-fix).
 6. Architecture + Supabase backend map: `docs/architecture.md`.
 
 ## Stack

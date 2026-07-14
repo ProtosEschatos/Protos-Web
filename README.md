@@ -133,7 +133,7 @@ src/
 ## Features
 
 ### Completed
-- [x] Header with desktop nav, language selector (5 langs), theme cycler, CTA, hamburger
+- [x] Header with desktop nav, language selector (6 langs), theme cycler, CTA, hamburger
 - [x] MobileMenu with Framer Motion slide-in animation
 - [x] Footer with brand, links, legal, social, Balkans causes
 - [x] PageLoader with cyber background, progress gate, and boot cookie modal
@@ -184,42 +184,11 @@ src/
 5. **All Three.js components are dynamically imported** with `ssr: false`
 6. **Performance** — R3F canvases use `next/dynamic` with `ssr: false`; production responses use `compress: true` in `next.config.js`; Inter loads with `display: swap`. Run Lighthouse against a production build (`npm run build && npm start`) for audit scores.
 
-## Environment Variables — Where Things Live
+## Environment & secrets
 
-Secrets are **not** duplicated everywhere on purpose. Each platform reads only what it needs:
+Kanonski izvor: [`docs/security.md`](docs/security.md) (tajne po platformi) i [`docs/architecture.md`](docs/architecture.md) (stack + Supabase backend).
 
-| Location | Purpose | What goes here |
-|----------|---------|----------------|
-| **Cloudflare** | DNS for `protosweb.eu` — MX (Zoho), Resend DKIM/SPF, DMARC. See [`docs/cloudflare-dns.md`](docs/cloudflare-dns.md) |
-| **`.env.local`** (local dev, gitignored) | Your machine only | Copy from `.env.example` — never commit |
-| **Vercel** | Production/preview builds + runtime | All `NEXT_PUBLIC_*` + server keys the Next.js app uses |
-| **GitHub Secrets** | GitHub Actions workflows only | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `KEEP_ALIVE_SECRET`, `SUPABASE_ACCESS_TOKEN`, `SUPABASE_PROJECT_REF` |
-| **Supabase Edge Secrets** | Edge functions only | `KEEP_ALIVE_SECRET`, `RESEND_API_KEY`, `CONTACT_EMAIL=dario.admin@protosweb.eu`, `RESEND_FROM_EMAIL=dario.admin@protosweb.eu` |
-
-**Why not one `.env` for everything?** `.env` files must never be pushed to git (security). Vercel injects vars at deploy time. GitHub and Supabase run separate services that never read Vercel's config.
-
-**Do GitHub secrets need `NEXT_PUBLIC_SUPABASE_URL`?** No — the site reads that from Vercel. GitHub only needs the base URL for the keep-alive curl (`SUPABASE_URL`, same host without `NEXT_PUBLIC_` prefix).
-
-### Vercel — required for the live site
-
-- `NEXT_PUBLIC_SITE_URL` = `https://protosweb.eu` (Production **and** Preview — mora odgovarati `SITE_URL` u `src/lib/site.ts`)
-- `NEXT_PUBLIC_SUPABASE_URL`
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- `SUPABASE_SERVICE_ROLE_KEY`
-
-Email vars on Vercel are **legacy/unused** by Next.js (mail goes through Supabase edge fn) but kept in sync: `CONTACT_EMAIL` and `RESEND_FROM_EMAIL` = `dario.admin@protosweb.eu`.
-
-**DNS (Cloudflare):** see [`docs/cloudflare-dns.md`](docs/cloudflare-dns.md) — MX for Zoho inbox, Resend on `send` subdomain, update DMARC `rua`.
-
-**Analytics (GA4):** wired by default (`G-HR9HK4SR7Q`, consent-gated). Optional override: `NEXT_PUBLIC_GA_ID`. Alternative: `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`.
-
-### Vercel — safe to remove (unused by current code)
-
-Resend, Brevo, Sentry, Telegram, `DATABASE_URL` — leftovers from older setup; they do not break anything if left in place.
-
-**Stripe** — DB columns exist (`stripe_session_id`, `stripe_price_id`) but there is no Stripe SDK, API route, or env integration yet. Documented as future/inactive in `.env.example`.
-
-**Zoho Mail** — inbox receives mail via Cloudflare DNS MX records (`mail.zoho.eu`). No Zoho API key or env var is required for the site; admin links to webmail at `/admin/tools`.
+Lokalno: kopiraj `.env.example` → `.env.local` (gitignored). Deploy: `git push origin main` → Vercel.
 
 ## Supabase Edge Functions
 

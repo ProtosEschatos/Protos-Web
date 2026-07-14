@@ -11,7 +11,7 @@
 ## Trenutno stanje (2026-07-14)
 
 - **Showcase fix:** `40b0514` — `PortfolioShowcaseClient` koristi `ShowcaseBootLoader` u `next/dynamic` (nikad `loading: () => null` na showcaseu).
-- **Supabase:** projekt `laqnnzavwbojntfiqmxj` — tablice OK (blog, portfolio, contact, donations). Ako lokalni build javlja `Invalid API key`, rotiraj `NEXT_PUBLIC_SUPABASE_ANON_KEY` iz Supabase Dashboard → Settings → API.
+- **Supabase:** projekt `laqnnzavwbojntfiqmxj` — backend live. Tajne: `docs/security.md`.
 - **Admin Console v3.0:** slate/indigo UI — detalji u Protos-Agent memoriji i `docs/admin-console.md`.
 - **Donacije:** Stripe LIVE — `docs/stripe-donations.md`, `/admin/donacije`.
 - **Ne commitati:** `public/design/` (untracked assets).

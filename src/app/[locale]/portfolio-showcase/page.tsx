@@ -1,7 +1,8 @@
-import { getPortfolioItems } from '@/lib/queries/portfolio'
+import { getShowcasePortfolioItems } from '@/lib/queries/portfolio'
 import { setRequestLocale } from 'next-intl/server'
 import PortfolioShowcaseClient from '@/components/features/portfolio/PortfolioShowcaseClient'
 import { SHOWCASE_FOCUS_PARAM, SHOWCASE_POKLON_FOCUS } from '@/lib/showcase/featured-demo'
+import { FRAME_SLOTS } from '@/components/three/showcase/constants'
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -15,6 +16,6 @@ export default async function PortfolioShowcasePage({ params, searchParams }: Pr
   const focusPoklon = (Array.isArray(focusRaw) ? focusRaw[0] : focusRaw) === SHOWCASE_POKLON_FOCUS
 
   setRequestLocale(locale)
-  const portfolioItems = await getPortfolioItems(locale, 4)
+  const portfolioItems = await getShowcasePortfolioItems(locale, FRAME_SLOTS)
   return <PortfolioShowcaseClient portfolioItems={portfolioItems} focusPoklon={focusPoklon} />
 }

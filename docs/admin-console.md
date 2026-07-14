@@ -31,7 +31,7 @@
 | `/admin/donacije` | Stripe donacije (`donations` tablica) |
 | `/admin/blog`, `/admin/portfolio` | CMS CRUD |
 | `/admin/stranice/*` | Statičke stranice (i18n u `messages/`) |
-| `/admin/memory` | Protos-Agent memorija (GitHub raw, `GITHUB_TOKEN` ako je repo privatan) |
+| `/admin/memory` | Protos-Agent memorija — **samo GitHub** (`ProtosEschatos/Protos-Agent`; `GITHUB_TOKEN` ako je repo privatan) |
 | `/admin/ai` | DeepSeek (`DEEPSEEK_API_KEY`) |
 | `/admin/tools` | Linkovi na Vercel, DNS, platforme |
 

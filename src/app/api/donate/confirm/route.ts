@@ -1,8 +1,6 @@
 import { NextResponse } from 'next/server'
 import { checkRateLimit, getClientIp } from '@/lib/security/rate-limit'
-
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL
-const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+import { getSupabaseAnonKey, getSupabaseUrl } from '@/lib/supabase/env'
 
 export async function POST(request: Request) {
   const rate = checkRateLimit('donate-confirm', getClientIp(request), 20, 15 * 60 * 1000)
@@ -13,7 +11,10 @@ export async function POST(request: Request) {
     )
   }
 
-  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+  const supabaseUrl = getSupabaseUrl()
+  const supabaseAnonKey = getSupabaseAnonKey()
+
+  if (!supabaseUrl || !supabaseAnonKey) {
     return NextResponse.json({ error: 'Supabase nije konfiguriran' }, { status: 500 })
   }
 
@@ -24,11 +25,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Neispravan session ID' }, { status: 400 })
     }
 
-    const edgeRes = await fetch(`${SUPABASE_URL}/functions/v1/donation-confirm`, {
+    const edgeRes = await fetch(`${supabaseUrl}/functions/v1/donation-confirm`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        Authorization: `Bearer ${supabaseAnonKey}`,
       },
       body: JSON.stringify({ sessionId }),
     })

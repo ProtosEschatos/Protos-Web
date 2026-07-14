@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { checkRateLimit, getClientIp } from '@/lib/security/rate-limit'
+import { getSupabaseAnonKey, getSupabaseUrl } from '@/lib/supabase/env'
 
 export async function POST(request: Request) {
   const rate = checkRateLimit('subscribe', getClientIp(request), 5, 15 * 60 * 1000)
@@ -19,8 +20,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, message: 'Invalid email' }, { status: 400 })
     }
 
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    const supabaseUrl = getSupabaseUrl()
+    const anonKey = getSupabaseAnonKey()
 
     if (!supabaseUrl || !anonKey) {
       return NextResponse.json({ success: false, message: 'Not configured' }, { status: 503 })

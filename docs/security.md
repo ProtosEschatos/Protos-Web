@@ -17,7 +17,6 @@ Practical security map for `protosweb.eu`. No system is immune to every attack; 
 | `DEEPSEEK_API_KEY` | **Vercel** | `/admin/ai` — DeepSeek chat (već postavljen) |
 | `GEMINI_API_KEY` | **Vercel** (optional) | `/admin/ai` — alternativni provider |
 | `AGENT_MEMORY_REPO` | **Vercel** (optional) | Default `ProtosEschatos/Protos-Agent` — override repo for memory fetch |
-| `AGENT_MEMORY_LOCAL_PATH` | **Local dev only** | Filesystem fallback (default `~/Protos-Agent/memory` in development) |
 
 ### Email — multi-mailbox IMAP (admin only)
 

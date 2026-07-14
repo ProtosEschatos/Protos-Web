@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import { Loader2, Mail, RefreshCw } from 'lucide-react'
-import { adminGetMailMessage, adminListMailbox, adminRefreshMailbox } from '@/actions/admin-mail'
+import { adminGetMailMessage, adminRefreshMailbox } from '@/actions/admin-mail'
 import { mailboxSetupHint, type MailboxId, type MailboxProvider } from '@/lib/mail/mailboxes'
 import type { MailListItem } from '@/lib/mail/imap-client'
 

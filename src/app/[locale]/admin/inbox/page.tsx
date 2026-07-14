@@ -40,7 +40,17 @@ export default async function AdminInboxPage(props: Props) {
       description="Svi mail sandučići i kontakt upiti — sve na jednom mjestu u adminu."
     >
       <p className="text-sm text-[var(--light-muted)] mb-8">
-        Zoho ({mailboxStatuses.find((m) => m.id === 'zoho')?.email}) i Gmail studio — bez vanjskog webmaila.
+        Zoho ({mailboxStatuses.find((m) => m.id === 'zoho')?.email}) i Gmail studio.
+        Ako admin inbox ne učita live IMAP, prikazuje se zadnji cache iz Supabase.
+        {' · '}
+        <a
+          href="https://mail.zoho.eu"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[var(--primary)] hover:underline"
+        >
+          Otvori Zoho webmail
+        </a>
         {' · '}
         <AdminLink href="/admin" className="text-[var(--primary)] hover:underline">
           ← pregled
@@ -60,6 +70,8 @@ export default async function AdminInboxPage(props: Props) {
                 title={definition.title}
                 initialMessages={mailbox.messages}
                 initialError={mailbox.error}
+                initialSource={mailbox.source}
+                initialSyncedAt={mailbox.syncedAt}
                 configured={status.configured}
                 mailbox={status.email}
                 provider={definition.provider}

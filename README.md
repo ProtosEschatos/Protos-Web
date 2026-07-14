@@ -45,7 +45,7 @@ Live site: **https://protosweb.eu** · Repo: **https://github.com/ProtosEschatos
 src/
 ├── app/
 │   ├── [locale]/              # Locale-based routing (hr/en/de/it/es/sr)
-│   │   ├── layout.tsx         # Root layout (fonts, PageLoader, Header, Footer, CookieBanner)
+│   │   ├── layout.tsx         # Root layout (fonts, AppChrome, boot gate)
 │   │   ├── page.tsx           # Home page (Hero, Process, Portfolio, Services, Blog, Contact)
 │   │   ├── o-meni/page.tsx    # About page ("Full Stack Duo iz Zagreba")
 │   │   ├── proces/page.tsx    # Process page
@@ -84,7 +84,7 @@ src/
 │       ├── SiteBackground.tsx # Route-aware background wrapper
 │       ├── section-icons.tsx  # Shared Lucide icons for services/process
 │       ├── CustomCursor.tsx   # Dot + follower cursor
-│       └── CookieBanner.tsx   # Cookie consent
+│       └── SiteConsentModal   # Terms + privacy + cookies (via PageLoader / AppChrome)
 ├── lib/
 │   ├── auth/                  # Admin auth, rate limit, require-admin
 │   ├── config/                # site.ts, seo.ts, admin-links.ts, social-links.ts, tech-stacks.ts
@@ -139,7 +139,7 @@ src/
 - [x] PageLoader with cyber background, progress gate, and boot cookie modal
 - [x] CustomCursor with dot + follower
 - [x] Lucide React icons
-- [x] CookieBanner with localStorage persistence
+- [x] Site consent modal (terms, privacy, cookies) with localStorage persistence
 - [x] Hero section with per-route R3F background via SiteBackground
 - [x] Services section (6 cards)
 - [x] Process section (4 steps + 3 feature cards)

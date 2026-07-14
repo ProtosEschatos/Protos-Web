@@ -23,14 +23,12 @@ import {
 } from '@/lib/config/boot-gate'
 import { hasSiteConsent, SITE_CONSENT_EVENT } from '@/lib/config/site-consent'
 
-const LEGAL_PATH = /\/(terms|privacy|cookies)$/
-
 export default function AppChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const isShowcase = pathname.includes('portfolio-showcase')
   const isAdmin = pathname.includes('/admin')
   const isAdminLogin = pathname.endsWith('/admin/login')
-  const isLegal = isLegalPath(pathname) || LEGAL_PATH.test(pathname)
+  const isLegal = isLegalPath(pathname)
   const [consentGranted, setConsentGranted] = useState(() =>
     typeof window !== 'undefined' ? hasSiteConsent() : false,
   )

@@ -38,7 +38,7 @@ z-0      black backdrop
 
 ## Mandatory checks before merging 3D/UI changes
 
-1. **AppChrome** — showcase path must skip PageLoader, Header, Footer, CustomCursor, CookieBanner, SiteShell background.
+1. **AppChrome** — showcase path must skip PageLoader, Header, Footer, CustomCursor, SiteShell background.
 2. **Phases** — `SpaceGallery` uses mutually exclusive `phase` (`loading` | `intro` | `playing`); do not add always-on overlays.
 3. **Canvas placement** — wrap in `dynamic(..., { ssr: false })`; keep Canvas parent stable (avoid remount on every React state change).
 4. **Pointer events** — fixed backgrounds: `pointer-events-none`; HUD buttons: normal pointer events.
@@ -56,7 +56,7 @@ z-0      black backdrop
 
 | Layer | z-index |
 |-------|---------|
-| Site CookieBanner | ~200 |
+| SiteConsentModal | 100000 |
 | Showcase loading | 300 |
 | Showcase intro | 200 |
 | Showcase playing HUD | 10–20 |

@@ -10,10 +10,11 @@ Repo: ProtosEschatos/Protos-Web
 3. Full project memory: **Protos-Agent** `memory/projects/protos-web.md` (not `PROJECT-MEMORY.md` — that file is TL;DR only).
 4. Human UI: browse memory at `/admin/memory` (read-only, loads from Protos-Agent GitHub).
 5. Cursor rules: `.cursor/rules/*.mdc` (showcase layers, fix-not-remove, design system).
+6. Architecture + Supabase backend map: `docs/architecture.md`.
 
 ## Stack
 
-Next.js 16 App Router · React 19 · TypeScript · Tailwind · next-intl (hr/en/de/it/es/sr) · Supabase · Vercel.
+Next.js 16 App Router · React 19 · TypeScript · Tailwind · next-intl (hr/en/de/it/es/sr) · **Supabase (sole backend)** · Vercel.
 
 ## Project layout
 

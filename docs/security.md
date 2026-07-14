@@ -55,6 +55,8 @@ Legacy multi-tenant columns may still exist elsewhere; active flow uses `donatio
 
 Cursor plugin allowlist: [cursor-stack.md](./cursor-stack.md).
 
+**Vercel auto-deploy:** disabled in `vercel.json` — push does not trigger production build.
+
 ## Admin panel
 
 - Password auth via `ADMIN_SECRET` on Vercel

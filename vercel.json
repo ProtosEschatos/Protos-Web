@@ -1,7 +1,12 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
   "buildCommand": "npm run build",
   "installCommand": "npm install",
+  "git": {
+    "deploymentEnabled": false
+  },
+  "ignoreCommand": "echo 'Vercel auto-deploy disabled — deploy manually from Vercel Dashboard when ready.' && exit 0",
   "redirects": [
     { "source": "/hr", "destination": "/", "permanent": true },
     { "source": "/hr/:path*", "destination": "/:path*", "permanent": true }

@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint .",
     "type-check": "tsc --noEmit",
+    "check:env": "node scripts/check-env.mjs",
     "upload:showcase-assets": "node scripts/upload-showcase-assets.mjs",
     "cleanup:showcase-assets": "node scripts/cleanup-showcase-assets.mjs"
   },

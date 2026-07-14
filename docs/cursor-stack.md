@@ -1,56 +1,70 @@
 # Cursor stack — Protos Web
 
-Which Cursor plugins to enable or disable for this repo. Settings: **Cursor → Settings → Plugins / MCP**.
+Which Cursor plugins to enable or disable. Settings: **Cursor → Settings → Plugins / MCP**.
+
+## ORM rules (Prisma, Convex) — NOT for this project
+
+| What you see | Truth |
+|--------------|-------|
+| **Prisma plugin** `schema.prisma`, migrations, `prisma migrate` | Generic Cursor marketplace rules for **Prisma ORM** projects |
+| **Convex plugin** `convex dev`, custom functions, RLS | Generic rules for **Convex backend** projects |
+
+**Protos-Web never planned Prisma or Convex.** Backend is **Supabase only** (Postgres + RLS + Edge Functions). There is no `schema.prisma` and no `convex/` folder.
+
+Those ORM rules **do not serve you** — they inject wrong patterns into every chat (`alwaysApply: true`). **Keep them disabled.** Canonical backend rules: `.cursor/rules/protos-web.mdc` + `docs/architecture.md`.
 
 ## Backend reminder
 
-**Supabase is the sole backend** (`laqnnzavwbojntfiqmxj`). Removing Supabase jobs from `ci.yml` does **not** remove Supabase — it only stops duplicate health checks in the build pipeline. Migrations and edge functions still deploy via dedicated GitHub workflows.
+Removing Supabase jobs from `ci.yml` does **not** remove Supabase backend. Migrations/edge functions still deploy via dedicated GitHub workflows.
 
 ## Disable (noise / wrong stack)
 
 | Plugin | Why |
 |--------|-----|
-| Convex | Pushes `convex dev` patterns — no `convex/` in this repo |
-| Prisma | ORM rules — app uses Supabase, not Prisma |
-| Firebase | Not in stack |
-| Pinecone | Not in stack |
-| Render | Deploy is GitHub → Vercel only |
-| Datadog, Figma, Canva, Higgsfield, GSAP | Not used in Protos-Web |
+| **Convex** | Wrong backend patterns |
+| **Prisma** | Wrong ORM — no Prisma in repo |
+| **Vercel** | User disabled — no auto-deploy, no CLI |
+| Firebase, Pinecone, Render | Not in stack |
+| Datadog, Figma, Canva, Higgsfield, GSAP | Not used |
 
 ## Keep
 
 | Plugin | Use |
 |--------|-----|
+| **continual-learning** | Auto-updates `AGENTS.md` from chat (enable in Cursor Plugins) |
 | Supabase MCP (one instance) | Migrations, SQL, edge functions |
-| Stripe | Donations |
-| Sentry | Error monitoring |
-| Context7 | Library docs |
-| Resend | Email docs |
-| shadcn | UI reference (custom cosmic UI) |
-| Cloudflare | DNS docs only — not a CI gate |
+| Stripe, Sentry, Context7, Resend, shadcn | Stack-aligned |
+| Cloudflare | DNS docs only |
 
-## Caution
+## Continual learning (memory)
 
-| Plugin | Rule |
-|--------|------|
-| Vercel | Never `vercel deploy` CLI — only `git push origin main` |
-| Supabase | Disable duplicate MCP if both `plugin-supabase` and `user-supabase` are active |
+1. Enable **continual-learning** plugin in Cursor → Settings → Plugins
+2. Plugin runs `agents-memory-updater` on session end → updates `AGENTS.md` learned sections
+3. Long-term memory also in **Protos-Agent** GitHub (`/admin/memory`)
+4. Do not duplicate memory in random markdown files
 
-## Deploy chain
+## Deploy chain (current)
 
 ```
 git push origin main
-  → ci.yml (lint + typecheck + build)
-  → Vercel production (GitHub integration)
+  → ci.yml (lint + typecheck + build) ONLY
+  → Vercel auto-deploy OFF (vercel.json git.deploymentEnabled: false)
   → supabase-db-push.yml (on migrations/**)
   → supabase-deploy-functions.yml (on functions/**)
   → supabase-keep-alive.yml (cron)
 ```
 
-Cloudflare DNS: manual `cloudflare-dns-check.yml` (`workflow_dispatch`) — never blocks merge.
+**Production deploy:** manual from Vercel Dashboard when you choose — not on every push.
+
+Cloudflare DNS: `cloudflare-dns-check.yml` (`workflow_dispatch`) only.
+
+## Env / compatibility
+
+- Required vars: `docs/env-required.md` — run `npm run check:env`
+- Cross-browser: `docs/compatibility.md` — showcase has WebGL fallback + touch controls
 
 ## Canonical rules in repo
 
-- `.cursor/rules/protos-web.mdc` — single rule file
-- `AGENTS.md` — agent instructions
-- `docs/architecture.md` — stack map
+- `.cursor/rules/protos-web.mdc`
+- `AGENTS.md`
+- `docs/architecture.md`

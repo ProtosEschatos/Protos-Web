@@ -22,15 +22,19 @@ Next.js 16 App Router · React 19 · TypeScript · Tailwind · next-intl · **Su
 
 ## Deploy
 
-- **GitHub only:** `git push origin main` → Vercel production auto-deploy
-- **Never** Vercel CLI (`vercel deploy`, etc.)
-- **Supabase backend stays** — only removed duplicate jobs from `ci.yml`; workflows `supabase-db-push.yml`, `supabase-deploy-functions.yml`, `supabase-keep-alive.yml` remain
-- Cloudflare = DNS only; manual check via `cloudflare-dns-check.yml` (`workflow_dispatch`)
-- Commit only when the user asks
+- **CI only on push:** `git push origin main` → `ci.yml` (lint + typecheck + build)
+- **Vercel auto-deploy OFF** — `vercel.json` `git.deploymentEnabled: false`; deploy manually from Vercel Dashboard
+- **Never** Vercel CLI
+- Supabase migrations/functions: dedicated GitHub workflows (backend unchanged)
 
 ## Cursor plugins
 
-Disable Convex, Prisma, Firebase, Pinecone, Render for this repo. Full list: `docs/cursor-stack.md`
+**Disable:** Convex, Prisma, Vercel, Firebase, Pinecone, Render — ORM rules are NOT for this repo.  
+**Enable:** continual-learning (memory), Supabase MCP (one). Full list: `docs/cursor-stack.md`
+
+## ORM rules
+
+Prisma/Convex plugin rules are marketplace defaults for other stacks. Protos-Web uses **Supabase only** — no `schema.prisma`, no `convex/`. They mislead the agent if enabled.
 
 ## Supabase clients
 
@@ -47,7 +51,8 @@ Disable Convex, Prisma, Firebase, Pinecone, Render for this repo. Full list: `do
 ## Env files
 
 - Do not touch `.env*` unless the user explicitly asks
-- Canonical secret map: `docs/security.md` only — no duplicate env tables in docs
+- Env vars: `docs/env-required.md` · `npm run check:env`
+- Compatibility: `docs/compatibility.md`
 
 ## Features
 

@@ -70,19 +70,46 @@ src/
 
 ## Deploy
 
-**GitHub only:** push to `main` → Vercel production auto-deploy.
+**Git push = CI only.** Vercel auto-deploy is **disabled** in `vercel.json` (`git.deploymentEnabled: false`).
 
-- Do **not** use Vercel CLI (`vercel deploy`, `vercel ls`, `vercel redeploy`) or custom deploy scripts
-- **Supabase backend unchanged** — `ci.yml` build-only; Supabase ops in dedicated workflows
+- Do **not** use Vercel CLI (`vercel deploy`, etc.)
+- Deploy production **manually** from Vercel Dashboard when ready
+- **Supabase backend** — dedicated GitHub workflows (not removed from `ci.yml` = backend removed; only duplicate health jobs removed)
 - Cloudflare DNS: manual `cloudflare-dns-check.yml` only
-- Cursor plugins: see `docs/cursor-stack.md` — disable Convex/Prisma/Firebase
-- After push, verify live: `curl -sS -o /dev/null -w "%{http_code}" https://www.protosweb.eu/portfolio-showcase`
-- GitHub CI green ≠ instant Vercel READY — wait for deploy, then curl
+- Cursor plugins: `docs/cursor-stack.md` — **disable Prisma, Convex, Vercel plugins**
+- Env check: `npm run check:env` — see `docs/env-required.md`
+- Compatibility: `docs/compatibility.md` — all devices/browsers; showcase WebGL fallback
 
-**Critical:** `ADMIN_SECRET` lives on Vercel only — git revert does **not** restore it.
+**Critical:** `ADMIN_SECRET` on Vercel only — git revert does not restore it.
+
+## Agent memory loop
+
+- Enable Cursor **continual-learning** plugin — updates learned sections in this file after sessions
+- Canonical long-term memory: **Protos-Agent** GitHub (`memory/projects/protos-web.md`)
+- `/admin/memory` — read-only UI
+
+## Learned User Preferences
+
+- Never Vercel CLI deploy; auto-deploy on git push must stay off
+- Supabase is the sole backend — never suggest Convex, Prisma, or Firebase as backend
+- Disable Convex/Prisma/Vercel Cursor plugins — they add wrong ORM/backend rules
+- Do not touch `.env*` unless explicitly asked
+- When fixing: delete old duplicates, do not stack new files/rules on top
+- Croatian copy for admin-facing strings
+- Site must work on all common devices, OS, and browsers without debate
+- Commit only when user asks
+
+## Learned Workspace Facts
+
+- Supabase project: `laqnnzavwbojntfiqmxj` — 24 migrations synced
+- CI `ci.yml`: build job only (lint + typecheck + build)
+- Agent memory fetch: GitHub `ProtosEschatos/Protos-Agent` only — no local path fallback
+- Showcase: `ShowcaseBootBypass` + `ShowcasePrefetchLink` — no site boot veil on entry
+- Missing Supabase env vars → empty data, not crash — see `docs/env-required.md`
 
 ## Current state (2026-07-15)
 
 - **Supabase:** `laqnnzavwbojntfiqmxj` — 24 migrations synced (repo + remote)
 - **Donacije:** Stripe LIVE · `/admin/donacije`
+- **Vercel:** auto-deploy disabled in repo config
 - Full session history: **Protos-Agent** `memory/sessions/`

@@ -58,7 +58,7 @@ jobs:
           response=$(curl -sS -w "\n%{http_code}" \
             -H "apikey: ${SUPABASE_ANON_KEY}" \
             -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" \
-            "${SUPABASE_URL}/rest/v1/")
+            "${SUPABASE_URL}/rest/v1/portfolio_items?select=id&limit=1")
           code=$(echo "$response" | tail -n 1)
           if [ "$code" != "200" ]; then
             echo "Supabase REST check failed with status $code — rotate SUPABASE_ANON_KEY if needed."

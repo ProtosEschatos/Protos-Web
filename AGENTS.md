@@ -70,9 +70,7 @@ src/
 
 ## Deploy
 
-**Git push = CI only.** Vercel auto-deploy is **disabled** in `vercel.json` (`git.deploymentEnabled: false`).
-
-- Do **not** use Vercel CLI (`vercel deploy`, etc.)
+**Git push → Vercel production build** (auto-deploy uključen). Ne koristi Vercel CLI za deploy.
 - Deploy production **manually** from Vercel Dashboard when ready
 - **Supabase backend** — dedicated GitHub workflows (not removed from `ci.yml` = backend removed; only duplicate health jobs removed)
 - Cloudflare DNS: manual `cloudflare-dns-check.yml` only

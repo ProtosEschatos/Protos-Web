@@ -48,7 +48,7 @@ Removing Supabase jobs from `ci.yml` does **not** remove Supabase backend. Migra
 ```
 git push origin main
   → ci.yml (lint + typecheck + build) ONLY
-  → Vercel auto-deploy OFF (vercel.json git.deploymentEnabled: false)
+  → git push main → GitHub CI + Vercel production deploy
   → supabase-db-push.yml (on migrations/**)
   → supabase-deploy-functions.yml (on functions/**)
   → supabase-keep-alive.yml (cron)

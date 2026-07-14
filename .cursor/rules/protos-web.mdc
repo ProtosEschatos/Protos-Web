@@ -23,7 +23,7 @@ Next.js 16 App Router · React 19 · TypeScript · Tailwind · next-intl · **Su
 ## Deploy
 
 - **CI only on push:** `git push origin main` → `ci.yml` (lint + typecheck + build)
-- **Vercel auto-deploy OFF** — `vercel.json` `git.deploymentEnabled: false`; deploy manually from Vercel Dashboard
+- **Vercel** — samo Next.js host; Edge email/Stripe/keep-alive su na Supabaseu (vidi `docs/security.md` → Vercel env)
 - **Never** Vercel CLI
 - Supabase migrations/functions: dedicated GitHub workflows (backend unchanged)
 

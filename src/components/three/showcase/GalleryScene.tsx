@@ -69,6 +69,91 @@ function GalleryWallMotto() {
   )
 }
 
+function GalleryWallFeaturedPortal({ title, badge }: { title: string; badge: string }) {
+  const { galleryHeight, galleryLength } = SHOWCASE_CONFIG
+  const wallZ = -galleryLength / 2 + 0.14
+  const centerY = galleryHeight * 0.52 - 2.05
+
+  return (
+    <group position={[0, centerY, wallZ]}>
+      <mesh position={[0, 0, -0.03]}>
+        <planeGeometry args={[3.6, 2.15]} />
+        <meshBasicMaterial color={0x6366f1} transparent opacity={0.22} />
+      </mesh>
+      <mesh position={[0, 0, -0.02]}>
+        <planeGeometry args={[3.2, 1.85]} />
+        <meshBasicMaterial color={0x0f172a} transparent opacity={0.88} />
+      </mesh>
+      <mesh position={[0, 0, -0.01]}>
+        <planeGeometry args={[3.05, 1.7]} />
+        <meshBasicMaterial color={0x1e1b4b} transparent opacity={0.55} />
+      </mesh>
+      <mesh position={[0, 0, 0]}>
+        <boxGeometry args={[3.2, 1.85, 0.04]} />
+        <meshStandardMaterial
+          color={0x312e81}
+          emissive={0x4338ca}
+          emissiveIntensity={0.35}
+          metalness={0.4}
+          roughness={0.45}
+        />
+      </mesh>
+
+      <Text
+        anchorX="center"
+        anchorY="middle"
+        position={[0, 0.42, 0.05]}
+        fontSize={0.22}
+        color="#c4b5fd"
+        letterSpacing={0.12}
+        maxWidth={2.8}
+        textAlign="center"
+      >
+        {badge}
+      </Text>
+
+      <Text
+        anchorX="center"
+        anchorY="middle"
+        position={[0, -0.08, 0.05]}
+        fontSize={0.28}
+        color="#e0f2fe"
+        outlineWidth={0.02}
+        outlineColor="#0f172a"
+        maxWidth={2.9}
+        textAlign="center"
+      >
+        {title}
+      </Text>
+
+      <mesh position={[0, -0.62, 0.04]}>
+        <boxGeometry args={[1.6, 0.28, 0.03]} />
+        <meshStandardMaterial color={0x06b6d4} emissive={0x0891b2} emissiveIntensity={0.6} metalness={0.3} roughness={0.4} />
+      </mesh>
+
+      <Text
+        anchorX="center"
+        anchorY="middle"
+        position={[0, -0.62, 0.07]}
+        fontSize={0.14}
+        color="#ecfeff"
+        letterSpacing={0.08}
+      >
+        E
+      </Text>
+
+      <pointLight position={[0, 0.2, 0.8]} color={0xa78bfa} intensity={0.9} distance={4} />
+    </group>
+  )
+}
+
+export function getFeaturedWallDemoPosition() {
+  const { galleryHeight, galleryLength } = SHOWCASE_CONFIG
+  const wallZ = -galleryLength / 2 + 0.14
+  const centerY = galleryHeight * 0.52 - 2.05
+  return new THREE.Vector3(0, centerY, wallZ)
+}
+
 function Starfield() {
   const positions = useMemo(() => {
     const arr = new Float32Array(500 * 3)
@@ -324,7 +409,10 @@ type SceneProps = {
   keys: React.MutableRefObject<Record<string, boolean>>
   touchInput: React.MutableRefObject<TouchInput>
   characterRef: React.RefObject<THREE.Group | null>
+  featuredDemoTitle: string
+  featuredDemoBadge: string
   onNearestProject: (project: ShowcaseProject | null) => void
+  onNearFeaturedDemo: (near: boolean) => void
 }
 
 export function ShowcaseScene({
@@ -334,14 +422,19 @@ export function ShowcaseScene({
   keys,
   touchInput,
   characterRef,
+  featuredDemoTitle,
+  featuredDemoBadge,
   onNearestProject,
+  onNearFeaturedDemo,
 }: SceneProps) {
   const walkPhase = useRef(0)
   const headingRef = useRef(INITIAL_CHARACTER_HEADING)
   const lastNearestLinkRef = useRef<string | null>(null)
+  const lastNearFeaturedRef = useRef(false)
   const smoothTouch = useRef({ x: 0, y: 0 })
   const yAxis = useMemo(() => new THREE.Vector3(0, 1, 0), [])
   const moveDir = useMemo(() => new THREE.Vector3(), [])
+  const featuredWallPos = useMemo(() => getFeaturedWallDemoPosition(), [])
   const framePositions = useMemo(
     () =>
       projects.map((project, index) => {
@@ -439,7 +532,14 @@ export function ShowcaseScene({
         }
       }
 
-      const activeProject = nearestDist < 4 ? nearestProject : null
+      const featuredDist = character.position.distanceTo(featuredWallPos)
+      const nearFeaturedDemo = featuredDist < 4.8 && character.position.z < -SHOWCASE_CONFIG.galleryLength / 3
+      if (nearFeaturedDemo !== lastNearFeaturedRef.current) {
+        lastNearFeaturedRef.current = nearFeaturedDemo
+        onNearFeaturedDemo(nearFeaturedDemo)
+      }
+
+      const activeProject = !nearFeaturedDemo && nearestDist < 4 ? nearestProject : null
       const nextLink = activeProject?.link ?? null
       if (nextLink !== lastNearestLinkRef.current) {
         lastNearestLinkRef.current = nextLink
@@ -449,6 +549,10 @@ export function ShowcaseScene({
       if (lastNearestLinkRef.current !== null) {
         lastNearestLinkRef.current = null
         onNearestProject(null)
+      }
+      if (lastNearFeaturedRef.current) {
+        lastNearFeaturedRef.current = false
+        onNearFeaturedDemo(false)
       }
       character.quaternion.setFromAxisAngle(yAxis, headingRef.current)
     }
@@ -467,6 +571,7 @@ export function ShowcaseScene({
       <Starfield />
       <GalleryShell />
       <GalleryWallMotto />
+      <GalleryWallFeaturedPortal title={featuredDemoTitle} badge={featuredDemoBadge} />
       {Array.from({ length: FRAME_SLOTS }).map((_, index) => (
         <ProjectFrame
           key={`frame-${index}-${viewport}`}

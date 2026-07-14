@@ -36,6 +36,45 @@ Legacy multi-tenant columns may still exist elsewhere; active flow uses `donatio
 
 **Do not** store `ADMIN_SECRET` in Supabase — it is unused there and increases leak surface. Remove it from Supabase Dashboard → Edge Functions → Secrets if present.
 
+## Vercel — što smije ostati
+
+Vercel hosta **samo Next.js** (frontend + server actions + `/api/cron/sync-inbox`). Sve ostalo ide na Supabase Edge (GitHub deploy) ili GitHub Actions.
+
+### Obavezno na Vercelu
+
+| Varijabla | Svrha |
+|-----------|--------|
+| `NEXT_PUBLIC_SUPABASE_URL` | Klijent → Supabase |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` (ili publishable) | Klijent → Supabase (RLS) |
+| `SUPABASE_SERVICE_ROLE_KEY` | Server actions / admin (nikad u browser) |
+| `ADMIN_SECRET` | `/admin` login |
+| `NEXT_PUBLIC_SITE_URL` | Canonical URL (`https://www.protosweb.eu`) |
+| `ZOHO_IMAP_*` | Admin inbox IMAP |
+| `CRON_SECRET` | Auth za `GET /api/cron/sync-inbox` (GitHub `admin-inbox-sync.yml`) |
+
+### Opcionalno na Vercelu
+
+| Varijabla | Svrha |
+|-----------|--------|
+| `GITHUB_TOKEN` | `/admin/memory` ako je Protos-Agent private |
+| `DEEPSEEK_API_KEY` | `/admin/ai` |
+| `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ZONE_ID` | Admin status kartica (DNS je na Cloudflareu, ne na Vercelu) |
+| `SENTRY_*` | Error monitoring |
+| `VERCEL_TOKEN` | Samo admin insight kartica — **ne utječe na site** |
+
+### Ukloni s Vercela ako postoje (duplikat Supabase / GitHub)
+
+Ove varijable na tvom screenshotu su **Supabase Edge secrets** — na Vercelu ih **nema smisla** držati i mogu zbuniti debug:
+
+- `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `CONTACT_EMAIL`, `BREVO_API_KEY`
+- `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`
+- `KEEP_ALIVE_SECRET` (GitHub cron + Supabase `keep-alive` edge fn)
+- `SITE_URL` (edge fn koristi Supabase secret; Vercel koristi `NEXT_PUBLIC_SITE_URL`)
+- `FIRECRAWL_API_KEY` (nije u kodu — možeš obrisati i iz Supabasea ako ne koristiš)
+- `SUPABASE_ACCESS_TOKEN`, `SUPABASE_PROJECT_REF` (samo GitHub Actions)
+
+**Vercel auto-deploy:** uključen — `git push origin main` pokreće production build.
+
 ## GitHub Actions secrets
 
 | Secret | Required for | Notes |
@@ -52,8 +91,6 @@ Legacy multi-tenant columns may still exist elsewhere; active flow uses `donatio
 **Not in `ci.yml`:** Supabase keep-alive and REST probes run in dedicated workflows (`supabase-keep-alive.yml`, `supabase-db-push.yml`). Cloudflare is DNS-only — see [cloudflare-dns.md](./cloudflare-dns.md).
 
 Cursor plugin allowlist: [cursor-stack.md](./cursor-stack.md).
-
-**Vercel auto-deploy:** disabled in `vercel.json` — push does not trigger production build.
 
 ## Admin panel
 

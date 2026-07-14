@@ -31,8 +31,12 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
   const isAdmin = pathname.includes('/admin')
   const isAdminLogin = pathname.endsWith('/admin/login')
   const isLegal = isLegalPath(pathname) || LEGAL_PATH.test(pathname)
-  const [consentGranted, setConsentGranted] = useState(true)
-  const [bootDone, setBootDone] = useState(true)
+  const [consentGranted, setConsentGranted] = useState(() =>
+    typeof window !== 'undefined' ? hasSiteConsent() : false,
+  )
+  const [bootDone, setBootDone] = useState(() =>
+    typeof window !== 'undefined' ? isBootComplete() : false,
+  )
 
   useLayoutEffect(() => {
     setConsentGranted(hasSiteConsent())
@@ -92,9 +96,14 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
 
   if (isShowcase) {
     return (
-      <main className="relative min-h-screen overflow-hidden">
-        {children}
-      </main>
+      <>
+        <SiteConsentModal open={siteLocked} onAccepted={finishConsent} />
+        <main
+          className={`relative min-h-screen overflow-hidden ${siteLocked ? 'pointer-events-none select-none' : ''}`}
+        >
+          {children}
+        </main>
+      </>
     )
   }
 

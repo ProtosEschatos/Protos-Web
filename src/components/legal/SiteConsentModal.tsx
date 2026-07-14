@@ -60,7 +60,7 @@ export default function SiteConsentModal({ open, onAccepted }: SiteConsentModalP
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/75 backdrop-blur-sm px-4 sm:px-6"
+          className="fixed inset-0 z-[100000] flex items-end sm:items-center justify-center bg-black/75 backdrop-blur-sm px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-6 sm:py-6"
           role="dialog"
           aria-modal="true"
           aria-labelledby="site-consent-title"
@@ -69,7 +69,7 @@ export default function SiteConsentModal({ open, onAccepted }: SiteConsentModalP
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
-            className="cosmic-panel max-w-lg w-full max-h-[min(90vh,720px)] overflow-y-auto rounded-2xl border border-cyan-400/25 p-6 sm:p-8 shadow-2xl"
+            className="cosmic-panel max-w-lg w-full max-h-[min(88dvh,720px)] overflow-y-auto overscroll-contain rounded-t-2xl sm:rounded-2xl border border-cyan-400/25 p-5 sm:p-8 shadow-2xl touch-manipulation"
           >
             <h3 id="site-consent-title" className="text-lg font-bold text-[var(--light)] mb-2">
               {t('consentModalTitle')}
@@ -146,7 +146,7 @@ export default function SiteConsentModal({ open, onAccepted }: SiteConsentModalP
               type="button"
               disabled={!termsAccepted}
               onClick={handleAccept}
-              className="w-full px-6 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-emerald-500 text-white text-sm font-semibold hover:-translate-y-0.5 transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
+              className="w-full min-h-[44px] px-6 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-emerald-500 text-white text-sm font-semibold hover:-translate-y-0.5 transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
             >
               {t('consentModalAccept')}
             </button>

@@ -28,9 +28,10 @@ export default function PageLoader() {
   useLayoutEffect(() => {
     if (isBootComplete()) {
       setLoading(false)
-    } else {
-      removeBootSsrVeil()
+      return
     }
+    removeBootSsrVeil()
+    setLoading(true)
   }, [])
 
   useEffect(() => {

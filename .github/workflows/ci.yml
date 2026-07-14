@@ -32,7 +32,6 @@ jobs:
   supabase:
     name: Supabase
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
       - name: Ping keep-alive edge function
         run: |
@@ -53,8 +52,8 @@ jobs:
       - name: Verify Supabase REST API (anon key)
         run: |
           if [ -z "$SUPABASE_ANON_KEY" ]; then
-            echo "::warning title=Missing secret::Add SUPABASE_ANON_KEY to GitHub repo secrets for full Supabase CI coverage."
-            exit 0
+            echo "Missing SUPABASE_ANON_KEY — add it to GitHub repo secrets."
+            exit 1
           fi
           response=$(curl -sS -w "\n%{http_code}" \
             -H "apikey: ${SUPABASE_ANON_KEY}" \
@@ -62,8 +61,8 @@ jobs:
             "${SUPABASE_URL}/rest/v1/")
           code=$(echo "$response" | tail -n 1)
           if [ "$code" != "200" ]; then
-            echo "::warning title=Supabase REST::Check failed with status $code — rotate SUPABASE_ANON_KEY in GitHub secrets if this persists."
-            exit 0
+            echo "Supabase REST check failed with status $code — rotate SUPABASE_ANON_KEY if needed."
+            exit 1
           fi
           echo "Supabase REST API reachable"
         env:
@@ -73,13 +72,12 @@ jobs:
   cloudflare:
     name: Cloudflare DNS
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
       - name: Verify Cloudflare zone (read-only)
         run: |
           if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ZONE_ID" ]; then
-            echo "::notice title=Cloudflare skipped::Add CLOUDFLARE_API_TOKEN (Zone:Read) and CLOUDFLARE_ZONE_ID to GitHub secrets to show DNS health here."
-            exit 0
+            echo "Missing CLOUDFLARE_API_TOKEN or CLOUDFLARE_ZONE_ID — add to GitHub secrets."
+            exit 1
           fi
           response=$(curl -sS -w "\n%{http_code}" \
             -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
@@ -88,8 +86,8 @@ jobs:
           code=$(echo "$response" | tail -n 1)
           echo "$body" | head -c 500
           if [ "$code" != "200" ]; then
-            echo "::warning title=Cloudflare API::Request failed with status $code — rotate CLOUDFLARE_API_TOKEN in GitHub secrets."
-            exit 0
+            echo "Cloudflare API request failed with status $code"
+            exit 1
           fi
           status=$(echo "$body" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('result',{}).get('status','unknown'))" 2>/dev/null || echo "unknown")
           echo "Zone status: $status"

@@ -1,0 +1,58 @@
+---
+description: Protos-Web stack rules — Supabase, deploy, agent memory (from AGENTS.md)
+alwaysApply: true
+---
+
+# Protos-Web
+
+Live: https://www.protosweb.eu · Repo: ProtosEschatos/Protos-Web · Supabase: `laqnnzavwbojntfiqmxj`
+
+## Stack
+
+Next.js 16 App Router · React 19 · TypeScript · Tailwind · next-intl · **Supabase (sole backend)** · Vercel.
+
+**Not Convex** — ignore Convex plugin rules; this project does not use Convex.
+
+## Before you work
+
+1. Secrets placement: `docs/security.md` — `ADMIN_SECRET` on Vercel only, never Supabase.
+2. Admin UI: `docs/admin-console.md`
+3. Full memory: Protos-Agent GitHub `memory/projects/protos-web.md`
+4. Architecture: `docs/architecture.md`
+
+## Deploy
+
+- **GitHub only:** `git push origin main` → Vercel production auto-deploy
+- **Never** Vercel CLI (`vercel deploy`, etc.)
+- Supabase migrations: `supabase/migrations/` → GitHub Actions `supabase-db-push.yml` (`supabase db push`)
+- Edge functions: `supabase-deploy-functions.yml` on `supabase/functions/**`
+- Commit only when the user asks
+
+## Supabase clients
+
+- Public reads: `src/lib/supabase.ts` singleton + `src/lib/supabase/env.ts`
+- Admin writes: `src/lib/supabase-admin.ts` (service role)
+- Do not add duplicate Supabase client wrappers
+
+## Agent memory
+
+- Source: GitHub `ProtosEschatos/Protos-Agent` only (`src/lib/agent-memory.ts`)
+- Private repo needs `GITHUB_TOKEN` on Vercel
+- Never hardcode machine filesystem paths
+
+## Env files
+
+- Do not touch `.env*` unless the user explicitly asks
+- Canonical secret map: `docs/security.md` only — no duplicate env tables in docs
+
+## Features
+
+- **Fix, don't remove** user-facing features (3D showcase, backgrounds, nav) without explicit user approval
+- Showcase `/portfolio-showcase`: no Header/Footer/SiteBackground; phases `loading` | `intro` | `playing`
+- DOM = UI chrome; Canvas = 3D only (`src/components/three/**`)
+- Minimize diff scope; match existing style and CSS variables
+- Croatian copy for admin-facing strings
+
+## Verify
+
+`npm run lint && npm run type-check && npm run build` before push.

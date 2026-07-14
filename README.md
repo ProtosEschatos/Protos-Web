@@ -87,7 +87,7 @@ src/
 │       └── SiteConsentModal   # Terms + privacy + cookies (via PageLoader / AppChrome)
 ├── lib/
 │   ├── auth/                  # Admin auth, rate limit, require-admin
-│   ├── config/                # site.ts, seo.ts, admin-links.ts, social-links.ts, tech-stacks.ts
+│   ├── config/                # site.ts, seo.ts, admin-links.ts, team-profiles.ts, tech-stacks.ts
 │   ├── queries/               # blog.ts, portfolio.ts, admin/ (CMS reads)
 │   ├── routes/                # main-nav.ts (public + admin nav)
 │   ├── showcase/              # showcase storage, webgl helpers

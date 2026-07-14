@@ -9,7 +9,7 @@ Repo: ProtosEschatos/Protos-Web
 2. Admin UI: `docs/admin-console.md` + reference repo `Google-AI-Studio-Github-Connect`.
 3. Full project memory: **Protos-Agent** `memory/projects/protos-web.md` (not `PROJECT-MEMORY.md` — that file is TL;DR only).
 4. Human UI: browse memory at `/admin/memory` (read-only, loads from Protos-Agent GitHub).
-5. Cursor rules: `.cursor/rules/*.mdc` (showcase layers, fix-not-remove, design system, no-ignore-without-fix).
+5. Cursor rules: `.cursor/rules/protos-web.mdc` (single canonical rule file).
 6. Architecture + Supabase backend map: `docs/architecture.md`.
 
 ## Stack
@@ -29,7 +29,7 @@ src/
 │   └── ui/
 ├── lib/
 │   ├── auth/              # admin auth, rate limit, require-admin
-│   ├── config/            # site, seo, admin-links, social-links, tech-stacks
+│   ├── config/            # site, seo, admin-links, team-profiles, tech-stacks
 │   ├── queries/           # blog, portfolio (+ admin/)
 │   ├── routes/            # main-nav.ts
 │   └── showcase/          # showcase storage, webgl helpers
@@ -42,8 +42,15 @@ src/
 - Console v3.0 UI — ref: `Google-AI-Studio-Github-Connect`; docs: `docs/admin-console.md`
 - Password auth via `ADMIN_SECRET` on **Vercel only**
 - CMS reads: `src/lib/queries/admin/` · writes: `src/actions/admin-*.ts`
-- Agent memory: `/admin/memory` — Protos-Agent via GitHub raw
+- Agent memory: `/admin/memory` — Protos-Agent via GitHub only
 - AI assistant: `/admin/ai` — `DEEPSEEK_API_KEY` on Vercel
+
+## Supabase
+
+- Project: `laqnnzavwbojntfiqmxj`
+- Migrations: `supabase/migrations/` → GitHub Actions **Supabase DB Push** (`supabase db push` on push to `main`)
+- Edge functions: `.github/workflows/supabase-deploy-functions.yml` on `supabase/functions/**`
+- Keep-alive: `.github/workflows/supabase-keep-alive.yml` (every 5 min)
 
 ## Conventions
 
@@ -51,7 +58,7 @@ src/
 - Minimize diff scope; no drive-by refactors
 - Only commit when the user asks
 - Croatian copy for user-facing admin strings
-- **Fix, don't remove** broken features (see `.cursor/rules/fix-not-remove.mdc`)
+- Fix, don't remove broken user-facing features without explicit approval
 
 ## Showcase (`/portfolio-showcase`)
 
@@ -69,9 +76,8 @@ src/
 
 **Critical:** `ADMIN_SECRET` lives on Vercel only — git revert does **not** restore it.
 
-## Current state (2026-07-14)
+## Current state (2026-07-15)
 
-- **Latest commit:** `40b0514` — showcase boot loader restored
-- **Supabase:** `laqnnzavwbojntfiqmxj` — blog/portfolio/contact live
+- **Supabase:** `laqnnzavwbojntfiqmxj` — 24 migrations synced (repo + remote)
 - **Donacije:** Stripe LIVE · `/admin/donacije`
 - Full session history: **Protos-Agent** `memory/sessions/`

@@ -51,6 +51,8 @@ supabase migration list --linked
 
 Every row must show matching `local` and `remote` (no empty `local`).
 
+GitHub Actions **Supabase DB Push** (`.github/workflows/supabase-db-push.yml`) runs `supabase db push` on every push to `main` that touches this folder.
+
 ## Types
 
 ```bash

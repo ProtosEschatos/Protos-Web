@@ -1,10 +1,1 @@
-# Protos Web — Cursor entry point
-
-Canonical agent docs live elsewhere — do not duplicate long rules here.
-
-- **Agent workflow:** `AGENTS.md`
-- **Project TL;DR:** `PROJECT-MEMORY.md` (full memory in Protos-Agent repo)
-- **Cursor rules:** `.cursor/rules/*.mdc` (fix-not-remove, dom-canvas-layers, design-system)
-- **Security:** `docs/security.md`
-
-Deploy: `git push origin main` only — no Vercel CLI.
+# Protos Web — see AGENTS.md and .cursor/rules/protos-web.mdc

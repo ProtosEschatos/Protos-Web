@@ -58,6 +58,12 @@ export const PROJECT_LINKS: ProjectLink[] = [
     screenshotMobile: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('golden-pawn', 'mobile')),
     screenshotDesktop: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('golden-pawn', 'desktop')),
   },
+  {
+    color: 0xa78bfa,
+    link: 'https://www.protosweb.eu/demos/system-boost/index.html',
+    screenshotMobile: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('system-boost', 'mobile')),
+    screenshotDesktop: getShowcaseStorageUrl(SHOWCASE_STORAGE.project('system-boost', 'desktop')),
+  },
 ]
 
 export const SHOWCASE_FRAME_COLORS = [

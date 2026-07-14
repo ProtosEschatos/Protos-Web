@@ -81,12 +81,6 @@ export default function AdminMailboxPanel({
         </p>
         <p className="text-amber-100/90 leading-relaxed">
           {mailboxSetupHint(mailboxId)}
-          {provider === 'gmail' ? (
-            <>
-              {' '}
-              Za <strong>{mailbox}</strong> kreiraj App Password u Google Account → Security.
-            </>
-          ) : null}
         </p>
       </div>
     )

@@ -33,7 +33,7 @@ Viewport: `src/hooks/use-showcase-viewport.ts` — desktop / tablet / mobile.
 
 ## What breaks without env vars
 
-See [env-required.md](./env-required.md). Missing Supabase keys do **not** crash the app — public pages render with empty data; showcase shows empty frames.
+Missing Supabase keys do **not** crash the app — public pages render with empty data; showcase shows empty frames.
 
 ## Testing before release
 

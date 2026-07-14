@@ -45,7 +45,7 @@ export default function Hero() {
             <TransitionLink href="/portfolio" className="inline-flex items-center gap-2 px-7 py-3 rounded-full border border-[var(--border-card)] text-[var(--light)] text-xs font-semibold uppercase tracking-wider hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all duration-300">
               {t('cta_secondary')} <ArrowRight className="w-3 h-3" />
             </TransitionLink>
-            <ShowcasePrefetchLink href="/portfolio-showcase?focus=poklon" className="inline-flex items-center gap-2 px-7 py-3 rounded-full border border-[#a78bfa]/50 bg-[#6366f1]/10 text-[#ddd6fe] text-xs font-semibold uppercase tracking-wider hover:border-[#a78bfa] hover:bg-[#6366f1]/25 transition-all duration-300">
+            <ShowcasePrefetchLink href="/portfolio-showcase" className="inline-flex items-center gap-2 px-7 py-3 rounded-full border border-[#a78bfa]/50 bg-[#6366f1]/10 text-[#ddd6fe] text-xs font-semibold uppercase tracking-wider hover:border-[#a78bfa] hover:bg-[#6366f1]/25 transition-all duration-300">
               {t('cta_gift')} <ArrowRight className="w-3 h-3" />
             </ShowcasePrefetchLink>
           </motion.div>

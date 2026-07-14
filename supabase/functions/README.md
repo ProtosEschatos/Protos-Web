@@ -7,7 +7,6 @@ Project ref: `laqnnzavwbojntfiqmxj`
 | `keep-alive` | GitHub cron (`supabase-keep-alive.yml`) | Ping DB to prevent free-tier pause |
 | `submit-form` | Database webhook on `contacts` INSERT | Contact emails: **Resend primary**, Brevo fallback → Zoho inbox |
 | `subscribe` | `POST /api/subscribe` from site footer | Newsletter: **Brevo primary**, Resend fallback |
-| `content` | `GET ?type=<t>&lang=<l>` (service role) | Generic read API for DB-backed content (services, portfolio, blog, testimonials, pricing, process) |
 | `donation-checkout` | `POST /api/donate` from site | Stripe Checkout session (1–1000 EUR), inserts `donations` pending row |
 | `stripe-webhook` | Stripe webhook | `checkout.session.completed` / `expired` → update `donations` status |
 
@@ -46,7 +45,7 @@ Set in Supabase Dashboard → Edge Functions → Secrets:
 |--------|---------|
 | `KEEP_ALIVE_SECRET` | `keep-alive` |
 | `SUPABASE_URL` | all |
-| `SUPABASE_SERVICE_ROLE_KEY` | `subscribe`, `keep-alive`, `content` |
+| `SUPABASE_SERVICE_ROLE_KEY` | `subscribe`, `keep-alive` |
 | `RESEND_API_KEY` | `submit-form`, `subscribe` |
 | `RESEND_FROM_EMAIL` | `submit-form`, `subscribe` — `dario.admin@protosweb.eu` |
 | `CONTACT_EMAIL` | `submit-form` — admin inbox `dario.admin@protosweb.eu` |

@@ -60,7 +60,7 @@ Cloudflare DNS: `cloudflare-dns-check.yml` (`workflow_dispatch`) only.
 
 ## Env / compatibility
 
-- Required vars: `docs/env-required.md` — run `npm run check:env`
+- Required vars: `.env.example` — run `npm run check:env`
 - Cross-browser: `docs/compatibility.md` — showcase has WebGL fallback + touch controls
 
 ## Canonical rules in repo

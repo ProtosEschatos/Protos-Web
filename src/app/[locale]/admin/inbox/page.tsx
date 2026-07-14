@@ -21,17 +21,8 @@ export default async function AdminInboxPage(props: Props) {
     adminListMailboxStatuses(),
   ])
 
-  // Only show Martina's mailbox once it's actually configured — otherwise
-  // the inbox page shows "Zoho" twice (hers is also a Zoho account) for a
-  // mailbox nobody uses yet. Reappears automatically once MARTINA_IMAP_* is set.
-  const visibleMailboxes = ADMIN_MAILBOXES.filter((mailbox) => {
-    if (mailbox.id === 'martina') {
-      return mailboxStatuses.find((s) => s.id === 'martina')?.configured ?? false
-    }
-    return true
-  })
   const mailboxResults = await Promise.all(
-    visibleMailboxes.map((mailbox) => adminListMailbox(mailbox.id, 40)),
+    ADMIN_MAILBOXES.map((mailbox) => adminListMailbox(mailbox.id, 40)),
   )
 
   return (
@@ -40,7 +31,7 @@ export default async function AdminInboxPage(props: Props) {
       description="Svi mail sandučići i kontakt upiti — sve na jednom mjestu u adminu."
     >
       <p className="text-sm text-[var(--light-muted)] mb-8">
-        Zoho ({mailboxStatuses.find((m) => m.id === 'zoho')?.email}) i Gmail studio.
+        Zoho ({mailboxStatuses.find((m) => m.id === 'zoho')?.email}).
         Ako admin inbox ne učita live IMAP, prikazuje se zadnji cache iz Supabase.
         {' · '}
         <a
@@ -58,7 +49,7 @@ export default async function AdminInboxPage(props: Props) {
       </p>
 
       <div className="space-y-10 mb-10">
-        {visibleMailboxes.map((definition, index) => {
+        {ADMIN_MAILBOXES.map((definition, index) => {
           const status = mailboxStatuses.find((item) => item.id === definition.id)!
           const mailbox = mailboxResults[index]
 

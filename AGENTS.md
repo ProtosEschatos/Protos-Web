@@ -77,7 +77,7 @@ src/
 - **Supabase backend** — dedicated GitHub workflows (not removed from `ci.yml` = backend removed; only duplicate health jobs removed)
 - Cloudflare DNS: manual `cloudflare-dns-check.yml` only
 - Cursor plugins: `docs/cursor-stack.md` — **disable Prisma, Convex, Vercel plugins**
-- Env check: `npm run check:env` — see `docs/env-required.md`
+- Env check: `npm run check:env` — see `.env.example`
 - Compatibility: `docs/compatibility.md` — all devices/browsers; showcase WebGL fallback
 
 **Critical:** `ADMIN_SECRET` on Vercel only — git revert does not restore it.
@@ -105,7 +105,7 @@ src/
 - CI `ci.yml`: build job only (lint + typecheck + build)
 - Agent memory fetch: GitHub `ProtosEschatos/Protos-Agent` only — no local path fallback
 - Showcase: `ShowcaseBootBypass` + `ShowcasePrefetchLink` — no site boot veil on entry
-- Missing Supabase env vars → empty data, not crash — see `docs/env-required.md`
+- Missing Supabase env vars → empty data, not crash — see `.env.example`
 
 ## Current state (2026-07-15)
 

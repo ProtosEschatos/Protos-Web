@@ -14,13 +14,12 @@ const SpaceGallery = dynamic(
 
 type Props = {
   portfolioItems: PortfolioItem[]
-  focusPoklon?: boolean
 }
 
-export default function PortfolioShowcaseClient({ portfolioItems, focusPoklon = false }: Props) {
+export default function PortfolioShowcaseClient({ portfolioItems }: Props) {
   return (
     <div data-showcase-root className="min-h-screen">
-      <SpaceGallery portfolioItems={portfolioItems} focusPoklon={focusPoklon} />
+      <SpaceGallery portfolioItems={portfolioItems} />
     </div>
   )
 }

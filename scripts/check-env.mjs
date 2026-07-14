@@ -58,7 +58,7 @@ for (const { ok, label } of recommended) {
 }
 
 if (failed) {
-  console.error('\nFix .env.local — see docs/env-required.md')
+  console.error('\nFix .env.local — see .env.example')
   process.exit(1)
 }
 

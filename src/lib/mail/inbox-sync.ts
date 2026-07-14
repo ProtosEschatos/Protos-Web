@@ -34,9 +34,6 @@ export async function syncAllMailboxes(): Promise<Record<MailboxId, { ok: boolea
   const results = {} as Record<MailboxId, { ok: boolean; error?: string }>
 
   for (const mailbox of ADMIN_MAILBOXES) {
-    if (mailbox.id === 'martina' && !isMailboxConfigured('martina')) {
-      continue
-    }
     results[mailbox.id] = await syncMailboxToCache(mailbox.id)
   }
 

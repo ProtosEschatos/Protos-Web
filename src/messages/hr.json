@@ -34,6 +34,7 @@
     "subtitle": "Brze, lagane i robusne web stranice koje rade za vas. Sve na jednom mjestu.",
     "cta_primary": "Započni projekt",
     "cta_secondary": "Pogledaj portfolio",
+    "cta_gift": "Poklon",
     "stats": {
       "projects": {
         "value": "50",
@@ -372,7 +373,14 @@
     "webglContextLostTitle": "3D prikaz je pauziran",
     "webglContextLostDesc": "Grafička kartica je privremeno oslobodila 3D prikaz. Možete nastaviti pregledavati projekte ili pokušati ponovo.",
     "webglRetry": "Pokušaj ponovo 3D",
-    "webglViewPortfolio": "Pogledaj cijeli portfolio"
+    "webglViewPortfolio": "Pogledaj cijeli portfolio",
+    "wallDemoBadge": "Poklon",
+    "wallDemoTitle": "Vodič za maksimalne performanse",
+    "wallDemoDescription": "Interaktivni alat za optimizaciju CPU-a, RAM-a i GPU-a — besplatno za vas.",
+    "wallDemoOpen": "Otvori u punom ekranu",
+    "wallDemoClose": "Zatvori",
+    "giftIntroHint": "Poklon vas čeka na stražnjem zidu prostorije — ispod natpisa Astra Castra / Numen Lumen. Priđite panelu i pritisnite E.",
+    "giftWalkHint": "Priđite stražnjem zidu — poklon je ispod natpisa na zidu. Pritisnite E za puni ekran."
   },
   "aboutPage": {
     "label": "O NAMA",

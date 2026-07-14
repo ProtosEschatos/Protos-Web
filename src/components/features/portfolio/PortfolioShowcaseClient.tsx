@@ -1,5 +1,6 @@
 'use client'
 
+import { Suspense } from 'react'
 import dynamic from 'next/dynamic'
 import type { PortfolioItem } from '@/types/portfolio'
 import { ShowcaseBootLoader } from '@/components/three/showcase/ShowcaseBootLoader'
@@ -17,5 +18,9 @@ type Props = {
 }
 
 export default function PortfolioShowcaseClient({ portfolioItems }: Props) {
-  return <SpaceGallery portfolioItems={portfolioItems} />
+  return (
+    <Suspense fallback={<ShowcaseBootLoader />}>
+      <SpaceGallery portfolioItems={portfolioItems} />
+    </Suspense>
+  )
 }

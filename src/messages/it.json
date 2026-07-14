@@ -34,6 +34,7 @@
     "subtitle": "Siti web veloci, leggeri e robusti che lavorano per te. Tutto in un unico posto.",
     "cta_primary": "Inizia progetto",
     "cta_secondary": "Vedi portfolio",
+    "cta_gift": "Regalo",
     "stats": {
       "projects": {
         "value": "50",
@@ -372,7 +373,14 @@
     "webglContextLostTitle": "Vista 3D in pausa",
     "webglContextLostDesc": "La GPU ha rilasciato temporaneamente la vista 3D. Esplora i progetti sotto o riprova la 3D.",
     "webglRetry": "Riprova 3D",
-    "webglViewPortfolio": "Vedi portfolio completo"
+    "webglViewPortfolio": "Vedi portfolio completo",
+    "wallDemoBadge": "Regalo",
+    "wallDemoTitle": "Guida alle massime prestazioni",
+    "wallDemoDescription": "Strumento interattivo per ottimizzare CPU, RAM e GPU — gratis per te.",
+    "wallDemoOpen": "Apri a schermo intero",
+    "wallDemoClose": "Chiudi",
+    "giftIntroHint": "Il regalo è sul muro posteriore — sotto il motto Astra Castra / Numen Lumen. Avvicinati al pannello e premi E.",
+    "giftWalkHint": "Raggiungi il muro posteriore — il regalo è sotto il motto. Premi E per lo schermo intero."
   },
   "legalPages": {
     "lastUpdated": "Ultimo aggiornamento",

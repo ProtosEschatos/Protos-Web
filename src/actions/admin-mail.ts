@@ -34,19 +34,6 @@ export async function adminListMailboxStatuses(): Promise<AdminMailboxStatus[]> 
   }))
 }
 
-/** @deprecated Use adminListMailboxStatuses */
-export async function adminGetImapStatus(): Promise<{
-  configured: boolean
-  mailbox: string
-}> {
-  await requireAdmin()
-  const zoho = getMailbox('zoho')
-  return {
-    configured: isMailboxConfigured('zoho'),
-    mailbox: process.env[zoho.env.user]?.trim() || zoho.email,
-  }
-}
-
 export async function adminListMailbox(
   mailboxId: MailboxId,
   limit = 40,

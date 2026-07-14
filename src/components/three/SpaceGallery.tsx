@@ -3,7 +3,6 @@
 import { useState, useRef, useMemo, useEffect, useCallback, memo } from 'react'
 import * as THREE from 'three'
 import { useTranslations } from 'next-intl'
-import { useSearchParams } from 'next/navigation'
 import { Link } from '@/navigation'
 import { type ShowcaseProject } from './showcase/constants'
 import { ShowcaseScene } from './showcase/GalleryScene'
@@ -15,8 +14,6 @@ import { SafeCanvas } from '@/components/three/SafeCanvas'
 import { isWebGLAvailable } from '@/lib/showcase/webgl'
 import {
   FEATURED_WALL_DEMO,
-  SHOWCASE_FOCUS_PARAM,
-  SHOWCASE_POKLON_FOCUS,
 } from '@/lib/showcase/featured-demo'
 import { ShowcaseFullscreenDemo } from '@/components/showcase/ShowcaseFullscreenDemo'
 import {
@@ -32,6 +29,7 @@ type Phase = 'loading' | 'intro' | 'playing'
 
 type SpaceGalleryProps = {
   portfolioItems?: PortfolioItem[]
+  focusPoklon?: boolean
 }
 
 type ShowcaseCanvasLayerProps = {
@@ -89,11 +87,9 @@ const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
   )
 })
 
-export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
+export function SpaceGallery({ portfolioItems = [], focusPoklon = false }: SpaceGalleryProps) {
   const t = useTranslations('showcase')
   const tNav = useTranslations('nav')
-  const searchParams = useSearchParams()
-  const focusPoklon = searchParams.get(SHOWCASE_FOCUS_PARAM) === SHOWCASE_POKLON_FOCUS
   const viewport = useShowcaseViewport()
   const touchControlsEnabled = useTouchControlsEnabled()
 
@@ -139,18 +135,26 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
   }, [])
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress((p) => {
-        const next = p + Math.random() * 15
-        if (next >= 100) {
-          clearInterval(interval)
-          setTimeout(() => setPhase('intro'), 500)
-          return 100
-        }
-        return next
-      })
-    }, 200)
-    return () => clearInterval(interval)
+    let progressValue = 0
+    const tick = setInterval(() => {
+      progressValue = Math.min(100, progressValue + 8 + Math.random() * 10)
+      setProgress(progressValue)
+      if (progressValue >= 100) {
+        clearInterval(tick)
+        setPhase('intro')
+      }
+    }, 160)
+
+    const fallback = setTimeout(() => {
+      clearInterval(tick)
+      setProgress(100)
+      setPhase('intro')
+    }, 3500)
+
+    return () => {
+      clearInterval(tick)
+      clearTimeout(fallback)
+    }
   }, [])
 
   useEffect(() => {

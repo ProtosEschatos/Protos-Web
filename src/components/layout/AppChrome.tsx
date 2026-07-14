@@ -33,19 +33,15 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
   const isLegal = isLegalPath(pathname) || LEGAL_PATH.test(pathname)
   const [consentGranted, setConsentGranted] = useState(true)
   const [bootDone, setBootDone] = useState(true)
-  const [showcaseBlocked, setShowcaseBlocked] = useState(true)
 
   useLayoutEffect(() => {
     setConsentGranted(hasSiteConsent())
     setBootDone(isBootComplete())
-    setShowcaseBlocked(!hasSiteConsent())
   }, [])
 
   useEffect(() => {
     const syncConsent = () => {
-      const ok = hasSiteConsent()
-      setConsentGranted(ok)
-      setShowcaseBlocked(!ok)
+      setConsentGranted(hasSiteConsent())
     }
     const syncBoot = () => setBootDone(isBootComplete())
     window.addEventListener(SITE_CONSENT_EVENT, syncConsent)
@@ -76,7 +72,6 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
 
   const finishConsent = useCallback(() => {
     setConsentGranted(true)
-    setShowcaseBlocked(false)
     sessionStorage.setItem(BOOT_SESSION_KEY, '1')
     clearBootPending()
     window.dispatchEvent(new Event(BOOT_COMPLETE_EVENT))
@@ -97,12 +92,9 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
 
   if (isShowcase) {
     return (
-      <>
-        <SiteConsentModal open={showcaseBlocked} onAccepted={finishConsent} />
-        <main className={`relative min-h-0 overflow-hidden ${showcaseBlocked ? 'pointer-events-none select-none' : ''}`}>
-          {children}
-        </main>
-      </>
+      <main className="relative min-h-screen overflow-hidden">
+        {children}
+      </main>
     )
   }
 

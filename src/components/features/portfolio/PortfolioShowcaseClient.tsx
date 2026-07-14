@@ -1,6 +1,5 @@
 'use client'
 
-import { Suspense } from 'react'
 import dynamic from 'next/dynamic'
 import type { PortfolioItem } from '@/types/portfolio'
 import { ShowcaseBootLoader } from '@/components/three/showcase/ShowcaseBootLoader'
@@ -15,12 +14,9 @@ const SpaceGallery = dynamic(
 
 type Props = {
   portfolioItems: PortfolioItem[]
+  focusPoklon?: boolean
 }
 
-export default function PortfolioShowcaseClient({ portfolioItems }: Props) {
-  return (
-    <Suspense fallback={<ShowcaseBootLoader />}>
-      <SpaceGallery portfolioItems={portfolioItems} />
-    </Suspense>
-  )
+export default function PortfolioShowcaseClient({ portfolioItems, focusPoklon = false }: Props) {
+  return <SpaceGallery portfolioItems={portfolioItems} focusPoklon={focusPoklon} />
 }

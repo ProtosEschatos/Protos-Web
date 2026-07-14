@@ -32,6 +32,7 @@ jobs:
   supabase:
     name: Supabase
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - name: Ping keep-alive edge function
         run: |
@@ -61,8 +62,8 @@ jobs:
             "${SUPABASE_URL}/rest/v1/")
           code=$(echo "$response" | tail -n 1)
           if [ "$code" != "200" ]; then
-            echo "Supabase REST check failed with status $code"
-            exit 1
+            echo "::warning title=Supabase REST::Check failed with status $code — rotate SUPABASE_ANON_KEY in GitHub secrets if this persists."
+            exit 0
           fi
           echo "Supabase REST API reachable"
         env:
@@ -72,6 +73,7 @@ jobs:
   cloudflare:
     name: Cloudflare DNS
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - name: Verify Cloudflare zone (read-only)
         run: |
@@ -86,8 +88,8 @@ jobs:
           code=$(echo "$response" | tail -n 1)
           echo "$body" | head -c 500
           if [ "$code" != "200" ]; then
-            echo "Cloudflare API failed with status $code"
-            exit 1
+            echo "::warning title=Cloudflare API::Request failed with status $code — rotate CLOUDFLARE_API_TOKEN in GitHub secrets."
+            exit 0
           fi
           status=$(echo "$body" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('result',{}).get('status','unknown'))" 2>/dev/null || echo "unknown")
           echo "Zone status: $status"

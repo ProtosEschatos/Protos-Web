@@ -1,12 +1,7 @@
 'use client'
 
-import dynamic from 'next/dynamic'
+import { SpaceGallery } from '@/components/three/SpaceGallery'
 import type { PortfolioItem } from '@/types/portfolio'
-
-const SpaceGallery = dynamic(
-  () => import('@/components/three/SpaceGallery').then((mod) => ({ default: mod.SpaceGallery })),
-  { ssr: false, loading: () => null },
-)
 
 type Props = {
   portfolioItems: PortfolioItem[]

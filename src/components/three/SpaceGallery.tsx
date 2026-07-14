@@ -8,7 +8,6 @@ import { type ShowcaseProject } from './showcase/constants'
 import { ShowcaseScene } from './showcase/GalleryScene'
 import { buildShowcaseProjects } from './showcase/buildProjects'
 import { ShowcaseFallback } from './showcase/ShowcaseFallback'
-import { ShowcaseBootLoader } from './showcase/ShowcaseBootLoader'
 import { ShowcaseJoystick } from './showcase/ShowcaseJoystick'
 import { SafeCanvas } from '@/components/three/SafeCanvas'
 import { isWebGLAvailable } from '@/lib/showcase/webgl'
@@ -98,11 +97,10 @@ export function SpaceGallery({ portfolioItems = [], focusPoklon = false }: Space
     [t, portfolioItems, viewport],
   )
 
-  const [webglReady, setWebglReady] = useState<boolean | null>(null)
+  const [webglReady] = useState(() => isWebGLAvailable())
   const [contextLost, setContextLost] = useState(false)
   const [canvasKey, setCanvasKey] = useState(0)
-  const [phase, setPhase] = useState<Phase>('loading')
-  const [progress, setProgress] = useState(0)
+  const [phase, setPhase] = useState<Phase>('intro')
   const [showMenu, setShowMenu] = useState(false)
   const [nearestProject, setNearestProject] = useState<ShowcaseProject | null>(null)
   const [nearFeaturedDemo, setNearFeaturedDemo] = useState(false)
@@ -124,36 +122,9 @@ export function SpaceGallery({ portfolioItems = [], focusPoklon = false }: Space
   }, [])
 
   useEffect(() => {
-    setWebglReady(isWebGLAvailable())
-  }, [])
-
-  useEffect(() => {
     document.body.style.overflow = 'hidden'
     return () => {
       document.body.style.overflow = ''
-    }
-  }, [])
-
-  useEffect(() => {
-    let progressValue = 0
-    const tick = setInterval(() => {
-      progressValue = Math.min(100, progressValue + 8 + Math.random() * 10)
-      setProgress(progressValue)
-      if (progressValue >= 100) {
-        clearInterval(tick)
-        setPhase('intro')
-      }
-    }, 160)
-
-    const fallback = setTimeout(() => {
-      clearInterval(tick)
-      setProgress(100)
-      setPhase('intro')
-    }, 3500)
-
-    return () => {
-      clearInterval(tick)
-      clearTimeout(fallback)
     }
   }, [])
 
@@ -221,7 +192,6 @@ export function SpaceGallery({ portfolioItems = [], focusPoklon = false }: Space
     setContextLost(false)
     setCanvasKey((key) => key + 1)
     setPhase('intro')
-    setProgress(100)
     setShowMenu(false)
   }, [])
 
@@ -235,11 +205,7 @@ export function SpaceGallery({ portfolioItems = [], focusPoklon = false }: Space
     }
   }, [nearFeaturedDemo, nearestProject, openFeaturedDemo])
 
-  if (webglReady === null) {
-    return <ShowcaseBootLoader />
-  }
-
-  if (webglReady === false) {
+  if (!webglReady) {
     return <ShowcaseFallback projects={projects} reason="unsupported" />
   }
 
@@ -274,27 +240,6 @@ export function SpaceGallery({ portfolioItems = [], focusPoklon = false }: Space
         closeLabel={t('wallDemoClose')}
         onClose={closeFeaturedDemo}
       />
-
-      {phase === 'loading' && (
-        <div className="fixed inset-0 z-[300] flex flex-col items-center justify-center bg-[#0a0a1a]">
-          <div className="loader-title mb-4 text-5xl font-bold bg-gradient-to-br from-[#6366f1] to-[#06b6d4] bg-clip-text text-transparent">
-            {t('loaderTitle')}
-          </div>
-          <div className="mb-8 text-sm uppercase tracking-[0.3em] text-[#94a3b8]">{t('loaderSubtitle')}</div>
-          <div className="h-1 w-48 overflow-hidden rounded-full bg-white/10">
-            <div
-              className="h-full rounded-full bg-gradient-to-r from-[#6366f1] via-[#06b6d4] to-[#f59e0b] transition-all duration-300"
-              style={{ width: `${Math.min(progress, 100)}%` }}
-            />
-          </div>
-          {!touchControlsEnabled && (
-            <p className="mt-8 text-sm text-[#94a3b8]">
-              {t('loaderTipPrefix')} <span className="font-semibold text-[#6366f1]">WASD</span> {t('loaderTipOr')}{' '}
-              <span className="font-semibold text-[#06b6d4]">{t('loaderTipArrows')}</span> {t('loaderTipSuffix')}
-            </p>
-          )}
-        </div>
-      )}
 
       {phase === 'intro' && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/90">

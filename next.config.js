@@ -18,6 +18,7 @@ const securityHeaders = [
       "style-src 'self' 'unsafe-inline'",
       "font-src 'self' data:",
       "media-src 'self' blob:",
+      "frame-src 'self'",
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self'",

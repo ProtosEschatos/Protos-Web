@@ -115,7 +115,7 @@ src/
 | `tailwind.config.ts` | Tailwind with Protos theme colors, custom animations |
 | `tsconfig.json` | TypeScript strict mode, `@/*` path alias |
 | `postcss.config.js` | Tailwind + Autoprefixer |
-| `.cursorrules` | Cursor AI coding standards |
+| `.cursorrules` | Pointer to `.cursor/rules/*.mdc` — guardrails only, not product memory |
 | `package.json` | All dependencies |
 
 ## Theme Colors

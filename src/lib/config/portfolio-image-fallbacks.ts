@@ -3,6 +3,8 @@ const FALLBACKS: Record<string, string> = {
   'bodulica.shop': '/images/portfolio/bodulica.svg',
   'www.bodulica.shop': '/images/portfolio/bodulica.svg',
   'golden-pawn.vercel.app': '/images/portfolio/golden-pawn.svg',
+  'auto-moto.vercel.app': '/images/portfolio/auto-moto.svg',
+  'lumina-dent.vercel.app': '/images/portfolio/dentalna-ordinacija.svg',
 }
 
 function normalizeHost(url: string): string | null {

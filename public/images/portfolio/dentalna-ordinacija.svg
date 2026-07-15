@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="LuminaDent preview">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ecfeff"/>
+      <stop offset="100%" stop-color="#cffafe"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <rect x="80" y="120" width="640" height="360" rx="24" fill="#ffffff" stroke="#06b6d4" stroke-width="2"/>
+  <text x="400" y="500" text-anchor="middle" fill="#0f172a" font-family="system-ui,sans-serif" font-size="28" font-weight="700">LuminaDent</text>
+  <text x="400" y="536" text-anchor="middle" fill="#0891b2" font-family="system-ui,sans-serif" font-size="16">lumina-dent.vercel.app</text>
+</svg>

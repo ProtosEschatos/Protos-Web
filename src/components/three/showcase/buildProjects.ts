@@ -1,42 +1,22 @@
 import type { PortfolioItem } from '@/types/portfolio'
 import type { ShowcaseViewport } from '@/hooks/use-showcase-viewport'
-import {
-  getShowcaseFrameImageFallbackUrl,
-  getShowcaseFrameImageUrl,
-} from '@/lib/showcase/showcase-storage'
-import { isPoklonPortfolioUrl, portfolioUrlToShowcaseSlug } from '@/lib/showcase/portfolio-slug'
+import { SHOWCASE_ALLOWLIST } from '@/lib/showcase/showcase-allowlist'
+import { getShowcaseFrameImageUrl } from '@/lib/showcase/showcase-storage'
 import { type ShowcaseProject } from './constants'
 
 const FRAME_COLORS = [0x6366f1, 0x06b6d4, 0xf59e0b, 0x818cf8, 0xff6600, 0x8b5cf6, 0x10b981, 0xec4899]
 
-const LOCAL_FRAME_SLUGS = new Set([
-  'bodulica',
-  'zeustrading',
-  'cosmic-blueprint',
-  'protosweb',
-  'golden-pawn',
-])
-
 export function buildShowcaseProjects(
-  portfolioItems: PortfolioItem[],
+  _portfolioItems: PortfolioItem[],
   viewport: ShowcaseViewport,
 ): ShowcaseProject[] {
-  return portfolioItems
-    .filter((item) => item.project_url && !isPoklonPortfolioUrl(item.project_url))
-    .sort((a, b) => (a.sort_order ?? 99) - (b.sort_order ?? 99))
-    .map((item, index) => {
-      const link = item.project_url!
-      const slug = portfolioUrlToShowcaseSlug(link)
-      const imageUrl = LOCAL_FRAME_SLUGS.has(slug)
-        ? getShowcaseFrameImageUrl(slug, viewport)
-        : getShowcaseFrameImageFallbackUrl(slug, viewport)
-
-      return {
-        color: FRAME_COLORS[index % FRAME_COLORS.length],
-        link,
-        title: item.title,
-        description: item.description ?? '',
-        imageUrl,
-      }
-    })
+  return [...SHOWCASE_ALLOWLIST]
+    .sort((a, b) => a.sortOrder - b.sortOrder)
+    .map((entry, index) => ({
+      color: FRAME_COLORS[index % FRAME_COLORS.length],
+      link: entry.projectUrl,
+      title: entry.title,
+      description: entry.description,
+      imageUrl: getShowcaseFrameImageUrl(entry.slug, viewport),
+    }))
 }

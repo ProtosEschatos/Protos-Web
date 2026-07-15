@@ -243,7 +243,8 @@
     "subtitle": "Siti web che ci ispirano e gli standard di qualita a cui miriamo",
     "showcaseTitle": "3D Portfolio Showcase",
     "showcaseText": "Esplora i nostri progetti in un'esperienza 3D immersiva",
-    "showcaseCta": "APRI GALLERIA"
+    "showcaseCta": "APRI GALLERIA",
+    "showcaseOnlyHint": "Tutti i progetti sono nella galleria 3D — vai ai cornici e premi E. Il regalo System Boost e sul muro posteriore."
   },
   "blog": {
     "label": "BLOG",

@@ -11,11 +11,11 @@ export type FrameDimensions = {
 export function getFrameDimensions(viewport: ShowcaseViewport): FrameDimensions {
   if (viewport === 'desktop') {
     return {
-      viewW: 2.9,
-      viewH: 1.65,
-      frameW: 0.11,
+      viewW: 3.85,
+      viewH: 2.18,
+      frameW: 0.12,
       depth: 0.1,
-      centerY: 2.35,
+      centerY: 2.45,
     }
   }
 

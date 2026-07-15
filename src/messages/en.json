@@ -243,7 +243,8 @@
     "subtitle": "Websites that inspire us and the quality standards we strive for",
     "showcaseTitle": "Portfolio Showcase",
     "showcaseText": "Explore our projects through an immersive 3D experience",
-    "showcaseCta": "OPEN GALLERY"
+    "showcaseCta": "OPEN GALLERY",
+    "showcaseOnlyHint": "All projects live inside the 3D gallery — walk to the wall frames and press E. System Boost gift is on the back wall."
   },
   "blog": {
     "label": "BLOG",
@@ -372,7 +373,11 @@
     "webglContextLostTitle": "3D view paused",
     "webglContextLostDesc": "The GPU temporarily released the 3D view. Browse the projects below or try 3D again.",
     "webglRetry": "Try 3D again",
-    "webglViewPortfolio": "View full portfolio"
+    "webglViewPortfolio": "View full portfolio",
+    "poklonTitle": "System Boost — free gift",
+    "poklonDesc": "Ultimate laptop speed guide (CPU + RAM). Press E or tap the button.",
+    "poklonOpen": "Open gift",
+    "poklonClose": "Close"
   },
   "aboutPage": {
     "label": "ABOUT US",
@@ -659,8 +664,8 @@
       "description": "Website development process — from consultation to launch. Protos Web, Zagreb. Web design for clients in Croatia and Southeast Europe."
     },
     "portfolio": {
-      "title": "Portfolio",
-      "description": "Web projects and case studies — custom design, development and 3D experiences. Protos Web studio, Zagreb — Balkans and EU."
+      "title": "Portfolio — 3D gallery",
+      "description": "Protos Web projects in an interactive 3D gallery — Bodulica, Zeus Trading, Cosmic Blueprint and more. Zagreb, Balkans and EU."
     },
     "showcase": {
       "title": "3D Portfolio Showcase",

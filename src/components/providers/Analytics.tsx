@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import Script from 'next/script'
 import { getCookiePreferences, COOKIE_CONSENT_EVENT, applyGoogleConsentMode } from '@/lib/config/cookie-consent'
+import { GA4_MEASUREMENT_ID } from '@/lib/config/site'
 
 export default function Analytics() {
   const [allowed, setAllowed] = useState(false)
@@ -27,8 +28,7 @@ export default function Analytics() {
   }, [])
 
   const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN
-  // GA4 ID is public (visible in page source). Env var overrides the project default.
-  const gaId = process.env.NEXT_PUBLIC_GA_ID || 'G-HR9HK4SR7Q'
+  const gaId = GA4_MEASUREMENT_ID
 
   // GA gtag does not auto-track SPA route changes. The initial page_view is sent
   // by gtag('config'), so we skip the first observed path and only fire on real
@@ -75,7 +75,11 @@ export default function Analytics() {
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', '${gaId}');
+              gtag('config', '${gaId}', {
+                anonymize_ip: true,
+                allow_google_signals: false,
+                allow_ad_personalization_signals: false
+              });
             `}
           </Script>
         </>

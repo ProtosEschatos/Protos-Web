@@ -20,6 +20,13 @@ const inter = Inter({
   display: 'swap',
 })
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover' as const,
+  themeColor: '#0a0a1a',
+}
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {

@@ -1,4 +1,4 @@
-import { LEGAL_TERMS_VERSION } from '@/lib/config/site'
+import { LEGAL_TERMS_VERSION, GA4_MEASUREMENT_ID } from '@/lib/config/site'
 
 export const SITE_CONSENT_KEY = 'protos-site-consent-v1'
 export const COOKIE_STORAGE_KEY = 'protos-cookies'
@@ -94,6 +94,9 @@ export function applyGoogleConsentMode(analyticsGranted: boolean): void {
     ad_user_data: 'denied',
     ad_personalization: 'denied',
   })
+  if (analyticsGranted) {
+    gtag('config', GA4_MEASUREMENT_ID, { send_page_view: true })
+  }
 }
 
 /** Records the cookie-banner choice and marks the banner as dismissed. */

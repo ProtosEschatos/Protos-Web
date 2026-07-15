@@ -9,59 +9,12 @@ import type { ShowcaseViewport } from '@/hooks/use-showcase-viewport'
 import type { TouchInput } from '@/hooks/use-showcase-viewport'
 import { AstronautCharacter, animateAstronautWalk, resetAstronautPose } from './AstronautCharacter'
 import { FrameScreenshot } from './FrameScreenshot'
+import { GiftPortal } from './GiftPortal'
 
-const LETTER_BLOCKS = [
-  [
-    { x: -4, y: 0, w: 0.15, h: 1.2 },
-    { x: -3.8, y: 0.5, w: 0.4, h: 0.15 },
-    { x: -3.5, y: 0.3, w: 0.15, h: 0.5 },
-    { x: -3.8, y: 0.1, w: 0.4, h: 0.15 },
-  ],
-  [
-    { x: -3.0, y: 0, w: 0.15, h: 1.2 },
-    { x: -2.5, y: 0, w: 0.15, h: 1.2 },
-    { x: -2.75, y: 0.5, w: 0.4, h: 0.15 },
-    { x: -2.75, y: -0.5, w: 0.4, h: 0.15 },
-  ],
-  [
-    { x: -2.0, y: 0, w: 0.15, h: 1.2 },
-    { x: -1.8, y: 0.5, w: 0.4, h: 0.15 },
-    { x: -1.5, y: 0.3, w: 0.15, h: 0.5 },
-    { x: -1.8, y: 0.1, w: 0.4, h: 0.15 },
-    { x: -1.5, y: -0.3, w: 0.15, h: 0.5 },
-  ],
-  [
-    { x: -1.0, y: 0.5, w: 0.6, h: 0.15 },
-    { x: -1.0, y: 0, w: 0.15, h: 1.2 },
-  ],
-  [
-    { x: -0.3, y: 0, w: 0.15, h: 1.2 },
-    { x: -0.1, y: 0.5, w: 0.4, h: 0.15 },
-    { x: -0.1, y: 0.1, w: 0.3, h: 0.15 },
-  ],
-  [
-    { x: 0.5, y: 0, w: 0.15, h: 1.2 },
-    { x: 1.0, y: 0, w: 0.15, h: 1.2 },
-    { x: 0.75, y: 0.5, w: 0.4, h: 0.15 },
-    { x: 0.75, y: -0.5, w: 0.4, h: 0.15 },
-  ],
-  [
-    { x: 1.5, y: 0, w: 0.15, h: 1.2 },
-    { x: 1.7, y: -0.5, w: 0.4, h: 0.15 },
-  ],
-  [{ x: 2.3, y: 0, w: 0.15, h: 1.2 }],
-  [
-    { x: 2.8, y: 0, w: 0.15, h: 1.2 },
-    { x: 3.3, y: 0, w: 0.15, h: 1.2 },
-    { x: 3.05, y: 0.5, w: 0.4, h: 0.15 },
-    { x: 3.05, y: -0.5, w: 0.4, h: 0.15 },
-  ],
-] as const
-
-function Starfield() {
+function Starfield({ count = 500 }: { count?: number }) {
   const positions = useMemo(() => {
-    const arr = new Float32Array(500 * 3)
-    for (let i = 0; i < 500; i++) {
+    const arr = new Float32Array(count * 3)
+    for (let i = 0; i < count; i++) {
       const radius = 80 + Math.random() * 50
       const theta = Math.random() * Math.PI * 2
       const phi = Math.random() * Math.PI
@@ -70,7 +23,7 @@ function Starfield() {
       arr[i * 3 + 2] = radius * Math.sin(phi) * Math.sin(theta)
     }
     return arr
-  }, [])
+  }, [count])
 
   return (
     <points>
@@ -79,30 +32,6 @@ function Starfield() {
       </bufferGeometry>
       <pointsMaterial color={0xffffff} size={0.5} transparent opacity={0.8} />
     </points>
-  )
-}
-
-function PortfolioWallText() {
-  const letterMat = useMemo(() => new THREE.MeshBasicMaterial({ color: 0x6366f1, transparent: true, opacity: 0.9 }), [])
-
-  return (
-    <group position={[0, SHOWCASE_CONFIG.galleryHeight * 0.5, -SHOWCASE_CONFIG.galleryLength / 2 + 0.3]}>
-      {LETTER_BLOCKS.flatMap((letter, li) =>
-        letter.map((block, bi) => (
-          <mesh key={`${li}-${bi}`} material={letterMat} position={[block.x, block.y, 0.1]}>
-            <boxGeometry args={[block.w, block.h, 0.1]} />
-          </mesh>
-        )),
-      )}
-      <mesh position={[0, -1, 0.05]}>
-        <boxGeometry args={[6, 0.05, 0.02]} />
-        <meshBasicMaterial color={0x6366f1} transparent opacity={0.8} />
-      </mesh>
-      <mesh position={[0, 0, -0.1]}>
-        <planeGeometry args={[8, 3]} />
-        <meshBasicMaterial color={0x06b6d4} transparent opacity={0.1} />
-      </mesh>
-    </group>
   )
 }
 
@@ -338,6 +267,7 @@ type SceneProps = {
   touchInput: React.MutableRefObject<TouchInput>
   characterRef: React.RefObject<THREE.Group | null>
   onNearestProject: (project: ShowcaseProject | null) => void
+  onNearestGift: (near: boolean) => void
 }
 
 export function ShowcaseScene({
@@ -348,10 +278,12 @@ export function ShowcaseScene({
   touchInput,
   characterRef,
   onNearestProject,
+  onNearestGift,
 }: SceneProps) {
   const walkPhase = useRef(0)
   const headingRef = useRef(INITIAL_CHARACTER_HEADING)
   const lastNearestLinkRef = useRef<string | null>(null)
+  const lastGiftNearRef = useRef(false)
   const smoothTouch = useRef({ x: 0, y: 0 })
   const yAxis = useMemo(() => new THREE.Vector3(0, 1, 0), [])
   const moveDir = useMemo(() => new THREE.Vector3(), [])
@@ -462,6 +394,10 @@ export function ShowcaseScene({
         lastNearestLinkRef.current = null
         onNearestProject(null)
       }
+      if (lastGiftNearRef.current) {
+        lastGiftNearRef.current = false
+        onNearestGift(false)
+      }
       character.quaternion.setFromAxisAngle(yAxis, headingRef.current)
     }
 
@@ -476,9 +412,9 @@ export function ShowcaseScene({
       <color attach="background" args={['#0a0a1a']} />
       <fog attach="fog" args={['#0a0a1a', 20, 80]} />
       <GalleryLighting />
-      <Starfield />
+      <Starfield count={viewport === 'mobile' ? 180 : 500} />
       <GalleryShell />
-      <PortfolioWallText />
+      <GiftPortal viewport={viewport} characterRef={characterRef} onProximityChange={onNearestGift} />
       {Array.from({ length: FRAME_SLOTS }).map((_, index) => (
         <ProjectFrame
           key={`frame-${index}-${viewport}`}

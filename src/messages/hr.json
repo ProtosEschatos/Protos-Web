@@ -243,7 +243,8 @@
     "subtitle": "Web stranice koje nas inspiriraju i standardi kvalitete kojima težimo.",
     "showcaseTitle": "3D Portfolio Showcase",
     "showcaseText": "Istražite naše projekte kroz imerzivno 3D iskustvo.",
-    "showcaseCta": "OTVORI GALERIJU"
+    "showcaseCta": "OTVORI GALERIJU",
+    "showcaseOnlyHint": "Svi projekti su u 3D galeriji — hodaj do prozora na zidovima i pritisni E za pregled. Poklon System Boost čeka na stražnjem zidu."
   },
   "blog": {
     "label": "BLOG",
@@ -372,7 +373,11 @@
     "webglContextLostTitle": "3D prikaz je pauziran",
     "webglContextLostDesc": "Grafička kartica je privremeno oslobodila 3D prikaz. Možete nastaviti pregledavati projekte ili pokušati ponovo.",
     "webglRetry": "Pokušaj ponovo 3D",
-    "webglViewPortfolio": "Pogledaj cijeli portfolio"
+    "webglViewPortfolio": "Pogledaj cijeli portfolio",
+    "poklonTitle": "System Boost — besplatni poklon",
+    "poklonDesc": "Ultimativni vodič za ubrzanje laptopa (CPU + RAM). Pritisni E ili dodirni gumb.",
+    "poklonOpen": "Otvori poklon",
+    "poklonClose": "Zatvori"
   },
   "aboutPage": {
     "label": "O NAMA",
@@ -659,8 +664,8 @@
       "description": "Proces izrade web stranice — od konzultacija do lansiranja. Protos Web, Zagreb. Web dizajn i development za klijente u Hrvatskoj i ex-Yu regiji."
     },
     "portfolio": {
-      "title": "Portfolio",
-      "description": "Web projekti i studije slučaja — custom dizajn, development i 3D iskustva. Protos Web studio, Zagreb — Balkan i EU."
+      "title": "Portfolio — 3D galerija",
+      "description": "Projekti Protos Web studija u interaktivnoj 3D galeriji — Bodulica, Zeus Trading, Cosmic Blueprint i više. Zagreb, Balkan i EU."
     },
     "showcase": {
       "title": "3D Portfolio Showcase",

@@ -4,17 +4,11 @@ import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/navigation'
 import { ArrowRight, Layers } from 'lucide-react'
-import type { PortfolioItem } from '@/types/portfolio'
-import PortfolioGrid from '@/components/features/portfolio/PortfolioGrid'
 import { PROTOS_WEB_MARQUEE } from '@/lib/config/tech-stacks'
 
 const marqueeItems = PROTOS_WEB_MARQUEE
 
-type Props = {
-  items: PortfolioItem[]
-}
-
-export default function Portfolio({ items }: Props) {
+export default function Portfolio() {
   const t = useTranslations('portfolio')
 
   return (
@@ -34,8 +28,6 @@ export default function Portfolio({ items }: Props) {
             ))}
           </div>
         </div>
-
-        <PortfolioGrid items={items} />
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -101,8 +101,15 @@ export const adminMarketingLinks: AdminHubLink[] = [
   {
     id: 'google-analytics',
     label: 'Google Analytics 4',
-    href: 'https://analytics.google.com/analytics/web/',
+    href: 'https://analytics.google.com/analytics/web/#/p/G-HR9HK4SR7Q/reports/intelligenthome',
     description: 'Posjete, izvori prometa, konverzije',
+    external: true,
+  },
+  {
+    id: 'google-business',
+    label: 'Google Business Profile',
+    href: 'https://business.google.com/',
+    description: 'Google Maps, recenzije, lokalni SEO',
     external: true,
   },
   {

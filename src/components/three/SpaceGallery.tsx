@@ -3,6 +3,7 @@
 import { useState, useRef, useMemo, useEffect, useCallback, memo } from 'react'
 import * as THREE from 'three'
 import { useTranslations } from 'next-intl'
+import { useSearchParams } from 'next/navigation'
 import { Link } from '@/navigation'
 import { type ShowcaseProject } from './showcase/constants'
 import { ShowcaseScene } from './showcase/GalleryScene'
@@ -12,6 +13,12 @@ import { ShowcaseBootLoader } from './showcase/ShowcaseBootLoader'
 import { ShowcaseJoystick } from './showcase/ShowcaseJoystick'
 import { SafeCanvas } from '@/components/three/SafeCanvas'
 import { isWebGLAvailable } from '@/lib/showcase/webgl'
+import {
+  FEATURED_WALL_DEMO,
+  SHOWCASE_FOCUS_PARAM,
+  SHOWCASE_POKLON_FOCUS,
+} from '@/lib/showcase/featured-demo'
+import { ShowcaseFullscreenDemo } from '@/components/showcase/ShowcaseFullscreenDemo'
 import {
   INITIAL_TOUCH_INPUT,
   useShowcaseViewport,
@@ -34,6 +41,7 @@ type ShowcaseCanvasLayerProps = {
   touchInput: React.MutableRefObject<TouchInput>
   characterRef: React.RefObject<THREE.Group | null>
   onNearestProject: (project: ShowcaseProject | null) => void
+  onNearestGift: (near: boolean) => void
   mountKey: number
   onContextLost: () => void
 }
@@ -46,6 +54,7 @@ const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
   touchInput,
   characterRef,
   onNearestProject,
+  onNearestGift,
   mountKey,
   onContextLost,
 }: ShowcaseCanvasLayerProps) {
@@ -66,6 +75,7 @@ const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
           touchInput={touchInput}
           characterRef={characterRef}
           onNearestProject={onNearestProject}
+          onNearestGift={onNearestGift}
         />
       </SafeCanvas>
     </div>
@@ -75,12 +85,14 @@ const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
 export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
   const t = useTranslations('showcase')
   const tNav = useTranslations('nav')
+  const searchParams = useSearchParams()
   const viewport = useShowcaseViewport()
   const touchControlsEnabled = useTouchControlsEnabled()
+  const poklonFocus = searchParams.get(SHOWCASE_FOCUS_PARAM) === SHOWCASE_POKLON_FOCUS
 
   const projects = useMemo<ShowcaseProject[]>(
-    () => buildShowcaseProjects(t, portfolioItems, viewport),
-    [t, portfolioItems, viewport],
+    () => buildShowcaseProjects(portfolioItems, viewport),
+    [portfolioItems, viewport],
   )
 
   const [webglReady, setWebglReady] = useState<boolean | null>(null)
@@ -90,7 +102,11 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
   const [progress, setProgress] = useState(0)
   const [showMenu, setShowMenu] = useState(false)
   const [nearestProject, setNearestProject] = useState<ShowcaseProject | null>(null)
+  const [nearestGift, setNearestGift] = useState(false)
+  const [demoOpen, setDemoOpen] = useState(false)
   const [activeKeys, setActiveKeys] = useState({ w: false, a: false, s: false, d: false })
+
+  const demoUrl = FEATURED_WALL_DEMO.demoUrl
 
   const keys = useRef<Record<string, boolean>>({})
   const touchInput = useRef<TouchInput>(INITIAL_TOUCH_INPUT)
@@ -108,6 +124,14 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
   }, [])
 
   useEffect(() => {
+    if (!poklonFocus) return
+    setProgress(100)
+    setPhase('playing')
+    setDemoOpen(true)
+  }, [poklonFocus])
+
+  useEffect(() => {
+    if (poklonFocus) return
     const interval = setInterval(() => {
       setProgress((p) => {
         const next = p + Math.random() * 15
@@ -120,7 +144,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
       })
     }, 200)
     return () => clearInterval(interval)
-  }, [])
+  }, [poklonFocus])
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -132,8 +156,12 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
         d: !!(keys.current.KeyD || keys.current.ArrowRight),
       })
       if (e.code === 'Escape') setShowMenu((m) => !m)
-      if (e.code === 'KeyE' && nearestProject && phase === 'playing') {
-        window.open(nearestProject.link, '_blank', 'noopener,noreferrer')
+      if (e.code === 'KeyE' && phase === 'playing') {
+        if (nearestGift) {
+          setDemoOpen(true)
+        } else if (nearestProject) {
+          window.open(nearestProject.link, '_blank', 'noopener,noreferrer')
+        }
       }
     }
     const onKeyUp = (e: KeyboardEvent) => {
@@ -151,10 +179,14 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
       window.removeEventListener('keydown', onKeyDown)
       window.removeEventListener('keyup', onKeyUp)
     }
-  }, [nearestProject, phase])
+  }, [nearestProject, nearestGift, phase])
 
   const handleNearestProject = useCallback((project: ShowcaseProject | null) => {
     setNearestProject(project)
+  }, [])
+
+  const handleNearestGift = useCallback((near: boolean) => {
+    setNearestGift(near)
   }, [])
 
   const handleContextLost = useCallback(() => {
@@ -191,6 +223,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
         touchInput={touchInput}
         characterRef={characterRef}
         onNearestProject={handleNearestProject}
+        onNearestGift={handleNearestGift}
         mountKey={canvasKey}
         onContextLost={handleContextLost}
       />
@@ -217,8 +250,8 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
       )}
 
       {phase === 'intro' && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/90">
-          <div className="max-w-lg px-8 text-center">
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/90 px-4">
+          <div className="max-h-[min(90dvh,100%)] max-w-lg overflow-y-auto px-4 py-2 text-center sm:px-8">
             <h1 className="mb-4 text-4xl font-bold bg-gradient-to-br from-[#6366f1] to-[#06b6d4] bg-clip-text text-transparent">
               {t('instructionsTitle')}
             </h1>
@@ -275,31 +308,53 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
           {touchControlsEnabled && <ShowcaseJoystick touchInput={touchInput} />}
 
           <div
-            className={`fixed bottom-32 left-1/2 z-20 max-w-md -translate-x-1/2 rounded-2xl border border-[#6366f1] bg-black/90 px-8 py-6 text-center backdrop-blur-md transition-all duration-300 ${
-              nearestProject && phase === 'playing' ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-4 opacity-0'
+            className={`fixed left-1/2 z-20 w-[calc(100%-2rem)] max-w-md -translate-x-1/2 rounded-2xl border px-5 py-5 text-center backdrop-blur-md transition-all duration-300 sm:px-8 sm:py-6 ${
+              touchControlsEnabled ? 'bottom-[calc(env(safe-area-inset-bottom)+11rem)] md:bottom-32' : 'bottom-[calc(env(safe-area-inset-bottom)+2rem)] md:bottom-32'
+            } ${
+              nearestGift && phase === 'playing'
+                ? 'translate-y-0 border-[#ff6600] bg-black/90 opacity-100'
+                : nearestProject && phase === 'playing' && !nearestGift
+                  ? 'translate-y-0 border-[#6366f1] bg-black/90 opacity-100'
+                  : 'pointer-events-none translate-y-4 opacity-0'
             }`}
           >
-            <h3 className="mb-2 text-xl text-[#6366f1]">{nearestProject?.title}</h3>
-            {nearestProject?.imageUrl && phase === 'playing' && (
-              <div className="mb-3 overflow-hidden rounded-lg border border-white/10 bg-[#0f172a]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={nearestProject.imageUrl}
-                  alt={nearestProject.title}
-                  loading="lazy"
-                  className="mx-auto h-36 w-auto max-w-full object-contain object-top"
-                />
-              </div>
+            {nearestGift ? (
+              <>
+                <h3 className="mb-2 text-xl text-[#ff6600]">{t('poklonTitle')}</h3>
+                <p className="mb-4 text-sm text-[#94a3b8]">{t('poklonDesc')}</p>
+                <button
+                  type="button"
+                  onClick={() => setDemoOpen(true)}
+                  className="inline-flex items-center gap-2 rounded-full bg-[#ff6600] px-5 py-2 text-sm text-white hover:bg-[#06b6d4]"
+                >
+                  {t('poklonOpen')}
+                </button>
+              </>
+            ) : (
+              <>
+                <h3 className="mb-2 text-xl text-[#6366f1]">{nearestProject?.title}</h3>
+                {nearestProject?.imageUrl && phase === 'playing' && (
+                  <div className="mb-3 overflow-hidden rounded-lg border border-white/10 bg-[#0f172a]">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={nearestProject.imageUrl}
+                      alt={nearestProject.title}
+                      loading="lazy"
+                      className="mx-auto h-36 w-auto max-w-full object-contain object-top"
+                    />
+                  </div>
+                )}
+                <p className="mb-4 text-sm text-[#94a3b8]">{nearestProject?.description}</p>
+                <a
+                  href={nearestProject?.link || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#6366f1] px-5 py-2 text-sm text-white hover:bg-[#06b6d4]"
+                >
+                  {t('viewProject')}
+                </a>
+              </>
             )}
-            <p className="mb-4 text-sm text-[#94a3b8]">{nearestProject?.description}</p>
-            <a
-              href={nearestProject?.link || '#'}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-[#6366f1] px-5 py-2 text-sm text-white hover:bg-[#06b6d4]"
-            >
-              {t('viewProject')}
-            </a>
           </div>
 
           <div className="fixed bottom-8 left-1/2 z-20 hidden -translate-x-1/2 items-center gap-8 rounded-2xl border border-white/10 bg-black/80 px-8 py-4 backdrop-blur-md md:flex">
@@ -331,7 +386,10 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
             <button
               type="button"
               className="flex flex-col items-center gap-2"
-              onClick={() => nearestProject && window.open(nearestProject.link, '_blank', 'noopener,noreferrer')}
+              onClick={() => {
+                if (nearestGift) setDemoOpen(true)
+                else if (nearestProject) window.open(nearestProject.link, '_blank', 'noopener,noreferrer')
+              }}
             >
               <div className="rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-xs font-semibold">{t('details')}</div>
               <span className="text-[0.65rem] uppercase tracking-wider text-[#94a3b8]">E</span>
@@ -346,7 +404,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
       )}
 
       {(phase === 'intro' || phase === 'playing') && (
-        <header className="fixed left-0 right-0 top-0 z-[100] flex items-center justify-between bg-gradient-to-b from-black/80 to-transparent p-6">
+        <header className="fixed left-0 right-0 top-0 z-[100] flex items-center justify-between bg-gradient-to-b from-black/80 to-transparent px-4 pb-4 pt-[max(1rem,env(safe-area-inset-top))] sm:p-6">
         <Link href="/" className="flex items-center gap-3 text-white">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#6366f1] to-[#06b6d4] text-lg font-bold">
             P
@@ -388,6 +446,14 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
           </nav>
         </div>
       )}
+
+      <ShowcaseFullscreenDemo
+        open={demoOpen}
+        url={demoUrl}
+        title={t('poklonTitle')}
+        closeLabel={t('poklonClose')}
+        onClose={() => setDemoOpen(false)}
+      />
     </div>
   )
 }

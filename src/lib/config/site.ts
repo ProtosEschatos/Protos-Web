@@ -28,3 +28,11 @@ export const LEGAL_LAST_UPDATED = '2026-07-11'
 export const LEGAL_TERMS_VERSION = '2026-07-11-v3'
 /** Google Search Console — HTML meta verification (DNS TXT also on Cloudflare). */
 export const GOOGLE_SITE_VERIFICATION = '6SnN-0ojdBd99Wr_5Y5WmgDFSGUwtg-U0PgrDz7HL1A'
+
+/** Google Business Profile (Maps) — set NEXT_PUBLIC_GOOGLE_BUSINESS_URL when live. */
+export const GOOGLE_BUSINESS_PROFILE_URL =
+  process.env.NEXT_PUBLIC_GOOGLE_BUSINESS_URL?.trim() || ''
+
+/** GA4 measurement ID — override via NEXT_PUBLIC_GA_ID on Vercel. */
+export const GA4_MEASUREMENT_ID =
+  process.env.NEXT_PUBLIC_GA_ID?.trim() || 'G-HR9HK4SR7Q'

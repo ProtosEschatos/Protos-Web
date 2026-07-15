@@ -1,6 +1,8 @@
 import {
   CONTACT_EMAIL,
   CONTACT_PHONE,
+  GOOGLE_BUSINESS_PROFILE_URL,
+  INSTAGRAM_URL,
   LEGAL_BRAND,
   LEGAL_BUSINESS_NAME,
   LEGAL_COLLABORATOR,
@@ -118,6 +120,10 @@ export function buildCreatorSeoGraph(locale: string) {
 
   const serviceTypes = getServiceTypesForLocale(loc)
   const graphLocale: 'hr' | 'en' = loc === 'hr' || loc === 'sr' ? 'hr' : 'en'
+  const businessSameAs = [
+    INSTAGRAM_URL,
+    ...(GOOGLE_BUSINESS_PROFILE_URL ? [GOOGLE_BUSINESS_PROFILE_URL] : []),
+  ]
 
   return {
     '@context': 'https://schema.org',
@@ -182,6 +188,7 @@ export function buildCreatorSeoGraph(locale: string) {
           addressLocality: 'Zagreb',
           addressCountry: 'HR',
         },
+        sameAs: businessSameAs,
       },
       {
         '@type': 'Organization',
@@ -202,6 +209,7 @@ export function buildCreatorSeoGraph(locale: string) {
         employee: [{ '@id': martina.id }],
         knowsLanguage: ['hr', 'en', 'de', 'it', 'es', 'sr'],
         makesOffer: { '@id': serviceId },
+        sameAs: businessSameAs,
       },
       {
         '@type': 'Person',

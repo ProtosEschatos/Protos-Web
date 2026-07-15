@@ -1,0 +1,21 @@
+/** Map portfolio project_url → showcase storage slug (public/showcase + Supabase bucket). */
+export function portfolioUrlToShowcaseSlug(projectUrl: string): string {
+  try {
+    const host = new URL(projectUrl).hostname.replace(/^www\./, '').toLowerCase()
+    if (host.includes('bodulica')) return 'bodulica'
+    if (host.includes('golden-pawn')) return 'golden-pawn'
+    if (host.includes('zeustrading')) return 'zeustrading'
+    if (host.includes('cosmic-blueprint')) return 'cosmic-blueprint'
+    if (host.includes('protosweb')) return 'protosweb'
+    const base = host.split('.')[0]
+    return base.replace(/[^a-z0-9-]/g, '-') || 'project'
+  } catch {
+    return 'project'
+  }
+}
+
+export function isPoklonPortfolioUrl(projectUrl: string | null | undefined): boolean {
+  if (!projectUrl) return false
+  const lower = projectUrl.toLowerCase()
+  return lower.includes('system-boost') || lower.includes('pages.dev/protos-system-boost')
+}

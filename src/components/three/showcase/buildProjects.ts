@@ -1,27 +1,36 @@
 import type { PortfolioItem } from '@/types/portfolio'
 import type { ShowcaseViewport } from '@/hooks/use-showcase-viewport'
-import { normalizeProjectUrl } from '@/lib/showcase/showcase-utils'
-import { PROJECT_LINKS, type ShowcaseProject } from './constants'
+import { getShowcaseStorageUrl, SHOWCASE_STORAGE } from '@/lib/showcase/showcase-storage'
+import { isPoklonPortfolioUrl, portfolioUrlToShowcaseSlug } from '@/lib/showcase/portfolio-slug'
+import { type ShowcaseProject } from './constants'
+
+const FRAME_COLORS = [0x6366f1, 0x06b6d4, 0xf59e0b, 0x818cf8, 0xff6600, 0x8b5cf6, 0x10b981, 0xec4899]
 
 export function buildShowcaseProjects(
-  t: (key: string) => string,
   portfolioItems: PortfolioItem[],
   viewport: ShowcaseViewport,
 ): ShowcaseProject[] {
-  return PROJECT_LINKS.map((meta, index) => {
-    const dbItem = portfolioItems.find(
-      (item) => item.project_url && normalizeProjectUrl(item.project_url) === normalizeProjectUrl(meta.link),
-    )
+  const viewportKey = viewport === 'desktop' ? 'desktop' : 'mobile'
 
-    const fallback = viewport === 'desktop' ? meta.screenshotDesktop : meta.screenshotMobile
-    const imageUrl = dbItem?.image_url ?? fallback
+  return portfolioItems
+    .filter((item) => item.project_url && !isPoklonPortfolioUrl(item.project_url))
+    .sort((a, b) => (a.sort_order ?? 99) - (b.sort_order ?? 99))
+    .map((item, index) => {
+      const link = item.project_url!
+      const slug = portfolioUrlToShowcaseSlug(link)
+      const storageFallback = getShowcaseStorageUrl(
+        SHOWCASE_STORAGE.project(slug, viewportKey),
+      )
+      const prefersStorage =
+        viewport === 'desktop' && (!item.image_url || item.image_url.includes('/mobile-'))
+      const imageUrl = prefersStorage ? storageFallback : (item.image_url ?? storageFallback)
 
-    return {
-      color: meta.color,
-      link: meta.link,
-      title: dbItem?.title ?? t(`project${index + 1}_title`),
-      description: dbItem?.description ?? t(`project${index + 1}_desc`),
-      imageUrl,
-    }
-  })
+      return {
+        color: FRAME_COLORS[index % FRAME_COLORS.length],
+        link,
+        title: item.title,
+        description: item.description ?? '',
+        imageUrl,
+      }
+    })
 }

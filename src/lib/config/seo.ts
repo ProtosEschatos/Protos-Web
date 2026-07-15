@@ -288,11 +288,12 @@ export function portfolioItemListJsonLd(
 ) {
   if (items.length === 0) return null
 
-  const pageUrl = buildLocaleUrl(locale, '/portfolio')
+  const pageUrl = buildLocaleUrl(locale, '/portfolio-showcase')
   return {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     url: pageUrl,
+    name: 'Protos Web 3D Portfolio Showcase',
     numberOfItems: items.length,
     itemListElement: items.map((item, index) => ({
       '@type': 'ListItem',
@@ -307,5 +308,27 @@ export function portfolioItemListJsonLd(
         contributor: { '@id': `${SITE_URL}/#martina-markulin` },
       },
     })),
+  }
+}
+
+export function showcasePageJsonLd(locale: string, title: string, description: string) {
+  const url = buildLocaleUrl(locale, '/portfolio-showcase')
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: title,
+    description,
+    inLanguage: locale,
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    about: { '@id': `${SITE_URL}/#professional-service` },
+    mainEntity: {
+      '@type': 'WebApplication',
+      name: title,
+      description,
+      applicationCategory: 'DesignApplication',
+      operatingSystem: 'Web browser',
+    },
   }
 }

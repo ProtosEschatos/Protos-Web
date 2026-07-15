@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { getBlogPosts } from '@/lib/queries/blog'
-import { getPortfolioItems } from '@/lib/queries/portfolio'
 import { buildPageMetadata } from '@/lib/config/seo'
 import Hero from '@/components/features/home/sections/Hero'
 import Services from '@/components/features/home/sections/Services'
@@ -39,13 +38,12 @@ export default async function HomePage(props: Props) {
 
   setRequestLocale(locale)
   const blogPosts = await getBlogPosts(3, locale)
-  const portfolioItems = await getPortfolioItems(locale, 3)
 
   return (
     <>
       <Hero />
       <Process />
-      <Portfolio items={portfolioItems} />
+      <Portfolio />
       <Services />
       <Blog posts={blogPosts} locale={locale} />
       <Contact />

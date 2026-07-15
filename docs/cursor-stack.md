@@ -35,16 +35,15 @@ Removing Supabase jobs from `ci.yml` does **not** remove Supabase backend. Migra
 | Stripe, Sentry, Context7, Resend, shadcn | Stack-aligned |
 | Cloudflare | DNS docs only |
 
-## Memory (where it lives)
+## Docs in this repo (Cursor)
 
-| What | Where |
-|------|-------|
-| Sessions, plans, learnings | **Protos-Agent** repo (`memory/`) |
-| Admin viewer | `/admin/memory` on live site |
-| Coding guardrails | `.cursor/rules/*.mdc` in this repo |
-| Entry pointer | `.cursorrules`, slim `AGENTS.md` |
+| File | Purpose |
+|------|---------|
+| `.cursor/rules/*.mdc` | Coding guardrails |
+| `docs/architecture.md` | Product architecture |
+| `PROJECT-MEMORY.md` | Stub — do not expand |
 
-Do **not** duplicate Protos-Agent content into `PROJECT-MEMORY.md` or long `AGENTS.md` sections. Continual-learning plugin, if enabled, should prefer **Protos-Agent** over bloating this repo.
+**Protos-Agent** = admin DeepSeek knowledge only (`/admin/memory`). Not part of Cursor workflow.
 
 ## Deploy chain (current)
 

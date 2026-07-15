@@ -10,7 +10,7 @@ Live: https://www.protosweb.eu · Repo: ProtosEschatos/Protos-Web · Supabase: `
 ## Repo roles (mandatory)
 
 - **This repo** = production code only. Rules **guard** the codebase; they do not replace product decisions.
-- **Protos-Agent** = sessions, plans, long-term memory (`memory/projects/protos-web.md`). **Never duplicate** that content here.
+- **Protos-Agent** = separate repo, **admin panel only** (`/admin/memory`, DeepSeek context in `/admin/ai`). **Do not** use it in Cursor coding sessions or duplicate its content here.
 - Do not bulk-edit `.cursorrules`, `AGENTS.md`, or docs unless the user asks. One feature at a time.
 
 ## Stack
@@ -23,8 +23,7 @@ Next.js 16 App Router · React 19 · TypeScript · Tailwind · next-intl · **Su
 
 1. Secrets placement: `docs/security.md` — `ADMIN_SECRET` on Vercel only, never Supabase.
 2. Admin UI: `docs/admin-console.md`
-3. Full memory: Protos-Agent GitHub `memory/projects/protos-web.md`
-4. Architecture: `docs/architecture.md`
+3. Architecture: `docs/architecture.md`
 
 ## Deploy
 
@@ -36,7 +35,7 @@ Next.js 16 App Router · React 19 · TypeScript · Tailwind · next-intl · **Su
 ## Cursor plugins
 
 **Disable:** Convex, Prisma, Vercel, Firebase, Pinecone, Render — ORM rules are NOT for this repo.  
-**Enable:** continual-learning (memory), Supabase MCP (one). Full list: `docs/cursor-stack.md`
+**Enable:** Supabase MCP (one). Full list: `docs/cursor-stack.md`
 
 ## ORM rules
 
@@ -48,11 +47,10 @@ Prisma/Convex plugin rules are marketplace defaults for other stacks. Protos-Web
 - Admin writes: `src/lib/supabase-admin.ts` (service role)
 - Do not add duplicate Supabase client wrappers
 
-## Agent memory
+## Admin DeepSeek memory (do not mix with Cursor)
 
-- **Write** sessions/plans/learnings → **Protos-Agent** repo only
-- **Read** in app: `src/lib/agent-memory.ts` → `/admin/memory`
-- Never hardcode machine filesystem paths in committed code
+- **Protos-Agent** repo is read by the **admin panel only** — `src/lib/agent-memory.ts`, `/admin/memory`, optional context in `/admin/ai` (`useMemory`)
+- Do not instruct Cursor to read/write Protos-Agent; do not add session logs to this repo
 
 ## Env files
 

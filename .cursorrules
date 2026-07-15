@@ -1,14 +1,13 @@
 # Protos Web — Cursor entrypoint
 #
-# This repo is PRODUCTION CODE. Rules guard the codebase — they do not define the product.
-# Full coding standards: .cursor/rules/*.mdc (alwaysApply)
-# Long-term memory: Protos-Agent repo — NOT here.
+# PRODUCTION CODE ONLY. Rules guard the codebase — not the product roadmap.
+# Standards: .cursor/rules/*.mdc (alwaysApply)
 
 Read first:
-- .cursor/rules/protos-web.mdc      — stack, deploy, Supabase-only, repo roles
+- .cursor/rules/protos-web.mdc       — stack, deploy, Supabase-only
 - .cursor/rules/dom-canvas-layers.mdc — showcase vs site chrome (mandatory for 3D/UI)
-- .cursor/rules/fix-not-remove.mdc  — do not delete working features
-- docs/architecture.md              — zones, backend ownership
-- docs/security.md                  — secret placement
+- .cursor/rules/fix-not-remove.mdc   — do not delete working features
+- docs/architecture.md               — zones, backend ownership
+- docs/security.md                   — secret placement
 
-Memory / sessions / plans → ProtosEschatos/Protos-Agent (or /admin/memory). Do not duplicate in this repo.
+Do not duplicate long memory dumps in this repo. Protos-Agent is admin-panel only — ignore it when coding here.

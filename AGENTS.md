@@ -2,21 +2,15 @@
 
 Live: https://www.protosweb.eu · Repo: `ProtosEschatos/Protos-Web`
 
-## Repo roles
+This repo is **production code only**. Cursor rules guard the codebase — they do not define the product.
 
-| Repo | Purpose |
-|------|---------|
-| **Protos-Web** (this) | Production site — code, Supabase, CI, Vercel |
-| **Protos-Agent** | Long-term memory, sessions, plans — **canonical source** |
-
-**Workflow drives rules, not the reverse.** Do not bulk-rewrite docs/rules. Do not store session logs or checklists in this repo.
-
-## Before you work
+## Before you work (this repo only)
 
 1. `docs/security.md` — secrets (`ADMIN_SECRET` on Vercel only)
 2. `docs/architecture.md` — stack, UI zones, backend
 3. `.cursor/rules/protos-web.mdc` — coding guardrails
-4. Memory: **Protos-Agent** `memory/projects/protos-web.md` · UI: `/admin/memory`
+
+Do **not** pull Protos-Agent into Cursor sessions. That repo is for the **admin panel DeepSeek** feature only (`/admin/memory`, `/admin/ai`).
 
 ## Stack
 
@@ -34,4 +28,4 @@ Next.js 16 · React 19 · TypeScript · Tailwind · next-intl (hr/en/de/it/es/sr
 - Do not touch `.env*` unless explicitly asked
 - Croatian copy for admin-facing strings
 
-Details: `docs/admin-console.md`, `docs/cursor-stack.md`
+Admin panel (including DeepSeek + memory viewer): `docs/admin-console.md`

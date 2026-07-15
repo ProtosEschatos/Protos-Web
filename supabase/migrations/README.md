@@ -3,55 +3,46 @@
 Project: `laqnnzavwbojntfiqmxj`  
 Dashboard: [Database → Migrations](https://supabase.com/dashboard/project/laqnnzavwbojntfiqmxj/database/migrations)
 
-Local `supabase/migrations/` must list **every** version in `supabase_migrations.schema_migrations` on remote. If a version exists only on remote (empty `local` in `supabase migration list`), GitHub branching shows **MIGRATIONS: FAILED**.
+Local `supabase/migrations/` must list **every** version in `supabase_migrations.schema_migrations` on remote. If a version exists only on remote (empty `local` in `supabase migration list`), GitHub shows **MIGRATIONS: FAILED**.
 
-## Current state (24 migrations — all synced)
+## Current state (38 migrations — all synced 2026-07-15)
 
-| Version | Name | Repo file |
-|---------|------|-----------|
-| 20260615174512 | init_tables | anchor |
-| 20260615174539 | seed_blog | anchor |
-| 20260622120000 | schema_security_hardening | anchor |
-| 20260622130000 | drop_unused_tables | anchor |
-| 20260622140000 | final_rls_lockdown | anchor |
-| 20260623055126 | security_cleanup | anchor |
-| 20260623062612 | drop_dead_triggers | anchor |
-| 20260623064551 | backend_sites_rls | anchor |
-| 20260702115818 | create_showcase_storage_bucket | full SQL |
-| 20260705193252 | harden_security_advisors | full SQL |
-| 20260705193549 | create_contacts_submit_form_webhook | full SQL |
-| 20260706002434 | design_elements_library | full SQL |
-| 20260706002707 | seed_design_elements | full SQL |
-| 20260710163317 | blog_post_bodulica_shop_hr | anchor |
-| 20260711010955 | blog_posts_author_slug | full SQL |
-| 20260712211748 | dedupe_content_tables_fix_hr_text | anchor |
-| 20260712212525 | fix_pricing_plans_diacritics | anchor |
-| 20260712213029 | fix_services_subtitle_diacritics | anchor |
-| 20260712213541 | rename_icon_values_to_lucide_names | anchor |
-| 20260712220315 | activate_portfolio_display_bodulica_golden_pawn | anchor |
-| 20260712220608 | update_golden_pawn_portfolio_url | anchor |
-| 20260712224047 | admin_mail_sync | anchor |
-| 20260714221113 | donations_stripe_integration | full SQL |
-| 20260714221121 | seed_admin_design_element | full SQL |
+Run `supabase migration list --linked` — every row must show matching `local` and `remote`.
 
-**Anchor** = `SELECT 1` placeholder — schema already applied on remote before this repo was synced. Safe: CLI skips versions already in `schema_migrations`.
+GitHub Actions **Supabase DB Push** (`.github/workflows/supabase-db-push.yml`) runs `supabase db push` on push to `main` when this folder changes.
 
-**Removed duplicates** (never re-add):
-- `20260713003000_admin_mail_sync`
-- `20260713010000_drop_gmail_studio_mailbox`
-- `20260706003000_seed_admin_design_element` → replaced by `20260714221121`
-- `20260711150000_donations_stripe_integration` → replaced by `20260714221113`
+Supabase CLI in CI is pinned to **2.109.1** (see workflow files).
+
+## Duplicate version pairs (on remote — do not delete files)
+
+Historical re-sync left parallel timestamps for the same logical change. **Both versions are applied on remote.** Removing either file breaks local/remote parity.
+
+| Versions | Topic |
+|----------|-------|
+| `20260702115818` / `20260702120000` | showcase storage bucket |
+| `20260706001900` / `20260706002434` | design_elements library |
+| `20260706002000` / `20260706002707` | seed design elements |
+| `20260706003000` / `20260714221121` | seed admin design element |
+| `20260711010955` / `20260711030000` | blog_posts author slug |
+| `20260711150000` / `20260714221113` | donations Stripe |
+| `20260712224047` / `20260713003000` | admin mail sync |
+| `20260715122913` / `20260715141417` | pg_cron keep-alive add + remove |
+
+## pg_cron keep-alive
+
+- `20260715122913` — added pg_cron job (later superseded)
+- `20260715141417` — removed pg_cron job
+- **Canonical keep-alive:** GitHub cron → edge function `keep-alive` (`.github/workflows/supabase-keep-alive.yml`)
 
 ## Verify sync
 
 ```bash
 supabase link --project-ref laqnnzavwbojntfiqmxj
 supabase migration list --linked
+supabase db push --dry-run
 ```
 
-Every row must show matching `local` and `remote` (no empty `local`).
-
-GitHub Actions **Supabase DB Push** (`.github/workflows/supabase-db-push.yml`) runs `supabase db push` on every push to `main` that touches this folder.
+Expected: all local = remote; dry-run reports "Remote database is up to date."
 
 ## Types
 
@@ -59,4 +50,5 @@ GitHub Actions **Supabase DB Push** (`.github/workflows/supabase-db-push.yml`) r
 supabase gen types typescript --project-id laqnnzavwbojntfiqmxj > src/lib/database.types.ts
 ```
 
-See [`../functions/README.md`](../functions/README.md) for edge functions.
+See [`../functions/README.md`](../functions/README.md) for edge functions.  
+Full infra audit: [`../../docs/INFRA-AUDIT-REPORT.md`](../../docs/INFRA-AUDIT-REPORT.md).

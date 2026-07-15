@@ -101,7 +101,7 @@ export const adminMarketingLinks: AdminHubLink[] = [
   {
     id: 'google-analytics',
     label: 'Google Analytics 4',
-    href: 'https://analytics.google.com/analytics/web/#/p/G-LP29SJ3MM3/reports/intelligenthome',
+    href: 'https://analytics.google.com/analytics/web/',
     description: 'Posjete, izvori prometa, konverzije',
     external: true,
   },

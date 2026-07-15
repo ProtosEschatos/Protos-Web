@@ -1,4 +1,4 @@
-import { LEGAL_TERMS_VERSION, GA4_MEASUREMENT_ID } from '@/lib/config/site'
+import { LEGAL_TERMS_VERSION } from '@/lib/config/site'
 
 export const SITE_CONSENT_KEY = 'protos-site-consent-v1'
 export const COOKIE_STORAGE_KEY = 'protos-cookies'

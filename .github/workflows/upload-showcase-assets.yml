@@ -1,14 +1,16 @@
-name: Upload Showcase Assets
+name: Upload Production Assets
 
 on:
   workflow_dispatch:
   push:
     branches: [main]
     paths:
-      - 'public/showcase/**'
+      - 'public/**'
       - 'scripts/normalize-showcase-screenshots.mjs'
+      - 'scripts/upload-production-assets.mjs'
       - 'scripts/upload-showcase-assets.mjs'
       - 'scripts/cleanup-showcase-assets.mjs'
+      - 'supabase/migrations/*site_assets*'
 
 permissions:
   contents: read
@@ -30,17 +32,17 @@ jobs:
       - name: Install Pillow for JPEG normalization
         run: pip3 install --user Pillow
 
-      - name: Normalize showcase JPEGs (PNG-as-JPG from Firefox → real JPEG)
+      - name: Normalize showcase JPEGs
         run: npm run normalize:showcase-screenshots
 
-      - name: Remove obsolete showcase assets from Supabase Storage
+      - name: Remove obsolete assets from Supabase Storage
         run: npm run cleanup:showcase-assets
         env:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
 
-      - name: Upload showcase images to Supabase Storage
-        run: npm run upload:showcase-assets
+      - name: Upload all production assets to Supabase Storage CDN
+        run: npm run upload:production-assets
         env:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}

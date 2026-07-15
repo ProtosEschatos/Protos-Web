@@ -1,36 +1,40 @@
 import { isAllowedPortfolioUrl } from '@/lib/showcase/showcase-allowlist'
 import { portfolioUrlToShowcaseSlug } from '@/lib/showcase/portfolio-slug'
 import { getPortfolioShowcaseImageUrl } from '@/lib/showcase/showcase-storage'
+import { SITE_STORAGE, STORAGE_BUCKETS, getPublicStorageUrl } from '@/lib/assets/storage-cdn'
 
-/** Local SVG placeholders when project URL is not on the showcase allowlist. */
-const SVG_FALLBACKS: Record<string, string> = {
-  'bodulica.shop': '/images/portfolio/bodulica.svg',
-  'www.bodulica.shop': '/images/portfolio/bodulica.svg',
-  'golden-pawn.vercel.app': '/images/portfolio/golden-pawn.svg',
-  'auto-moto.vercel.app': '/images/portfolio/auto-moto.svg',
-  'lumina-dent.vercel.app': '/images/portfolio/dentalna-ordinacija.svg',
+const PORTFOLIO_SVG_BY_HOST: Record<string, string> = {
+  'bodulica.shop': 'bodulica',
+  'www.bodulica.shop': 'bodulica',
+  'golden-pawn.vercel.app': 'golden-pawn',
+  'auto-moto.vercel.app': 'auto-moto',
+  'lumina-dent.vercel.app': 'dentalna-ordinacija',
 }
 
 function normalizeHost(url: string): string | null {
   try {
-    const host = new URL(url).hostname.replace(/^www\./, '')
-    return host
+    return new URL(url).hostname.replace(/^www\./, '')
   } catch {
     return null
   }
+}
+
+function getPortfolioSvgUrl(name: string): string {
+  return getPublicStorageUrl(STORAGE_BUCKETS.site, SITE_STORAGE.portfolioSvg(name))
 }
 
 export function getPortfolioImageFallback(projectUrl: string | null | undefined): string | null {
   if (!projectUrl) return null
 
   if (isAllowedPortfolioUrl(projectUrl)) {
-    const slug = portfolioUrlToShowcaseSlug(projectUrl)
-    return getPortfolioShowcaseImageUrl(slug)
+    return getPortfolioShowcaseImageUrl(portfolioUrlToShowcaseSlug(projectUrl))
   }
 
   const host = normalizeHost(projectUrl)
   if (!host) return null
-  return SVG_FALLBACKS[host] ?? SVG_FALLBACKS[`www.${host}`] ?? null
+  const svgName = PORTFOLIO_SVG_BY_HOST[host] ?? PORTFOLIO_SVG_BY_HOST[`www.${host}`]
+  if (!svgName) return null
+  return getPortfolioSvgUrl(svgName)
 }
 
 export function withPortfolioImageFallback<T extends { image_url: string | null; project_url: string | null }>(
@@ -41,7 +45,8 @@ export function withPortfolioImageFallback<T extends { image_url: string | null;
     return { ...item, image_url: getPortfolioShowcaseImageUrl(slug) }
   }
 
-  if (item.image_url) return item
+  if (item.image_url?.startsWith('http')) return item
+
   const fallback = getPortfolioImageFallback(item.project_url)
   if (!fallback) return item
   return { ...item, image_url: fallback }

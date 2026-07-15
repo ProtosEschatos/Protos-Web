@@ -21,23 +21,23 @@
 ## Korak 1 — Showcase mora učitati (PRIORITET)
 
 - [x] Maknuti `r3f-perf` iz `src/components/three/SafeCanvas.tsx` (produkcijski Turbopack crash)
-- [ ] Nakon deploya: test `/portfolio-showcase` na mobitelu i desktopu
+- [ ] Nakon deploya: test `/portfolio-showcase` na mobitelu i desktopu (consent modal → Enter → showcase)
 - [ ] CI zelen: `npm run lint && npm run type-check && npm run build`
 
 ---
 
 ## Korak 2 — Vizualni cherry-pick (jedan commit → test → push)
 
-Redoslijed, **ne preskakati**:
+Redoslijed, **ne preskakati** — **primijenjeno 15.7.:**
 
-1. `b5b51c1` — unified Supabase CDN za produkcijske assete
-2. `34e6804` — gift wall inscription kao Supabase PNG
-3. `97ae33f` — lower gift wall inscription
-4. `ddaa8f4` — enlarge desktop project frame screens
-5. `720acd2` — double Astra Castra / Numen Lumen size
-6. `20052b7` — triptych back wall
-7. `84c922a` — 2x triptych text, raise wall shrine
-8. `f17cd1c` — boot → Enter → ToS/cookie modal gate
+1. [x] `b5b51c1` — unified Supabase CDN za produkcijske assete
+2. [x] `34e6804` — gift wall inscription kao Supabase PNG
+3. [x] `97ae33f` — lower gift wall inscription
+4. [x] `ddaa8f4` — enlarge desktop project frame screens
+5. [x] `720acd2` — double Astra Castra / Numen Lumen size
+6. [x] `20052b7` — triptych back wall
+7. [x] `84c922a` — 2x triptych text, raise wall shrine
+8. [x] `f17cd1c` — boot → Enter → ToS/cookie modal gate
 
 ---
 

@@ -68,15 +68,14 @@ src/
 - `PortfolioShowcaseClient` → dynamic `SpaceGallery` with `ShowcaseBootLoader` (never `loading: () => null`)
 - `ShowcaseBootBypass` in layout — hides site boot veil; never stack PageLoader on showcase
 - `ShowcasePrefetchLink` on entry CTAs — prefetches SpaceGallery chunk on hover/focus
-- Phases: `loading` | `intro` | `playing` — one visible at a time; canvas `onReady` → intro
+- Phases: `intro` | `playing` — canvas loads dynamic; `ShowcaseBootLoader` while chunk loads
 
 ## Deploy
 
-**Git push → Vercel production build** (auto-deploy uključen). Ne koristi Vercel CLI za deploy.
-- Deploy production **manually** from Vercel Dashboard when ready
-- **Supabase backend** — dedicated GitHub workflows (not removed from `ci.yml` = backend removed; only duplicate health jobs removed)
+**Git push → Vercel production** (auto-deploy uključen). Ne koristi Vercel CLI za deploy.
+- **Supabase backend** — dedicated GitHub workflows (`supabase-db-push.yml`, `supabase-deploy-functions.yml`, `supabase-keep-alive.yml`)
 - Cloudflare DNS: manual `cloudflare-dns-check.yml` only
-- Cursor plugins: `docs/cursor-stack.md` — **disable Prisma, Convex, Vercel plugins**
+- Cursor plugins: `docs/cursor-stack.md` — **disable Prisma, Convex** marketplace ORM rules
 - Env check: `npm run check:env` — see `.env.example`
 - Compatibility: `docs/compatibility.md` — all devices/browsers; showcase WebGL fallback
 
@@ -90,7 +89,7 @@ src/
 
 ## Learned User Preferences
 
-- Never Vercel CLI deploy; auto-deploy on git push must stay off
+- Never Vercel CLI deploy; production ide automatski na `git push origin main`
 - Supabase is the sole backend — never suggest Convex, Prisma, or Firebase as backend
 - Disable Convex/Prisma/Vercel Cursor plugins — they add wrong ORM/backend rules
 - Do not touch `.env*` unless explicitly asked
@@ -111,5 +110,5 @@ src/
 
 - **Supabase:** `laqnnzavwbojntfiqmxj` — 24 migrations synced (repo + remote)
 - **Donacije:** Stripe LIVE · `/admin/donacije`
-- **Vercel:** auto-deploy disabled in repo config
+- **Vercel:** auto-deploy on push to `main`
 - Full session history: **Protos-Agent** `memory/sessions/`

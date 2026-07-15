@@ -25,23 +25,16 @@ import { hasSiteConsent, SITE_CONSENT_EVENT } from '@/lib/config/site-consent'
 
 const LEGAL_PATH = /\/(terms|privacy|cookies)$/
 
-function readConsentGranted(): boolean {
-  return typeof window !== 'undefined' ? hasSiteConsent() : false
-}
-
-function readBootDone(): boolean {
-  return typeof window !== 'undefined' ? isBootComplete() : false
-}
-
 export default function AppChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const isShowcase = pathname.includes('portfolio-showcase')
   const isAdmin = pathname.includes('/admin')
   const isAdminLogin = pathname.endsWith('/admin/login')
   const isLegal = isLegalPath(pathname) || LEGAL_PATH.test(pathname)
-  const [consentGranted, setConsentGranted] = useState(readConsentGranted)
-  const [bootDone, setBootDone] = useState(readBootDone)
-  const [consentChecked, setConsentChecked] = useState(() => typeof window !== 'undefined')
+  // SSR-safe defaults — sync from browser in useLayoutEffect to avoid hydration mismatch on mobile.
+  const [consentGranted, setConsentGranted] = useState(false)
+  const [bootDone, setBootDone] = useState(false)
+  const [consentChecked, setConsentChecked] = useState(false)
 
   useLayoutEffect(() => {
     setConsentGranted(hasSiteConsent())

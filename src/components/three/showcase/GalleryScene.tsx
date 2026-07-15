@@ -237,17 +237,18 @@ function GalleryShell() {
   )
 }
 
-function GalleryLighting() {
+function GalleryLighting({ viewport }: { viewport: ShowcaseViewport }) {
   const { galleryLength, galleryWidth, galleryHeight } = SHOWCASE_CONFIG
+  const mobile = viewport === 'mobile'
 
   return (
     <>
-      <ambientLight color={0x3b4a6b} intensity={0.4} />
+      <ambientLight color={0x3b4a6b} intensity={mobile ? 0.55 : 0.4} />
       <directionalLight
         position={[5, galleryHeight + 10, -10]}
-        intensity={0.5}
-        castShadow
-        shadow-mapSize={[2048, 2048]}
+        intensity={mobile ? 0.35 : 0.5}
+        castShadow={!mobile}
+        shadow-mapSize={mobile ? [512, 512] : [2048, 2048]}
       />
       <pointLight position={[-5, galleryHeight - 1, 0]} color={0x6366f1} intensity={0.6} distance={25} />
       <pointLight position={[5, galleryHeight - 1, 0]} color={0x06b6d4} intensity={0.6} distance={25} />
@@ -418,8 +419,8 @@ export function ShowcaseScene({
     <>
       <color attach="background" args={['#0a0a1a']} />
       <fog attach="fog" args={['#0a0a1a', 20, 80]} />
-      <GalleryLighting />
-      <Starfield count={viewport === 'mobile' ? 180 : 500} />
+      <GalleryLighting viewport={viewport} />
+      <Starfield count={viewport === 'mobile' ? 120 : 500} />
       <GalleryShell />
       <GiftWallInscription viewport={viewport} layoutWidth={layoutWidth} />
       <GiftPortal

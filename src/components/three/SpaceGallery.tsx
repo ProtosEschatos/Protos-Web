@@ -65,8 +65,13 @@ const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
       <SafeCanvas
         mountKey={mountKey}
         frameloop="always"
+        dpr={viewport === 'mobile' ? 1 : [1, 1.5]}
         camera={{ fov: 70, near: 0.1, far: 1000 }}
-        gl={{ toneMapping: THREE.NoToneMapping }}
+        gl={{
+          toneMapping: THREE.NoToneMapping,
+          antialias: viewport !== 'mobile',
+          powerPreference: viewport === 'mobile' ? 'default' : 'high-performance',
+        }}
         onContextLost={onContextLost}
         fallback={null}
       >

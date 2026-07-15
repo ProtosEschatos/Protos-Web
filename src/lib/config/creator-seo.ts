@@ -1,6 +1,9 @@
 import {
   CONTACT_EMAIL,
   CONTACT_PHONE,
+  FACEBOOK_URL,
+  GITHUB_ORG_URL,
+  GOLANCE_URL,
   GOOGLE_BUSINESS_PROFILE_URL,
   INSTAGRAM_URL,
   LEGAL_BRAND,
@@ -9,6 +12,8 @@ import {
   LEGAL_OIB,
   LEGAL_OWNER,
   SITE_URL,
+  SUBSTACK_URL,
+  UPWORK_URL,
 } from '@/lib/config/site'
 import { getLiveProfileUrls, darioSocialItems, martinaSocialItems } from '@/lib/config/team-profiles'
 import { buildLocalePath } from '@/lib/config/seo'
@@ -41,9 +46,15 @@ export const CREATOR_PROFILES = {
       'Web design',
       'Website development',
       '3D web experiences',
+      'WebGL',
+      'Three.js',
+      'Next.js',
+      'React',
       'SEO optimization',
       'E-commerce development',
       'Cyber security',
+      'Bodulica Shop',
+      'System Boost',
     ],
     sameAs: getLiveProfileUrls(darioSocialItems),
     speaks: ['hr', 'en', 'de'],
@@ -123,6 +134,11 @@ export function buildCreatorSeoGraph(locale: string) {
   const graphLocale: 'hr' | 'en' = loc === 'hr' || loc === 'sr' ? 'hr' : 'en'
   const businessSameAs = [
     INSTAGRAM_URL,
+    FACEBOOK_URL,
+    GITHUB_ORG_URL,
+    SUBSTACK_URL,
+    GOLANCE_URL,
+    UPWORK_URL,
     ...(GOOGLE_BUSINESS_PROFILE_URL ? [GOOGLE_BUSINESS_PROFILE_URL] : []),
   ]
 

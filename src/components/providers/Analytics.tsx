@@ -43,12 +43,27 @@ export default function Analytics() {
     lastTrackedPath.current = pathname
     const gtag = (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag
     if (typeof gtag !== 'function') return
+    const locale = pathname.split('/').filter(Boolean)[0] || 'hr'
+    const knownLocales = new Set(['hr', 'en', 'de', 'it', 'es', 'sr'])
+    const language = knownLocales.has(locale) ? locale : 'hr'
     gtag('event', 'page_view', {
       page_path: pathname,
       page_location: window.location.href,
       page_title: document.title,
+      language,
+      content_group: language,
     })
   }, [pathname, allowed, gaId])
+
+  // When consent flips on mid-session, gtag may already exist — re-apply grant
+  // before SPA navigations so the first config isn't stuck in denied state.
+  useEffect(() => {
+    if (!allowed) {
+      lastTrackedPath.current = null
+      return
+    }
+    applyGoogleConsentMode(true)
+  }, [allowed])
 
   if (!allowed || (!plausibleDomain && !gaId)) {
     return null
@@ -75,10 +90,18 @@ export default function Analytics() {
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
+              gtag('consent', 'update', {
+                analytics_storage: 'granted',
+                ad_storage: 'denied',
+                ad_user_data: 'denied',
+                ad_personalization: 'denied'
+              });
               gtag('config', '${gaId}', {
                 anonymize_ip: true,
                 allow_google_signals: false,
-                allow_ad_personalization_signals: false
+                allow_ad_personalization_signals: false,
+                send_page_view: true,
+                cookie_flags: 'SameSite=None;Secure'
               });
             `}
           </Script>

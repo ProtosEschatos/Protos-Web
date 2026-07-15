@@ -7,6 +7,17 @@ export const INSTAGRAM_URL = 'https://www.instagram.com/protos_eschatos/'
 export const DARIO_INSTAGRAM_URL = INSTAGRAM_URL
 export const MARTINA_INSTAGRAM_URL = 'https://www.instagram.com/everybodycries/'
 
+/** Verified public social / freelance profiles (sameAs + presence tiles). */
+export const FACEBOOK_URL = 'https://www.facebook.com/imsirovicdario23/'
+export const GITHUB_ORG_URL = 'https://github.com/ProtosEschatos'
+export const SUBSTACK_URL = 'https://darioimsirovic.substack.com/'
+export const SUBSTACK_FEATURED_POST_URL =
+  'https://darioimsirovic.substack.com/p/protos-web-web-studio-iz-zagreba'
+export const UPWORK_URL = 'https://www.upwork.com/freelancers/protos01eschatos'
+/** Public goLance profile (not the private /freelancer/home dashboard). */
+export const GOLANCE_URL = 'https://golance.com/freelancer/dario.imsirovic'
+export const WHATSAPP_URL = 'https://wa.me/385976043941'
+
 /** Public contact + Resend/Zoho mailbox on protosweb.eu */
 export const CONTACT_EMAIL = 'dario.admin@protosweb.eu'
 export const CONTACT_PHONE = '+385976043941'

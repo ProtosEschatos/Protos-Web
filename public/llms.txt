@@ -24,8 +24,16 @@
 - Services: https://protosweb.eu/usluge (includes FAQ — pricing, timelines, languages)
 - Process: https://protosweb.eu/proces
 - Portfolio: https://protosweb.eu/portfolio
+- 3D Showcase: https://protosweb.eu/portfolio-showcase
 - Blog: https://protosweb.eu/blog
 - Contact: https://protosweb.eu/kontakt
+
+## Featured projects (public demos)
+- Bodulica Shop — e-commerce handmade: https://bodulica.shop
+- Auto Moto Zagreb — automotive landing: https://auto-moto.vercel.app
+- Golden Pawn — pawn / auction demo: https://golden-pawn.vercel.app
+- LuminaDent — dental clinic landing: https://lumina-dent.vercel.app
+- System Boost — free gift tool: https://protos-system-boost.pages.dev/
 
 ## Services offered
 - Custom web design and development (Next.js, TypeScript, React)
@@ -36,11 +44,22 @@
 
 ## Tech stacks (public)
 - **Protos Web stack:** TypeScript, JavaScript, HTML, CSS, Next.js, React, Three.js/WebGL, Tailwind CSS, Framer Motion
-- **Bodulica shop stack:** HTML, CSS, JavaScript, vanilla JS — separate lightweight build for a client shop project (no live shop link on site)
+- **Bodulica shop stack:** HTML, CSS, JavaScript, vanilla JS — separate lightweight build for a client shop project
 
 ## Team
 - Dario Imsirović — AI engineer & full stack cross-web developer (3D, security, custom platforms). About: https://protosweb.eu/o-meni#dario-imsirovic
 - Martina Markulin — frontend expert & shop/UI designer (3D, branding, UX). About: https://protosweb.eu/o-meni#martina-markulin
+
+## Public profiles (sameAs)
+- Website: https://protosweb.eu
+- Instagram (studio): https://www.instagram.com/protos_eschatos/
+- Instagram (Martina): https://www.instagram.com/everybodycries/
+- Facebook (Dario): https://www.facebook.com/imsirovicdario23/
+- GitHub org: https://github.com/ProtosEschatos
+- Substack: https://darioimsirovic.substack.com/
+- goLance: https://golance.com/freelancer/dario.imsirovic
+- Upwork: https://www.upwork.com/freelancers/protos01eschatos
+- WhatsApp: https://wa.me/385976043941
 
 ## Contact
 - Email: dario.admin@protosweb.eu
@@ -59,3 +78,5 @@
 - GDPR-compliant websites
 - Multilingual websites for EU markets
 - Modern React/Next.js vs lightweight vanilla webshops
+- 3D / WebGL portfolio experiences
+- Bodulica, Auto Moto Zagreb, Golden Pawn, LuminaDent, System Boost projects

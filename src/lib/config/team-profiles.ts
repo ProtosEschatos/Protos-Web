@@ -1,11 +1,15 @@
 import {
   DARIO_INSTAGRAM_URL,
+  FACEBOOK_URL,
+  GITHUB_ORG_URL,
+  GOLANCE_URL,
   INSTAGRAM_URL,
   MARTINA_INSTAGRAM_URL,
+  SUBSTACK_FEATURED_POST_URL,
+  UPWORK_URL,
+  WHATSAPP_URL,
 } from '@/lib/config/site'
 import type { PresenceItem } from '@/lib/config/social-links'
-
-const WHATSAPP_URL = 'https://wa.me/385976043941'
 
 function profileLink(
   id: string,
@@ -18,25 +22,22 @@ function profileLink(
 }
 
 export const studioSocialItems: PresenceItem[] = [
-  profileLink('github', 'GitHub', 'https://github.com/ProtosEschatos', '#e7e7f0'),
+  profileLink('github', 'GitHub', GITHUB_ORG_URL, '#e7e7f0'),
   profileLink('instagram', 'Instagram', INSTAGRAM_URL, '#e1306c'),
-  profileLink(
-    'substack',
-    'Substack',
-    'https://open.substack.com/pub/darioimsirovic/p/protos-web-web-studio-iz-zagreba?r=8r3yr1&utm_campaign=post&utm_medium=web',
-    '#ff6719',
-  ),
-  profileLink('facebook', 'Facebook', 'https://www.facebook.com/imsirovicdario23/', '#1877f2'),
+  profileLink('substack', 'Substack', SUBSTACK_FEATURED_POST_URL, '#ff6719'),
+  profileLink('facebook', 'Facebook', FACEBOOK_URL, '#1877f2'),
   profileLink('whatsapp', 'WhatsApp', WHATSAPP_URL, '#25d366'),
   profileLink('tiktok', 'TikTok', '#', '#00f2ea'),
 ]
 
 export const darioSocialItems: PresenceItem[] = [
   profileLink('instagram', 'Instagram', DARIO_INSTAGRAM_URL, '#e1306c'),
-  profileLink('facebook', 'Facebook', 'https://www.facebook.com/imsirovicdario23/', '#1877f2'),
+  profileLink('facebook', 'Facebook', FACEBOOK_URL, '#1877f2'),
+  profileLink('github', 'GitHub', GITHUB_ORG_URL, '#e7e7f0'),
+  profileLink('substack', 'Substack', SUBSTACK_FEATURED_POST_URL, '#ff6719'),
+  profileLink('golance', 'goLance', GOLANCE_URL, '#25b14c'),
+  profileLink('upwork', 'Upwork', UPWORK_URL, '#14a800'),
   profileLink('tiktok', 'TikTok', '#', '#00f2ea'),
-  profileLink('golance', 'goLance', 'https://golance.com/freelancer/home/', '#25b14c'),
-  profileLink('upwork', 'Upwork', 'https://www.upwork.com/freelancers/protos01eschatos', '#14a800'),
 ]
 
 export const martinaSocialItems: PresenceItem[] = [
@@ -45,8 +46,8 @@ export const martinaSocialItems: PresenceItem[] = [
 ]
 
 export const freelancePlatformItems: PresenceItem[] = [
-  profileLink('golance', 'goLance.com', 'https://golance.com/freelancer/home/', '#25b14c'),
-  profileLink('upwork', 'Upwork', 'https://www.upwork.com/freelancers/protos01eschatos', '#14a800'),
+  profileLink('golance', 'goLance.com', GOLANCE_URL, '#25b14c'),
+  profileLink('upwork', 'Upwork', UPWORK_URL, '#14a800'),
   profileLink('freelancer', 'Freelancer.com', '#', '#29b2fe'),
   profileLink('malt', 'Malt.com', '#', '#fc5757'),
   profileLink('guru', 'Guru.com', '#', '#ff7300'),

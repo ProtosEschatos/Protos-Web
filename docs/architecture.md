@@ -62,7 +62,7 @@ git push origin main
 
 **Do not** use Vercel CLI as primary deploy path. **Do not** force-push `main`.
 
-Full platform audit and secret matrix: [`docs/INFRA-AUDIT-REPORT.md`](INFRA-AUDIT-REPORT.md).
+Full platform audit and secret matrix: [`docs/INFRA-AUDIT-REPORT.md`](INFRA-AUDIT-REPORT.md) · [`docs/SECRETS-INVENTORY.md`](SECRETS-INVENTORY.md).
 
 ## Operational runbooks
 

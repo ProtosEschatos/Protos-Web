@@ -1,29 +1,60 @@
 # Infrastructure Audit Report — Protos Web
 
-**Date:** 2026-07-15  
-**Commit audited:** `8e14292` (`fix(showcase): stop camera spin when astronaut turns`)  
+**Date:** 2026-07-15 (final pass)  
+**Commit:** `7dbfc68` (`fix(ci): pass Supabase secrets to check-env`)  
 **Project:** `laqnnzavwbojntfiqmxj` · Production: https://protosweb.eu
+
+**Related:** [`SECRETS-INVENTORY.md`](SECRETS-INVENTORY.md) — puni popis svih ključeva po platformi
 
 ---
 
 ## 1. Executive summary
 
-| Platform | Status | Notes |
-|----------|--------|-------|
-| **GitHub** | Green | CI + Security Audit success on `8e14292` |
-| **Vercel** | Green | Production Ready (~58s build), alias `protosweb.eu` |
-| **Supabase** | Green | 38/38 migrations synced; `db push --dry-run` up to date |
-| **Cloudflare** | Green (DNS) | MX/SPF/DMARC match docs; zone check optional in CI |
+| Platform | Production | Automation (CI) | Notes |
+|----------|------------|-----------------|-------|
+| **GitHub** | — | ✅ CI + Security success on `7dbfc68` | Build, check-env, Supabase ping |
+| **Vercel** | ✅ Ready ~58s | auto on push | `npm ci` aligned with GitHub |
+| **Supabase** | ✅ site reads DB | ✅ migrations synced, keep-alive cron | 38/38 local=remote |
+| **Cloudflare** | ✅ DNS (dig) | ⚠️ CI job 403 | GitHub token = **pogrešan tip** (`cfat_` ≠ Zone API) |
 
-**Live HTTP:** `/` → 200, `/hr/portfolio-showcase` → 200
+**Live HTTP:** `/` → 200 · `/hr/portfolio-showcase` → 200 · 6 jezika → 200
 
-**Upgrades applied in this audit cycle:** toolchain alignment (Node 22, `npm ci` on Vercel), CI hardening (check-env, pinned Supabase CLI, Cloudflare fail-on-error), migration README sync, architecture runbook update.
+**Audit upgrades pushed:** `0decf20` + `7dbfc68` (toolchain, docs, CI hardening)
 
 ---
 
-## 2. File inventory
+## 2. Cloudflare token — zašto “token iz chata” ne popravlja CI
 
-### 2.1 GitHub (9 files)
+Token spremljen u tvojim env datotekama (Cursor history) počinje s **`cfat_`** — to je **Cursor IDE agent token**, ne Cloudflare API token za zone.
+
+| API poziv | `cfat_` token | Pravi Zone:Read token |
+|-----------|---------------|------------------------|
+| `GET /zones/{id}` (CI check) | ❌ 403 Invalid | ✅ 200 active |
+| `scripts/fix-cloudflare-dns.sh` | ❌ | ✅ (treba DNS **Edit**) |
+| Produkcijski DNS (`dig`) | ✅ (ne treba token) | — |
+
+**Zaključak:** Nisam “ignorirao” token — **tip tokena ne podržava** CI/admin zone check. Produkcija nije pogođena. Rješenje: novi token iz Cloudflare dashboarda (5 min) → GitHub + Vercel secret. Detalji: [`SECRETS-INVENTORY.md` §4](SECRETS-INVENTORY.md).
+
+---
+
+## 3. Live status snapshot (2026-07-15, final)
+
+| Check | Result |
+|-------|--------|
+| GitHub CI (`7dbfc68`) | ✅ success |
+| Security Audit | ✅ success |
+| Vercel production | ✅ Ready |
+| Site + showcase | ✅ 200 |
+| Supabase migrations | ✅ 38/38, dry-run clean |
+| Supabase keep-alive cron | ✅ scheduled */5 min |
+| Cloudflare CI zone API | ⚠️ 403 — rotate token type |
+| DNS dig MX/SPF/DMARC | ✅ matches docs |
+
+---
+
+## 4. File inventory
+
+### 4.1 GitHub (9 files)
 
 | File | Trigger | Runtime | Secrets / vars |
 |------|---------|---------|----------------|
@@ -129,7 +160,7 @@
 
 | # | Issue | Fix |
 |---|-------|-----|
-| 5 | Cloudflare CI `continue-on-error: true` | Removed strict block; restored `continue-on-error` — GitHub `CLOUDFLARE_API_TOKEN` returns 403 (rotate to Zone:Read token) |
+| 5 | Cloudflare CI token | GitHub secret = `cfat_` type → 403 on Zone API | Job `continue-on-error: true`; **user creates Zone:Read token** — see SECRETS-INVENTORY §4 |
 | 6 | `check-env.mjs` not in CI | Added `npm run check-env` to build job |
 | 7 | Blog `force-dynamic` | Documented tradeoff; keep until SSG strategy tested |
 | 8 | Stale `migrations/README.md` (said 24) | Updated to 38 + duplicate pairs |
@@ -191,6 +222,33 @@ Future cleanup requires Supabase support or careful remote history surgery — *
 4. Confirm GitHub CI green before declaring production fixed
 5. Poklon URL remains `https://protos-system-boost.pages.dev/`
 6. Do not edit `.env*` in repo; rotate secrets in dashboards only
+
+---
+
+## 10. Cannot fix without breaking something else
+
+| Item | Why blocked | Safe path |
+|------|-------------|-----------|
+| Blog SSG all locales | Vercel 60s timeout × 252 pages | Keep `force-dynamic`; PR-5 later with HR-only ISR |
+| Delete duplicate migrations | All 38 on remote | Never delete; documented pairs only |
+| Use `cfat_` for CI Cloudflare | API rejects token type | Separate Zone:Read token |
+| Strict Cloudflare CI without valid token | Blocks merge, site still works | `continue-on-error` until token rotated |
+| Showcase perf + infra in one PR | Regression risk | PR-6 separate |
+| Force push / rewrite git | User forbidden | Linear commits on main |
+
+---
+
+## 11. Upgrade plan status (final)
+
+| PR | Status |
+|----|--------|
+| PR-1 Toolchain | ✅ `0decf20` |
+| PR-2 CI hardening | ✅ `7dbfc68` (check-env env map, CLI pin, db-push `*.sql` only) |
+| PR-3 Migration docs | ✅ README 38 migrations |
+| PR-4 Docs | ✅ architecture, INFRA-AUDIT, SECRETS-INVENTORY |
+| PR-5 Blog SSG | Backlog |
+| PR-6 Showcase perf | Backlog |
+| **User action** | Cloudflare Zone:Read token → GitHub + Vercel |
 
 ---
 

@@ -17,10 +17,16 @@ export type BackWallTriptychLayout = {
   bandH: number
 }
 
+export function getBackWallCenterY(viewport: ShowcaseViewport): number {
+  const { centerY } = getFrameDimensions(viewport)
+  const lift = viewport === 'mobile' ? 1.0 : 1.45
+  return centerY + lift
+}
+
 /** Back wall split in thirds: inscription | poklon | inscription. */
 export function getBackWallTriptychLayout(viewport: ShowcaseViewport): BackWallTriptychLayout {
   const { galleryWidth, galleryLength } = SHOWCASE_CONFIG
-  const { centerY } = getFrameDimensions(viewport)
+  const centerY = getBackWallCenterY(viewport)
   const thirdWidth = galleryWidth / 3
   const z = -galleryLength / 2 + 0.35
   const compact = viewport === 'mobile'
@@ -33,10 +39,10 @@ export function getBackWallTriptychLayout(viewport: ShowcaseViewport): BackWallT
     leftX: -thirdWidth,
     centerX: 0,
     rightX: thirdWidth,
-    textPlaneW: thirdWidth * (compact ? 0.82 : 0.88),
-    textPlaneH: compact ? 2.4 : 3.4,
+    textPlaneW: thirdWidth * (compact ? 0.9 : 0.95),
+    textPlaneH: compact ? 4.8 : 6.8,
     dividerX: [-thirdWidth / 2, thirdWidth / 2],
     bandW: galleryWidth - 0.6,
-    bandH: compact ? 3.6 : 4.6,
+    bandH: compact ? 5.2 : 6.8,
   }
 }

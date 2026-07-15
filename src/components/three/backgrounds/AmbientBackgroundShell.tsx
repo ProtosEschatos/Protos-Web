@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { SafeCanvas } from '@/components/three/SafeCanvas'
@@ -18,6 +18,12 @@ type AmbientBackgroundShellProps = PageBackgroundProps & {
 
 type PointerRef = { current: { x: number; y: number } }
 
+type MotionPrefs = {
+  parallax: boolean
+  motionScale: number
+}
+
+/** Pointer on window (not canvas) so background stays pointer-events-none but still reacts. */
 function usePointerParallax(enabled: boolean): PointerRef {
   const pointer = useRef({ x: 0, y: 0 })
 
@@ -34,9 +40,18 @@ function usePointerParallax(enabled: boolean): PointerRef {
   return pointer
 }
 
-function prefersReducedMotion(): boolean {
-  if (typeof window === 'undefined') return false
-  return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false
+function useMotionPrefs(isMobile: boolean): MotionPrefs {
+  const [prefs, setPrefs] = useState<MotionPrefs>({ parallax: false, motionScale: 1 })
+
+  useEffect(() => {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    setPrefs({
+      parallax: !isMobile && !reduced,
+      motionScale: reduced ? 0.35 : 1,
+    })
+  }, [isMobile])
+
+  return prefs
 }
 
 function AmbientSceneGroup({
@@ -100,9 +115,7 @@ export default function AmbientBackgroundShell({
   glowColor = '#ff6600',
   showGlow = true,
 }: AmbientBackgroundShellProps) {
-  const reducedMotion = prefersReducedMotion()
-  const parallax = !isMobile && !reducedMotion
-  const motionScale = reducedMotion ? 0.35 : 1
+  const { parallax, motionScale } = useMotionPrefs(isMobile)
   const pointer = usePointerParallax(parallax)
 
   return (

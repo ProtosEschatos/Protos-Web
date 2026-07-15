@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import { usePathname } from '@/navigation'
 import { BACKGROUND_FALLBACKS, getBackgroundKey } from '@/lib/showcase/site-background-routes'
 import PageBackgroundCanvas from '@/components/three/backgrounds/PageBackgroundCanvas'
@@ -22,7 +22,11 @@ const TWINKLE_BG = `
 export default function SiteBackground() {
   const pathname = usePathname()
   const routeKey = getBackgroundKey(pathname)
-  const [active, setActive] = useState(() => typeof window !== 'undefined' && hasSiteConsent())
+  const [active, setActive] = useState(false)
+
+  useLayoutEffect(() => {
+    setActive(hasSiteConsent())
+  }, [])
 
   useEffect(() => {
     const sync = () => setActive(hasSiteConsent())

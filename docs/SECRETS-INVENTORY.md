@@ -86,6 +86,15 @@
 | `STRIPE_SECRET_KEY` | **Supabase Edge only** |
 | `STRIPE_WEBHOOK_SECRET` | **Supabase Edge only** |
 
+### Ko-fi (tip jar)
+
+| Variable | Gdje | Napomena |
+|----------|------|----------|
+| `KO_FI_API_KEY` | **Vercel Production** ✅ | Server-only; nije NEXT_PUBLIC. Za API/webhooks kad ih dodamo. |
+| Stranica | javni URL | https://ko-fi.com/protoswebmark23 |
+
+**Ne** treba na GitHub Actions ni Supabase dok nema workflowa / edge fn koji zove Ko-fi API.
+
 ---
 
 ## 4. Cloudflare — tri različita tokena (NE miješati)

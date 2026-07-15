@@ -14,6 +14,7 @@ const LOCAL_FRAME_SLUGS = new Set([
   'zeustrading',
   'cosmic-blueprint',
   'protosweb',
+  'golden-pawn',
 ])
 
 export function buildShowcaseProjects(

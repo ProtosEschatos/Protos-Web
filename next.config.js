@@ -32,6 +32,7 @@ const securityHeaders = [
 const nextConfig = {
   reactStrictMode: true,
   compress: true,
+  staticPageGenerationTimeout: 120,
 
   images: {
     remotePatterns: [

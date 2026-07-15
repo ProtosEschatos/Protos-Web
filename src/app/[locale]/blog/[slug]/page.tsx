@@ -9,12 +9,17 @@ import { buildBlogPostMetadata, blogPostingJsonLd, normalizeAuthorSlug } from '@
 
 type Props = { params: Promise<{ locale: string; slug: string }> }
 
+export const revalidate = 3600
+
+/** Prebuild HR posts at deploy; other locales render on first request (avoids Vercel SSG timeout). */
 export async function generateStaticParams() {
   const slugs = await getAllBlogSlugs()
-  return slugs.map((post) => ({
-    locale: post.language,
-    slug: post.slug,
-  }))
+  return slugs
+    .filter((post) => post.language === 'hr')
+    .map((post) => ({
+      locale: post.language,
+      slug: post.slug,
+    }))
 }
 
 export async function generateMetadata(props: Props): Promise<Metadata> {

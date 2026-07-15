@@ -53,6 +53,7 @@ export default function BootSkyBackground({ active }: { active: boolean }) {
     const reduceMotion =
       typeof window !== 'undefined' &&
       window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    const motionScale = reduceMotion ? 0.45 : 1
 
     let width = 0
     let height = 0
@@ -140,8 +141,8 @@ export default function BootSkyBackground({ active }: { active: boolean }) {
 
     const drawStars = (t: number) => {
       for (const s of stars) {
-        const twinkle = 0.5 + 0.5 * Math.sin(t * s.twinkleSpeed + s.phase)
-        const alpha = reduceMotion ? s.baseAlpha : s.baseAlpha * (0.35 + 0.65 * twinkle)
+        const twinkle = 0.5 + 0.5 * Math.sin(t * s.twinkleSpeed * motionScale + s.phase)
+        const alpha = s.baseAlpha * (0.35 + 0.65 * twinkle)
         ctx.beginPath()
         ctx.fillStyle = `rgba(226,238,255,${alpha.toFixed(3)})`
         ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2)
@@ -152,7 +153,7 @@ export default function BootSkyBackground({ active }: { active: boolean }) {
     const drawCar = (car: FlyingCar, t: number) => {
       const [r, g, b] = car.hue
       const s = car.scale
-      const yOff = reduceMotion ? 0 : Math.sin(t * car.bobSpeed + car.bobPhase) * car.bob
+      const yOff = Math.sin(t * car.bobSpeed * motionScale + car.bobPhase) * car.bob * (reduceMotion ? 0.5 : 1)
       const x = car.x
       const y = car.y + yOff
       const bodyW = 34 * s
@@ -222,24 +223,18 @@ export default function BootSkyBackground({ active }: { active: boolean }) {
       drawStars(t)
 
       for (const car of cars) {
-        if (!reduceMotion) car.x += car.speed * car.dir * dt
+        car.x += car.speed * car.dir * dt * motionScale
         drawCar(car, t)
         if (car.dir === 1 && car.x > width + 260) Object.assign(car, spawnCar(true))
         else if (car.dir === -1 && car.x < -260) Object.assign(car, spawnCar(true))
       }
 
-      if (!reduceMotion) raf = requestAnimationFrame(loop)
+      raf = requestAnimationFrame(loop)
     }
 
     resize()
     window.addEventListener('resize', resize)
-    if (reduceMotion) {
-      drawBackground()
-      drawStars(0)
-      for (const car of cars) drawCar(car, 0)
-    } else {
-      raf = requestAnimationFrame(loop)
-    }
+    raf = requestAnimationFrame(loop)
 
     return () => {
       running = false

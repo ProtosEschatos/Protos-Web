@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { usePathname } from '@/navigation'
 import { BACKGROUND_FALLBACKS, getBackgroundKey } from '@/lib/showcase/site-background-routes'
 import PageBackgroundCanvas from '@/components/three/backgrounds/PageBackgroundCanvas'
-import { BOOT_COMPLETE_EVENT, isBootComplete } from '@/lib/config/boot-gate'
+import { BOOT_COMPLETE_EVENT } from '@/lib/config/boot-gate'
 import { hasSiteConsent, SITE_CONSENT_EVENT } from '@/lib/config/site-consent'
 
 const TWINKLE_BG = `
@@ -22,20 +22,20 @@ const TWINKLE_BG = `
 export default function SiteBackground() {
   const pathname = usePathname()
   const routeKey = getBackgroundKey(pathname)
-  const [bootDone, setBootDone] = useState(() => isBootComplete() && hasSiteConsent())
+  const [active, setActive] = useState(() => typeof window !== 'undefined' && hasSiteConsent())
 
   useEffect(() => {
-    const sync = () => setBootDone(isBootComplete() && hasSiteConsent())
+    const sync = () => setActive(hasSiteConsent())
     sync()
-    window.addEventListener(BOOT_COMPLETE_EVENT, sync)
     window.addEventListener(SITE_CONSENT_EVENT, sync)
+    window.addEventListener(BOOT_COMPLETE_EVENT, sync)
     return () => {
-      window.removeEventListener(BOOT_COMPLETE_EVENT, sync)
       window.removeEventListener(SITE_CONSENT_EVENT, sync)
+      window.removeEventListener(BOOT_COMPLETE_EVENT, sync)
     }
   }, [])
 
-  if (!bootDone) return null
+  if (!active) return null
 
   return (
     <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden>

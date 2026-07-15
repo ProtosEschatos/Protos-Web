@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { SafeCanvas } from '@/components/three/SafeCanvas'
@@ -18,12 +18,6 @@ type AmbientBackgroundShellProps = PageBackgroundProps & {
 
 type PointerRef = { current: { x: number; y: number } }
 
-/**
- * Tracks normalized pointer position (-1..1) in a ref so cursor movement never
- * triggers React re-renders — only the R3F frame loop reads it. Listens on
- * `window`, not the canvas, so the background can stay `pointer-events-none`
- * without losing interactivity (see dom-canvas-layers.mdc).
- */
 function usePointerParallax(enabled: boolean): PointerRef {
   const pointer = useRef({ x: 0, y: 0 })
 
@@ -40,35 +34,42 @@ function usePointerParallax(enabled: boolean): PointerRef {
   return pointer
 }
 
+function prefersReducedMotion(): boolean {
+  if (typeof window === 'undefined') return false
+  return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false
+}
+
 function AmbientSceneGroup({
   children,
   pointer,
-  interactive,
+  parallax,
+  motionScale,
 }: {
   children: ReactNode
   pointer: PointerRef
-  interactive: boolean
+  parallax: boolean
+  motionScale: number
 }) {
   const groupRef = useRef<THREE.Group>(null)
   const smoothed = useRef({ x: 0, y: 0 })
   const burst = useRef(0)
 
   useEffect(() => {
-    if (!interactive) return
+    if (!parallax) return
     const handleDown = () => {
       burst.current = 1
     }
     window.addEventListener('pointerdown', handleDown, { passive: true })
     return () => window.removeEventListener('pointerdown', handleDown)
-  }, [interactive])
+  }, [parallax])
 
   useFrame((state, delta) => {
     if (!groupRef.current) return
     const scrollY = typeof window !== 'undefined' ? window.scrollY : 0
-    const t = state.clock.elapsedTime
+    const t = state.clock.elapsedTime * motionScale
 
-    const targetX = interactive ? pointer.current.x : 0
-    const targetY = interactive ? pointer.current.y : 0
+    const targetX = parallax ? pointer.current.x : 0
+    const targetY = parallax ? pointer.current.y : 0
     smoothed.current.x = THREE.MathUtils.damp(smoothed.current.x, targetX, 4, delta)
     smoothed.current.y = THREE.MathUtils.damp(smoothed.current.y, targetY, 4, delta)
 
@@ -99,14 +100,14 @@ export default function AmbientBackgroundShell({
   glowColor = '#ff6600',
   showGlow = true,
 }: AmbientBackgroundShellProps) {
-  const [interactive] = useState(() => {
-    if (isMobile || typeof window === 'undefined') return false
-    return !window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
-  })
-  const pointer = usePointerParallax(interactive)
+  const reducedMotion = prefersReducedMotion()
+  const parallax = !isMobile && !reducedMotion
+  const motionScale = reducedMotion ? 0.35 : 1
+  const pointer = usePointerParallax(parallax)
 
   return (
     <SafeCanvas
+      frameloop="always"
       camera={{ position: [0, 0, cameraZ], fov: 52 }}
       style={{
         position: 'absolute',
@@ -123,7 +124,7 @@ export default function AmbientBackgroundShell({
       <fog attach="fog" args={[fogColor, fogNear, fogFar]} />
       <ambientLight intensity={showGlow ? 0.72 : 0.45} />
       {showGlow ? <pointLight position={[4, 3, 6]} intensity={0.55} color={glowColor} /> : null}
-      <AmbientSceneGroup pointer={pointer} interactive={interactive}>
+      <AmbientSceneGroup pointer={pointer} parallax={parallax} motionScale={motionScale}>
         {children}
       </AmbientSceneGroup>
     </SafeCanvas>

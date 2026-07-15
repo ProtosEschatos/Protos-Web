@@ -123,8 +123,8 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
     <PageTransitionProvider>
       <PageLoader />
       <SiteConsentModal open={showConsentFallback} onAccepted={finishConsent} />
+      <SiteBackground />
       <div className={siteLocked ? 'pointer-events-none select-none' : ''}>
-        <SiteBackground />
         <PageTransitionOverlay />
         <CustomCursor />
         <Header />

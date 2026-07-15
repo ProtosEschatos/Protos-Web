@@ -31,7 +31,6 @@ export async function adminCreatePortfolioItem(
   if (error) return { success: false, error: error.message }
 
   revalidatePath('/portfolio')
-  revalidatePath('/portfolio-showcase')
   revalidatePath('/')
   return { success: true, id: data.id }
 }
@@ -59,7 +58,6 @@ export async function adminUpdatePortfolioItem(
   if (error) return { success: false, error: error.message }
 
   revalidatePath('/portfolio')
-  revalidatePath('/portfolio-showcase')
   revalidatePath('/')
   return { success: true }
 }
@@ -72,7 +70,6 @@ export async function adminDeletePortfolioItem(id: string): Promise<{ success: b
   if (error) return { success: false, error: error.message }
 
   revalidatePath('/portfolio')
-  revalidatePath('/portfolio-showcase')
   revalidatePath('/')
   return { success: true }
 }

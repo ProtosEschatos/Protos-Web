@@ -4,17 +4,11 @@ import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import ShowcasePrefetchLink from '@/components/features/portfolio/ShowcasePrefetchLink'
 import { ArrowRight, Layers } from 'lucide-react'
-import type { PortfolioItem } from '@/types/portfolio'
-import PortfolioGrid from '@/components/features/portfolio/PortfolioGrid'
 import { PROTOS_WEB_MARQUEE } from '@/lib/config/tech-stacks'
 
 const marqueeItems = PROTOS_WEB_MARQUEE
 
-type Props = {
-  items: PortfolioItem[]
-}
-
-export default function Portfolio({ items }: Props) {
+export default function Portfolio() {
   const t = useTranslations('portfolio')
 
   return (
@@ -35,14 +29,12 @@ export default function Portfolio({ items }: Props) {
           </div>
         </div>
 
-        <PortfolioGrid items={items} />
-
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-12 bg-gradient-to-r from-[var(--secondary)]/15 to-[var(--accent)]/10 border border-[var(--secondary)]/20 rounded-3xl p-8 sm:px-10 flex flex-col sm:flex-row items-center justify-between gap-6"
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mt-8 bg-gradient-to-r from-[var(--secondary)]/15 to-[var(--accent)]/10 border border-[var(--secondary)]/20 rounded-3xl p-8 sm:px-10 flex flex-col sm:flex-row items-center justify-between gap-6 max-w-2xl mx-auto"
         >
           <div className="flex items-center gap-5">
             <div className="w-12 h-12 rounded-xl bg-[var(--secondary)]/20 flex items-center justify-center text-[var(--secondary)] text-lg">
@@ -53,12 +45,12 @@ export default function Portfolio({ items }: Props) {
               <div className="text-sm text-[var(--light-muted)]">{t('showcaseText')}</div>
             </div>
           </div>
-          <div className="flex items-center gap-4">
-            <span className="text-xs font-semibold tracking-[0.1em] uppercase text-[var(--accent)]">{t('showcaseCta')}</span>
-            <ShowcasePrefetchLink href="/portfolio-showcase" className="w-11 h-11 rounded-full bg-[var(--primary)] flex items-center justify-center text-white hover:scale-110 transition-transform duration-300" aria-label={t('showcaseCta')}>
-              <ArrowRight className="w-4 h-4" />
-            </ShowcasePrefetchLink>
-          </div>
+          <ShowcasePrefetchLink
+            href="/portfolio"
+            className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-[var(--primary)] text-white text-xs font-semibold uppercase tracking-wider hover:scale-105 transition-transform duration-300"
+          >
+            {t('showcaseCta')} <ArrowRight className="w-4 h-4" />
+          </ShowcasePrefetchLink>
         </motion.div>
       </div>
     </section>

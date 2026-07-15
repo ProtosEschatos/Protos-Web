@@ -1,21 +1,23 @@
-import { getShowcasePortfolioItems } from '@/lib/queries/portfolio'
-import { setRequestLocale } from 'next-intl/server'
-import PortfolioShowcaseClient from '@/components/features/portfolio/PortfolioShowcaseClient'
-import { SHOWCASE_FOCUS_PARAM, SHOWCASE_POKLON_FOCUS } from '@/lib/showcase/featured-demo'
-import { FRAME_SLOTS } from '@/components/three/showcase/constants'
+import { redirect } from 'next/navigation'
 
 type Props = {
-  params: Promise<{ locale: string }>
   searchParams: Promise<Record<string, string | string[] | undefined>>
 }
 
-export default async function PortfolioShowcasePage({ params, searchParams }: Props) {
-  const { locale } = await params
+/** Legacy URL — 3D room lives at /portfolio. */
+export default async function PortfolioShowcaseRedirectPage({ searchParams }: Props) {
   const query = await searchParams
-  const focusRaw = query[SHOWCASE_FOCUS_PARAM]
-  const focusPoklon = (Array.isArray(focusRaw) ? focusRaw[0] : focusRaw) === SHOWCASE_POKLON_FOCUS
+  const params = new URLSearchParams()
 
-  setRequestLocale(locale)
-  const portfolioItems = await getShowcasePortfolioItems(locale, FRAME_SLOTS)
-  return <PortfolioShowcaseClient portfolioItems={portfolioItems} focusPoklon={focusPoklon} />
+  for (const [key, value] of Object.entries(query)) {
+    if (value === undefined) continue
+    if (Array.isArray(value)) {
+      for (const entry of value) params.append(key, entry)
+    } else {
+      params.set(key, value)
+    }
+  }
+
+  const qs = params.toString()
+  redirect(qs ? `/portfolio?${qs}` : '/portfolio')
 }

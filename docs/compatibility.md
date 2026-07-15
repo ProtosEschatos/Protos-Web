@@ -11,7 +11,7 @@ Protos Web is built for **all common devices, OS, and browsers**. No feature is 
 | OS | Windows, macOS, Linux, iOS, Android |
 | WebGL | Optional — showcase degrades to grid fallback if unavailable |
 
-## Showcase (`/portfolio-showcase`)
+## Showcase (`/portfolio`)
 
 | Capability | Desktop | Mobile / tablet |
 |------------|---------|-----------------|
@@ -41,4 +41,4 @@ Missing Supabase keys do **not** crash the app — public pages render with empt
 npm run lint && npm run type-check && npm run build
 ```
 
-Manual smoke: home, portfolio, portfolio-showcase (desktop + narrow viewport), admin login.
+Manual smoke: home, `/portfolio` (3D room + poklon), `/portfolio?focus=poklon`, admin login.

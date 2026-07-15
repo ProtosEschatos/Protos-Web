@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useLayoutEffect, useCallback } from 'react'
 import { usePathname } from '@/navigation'
+import { isPortfolioShowcasePath } from '@/lib/routes/showcase-path'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import PageLoader from '@/components/ui/PageLoader'
@@ -25,7 +26,7 @@ import { hasSiteConsent, SITE_CONSENT_EVENT } from '@/lib/config/site-consent'
 
 export default function AppChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
-  const isShowcase = pathname.includes('portfolio-showcase')
+  const isShowcase = isPortfolioShowcasePath(pathname)
   const isAdmin = pathname.includes('/admin')
   const isAdminLogin = pathname.endsWith('/admin/login')
   const isLegal = isLegalPath(pathname)

@@ -50,7 +50,8 @@ src/
 │   │   ├── o-meni/page.tsx    # About page ("Full Stack Duo iz Zagreba")
 │   │   ├── proces/page.tsx    # Process page
 │   │   ├── portfolio/page.tsx # Portfolio page
-│   │   ├── portfolio-showcase/page.tsx # R3F 3D space gallery
+│   │   ├── portfolio/page.tsx          # R3F 3D space gallery
+│   │   ├── portfolio-showcase/page.tsx # 301 redirect → /portfolio
 │   │   ├── usluge/page.tsx    # Services page
 │   │   ├── blog/page.tsx      # Blog listing (Supabase)
 │   │   ├── blog/[slug]/page.tsx # Blog post detail
@@ -144,7 +145,7 @@ src/
 - [x] Services section (6 cards)
 - [x] Process section (4 steps + 3 feature cards)
 - [x] Process page with ProcessBackground via SiteBackground
-- [x] Portfolio section with showcase banner → /portfolio-showcase
+- [x] Portfolio section CTA → `/portfolio` (3D showcase)
 - [x] Portfolio Showcase — full R3F 3D space gallery (WASD movement, E interact, ESC menu)
 - [x] Blog section (preview) + full blog page from Supabase
 - [x] Blog post detail pages (`/blog/[slug]`) with markdown content

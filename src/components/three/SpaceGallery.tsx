@@ -407,7 +407,7 @@ export function SpaceGallery({ portfolioItems = [], focusPoklon = false }: Space
           <span className="text-white">{t('station')}</span>
         </div>
         <Link
-          href="/portfolio"
+          href="/"
           className="flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3 text-sm text-white transition-all hover:border-[#6366f1] hover:bg-[#6366f1]"
         >
           ← {t('back')}

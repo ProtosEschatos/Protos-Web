@@ -60,7 +60,9 @@ src/
 - Croatian copy for user-facing admin strings
 - Fix, don't remove broken user-facing features without explicit approval
 
-## Showcase (`/portfolio-showcase`)
+## Showcase (`/portfolio`)
+
+3D space gallery — same URL as nav **Portfolio**. Legacy `/portfolio-showcase` redirects here.
 
 - No Header/Footer/SiteBackground — handled in `AppChrome`
 - `PortfolioShowcaseClient` → dynamic `SpaceGallery` with `ShowcaseBootLoader` (never `loading: () => null`)

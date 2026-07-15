@@ -57,7 +57,7 @@ Prisma/Convex plugin rules are marketplace defaults for other stacks. Protos-Web
 ## Features
 
 - **Fix, don't remove** user-facing features (3D showcase, backgrounds, nav) without explicit user approval
-- Showcase `/portfolio-showcase`: no Header/Footer/SiteBackground; phases `loading` | `intro` | `playing`
+- Showcase `/portfolio`: no Header/Footer/SiteBackground; phases `intro` | `playing`
 - Showcase must bypass site boot veil (`ShowcaseBootBypass`); use `ShowcasePrefetchLink` for entry links
 - DOM = UI chrome; Canvas = 3D only (`src/components/three/**`)
 - Minimize diff scope; match existing style and CSS variables

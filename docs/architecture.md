@@ -38,7 +38,7 @@ Full secret placement table: [`docs/security.md`](security.md).
 | Zone | Routes | Chrome |
 |------|--------|--------|
 | Site | all except below | PageLoader, Header, Footer, SiteBackground |
-| Showcase | `/portfolio-showcase` | SpaceGallery only — no site chrome |
+| Showcase | `/portfolio` | SpaceGallery only — no site chrome; legacy `/portfolio-showcase` → 301 |
 | Admin | `/admin` | AdminShell |
 | Legal | `/terms`, `/privacy`, `/cookies` | Header + Footer, no boot gate |
 

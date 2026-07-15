@@ -37,7 +37,8 @@ export function GiftPortal({ viewport, onProximityChange, characterRef }: GiftPo
   const { viewW, viewH, frameW, depth, centerY } = getFrameDimensions(viewport)
   const outerW = viewW + frameW * 2
   const outerH = viewH + frameW * 2
-  const z = -SHOWCASE_CONFIG.galleryLength / 2 + 0.35
+  const portalZ = -SHOWCASE_CONFIG.galleryLength / 2 + 0.35
+  const z = portalZ
 
   useFrame((state) => {
     const character = characterRef.current
@@ -47,7 +48,7 @@ export function GiftPortal({ viewport, onProximityChange, characterRef }: GiftPo
       groupRef.current.position.y = centerY + Math.sin(state.clock.elapsedTime * 1.2) * 0.015
     }
 
-    const portalPos = new THREE.Vector3(0, centerY * 0.35, z)
+    const portalPos = new THREE.Vector3(0, centerY, z)
     const near = character.position.distanceTo(portalPos) < 4.5
     if (near !== lastNear.current) {
       lastNear.current = near
@@ -109,5 +110,5 @@ export function GiftPortal({ viewport, onProximityChange, characterRef }: GiftPo
 }
 
 export function getGiftPortalPosition(centerY: number): THREE.Vector3 {
-  return new THREE.Vector3(0, centerY * 0.35, -SHOWCASE_CONFIG.galleryLength / 2 + 0.35)
+  return new THREE.Vector3(0, centerY, -SHOWCASE_CONFIG.galleryLength / 2 + 0.35)
 }

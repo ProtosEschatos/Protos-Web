@@ -1,67 +1,28 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useMemo } from 'react'
 import * as THREE from 'three'
-import { SHOWCASE_CONFIG } from './constants'
-import { getFrameDimensions } from './frameDimensions'
 import type { ShowcaseViewport } from '@/hooks/use-showcase-viewport'
-import { giftWallInscriptionUrl } from '@/lib/assets/storage-cdn'
+import { GIFT_WALL_INSCRIPTION } from '@/lib/showcase/featured-demo'
+import { getBackWallTriptychLayout } from './backWallTriptych'
+import { buildTwoLineNeonTexture } from './neonTextTexture'
 
-type Props = {
-  viewport: ShowcaseViewport
+type NeonPanelProps = {
+  lines: readonly [string, string]
+  position: [number, number, number]
+  planeW: number
+  planeH: number
+  fontSize: number
 }
 
-/** Cyan neon inscription just above the System Boost poklon frame on the back wall. */
-export function GiftWallInscription({ viewport }: Props) {
-  const { galleryLength } = SHOWCASE_CONFIG
-  const { viewW, viewH, frameW, centerY } = getFrameDimensions(viewport)
-  const outerW = viewW + frameW * 2
-  const outerH = viewH + frameW * 2
-
-  const portalZ = -galleryLength / 2 + 0.35
-  const z = portalZ + 0.05
-  const planeW = outerW * 2.16
-  const planeH = (viewport === 'mobile' ? 1.55 : 1.85) * 2
-  const portalTop = centerY + outerH / 2
-  const y = portalTop + 0.12 + planeH / 2
-
-  const [texture, setTexture] = useState<THREE.Texture | null>(null)
-
-  useEffect(() => {
-    let cancelled = false
-    const loader = new THREE.TextureLoader()
-    loader.setCrossOrigin('anonymous')
-    loader.load(
-      giftWallInscriptionUrl,
-      (loaded) => {
-        if (cancelled) {
-          loaded.dispose()
-          return
-        }
-        loaded.colorSpace = THREE.SRGBColorSpace
-        loaded.minFilter = THREE.LinearFilter
-        loaded.magFilter = THREE.LinearFilter
-        loaded.needsUpdate = true
-        setTexture(loaded)
-      },
-      undefined,
-      () => {
-        if (!cancelled) setTexture(null)
-      },
-    )
-    return () => {
-      cancelled = true
-    }
-  }, [])
-
-  useEffect(() => {
-    return () => texture?.dispose()
-  }, [texture])
-
-  if (!texture) return null
+function NeonInscriptionPanel({ lines, position, planeW, planeH, fontSize }: NeonPanelProps) {
+  const texture = useMemo(
+    () => buildTwoLineNeonTexture(lines[0], lines[1], fontSize),
+    [lines, fontSize],
+  )
 
   return (
-    <group position={[0, y, z]}>
+    <group position={position}>
       <mesh renderOrder={50}>
         <planeGeometry args={[planeW, planeH]} />
         <meshBasicMaterial
@@ -75,7 +36,56 @@ export function GiftWallInscription({ viewport }: Props) {
           side={THREE.FrontSide}
         />
       </mesh>
-      <pointLight position={[0, 0.2, 0.6]} color="#22d3ee" intensity={8} distance={12} decay={1.2} />
+    </group>
+  )
+}
+
+type Props = {
+  viewport: ShowcaseViewport
+}
+
+/** Back wall triptych: Astra Castra (left) | poklon (center) | Numen Lumen (right). */
+export function GiftWallInscription({ viewport }: Props) {
+  const layout = getBackWallTriptychLayout(viewport)
+  const fontSize = viewport === 'mobile' ? 92 : 128
+
+  return (
+    <group>
+      <mesh position={[0, layout.centerY, layout.z - 0.02]} renderOrder={18}>
+        <planeGeometry args={[layout.bandW, layout.bandH]} />
+        <meshStandardMaterial
+          color={0x0b1224}
+          emissive={0x061018}
+          emissiveIntensity={0.35}
+          roughness={0.85}
+          metalness={0.15}
+        />
+      </mesh>
+
+      {layout.dividerX.map((x) => (
+        <mesh key={x} position={[x, layout.centerY, layout.textZ - 0.01]} renderOrder={19}>
+          <planeGeometry args={[0.04, layout.bandH * 0.92]} />
+          <meshBasicMaterial color={0x22d3ee} transparent opacity={0.35} toneMapped={false} />
+        </mesh>
+      ))}
+
+      <NeonInscriptionPanel
+        lines={GIFT_WALL_INSCRIPTION.left}
+        position={[layout.leftX, layout.centerY, layout.textZ]}
+        planeW={layout.textPlaneW}
+        planeH={layout.textPlaneH}
+        fontSize={fontSize}
+      />
+      <NeonInscriptionPanel
+        lines={GIFT_WALL_INSCRIPTION.right}
+        position={[layout.rightX, layout.centerY, layout.textZ]}
+        planeW={layout.textPlaneW}
+        planeH={layout.textPlaneH}
+        fontSize={fontSize}
+      />
+
+      <pointLight position={[layout.leftX, layout.centerY, layout.textZ + 1.2]} color="#22d3ee" intensity={6} distance={14} />
+      <pointLight position={[layout.rightX, layout.centerY, layout.textZ + 1.2]} color="#22d3ee" intensity={6} distance={14} />
     </group>
   )
 }

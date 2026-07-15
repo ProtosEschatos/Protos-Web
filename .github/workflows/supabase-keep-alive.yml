@@ -2,9 +2,8 @@ name: Supabase Keep-Alive
 
 on:
   schedule:
-    # Backup only — primary keep-alive is pg_cron every 2 min (see migration 20260715143000).
-    # GitHub scheduled workflows run at most ~every 5+ min in practice, not every 2.
-    - cron: '0 * * * *'
+    # Every 5 minutes — keeps Supabase project active (GitHub Actions, not Vercel)
+    - cron: '*/5 * * * *'
   workflow_dispatch:
 
 concurrency:
@@ -17,25 +16,19 @@ permissions:
 jobs:
   ping:
     runs-on: ubuntu-latest
-    timeout-minutes: 55
     steps:
-      - name: Ping keep-alive edge function every 2 minutes (hourly backup window)
+      - name: Ping Supabase keep-alive edge function
         run: |
-          set -euo pipefail
-          END=$(( $(date +%s) + 3300 ))
-          while [ "$(date +%s)" -lt "$END" ]; do
-            response=$(curl -sS -w "\n%{http_code}" \
-              -H "Authorization: Bearer ${KEEP_ALIVE_SECRET}" \
-              "${SUPABASE_URL}/functions/v1/keep-alive")
-            body=$(echo "$response" | head -n -1)
-            code=$(echo "$response" | tail -n 1)
-            echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) $body (HTTP $code)"
-            if [ "$code" != "200" ]; then
-              echo "Keep-alive failed with status $code"
-              exit 1
-            fi
-            sleep 120
-          done
+          response=$(curl -sS -w "\n%{http_code}" \
+            -H "Authorization: Bearer ${KEEP_ALIVE_SECRET}" \
+            "${SUPABASE_URL}/functions/v1/keep-alive")
+          body=$(echo "$response" | head -n -1)
+          code=$(echo "$response" | tail -n 1)
+          echo "$body"
+          if [ "$code" != "200" ]; then
+            echo "Keep-alive failed with status $code"
+            exit 1
+          fi
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           KEEP_ALIVE_SECRET: ${{ secrets.KEEP_ALIVE_SECRET }}

@@ -5,7 +5,6 @@ import { usePathname } from 'next/navigation'
 import Script from 'next/script'
 import { getCookiePreferences, COOKIE_CONSENT_EVENT, applyGoogleConsentMode } from '@/lib/config/cookie-consent'
 import { GA4_MEASUREMENT_ID } from '@/lib/config/site'
-import { PLAUSIBLE_DOMAIN } from '@/lib/config/marketing'
 
 export default function Analytics() {
   const [allowed, setAllowed] = useState(false)
@@ -28,7 +27,7 @@ export default function Analytics() {
     }
   }, [])
 
-  const plausibleDomain = PLAUSIBLE_DOMAIN || undefined
+  const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN
   const gaId = GA4_MEASUREMENT_ID
 
   // GA gtag does not auto-track SPA route changes. The initial page_view is sent

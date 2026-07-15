@@ -8,13 +8,11 @@ import '@/styles/globals.css'
 import AppChrome from '@/components/layout/AppChrome'
 import LenisProvider from '@/components/providers/LenisProvider'
 import Analytics from '@/components/providers/Analytics'
-import MarketingTags from '@/components/providers/MarketingTags'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { locales, CYRILLIC_LOCALES, type Locale } from '@/i18n'
 import { ogImage, siteUrl } from '@/lib/config/seo'
 import { siteFaviconUrl } from '@/lib/assets/storage-cdn'
 import { LEGAL_OWNER, LEGAL_COLLABORATOR, SITE_URL, GOOGLE_SITE_VERIFICATION } from '@/lib/config/site'
-import { BING_SITE_VERIFICATION } from '@/lib/config/marketing'
 import LocaleCreatorSeo from '@/components/seo/LocaleCreatorSeo'
 import { BOOT_GATE_INIT_SCRIPT } from '@/lib/config/boot-gate'
 
@@ -89,7 +87,6 @@ export const metadata: Metadata = {
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || GOOGLE_SITE_VERIFICATION,
-    ...(BING_SITE_VERIFICATION ? { other: { 'msvalidate.01': BING_SITE_VERIFICATION } } : {}),
   },
   icons: {
     icon: siteFaviconUrl,
@@ -154,7 +151,6 @@ export default async function LocaleLayout(
         <NextIntlClientProvider locale={locale} messages={messages}>
           <LenisProvider>
             <Analytics />
-            <MarketingTags />
             <AppChrome>{children}</AppChrome>
             <SpeedInsights />
           </LenisProvider>

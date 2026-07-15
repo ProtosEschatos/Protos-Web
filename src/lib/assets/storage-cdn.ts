@@ -21,6 +21,7 @@ export function getPublicStorageUrl(bucket: StorageBucket, path: string): string
 
 export const SHOWCASE_STORAGE = {
   project: (slug: string, viewport: 'mobile' | 'desktop') => `projects/${viewport}-${slug}.jpg`,
+  giftWallInscription: 'environment/gift-wall-inscription.png',
 } as const
 
 export const SITE_STORAGE = {
@@ -32,3 +33,7 @@ export const SITE_STORAGE = {
 
 export const siteFaviconUrl = getPublicStorageUrl(STORAGE_BUCKETS.site, SITE_STORAGE.favicon)
 export const siteBrandOgImageUrl = getPublicStorageUrl(STORAGE_BUCKETS.site, SITE_STORAGE.ogImage)
+export const giftWallInscriptionUrl = getPublicStorageUrl(
+  STORAGE_BUCKETS.showcase,
+  SHOWCASE_STORAGE.giftWallInscription,
+)

@@ -46,7 +46,10 @@ function walkShowcase(dir, prefix = '') {
     if (statSync(full).isDirectory()) {
       walkShowcase(full, rel)
     } else if (/\.(jpe?g|png|webp)$/i.test(name)) {
-      const storagePath = rel.includes('/') ? rel : `projects/${name}`
+      let storagePath = rel
+      if (!rel.includes('/')) {
+        storagePath = `projects/${name}`
+      }
       addFile(full, 'showcase', storagePath)
     }
   }

@@ -1,9 +1,9 @@
+/** System Boost poklon — Cloudflare Pages preview (canonical URL). */
+export const SYSTEM_BOOST_POKLON_URL = 'https://486493ea.protos-system-boost.pages.dev/'
+
 export const FEATURED_WALL_DEMO = {
   id: 'system-boost',
-  /** Same-origin build in /public/demos — reliable in iframe on protosweb.eu */
-  demoUrl: '/demos/system-boost/index.html',
-  /** Latest preview on Cloudflare Pages (optional external mirror) */
-  demoUrlExternal: 'https://486493ea.protos-system-boost.pages.dev/',
+  demoUrl: SYSTEM_BOOST_POKLON_URL,
   repoUrl: 'https://github.com/ProtosEschatos/Protos-System-Boost',
 } as const
 

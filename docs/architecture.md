@@ -44,4 +44,4 @@ Full secret placement table: [`docs/security.md`](security.md).
 
 Consent: one `SiteConsentModal` (terms + privacy + cookies), not a separate cookie banner.
 
-DOM = UI chrome; Canvas = 3D only (`src/components/three/**`). See [`.cursor/rules/protos-web.mdc`](../.cursor/rules/protos-web.mdc).
+DOM = UI chrome; Canvas = 3D only (`src/components/three/**`). See `docs/architecture.md` and showcase layout in `src/components/layout/AppChrome.tsx`.

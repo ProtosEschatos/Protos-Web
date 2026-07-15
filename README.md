@@ -115,7 +115,6 @@ src/
 | `tailwind.config.ts` | Tailwind with Protos theme colors, custom animations |
 | `tsconfig.json` | TypeScript strict mode, `@/*` path alias |
 | `postcss.config.js` | Tailwind + Autoprefixer |
-| `.cursorrules` | Pointer to `.cursor/rules/*.mdc` — guardrails only, not product memory |
 | `package.json` | All dependencies |
 
 ## Theme Colors
@@ -156,7 +155,6 @@ src/
 - [x] i18n with next-intl (5 languages)
 - [x] hreflang alternates + dynamic sitemap with blog posts
 - [x] All config files (tailwind, next, tsconfig, postcss, middleware, i18n)
-- [x] .cursorrules for Cursor AI
 
 ### Backend
 - [x] Supabase client connection

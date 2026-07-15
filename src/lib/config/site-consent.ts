@@ -78,8 +78,22 @@ export function saveSiteConsent(analytics: boolean): void {
   // so cookie consent is recorded here — there is no separate cookie banner.
   localStorage.setItem(SITE_CONSENT_KEY, JSON.stringify(consent))
   localStorage.setItem(COOKIE_STORAGE_KEY, JSON.stringify(cookiePrefs))
+  applyGoogleConsentMode(analytics)
   window.dispatchEvent(new CustomEvent(COOKIE_CONSENT_EVENT))
   window.dispatchEvent(new CustomEvent(SITE_CONSENT_EVENT))
+}
+
+/** Google Consent Mode v2 — call after default script in layout. */
+export function applyGoogleConsentMode(analyticsGranted: boolean): void {
+  if (typeof window === 'undefined') return
+  const gtag = (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag
+  if (typeof gtag !== 'function') return
+  gtag('consent', 'update', {
+    analytics_storage: analyticsGranted ? 'granted' : 'denied',
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+  })
 }
 
 /** Records the cookie-banner choice and marks the banner as dismissed. */

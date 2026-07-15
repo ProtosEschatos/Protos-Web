@@ -4,4 +4,5 @@ export {
   getCookiePreferences,
   saveCookiePreferences,
   hasCookieConsent,
+  applyGoogleConsentMode,
 } from '@/lib/config/site-consent'

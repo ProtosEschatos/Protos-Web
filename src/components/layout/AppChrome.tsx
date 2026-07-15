@@ -23,14 +23,17 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
   const isAdmin = pathname.includes('/admin')
   const isAdminLogin = pathname.endsWith('/admin/login')
   const isLegal = LEGAL_PATH.test(pathname)
-  const [consentGranted, setConsentGranted] = useState(true)
-  const [bootDone, setBootDone] = useState(true)
+  /** Start locked until client reads localStorage — avoids skipping consent on first paint. */
+  const [consentGranted, setConsentGranted] = useState(false)
+  const [bootDone, setBootDone] = useState(false)
+  const [consentChecked, setConsentChecked] = useState(false)
   const [showcaseBlocked, setShowcaseBlocked] = useState(true)
 
   useLayoutEffect(() => {
     setConsentGranted(hasSiteConsent())
     setBootDone(isBootComplete())
     setShowcaseBlocked(!hasSiteConsent())
+    setConsentChecked(true)
   }, [])
 
   useEffect(() => {
@@ -70,8 +73,8 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
     setShowcaseBlocked(false)
   }, [])
 
-  const siteLocked = !consentGranted
-  const showConsentFallback = siteLocked && bootDone
+  const siteLocked = !consentChecked || !consentGranted
+  const showConsentFallback = consentChecked && siteLocked && bootDone
 
   if (isLegal) {
     return (

@@ -123,6 +123,19 @@ export default async function LocaleLayout(
         <Script id="boot-gate-init" strategy="beforeInteractive">
           {BOOT_GATE_INIT_SCRIPT}
         </Script>
+        <Script id="google-consent-default" strategy="beforeInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('consent', 'default', {
+              analytics_storage: 'denied',
+              ad_storage: 'denied',
+              ad_user_data: 'denied',
+              ad_personalization: 'denied',
+              wait_for_update: 500
+            });
+          `}
+        </Script>
         <div id="boot-ssr-veil" aria-hidden suppressHydrationWarning>
           <div className="boot-ssr-spinner" />
           <p className="boot-ssr-title">Protos Web</p>

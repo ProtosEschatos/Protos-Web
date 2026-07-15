@@ -1,52 +1,66 @@
-# API ownership — Next.js routes vs Supabase Edge Functions
+# API ownership — Protos Web
 
-Single source of truth for where backend logic lives. Next.js API routes are **thin adapters** (validation, rate limits, locale URLs); Supabase Edge Functions own secrets and side effects (email, Stripe, service-role DB writes).
+Single source of truth per flow. Next.js API routes are thin proxies (validation + rate limit); business logic lives in Supabase (RPC, Edge Functions, or Postgres triggers/webhooks).
 
-## Public site flows
+## Public form flows
 
-| User action | Next.js route | Owner of business logic | Notes |
-|-------------|---------------|-------------------------|-------|
-| Contact form | `POST /api/contact` | **Supabase RPC** `submit_contact` + Edge `submit-form` | Route persists via anon client; email sent by DB webhook on `contacts` INSERT — not from Next.js |
-| Newsletter | `POST /api/subscribe` | Edge **`subscribe`** | Route proxies via `invokeEdgeFunction`; Brevo/Resend secrets on Supabase only |
-| Donation checkout | `POST /api/donate` | Edge **`donation-checkout`** | Route validates amount/cause and builds localized success/cancel URLs, then proxies |
-| Donation confirm (return URL) | `POST /api/donate/confirm` | Edge **`donation-confirm`** | Route validates `cs_` session id, then proxies |
-| Blog JSON | `GET /api/blog` | **Next.js** (`getBlogPosts`) | Read-only anon query; no edge fn |
+| Route | Owner | Runtime | Next.js role | External deps |
+|-------|-------|---------|--------------|---------------|
+| `POST /api/contact` | Supabase RPC `submit_contact` + Edge `submit-form` (DB webhook) | nodejs | Rate limit, validate, call RPC | Supabase anon client |
+| `POST /api/subscribe` | Edge `subscribe` | nodejs | Rate limit, validate, proxy | Supabase Edge (Resend/Brevo) |
+| `POST /api/donate` | Edge `donation-checkout` | nodejs | Rate limit, validate, build URLs, proxy | Supabase Edge (Stripe) |
+| `POST /api/donate/confirm` | Edge `donation-confirm` | nodejs | Rate limit, validate session id, proxy | Supabase Edge (Stripe) |
 
-## Supabase-only (no Next.js duplicate)
+### Contact flow detail
+
+1. Browser → `POST /api/contact` (Next.js)
+2. Next.js → `submit_contact` RPC (writes `contacts` row, DB rate limit)
+3. Postgres trigger/webhook → Edge `submit-form` (Resend/Brevo email)
+
+Email is **never** sent from Next.js. Do not proxy contact directly to `submit-form` — that function expects DB webhook payloads only.
+
+### Donation / Stripe
+
+Stripe keys live on **Supabase Edge secrets**, not Vercel. Webhook handler: Edge `stripe-webhook` (called by Stripe, not Next.js).
+
+## Next.js–only routes
+
+| Route | Owner | Runtime | Purpose | External deps |
+|-------|-------|---------|---------|---------------|
+| `GET /api/cron/sync-inbox` | Next.js | nodejs | IMAP sync → Supabase `admin_mail_sync` cache | imapflow, Zoho IMAP |
+| `POST /api/admin/login` | Next.js | nodejs | `ADMIN_SECRET` session cookie | — |
+| `GET /api/admin/session` | Next.js | nodejs | Session check | — |
+| `POST /api/admin/logout` | Next.js | nodejs | Clear session | — |
+| `POST /api/admin/ai` | Next.js | nodejs | Admin AI assistant | DeepSeek, Gemini |
+| `GET /api/admin/notifications/badge` | Next.js | nodejs | Admin badge count | Supabase service role |
+| `GET /api/blog` | Next.js | nodejs | Public blog JSON | Supabase anon |
+| `GET /api/og` | Next.js | **edge** | Dynamic OG images | — |
+
+## Supabase Edge Functions (no Next.js duplicate)
 
 | Function | Trigger | Purpose |
 |----------|---------|---------|
-| `submit-form` | Database webhook on `contacts` INSERT | Contact admin + auto-reply email (Resend → Brevo fallback) |
-| `subscribe` | `POST /api/subscribe` | Upsert subscriber + welcome/admin email |
-| `donation-checkout` | `POST /api/donate` | Insert pending `donations` row + Stripe Checkout session |
-| `donation-confirm` | `POST /api/donate/confirm` | Poll Stripe session, mark donation completed |
-| `stripe-webhook` | Stripe webhook | `checkout.session.completed` / `expired` → update `donations` |
-| `keep-alive` | GitHub cron | Ping DB (free-tier keep-alive) |
+| `submit-form` | DB webhook on `contacts` INSERT | Contact notification + auto-reply email |
+| `subscribe` | Next.js proxy or direct | Subscriber upsert + welcome email |
+| `donation-checkout` | Next.js proxy | Stripe Checkout session |
+| `donation-confirm` | Next.js proxy | Post-checkout confirmation |
+| `stripe-webhook` | Stripe webhook | Payment events |
+| `keep-alive` | GitHub cron | Prevent Supabase pause |
 
-## Next.js-only (Node runtime)
+## Edge proxy (`src/proxy.ts`)
 
-| Route | Purpose | Why not Edge |
-|-------|---------|--------------|
-| `POST /api/admin/login` | Admin session cookie | `crypto` + `ADMIN_SECRET` on Vercel |
-| `POST /api/admin/logout` | Clear admin cookie | Same |
-| `GET /api/admin/session` | Session probe | Same |
-| `GET /api/admin/notifications/badge` | Admin badge count | Server actions + cookie auth |
-| `POST /api/admin/ai` | Admin AI providers | Node provider adapters |
-| `GET /api/cron/sync-inbox` | IMAP → Supabase cache | **imapflow** — Node only |
+| Concern | Owner | Runtime | Imports |
+|---------|-------|---------|---------|
+| i18n routing, admin gate | Next.js edge proxy | edge | `next-intl`, `admin-auth-shared` (Web Crypto HMAC only) |
+
+**Must not import:** `mail/`, `imapflow`, `admin-auth` (Node `crypto`), or any `server-only` module.
 
 ## Shared helpers
 
-| Module | Role |
-|--------|------|
-| `src/lib/supabase/edge-fn.ts` | `invokeEdgeFunction()` — anon-key proxy to `/functions/v1/*` |
-| `src/lib/contact/submit-contact.ts` | Contact RPC wrapper (used by `/api/contact` only) |
-| `src/lib/security/rate-limit.ts` | In-memory rate limits on public POST routes |
+| Module | Used by |
+|--------|---------|
+| `src/lib/supabase/edge-fn.ts` | subscribe, donate, donate/confirm routes |
+| `src/lib/contact/submit-contact.ts` | contact route (RPC only) |
+| `src/lib/security/rate-limit.ts` | Public API routes |
 
-## Rules
-
-1. **Never duplicate** Stripe, Resend, or Brevo calls in Next.js — those secrets stay on Supabase Edge.
-2. **Contact email** is always webhook-driven (`submit-form`); the contact route only writes to Postgres.
-3. **Donate/subscribe** Next routes must use `invokeEdgeFunction`, not inline `fetch` to Supabase.
-4. **IMAP / admin auth** stay in Node routes and `server-only` mail modules — never import from `src/proxy.ts` or edge middleware.
-
-See also: [`architecture.md`](./architecture.md), [`supabase/functions/README.md`](../supabase/functions/README.md), [`security.md`](./security.md).
+See also: [`docs/architecture.md`](architecture.md), [`docs/security.md`](security.md), [`supabase/functions/README.md`](../supabase/functions/README.md).

@@ -41,7 +41,7 @@ function extractGoogleVerification(html: string): string | null {
 export async function adminGetInsights(): Promise<AdminInsightsSnapshot> {
   await requireAdmin()
 
-  const gaId = process.env.NEXT_PUBLIC_GA_ID || 'G-HR9HK4SR7Q'
+  const gaId = process.env.NEXT_PUBLIC_GA_ID || 'G-LP29SJ3MM3'
   const configuredVerification =
     process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || GOOGLE_SITE_VERIFICATION
   const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN

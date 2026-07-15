@@ -35,4 +35,4 @@ export const GOOGLE_BUSINESS_PROFILE_URL =
 
 /** GA4 measurement ID — override via NEXT_PUBLIC_GA_ID on Vercel. */
 export const GA4_MEASUREMENT_ID =
-  process.env.NEXT_PUBLIC_GA_ID?.trim() || 'G-HR9HK4SR7Q'
+  process.env.NEXT_PUBLIC_GA_ID?.trim() || 'G-LP29SJ3MM3'

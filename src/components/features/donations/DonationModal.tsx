@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Loader2, X } from 'lucide-react'
 import { useLocale } from 'next-intl'
+import AirCashButton from '@/components/features/donations/AirCashButton'
 import {
   DONATION_MAX_EUR,
   DONATION_MIN_EUR,
@@ -24,6 +25,9 @@ type Props = {
     cancel: string
     processing: string
     errorGeneric: string
+    aircashLabel: string
+    aircashCopied: string
+    aircashHint: string
   }
 }
 
@@ -163,6 +167,13 @@ export default function DonationModal({ open, onClose, cause, labels }: Props) {
               )}
             </button>
           </div>
+
+          <AirCashButton
+            label={labels.aircashLabel}
+            copiedLabel={labels.aircashCopied}
+            hint={labels.aircashHint}
+            className="pt-1"
+          />
         </form>
       </div>
     </div>

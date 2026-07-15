@@ -464,7 +464,10 @@
       "processing": "Loading…",
       "errorGeneric": "Donation failed. Please try again.",
       "successToast": "Thank you! Your donation was received.",
-      "cancelledToast": "Payment was cancelled. You can try again anytime."
+      "cancelledToast": "Payment was cancelled. You can try again anytime.",
+      "aircashLabel": "Pay with AirCash",
+      "aircashCopied": "Number copied",
+      "aircashHint": "Tap to copy the number — send via the AirCash app"
     },
     "dualStacks": {
       "label": "STACKS",

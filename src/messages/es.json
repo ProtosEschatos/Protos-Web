@@ -643,7 +643,10 @@
       "processing": "Cargando…",
       "errorGeneric": "La donación falló. Inténtalo de nuevo.",
       "successToast": "¡Gracias! Tu donación fue recibida.",
-      "cancelledToast": "Pago cancelado. Puedes intentarlo de nuevo cuando quieras."
+      "cancelledToast": "Pago cancelado. Puedes intentarlo de nuevo cuando quieras.",
+      "aircashLabel": "Pago con AirCash",
+      "aircashCopied": "Número copiado",
+      "aircashHint": "Toca para copiar el número — envía desde la app AirCash"
     },
     "dualStacks": {
       "label": "STACKS",

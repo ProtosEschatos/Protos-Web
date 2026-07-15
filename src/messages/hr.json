@@ -464,7 +464,10 @@
       "processing": "Učitavanje…",
       "errorGeneric": "Donacija nije uspjela. Pokušaj ponovo.",
       "successToast": "Hvala! Donacija je uspješno zaprimljena.",
-      "cancelledToast": "Plaćanje je otkazano. Možeš pokušati ponovo kad god želiš."
+      "cancelledToast": "Plaćanje je otkazano. Možeš pokušati ponovo kad god želiš.",
+      "aircashLabel": "Uplata AirCash",
+      "aircashCopied": "Broj kopiran",
+      "aircashHint": "Dodirni za kopiranje broja — uplati u AirCash aplikaciji"
     },
     "dualStacks": {
       "label": "STACKOVI",

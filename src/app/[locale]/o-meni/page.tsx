@@ -7,6 +7,7 @@ import { Link } from '@/navigation'
 import { ArrowRight, BookOpen, Instagram } from 'lucide-react'
 import OnlinePresence from '@/components/features/home/sections/OnlinePresence'
 import DualStacksSection from '@/components/features/home/sections/DualStacksSection'
+import AirCashButton from '@/components/features/donations/AirCashButton'
 import DonationModal from '@/components/features/donations/DonationModal'
 import { DARIO_INSTAGRAM_URL, MARTINA_INSTAGRAM_URL } from '@/lib/config/site'
 import { DONATION_DEFAULT_CAUSE } from '@/lib/donations'
@@ -81,6 +82,9 @@ export default function AboutPage() {
     errorGeneric: string
     successToast: string
     cancelledToast: string
+    aircashLabel: string
+    aircashCopied: string
+    aircashHint: string
   }
 
   const [donationModalOpen, setDonationModalOpen] = useState(false)
@@ -262,13 +266,20 @@ export default function AboutPage() {
               {donationNotice}
             </p>
           ) : null}
-          <button
-            type="button"
-            onClick={() => setDonationModalOpen(true)}
-            className="inline-flex items-center justify-center px-8 py-4 rounded-full text-sm font-semibold text-white bg-[var(--primary)] transition-all duration-300 hover:brightness-110"
-          >
-            {t('supportButton')}
-          </button>
+          <div className="mx-auto flex max-w-md flex-col items-stretch gap-3">
+            <button
+              type="button"
+              onClick={() => setDonationModalOpen(true)}
+              className="inline-flex w-full items-center justify-center px-8 py-4 rounded-full text-sm font-semibold text-white bg-[var(--primary)] transition-all duration-300 hover:brightness-110"
+            >
+              {t('supportButton')}
+            </button>
+            <AirCashButton
+              label={donationLabels.aircashLabel}
+              copiedLabel={donationLabels.aircashCopied}
+              hint={donationLabels.aircashHint}
+            />
+          </div>
         </div>
       </section>
 

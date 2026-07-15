@@ -12,6 +12,10 @@ export const CONTACT_EMAIL = 'dario.admin@protosweb.eu'
 export const CONTACT_PHONE = '+385976043941'
 export const CONTACT_PHONE_DISPLAY = '+385 97 604 39 41'
 
+/** AirCash peer payment number (same as public contact phone). */
+export const AIRCASH_PHONE = CONTACT_PHONE
+export const AIRCASH_PHONE_DISPLAY = CONTACT_PHONE_DISPLAY
+
 /** Supabase project ref (laqnnzavwbojntfiqmxj) */
 export const SUPABASE_PROJECT_REF = 'laqnnzavwbojntfiqmxj'
 

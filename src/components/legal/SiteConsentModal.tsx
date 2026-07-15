@@ -2,10 +2,9 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations, useLocale } from 'next-intl'
-import { useState, useEffect, useRef } from 'react'
-import { createPortal } from 'react-dom'
+import { useState } from 'react'
 import { buildLocalePath } from '@/lib/config/seo'
-import { getSiteConsent, saveSiteConsent } from '@/lib/config/site-consent'
+import { saveSiteConsent } from '@/lib/config/site-consent'
 
 type SiteConsentModalProps = {
   open: boolean
@@ -20,51 +19,15 @@ export default function SiteConsentModal({ open, onAccepted }: SiteConsentModalP
   const cookiesHref = buildLocalePath(locale, '/cookies')
   const [termsAccepted, setTermsAccepted] = useState(false)
   const [analyticsOptIn, setAnalyticsOptIn] = useState(false)
-  const [mounted, setMounted] = useState(false)
-  const dialogRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  useEffect(() => {
-    if (!open) {
-      setTermsAccepted(false)
-      setAnalyticsOptIn(false)
-      return
-    }
-    const existing = getSiteConsent()
-    if (existing) {
-      setTermsAccepted(true)
-      setAnalyticsOptIn(existing.analytics)
-    }
-    dialogRef.current?.focus()
-  }, [open])
-
-  const accept = () => {
-    if (!termsAccepted) return
-    saveSiteConsent(analyticsOptIn)
-    onAccepted()
-  }
-
-  if (!mounted) return null
-
-  return createPortal(
+  return (
     <AnimatePresence>
       {open && (
         <motion.div
-          ref={dialogRef}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onKeyDown={(e) => {
-            if (e.key !== 'Enter') return
-            if ((e.target as HTMLElement).tagName === 'A') return
-            e.preventDefault()
-            accept()
-          }}
-          tabIndex={-1}
-          className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/75 backdrop-blur-sm px-4 sm:px-6"
+          className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/70 backdrop-blur-sm px-6"
           role="dialog"
           aria-modal="true"
           aria-labelledby="site-consent-title"
@@ -73,7 +36,7 @@ export default function SiteConsentModal({ open, onAccepted }: SiteConsentModalP
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
-            className="cosmic-panel max-w-lg w-full max-h-[min(90dvh,720px)] overflow-y-auto rounded-2xl border border-cyan-400/25 p-6 sm:p-8 shadow-2xl"
+            className="cosmic-panel max-w-lg w-full max-h-[90vh] overflow-y-auto rounded-2xl border border-cyan-400/25 p-8 shadow-2xl"
           >
             <h3 id="site-consent-title" className="text-lg font-bold text-[var(--light)] mb-2">
               {t('consentModalTitle')}
@@ -149,7 +112,10 @@ export default function SiteConsentModal({ open, onAccepted }: SiteConsentModalP
             <button
               type="button"
               disabled={!termsAccepted}
-              onClick={accept}
+              onClick={() => {
+                saveSiteConsent(analyticsOptIn)
+                onAccepted()
+              }}
               className="w-full px-6 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-emerald-500 text-white text-sm font-semibold hover:-translate-y-0.5 transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
             >
               {t('consentModalAccept')}
@@ -160,7 +126,6 @@ export default function SiteConsentModal({ open, onAccepted }: SiteConsentModalP
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>,
-    document.body,
+    </AnimatePresence>
   )
 }

@@ -56,15 +56,13 @@ function ProjectFrame({
   project,
   index,
   viewport,
-  layoutWidth,
 }: {
   project: ShowcaseProject | null
   index: number
   viewport: ShowcaseViewport
-  layoutWidth?: number
 }) {
   const groupRef = useRef<THREE.Group>(null)
-  const { viewW, viewH, frameW, depth, centerY } = getFrameDimensions(viewport, layoutWidth)
+  const { viewW, viewH, frameW, depth, centerY } = getFrameDimensions(viewport)
   const outerW = viewW + frameW * 2
   const outerH = viewH + frameW * 2
   const edgeColors = [0x6366f1, 0x06b6d4, 0xf59e0b, 0x818cf8]
@@ -237,18 +235,17 @@ function GalleryShell() {
   )
 }
 
-function GalleryLighting({ viewport }: { viewport: ShowcaseViewport }) {
+function GalleryLighting() {
   const { galleryLength, galleryWidth, galleryHeight } = SHOWCASE_CONFIG
-  const mobile = viewport === 'mobile'
 
   return (
     <>
-      <ambientLight color={0x3b4a6b} intensity={mobile ? 0.55 : 0.4} />
+      <ambientLight color={0x3b4a6b} intensity={0.4} />
       <directionalLight
         position={[5, galleryHeight + 10, -10]}
-        intensity={mobile ? 0.35 : 0.5}
-        castShadow={!mobile}
-        shadow-mapSize={mobile ? [512, 512] : [2048, 2048]}
+        intensity={0.5}
+        castShadow
+        shadow-mapSize={[2048, 2048]}
       />
       <pointLight position={[-5, galleryHeight - 1, 0]} color={0x6366f1} intensity={0.6} distance={25} />
       <pointLight position={[5, galleryHeight - 1, 0]} color={0x06b6d4} intensity={0.6} distance={25} />
@@ -269,7 +266,6 @@ type SceneProps = {
   projects: ShowcaseProject[]
   isPlaying: boolean
   viewport: ShowcaseViewport
-  layoutWidth?: number
   keys: React.MutableRefObject<Record<string, boolean>>
   touchInput: React.MutableRefObject<TouchInput>
   characterRef: React.RefObject<THREE.Group | null>
@@ -281,7 +277,6 @@ export function ShowcaseScene({
   projects,
   isPlaying,
   viewport,
-  layoutWidth,
   keys,
   touchInput,
   characterRef,
@@ -298,11 +293,11 @@ export function ShowcaseScene({
   const framePositions = useMemo(
     () =>
       projects.map((project, index) => {
-        const { centerY } = getFrameDimensions(viewport, layoutWidth)
+        const { centerY } = getFrameDimensions(viewport)
         const { x, z } = getFrameTransform(index, centerY)
         return { project, pos: new THREE.Vector3(x, centerY * 0.35, z) }
       }),
-    [projects, viewport, layoutWidth],
+    [projects, viewport],
   )
 
   useEffect(() => {
@@ -419,23 +414,17 @@ export function ShowcaseScene({
     <>
       <color attach="background" args={['#0a0a1a']} />
       <fog attach="fog" args={['#0a0a1a', 20, 80]} />
-      <GalleryLighting viewport={viewport} />
-      <Starfield count={viewport === 'mobile' ? 120 : 500} />
+      <GalleryLighting />
+      <Starfield count={viewport === 'mobile' ? 180 : 500} />
       <GalleryShell />
-      <GiftWallInscription viewport={viewport} layoutWidth={layoutWidth} />
-      <GiftPortal
-        viewport={viewport}
-        layoutWidth={layoutWidth}
-        characterRef={characterRef}
-        onProximityChange={onNearestGift}
-      />
+      <GiftWallInscription viewport={viewport} />
+      <GiftPortal viewport={viewport} characterRef={characterRef} onProximityChange={onNearestGift} />
       {Array.from({ length: showcaseFrameSlotCount(projects.length) }).map((_, index) => (
         <ProjectFrame
-          key={`frame-${index}-${viewport}-${layoutWidth ?? 0}`}
+          key={`frame-${index}-${viewport}`}
           project={projects[index] ?? null}
           index={index}
           viewport={viewport}
-          layoutWidth={layoutWidth}
         />
       ))}
       <AstronautCharacter ref={characterRef} />

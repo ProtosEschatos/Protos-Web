@@ -1,5 +1,4 @@
 import type { ShowcaseViewport } from '@/hooks/use-showcase-viewport'
-import { getShowcaseLayoutScale, lerpScale } from '@/lib/showcase/showcase-layout-scale'
 
 export type FrameDimensions = {
   viewW: number
@@ -9,16 +8,14 @@ export type FrameDimensions = {
   centerY: number
 }
 
-export function getFrameDimensions(viewport: ShowcaseViewport, width?: number): FrameDimensions {
-  const scale = getShowcaseLayoutScale(viewport, width)
-
+export function getFrameDimensions(viewport: ShowcaseViewport): FrameDimensions {
   if (viewport === 'desktop') {
     return {
-      viewW: lerpScale(3.35, 3.85, scale),
-      viewH: lerpScale(1.95, 2.18, scale),
-      frameW: 0.12,
+      viewW: 2.9,
+      viewH: 1.65,
+      frameW: 0.11,
       depth: 0.1,
-      centerY: 2.45,
+      centerY: 2.35,
     }
   }
 

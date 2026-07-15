@@ -12,15 +12,7 @@ import { PageTransitionProvider } from '@/components/navigation/PageTransitionPr
 import PageTransitionOverlay from '@/components/navigation/PageTransitionOverlay'
 import AdminShell from '@/components/features/admin/AdminShell'
 import SiteConsentModal from '@/components/legal/SiteConsentModal'
-import {
-  clearBootPending,
-  isBootComplete,
-  isBootGateBypassPath,
-  isLegalPath,
-  removeBootSsrVeil,
-  BOOT_SESSION_KEY,
-  BOOT_COMPLETE_EVENT,
-} from '@/lib/config/boot-gate'
+import { clearBootPending, isBootComplete, isBootGateBypassPath, removeBootSsrVeil, BOOT_SESSION_KEY, BOOT_COMPLETE_EVENT } from '@/lib/config/boot-gate'
 import { hasSiteConsent, SITE_CONSENT_EVENT } from '@/lib/config/site-consent'
 
 const LEGAL_PATH = /\/(terms|privacy|cookies)$/
@@ -30,15 +22,17 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
   const isShowcase = pathname.includes('portfolio-showcase')
   const isAdmin = pathname.includes('/admin')
   const isAdminLogin = pathname.endsWith('/admin/login')
-  const isLegal = isLegalPath(pathname) || LEGAL_PATH.test(pathname)
-  // SSR-safe defaults — sync from browser in useLayoutEffect to avoid hydration mismatch on mobile.
+  const isLegal = LEGAL_PATH.test(pathname)
+  /** Start locked until client reads localStorage — avoids skipping consent on first paint. */
   const [consentGranted, setConsentGranted] = useState(false)
   const [bootDone, setBootDone] = useState(false)
   const [consentChecked, setConsentChecked] = useState(false)
+  const [showcaseBlocked, setShowcaseBlocked] = useState(true)
 
   useLayoutEffect(() => {
     setConsentGranted(hasSiteConsent())
     setBootDone(isBootComplete())
+    setShowcaseBlocked(!hasSiteConsent())
     setConsentChecked(true)
   }, [])
 
@@ -76,10 +70,11 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
     sessionStorage.setItem(BOOT_SESSION_KEY, '1')
     clearBootPending()
     window.dispatchEvent(new Event(BOOT_COMPLETE_EVENT))
+    setShowcaseBlocked(false)
   }, [])
 
-  const siteLocked = consentChecked && !consentGranted
-  const showConsentFallback = siteLocked && bootDone
+  const siteLocked = !consentChecked || !consentGranted
+  const showConsentFallback = consentChecked && siteLocked && bootDone
 
   if (isLegal) {
     return (
@@ -94,10 +89,8 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
   if (isShowcase) {
     return (
       <>
-        <SiteConsentModal open={siteLocked} onAccepted={finishConsent} />
-        <main
-          className={`relative min-h-screen overflow-hidden ${siteLocked ? 'pointer-events-none select-none' : ''}`}
-        >
+        <SiteConsentModal open={showcaseBlocked} onAccepted={finishConsent} />
+        <main className={`relative min-h-0 overflow-hidden ${showcaseBlocked ? 'pointer-events-none select-none' : ''}`}>
           {children}
         </main>
       </>
@@ -116,8 +109,8 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
     <PageTransitionProvider>
       <PageLoader />
       <SiteConsentModal open={showConsentFallback} onAccepted={finishConsent} />
-      <SiteBackground />
       <div className={siteLocked ? 'pointer-events-none select-none' : ''}>
+        <SiteBackground />
         <PageTransitionOverlay />
         <CustomCursor />
         <Header />

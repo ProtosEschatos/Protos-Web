@@ -2,28 +2,80 @@
 
 import { useMemo } from 'react'
 import * as THREE from 'three'
+import { SHOWCASE_CONFIG } from './constants'
 import type { ShowcaseViewport } from '@/hooks/use-showcase-viewport'
-import { GIFT_WALL_INSCRIPTION } from '@/lib/showcase/featured-demo'
-import { getBackWallTriptychLayout } from './backWallTriptych'
-import { buildTwoLineNeonTexture } from './neonTextTexture'
+import { GIFT_PORTAL_INSCRIPTION } from '@/lib/showcase/featured-demo'
 
-type NeonPanelProps = {
-  lines: readonly [string, string]
-  position: [number, number, number]
-  planeW: number
-  planeH: number
-  fontSize: number
+function buildInscriptionTexture(line1: string, line2: string): THREE.CanvasTexture {
+  const width = 2048
+  const height = 768
+  const canvas = document.createElement('canvas')
+  canvas.width = width
+  canvas.height = height
+  const ctx = canvas.getContext('2d')
+  if (!ctx) {
+    const fallback = new THREE.CanvasTexture(canvas)
+    fallback.colorSpace = THREE.SRGBColorSpace
+    return fallback
+  }
+
+  ctx.clearRect(0, 0, width, height)
+
+  const drawNeonLine = (text: string, y: number, fontSize: number) => {
+    ctx.font = `300 ${fontSize}px Georgia, "Times New Roman", serif`
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'middle'
+
+    ctx.shadowColor = '#22d3ee'
+    ctx.shadowBlur = 64
+    ctx.fillStyle = 'rgba(34, 211, 238, 0.55)'
+    ctx.fillText(text, width / 2, y)
+
+    ctx.shadowBlur = 36
+    ctx.fillStyle = '#67e8f9'
+    ctx.fillText(text, width / 2, y)
+
+    ctx.shadowBlur = 14
+    ctx.fillStyle = '#ecfeff'
+    ctx.fillText(text, width / 2, y)
+
+    ctx.shadowBlur = 0
+    ctx.fillStyle = '#f0fdff'
+    ctx.fillText(text, width / 2, y)
+  }
+
+  drawNeonLine(line1, height * 0.36, 132)
+  drawNeonLine(line2, height * 0.68, 112)
+
+  const texture = new THREE.CanvasTexture(canvas)
+  texture.colorSpace = THREE.SRGBColorSpace
+  texture.minFilter = THREE.LinearFilter
+  texture.magFilter = THREE.LinearFilter
+  texture.needsUpdate = true
+  return texture
 }
 
-function NeonInscriptionPanel({ lines, position, planeW, planeH, fontSize }: NeonPanelProps) {
+type Props = {
+  viewport: ShowcaseViewport
+}
+
+/** Large cyan neon inscription on the back wall above the System Boost poklon frame. */
+export function GiftWallInscription({ viewport }: Props) {
+  const { galleryLength, galleryHeight, galleryWidth } = SHOWCASE_CONFIG
+  const compact = viewport === 'mobile'
+  const z = -galleryLength / 2 + 0.14
+  const planeW = compact ? galleryWidth * 0.88 : galleryWidth * 0.92
+  const planeH = compact ? 2.4 : 3.2
+  const y = galleryHeight * 0.78
+
   const texture = useMemo(
-    () => buildTwoLineNeonTexture(lines[0], lines[1], fontSize),
-    [lines, fontSize],
+    () => buildInscriptionTexture(GIFT_PORTAL_INSCRIPTION.line1, GIFT_PORTAL_INSCRIPTION.line2),
+    [],
   )
 
   return (
-    <group position={position}>
-      <mesh renderOrder={50}>
+    <group position={[0, y, z]}>
+      <mesh renderOrder={30}>
         <planeGeometry args={[planeW, planeH]} />
         <meshBasicMaterial
           map={texture}
@@ -31,65 +83,11 @@ function NeonInscriptionPanel({ lines, position, planeW, planeH, fontSize }: Neo
           opacity={1}
           toneMapped={false}
           depthWrite={false}
-          depthTest={false}
-          blending={THREE.AdditiveBlending}
           side={THREE.FrontSide}
         />
       </mesh>
-    </group>
-  )
-}
-
-type Props = {
-  viewport: ShowcaseViewport
-  layoutWidth?: number
-}
-
-/** Back wall triptych: Astra Castra (left) | poklon (center) | Numen Lumen (right). */
-export function GiftWallInscription({ viewport, layoutWidth }: Props) {
-  const layout = getBackWallTriptychLayout(viewport, layoutWidth)
-  const clampedFont =
-    viewport === 'mobile'
-      ? 184
-      : Math.min(256, Math.max(200, Math.round(200 + (((layoutWidth ?? 1280) - 768) / (1920 - 768)) * 56)))
-
-  return (
-    <group>
-      <mesh position={[0, layout.centerY, layout.z - 0.02]} renderOrder={18}>
-        <planeGeometry args={[layout.bandW, layout.bandH]} />
-        <meshStandardMaterial
-          color={0x0b1224}
-          emissive={0x061018}
-          emissiveIntensity={0.35}
-          roughness={0.85}
-          metalness={0.15}
-        />
-      </mesh>
-
-      {layout.dividerX.map((x) => (
-        <mesh key={x} position={[x, layout.centerY, layout.textZ - 0.01]} renderOrder={19}>
-          <planeGeometry args={[0.04, layout.bandH * 0.92]} />
-          <meshBasicMaterial color={0x22d3ee} transparent opacity={0.35} toneMapped={false} />
-        </mesh>
-      ))}
-
-      <NeonInscriptionPanel
-        lines={GIFT_WALL_INSCRIPTION.left}
-        position={[layout.leftX, layout.inscriptionY, layout.textZ]}
-        planeW={layout.textPlaneW}
-        planeH={layout.textPlaneH}
-        fontSize={clampedFont}
-      />
-      <NeonInscriptionPanel
-        lines={GIFT_WALL_INSCRIPTION.right}
-        position={[layout.rightX, layout.inscriptionY, layout.textZ]}
-        planeW={layout.textPlaneW}
-        planeH={layout.textPlaneH}
-        fontSize={clampedFont}
-      />
-
-      <pointLight position={[layout.leftX, layout.inscriptionY, layout.textZ + 1.2]} color="#22d3ee" intensity={6} distance={14} />
-      <pointLight position={[layout.rightX, layout.inscriptionY, layout.textZ + 1.2]} color="#22d3ee" intensity={6} distance={14} />
+      <pointLight position={[0, 0.4, 1.2]} color="#22d3ee" intensity={compact ? 4 : 6} distance={18} decay={1.5} />
+      <pointLight position={[0, -0.3, 0.8]} color="#06b6d4" intensity={compact ? 2 : 3} distance={14} decay={2} />
     </group>
   )
 }

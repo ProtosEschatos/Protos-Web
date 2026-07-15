@@ -21,7 +21,7 @@ import {
 import { ShowcaseFullscreenDemo } from '@/components/showcase/ShowcaseFullscreenDemo'
 import {
   INITIAL_TOUCH_INPUT,
-  useShowcaseViewportState,
+  useShowcaseViewport,
   useTouchControlsEnabled,
   type TouchInput,
 } from '@/hooks/use-showcase-viewport'
@@ -37,7 +37,6 @@ type ShowcaseCanvasLayerProps = {
   projects: ShowcaseProject[]
   isPlaying: boolean
   viewport: import('@/hooks/use-showcase-viewport').ShowcaseViewport
-  layoutWidth: number
   keys: React.MutableRefObject<Record<string, boolean>>
   touchInput: React.MutableRefObject<TouchInput>
   characterRef: React.RefObject<THREE.Group | null>
@@ -51,7 +50,6 @@ const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
   projects,
   isPlaying,
   viewport,
-  layoutWidth,
   keys,
   touchInput,
   characterRef,
@@ -64,14 +62,8 @@ const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
     <div className="absolute inset-0 z-[1]">
       <SafeCanvas
         mountKey={mountKey}
-        frameloop="always"
-        dpr={viewport === 'mobile' ? 1 : [1, 1.5]}
         camera={{ fov: 70, near: 0.1, far: 1000 }}
-        gl={{
-          toneMapping: THREE.NoToneMapping,
-          antialias: viewport !== 'mobile',
-          powerPreference: viewport === 'mobile' ? 'default' : 'high-performance',
-        }}
+        gl={{ toneMapping: THREE.NoToneMapping }}
         onContextLost={onContextLost}
         fallback={null}
       >
@@ -79,7 +71,6 @@ const ShowcaseCanvasLayer = memo(function ShowcaseCanvasLayer({
           projects={projects}
           isPlaying={isPlaying}
           viewport={viewport}
-          layoutWidth={layoutWidth}
           keys={keys}
           touchInput={touchInput}
           characterRef={characterRef}
@@ -95,7 +86,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
   const t = useTranslations('showcase')
   const tNav = useTranslations('nav')
   const searchParams = useSearchParams()
-  const { viewport, width: layoutWidth } = useShowcaseViewportState()
+  const viewport = useShowcaseViewport()
   const touchControlsEnabled = useTouchControlsEnabled()
   const poklonFocus = searchParams.get(SHOWCASE_FOCUS_PARAM) === SHOWCASE_POKLON_FOCUS
 
@@ -228,7 +219,6 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
         projects={projects}
         isPlaying={phase === 'playing'}
         viewport={viewport}
-        layoutWidth={layoutWidth}
         keys={keys}
         touchInput={touchInput}
         characterRef={characterRef}
@@ -319,9 +309,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
 
           <div
             className={`fixed left-1/2 z-20 w-[calc(100%-2rem)] max-w-md -translate-x-1/2 rounded-2xl border px-5 py-5 text-center backdrop-blur-md transition-all duration-300 sm:px-8 sm:py-6 ${
-              touchControlsEnabled
-                ? 'bottom-[calc(env(safe-area-inset-bottom)+11rem)] md:bottom-[11rem]'
-                : 'bottom-[calc(env(safe-area-inset-bottom)+2rem)] md:bottom-40'
+              touchControlsEnabled ? 'bottom-[calc(env(safe-area-inset-bottom)+11rem)] md:bottom-32' : 'bottom-[calc(env(safe-area-inset-bottom)+2rem)] md:bottom-32'
             } ${
               nearestGift && phase === 'playing'
                 ? 'translate-y-0 border-[#ff6600] bg-black/90 opacity-100'

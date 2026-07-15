@@ -1,15 +1,9 @@
 /** System Boost poklon — javna Cloudflare Pages stranica. */
 export const SYSTEM_BOOST_POKLON_URL = 'https://protos-system-boost.pages.dev/'
 
-export const GIFT_WALL_INSCRIPTION = {
-  left: ['Astra', 'Castra'] as const,
-  right: ['Numen', 'Lumen'] as const,
-} as const
-
-/** @deprecated Use GIFT_WALL_INSCRIPTION.left/right */
 export const GIFT_PORTAL_INSCRIPTION = {
-  line1: 'Astra Castra',
-  line2: 'Numen Lumen',
+  line1: 'Astra Castra,',
+  line2: 'Numen Lumen.',
 } as const
 
 export const FEATURED_WALL_DEMO = {

@@ -276,7 +276,8 @@ export function ShowcaseScene({
   const giftPortalPos = useMemo(() => getGiftPortalPosition(viewport), [viewport])
   const yAxis = useMemo(() => new THREE.Vector3(0, 1, 0), [])
   const moveDir = useMemo(() => new THREE.Vector3(), [])
-  const cameraOffset = useMemo(() => new THREE.Vector3(0, 4, 6), [])
+  const cameraBaseOffset = useMemo(() => new THREE.Vector3(0, 4, 6), [])
+  const cameraOffset = useMemo(() => new THREE.Vector3(), [])
   const cameraLookAt = useMemo(() => new THREE.Vector3(), [])
   const cameraTarget = useMemo(() => new THREE.Vector3(), [])
   const cameraInitialized = useRef(false)
@@ -403,7 +404,7 @@ export function ShowcaseScene({
       character.quaternion.setFromAxisAngle(yAxis, headingRef.current)
     }
 
-    cameraOffset.applyQuaternion(character.quaternion)
+    cameraOffset.copy(cameraBaseOffset).applyQuaternion(character.quaternion)
     cameraTarget.copy(character.position).add(cameraOffset)
     cameraLookAt.set(character.position.x, character.position.y + 1.5, character.position.z)
 

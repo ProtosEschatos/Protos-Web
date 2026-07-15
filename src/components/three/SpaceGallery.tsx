@@ -305,13 +305,16 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
           {touchControlsEnabled && <ShowcaseJoystick touchInput={touchInput} />}
 
           <div
-            className={`fixed left-1/2 z-20 w-[calc(100%-2rem)] max-w-md -translate-x-1/2 rounded-2xl border px-5 py-5 text-center backdrop-blur-md transition-all duration-300 sm:px-8 sm:py-6 ${
-              touchControlsEnabled ? 'bottom-[calc(env(safe-area-inset-bottom)+11rem)] md:bottom-32' : 'bottom-[calc(env(safe-area-inset-bottom)+2rem)] md:bottom-32'
+            className={`fixed z-40 rounded-2xl border px-5 py-5 text-center backdrop-blur-md transition-all duration-300 sm:px-8 sm:py-6 ${
+              touchControlsEnabled
+                ? // Mobile: sit bottom-right clear of left joystick; desktop unchanged center
+                  'bottom-[calc(env(safe-area-inset-bottom)+1rem)] left-auto right-[max(0.75rem,env(safe-area-inset-right))] w-[min(22rem,calc(100%-8.5rem))] translate-x-0 md:bottom-32 md:left-1/2 md:right-auto md:w-[calc(100%-2rem)] md:max-w-md md:-translate-x-1/2'
+                : 'bottom-[calc(env(safe-area-inset-bottom)+2rem)] left-1/2 w-[calc(100%-2rem)] max-w-md -translate-x-1/2 md:bottom-32'
             } ${
               nearestGift && phase === 'playing'
-                ? 'translate-y-0 border-[#ff6600] bg-black/90 opacity-100'
+                ? 'pointer-events-auto translate-y-0 border-[#ff6600] bg-black/90 opacity-100'
                 : nearestProject && phase === 'playing' && !nearestGift
-                  ? 'translate-y-0 border-[#6366f1] bg-black/90 opacity-100'
+                  ? 'pointer-events-auto translate-y-0 border-[#6366f1] bg-black/90 opacity-100'
                   : 'pointer-events-none translate-y-4 opacity-0'
             }`}
           >

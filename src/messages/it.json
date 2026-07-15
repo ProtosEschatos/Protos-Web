@@ -25,7 +25,8 @@
   "header": {
     "brand": "Protos Web",
     "cta": "RICHIEDI PREVENTIVO",
-    "menu": "Menu"
+    "menu": "Menu",
+    "kofi": "Ko-fi"
   },
   "hero": {
     "label": "VELOCE. PER IL TUO BUSINESS",
@@ -306,6 +307,7 @@
     "terms": "Termini",
     "cookies": "Cookie",
     "tools": "Il mio editor",
+    "kofi_cta": "Dona su Ko-fi",
     "cursor_cta": "Prova Cursor",
     "cursor_badge": "50% di sconto",
     "cursor_promo": "nel primo mese — l'editor AI con cui costruisco questo sito, piu veloce del codice classico.",

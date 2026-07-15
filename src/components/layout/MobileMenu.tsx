@@ -3,6 +3,7 @@
 import { useTranslations, useLocale } from 'next-intl'
 import TransitionLink from '@/components/navigation/TransitionLink'
 import { SocialLinksInline } from '@/components/ui/SocialLinks'
+import KoFiButton from '@/components/ui/KoFiButton'
 import { CONTACT_EMAIL } from '@/lib/config/site'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MAIN_NAV_ITEMS, navPublicHref } from '@/lib/routes/main-nav'
@@ -25,6 +26,7 @@ interface MobileMenuProps {
 
 export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const t = useTranslations('nav')
+  const th = useTranslations('header')
   const locale = useLocale() as Locale
 
   return (
@@ -80,6 +82,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               transition={{ delay: 0.5 }}
               className="mt-16 text-[var(--light-muted)]"
             >
+              <KoFiButton label={th('kofi')} variant="footer" className="mb-6" />
               <p className="text-sm">{CONTACT_EMAIL}</p>
               <p className="text-sm">+385 97 604 39 41</p>
               <SocialLinksInline className="flex gap-4 mt-6" />

@@ -25,7 +25,8 @@
   "header": {
     "brand": "Protos Web",
     "cta": "ANGEBOT ANFORDERN",
-    "menu": "Menu"
+    "menu": "Menu",
+    "kofi": "Ko-fi"
   },
   "hero": {
     "label": "SCHNELL. FUR IHR GESCHAFT",
@@ -306,6 +307,7 @@
     "terms": "AGB",
     "cookies": "Cookies",
     "tools": "Mein Editor",
+    "kofi_cta": "Auf Ko-fi spenden",
     "cursor_cta": "Cursor testen",
     "cursor_badge": "50% Rabatt",
     "cursor_promo": "im ersten Monat — der KI-Editor, mit dem ich diese Seite baue, schneller als klassisches Coden.",

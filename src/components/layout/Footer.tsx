@@ -6,6 +6,7 @@ import { MousePointer2, Heart } from 'lucide-react'
 import { Link } from '@/navigation'
 import TransitionLink from '@/components/navigation/TransitionLink'
 import SocialLinks from '@/components/ui/SocialLinks'
+import KoFiButton from '@/components/ui/KoFiButton'
 import ProtosLogo from '@/components/ui/ProtosLogo'
 import { navPublicHref } from '@/lib/routes/main-nav'
 import type { Locale } from '@/i18n'
@@ -124,18 +125,21 @@ export default function Footer() {
 
           <div>
             <h4 className="font-bold mb-5">{t('tools')}</h4>
-            <a
-              href="https://cursor.com/referral?code=1HM5DWZJCWXH"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-[var(--border-card)] bg-[var(--dark-card)] text-xs font-semibold text-[var(--light)] whitespace-nowrap hover:border-[var(--primary)] hover:text-[var(--primary)] hover:-translate-y-0.5 transition-all duration-300"
-            >
-              <MousePointer2 className="w-3.5 h-3.5" />
-              {t('cursor_cta')}
-              <span className="px-2 py-0.5 rounded-full bg-gradient-to-r from-[var(--primary)] to-[#ff8800] text-white text-[10px] font-bold uppercase tracking-wide">
-                {t('cursor_badge')}
-              </span>
-            </a>
+            <div className="flex flex-col gap-3 items-start">
+              <KoFiButton label={t('kofi_cta')} variant="footer" />
+              <a
+                href="https://cursor.com/referral?code=1HM5DWZJCWXH"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-[var(--border-card)] bg-[var(--dark-card)] text-xs font-semibold text-[var(--light)] whitespace-nowrap hover:border-[var(--primary)] hover:text-[var(--primary)] hover:-translate-y-0.5 transition-all duration-300"
+              >
+                <MousePointer2 className="w-3.5 h-3.5" />
+                {t('cursor_cta')}
+                <span className="px-2 py-0.5 rounded-full bg-gradient-to-r from-[var(--primary)] to-[#ff8800] text-white text-[10px] font-bold uppercase tracking-wide">
+                  {t('cursor_badge')}
+                </span>
+              </a>
+            </div>
             <p className="mt-3 max-w-[240px] text-sm leading-relaxed">
               <span className="font-bold bg-gradient-to-r from-[var(--primary)] to-[#ff8800] bg-clip-text text-transparent">
                 {t('cursor_badge')}

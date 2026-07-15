@@ -25,7 +25,8 @@
   "header": {
     "brand": "Protos Web",
     "cta": "SOLICITAR PRESUPUESTO",
-    "menu": "Menu"
+    "menu": "Menu",
+    "kofi": "Ko-fi"
   },
   "hero": {
     "label": "RAPIDO. PARA TU NEGOCIO",
@@ -306,6 +307,7 @@
     "terms": "Terminos",
     "cookies": "Cookies",
     "tools": "Mi editor",
+    "kofi_cta": "Donar en Ko-fi",
     "cursor_cta": "Probar Cursor",
     "cursor_badge": "50% dto.",
     "cursor_promo": "en el primer mes — el editor IA con el que construyo este sitio, mas rapido que el codigo clasico.",

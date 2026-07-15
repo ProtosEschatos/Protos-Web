@@ -25,7 +25,8 @@
   "header": {
     "brand": "Protos Web",
     "cta": "ZATRAŽI PONUDU",
-    "menu": "Izbornik"
+    "menu": "Izbornik",
+    "kofi": "Ko-fi"
   },
   "hero": {
     "label": "BRZO. ZA VAŠ POSAO",
@@ -306,6 +307,7 @@
     "terms": "Uvjeti",
     "cookies": "Kolačići",
     "tools": "Moj editor",
+    "kofi_cta": "Doniraj na Ko-fi",
     "cursor_cta": "Isprobaj Cursor",
     "cursor_badge": "50% popusta",
     "cursor_promo": "na prvi mjesec — AI editor kojim gradim ovu stranicu, brže od klasičnog koda.",

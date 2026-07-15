@@ -1,4 +1,4 @@
-import { CONTACT_EMAIL, SITE_URL, SUPABASE_PROJECT_REF } from '@/lib/config/site'
+import { CONTACT_EMAIL, KO_FI_URL, SITE_URL, SUPABASE_PROJECT_REF } from '@/lib/config/site'
 import { partnerReferralItems, platformItems, socialItems } from '@/lib/config/social-links'
 
 /** Single source for email/comms service roles — used by admin dashboard + detail pages. */
@@ -139,7 +139,7 @@ export const adminPlatformLinks: AdminHubLink[] = [
   },
   { id: 'github', label: 'GitHub Repo', href: 'https://github.com/ProtosEschatos/Protos-Web', external: true },
   { id: 'stripe', label: 'Stripe', href: 'https://dashboard.stripe.com', external: true },
-  { id: 'kofi', label: 'Ko-fi', href: 'https://ko-fi.com/protoswebmark23', external: true },
+  { id: 'kofi', label: 'Ko-fi', href: KO_FI_URL, external: true },
   { id: 'sentry', label: 'Sentry', href: 'https://sentry.io/', external: true },
   { id: 'zoho-admin', label: 'Zoho Mail', href: 'https://mail.zoho.eu', external: true },
   { id: 'live', label: 'Javna stranica', href: SITE_URL, external: true },

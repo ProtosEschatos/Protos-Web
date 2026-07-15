@@ -36,6 +36,7 @@ export const studioSocialItems: PresenceItem[] = [
 export const darioSocialItems: PresenceItem[] = [
   profileLink('instagram', 'Instagram', DARIO_INSTAGRAM_URL, '#e1306c'),
   profileLink('facebook', 'Facebook', 'https://www.facebook.com/imsirovicdario23/', '#1877f2'),
+  profileLink('kofi', 'Ko-fi', KO_FI_URL, '#ff5e5b'),
   profileLink('tiktok', 'TikTok', '#', '#00f2ea'),
   profileLink('golance', 'goLance', 'https://golance.com/freelancer/home/', '#25b14c'),
   profileLink('upwork', 'Upwork', 'https://www.upwork.com/freelancers/protos01eschatos', '#14a800'),
@@ -59,6 +60,7 @@ export const freelancePlatformItems: PresenceItem[] = [
 
 /** Partner / referral tools (rewards, AI, editor — not freelance platforms). */
 export const partnerReferralItems: PresenceItem[] = [
+  profileLink('kofi', 'Ko-fi', KO_FI_URL, '#ff5e5b'),
   profileLink('freecash', 'Free Cash', 'https://freecash.com/r/11DJW3', '#1db954'),
   profileLink('otter', 'Otter.ai', 'https://otter.ai/referrals/P78SAFF6', '#1a73e8'),
   profileLink('cursor', 'Cursor', 'https://cursor.com/referral?code=1HM5DWZJCWXH', '#7c3aed'),

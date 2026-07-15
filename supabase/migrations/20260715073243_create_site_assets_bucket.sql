@@ -1,4 +1,5 @@
 -- Public CDN bucket for site static assets (portfolio SVG fallbacks, boot video, brand).
+-- Applied on remote as 20260715073243; repo must keep this exact version for migration history sync.
 INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 VALUES (
   'site-assets',

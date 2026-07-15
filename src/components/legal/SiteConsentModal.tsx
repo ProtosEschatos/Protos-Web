@@ -2,9 +2,9 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations, useLocale } from 'next-intl'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { buildLocalePath } from '@/lib/config/seo'
-import { saveSiteConsent } from '@/lib/config/site-consent'
+import { getSiteConsent, saveSiteConsent } from '@/lib/config/site-consent'
 
 type SiteConsentModalProps = {
   open: boolean
@@ -19,6 +19,21 @@ export default function SiteConsentModal({ open, onAccepted }: SiteConsentModalP
   const cookiesHref = buildLocalePath(locale, '/cookies')
   const [termsAccepted, setTermsAccepted] = useState(false)
   const [analyticsOptIn, setAnalyticsOptIn] = useState(false)
+  const dialogRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!open) {
+      setTermsAccepted(false)
+      setAnalyticsOptIn(false)
+      return
+    }
+    const existing = getSiteConsent()
+    if (existing) {
+      setTermsAccepted(true)
+      setAnalyticsOptIn(existing.analytics)
+    }
+    dialogRef.current?.focus()
+  }, [open])
 
   const accept = () => {
     if (!termsAccepted) return
@@ -30,6 +45,7 @@ export default function SiteConsentModal({ open, onAccepted }: SiteConsentModalP
     <AnimatePresence>
       {open && (
         <motion.div
+          ref={dialogRef}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -39,6 +55,7 @@ export default function SiteConsentModal({ open, onAccepted }: SiteConsentModalP
             e.preventDefault()
             accept()
           }}
+          tabIndex={-1}
           className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/70 backdrop-blur-sm px-6"
           role="dialog"
           aria-modal="true"

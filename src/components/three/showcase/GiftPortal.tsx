@@ -58,7 +58,10 @@ export function GiftPortal({ viewport, onProximityChange, characterRef }: GiftPo
     }
   })
 
+  const floorMarkerZ = z + 1.4
+
   return (
+    <>
     <group ref={groupRef} position={[0, centerY, z]} rotation={[0, 0, 0]} renderOrder={20}>
       <mesh position={[0, 0, -depth * 0.5]} renderOrder={20}>
         <boxGeometry args={[outerW + 0.08, outerH + 0.08, depth]} />
@@ -102,12 +105,17 @@ export function GiftPortal({ viewport, onProximityChange, characterRef }: GiftPo
 
       <pointLight position={[0, 0.3, 0.5]} color={POKLON_COLOR} intensity={1.8} distance={8} decay={2} />
       <pointLight position={[0, -0.2, 0.4]} color={POKLON_ACCENT} intensity={0.9} distance={6} decay={2} />
-
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -outerH / 2 - 0.5, 0.8]}>
-        <ringGeometry args={[1, 1.5, 32]} />
-        <meshBasicMaterial color={POKLON_COLOR} transparent opacity={0.45} side={THREE.DoubleSide} />
-      </mesh>
     </group>
+
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.02, floorMarkerZ]}>
+      <ringGeometry args={[1, 1.5, 32]} />
+      <meshBasicMaterial color={POKLON_COLOR} transparent opacity={0.45} side={THREE.DoubleSide} />
+    </mesh>
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.015, floorMarkerZ]}>
+      <circleGeometry args={[0.85, 32]} />
+      <meshBasicMaterial color={POKLON_ACCENT} transparent opacity={0.22} side={THREE.DoubleSide} />
+    </mesh>
+    </>
   )
 }
 

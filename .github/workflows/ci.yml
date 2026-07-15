@@ -60,16 +60,18 @@ jobs:
             echo "::warning title=Missing secret::Add SUPABASE_ANON_KEY to GitHub repo secrets for full Supabase CI coverage."
             exit 0
           fi
+          # Bare /rest/v1/ requires service_role; ping a public table with anon instead.
           response=$(curl -sS -w "\n%{http_code}" \
             -H "apikey: ${SUPABASE_ANON_KEY}" \
             -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" \
-            "${SUPABASE_URL}/rest/v1/")
+            -H "Accept: application/json" \
+            "${SUPABASE_URL}/rest/v1/blog_posts?select=id&limit=1")
           code=$(echo "$response" | tail -n 1)
           if [ "$code" != "200" ]; then
-            echo "::warning title=Supabase REST::Check failed with status $code — rotate SUPABASE_ANON_KEY in GitHub secrets if this persists."
+            echo "::warning title=Supabase REST::Check failed with status $code — verify SUPABASE_ANON_KEY and SUPABASE_URL in GitHub secrets."
             exit 0
           fi
-          echo "Supabase REST API reachable"
+          echo "Supabase REST API reachable (anon)"
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}

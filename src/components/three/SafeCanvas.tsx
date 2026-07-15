@@ -4,7 +4,6 @@ import '@/lib/three/patch-three-clock'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Canvas, type CanvasProps } from '@react-three/fiber'
 import { useThree } from '@react-three/fiber'
-import { Perf } from 'r3f-perf'
 import { isWebGLAvailable } from '@/lib/showcase/webgl'
 
 function WebGLContextGuard({
@@ -96,7 +95,6 @@ export function SafeCanvas({
       {...canvasProps}
     >
       <WebGLContextGuard onContextLost={handleLost} onContextRestored={handleRestored} />
-      {process.env.NODE_ENV === 'development' && <Perf position="top-left" />}
       {children}
     </Canvas>
   )

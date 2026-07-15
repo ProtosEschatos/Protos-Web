@@ -93,14 +93,9 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
 
   if (isShowcase) {
     return (
-      <>
-        <SiteConsentModal open={siteLocked} onAccepted={finishConsent} />
-        <main
-          className={`relative min-h-screen overflow-hidden ${siteLocked ? 'pointer-events-none select-none' : ''}`}
-        >
-          {children}
-        </main>
-      </>
+      <main className="relative min-h-screen overflow-hidden">
+        {children}
+      </main>
     )
   }
 

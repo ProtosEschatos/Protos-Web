@@ -1,14 +1,17 @@
-'use server'
-
 import { supabase } from '@/lib/supabase'
 
-export async function submitContact(data: {
+export type ContactSubmission = {
   name: string
   email: string
   service: string
   message: string
   language?: string
-}) {
+}
+
+/** Persist contact form via Supabase RPC; email is sent by edge `submit-form` (DB webhook). */
+export async function submitContact(
+  data: ContactSubmission,
+): Promise<{ success: true } | { success: false; error: string }> {
   if (!supabase) {
     console.error('Contact submission failed: Supabase not configured')
     return { success: false, error: 'Contact form is not configured' }

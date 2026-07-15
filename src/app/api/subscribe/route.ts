@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { checkRateLimit, getClientIp } from '@/lib/security/rate-limit'
-import { getSupabaseAnonKey, getSupabaseUrl } from '@/lib/supabase/env'
+import { invokeEdgeFunction } from '@/lib/supabase/edge-fn'
+
+export const runtime = 'nodejs'
 
 export async function POST(request: Request) {
   const rate = checkRateLimit('subscribe', getClientIp(request), 5, 15 * 60 * 1000)
@@ -20,28 +22,20 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, message: 'Invalid email' }, { status: 400 })
     }
 
-    const supabaseUrl = getSupabaseUrl()
-    const anonKey = getSupabaseAnonKey()
+    const result = await invokeEdgeFunction<{ success?: boolean; error?: string }>('subscribe', {
+      email,
+      language,
+      source: 'website',
+    })
 
-    if (!supabaseUrl || !anonKey) {
+    if (!result.configured) {
       return NextResponse.json({ success: false, message: 'Not configured' }, { status: 503 })
     }
 
-    const response = await fetch(`${supabaseUrl}/functions/v1/subscribe`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${anonKey}`,
-      },
-      body: JSON.stringify({ email, language, source: 'website' }),
-    })
-
-    const data = await response.json().catch(() => ({}))
-
-    if (!response.ok) {
+    if (!result.ok) {
       return NextResponse.json(
-        { success: false, message: data.error || 'Subscribe failed' },
-        { status: response.status },
+        { success: false, message: result.data.error || 'Subscribe failed' },
+        { status: result.status },
       )
     }
 

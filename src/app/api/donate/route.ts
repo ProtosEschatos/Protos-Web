@@ -2,7 +2,9 @@ import { NextResponse } from 'next/server'
 import { aboutPublicPathForLocale } from '@/lib/routes/localized-paths'
 import { DONATION_MAX_EUR, DONATION_MIN_EUR, isDonationCause } from '@/lib/donations'
 import { checkRateLimit, getClientIp } from '@/lib/security/rate-limit'
-import { getSupabaseAnonKey, getSupabaseUrl } from '@/lib/supabase/env'
+import { invokeEdgeFunction } from '@/lib/supabase/edge-fn'
+
+export const runtime = 'nodejs'
 
 function siteBaseUrl(): string {
   return (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.protosweb.eu').replace(/\/$/, '')
@@ -15,13 +17,6 @@ export async function POST(request: Request) {
       { error: 'Previše zahtjeva. Pokušaj ponovno kasnije.' },
       { status: 429, headers: { 'Retry-After': String(rate.retryAfterSec) } },
     )
-  }
-
-  const supabaseUrl = getSupabaseUrl()
-  const supabaseAnonKey = getSupabaseAnonKey()
-
-  if (!supabaseUrl || !supabaseAnonKey) {
-    return NextResponse.json({ error: 'Supabase nije konfiguriran' }, { status: 500 })
   }
 
   try {
@@ -52,28 +47,32 @@ export async function POST(request: Request) {
     const successUrl = `${base}${aboutPath}?donation=success&session_id={CHECKOUT_SESSION_ID}`
     const cancelUrl = `${base}${aboutPath}?donation=cancelled`
 
-    const edgeRes = await fetch(`${supabaseUrl}/functions/v1/donation-checkout`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${supabaseAnonKey}`,
-      },
-      body: JSON.stringify({ amount, email, name, cause, locale, successUrl, cancelUrl }),
+    const result = await invokeEdgeFunction<{ url?: string; error?: string }>('donation-checkout', {
+      amount,
+      email,
+      name,
+      cause,
+      locale,
+      successUrl,
+      cancelUrl,
     })
 
-    const data = await edgeRes.json()
-    if (!edgeRes.ok) {
+    if (!result.configured) {
+      return NextResponse.json({ error: 'Supabase nije konfiguriran' }, { status: 500 })
+    }
+
+    if (!result.ok) {
       return NextResponse.json(
-        { error: data.error ?? 'Checkout nije uspio' },
-        { status: edgeRes.status },
+        { error: result.data.error ?? 'Checkout nije uspio' },
+        { status: result.status },
       )
     }
 
-    if (!data.url) {
+    if (!result.data.url) {
       return NextResponse.json({ error: 'Stripe URL nedostaje' }, { status: 502 })
     }
 
-    return NextResponse.json({ url: data.url })
+    return NextResponse.json({ url: result.data.url })
   } catch {
     return NextResponse.json({ error: 'Neispravan zahtjev' }, { status: 400 })
   }

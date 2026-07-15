@@ -13,7 +13,7 @@
 
 **Supabase project:** `laqnnzavwbojntfiqmxj`
 
-There is no Prisma, Firebase, or separate Node API server. Next.js API routes call Supabase (anon or service role) or Supabase Edge Functions.
+There is no Prisma, Firebase, or separate Node API server. Next.js API routes call Supabase (anon or service role) or proxy to Supabase Edge Functions. Route vs edge ownership: [`docs/api-ownership.md`](api-ownership.md).
 
 ## What Supabase owns (backend)
 

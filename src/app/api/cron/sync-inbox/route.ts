@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { syncAllMailboxes } from '@/lib/mail/inbox-sync'
 
+export const runtime = 'nodejs'
+
 function isAuthorized(request: Request): boolean {
   const secret = process.env.CRON_SECRET?.trim()
   if (!secret) return false

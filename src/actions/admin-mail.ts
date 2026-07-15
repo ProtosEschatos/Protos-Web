@@ -1,7 +1,7 @@
 'use server'
 
 import { requireAdmin } from '@/lib/auth/require-admin'
-import { fetchMailboxInbox, fetchMailboxMessage, type MailListItem, type MailMessage } from '@/lib/mail/imap-client'
+import { fetchMailboxInbox, fetchMailboxMessage } from '@/lib/mail/imap-client'
 import { getCachedMailboxInbox, syncMailboxToCache } from '@/lib/mail/inbox-sync'
 import {
   ADMIN_MAILBOXES,
@@ -9,6 +9,7 @@ import {
   isMailboxConfigured,
   type MailboxId,
 } from '@/lib/mail/mailboxes'
+import type { MailListItem, MailMessage } from '@/lib/mail/types'
 
 export type AdminMailboxStatus = {
   id: MailboxId

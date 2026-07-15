@@ -1,6 +1,9 @@
+import 'server-only'
+
 import { supabaseAdmin } from '@/lib/supabase-admin'
-import { fetchMailboxInbox, type MailListItem } from '@/lib/mail/imap-client'
+import { fetchMailboxInbox } from '@/lib/mail/imap-client'
 import { ADMIN_MAILBOXES, isMailboxConfigured, type MailboxId } from '@/lib/mail/mailboxes'
+import type { MailListItem } from '@/lib/mail/types'
 
 export async function syncMailboxToCache(mailboxId: MailboxId): Promise<{ ok: boolean; error?: string }> {
   if (!supabaseAdmin) {

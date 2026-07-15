@@ -7,6 +7,8 @@ import {
 } from '@/lib/auth/admin-auth'
 import { checkRateLimit, getClientIp, recordFailedAttempt } from '@/lib/auth/admin-rate-limit'
 
+export const runtime = 'nodejs'
+
 const GENERIC_ERROR = 'Neispravna lozinka ili pristup trenutno nije dostupan.'
 
 function delay(ms: number) {

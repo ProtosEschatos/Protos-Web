@@ -3,6 +3,8 @@ import { cookies } from 'next/headers'
 import { verifyAdminSession, ADMIN_COOKIE } from '@/lib/auth/admin-auth'
 import { adminGetActivityBadgeCount } from '@/actions/admin-notifications'
 
+export const runtime = 'nodejs'
+
 export async function GET() {
   const token = (await cookies()).get(ADMIN_COOKIE)?.value
   if (!verifyAdminSession(token)) {

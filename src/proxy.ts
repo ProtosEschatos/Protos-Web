@@ -13,6 +13,8 @@ import {
   verifyAdminSessionEdge,
 } from './lib/auth/admin-auth-shared'
 
+/** Edge proxy — must not import mail/, imapflow, or Node-only admin-auth (crypto module). */
+
 const intlMiddleware = createMiddleware(routing)
 
 const defaultLocale = routing.defaultLocale

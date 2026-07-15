@@ -3,11 +3,11 @@
 import { useEffect } from 'react'
 import Lenis from 'lenis'
 import { usePathname } from '@/navigation'
-import { isPortfolioShowcasePath } from '@/lib/routes/showcase-path'
 
 export default function LenisProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
-  const disableSmoothScroll = isPortfolioShowcasePath(pathname) || pathname.includes('/admin')
+  const disableSmoothScroll =
+    pathname.includes('portfolio-showcase') || pathname.includes('/admin')
 
   useEffect(() => {
     if (disableSmoothScroll) return

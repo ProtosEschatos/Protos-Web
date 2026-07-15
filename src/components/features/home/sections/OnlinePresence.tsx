@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { brandGlyph } from '@/components/ui/BrandIcons'
-import type { PresenceItem } from '@/lib/config/team-profiles'
+import type { PresenceItem } from '@/lib/config/social-links'
 import {
   darioSocialItems,
   freelancePlatformItems,

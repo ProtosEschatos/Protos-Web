@@ -2,7 +2,7 @@
 
 > Trajna biblioteka dizajn elemenata / inspiracije za Protos Web.
 > **Dostupna na dva mjesta:**
-> 1. **Ovaj repo** (`design/references/`) + Cursor pravilo `.cursor/rules/protos-web.mdc` → AI uvijek ima kontekst.
+> 1. **Ovaj repo** (`design/references/`) + Cursor pravilo `.cursor/rules/design-system.mdc` → AI uvijek ima kontekst.
 > 2. **Supabase** — Storage bucket `design-assets` + tablica `public.design_elements` (metapodaci).
 
 ---
@@ -26,7 +26,7 @@ Protos Web = **cosmic / neon / glassmorphism** na tamnoj podlozi.
 **Principi:**
 - Tamna svemirska podloga + glassmorphism paneli (blur, tanki svijetli rub `rgba(255,255,255,0.08)`).
 - Glow / neon rubovi i sjene umjesto tvrdih linija.
-- Animacije samo na `opacity` + `transform` (vidi `.cursor/rules/protos-web.mdc`).
+- Animacije samo na `opacity` + `transform` (vidi `.cursor/rules/dom-canvas-layers.mdc`).
 - 3D prostor ide u R3F (`src/components/three/**`), UI chrome u DOM.
 
 ---

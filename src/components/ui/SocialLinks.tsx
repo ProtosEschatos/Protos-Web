@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { Mail } from 'lucide-react'
-import { SOCIAL_EMAIL } from '@/lib/config/team-profiles'
+import { SOCIAL_EMAIL } from '@/lib/config/social-links'
 
 type SocialLinksProps = {
   className?: string

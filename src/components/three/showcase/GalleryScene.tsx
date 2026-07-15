@@ -3,7 +3,6 @@
 import { useMemo, useRef, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
-import { Text } from '@react-three/drei'
 import { SHOWCASE_CONFIG, INITIAL_CHARACTER_HEADING, FRAME_SLOTS, getFrameTransform, type ShowcaseProject } from './constants'
 import { getFrameDimensions } from './frameDimensions'
 import type { ShowcaseViewport } from '@/hooks/use-showcase-viewport'
@@ -11,148 +10,53 @@ import type { TouchInput } from '@/hooks/use-showcase-viewport'
 import { AstronautCharacter, animateAstronautWalk, resetAstronautPose } from './AstronautCharacter'
 import { FrameScreenshot } from './FrameScreenshot'
 
-function GalleryWallMotto() {
-  const { galleryHeight, galleryLength } = SHOWCASE_CONFIG
-  const wallZ = -galleryLength / 2 + 0.14
-  const centerY = galleryHeight * 0.52
-
-  const lineProps = {
-    anchorX: 'center' as const,
-    anchorY: 'middle' as const,
-    outlineWidth: 0.028,
-    outlineColor: '#0f172a',
-    letterSpacing: 0.06,
-    maxWidth: 10,
-    textAlign: 'center' as const,
-  }
-
-  return (
-    <group position={[0, centerY, wallZ]}>
-      <mesh position={[0, 0, -0.06]}>
-        <planeGeometry args={[9.5, 3.4]} />
-        <meshBasicMaterial color={0x06b6d4} transparent opacity={0.14} />
-      </mesh>
-      <mesh position={[0, 0, -0.05]}>
-        <planeGeometry args={[8.4, 2.8]} />
-        <meshBasicMaterial color={0x0f172a} transparent opacity={0.72} />
-      </mesh>
-      <mesh position={[0, 0, -0.04]}>
-        <planeGeometry args={[7.6, 2.4]} />
-        <meshBasicMaterial color={0x1e1b4b} transparent opacity={0.35} />
-      </mesh>
-
-      <Text
-        {...lineProps}
-        position={[0, 0.52, 0.02]}
-        fontSize={0.58}
-        color="#e0f2fe"
-      >
-        Astra Castra
-      </Text>
-
-      <mesh position={[0, 0.02, 0.01]}>
-        <boxGeometry args={[4.8, 0.035, 0.02]} />
-        <meshBasicMaterial color={0x6366f1} transparent opacity={0.9} />
-      </mesh>
-
-      <Text
-        {...lineProps}
-        position={[0, -0.48, 0.02]}
-        fontSize={0.58}
-        color="#a5f3fc"
-      >
-        Numen Lumen
-      </Text>
-
-      <pointLight position={[0, 0, 1.2]} color={0x67e8f9} intensity={1.1} distance={7} />
-    </group>
-  )
-}
-
-function GalleryWallFeaturedPortal({ title, badge }: { title: string; badge: string }) {
-  const { galleryHeight, galleryLength } = SHOWCASE_CONFIG
-  const wallZ = -galleryLength / 2 + 0.14
-  const centerY = galleryHeight * 0.52 - 2.05
-
-  return (
-    <group position={[0, centerY, wallZ]}>
-      <mesh position={[0, 0, -0.03]}>
-        <planeGeometry args={[3.6, 2.15]} />
-        <meshBasicMaterial color={0x6366f1} transparent opacity={0.22} />
-      </mesh>
-      <mesh position={[0, 0, -0.02]}>
-        <planeGeometry args={[3.2, 1.85]} />
-        <meshBasicMaterial color={0x0f172a} transparent opacity={0.88} />
-      </mesh>
-      <mesh position={[0, 0, -0.01]}>
-        <planeGeometry args={[3.05, 1.7]} />
-        <meshBasicMaterial color={0x1e1b4b} transparent opacity={0.55} />
-      </mesh>
-      <mesh position={[0, 0, 0]}>
-        <boxGeometry args={[3.2, 1.85, 0.04]} />
-        <meshStandardMaterial
-          color={0x312e81}
-          emissive={0x4338ca}
-          emissiveIntensity={0.35}
-          metalness={0.4}
-          roughness={0.45}
-        />
-      </mesh>
-
-      <Text
-        anchorX="center"
-        anchorY="middle"
-        position={[0, 0.42, 0.05]}
-        fontSize={0.22}
-        color="#c4b5fd"
-        letterSpacing={0.12}
-        maxWidth={2.8}
-        textAlign="center"
-      >
-        {badge}
-      </Text>
-
-      <Text
-        anchorX="center"
-        anchorY="middle"
-        position={[0, -0.08, 0.05]}
-        fontSize={0.28}
-        color="#e0f2fe"
-        outlineWidth={0.02}
-        outlineColor="#0f172a"
-        maxWidth={2.9}
-        textAlign="center"
-      >
-        {title}
-      </Text>
-
-      <mesh position={[0, -0.62, 0.04]}>
-        <boxGeometry args={[1.6, 0.28, 0.03]} />
-        <meshStandardMaterial color={0x06b6d4} emissive={0x0891b2} emissiveIntensity={0.6} metalness={0.3} roughness={0.4} />
-      </mesh>
-
-      <Text
-        anchorX="center"
-        anchorY="middle"
-        position={[0, -0.62, 0.07]}
-        fontSize={0.14}
-        color="#ecfeff"
-        letterSpacing={0.08}
-      >
-        E
-      </Text>
-
-      <pointLight position={[0, 0.2, 0.8]} color={0xa78bfa} intensity={0.9} distance={4} />
-    </group>
-  )
-}
-
-export function getFeaturedWallDemoPosition() {
-  const { galleryHeight, galleryLength } = SHOWCASE_CONFIG
-  const wallZ = -galleryLength / 2 + 0.14
-  const centerY = galleryHeight * 0.52 - 2.05
-  return new THREE.Vector3(0, centerY, wallZ)
-}
+const LETTER_BLOCKS = [
+  [
+    { x: -4, y: 0, w: 0.15, h: 1.2 },
+    { x: -3.8, y: 0.5, w: 0.4, h: 0.15 },
+    { x: -3.5, y: 0.3, w: 0.15, h: 0.5 },
+    { x: -3.8, y: 0.1, w: 0.4, h: 0.15 },
+  ],
+  [
+    { x: -3.0, y: 0, w: 0.15, h: 1.2 },
+    { x: -2.5, y: 0, w: 0.15, h: 1.2 },
+    { x: -2.75, y: 0.5, w: 0.4, h: 0.15 },
+    { x: -2.75, y: -0.5, w: 0.4, h: 0.15 },
+  ],
+  [
+    { x: -2.0, y: 0, w: 0.15, h: 1.2 },
+    { x: -1.8, y: 0.5, w: 0.4, h: 0.15 },
+    { x: -1.5, y: 0.3, w: 0.15, h: 0.5 },
+    { x: -1.8, y: 0.1, w: 0.4, h: 0.15 },
+    { x: -1.5, y: -0.3, w: 0.15, h: 0.5 },
+  ],
+  [
+    { x: -1.0, y: 0.5, w: 0.6, h: 0.15 },
+    { x: -1.0, y: 0, w: 0.15, h: 1.2 },
+  ],
+  [
+    { x: -0.3, y: 0, w: 0.15, h: 1.2 },
+    { x: -0.1, y: 0.5, w: 0.4, h: 0.15 },
+    { x: -0.1, y: 0.1, w: 0.3, h: 0.15 },
+  ],
+  [
+    { x: 0.5, y: 0, w: 0.15, h: 1.2 },
+    { x: 1.0, y: 0, w: 0.15, h: 1.2 },
+    { x: 0.75, y: 0.5, w: 0.4, h: 0.15 },
+    { x: 0.75, y: -0.5, w: 0.4, h: 0.15 },
+  ],
+  [
+    { x: 1.5, y: 0, w: 0.15, h: 1.2 },
+    { x: 1.7, y: -0.5, w: 0.4, h: 0.15 },
+  ],
+  [{ x: 2.3, y: 0, w: 0.15, h: 1.2 }],
+  [
+    { x: 2.8, y: 0, w: 0.15, h: 1.2 },
+    { x: 3.3, y: 0, w: 0.15, h: 1.2 },
+    { x: 3.05, y: 0.5, w: 0.4, h: 0.15 },
+    { x: 3.05, y: -0.5, w: 0.4, h: 0.15 },
+  ],
+] as const
 
 function Starfield() {
   const positions = useMemo(() => {
@@ -175,6 +79,30 @@ function Starfield() {
       </bufferGeometry>
       <pointsMaterial color={0xffffff} size={0.5} transparent opacity={0.8} />
     </points>
+  )
+}
+
+function PortfolioWallText() {
+  const letterMat = useMemo(() => new THREE.MeshBasicMaterial({ color: 0x6366f1, transparent: true, opacity: 0.9 }), [])
+
+  return (
+    <group position={[0, SHOWCASE_CONFIG.galleryHeight * 0.5, -SHOWCASE_CONFIG.galleryLength / 2 + 0.3]}>
+      {LETTER_BLOCKS.flatMap((letter, li) =>
+        letter.map((block, bi) => (
+          <mesh key={`${li}-${bi}`} material={letterMat} position={[block.x, block.y, 0.1]}>
+            <boxGeometry args={[block.w, block.h, 0.1]} />
+          </mesh>
+        )),
+      )}
+      <mesh position={[0, -1, 0.05]}>
+        <boxGeometry args={[6, 0.05, 0.02]} />
+        <meshBasicMaterial color={0x6366f1} transparent opacity={0.8} />
+      </mesh>
+      <mesh position={[0, 0, -0.1]}>
+        <planeGeometry args={[8, 3]} />
+        <meshBasicMaterial color={0x06b6d4} transparent opacity={0.1} />
+      </mesh>
+    </group>
   )
 }
 
@@ -409,10 +337,7 @@ type SceneProps = {
   keys: React.MutableRefObject<Record<string, boolean>>
   touchInput: React.MutableRefObject<TouchInput>
   characterRef: React.RefObject<THREE.Group | null>
-  featuredDemoTitle: string
-  featuredDemoBadge: string
   onNearestProject: (project: ShowcaseProject | null) => void
-  onNearFeaturedDemo: (near: boolean) => void
 }
 
 export function ShowcaseScene({
@@ -422,19 +347,14 @@ export function ShowcaseScene({
   keys,
   touchInput,
   characterRef,
-  featuredDemoTitle,
-  featuredDemoBadge,
   onNearestProject,
-  onNearFeaturedDemo,
 }: SceneProps) {
   const walkPhase = useRef(0)
   const headingRef = useRef(INITIAL_CHARACTER_HEADING)
   const lastNearestLinkRef = useRef<string | null>(null)
-  const lastNearFeaturedRef = useRef(false)
   const smoothTouch = useRef({ x: 0, y: 0 })
   const yAxis = useMemo(() => new THREE.Vector3(0, 1, 0), [])
   const moveDir = useMemo(() => new THREE.Vector3(), [])
-  const featuredWallPos = useMemo(() => getFeaturedWallDemoPosition(), [])
   const framePositions = useMemo(
     () =>
       projects.map((project, index) => {
@@ -531,15 +451,7 @@ export function ShowcaseScene({
           nearestProject = project
         }
       }
-
-      const featuredDist = character.position.distanceTo(featuredWallPos)
-      const nearFeaturedDemo = featuredDist < 4.8 && character.position.z < -SHOWCASE_CONFIG.galleryLength / 3
-      if (nearFeaturedDemo !== lastNearFeaturedRef.current) {
-        lastNearFeaturedRef.current = nearFeaturedDemo
-        onNearFeaturedDemo(nearFeaturedDemo)
-      }
-
-      const activeProject = !nearFeaturedDemo && nearestDist < 4 ? nearestProject : null
+      const activeProject = nearestDist < 4 ? nearestProject : null
       const nextLink = activeProject?.link ?? null
       if (nextLink !== lastNearestLinkRef.current) {
         lastNearestLinkRef.current = nextLink
@@ -549,10 +461,6 @@ export function ShowcaseScene({
       if (lastNearestLinkRef.current !== null) {
         lastNearestLinkRef.current = null
         onNearestProject(null)
-      }
-      if (lastNearFeaturedRef.current) {
-        lastNearFeaturedRef.current = false
-        onNearFeaturedDemo(false)
       }
       character.quaternion.setFromAxisAngle(yAxis, headingRef.current)
     }
@@ -570,8 +478,7 @@ export function ShowcaseScene({
       <GalleryLighting />
       <Starfield />
       <GalleryShell />
-      <GalleryWallMotto />
-      <GalleryWallFeaturedPortal title={featuredDemoTitle} badge={featuredDemoBadge} />
+      <PortfolioWallText />
       {Array.from({ length: FRAME_SLOTS }).map((_, index) => (
         <ProjectFrame
           key={`frame-${index}-${viewport}`}

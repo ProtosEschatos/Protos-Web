@@ -33,7 +33,7 @@ export function ShowcaseFallback({ projects, reason = 'unsupported', onRetry }: 
           <span className="text-white">{t('station')}</span>
         </div>
         <Link
-          href="/"
+          href="/portfolio"
           className="flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-2.5 text-sm text-white transition-all hover:border-[#ff0099] hover:bg-[#ff0099]"
         >
           ← {t('back')}
@@ -104,8 +104,14 @@ export function ShowcaseFallback({ projects, reason = 'unsupported', onRetry }: 
 
         <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Link
-            href="/kontakt"
+            href="/portfolio"
             className="rounded-full border border-white/20 bg-white/10 px-8 py-3 text-sm font-semibold text-white hover:border-[#ff0099]"
+          >
+            {t('webglViewPortfolio')}
+          </Link>
+          <Link
+            href="/kontakt"
+            className="rounded-full bg-gradient-to-r from-[var(--primary)] to-[#ff8800] px-8 py-3 text-sm font-semibold text-white"
           >
             {tNav('contact')}
           </Link>

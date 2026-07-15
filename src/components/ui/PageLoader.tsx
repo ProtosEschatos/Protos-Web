@@ -28,10 +28,9 @@ export default function PageLoader() {
   useLayoutEffect(() => {
     if (isBootComplete()) {
       setLoading(false)
-      return
+    } else {
+      removeBootSsrVeil()
     }
-    removeBootSsrVeil()
-    setLoading(true)
   }, [])
 
   useEffect(() => {
@@ -179,7 +178,7 @@ export default function PageLoader() {
         )}
       </AnimatePresence>
 
-      <SiteConsentModal open={showConsentModal} onAccepted={finishBoot} />
+      <SiteConsentModal open={loading && showConsentModal} onAccepted={finishBoot} />
     </>
   )
 }

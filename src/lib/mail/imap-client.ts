@@ -1,5 +1,3 @@
-import 'server-only'
-
 import { ImapFlow } from 'imapflow'
 import {
   getMailbox,
@@ -7,9 +5,21 @@ import {
   resolveMailboxImapConfig,
   type MailboxId,
 } from '@/lib/mail/mailboxes'
-import type { MailListItem, MailMessage } from '@/lib/mail/types'
 
-export type { MailListItem, MailMessage } from '@/lib/mail/types'
+export type MailListItem = {
+  uid: number
+  subject: string
+  from: string
+  to: string
+  date: string | null
+  seen: boolean
+  preview: string
+}
+
+export type MailMessage = MailListItem & {
+  text: string
+  html: string | null
+}
 
 function formatAddress(addr: { name?: string; address?: string } | undefined): string {
   if (!addr) return ''

@@ -34,7 +34,6 @@
     "subtitle": "Fast, lightweight, and robust websites that work for you. All in one place.",
     "cta_primary": "Start build",
     "cta_secondary": "View Portfolio",
-    "cta_gift": "Gift",
     "stats": {
       "projects": {
         "value": "50",
@@ -373,14 +372,7 @@
     "webglContextLostTitle": "3D view paused",
     "webglContextLostDesc": "The GPU temporarily released the 3D view. Browse the projects below or try 3D again.",
     "webglRetry": "Try 3D again",
-    "webglViewPortfolio": "View full portfolio",
-    "wallDemoBadge": "Gift",
-    "wallDemoTitle": "Maximum Performance Guide",
-    "wallDemoDescription": "Interactive tool for CPU, RAM and GPU optimization — free for you.",
-    "wallDemoOpen": "Open fullscreen",
-    "wallDemoClose": "Close",
-    "giftIntroHint": "Your gift is on the back wall — below the Astra Castra / Numen Lumen motto. Walk to the panel and press E.",
-    "giftWalkHint": "Walk to the back wall — the gift is below the wall motto. Press E for fullscreen."
+    "webglViewPortfolio": "View full portfolio"
   },
   "aboutPage": {
     "label": "ABOUT US",

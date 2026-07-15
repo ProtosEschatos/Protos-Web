@@ -12,6 +12,7 @@ import { DARIO_INSTAGRAM_URL, MARTINA_INSTAGRAM_URL } from '@/lib/config/site'
 import { DONATION_DEFAULT_CAUSE } from '@/lib/donations'
 
 const TEAM_MEMBERS = ['dario', 'martina'] as const
+type TeamMemberId = (typeof TEAM_MEMBERS)[number]
 
 const DARIO_FIELDS = ['location', 'experience', 'email', 'phone', 'languages', 'instagram'] as const
 const MARTINA_FIELDS = ['experience', 'focus', 'contribution', 'instagram'] as const

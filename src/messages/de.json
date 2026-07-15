@@ -34,7 +34,6 @@
     "subtitle": "Schnelle, leichte und robuste Websites, die fur Sie arbeiten. Alles an einem Ort.",
     "cta_primary": "Projekt starten",
     "cta_secondary": "Portfolio ansehen",
-    "cta_gift": "Geschenk",
     "stats": {
       "projects": {
         "value": "50",
@@ -373,14 +372,7 @@
     "webglContextLostTitle": "3D-Ansicht pausiert",
     "webglContextLostDesc": "Die GPU hat die 3D-Ansicht vorubergehend freigegeben. Durchsuchen Sie die Projekte unten oder versuchen Sie 3D erneut.",
     "webglRetry": "3D erneut versuchen",
-    "webglViewPortfolio": "Ganzes Portfolio ansehen",
-    "wallDemoBadge": "Geschenk",
-    "wallDemoTitle": "Leitfaden für maximale Leistung",
-    "wallDemoDescription": "Interaktives Tool zur CPU-, RAM- und GPU-Optimierung — kostenlos für Sie.",
-    "wallDemoOpen": "Vollbild öffnen",
-    "wallDemoClose": "Schließen",
-    "giftIntroHint": "Ihr Geschenk wartet an der Rückwand — unter dem Motto Astra Castra / Numen Lumen. Gehen Sie zum Panel und drücken Sie E.",
-    "giftWalkHint": "Gehen Sie zur Rückwand — das Geschenk ist unter dem Wandspruch. Drücken Sie E für Vollbild."
+    "webglViewPortfolio": "Ganzes Portfolio ansehen"
   },
   "legalPages": {
     "lastUpdated": "Zuletzt aktualisiert",

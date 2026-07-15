@@ -1,9 +1,6 @@
-import 'server-only'
-
 import { supabaseAdmin } from '@/lib/supabase-admin'
-import { fetchMailboxInbox } from '@/lib/mail/imap-client'
+import { fetchMailboxInbox, type MailListItem } from '@/lib/mail/imap-client'
 import { ADMIN_MAILBOXES, isMailboxConfigured, type MailboxId } from '@/lib/mail/mailboxes'
-import type { MailListItem } from '@/lib/mail/types'
 
 export async function syncMailboxToCache(mailboxId: MailboxId): Promise<{ ok: boolean; error?: string }> {
   if (!supabaseAdmin) {
@@ -37,6 +34,9 @@ export async function syncAllMailboxes(): Promise<Record<MailboxId, { ok: boolea
   const results = {} as Record<MailboxId, { ok: boolean; error?: string }>
 
   for (const mailbox of ADMIN_MAILBOXES) {
+    if (mailbox.id === 'martina' && !isMailboxConfigured('martina')) {
+      continue
+    }
     results[mailbox.id] = await syncMailboxToCache(mailbox.id)
   }
 

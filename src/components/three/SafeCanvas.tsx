@@ -1,24 +1,10 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { Canvas, useThree, type CanvasProps } from '@react-three/fiber'
+import { Canvas, type CanvasProps } from '@react-three/fiber'
+import { useThree } from '@react-three/fiber'
+import { Perf } from 'r3f-perf'
 import { isWebGLAvailable } from '@/lib/showcase/webgl'
-
-function CanvasReadyNotifier({ onReady }: { onReady?: () => void }) {
-  const { gl } = useThree()
-
-  useEffect(() => {
-    if (!onReady) return
-    let frame = 0
-    const notify = () => {
-      frame = requestAnimationFrame(() => onReady())
-    }
-    notify()
-    return () => cancelAnimationFrame(frame)
-  }, [gl, onReady])
-
-  return null
-}
 
 function WebGLContextGuard({
   onContextLost,
@@ -58,7 +44,6 @@ type SafeCanvasProps = CanvasProps & {
   mountKey?: number
   onContextLost?: () => void
   onContextRestored?: () => void
-  onReady?: () => void
 }
 
 export function SafeCanvas({
@@ -67,7 +52,6 @@ export function SafeCanvas({
   mountKey = 0,
   onContextLost,
   onContextRestored,
-  onReady,
   dpr = [1, 1.5],
   gl,
   ...canvasProps
@@ -110,7 +94,7 @@ export function SafeCanvas({
       {...canvasProps}
     >
       <WebGLContextGuard onContextLost={handleLost} onContextRestored={handleRestored} />
-      <CanvasReadyNotifier onReady={onReady} />
+      {process.env.NODE_ENV === 'development' && <Perf position="top-left" />}
       {children}
     </Canvas>
   )

@@ -1,7 +1,5 @@
-import 'server-only'
-
 /** Backward-compatible wrappers around the multi-mailbox IMAP client. */
-export type { MailListItem, MailMessage } from '@/lib/mail/types'
+export type { MailListItem, MailMessage } from '@/lib/mail/imap-client'
 export { fetchMailboxInbox, fetchMailboxMessage } from '@/lib/mail/imap-client'
 import { fetchMailboxInbox, fetchMailboxMessage } from '@/lib/mail/imap-client'
 import { isMailboxConfigured } from '@/lib/mail/mailboxes'

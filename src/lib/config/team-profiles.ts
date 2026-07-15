@@ -1,20 +1,9 @@
 import {
-  CONTACT_EMAIL,
   DARIO_INSTAGRAM_URL,
   INSTAGRAM_URL,
   MARTINA_INSTAGRAM_URL,
 } from '@/lib/config/site'
-
-export const SOCIAL_EMAIL = CONTACT_EMAIL
-export const SOCIAL_PHONE = '+385 97 604 39 41'
-
-export type PresenceItem = {
-  id: string
-  label: string
-  href: string
-  brand: string
-  pending?: boolean
-}
+import type { PresenceItem } from '@/lib/config/social-links'
 
 const WHATSAPP_URL = 'https://wa.me/385976043941'
 

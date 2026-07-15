@@ -1,1 +1,123 @@
-# Protos Web — see AGENTS.md and .cursor/rules/protos-web.mdc
+# Protos Web — Cursor AI Rules
+# =============================
+# This file defines strict coding standards for Cursor AI assistant.
+# All code generation MUST follow these rules without exception.
+
+## Project Stack
+- **Framework**: Next.js 14 (App Router) with `src/` directory
+- **Language**: TypeScript (strict mode)
+- **Styling**: Tailwind CSS with CSS custom properties
+- **Animations**: Framer Motion only — GSAP is NOT installed
+- **3D**: React Three Fiber (`@react-three/fiber`, `@react-three/drei`) — NOT vanilla Three.js
+- **Smooth Scroll**: `lenis` (via LenisProvider)
+- **DOM + Canvas layers**: see `.cursor/rules/dom-canvas-layers.mdc` — mandatory for any UI/3D work
+- **i18n**: `next-intl` (5 locales: hr, en, de, it, es)
+- **Icons**: `lucide-react` only (no Font Awesome, no icon CDN)
+- **Backend**: Supabase (blog, contact, portfolio, edge functions; see `supabase/functions/README.md`)
+
+## File Structure Rules
+- All pages go in `src/app/[locale]/`
+- All components go in `src/components/` with subdirs: `layout/`, `sections/`, `three/`, `ui/`, `providers/`
+- All lib/utils go in `src/lib/`
+- All i18n messages go in `src/messages/{locale}.json`
+- API routes go in `src/app/api/`
+
+## Component Rules
+1. **Always use `'use client'`** for components that use:
+   - React hooks (useState, useEffect, useRef, etc.)
+   - Framer Motion animations
+   - Browser APIs (window, document, localStorage)
+   - Three.js / R3F components
+   - Event handlers
+
+2. **Three.js components MUST**:
+   - Use `@react-three/fiber` and `@react-three/drei` — NEVER vanilla Three.js
+   - Be dynamically imported with `next/dynamic` and `{ ssr: false }`
+   - Be wrapped in `<Canvas>` from `@react-three/fiber`
+   - Include `<Suspense>` fallback for loading states
+
+3. **DOM + Canvas layers MUST** (full spec in `.cursor/rules/dom-canvas-layers.mdc`):
+   - Site pages: `SiteBackground` → `PageBackgroundCanvas` / per-route backgrounds in `three/backgrounds/` (fixed, behind)
+   - Showcase: fullscreen Canvas; NO Header/Footer/SiteBackground (handled in `AppChrome`)
+   - One showcase phase visible at a time (`loading` | `intro` | `playing`)
+   - 3D objects in Canvas; never fake 3D with CSS transforms for showcase frames
+
+4. **Framer Motion usage MUST**:
+   - Use `whileInView` with `viewport={{ once: true }}` for scroll animations
+   - Use `AnimatePresence` for enter/exit animations
+   - Keep transition durations between 0.3s–0.8s for UI, up to 1.2s for hero elements
+
+## Styling Rules
+1. **Use Tailwind classes** as primary styling method
+2. **CSS custom properties** (from globals.css) for theme colors:
+   - `var(--primary)` = #ff6600
+   - `var(--secondary)` = #8b5cf6
+   - `var(--accent)` = #06b6d4
+   - `var(--dark)` = #0a0a1a
+   - `var(--dark-card)` = #0f0f2a
+   - `var(--light)` = #e8e8f0
+   - `var(--light-muted)` = #8888aa
+3. **Gradients**: Use `var(--gradient-hero)` or Tailwind `bg-gradient-to-*` with CSS vars
+4. **Border radius**: Use Tailwind rounded classes (rounded-xl, rounded-2xl, rounded-full)
+5. **Dark theme only** — do NOT add light mode styles
+
+## Naming Conventions
+- **Components**: PascalCase (e.g., `PageLoader.tsx`, `TransitionLink.tsx`)
+- **Pages**: `page.tsx` inside route folders
+- **Utilities/Hooks**: camelCase (e.g., `useScrollProgress.ts`)
+- **CSS classes**: Tailwind utility-first, custom classes use kebab-case
+- **i18n keys**: dot.notation (e.g., `nav.home`, `hero.title`)
+
+## Performance Rules
+1. **Dynamic imports** for heavy components (Three.js, charts, maps):
+   ```tsx
+   const HomeBackground = dynamic(() => import('@/components/three/backgrounds/HomeBackground'), {
+     ssr: false,
+     loading: () => <div className="w-full h-full bg-dark" />,
+   })
+   ```
+2. **Image optimization**: Always use `next/image` with proper width/height/alt
+3. **Font optimization**: Use `next/font/google` for Inter
+4. **Lazy loading**: Use `loading="lazy"` for below-fold images
+5. **Memoization**: Use `useMemo`/`useCallback` for expensive computations in R3F
+
+## Backend Rules
+- API routes in `src/app/api/` — contact, blog, subscribe
+- Server actions in `src/actions/` — Supabase reads/writes when env vars are set
+- Supabase client in `src/lib/supabase.ts`
+- Edge functions in `supabase/functions/` — see `supabase/functions/README.md`
+- Live schema managed via Supabase MCP/CLI — see `supabase/migrations/README.md`
+
+## i18n Rules
+- Default locale: `hr` (Croatian)
+- All user-facing text MUST use `useTranslations()` hook
+- Translation keys go in all 5 locale files
+- Route segments stay in Croatian (e.g., `/proces`, `/o-meni`, `/usluge`, `/kontakt`)
+- Language selector must show all 5 languages with flag emojis
+
+## Accessibility Rules
+- All images must have `alt` text
+- All buttons must have `aria-label` if no visible text
+- All interactive elements must be keyboard-accessible
+- Use semantic HTML (`<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<footer>`)
+- Color contrast must meet WCAG AA standards
+
+## Git Rules
+- Commit messages in English, imperative mood
+- Prefix: `feat:`, `fix:`, `refactor:`, `style:`, `chore:`, `docs:`
+- One logical change per commit
+- Never commit `node_modules/`, `.next/`, `.env`, `.env.local`
+
+## FORBIDDEN
+- ❌ Do NOT mix site chrome (Header/Footer/PageLoader/SiteBackground) into portfolio-showcase
+- ❌ Do NOT stack multiple `fixed inset-0` overlays on showcase or site
+- ❌ Do NOT use GSAP (not in stack) unless user explicitly adds it to package.json
+- ❌ Do NOT use vanilla Three.js — only React Three Fiber
+- ❌ Do NOT use `pages/` router — only App Router with `src/app/`
+- ❌ Do NOT use CSS modules or styled-components — only Tailwind + CSS vars
+- ❌ Do NOT add light mode — dark theme only
+- ❌ Do NOT add new SQL migrations without coordinating with live remote schema
+- ❌ Do NOT use `any` type — always type properly
+- ❌ Do NOT use inline styles unless absolutely necessary (use Tailwind)
+- ❌ Do NOT create files outside the defined folder structure
+- ❌ Do NOT remove existing working features when adding new ones

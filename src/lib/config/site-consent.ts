@@ -34,6 +34,17 @@ export function getSiteConsent(): SiteConsent | null {
   return null
 }
 
+/** @deprecated Use getSiteConsent — kept for Analytics compatibility */
+export function getCookiePreferences(): CookiePreferences | null {
+  const consent = getSiteConsent()
+  if (!consent) return null
+  return {
+    essential: true,
+    analytics: consent.analytics,
+    acceptedAt: consent.acceptedAt,
+  }
+}
+
 export function hasSiteConsent(): boolean {
   return getSiteConsent() !== null
 }

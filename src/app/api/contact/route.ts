@@ -1,8 +1,6 @@
 import { NextResponse } from 'next/server'
-import { submitContact } from '@/lib/contact/submit-contact'
+import { submitContact } from '@/actions/contact'
 import { checkRateLimit, getClientIp } from '@/lib/security/rate-limit'
-
-export const runtime = 'nodejs'
 
 export async function POST(request: Request) {
   const rate = checkRateLimit('contact', getClientIp(request), 5, 15 * 60 * 1000)
@@ -25,7 +23,6 @@ export async function POST(request: Request) {
       email: String(body.email),
       service: String(body.service || ''),
       message: String(body.message),
-      language: typeof body.language === 'string' ? body.language : undefined,
     })
 
     if (!result.success) {

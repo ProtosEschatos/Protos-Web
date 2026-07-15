@@ -4,6 +4,7 @@ export type BackgroundRouteKey =
   | 'home'
   | 'about'
   | 'process'
+  | 'portfolio'
   | 'services'
   | 'blog'
   | 'contact'
@@ -30,6 +31,7 @@ export function getBackgroundKey(pathname: string): BackgroundRouteKey {
   if (path === '/') return 'home'
   if (path.startsWith('/o-meni') || isAboutPath(path)) return 'about'
   if (path.startsWith('/proces')) return 'process'
+  if (path.startsWith('/portfolio')) return 'portfolio'
   if (path.startsWith('/usluge')) return 'services'
   if (path.startsWith('/blog')) return 'blog'
   if (path.startsWith('/kontakt')) return 'contact'
@@ -41,6 +43,7 @@ export const BACKGROUND_GLOW: Record<BackgroundRouteKey, string> = {
   home: '#ff6600',
   about: '#a78bfa',
   process: '#ff8800',
+  portfolio: '#6366f1',
   services: '#22d3ee',
   blog: '#f59e0b',
   contact: '#06b6d4',
@@ -50,6 +53,7 @@ export const BACKGROUND_FALLBACKS: Record<BackgroundRouteKey, string> = {
   home: 'transparent',
   about: 'radial-gradient(ellipse at 35% 45%, rgba(139,92,246,0.38) 0%, transparent 58%), radial-gradient(ellipse at 72% 28%, rgba(6,182,212,0.28) 0%, transparent 52%)',
   process: 'radial-gradient(ellipse at 28% 50%, rgba(255,102,0,0.34) 0%, transparent 55%), radial-gradient(ellipse at 72% 48%, rgba(139,92,246,0.32) 0%, transparent 55%)',
+  portfolio: 'radial-gradient(ellipse at 50% 42%, rgba(99,102,241,0.38) 0%, transparent 62%)',
   services: 'radial-gradient(ellipse at 55% 48%, rgba(6,182,212,0.36) 0%, transparent 58%)',
   blog: 'radial-gradient(ellipse at 42% 38%, rgba(255,136,0,0.32) 0%, transparent 52%), radial-gradient(ellipse at 68% 62%, rgba(139,92,246,0.26) 0%, transparent 52%)',
   contact: 'radial-gradient(ellipse at 50% 48%, rgba(6,182,212,0.4) 0%, transparent 62%)',
@@ -79,6 +83,11 @@ export const BACKGROUND_AMBIENT: Record<BackgroundRouteKey, AmbientBlob[]> = {
     { color: 'rgba(139,92,246,0.18)', size: 'min(34vw, 22rem)', position: 'bottom-[20%] right-[10%]', animation: 'ambient-drift-c', delay: '-5s' },
     { color: 'rgba(129,140,248,0.12)', size: 'min(24vw, 16rem)', position: 'top-[40%] right-[40%]', animation: 'ambient-pulse' },
   ],
+  portfolio: [
+    { color: 'rgba(99,102,241,0.22)', size: 'min(44vw, 28rem)', position: 'top-[10%] left-[30%]', animation: 'ambient-drift-a' },
+    { color: 'rgba(6,182,212,0.14)', size: 'min(30vw, 20rem)', position: 'bottom-[15%] left-[10%]', animation: 'ambient-drift-b', delay: '-2s' },
+    { color: 'rgba(245,158,11,0.12)', size: 'min(22vw, 15rem)', position: 'top-[60%] right-[12%]', animation: 'ambient-pulse', delay: '-3s' },
+  ],
   services: [
     { color: 'rgba(6,182,212,0.22)', size: 'min(40vw, 26rem)', position: 'top-[12%] right-[18%]', animation: 'ambient-drift-c' },
     { color: 'rgba(139,92,246,0.14)', size: 'min(32vw, 21rem)', position: 'bottom-[22%] left-[15%]', animation: 'ambient-drift-a', delay: '-4s' },
@@ -100,6 +109,7 @@ export const BACKGROUND_FOG: Record<BackgroundRouteKey, string> = {
   home: '#0a0818',
   about: '#0c0820',
   process: '#100818',
+  portfolio: '#080818',
   services: '#061018',
   blog: '#120a08',
   contact: '#061218',

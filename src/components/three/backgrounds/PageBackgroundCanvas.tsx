@@ -15,6 +15,7 @@ const Backgrounds: Record<BackgroundRouteKey, ComponentType<PageBackgroundProps>
   home: dynamic(() => import('@/components/three/backgrounds/HomeBackground'), { ssr: false, loading: () => null }),
   about: dynamic(() => import('@/components/three/backgrounds/AboutBackground'), { ssr: false, loading: () => null }),
   process: dynamic(() => import('@/components/three/backgrounds/ProcessBackground'), { ssr: false, loading: () => null }),
+  portfolio: dynamic(() => import('@/components/three/backgrounds/PortfolioBackground'), { ssr: false, loading: () => null }),
   services: dynamic(() => import('@/components/three/backgrounds/ServicesBackground'), { ssr: false, loading: () => null }),
   blog: dynamic(() => import('@/components/three/backgrounds/BlogBackground'), { ssr: false, loading: () => null }),
   contact: dynamic(() => import('@/components/three/backgrounds/ContactBackground'), { ssr: false, loading: () => null }),

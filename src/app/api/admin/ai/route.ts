@@ -10,8 +10,6 @@ import {
   type AiProvider,
 } from '@/lib/ai/providers'
 
-export const runtime = 'nodejs'
-
 type AiRequestBody = {
   provider?: AiProvider
   messages?: Array<{ role: 'system' | 'user' | 'assistant'; content: string }>

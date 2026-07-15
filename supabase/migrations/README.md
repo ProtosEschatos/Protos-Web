@@ -1,62 +1,51 @@
 # Migrations
 
-Project: `laqnnzavwbojntfiqmxj`  
-Dashboard: [Database → Migrations](https://supabase.com/dashboard/project/laqnnzavwbojntfiqmxj/database/migrations)
+Live database schema for project `laqnnzavwbojntfiqmxj` is managed via **Supabase MCP** and the **Supabase CLI** — not by committing new SQL files from this repo unless you intentionally add a migration and apply it remotely.
 
-Local `supabase/migrations/` must list **every** version in `supabase_migrations.schema_migrations` on remote. If a version exists only on remote (empty `local` in `supabase migration list`), GitHub branching shows **MIGRATIONS: FAILED**.
+## Applied remote migration versions
 
-## Current state (24 migrations — all synced)
+| Version        | Name                                | In repo |
+|----------------|-------------------------------------|---------|
+| 20260615174512 | init_tables                         | no (baseline, remote-only) |
+| 20260615174539 | seed_blog                           | no (baseline, remote-only) |
+| 20260622120000 | schema_security_hardening           | no (baseline, remote-only) |
+| 20260622130000 | drop_unused_tables                  | no (baseline, remote-only) |
+| 20260622140000 | final_rls_lockdown                  | no (baseline, remote-only) |
+| 20260623055126 | security_cleanup                    | no (baseline, remote-only) |
+| 20260623062612 | drop_dead_triggers                  | no (baseline, remote-only) |
+| 20260623064551 | backend_sites_rls                   | no (baseline, remote-only) |
+| 20260702115818 | create_showcase_storage_bucket      | yes |
+| 20260705193252 | harden_security_advisors            | yes |
+| 20260705193549 | create_contacts_submit_form_webhook | yes |
 
-| Version | Name | Repo file |
-|---------|------|-----------|
-| 20260615174512 | init_tables | anchor |
-| 20260615174539 | seed_blog | anchor |
-| 20260622120000 | schema_security_hardening | anchor |
-| 20260622130000 | drop_unused_tables | anchor |
-| 20260622140000 | final_rls_lockdown | anchor |
-| 20260623055126 | security_cleanup | anchor |
-| 20260623062612 | drop_dead_triggers | anchor |
-| 20260623064551 | backend_sites_rls | anchor |
-| 20260702115818 | create_showcase_storage_bucket | full SQL |
-| 20260705193252 | harden_security_advisors | full SQL |
-| 20260705193549 | create_contacts_submit_form_webhook | full SQL |
-| 20260706002434 | design_elements_library | full SQL |
-| 20260706002707 | seed_design_elements | full SQL |
-| 20260710163317 | blog_post_bodulica_shop_hr | anchor |
-| 20260711010955 | blog_posts_author_slug | full SQL |
-| 20260712211748 | dedupe_content_tables_fix_hr_text | anchor |
-| 20260712212525 | fix_pricing_plans_diacritics | anchor |
-| 20260712213029 | fix_services_subtitle_diacritics | anchor |
-| 20260712213541 | rename_icon_values_to_lucide_names | anchor |
-| 20260712220315 | activate_portfolio_display_bodulica_golden_pawn | anchor |
-| 20260712220608 | update_golden_pawn_portfolio_url | anchor |
-| 20260712224047 | admin_mail_sync | anchor |
-| 20260714221113 | donations_stripe_integration | full SQL |
-| 20260714221121 | seed_admin_design_element | full SQL |
+To inspect the current list: `supabase link --project-ref laqnnzavwbojntfiqmxj` then `supabase migration list --linked`.
 
-**Anchor** = `SELECT 1` placeholder — schema already applied on remote before this repo was synced. Safe: CLI skips versions already in `schema_migrations`.
+### Full baseline dump
 
-**Removed duplicates** (never re-add):
-- `20260713003000_admin_mail_sync`
-- `20260713010000_drop_gmail_studio_mailbox`
-- `20260706003000_seed_admin_design_element` → replaced by `20260714221121`
-- `20260711150000_donations_stripe_integration` → replaced by `20260714221113`
-
-## Verify sync
+The earliest tables/RLS/functions (versions `2026061*`–`2026062*`) were created directly
+against the remote project and are not yet checked in as SQL. To capture a complete,
+re-runnable baseline once you have DB credentials:
 
 ```bash
 supabase link --project-ref laqnnzavwbojntfiqmxj
-supabase migration list --linked
+supabase db dump --linked -f supabase/migrations/00000000000000_baseline_schema.sql
 ```
 
-Every row must show matching `local` and `remote` (no empty `local`).
-
-GitHub Actions **Supabase DB Push** (`.github/workflows/supabase-db-push.yml`) runs `supabase db push` on every push to `main` that touches this folder.
-
-## Types
+TypeScript row/insert/update types for the current schema are generated into
+[`../../src/lib/database.types.ts`](../../src/lib/database.types.ts) and consumed by the
+typed Supabase client in `src/lib/supabase.ts`. Regenerate with:
 
 ```bash
 supabase gen types typescript --project-id laqnnzavwbojntfiqmxj > src/lib/database.types.ts
 ```
 
-See [`../functions/README.md`](../functions/README.md) for edge functions.
+## Contact emails (database webhook)
+
+Contact form submissions insert into `contacts` via RPC `submit_contact`. Admin and auto-reply emails are handled by the `submit-form` edge function.
+
+The `contacts` INSERT → `submit-form` webhook is now managed as code in migration
+`20260705193549_create_contacts_submit_form_webhook.sql` (a trigger calling
+`supabase_functions.http_request`). No manual dashboard step is required; if you
+recreate the project, applying migrations restores it.
+
+See [`../functions/README.md`](../functions/README.md) for edge function secrets and deploy details.

@@ -1,5 +1,5 @@
-# Supabase CLI config — project ref laqnnzavwbojntfiqmxj (protosweb.eu)
-project_id = "laqnnzavwbojntfiqmxj"
+# Supabase CLI config
+project_id = "protos-web"
 
 [api]
 enabled = true

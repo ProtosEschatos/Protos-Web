@@ -1,0 +1,149 @@
+{
+  "lastUpdated": "Ultimo aggiornamento",
+  "lastUpdatedDate": "11 luglio 2026",
+  "privacyTitle": "Informativa sulla privacy",
+  "privacyDescription": "Come Protos Web tratta i dati personali in conformità al GDPR.",
+  "termsTitle": "Termini di servizio",
+  "termsDescription": "Condizioni per l'uso del sito Protos Web, inclusa la protezione della proprietà intellettuale.",
+  "cookiesTitle": "Informativa sui cookie",
+  "cookiesDescription": "Come Protos Web utilizza cookie e tecnologie simili.",
+  "termsSections": [
+    {
+      "title": "1. Introduzione e accettazione",
+      "paragraphs": [
+        "Questi Termini di servizio (\"Termini\") regolano l'accesso e l'uso del sito www.protosweb.eu (il \"Sito\") gestito da Dario Imsirović — Protos Web, Zagabria, Repubblica di Croazia (\"Protos Web\", \"noi\").",
+        "Accedendo al Sito confermi di aver letto, compreso e accettato integralmente questi Termini. In caso contrario, non utilizzare il Sito."
+      ]
+    },
+    {
+      "title": "2. Proprietà intellettuale e copyright",
+      "paragraphs": [
+        "Tutti i contenuti del Sito — identità visiva, design UI/UX, layout, tipografia, grafica, animazioni, contenuti 3D, codice sorgente, testi, traduzioni, blog, metadati SEO e implementazioni tecniche — sono proprietà intellettuale originale di Dario Imsirović e/o Protos Web, salvo diversa indicazione.",
+        "Tutti gli elementi sono protetti dalle leggi croate e dell'UE sul copyright e la proprietà intellettuale.",
+        "Nessuna licenza implicita è concessa senza previo consenso scritto."
+      ]
+    },
+    {
+      "title": "3. Attività vietate",
+      "paragraphs": [
+        "Senza autorizzazione scritta è vietato: copiare, scaricare, riprodurre o distribuire contenuti; scraping automatizzato; clonare design o funzionalità; reverse engineering; rimuovere avvisi di copyright; uso commerciale o ingannevole; rivendicare falsamente la proprietà.",
+        "Opere derivate o integrazione del nostro design/codice in prodotti terzi senza consenso scritto sono vietate."
+      ]
+    },
+    {
+      "title": "4. Responsabilità civile e penale",
+      "paragraphs": [
+        "L'uso non autorizzato può comportare responsabilità civile (inibitoria, danni, spese legali).",
+        "A seconda dei casi può costituire illecito o reato secondo la legge croata. Ci riserviamo di segnalare alle autorità e agire legalmente.",
+        "Protos Web protegge attivamente i propri diritti. Ogni violazione accertata sarà perseguita nei limiti di legge."
+      ]
+    },
+    {
+      "title": "5. Portfolio e contenuti demo",
+      "paragraphs": [
+        "Portfolio e demo sono solo dimostrativi e non autorizzano la riproduzione delle soluzioni mostrate.",
+        "I progetti clienti sono mostrati con consenso; i diritti sono definiti nei rispettivi contratti."
+      ]
+    },
+    {
+      "title": "6. Link esterni",
+      "paragraphs": [
+        "I link a terze parti sono soggetti alle loro condizioni. Protos Web non ne controlla i contenuti."
+      ]
+    },
+    {
+      "title": "7. Limitazione di responsabilità",
+      "paragraphs": [
+        "Il Sito è fornito \"così com'è\". La responsabilità per danni indiretti è esclusa nei limiti consentiti dalla legge."
+      ]
+    },
+    {
+      "title": "8. Modifiche",
+      "paragraphs": [
+        "Possiamo aggiornare i Termini. L'uso continuato implica accettazione delle modifiche."
+      ]
+    },
+    {
+      "title": "9. Legge applicabile",
+      "paragraphs": [
+        "Si applica la legge della Repubblica di Croazia. Foro competente in Croazia. Contatto: dario.admin@protosweb.eu."
+      ]
+    }
+  ],
+  "privacySections": [
+    {
+      "title": "1. Titolare del trattamento",
+      "paragraphs": [
+        "Titolare: Dario Imsirović — Protos Web, Zagabria, Repubblica di Croazia. Contatto: dario.admin@protosweb.eu."
+      ]
+    },
+    {
+      "title": "2. Dati raccolti",
+      "paragraphs": [
+        "Modulo contatto, newsletter, cookie (con consenso), log tecnici per sicurezza e funzionamento."
+      ]
+    },
+    {
+      "title": "3. Finalità e base giuridica",
+      "paragraphs": [
+        "Comunicazione (interesse legittimo/servizio), newsletter (consenso), sicurezza (interesse legittimo), cookie analitici (consenso)."
+      ]
+    },
+    {
+      "title": "4. Destinatari",
+      "paragraphs": [
+        "Vercel, Supabase, Resend/Brevo, Cloudflare — vincolati contrattualmente. Nessuna vendita di dati personali."
+      ]
+    },
+    {
+      "title": "5. Conservazione",
+      "paragraphs": [
+        "I dati sono conservati solo per il tempo necessario alle finalità indicate."
+      ]
+    },
+    {
+      "title": "6. I tuoi diritti",
+      "paragraphs": [
+        "Accesso, rettifica, cancellazione, limitazione, opposizione, portabilità, revoca del consenso. Reclamo all'AZOP, Zagabria."
+      ]
+    },
+    {
+      "title": "7. Proprietà intellettuale",
+      "paragraphs": [
+        "La protezione di design e codice è nei Termini di servizio. Questa informativa riguarda solo i dati personali."
+      ]
+    },
+    {
+      "title": "8. Modifiche",
+      "paragraphs": [
+        "Aggiornamenti pubblicati sul Sito."
+      ]
+    }
+  ],
+  "cookiesSections": [
+    {
+      "title": "1. Cosa sono i cookie",
+      "paragraphs": [
+        "Piccoli file di testo nel browser per funzionamento, impostazioni e — con consenso — analisi."
+      ]
+    },
+    {
+      "title": "2. Tipi di cookie",
+      "paragraphs": [
+        "Cookie essenziali (sempre attivi) e cookie analitici opzionali (solo con consenso)."
+      ]
+    },
+    {
+      "title": "3. Gestione del consenso",
+      "paragraphs": [
+        "Scelta tramite modal/banner, salvata localmente. Cancellazione nelle impostazioni del browser."
+      ]
+    },
+    {
+      "title": "4. Altri documenti",
+      "paragraphs": [
+        "Dettagli nell'Informativa privacy. I Termini proteggono la proprietà intellettuale di Protos Web."
+      ]
+    }
+  ]
+}

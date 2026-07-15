@@ -27,11 +27,11 @@
 | Put | Sadržaj |
 |-----|---------|
 | `/admin` | Dashboard — statistike, inboxi, sigurnost, marketing |
-| `/admin/inbox` | Zoho IMAP + kontakt forma (Supabase) |
+| `/admin/inbox` | Zoho + Gmail studio + Martina IMAP + kontakt forma |
 | `/admin/donacije` | Stripe donacije (`donations` tablica) |
 | `/admin/blog`, `/admin/portfolio` | CMS CRUD |
 | `/admin/stranice/*` | Statičke stranice (i18n u `messages/`) |
-| `/admin/memory` | Protos-Agent memorija — **samo GitHub** (`ProtosEschatos/Protos-Agent`; `GITHUB_TOKEN` ako je repo privatan) |
+| `/admin/memory` | Protos-Agent memorija (GitHub raw, `GITHUB_TOKEN` ako je repo privatan) |
 | `/admin/ai` | DeepSeek (`DEEPSEEK_API_KEY`) |
 | `/admin/tools` | Linkovi na Vercel, DNS, platforme |
 
@@ -40,6 +40,8 @@
 | Mailbox | Env prefix |
 |---------|------------|
 | Zoho admin | `ZOHO_IMAP_*` |
+| Gmail studio | `GMAIL_STUDIO_IMAP_*` |
+| Martina (placeholder) | `MARTINA_IMAP_*` |
 
 Detalji: `docs/security.md`, `docs/email-setup.md`
 

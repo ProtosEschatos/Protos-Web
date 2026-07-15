@@ -6,7 +6,7 @@ Practical security map for `protosweb.eu`. No system is immune to every attack; 
 
 | Secret | Platform | Used by |
 |--------|----------|---------|
-| `ADMIN_SECRET` | **Vercel only** | `/admin` login + edge proxy (Next.js) |
+| `ADMIN_SECRET` | **Vercel only** | `/admin` login + middleware (Next.js) |
 | `RESEND_API_KEY`, `BREVO_API_KEY` | **Supabase Edge secrets** | `submit-form`, `subscribe` |
 | `RESEND_FROM_EMAIL`, `CONTACT_EMAIL` | **Supabase Edge secrets** | Email from addresses |
 | `KEEP_ALIVE_SECRET` | **Supabase** + **GitHub** | `keep-alive` edge fn + cron |
@@ -17,6 +17,7 @@ Practical security map for `protosweb.eu`. No system is immune to every attack; 
 | `DEEPSEEK_API_KEY` | **Vercel** | `/admin/ai` — DeepSeek chat (već postavljen) |
 | `GEMINI_API_KEY` | **Vercel** (optional) | `/admin/ai` — alternativni provider |
 | `AGENT_MEMORY_REPO` | **Vercel** (optional) | Default `ProtosEschatos/Protos-Agent` — override repo for memory fetch |
+| `AGENT_MEMORY_LOCAL_PATH` | **Local dev only** | Filesystem fallback (default `~/Protos-Agent/memory` in development) |
 
 ### Email — multi-mailbox IMAP (admin only)
 
@@ -25,6 +26,8 @@ Practical security map for `protosweb.eu`. No system is immune to every attack; 
 | Service | Secret location | Notes |
 |---------|-----------------|-------|
 | **Zoho IMAP (Dario)** | **Vercel** | `ZOHO_IMAP_USER`, `ZOHO_IMAP_PASSWORD` — enable IMAP Access in Zoho |
+| **Gmail IMAP (studio)** | **Vercel** | `GMAIL_STUDIO_IMAP_USER`, `GMAIL_STUDIO_IMAP_PASSWORD` — Google App Password for `protoswebmark23@gmail.com` |
+| **Zoho IMAP (Martina)** | **Vercel** | `MARTINA_IMAP_*` when `martina.admin@protosweb.eu` is live |
 | **Resend** | Supabase Edge | Outbound transactional mail (`submit-form`, `subscribe`) |
 | **Brevo** | Supabase Edge | Optional; DKIM on apex for deliverability |
 
@@ -35,62 +38,6 @@ Practical security map for `protosweb.eu`. No system is immune to every attack; 
 Legacy multi-tenant columns may still exist elsewhere; active flow uses `donations` table + edge fn `donation-checkout` / `stripe-webhook`.
 
 **Do not** store `ADMIN_SECRET` in Supabase — it is unused there and increases leak surface. Remove it from Supabase Dashboard → Edge Functions → Secrets if present.
-
-## Vercel — što smije ostati
-
-Vercel hosta **samo Next.js** (frontend + server actions + `/api/cron/sync-inbox`). Sve ostalo ide na Supabase Edge (GitHub deploy) ili GitHub Actions.
-
-### Obavezno na Vercelu
-
-| Varijabla | Svrha |
-|-----------|--------|
-| `NEXT_PUBLIC_SUPABASE_URL` | Klijent → Supabase |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` (ili publishable) | Klijent → Supabase (RLS) |
-| `SUPABASE_SERVICE_ROLE_KEY` | Server actions / admin (nikad u browser) |
-| `ADMIN_SECRET` | `/admin` login |
-| `NEXT_PUBLIC_SITE_URL` | Canonical URL (`https://www.protosweb.eu`) |
-| `ZOHO_IMAP_*` | Admin inbox IMAP |
-| `CRON_SECRET` | Auth za `GET /api/cron/sync-inbox` (GitHub `admin-inbox-sync.yml`) |
-
-### Opcionalno na Vercelu
-
-| Varijabla | Svrha |
-|-----------|--------|
-| `GITHUB_TOKEN` | `/admin/memory` ako je Protos-Agent private |
-| `DEEPSEEK_API_KEY` | `/admin/ai` |
-| `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ZONE_ID` | Admin status kartica (DNS je na Cloudflareu, ne na Vercelu) |
-| `SENTRY_*` | Error monitoring |
-| `VERCEL_TOKEN` | Samo admin insight kartica — **ne utječe na site** |
-
-### Ukloni s Vercela ako postoje (duplikat Supabase / GitHub)
-
-Ove varijable na tvom screenshotu su **Supabase Edge secrets** — na Vercelu ih **nema smisla** držati i mogu zbuniti debug:
-
-- `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `CONTACT_EMAIL`, `BREVO_API_KEY`
-- `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`
-- `KEEP_ALIVE_SECRET` (GitHub cron + Supabase `keep-alive` edge fn)
-- `SITE_URL` (edge fn koristi Supabase secret; Vercel koristi `NEXT_PUBLIC_SITE_URL`)
-- `FIRECRAWL_API_KEY` (nije u kodu — možeš obrisati i iz Supabasea ako ne koristiš)
-- `SUPABASE_ACCESS_TOKEN`, `SUPABASE_PROJECT_REF` (samo GitHub Actions)
-
-**Vercel auto-deploy:** uključen — `git push origin main` pokreće production build.
-
-## GitHub Actions secrets
-
-| Secret | Required for | Notes |
-|--------|--------------|-------|
-| `SUPABASE_URL` | `ci.yml` build | Same as `NEXT_PUBLIC_SUPABASE_URL` |
-| `SUPABASE_ANON_KEY` | `ci.yml` build | Publishable anon key for Next.js compile |
-| `SUPABASE_SERVICE_ROLE_KEY` | `ci.yml` build | Server-side compile only — never in browser |
-| `SUPABASE_ACCESS_TOKEN` | `supabase-db-push.yml`, `supabase-deploy-functions.yml` | CLI deploy |
-| `SUPABASE_PROJECT_REF` | Supabase workflows | `laqnnzavwbojntfiqmxj` |
-| `KEEP_ALIVE_SECRET` | `supabase-keep-alive.yml` | Edge fn auth |
-| `CLOUDFLARE_API_TOKEN` | `cloudflare-dns-check.yml` (manual only) | Optional — DNS check, not CI gate |
-| `CLOUDFLARE_ZONE_ID` | `cloudflare-dns-check.yml` (manual only) | Optional |
-
-**Not in `ci.yml`:** Supabase keep-alive and REST probes run in dedicated workflows (`supabase-keep-alive.yml`, `supabase-db-push.yml`). Cloudflare is DNS-only — see [cloudflare-dns.md](./cloudflare-dns.md).
-
-Cursor plugin allowlist: [cursor-stack.md](./cursor-stack.md).
 
 ## Admin panel
 

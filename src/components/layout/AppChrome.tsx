@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useLayoutEffect, useCallback } from 'react'
 import { usePathname } from '@/navigation'
-import { isPortfolioShowcasePath } from '@/lib/routes/showcase-path'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import PageLoader from '@/components/ui/PageLoader'
@@ -13,39 +12,29 @@ import { PageTransitionProvider } from '@/components/navigation/PageTransitionPr
 import PageTransitionOverlay from '@/components/navigation/PageTransitionOverlay'
 import AdminShell from '@/components/features/admin/AdminShell'
 import SiteConsentModal from '@/components/legal/SiteConsentModal'
-import {
-  clearBootPending,
-  isBootComplete,
-  isBootGateBypassPath,
-  isLegalPath,
-  removeBootSsrVeil,
-  BOOT_SESSION_KEY,
-  BOOT_COMPLETE_EVENT,
-} from '@/lib/config/boot-gate'
+import { clearBootPending, isBootComplete, isBootGateBypassPath, removeBootSsrVeil, BOOT_SESSION_KEY, BOOT_COMPLETE_EVENT } from '@/lib/config/boot-gate'
 import { hasSiteConsent, SITE_CONSENT_EVENT } from '@/lib/config/site-consent'
+
+const LEGAL_PATH = /\/(terms|privacy|cookies)$/
 
 export default function AppChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
-  const isShowcase = isPortfolioShowcasePath(pathname)
+  const isShowcase = pathname.includes('portfolio-showcase')
   const isAdmin = pathname.includes('/admin')
   const isAdminLogin = pathname.endsWith('/admin/login')
-  const isLegal = isLegalPath(pathname)
-  const [consentGranted, setConsentGranted] = useState(() =>
-    typeof window !== 'undefined' ? hasSiteConsent() : false,
-  )
-  const [bootDone, setBootDone] = useState(() =>
-    typeof window !== 'undefined' ? isBootComplete() : false,
-  )
+  const isLegal = LEGAL_PATH.test(pathname)
+  const [consentGranted, setConsentGranted] = useState(true)
+  const [bootDone, setBootDone] = useState(true)
+  const [showcaseBlocked, setShowcaseBlocked] = useState(true)
 
   useLayoutEffect(() => {
     setConsentGranted(hasSiteConsent())
     setBootDone(isBootComplete())
+    setShowcaseBlocked(!hasSiteConsent())
   }, [])
 
   useEffect(() => {
-    const syncConsent = () => {
-      setConsentGranted(hasSiteConsent())
-    }
+    const syncConsent = () => setConsentGranted(hasSiteConsent())
     const syncBoot = () => setBootDone(isBootComplete())
     window.addEventListener(SITE_CONSENT_EVENT, syncConsent)
     window.addEventListener(BOOT_COMPLETE_EVENT, syncBoot)
@@ -78,6 +67,7 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
     sessionStorage.setItem(BOOT_SESSION_KEY, '1')
     clearBootPending()
     window.dispatchEvent(new Event(BOOT_COMPLETE_EVENT))
+    setShowcaseBlocked(false)
   }, [])
 
   const siteLocked = !consentGranted
@@ -94,7 +84,14 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
   }
 
   if (isShowcase) {
-    return <main className="relative min-h-screen overflow-hidden">{children}</main>
+    return (
+      <>
+        <SiteConsentModal open={showcaseBlocked} onAccepted={finishConsent} />
+        <main className={`relative min-h-0 overflow-hidden ${showcaseBlocked ? 'pointer-events-none select-none' : ''}`}>
+          {children}
+        </main>
+      </>
+    )
   }
 
   if (isAdmin) {

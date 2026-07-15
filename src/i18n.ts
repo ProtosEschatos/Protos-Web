@@ -1,13 +1,10 @@
 import { getRequestConfig } from 'next-intl/server'
+import { hasLocale } from 'next-intl'
 import { routing } from './routing'
 
 export const locales = routing.locales
 export type Locale = (typeof locales)[number]
 export const defaultLocale = routing.defaultLocale
-
-function isLocale(value: string | undefined): value is Locale {
-  return value !== undefined && (routing.locales as readonly string[]).includes(value)
-}
 
 export const localeLabels: Record<Locale, string> = {
   hr: 'Hrvatski',
@@ -32,7 +29,9 @@ export const CYRILLIC_LOCALES: readonly Locale[] = ['sr']
 
 export default getRequestConfig(async ({ requestLocale }) => {
   const requested = await requestLocale
-  const locale = isLocale(requested) ? requested : routing.defaultLocale
+  const locale = hasLocale(routing.locales, requested)
+    ? requested
+    : routing.defaultLocale
 
   return {
     locale,

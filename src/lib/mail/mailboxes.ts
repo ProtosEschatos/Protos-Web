@@ -1,8 +1,12 @@
 import { CONTACT_EMAIL } from '@/lib/config/site'
 
-export type MailboxId = 'zoho'
+export const GMAIL_STUDIO_EMAIL = 'protoswebmark23@gmail.com'
+/** Zoho mailbox for Martina — set MARTINA_IMAP_* when the account is live. */
+export const MARTINA_CONTACT_EMAIL = 'martina.admin@protosweb.eu'
 
-export type MailboxProvider = 'zoho'
+export type MailboxId = 'zoho' | 'gmail-studio' | 'martina'
+
+export type MailboxProvider = 'zoho' | 'gmail'
 
 export type MailboxDefinition = {
   id: MailboxId
@@ -32,6 +36,34 @@ export const ADMIN_MAILBOXES: MailboxDefinition[] = [
       password: 'ZOHO_IMAP_PASSWORD',
       host: 'ZOHO_IMAP_HOST',
       port: 'ZOHO_IMAP_PORT',
+    },
+  },
+  {
+    id: 'gmail-studio',
+    title: 'Studio Gmail',
+    email: GMAIL_STUDIO_EMAIL,
+    defaultHost: 'imap.gmail.com',
+    defaultPort: 993,
+    provider: 'gmail',
+    env: {
+      user: 'GMAIL_STUDIO_IMAP_USER',
+      password: 'GMAIL_STUDIO_IMAP_PASSWORD',
+      host: 'GMAIL_STUDIO_IMAP_HOST',
+      port: 'GMAIL_STUDIO_IMAP_PORT',
+    },
+  },
+  {
+    id: 'martina',
+    title: 'Martina (Zoho)',
+    email: MARTINA_CONTACT_EMAIL,
+    defaultHost: 'imappro.zoho.eu',
+    defaultPort: 993,
+    provider: 'zoho',
+    env: {
+      user: 'MARTINA_IMAP_USER',
+      password: 'MARTINA_IMAP_PASSWORD',
+      host: 'MARTINA_IMAP_HOST',
+      port: 'MARTINA_IMAP_PORT',
     },
   },
 ]
@@ -66,5 +98,8 @@ export function resolveMailboxImapConfig(id: MailboxId) {
 
 export function mailboxSetupHint(id: MailboxId): string {
   const def = getMailbox(id)
+  if (def.provider === 'gmail') {
+    return `Postavi na Vercelu: ${def.env.password} (Google App Password — uključi 2FA na Gmailu). Host: imap.gmail.com:993`
+  }
   return `Postavi na Vercelu: ${def.env.password} (Zoho lozinka ili app password). U Zohu uključi IMAP Access za ${def.email}. Host: ${def.defaultHost}:${def.defaultPort}`
 }

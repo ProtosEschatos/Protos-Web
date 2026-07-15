@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server'
 import { checkRateLimit, getClientIp } from '@/lib/security/rate-limit'
-import { invokeEdgeFunction } from '@/lib/supabase/edge-fn'
 
-export const runtime = 'nodejs'
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL
+const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
 export async function POST(request: Request) {
   const rate = checkRateLimit('donate-confirm', getClientIp(request), 20, 15 * 60 * 1000)
@@ -13,6 +13,10 @@ export async function POST(request: Request) {
     )
   }
 
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    return NextResponse.json({ error: 'Supabase nije konfiguriran' }, { status: 500 })
+  }
+
   try {
     const body = await request.json()
     const sessionId = String(body.sessionId ?? '').trim()
@@ -20,18 +24,20 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Neispravan session ID' }, { status: 400 })
     }
 
-    const result = await invokeEdgeFunction<{ ok?: boolean; error?: string }>('donation-confirm', {
-      sessionId,
+    const edgeRes = await fetch(`${SUPABASE_URL}/functions/v1/donation-confirm`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      },
+      body: JSON.stringify({ sessionId }),
     })
 
-    if (!result.configured) {
-      return NextResponse.json({ error: 'Supabase nije konfiguriran' }, { status: 500 })
-    }
-
-    if (!result.ok) {
+    const data = await edgeRes.json()
+    if (!edgeRes.ok) {
       return NextResponse.json(
-        { error: result.data.error ?? 'Potvrda nije uspjela' },
-        { status: result.status },
+        { error: data.error ?? 'Potvrda nije uspjela' },
+        { status: edgeRes.status },
       )
     }
 

@@ -7,30 +7,28 @@ Repo: ProtosEschatos/Protos-Web
 
 1. Read `docs/security.md` for secret placement (never put `ADMIN_SECRET` in Supabase).
 2. Admin UI: `docs/admin-console.md` + reference repo `Google-AI-Studio-Github-Connect`.
-3. Full project memory: **Protos-Agent** `memory/projects/protos-web.md` (not `PROJECT-MEMORY.md` — that file is TL;DR only).
-4. Human UI: browse memory at `/admin/memory` (read-only, loads from Protos-Agent GitHub).
-5. Cursor rules: `.cursor/rules/protos-web.mdc` (single canonical rule file).
-6. Architecture + Supabase backend map: `docs/architecture.md`.
+3. For full project memory see **Protos-Agent** repo: `memory/projects/protos-web.md`.
+4. **Human UI:** browse memory at `/admin/memory` (read-only, loads from Protos-Agent GitHub).
 
 ## Stack
 
-Next.js 16 App Router · React 19 · TypeScript · Tailwind · next-intl (hr/en/de/it/es/sr) · **Supabase (sole backend)** · Vercel.
+Next.js 14 App Router · TypeScript · Tailwind · next-intl (hr/en/de/it/es) · Supabase · Vercel.
 
-## Project layout
+## Project layout (post-refactor)
 
 ```
 src/
-├── app/[locale]/          # Public + admin routes
+├── app/[locale]/          # Public + admin routes (App Router only)
 │   └── admin/stranice/    # Static page admin panels (o-meni, proces, usluge)
 ├── components/
 │   ├── features/          # admin/, home/sections/, blog/, portfolio/
 │   ├── layout/            # Header, Footer, MobileMenu
-│   ├── three/             # R3F backgrounds + showcase (SpaceGallery)
-│   └── ui/
+│   ├── three/             # R3F backgrounds + showcase
+│   └── ui/                # shared UI + section-icons.tsx
 ├── lib/
 │   ├── auth/              # admin auth, rate limit, require-admin
-│   ├── config/            # site, seo, admin-links, team-profiles, tech-stacks
-│   ├── queries/           # blog, portfolio (+ admin/)
+│   ├── config/            # site, seo, admin-links, social-links, tech-stacks
+│   ├── queries/           # blog, portfolio (+ admin/ subfolder)
 │   ├── routes/            # main-nav.ts
 │   └── showcase/          # showcase storage, webgl helpers
 ├── hooks/                 # use-showcase-viewport.ts
@@ -39,18 +37,18 @@ src/
 
 ## Admin (`/admin`)
 
-- Console v3.0 UI — ref: `Google-AI-Studio-Github-Connect`; docs: `docs/admin-console.md`
+- **Console v3.0** UI — referenca: `ProtosEschatos/Google-AI-Studio-Github-Connect`; docs: `docs/admin-console.md`
 - Password auth via `ADMIN_SECRET` on **Vercel only**
+- Stil: `src/styles/admin-console.css` (`.admin-console` scope)
+- Admin UI: `AdminShell`, `AdminSidebar`, `AdminLink` (Next.js client nav)
 - CMS reads: `src/lib/queries/admin/` · writes: `src/actions/admin-*.ts`
-- Agent memory: `/admin/memory` — Protos-Agent via GitHub only
-- AI assistant: `/admin/ai` — `DEEPSEEK_API_KEY` on Vercel
-
-## Supabase
-
-- Project: `laqnnzavwbojntfiqmxj`
-- Migrations: `supabase/migrations/` → GitHub Actions **Supabase DB Push** (`supabase db push` on push to `main`)
-- Edge functions: `.github/workflows/supabase-deploy-functions.yml` on `supabase/functions/**`
-- Keep-alive: `.github/workflows/supabase-keep-alive.yml` (every 5 min)
+- Static pages: `/admin/stranice/*` (copy in `messages/*.json` + page components)
+- Agent memory: `/admin/memory` — reads `Protos-Agent/memory/` via GitHub raw
+- AI assistant: `/admin/ai` — DeepSeek (+ opcionalno Gemini) via `DEEPSEEK_API_KEY` on Vercel
+- External tools: `/admin/tools` — Zoho/Resend/Brevo links (`src/lib/config/admin-links.ts`)
+- Social/platform structure: `src/lib/config/team-profiles.ts`; re-export via `social-links.ts` (`pending: true` until real URLs)
+- Public tech stacks (no infra): `src/lib/config/tech-stacks.ts`
+- Main nav (public + admin): `src/lib/routes/main-nav.ts`
 
 ## Conventions
 
@@ -58,57 +56,19 @@ src/
 - Minimize diff scope; no drive-by refactors
 - Only commit when the user asks
 - Croatian copy for user-facing admin strings
-- Fix, don't remove broken user-facing features without explicit approval
-
-## Showcase (`/portfolio`)
-
-3D space gallery — same URL as nav **Portfolio**. Legacy `/portfolio-showcase` redirects here.
-
-- No Header/Footer/SiteBackground — handled in `AppChrome`
-- `PortfolioShowcaseClient` → dynamic `SpaceGallery` with `ShowcaseBootLoader` (never `loading: () => null`)
-- `ShowcaseBootBypass` in layout — hides site boot veil; never stack PageLoader on showcase
-- `ShowcasePrefetchLink` on entry CTAs — prefetches SpaceGallery chunk on hover/focus
-- Phases: `intro` | `playing` — canvas loads dynamic; `ShowcaseBootLoader` while chunk loads
 
 ## Deploy
 
-**Git push → Vercel production** (auto-deploy uključen). Ne koristi Vercel CLI za deploy.
-- **Supabase backend** — dedicated GitHub workflows (`supabase-db-push.yml`, `supabase-deploy-functions.yml`, `supabase-keep-alive.yml`)
-- Cloudflare DNS: manual `cloudflare-dns-check.yml` only
-- Cursor plugins: `docs/cursor-stack.md` — **disable Prisma, Convex** marketplace ORM rules
-- Env check: `npm run check:env` (required Supabase vars only)
-- Compatibility: `docs/compatibility.md` — all devices/browsers; showcase WebGL fallback
+Push to `main` → Vercel production. **After every push verify live** (`vercel ls` or curl) — GitHub green ≠ Vercel deployed; webhook can lag (use `vercel redeploy` if needed). Preview envs need same secrets as production for admin CMS.
 
-**Critical:** `ADMIN_SECRET` on Vercel only — git revert does not restore it.
+**Critical:** `ADMIN_SECRET` lives on Vercel only — git revert does **not** restore it.
 
-## Agent memory loop
+## Current state (2026-07-11 23:10)
 
-- Enable Cursor **continual-learning** plugin — updates learned sections in this file after sessions
-- Canonical long-term memory: **Protos-Agent** GitHub (`memory/projects/protos-web.md`)
-- `/admin/memory` — read-only UI
-
-## Learned User Preferences
-
-- Never Vercel CLI deploy; production ide automatski na `git push origin main`
-- Supabase is the sole backend — never suggest Convex, Prisma, or Firebase as backend
-- Disable Convex/Prisma/Vercel Cursor plugins — they add wrong ORM/backend rules
-- Do not touch `.env*` unless explicitly asked
-- When fixing: delete old duplicates, do not stack new files/rules on top
-- Croatian copy for admin-facing strings
-- Site must work on all common devices, OS, and browsers without debate
-- Commit only when user asks
-
-## Learned Workspace Facts
-
-- Supabase project: `laqnnzavwbojntfiqmxj` — 24 migrations synced
-- CI `ci.yml`: build job only (lint + typecheck + build)
-- Agent memory fetch: GitHub `ProtosEschatos/Protos-Agent` only — no local path fallback
-- Showcase: `ShowcaseBootBypass` + `ShowcasePrefetchLink` — no site boot veil on entry
-- Missing Supabase env vars → empty data, not crash — see `.env.example`
-
-## Current state (2026-07-15)
-
-- **Supabase:** `laqnnzavwbojntfiqmxj` — 24 migrations synced (repo + remote)
+- **Latest commit:** `3c039ed` — Admin Console v3.0 reskin
+- **Live:** https://www.protosweb.eu/admin
+- **Admin UI:** slate/indigo Console v3.0 (ref: Google-AI-Studio-Github-Connect)
 - **Donacije:** Stripe LIVE · `/admin/donacije`
-- **Vercel:** auto-deploy on push to `main`
-- Full session history: **Protos-Agent** `memory/sessions/`
+- **Inbox:** Zoho + Gmail studio + Martina placeholder
+- **Docs:** `docs/admin-console.md`, `docs/stripe-donations.md`
+- Full memory: **Protos-Agent** `memory/sessions/2026-07-11-inbox-stripe-donations.md`

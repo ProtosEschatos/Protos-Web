@@ -1,41 +1,27 @@
 import type { PortfolioItem } from '@/types/portfolio'
 import type { ShowcaseViewport } from '@/hooks/use-showcase-viewport'
 import { normalizeProjectUrl } from '@/lib/showcase/showcase-utils'
-import {
-  FRAME_SLOTS,
-  PROJECT_LINKS,
-  SHOWCASE_FRAME_COLORS,
-  type ShowcaseProject,
-} from './constants'
-
-function findProjectLinkMeta(projectUrl: string) {
-  const normalized = normalizeProjectUrl(projectUrl)
-  return PROJECT_LINKS.find((meta) => normalizeProjectUrl(meta.link) === normalized)
-}
+import { PROJECT_LINKS, type ShowcaseProject } from './constants'
 
 export function buildShowcaseProjects(
-  _t: (key: string) => string,
+  t: (key: string) => string,
   portfolioItems: PortfolioItem[],
   viewport: ShowcaseViewport,
 ): ShowcaseProject[] {
-  const showcaseItems = portfolioItems
-    .filter((item) => item.project_url)
-    .slice(0, FRAME_SLOTS)
+  return PROJECT_LINKS.map((meta, index) => {
+    const dbItem = portfolioItems.find(
+      (item) => item.project_url && normalizeProjectUrl(item.project_url) === normalizeProjectUrl(meta.link),
+    )
 
-  return showcaseItems.map((item, index) => {
-    const meta = findProjectLinkMeta(item.project_url!)
-    const fallbackScreenshot = meta
-      ? viewport === 'desktop'
-        ? meta.screenshotDesktop
-        : meta.screenshotMobile
-      : null
+    const fallback = viewport === 'desktop' ? meta.screenshotDesktop : meta.screenshotMobile
+    const imageUrl = dbItem?.image_url ?? fallback
 
     return {
-      color: meta?.color ?? SHOWCASE_FRAME_COLORS[index % SHOWCASE_FRAME_COLORS.length],
-      link: item.project_url!,
-      title: item.title,
-      description: item.description ?? '',
-      imageUrl: item.image_url ?? fallbackScreenshot,
+      color: meta.color,
+      link: meta.link,
+      title: dbItem?.title ?? t(`project${index + 1}_title`),
+      description: dbItem?.description ?? t(`project${index + 1}_desc`),
+      imageUrl,
     }
   })
 }

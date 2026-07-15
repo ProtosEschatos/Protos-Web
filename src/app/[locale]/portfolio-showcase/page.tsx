@@ -1,23 +1,12 @@
-import { redirect } from 'next/navigation'
+import { getPortfolioItems } from '@/lib/queries/portfolio'
+import { setRequestLocale } from 'next-intl/server'
+import PortfolioShowcaseClient from '@/components/features/portfolio/PortfolioShowcaseClient'
 
-type Props = {
-  searchParams: Promise<Record<string, string | string[] | undefined>>
-}
+type Props = { params: Promise<{ locale: string }> }
 
-/** Legacy URL — 3D room lives at /portfolio. */
-export default async function PortfolioShowcaseRedirectPage({ searchParams }: Props) {
-  const query = await searchParams
-  const params = new URLSearchParams()
-
-  for (const [key, value] of Object.entries(query)) {
-    if (value === undefined) continue
-    if (Array.isArray(value)) {
-      for (const entry of value) params.append(key, entry)
-    } else {
-      params.set(key, value)
-    }
-  }
-
-  const qs = params.toString()
-  redirect(qs ? `/portfolio?${qs}` : '/portfolio')
+export default async function PortfolioShowcasePage({ params }: Props) {
+  const { locale } = await params
+  setRequestLocale(locale)
+  const portfolioItems = await getPortfolioItems(locale, 4)
+  return <PortfolioShowcaseClient portfolioItems={portfolioItems} />
 }

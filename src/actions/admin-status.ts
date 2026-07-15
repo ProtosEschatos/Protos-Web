@@ -2,7 +2,6 @@
 
 import { promises as dns } from 'dns'
 import { CONTACT_EMAIL, SITE_DOMAIN, SITE_URL, SUPABASE_PROJECT_REF } from '@/lib/config/site'
-import { getSupabaseAnonKey, getSupabaseUrl } from '@/lib/supabase/env'
 
 export type DnsCheck = {
   label: string
@@ -72,8 +71,8 @@ export async function getAdminStatus(): Promise<AdminStatus> {
     ],
     config: {
       adminSecret: Boolean(process.env.ADMIN_SECRET),
-      supabaseUrl: Boolean(getSupabaseUrl()),
-      supabaseAnon: Boolean(getSupabaseAnonKey()),
+      supabaseUrl: Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL),
+      supabaseAnon: Boolean(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
     },
     links: [
       { label: 'Cloudflare DNS', href: 'https://dash.cloudflare.com' },

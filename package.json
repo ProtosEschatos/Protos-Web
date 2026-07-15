@@ -8,15 +8,13 @@
     "start": "next start",
     "lint": "eslint .",
     "type-check": "tsc --noEmit",
-    "check:env": "node scripts/check-env.mjs",
     "upload:showcase-assets": "node scripts/upload-showcase-assets.mjs",
     "cleanup:showcase-assets": "node scripts/cleanup-showcase-assets.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.1",
-    "@supabase/supabase-js": "^2.110.5",
-    "@swc/helpers": "^0.5.23",
+    "@supabase/supabase-js": "^2.110.2",
     "@vercel/speed-insights": "^2.0.0",
     "framer-motion": "^12.42.2",
     "imapflow": "^1.0.184",
@@ -24,11 +22,12 @@
     "lucide-react": "^0.454.0",
     "next": "^16.2.10",
     "next-intl": "^4.13.2",
+    "r3f-perf": "^7.2.3",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-markdown": "^10.1.0",
-    "server-only": "^0.0.1",
-    "three": "^0.185.1"
+    "three": "^0.185.1",
+    "zustand": "^5.0.14"
   },
   "devDependencies": {
     "@types/node": "^22.8.4",

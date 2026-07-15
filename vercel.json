@@ -1,12 +1,9 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
   "buildCommand": "npm run build",
   "installCommand": "npm install",
   "redirects": [
     { "source": "/hr", "destination": "/", "permanent": true },
-    { "source": "/hr/:path*", "destination": "/:path*", "permanent": true },
-    { "source": "/portfolio-showcase", "destination": "/portfolio", "permanent": true },
-    { "source": "/:locale(en|de|it|es|sr)/portfolio-showcase", "destination": "/:locale/portfolio", "permanent": true }
+    { "source": "/hr/:path*", "destination": "/:path*", "permanent": true }
   ]
 }

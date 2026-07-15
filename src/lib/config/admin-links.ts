@@ -1,5 +1,5 @@
 import { CONTACT_EMAIL, SITE_URL, SUPABASE_PROJECT_REF } from '@/lib/config/site'
-import { freelancePlatformItems, studioSocialItems } from '@/lib/config/team-profiles'
+import { platformItems, socialItems } from '@/lib/config/social-links'
 
 /** Single source for email/comms service roles — used by admin dashboard + detail pages. */
 export const ADMIN_COMMS_SERVICES = {
@@ -137,7 +137,7 @@ export const adminPlatformLinks: AdminHubLink[] = [
   { id: 'live', label: 'Javna stranica', href: SITE_URL, external: true },
 ]
 
-export const adminSocialLinks: AdminHubLink[] = studioSocialItems.map((item) => ({
+export const adminSocialLinks: AdminHubLink[] = socialItems.map((item) => ({
   id: item.id,
   label: item.label,
   href: item.href,
@@ -145,7 +145,7 @@ export const adminSocialLinks: AdminHubLink[] = studioSocialItems.map((item) => 
   pending: item.pending,
 }))
 
-export const adminFreelanceLinks: AdminHubLink[] = freelancePlatformItems.map((item) => ({
+export const adminFreelanceLinks: AdminHubLink[] = platformItems.map((item) => ({
   id: item.id,
   label: item.label,
   href: item.href,

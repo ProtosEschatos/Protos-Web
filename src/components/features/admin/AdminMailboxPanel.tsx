@@ -2,17 +2,15 @@
 
 import { useState, useTransition } from 'react'
 import { Loader2, Mail, RefreshCw } from 'lucide-react'
-import { adminGetMailMessage, adminRefreshMailbox } from '@/actions/admin-mail'
+import { adminGetMailMessage, adminListMailbox } from '@/actions/admin-mail'
 import { mailboxSetupHint, type MailboxId, type MailboxProvider } from '@/lib/mail/mailboxes'
-import type { MailListItem } from '@/lib/mail/types'
+import type { MailListItem } from '@/lib/mail/imap-client'
 
 type Props = {
   mailboxId: MailboxId
   title: string
   initialMessages: MailListItem[]
   initialError?: string
-  initialSource?: 'live' | 'cache'
-  initialSyncedAt?: string
   configured: boolean
   mailbox: string
   provider: MailboxProvider
@@ -32,16 +30,12 @@ export default function AdminMailboxPanel({
   title,
   initialMessages,
   initialError,
-  initialSource = 'live',
-  initialSyncedAt,
   configured,
   mailbox,
   provider,
 }: Props) {
   const [messages, setMessages] = useState(initialMessages)
   const [error, setError] = useState(initialError)
-  const [source, setSource] = useState<'live' | 'cache'>(initialSource)
-  const [syncedAt, setSyncedAt] = useState(initialSyncedAt)
   const [selectedUid, setSelectedUid] = useState<number | null>(null)
   const [body, setBody] = useState<string | null>(null)
   const [bodyError, setBodyError] = useState<string | null>(null)
@@ -49,11 +43,9 @@ export default function AdminMailboxPanel({
 
   function refresh() {
     startTransition(async () => {
-      const res = await adminRefreshMailbox(mailboxId, 40)
+      const res = await adminListMailbox(mailboxId, 40)
       setMessages(res.messages)
       setError(res.error)
-      setSource(res.source)
-      setSyncedAt(res.syncedAt)
       setSelectedUid(null)
       setBody(null)
     })
@@ -81,6 +73,12 @@ export default function AdminMailboxPanel({
         </p>
         <p className="text-amber-100/90 leading-relaxed">
           {mailboxSetupHint(mailboxId)}
+          {provider === 'gmail' ? (
+            <>
+              {' '}
+              Za <strong>{mailbox}</strong> kreiraj App Password u Google Account → Security.
+            </>
+          ) : null}
         </p>
       </div>
     )
@@ -92,12 +90,7 @@ export default function AdminMailboxPanel({
         <p className="text-sm text-[var(--light-muted)]">
           <span className="text-[var(--light)] font-medium">{title}</span>
           {' · '}
-          <span className="text-[var(--light)]">{mailbox}</span>
-          {source === 'cache' && syncedAt ? (
-            <span className="text-amber-200/90"> — cache od {formatWhen(syncedAt)}</span>
-          ) : (
-            <span> — live IMAP</span>
-          )}
+          <span className="text-[var(--light)]">{mailbox}</span> — čita se ovdje, bez vanjskog webmaila.
         </p>
         <button
           type="button"

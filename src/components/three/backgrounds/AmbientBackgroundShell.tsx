@@ -22,7 +22,7 @@ type PointerRef = { current: { x: number; y: number } }
  * Tracks normalized pointer position (-1..1) in a ref so cursor movement never
  * triggers React re-renders — only the R3F frame loop reads it. Listens on
  * `window`, not the canvas, so the background can stay `pointer-events-none`
- * without losing interactivity (see protos-web.mdc).
+ * without losing interactivity (see dom-canvas-layers.mdc).
  */
 function usePointerParallax(enabled: boolean): PointerRef {
   const pointer = useRef({ x: 0, y: 0 })

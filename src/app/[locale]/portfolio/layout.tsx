@@ -1,27 +1,45 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
+import PageBreadcrumbSeo from '@/components/seo/PageBreadcrumbSeo'
 import { buildPageMetadata } from '@/lib/config/seo'
-import { ShowcaseBootBypass } from '@/components/features/portfolio/ShowcaseBootBypass'
 
-type Props = { params: Promise<{ locale: string }> }
+type Props = { params: Promise<{ locale: string }>; children: React.ReactNode }
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
-  const { locale } = await props.params
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
   setRequestLocale(locale)
-  const t = await getTranslations({ locale, namespace: 'metadata.showcase' })
+  const t = await getTranslations({ locale, namespace: 'metadata.portfolio' })
   return buildPageMetadata({
     title: t('title'),
     description: t('description'),
     locale,
     path: '/portfolio',
-    seoPage: 'showcase',
+    seoPage: 'portfolio',
   })
 }
 
-export default function PortfolioLayout({ children }: { children: React.ReactNode }) {
+export default async function PortfolioLayout(props: Props) {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
+  const {
+    children
+  } = props;
+
+  setRequestLocale(locale)
+  const t = await getTranslations({ locale, namespace: 'metadata.portfolio' })
+
   return (
     <>
-      <ShowcaseBootBypass />
+      <PageBreadcrumbSeo locale={locale} path="/portfolio" pageTitle={t('title')} />
       {children}
     </>
   )

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import Script from 'next/script'
-import { getSiteConsent, COOKIE_CONSENT_EVENT } from '@/lib/config/site-consent'
+import { getCookiePreferences, COOKIE_CONSENT_EVENT } from '@/lib/config/cookie-consent'
 
 export default function Analytics() {
   const [allowed, setAllowed] = useState(false)
@@ -12,7 +12,7 @@ export default function Analytics() {
 
   useEffect(() => {
     const sync = () => {
-      setAllowed(getSiteConsent()?.analytics === true)
+      setAllowed(getCookiePreferences()?.analytics === true)
     }
     sync()
     window.addEventListener(COOKIE_CONSENT_EVENT, sync)

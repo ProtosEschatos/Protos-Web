@@ -21,8 +21,17 @@ export default async function AdminInboxPage(props: Props) {
     adminListMailboxStatuses(),
   ])
 
+  // Only show Martina's mailbox once it's actually configured — otherwise
+  // the inbox page shows "Zoho" twice (hers is also a Zoho account) for a
+  // mailbox nobody uses yet. Reappears automatically once MARTINA_IMAP_* is set.
+  const visibleMailboxes = ADMIN_MAILBOXES.filter((mailbox) => {
+    if (mailbox.id === 'martina') {
+      return mailboxStatuses.find((s) => s.id === 'martina')?.configured ?? false
+    }
+    return true
+  })
   const mailboxResults = await Promise.all(
-    ADMIN_MAILBOXES.map((mailbox) => adminListMailbox(mailbox.id, 40)),
+    visibleMailboxes.map((mailbox) => adminListMailbox(mailbox.id, 40)),
   )
 
   return (
@@ -31,17 +40,7 @@ export default async function AdminInboxPage(props: Props) {
       description="Svi mail sandučići i kontakt upiti — sve na jednom mjestu u adminu."
     >
       <p className="text-sm text-[var(--light-muted)] mb-8">
-        Zoho ({mailboxStatuses.find((m) => m.id === 'zoho')?.email}).
-        Ako admin inbox ne učita live IMAP, prikazuje se zadnji cache iz Supabase.
-        {' · '}
-        <a
-          href="https://mail.zoho.eu"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[var(--primary)] hover:underline"
-        >
-          Otvori Zoho webmail
-        </a>
+        Zoho ({mailboxStatuses.find((m) => m.id === 'zoho')?.email}) i Gmail studio — bez vanjskog webmaila.
         {' · '}
         <AdminLink href="/admin" className="text-[var(--primary)] hover:underline">
           ← pregled
@@ -49,7 +48,7 @@ export default async function AdminInboxPage(props: Props) {
       </p>
 
       <div className="space-y-10 mb-10">
-        {ADMIN_MAILBOXES.map((definition, index) => {
+        {visibleMailboxes.map((definition, index) => {
           const status = mailboxStatuses.find((item) => item.id === definition.id)!
           const mailbox = mailboxResults[index]
 
@@ -61,8 +60,6 @@ export default async function AdminInboxPage(props: Props) {
                 title={definition.title}
                 initialMessages={mailbox.messages}
                 initialError={mailbox.error}
-                initialSource={mailbox.source}
-                initialSyncedAt={mailbox.syncedAt}
                 configured={status.configured}
                 mailbox={status.email}
                 provider={definition.provider}

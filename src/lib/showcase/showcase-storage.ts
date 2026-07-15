@@ -1,5 +1,3 @@
-import { getSupabaseUrl } from '@/lib/supabase/env'
-
 const BUCKET = 'showcase'
 
 function localFallback(path: string): string {
@@ -9,7 +7,7 @@ function localFallback(path: string): string {
 }
 
 export function getShowcaseStorageUrl(path: string): string {
-  const base = getSupabaseUrl()?.replace(/\/$/, '')
+  const base = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, '')
   if (!base) return localFallback(path)
   return `${base}/storage/v1/object/public/${BUCKET}/${path}`
 }

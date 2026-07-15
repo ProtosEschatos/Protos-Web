@@ -77,7 +77,6 @@ jobs:
   cloudflare:
     name: Cloudflare DNS
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
       - name: Verify Cloudflare zone (read-only)
         run: |

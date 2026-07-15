@@ -1,6 +1,6 @@
 # Secrets inventory — Protos Web
 
-**Updated:** 2026-07-15 · **Commit:** `7dbfc68`  
+**Updated:** 2026-07-15 · **Commit:** post-`c042990` docs sync  
 **Master env template:** [`.env.example`](../.env.example)  
 **Security map:** [`security.md`](security.md)  
 **Full audit:** [`INFRA-AUDIT-REPORT.md`](INFRA-AUDIT-REPORT.md)
@@ -31,7 +31,7 @@
 | `KEEP_ALIVE_SECRET` | ✅ radi | keep-alive cron + CI supabase job |
 | `CRON_SECRET` | ✅ postavljen | admin-inbox-sync (manual workflow) |
 | `CLOUDFLARE_ZONE_ID` | ✅ postavljen | CI cloudflare job |
-| `CLOUDFLARE_API_TOKEN` | ⚠️ **403 Invalid token** | CI cloudflare job — **pogrešan tip tokena** (vidi §4) |
+| `CLOUDFLARE_API_TOKEN` | ✅ radi (CI run 29430523905) | CI cloudflare job — `cfat_` OK za zone read (vidi §4) |
 
 ---
 
@@ -51,7 +51,7 @@
 
 | Variable | Status | Napomena |
 |----------|--------|----------|
-| `CLOUDFLARE_API_TOKEN` | ⚠️ vidi §4 | **Zone:Read** API token, ne `cfat_` |
+| `CLOUDFLARE_API_TOKEN` | ⚠️ provjeri dashboard | Isti token kao GitHub; `cfat_` radi zone read u CI — kopiraj za admin karticu |
 | `CLOUDFLARE_ZONE_ID` | ✅ | Isti ID kao GitHub |
 | `VERCEL_TOKEN` | ❓ provjeri dashboard | vercel.com/account/tokens |
 | `VERCEL_PROJECT_ID` | ❓ | `.vercel/project.json` ili dashboard |
@@ -90,26 +90,27 @@
 
 ## 4. Cloudflare — tri različita tokena (NE miješati)
 
-Ovo je **glavni razlog** zašto CI Cloudflare job pada i zašto token “iz chata” ne pomaže za zone check.
-
 | Token tip | Prefix / izvor | Radi za | Ne radi za |
 |-----------|----------------|---------|------------|
-| **Cursor agent** | `cfat_...` | Cursor IDE Cloudflare plugin | ❌ `/zones/{id}` API, ❌ DNS records API |
-| **DNS Edit** | Cloudflare dashboard → API Tokens | `scripts/fix-cloudflare-dns.sh` | ❌ samo Zone:Read check u CI |
+| **Cursor agent** | `cfat_...` | Cursor IDE plugin, ✅ `GET /zones/{id}` (CI), `/admin` zone status | ❌ `/zones/.../dns_records` (DNS edit) |
+| **DNS Edit** | Cloudflare dashboard → API Tokens | `scripts/fix-cloudflare-dns.sh` | ❌ nije potreban za CI zone check |
 | **Zone Read** | Cloudflare dashboard → Zone → Zone → Read | CI job, `/admin` status, `integrations/cloudflare.ts` | ❌ edit DNS |
 
-**Dokumentirano u:** [`cloudflare-dns.md`](cloudflare-dns.md) linija 14.
+**Status (2026-07-15):** GitHub `CLOUDFLARE_API_TOKEN` = `cfat_` → CI Cloudflare job **zelen** (run 29430523905). Zone read radi; DNS edit skripte i dalje trebaju poseban dashboard token.
 
-**Što napraviti (5 min, ne dira produkciju):**
+**Dokumentirano u:** [`cloudflare-dns.md`](cloudflare-dns.md).
+
+**Ako trebaš mijenjati DNS zapise** (ne za CI monitoring):
 
 1. Cloudflare → My Profile → API Tokens → **Create Token**
-2. Template: **Read all resources** ili custom: **Zone → Zone → Read** za `protosweb.eu`
-3. Kopiraj token (počinje obično drugačije od `cfat_`)
-4. GitHub → Protos-Web → Secrets → **Update** `CLOUDFLARE_API_TOKEN`
-5. Vercel → Production → **Update** `CLOUDFLARE_API_TOKEN` (admin kartica)
-6. Push bilo čega nije potreban — CI sljedeći run će biti zelen za Cloudflare
+2. Custom: **Zone → DNS → Edit** + **Zone → Zone → Read** za `protosweb.eu`
+3. Spremi u lokalni env / `~/.config/kilo/.env` — **ne** u GitHub CI secret (cfat je dovoljan za CI)
 
-**DNS produkcija je OK** — `dig` potvrđuje MX/SPF/DMARC. Problem je samo **monitoring token**, ne email niti sajt.
+**Opcionalno (admin + Vercel):** kopiraj isti `cfat_` token u Vercel Production → `CLOUDFLARE_API_TOKEN` da `/admin` status kartica radi.
+
+**Sigurnost:** ako je token bio u chatu, rotiraj u Cloudflareu i ažuriraj GitHub + Vercel secret.
+
+**DNS produkcija je OK** — `dig` potvrđuje MX/SPF/DMARC. Ne ovisi o API tokenu.
 
 ---
 
@@ -140,8 +141,8 @@ Provjera: Supabase Dashboard → Edge Functions → svaka fn → Logs (200 na ke
 
 ### Ne može (bez tebe — i ne smije “pogađati”)
 
-- Kreirati Cloudflare **Zone:Read** token (moraš ti u dashboardu)
-- Rotirati `cfat_` u GitHub secret — **ne bi pomoglo** (krivi tip)
+- Kreirati Cloudflare **DNS Edit** token za skripte (moraš ti u dashboardu)
+- Rotirati token ako je bio izložen u chatu — ažuriraj GitHub + Vercel secret
 - Čitati Vercel/Supabase dashboard env vrijednosti
 - Popuniti IMAP lozinke, `VERCEL_TOKEN`, Sentry slugove
 - Brisati migration fileove s remote-a (razbio bi sync)
@@ -153,7 +154,7 @@ Provjera: Supabase Dashboard → Edge Functions → svaka fn → Logs (200 na ke
 |--------|----------|
 | Ukloniti `force-dynamic` na blogu | Vercel build timeout (252 stranice SSG) |
 | Obrisati “duplicate” migracije | Sve 38 su na remote — sync pukne |
-| Strogi Cloudflare fail bez valjanog tokena | CI crven iako sajt radi |
+| Cloudflare CI bez tokena | Job skip — ne blokira build |
 | `npm install` na Vercel | lockfile drift vs GitHub `npm ci` |
 | Force push main | Eksplicitno zabranjeno |
 
@@ -164,10 +165,10 @@ Provjera: Supabase Dashboard → Edge Functions → svaka fn → Logs (200 na ke
 | Servis | Production | CI/automation | Akcija |
 |--------|------------|---------------|--------|
 | **Vercel** | ✅ Ready, site 200 | build via push | — |
-| **GitHub CI** | — | ✅ success `7dbfc68` | — |
+| **GitHub CI** | — | ✅ success (run 29430523905) | — |
 | **Supabase DB** | ✅ 38/38 synced | db push on `.sql` only | — |
 | **Supabase Edge** | ✅ 7 fn active | deploy on fn change | — |
-| **Cloudflare DNS** | ✅ dig OK | ⚠️ token 403 | Novi Zone:Read token (§4) |
+| **Cloudflare DNS** | ✅ dig OK | ✅ zone API (cfat_) | DNS Edit token samo za skripte (§4) |
 | **Email outbound** | ✅ (Resend/Brevo na Supabase) | — | — |
 | **Email inbound** | ✅ MX Zoho | — | IMAP lozinke za /admin/inbox |
 | **Stripe donations** | ❓ test checkout | webhook na Supabase | `STRIPE_WEBHOOK_SECRET` u Edge |

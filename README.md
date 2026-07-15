@@ -36,7 +36,7 @@ Next.js 16, React 19, TypeScript, Tailwind, Framer Motion, React Three Fiber, Le
 
 Ostalo (Stripe, Resend, IMAP, AI, …): vidi [`.env.example`](.env.example) i [`docs/security.md`](docs/security.md).
 
-GitHub Actions secrets: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `KEEP_ALIVE_SECRET`, `SUPABASE_ACCESS_TOKEN`, `SUPABASE_PROJECT_REF`.
+GitHub Actions secrets (9): `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `SUPABASE_ACCESS_TOKEN`, `SUPABASE_PROJECT_REF`, `KEEP_ALIVE_SECRET`, `CRON_SECRET`, `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ZONE_ID`. Puni popis: [`docs/SECRETS-INVENTORY.md`](docs/SECRETS-INVENTORY.md).
 
 ## Javne rute
 
@@ -55,6 +55,7 @@ npm ci && npm run lint && npm run type-check && npm run build
 | Doc | Sadržaj |
 |-----|---------|
 | [`docs/security.md`](docs/security.md) | Gdje stoji svaki secret |
+| [`docs/SECRETS-INVENTORY.md`](docs/SECRETS-INVENTORY.md) | GitHub / Vercel / Supabase secret matrix |
 | [`docs/architecture.md`](docs/architecture.md) | Stack, Supabase, UI zone |
 | [`docs/admin-console.md`](docs/admin-console.md) | Admin panel |
 | [`docs/email-setup.md`](docs/email-setup.md) | Zoho + Resend + Brevo |

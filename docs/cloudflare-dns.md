@@ -11,7 +11,14 @@ For agent/scripts to edit public DNS (`protosweb.eu`), the token needs:
 | **Zone → DNS → Edit** | Required (public zone records) |
 | **Zone → Zone → Read** | Recommended |
 
-**Not sufficient alone:** Account **DNS View Write** (Internal DNS views) or Cursor IDE `cfat_` agent tokens — these fail on `/zones/.../dns_records`.
+**Token types:**
+
+| Token | Zone read (`GET /zones/{id}`) | DNS edit (`/dns_records`) |
+|-------|-------------------------------|---------------------------|
+| Cursor `cfat_` | ✅ (CI + admin status) | ❌ 403 |
+| Dashboard DNS Edit token | ✅ | ✅ |
+
+**Not sufficient for DNS scripts:** Account **DNS View Write** (Internal DNS views) alone, or `cfat_` without dashboard DNS Edit permissions.
 
 Store token in `CLOUDFLARE_API_TOKEN` (e.g. `~/.config/kilo/.env`), then:
 

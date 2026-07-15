@@ -1,7 +1,7 @@
 # Infrastructure Audit Report — Protos Web
 
-**Date:** 2026-07-15 (final pass)  
-**Commit:** `7dbfc68` (`fix(ci): pass Supabase secrets to check-env`)  
+**Date:** 2026-07-15 (final pass + Cloudflare token verified)  
+**Commit:** post-`c042990` docs sync  
 **Project:** `laqnnzavwbojntfiqmxj` · Production: https://protosweb.eu
 
 **Related:** [`SECRETS-INVENTORY.md`](SECRETS-INVENTORY.md) — puni popis svih ključeva po platformi
@@ -12,28 +12,29 @@
 
 | Platform | Production | Automation (CI) | Notes |
 |----------|------------|-----------------|-------|
-| **GitHub** | — | ✅ CI + Security success on `7dbfc68` | Build, check-env, Supabase ping |
+| **GitHub** | — | ✅ CI + Security success (run 29430523905) | Build, check-env, Supabase ping, Cloudflare zone |
 | **Vercel** | ✅ Ready ~58s | auto on push | `npm ci` aligned with GitHub |
 | **Supabase** | ✅ site reads DB | ✅ migrations synced, keep-alive cron | 38/38 local=remote |
-| **Cloudflare** | ✅ DNS (dig) | ⚠️ CI job 403 | GitHub token = **pogrešan tip** (`cfat_` ≠ Zone API) |
+| **Cloudflare** | ✅ DNS (dig) | ✅ CI zone check | `cfat_` token — zone read OK, DNS edit needs dashboard token |
 
 **Live HTTP:** `/` → 200 · `/hr/portfolio-showcase` → 200 · 6 jezika → 200
 
-**Audit upgrades pushed:** `0decf20` + `7dbfc68` (toolchain, docs, CI hardening)
+**Audit upgrades pushed:** `0decf20` → `c042990` (toolchain, docs, CI hardening); Cloudflare secret verified outside git (GitHub Actions)
 
 ---
 
-## 2. Cloudflare token — zašto “token iz chata” ne popravlja CI
+## 2. Cloudflare token — tri tipa, različite namjene
 
-Token spremljen u tvojim env datotekama (Cursor history) počinje s **`cfat_`** — to je **Cursor IDE agent token**, ne Cloudflare API token za zone.
+| API poziv | `cfat_` (Cursor agent) | Dashboard Zone:Read | Dashboard DNS Edit |
+|-----------|--------------------------|---------------------|---------------------|
+| `GET /zones/{id}` (CI check) | ✅ 200 active | ✅ | ✅ |
+| `/admin` zone status | ✅ | ✅ | ✅ |
+| `scripts/fix-cloudflare-dns.sh` | ❌ 403 | ❌ | ✅ |
+| Produkcijski DNS (`dig`) | ✅ (ne treba token) | — | — |
 
-| API poziv | `cfat_` token | Pravi Zone:Read token |
-|-----------|---------------|------------------------|
-| `GET /zones/{id}` (CI check) | ❌ 403 Invalid | ✅ 200 active |
-| `scripts/fix-cloudflare-dns.sh` | ❌ | ✅ (treba DNS **Edit**) |
-| Produkcijski DNS (`dig`) | ✅ (ne treba token) | — |
+**Verified 2026-07-15:** GitHub secret `CLOUDFLARE_API_TOKEN` (`cfat_`) → CI run [29430523905](https://github.com/ProtosEschatos/Protos-Web/actions/runs/29430523905) all green.
 
-**Zaključak:** Nisam “ignorirao” token — **tip tokena ne podržava** CI/admin zone check. Produkcija nije pogođena. Rješenje: novi token iz Cloudflare dashboarda (5 min) → GitHub + Vercel secret. Detalji: [`SECRETS-INVENTORY.md` §4](SECRETS-INVENTORY.md).
+**User actions (optional):** copy same token to Vercel for admin card; create separate DNS Edit token only if running `fix-cloudflare-dns.sh`; rotate token if exposed in chat. Details: [`SECRETS-INVENTORY.md` §4](SECRETS-INVENTORY.md).
 
 ---
 
@@ -41,13 +42,13 @@ Token spremljen u tvojim env datotekama (Cursor history) počinje s **`cfat_`** 
 
 | Check | Result |
 |-------|--------|
-| GitHub CI (`7dbfc68`) | ✅ success |
+| GitHub CI (29430523905) | ✅ success (Build + Supabase + Cloudflare) |
 | Security Audit | ✅ success |
 | Vercel production | ✅ Ready |
 | Site + showcase | ✅ 200 |
 | Supabase migrations | ✅ 38/38, dry-run clean |
 | Supabase keep-alive cron | ✅ scheduled */5 min |
-| Cloudflare CI zone API | ⚠️ 403 — rotate token type |
+| Cloudflare CI zone API | ✅ active (cfat_ token) |
 | DNS dig MX/SPF/DMARC | ✅ matches docs |
 
 ---
@@ -160,7 +161,7 @@ Token spremljen u tvojim env datotekama (Cursor history) počinje s **`cfat_`** 
 
 | # | Issue | Fix |
 |---|-------|-----|
-| 5 | Cloudflare CI token | GitHub secret = `cfat_` type → 403 on Zone API | Job `continue-on-error: true`; **user creates Zone:Read token** — see SECRETS-INVENTORY §4 |
+| 5 | Cloudflare CI token | Was 403 with stale/wrong secret | ✅ Fixed: `cfat_` in GitHub secret; CI green; strict fail enabled |
 | 6 | `check-env.mjs` not in CI | Added `npm run check-env` to build job |
 | 7 | Blog `force-dynamic` | Documented tradeoff; keep until SSG strategy tested |
 | 8 | Stale `migrations/README.md` (said 24) | Updated to 38 + duplicate pairs |
@@ -231,8 +232,8 @@ Future cleanup requires Supabase support or careful remote history surgery — *
 |------|-------------|-----------|
 | Blog SSG all locales | Vercel 60s timeout × 252 pages | Keep `force-dynamic`; PR-5 later with HR-only ISR |
 | Delete duplicate migrations | All 38 on remote | Never delete; documented pairs only |
-| Use `cfat_` for CI Cloudflare | API rejects token type | Separate Zone:Read token |
-| Strict Cloudflare CI without valid token | Blocks merge, site still works | `continue-on-error` until token rotated |
+| Use `cfat_` for DNS edit scripts | `/dns_records` returns 403 | Separate dashboard token with DNS Edit |
+| Cloudflare CI without token | Job skips gracefully | Secrets optional; strict fail when token present |
 | Showcase perf + infra in one PR | Regression risk | PR-6 separate |
 | Force push / rewrite git | User forbidden | Linear commits on main |
 
@@ -248,7 +249,7 @@ Future cleanup requires Supabase support or careful remote history surgery — *
 | PR-4 Docs | ✅ architecture, INFRA-AUDIT, SECRETS-INVENTORY |
 | PR-5 Blog SSG | Backlog |
 | PR-6 Showcase perf | Backlog |
-| **User action** | Cloudflare Zone:Read token → GitHub + Vercel |
+| **User action (optional)** | Vercel `CLOUDFLARE_API_TOKEN`; DNS Edit token for scripts; rotate if token exposed |
 
 ---
 
@@ -260,4 +261,5 @@ Use this after any secret rotation:
 - [ ] **Vercel** → Project → Environment Variables: production vars match `.env.example` groups
 - [ ] **Supabase** → Edge Functions → Secrets: email + Stripe + KEEP_ALIVE
 - [ ] **Cloudflare** → DNS: apex grey-cloud to Vercel, MX/SPF/DMARC unchanged
+- [ ] **Cloudflare** → rotate token if exposed; update GitHub + Vercel secrets
 - [ ] **Vercel** → Domains: `protosweb.eu`, `www.protosweb.eu` active

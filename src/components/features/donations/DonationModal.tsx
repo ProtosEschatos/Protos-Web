@@ -6,6 +6,7 @@ import { useLocale } from 'next-intl'
 import {
   DONATION_MAX_EUR,
   DONATION_MIN_EUR,
+  KO_FI_URL,
   type DonationCause,
 } from '@/lib/donations'
 
@@ -24,6 +25,7 @@ type Props = {
     cancel: string
     processing: string
     errorGeneric: string
+    kofiAlt?: string
   }
 }
 
@@ -163,6 +165,18 @@ export default function DonationModal({ open, onClose, cause, labels }: Props) {
               )}
             </button>
           </div>
+          {labels.kofiAlt ? (
+            <p className="mt-4 text-center text-xs text-[var(--light-muted)]">
+              <a
+                href={KO_FI_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-2 hover:text-[#ff5e5b]"
+              >
+                {labels.kofiAlt}
+              </a>
+            </p>
+          ) : null}
         </form>
       </div>
     </div>

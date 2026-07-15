@@ -50,6 +50,16 @@ Ili primijeni `20260711150000_donations_stripe_integration.sql` u SQL Editoru.
 
 Jedan gumb na `/o-meni` → cause slug `resources` (bez javnih ciljeva / progress barova).
 
+## Ko-fi (paralelno)
+
+Javni tip jar: https://ko-fi.com/protoswebmark23
+
+- Tipka **Doniraj preko Ko-fi** na `/o-meni` + link u Stripe modalu + social/admin hub
+- Ko-fi: manje platformskih naknada za tipove; **ne** ide automatski u `donations` tablicu / `/admin/donacije`
+- Stripe: formalne donacije koje webhook bilježi u bazu
+
+Ako većina podrške ide preko Ko-fi, Stripe Checkout ima manje transakcija → manje Stripe fee-a.
+
 ## Produkcija (live)
 
 Koristi `sk_live_...` i live webhook `whsec_...` u Supabase secrets. Test kartice ne rade u live modu.

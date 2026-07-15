@@ -449,6 +449,8 @@
     "supportTitleHighlight": "digitalne Balkane",
     "supportSubtitle": "Svaka donacija doprinosi razvoju platforme za zaštitu od internetskih prijevara i gradnji slobodnijeg digitalnog prostora za našu regiju.",
     "supportButton": "Podrži resurse studija",
+    "supportKoFiButton": "Doniraj preko Ko-fi",
+    "supportKoFiHint": "Ko-fi je brži način podrške s manjim naknadama. Stripe ostaje za formalne donacije koje bilježimo u sustavu.",
     "donationForm": {
       "title": "Doniraj",
       "amountLabel": "Iznos (EUR)",
@@ -461,7 +463,8 @@
       "processing": "Učitavanje…",
       "errorGeneric": "Donacija nije uspjela. Pokušaj ponovo.",
       "successToast": "Hvala! Donacija je uspješno zaprimljena.",
-      "cancelledToast": "Plaćanje je otkazano. Možeš pokušati ponovo kad god želiš."
+      "cancelledToast": "Plaćanje je otkazano. Možeš pokušati ponovo kad god želiš.",
+      "kofiAlt": "Ili podrži na Ko-fi (manje naknade)"
     },
     "dualStacks": {
       "label": "STACKOVI",

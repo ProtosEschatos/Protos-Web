@@ -9,7 +9,7 @@ import OnlinePresence from '@/components/features/home/sections/OnlinePresence'
 import DualStacksSection from '@/components/features/home/sections/DualStacksSection'
 import DonationModal from '@/components/features/donations/DonationModal'
 import { DARIO_INSTAGRAM_URL, MARTINA_INSTAGRAM_URL } from '@/lib/config/site'
-import { DONATION_DEFAULT_CAUSE } from '@/lib/donations'
+import { DONATION_DEFAULT_CAUSE, KO_FI_URL } from '@/lib/donations'
 
 const TEAM_MEMBERS = ['dario', 'martina'] as const
 type TeamMemberId = (typeof TEAM_MEMBERS)[number]
@@ -262,13 +262,26 @@ export default function AboutPage() {
               {donationNotice}
             </p>
           ) : null}
-          <button
-            type="button"
-            onClick={() => setDonationModalOpen(true)}
-            className="inline-flex items-center justify-center px-8 py-4 rounded-full text-sm font-semibold text-white bg-[var(--primary)] transition-all duration-300 hover:brightness-110"
-          >
-            {t('supportButton')}
-          </button>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <button
+              type="button"
+              onClick={() => setDonationModalOpen(true)}
+              className="inline-flex items-center justify-center px-8 py-4 rounded-full text-sm font-semibold text-white bg-[var(--primary)] transition-all duration-300 hover:brightness-110"
+            >
+              {t('supportButton')}
+            </button>
+            <a
+              href={KO_FI_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center px-8 py-4 rounded-full text-sm font-semibold text-[var(--light)] border border-white/20 bg-white/[0.04] transition-all duration-300 hover:border-[#ff5e5b]/60 hover:bg-[#ff5e5b]/10"
+            >
+              {t('supportKoFiButton')}
+            </a>
+          </div>
+          <p className="mt-5 text-xs text-[var(--light-muted)] max-w-[420px] mx-auto leading-5">
+            {t('supportKoFiHint')}
+          </p>
         </div>
       </section>
 

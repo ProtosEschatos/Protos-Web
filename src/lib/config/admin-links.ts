@@ -1,4 +1,5 @@
 import { CONTACT_EMAIL, SITE_URL, SUPABASE_PROJECT_REF } from '@/lib/config/site'
+import { SEO_TOOL_URLS } from '@/lib/config/marketing'
 import { platformItems, socialItems } from '@/lib/config/social-links'
 
 /** Single source for email/comms service roles — used by admin dashboard + detail pages. */
@@ -97,26 +98,97 @@ export const adminInboxLinks: AdminHubLink[] = adminCommsLinks.filter((l) =>
   ['inbox-site'].includes(l.id),
 )
 
+/** SEO / marketing checklist from paper — links + setup hints. Live status in /admin insights. */
 export const adminMarketingLinks: AdminHubLink[] = [
+  {
+    id: 'search-console',
+    label: 'Google Search Console',
+    href: SEO_TOOL_URLS.searchConsole,
+    description: 'Indeks, pretraga, submit sitemap.xml',
+    external: true,
+  },
+  {
+    id: 'bing-webmaster',
+    label: 'Bing Webmaster Tools',
+    href: SEO_TOOL_URLS.bingWebmaster,
+    description: 'Verify site → NEXT_PUBLIC_BING_SITE_VERIFICATION na Vercel',
+    external: true,
+  },
   {
     id: 'google-analytics',
     label: 'Google Analytics 4',
-    href: 'https://analytics.google.com/analytics/web/#/p/G-HR9HK4SR7Q/reports/intelligenthome',
-    description: 'Posjete, izvori prometa, konverzije',
+    href: SEO_TOOL_URLS.ga4,
+    description: 'Property G-HR9HK4SR7Q · brojke nakon pristanka korisnika',
+    external: true,
+  },
+  {
+    id: 'tag-manager',
+    label: 'Google Tag Manager',
+    href: SEO_TOOL_URLS.tagManager,
+    description: 'Kreiraj container → GTM-XXXX → NEXT_PUBLIC_GTM_ID',
+    external: true,
+  },
+  {
+    id: 'plausible',
+    label: 'Plausible Analytics',
+    href: SEO_TOOL_URLS.plausible,
+    description: 'Opcionalno · NEXT_PUBLIC_PLAUSIBLE_DOMAIN=protosweb.eu',
+    external: true,
+  },
+  {
+    id: 'facebook-pixel',
+    label: 'Facebook Pixel',
+    href: SEO_TOOL_URLS.facebookEvents,
+    description: 'Events Manager → Pixel ID → NEXT_PUBLIC_FB_PIXEL_ID',
     external: true,
   },
   {
     id: 'google-business',
     label: 'Google Business Profile',
-    href: 'https://business.google.com/',
-    description: 'Google Maps, recenzije, lokalni SEO',
+    href: SEO_TOOL_URLS.businessProfile,
+    description: 'Maps listing · NEXT_PUBLIC_GOOGLE_BUSINESS_URL kad je live',
     external: true,
   },
   {
-    id: 'search-console',
-    label: 'Google Search Console',
-    href: 'https://search.google.com/search-console?resource_id=sc-domain%3Aprotosweb.eu',
-    description: 'Indeks, pretraga, Core Web Vitals',
+    id: 'keyword-planner',
+    label: 'Keyword Planner',
+    href: SEO_TOOL_URLS.keywordPlanner,
+    description: 'Google Ads research alat (vanjski)',
+    external: true,
+  },
+  {
+    id: 'trends',
+    label: 'Google Trends',
+    href: SEO_TOOL_URLS.trends,
+    description: 'Trend research (vanjski)',
+    external: true,
+  },
+  {
+    id: 'seranking',
+    label: 'SE Ranking',
+    href: SEO_TOOL_URLS.seRanking,
+    description: 'SEO SaaS monitoring (pretplata)',
+    external: true,
+  },
+  {
+    id: 'semrush',
+    label: 'SEMrush',
+    href: SEO_TOOL_URLS.semrush,
+    description: 'SEO SaaS audit (pretplata)',
+    external: true,
+  },
+  {
+    id: 'rich-results',
+    label: 'Rich Results Test',
+    href: SEO_TOOL_URLS.richResultsTest,
+    description: 'Test structured data na live URL-u',
+    external: true,
+  },
+  {
+    id: 'page-speed',
+    label: 'PageSpeed Insights',
+    href: SEO_TOOL_URLS.pageSpeedInsights,
+    description: 'Lighthouse score na produkciji',
     external: true,
   },
   {

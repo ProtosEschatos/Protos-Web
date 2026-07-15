@@ -5,6 +5,7 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { SHOWCASE_CONFIG } from './constants'
 import { getFrameDimensions } from './frameDimensions'
+import { getBackWallCenterY } from './backWallTriptych'
 import type { ShowcaseViewport } from '@/hooks/use-showcase-viewport'
 
 const POKLON_COLOR = 0xff6600
@@ -34,7 +35,8 @@ type GiftPortalProps = {
 export function GiftPortal({ viewport, onProximityChange, characterRef }: GiftPortalProps) {
   const groupRef = useRef<THREE.Group>(null)
   const lastNear = useRef(false)
-  const { viewW, viewH, frameW, depth, centerY } = getFrameDimensions(viewport)
+  const { viewW, viewH, frameW, depth } = getFrameDimensions(viewport)
+  const centerY = getBackWallCenterY(viewport)
   const outerW = viewW + frameW * 2
   const outerH = viewH + frameW * 2
   const portalZ = -SHOWCASE_CONFIG.galleryLength / 2 + 0.35
@@ -109,6 +111,6 @@ export function GiftPortal({ viewport, onProximityChange, characterRef }: GiftPo
   )
 }
 
-export function getGiftPortalPosition(centerY: number): THREE.Vector3 {
-  return new THREE.Vector3(0, centerY, -SHOWCASE_CONFIG.galleryLength / 2 + 0.35)
+export function getGiftPortalPosition(viewport: ShowcaseViewport): THREE.Vector3 {
+  return new THREE.Vector3(0, getBackWallCenterY(viewport), -SHOWCASE_CONFIG.galleryLength / 2 + 0.35)
 }

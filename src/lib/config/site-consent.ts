@@ -83,7 +83,7 @@ export function saveSiteConsent(analytics: boolean): void {
   window.dispatchEvent(new CustomEvent(SITE_CONSENT_EVENT))
 }
 
-/** Google Consent Mode v2 — call after default script in layout. */
+/** Google Consent Mode v2 — call after default script in layout. Config/load lives in Analytics.tsx only. */
 export function applyGoogleConsentMode(analyticsGranted: boolean): void {
   if (typeof window === 'undefined') return
   const gtag = (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag
@@ -94,9 +94,6 @@ export function applyGoogleConsentMode(analyticsGranted: boolean): void {
     ad_user_data: 'denied',
     ad_personalization: 'denied',
   })
-  if (analyticsGranted) {
-    gtag('config', GA4_MEASUREMENT_ID, { send_page_view: true })
-  }
 }
 
 /** Records the cookie-banner choice and marks the banner as dismissed. */

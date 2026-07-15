@@ -11,7 +11,7 @@ function allowlistFallbackItems(language: string): PortfolioItem[] {
       title: entry.title,
       tag: entry.tag,
       description: entry.description,
-      image_url: null,
+      image_url: getShowcaseFrameImageUrl(entry.slug, 'desktop'),
       project_url: entry.projectUrl,
       featured: false,
       sort_order: entry.sortOrder,

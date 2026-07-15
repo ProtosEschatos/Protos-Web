@@ -11,6 +11,7 @@ import type { TouchInput } from '@/hooks/use-showcase-viewport'
 import { AstronautCharacter, animateAstronautWalk, resetAstronautPose } from './AstronautCharacter'
 import { FrameScreenshot } from './FrameScreenshot'
 import { GiftPortal } from './GiftPortal'
+import { GiftWallInscription } from './GiftWallInscription'
 
 function Starfield({ count = 500 }: { count?: number }) {
   const positions = useMemo(() => {
@@ -415,6 +416,7 @@ export function ShowcaseScene({
       <GalleryLighting />
       <Starfield count={viewport === 'mobile' ? 180 : 500} />
       <GalleryShell />
+      <GiftWallInscription viewport={viewport} />
       <GiftPortal viewport={viewport} characterRef={characterRef} onProximityChange={onNearestGift} />
       {Array.from({ length: showcaseFrameSlotCount(projects.length) }).map((_, index) => (
         <ProjectFrame

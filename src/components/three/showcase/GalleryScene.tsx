@@ -277,6 +277,9 @@ export function ShowcaseScene({
   const yAxis = useMemo(() => new THREE.Vector3(0, 1, 0), [])
   const moveDir = useMemo(() => new THREE.Vector3(), [])
   const cameraOffset = useMemo(() => new THREE.Vector3(0, 4, 6), [])
+  const cameraLookAt = useMemo(() => new THREE.Vector3(), [])
+  const cameraTarget = useMemo(() => new THREE.Vector3(), [])
+  const cameraInitialized = useRef(false)
   const framePositions = useMemo(
     () =>
       projects.map((project, index) => {
@@ -302,11 +305,9 @@ export function ShowcaseScene({
 
     if (isPlaying) {
       let moving = false
-      const { moveSpeed, turnSpeed, mobileSpeedMultiplier, touchDeadZone, galleryLength, galleryWidth } =
-        SHOWCASE_CONFIG
+      const { moveSpeed, turnSpeed, touchDeadZone, galleryLength, galleryWidth } = SHOWCASE_CONFIG
       const touch = touchInput.current
       const deadZone = touchDeadZone
-      const mobileBoost = viewport === 'mobile' ? mobileSpeedMultiplier : 1
 
       if (touch.active) {
         const blend = 1 - Math.exp(-14 * dt)
@@ -327,12 +328,12 @@ export function ShowcaseScene({
 
       if (turnLeft) {
         const intensity = touch.active && tx < -deadZone ? Math.min(1, Math.abs(tx)) : 1
-        headingRef.current += turnSpeed * intensity * dt * mobileBoost
+        headingRef.current += turnSpeed * intensity * dt
         moving = true
       }
       if (turnRight) {
         const intensity = touch.active && tx > deadZone ? Math.min(1, Math.abs(tx)) : 1
-        headingRef.current -= turnSpeed * intensity * dt * mobileBoost
+        headingRef.current -= turnSpeed * intensity * dt
         moving = true
       }
 
@@ -340,14 +341,14 @@ export function ShowcaseScene({
 
       if (moveForward) {
         const intensity = touch.active && ty < -deadZone ? Math.min(1, Math.abs(ty)) : 1
-        moveDir.set(0, 0, -moveSpeed * intensity * dt * mobileBoost)
+        moveDir.set(0, 0, -moveSpeed * intensity * dt)
         moveDir.applyQuaternion(character.quaternion)
         character.position.add(moveDir)
         moving = true
       }
       if (moveBack) {
         const intensity = touch.active && ty > deadZone ? Math.min(1, Math.abs(ty)) : 1
-        moveDir.set(0, 0, moveSpeed * intensity * dt * mobileBoost)
+        moveDir.set(0, 0, moveSpeed * intensity * dt)
         moveDir.applyQuaternion(character.quaternion)
         character.position.add(moveDir)
         moving = true
@@ -403,8 +404,17 @@ export function ShowcaseScene({
     }
 
     cameraOffset.applyQuaternion(character.quaternion)
-    camera.position.copy(character.position).add(cameraOffset)
-    camera.lookAt(character.position.x, character.position.y + 1.5, character.position.z)
+    cameraTarget.copy(character.position).add(cameraOffset)
+    cameraLookAt.set(character.position.x, character.position.y + 1.5, character.position.z)
+
+    if (!cameraInitialized.current) {
+      camera.position.copy(cameraTarget)
+      cameraInitialized.current = true
+    } else {
+      const follow = 1 - Math.exp(-12 * dt)
+      camera.position.lerp(cameraTarget, follow)
+    }
+    camera.lookAt(cameraLookAt)
   })
 
   return (

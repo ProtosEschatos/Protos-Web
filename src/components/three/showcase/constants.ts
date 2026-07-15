@@ -3,8 +3,8 @@ export const SHOWCASE_CONFIG = {
   moveSpeed: 21,
   /** Radians per second (legacy was 0.05/frame @ ~60fps) */
   turnSpeed: 3,
-  /** Extra speed on touch devices where FPS is often lower */
-  mobileSpeedMultiplier: 1.35,
+  /** Keep 1 — movement uses delta time; do not boost speed on mobile. */
+  mobileSpeedMultiplier: 1,
   touchDeadZone: 0.1,
   galleryLength: 48,
   galleryWidth: 24,

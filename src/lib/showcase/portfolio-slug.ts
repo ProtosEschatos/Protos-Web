@@ -17,5 +17,5 @@ export function portfolioUrlToShowcaseSlug(projectUrl: string): string {
 export function isPoklonPortfolioUrl(projectUrl: string | null | undefined): boolean {
   if (!projectUrl) return false
   const lower = projectUrl.toLowerCase()
-  return lower.includes('system-boost') || lower.includes('pages.dev/protos-system-boost')
+  return lower.includes('system-boost') || lower.includes('protos-system-boost.pages.dev')
 }

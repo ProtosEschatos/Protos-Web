@@ -31,8 +31,16 @@ export function ShowcaseFullscreenDemo({ open, url, title, closeLabel, onClose }
   return (
     <div className="fixed inset-0 z-[500] flex flex-col bg-[#050510]" role="dialog" aria-modal="true" aria-label={title}>
       <header className="flex shrink-0 items-center justify-between gap-4 border-b border-white/10 bg-black/90 px-4 py-3 backdrop-blur-md sm:px-6">
-        <div className="min-w-0">
+        <div className="flex min-w-0 flex-col gap-1 sm:flex-row sm:items-center sm:gap-4">
           <p className="truncate text-sm font-semibold text-white sm:text-base">{title}</p>
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="truncate text-xs text-[#94a3b8] underline-offset-2 hover:text-[#06b6d4] hover:underline"
+          >
+            {url.replace(/^https?:\/\//, '')}
+          </a>
         </div>
         <button
           type="button"

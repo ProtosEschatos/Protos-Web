@@ -1,5 +1,5 @@
-/** System Boost poklon — Cloudflare Pages preview (canonical URL). */
-export const SYSTEM_BOOST_POKLON_URL = 'https://486493ea.protos-system-boost.pages.dev/'
+/** System Boost poklon — javna Cloudflare Pages stranica. */
+export const SYSTEM_BOOST_POKLON_URL = 'https://protos-system-boost.pages.dev/'
 
 export const GIFT_PORTAL_INSCRIPTION = {
   line1: 'Astra Castra',

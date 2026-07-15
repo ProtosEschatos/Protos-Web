@@ -2,7 +2,7 @@ const createNextIntlPlugin = require('next-intl/plugin')
 
 const withNextIntl = createNextIntlPlugin('./src/i18n.ts')
 
-const SYSTEM_BOOST_PAGES_ORIGIN = 'https://486493ea.protos-system-boost.pages.dev'
+const SYSTEM_BOOST_PAGES_ORIGIN = 'https://protos-system-boost.pages.dev'
 
 const securityHeaders = [
   { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },

@@ -23,7 +23,7 @@ Removing Supabase jobs from `ci.yml` does **not** remove Supabase backend. Migra
 |--------|-----|
 | **Convex** | Wrong backend patterns |
 | **Prisma** | Wrong ORM — no Prisma in repo |
-| **Vercel** | User disabled — no auto-deploy, no CLI |
+| **Vercel** | Optional MCP for deploy logs — production deploy is **auto on `git push origin main`** |
 | Firebase, Pinecone, Render | Not in stack |
 | Datadog, Figma, Canva, Higgsfield, GSAP | Not used |
 
@@ -54,7 +54,7 @@ git push origin main
   → supabase-keep-alive.yml (cron)
 ```
 
-**Production deploy:** manual from Vercel Dashboard when you choose — not on every push.
+**Production deploy:** automatic on every push to `main` (Vercel Git integration). Manual redeploy from Vercel Dashboard only if needed.
 
 Cloudflare DNS: `cloudflare-dns-check.yml` (`workflow_dispatch`) only.
 

@@ -18,7 +18,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     title: t('title'),
     description: t('description'),
     locale,
-    path: '/portfolio-showcase',
+    path: '/portfolio',
     seoPage: 'showcase',
   })
 }

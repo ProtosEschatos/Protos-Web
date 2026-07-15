@@ -72,7 +72,7 @@ src/
 │   │   ├── admin/             # AdminShell, AdminSidebar, forms, panels
 │   │   ├── home/sections/     # Hero, Services, Process, Portfolio, Blog, Contact, etc.
 │   │   ├── blog/              # BlogGrid, BlogPostContent
-│   │   └── portfolio/         # PortfolioGrid
+│   │   └── portfolio/         # 3D SpaceGallery (public showcase)
 │   ├── layout/
 │   │   ├── Header.tsx         # Navigation (MAIN_NAV_ITEMS), lang selector, theme cycler
 │   │   ├── Footer.tsx         # Footer with links, social, Balkans tags

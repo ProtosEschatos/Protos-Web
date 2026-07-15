@@ -81,7 +81,7 @@ export default function PageLoader() {
   return (
     <>
       <AnimatePresence>
-        {loading && (
+        {loading && !showConsentModal && (
           <motion.div
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}

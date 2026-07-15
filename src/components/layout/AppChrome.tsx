@@ -25,15 +25,23 @@ import { hasSiteConsent, SITE_CONSENT_EVENT } from '@/lib/config/site-consent'
 
 const LEGAL_PATH = /\/(terms|privacy|cookies)$/
 
+function readConsentGranted(): boolean {
+  return typeof window !== 'undefined' ? hasSiteConsent() : false
+}
+
+function readBootDone(): boolean {
+  return typeof window !== 'undefined' ? isBootComplete() : false
+}
+
 export default function AppChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const isShowcase = pathname.includes('portfolio-showcase')
   const isAdmin = pathname.includes('/admin')
   const isAdminLogin = pathname.endsWith('/admin/login')
   const isLegal = isLegalPath(pathname) || LEGAL_PATH.test(pathname)
-  const [consentGranted, setConsentGranted] = useState(false)
-  const [bootDone, setBootDone] = useState(false)
-  const [consentChecked, setConsentChecked] = useState(false)
+  const [consentGranted, setConsentGranted] = useState(readConsentGranted)
+  const [bootDone, setBootDone] = useState(readBootDone)
+  const [consentChecked, setConsentChecked] = useState(() => typeof window !== 'undefined')
 
   useLayoutEffect(() => {
     setConsentGranted(hasSiteConsent())
@@ -77,8 +85,8 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
     window.dispatchEvent(new Event(BOOT_COMPLETE_EVENT))
   }, [])
 
-  const siteLocked = !consentChecked || !consentGranted
-  const showConsentFallback = consentChecked && siteLocked && bootDone
+  const siteLocked = consentChecked && !consentGranted
+  const showConsentFallback = siteLocked && bootDone
 
   if (isLegal) {
     return (

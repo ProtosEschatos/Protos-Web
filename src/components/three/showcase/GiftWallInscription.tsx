@@ -42,12 +42,16 @@ function NeonInscriptionPanel({ lines, position, planeW, planeH, fontSize }: Neo
 
 type Props = {
   viewport: ShowcaseViewport
+  layoutWidth?: number
 }
 
 /** Back wall triptych: Astra Castra (left) | poklon (center) | Numen Lumen (right). */
-export function GiftWallInscription({ viewport }: Props) {
-  const layout = getBackWallTriptychLayout(viewport)
-  const fontSize = viewport === 'mobile' ? 184 : 256
+export function GiftWallInscription({ viewport, layoutWidth }: Props) {
+  const layout = getBackWallTriptychLayout(viewport, layoutWidth)
+  const clampedFont =
+    viewport === 'mobile'
+      ? 184
+      : Math.min(256, Math.max(200, Math.round(200 + (((layoutWidth ?? 1280) - 768) / (1920 - 768)) * 56)))
 
   return (
     <group>
@@ -71,21 +75,21 @@ export function GiftWallInscription({ viewport }: Props) {
 
       <NeonInscriptionPanel
         lines={GIFT_WALL_INSCRIPTION.left}
-        position={[layout.leftX, layout.centerY, layout.textZ]}
+        position={[layout.leftX, layout.inscriptionY, layout.textZ]}
         planeW={layout.textPlaneW}
         planeH={layout.textPlaneH}
-        fontSize={fontSize}
+        fontSize={clampedFont}
       />
       <NeonInscriptionPanel
         lines={GIFT_WALL_INSCRIPTION.right}
-        position={[layout.rightX, layout.centerY, layout.textZ]}
+        position={[layout.rightX, layout.inscriptionY, layout.textZ]}
         planeW={layout.textPlaneW}
         planeH={layout.textPlaneH}
-        fontSize={fontSize}
+        fontSize={clampedFont}
       />
 
-      <pointLight position={[layout.leftX, layout.centerY, layout.textZ + 1.2]} color="#22d3ee" intensity={6} distance={14} />
-      <pointLight position={[layout.rightX, layout.centerY, layout.textZ + 1.2]} color="#22d3ee" intensity={6} distance={14} />
+      <pointLight position={[layout.leftX, layout.inscriptionY, layout.textZ + 1.2]} color="#22d3ee" intensity={6} distance={14} />
+      <pointLight position={[layout.rightX, layout.inscriptionY, layout.textZ + 1.2]} color="#22d3ee" intensity={6} distance={14} />
     </group>
   )
 }

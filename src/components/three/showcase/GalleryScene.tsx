@@ -56,13 +56,15 @@ function ProjectFrame({
   project,
   index,
   viewport,
+  layoutWidth,
 }: {
   project: ShowcaseProject | null
   index: number
   viewport: ShowcaseViewport
+  layoutWidth?: number
 }) {
   const groupRef = useRef<THREE.Group>(null)
-  const { viewW, viewH, frameW, depth, centerY } = getFrameDimensions(viewport)
+  const { viewW, viewH, frameW, depth, centerY } = getFrameDimensions(viewport, layoutWidth)
   const outerW = viewW + frameW * 2
   const outerH = viewH + frameW * 2
   const edgeColors = [0x6366f1, 0x06b6d4, 0xf59e0b, 0x818cf8]
@@ -266,6 +268,7 @@ type SceneProps = {
   projects: ShowcaseProject[]
   isPlaying: boolean
   viewport: ShowcaseViewport
+  layoutWidth?: number
   keys: React.MutableRefObject<Record<string, boolean>>
   touchInput: React.MutableRefObject<TouchInput>
   characterRef: React.RefObject<THREE.Group | null>
@@ -277,6 +280,7 @@ export function ShowcaseScene({
   projects,
   isPlaying,
   viewport,
+  layoutWidth,
   keys,
   touchInput,
   characterRef,
@@ -293,11 +297,11 @@ export function ShowcaseScene({
   const framePositions = useMemo(
     () =>
       projects.map((project, index) => {
-        const { centerY } = getFrameDimensions(viewport)
+        const { centerY } = getFrameDimensions(viewport, layoutWidth)
         const { x, z } = getFrameTransform(index, centerY)
         return { project, pos: new THREE.Vector3(x, centerY * 0.35, z) }
       }),
-    [projects, viewport],
+    [projects, viewport, layoutWidth],
   )
 
   useEffect(() => {
@@ -417,14 +421,20 @@ export function ShowcaseScene({
       <GalleryLighting />
       <Starfield count={viewport === 'mobile' ? 180 : 500} />
       <GalleryShell />
-      <GiftWallInscription viewport={viewport} />
-      <GiftPortal viewport={viewport} characterRef={characterRef} onProximityChange={onNearestGift} />
+      <GiftWallInscription viewport={viewport} layoutWidth={layoutWidth} />
+      <GiftPortal
+        viewport={viewport}
+        layoutWidth={layoutWidth}
+        characterRef={characterRef}
+        onProximityChange={onNearestGift}
+      />
       {Array.from({ length: showcaseFrameSlotCount(projects.length) }).map((_, index) => (
         <ProjectFrame
-          key={`frame-${index}-${viewport}`}
+          key={`frame-${index}-${viewport}-${layoutWidth ?? 0}`}
           project={projects[index] ?? null}
           index={index}
           viewport={viewport}
+          layoutWidth={layoutWidth}
         />
       ))}
       <AstronautCharacter ref={characterRef} />

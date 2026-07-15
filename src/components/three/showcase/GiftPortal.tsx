@@ -3,9 +3,8 @@
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
-import { SHOWCASE_CONFIG } from './constants'
 import { getFrameDimensions } from './frameDimensions'
-import { getBackWallCenterY } from './backWallTriptych'
+import { getBackWallTriptychLayout } from './backWallTriptych'
 import type { ShowcaseViewport } from '@/hooks/use-showcase-viewport'
 
 const POKLON_COLOR = 0xff6600
@@ -28,19 +27,20 @@ function WindowFrameBar({
 
 type GiftPortalProps = {
   viewport: ShowcaseViewport
+  layoutWidth?: number
   onProximityChange: (near: boolean) => void
   characterRef: React.RefObject<THREE.Group | null>
 }
 
-export function GiftPortal({ viewport, onProximityChange, characterRef }: GiftPortalProps) {
+export function GiftPortal({ viewport, layoutWidth, onProximityChange, characterRef }: GiftPortalProps) {
   const groupRef = useRef<THREE.Group>(null)
   const lastNear = useRef(false)
-  const { viewW, viewH, frameW, depth } = getFrameDimensions(viewport)
-  const centerY = getBackWallCenterY(viewport)
+  const layout = getBackWallTriptychLayout(viewport, layoutWidth)
+  const { viewW, viewH, frameW, depth } = getFrameDimensions(viewport, layoutWidth)
+  const centerY = layout.centerY
   const outerW = viewW + frameW * 2
   const outerH = viewH + frameW * 2
-  const portalZ = -SHOWCASE_CONFIG.galleryLength / 2 + 0.35
-  const z = portalZ
+  const z = layout.z
 
   useFrame((state) => {
     const character = characterRef.current
@@ -57,8 +57,6 @@ export function GiftPortal({ viewport, onProximityChange, characterRef }: GiftPo
       onProximityChange(near)
     }
   })
-
-  const floorMarkerZ = z + 1.4
 
   return (
     <>
@@ -107,11 +105,11 @@ export function GiftPortal({ viewport, onProximityChange, characterRef }: GiftPo
       <pointLight position={[0, -0.2, 0.4]} color={POKLON_ACCENT} intensity={0.9} distance={6} decay={2} />
     </group>
 
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.02, floorMarkerZ]}>
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.02, layout.floorMarkerZ]}>
       <ringGeometry args={[1, 1.5, 32]} />
       <meshBasicMaterial color={POKLON_COLOR} transparent opacity={0.45} side={THREE.DoubleSide} />
     </mesh>
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.015, floorMarkerZ]}>
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.015, layout.floorMarkerZ]}>
       <circleGeometry args={[0.85, 32]} />
       <meshBasicMaterial color={POKLON_ACCENT} transparent opacity={0.22} side={THREE.DoubleSide} />
     </mesh>
@@ -119,6 +117,7 @@ export function GiftPortal({ viewport, onProximityChange, characterRef }: GiftPo
   )
 }
 
-export function getGiftPortalPosition(viewport: ShowcaseViewport): THREE.Vector3 {
-  return new THREE.Vector3(0, getBackWallCenterY(viewport), -SHOWCASE_CONFIG.galleryLength / 2 + 0.35)
+export function getGiftPortalPosition(viewport: ShowcaseViewport, layoutWidth?: number): THREE.Vector3 {
+  const layout = getBackWallTriptychLayout(viewport, layoutWidth)
+  return new THREE.Vector3(0, layout.centerY, layout.z)
 }

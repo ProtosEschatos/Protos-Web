@@ -11,18 +11,40 @@ export function getShowcaseViewport(): ShowcaseViewport {
   return window.matchMedia(DESKTOP_MQ).matches ? 'desktop' : 'mobile'
 }
 
+export type ShowcaseViewportState = {
+  viewport: ShowcaseViewport
+  width: number
+}
+
 export function useShowcaseViewport(): ShowcaseViewport {
-  const [viewport, setViewport] = useState<ShowcaseViewport>('desktop')
+  return useShowcaseViewportState().viewport
+}
+
+/** Viewport bucket + live inner width for responsive 3D layout. */
+export function useShowcaseViewportState(): ShowcaseViewportState {
+  const [state, setState] = useState<ShowcaseViewportState>(() => ({
+    viewport: typeof window !== 'undefined' ? getShowcaseViewport() : 'desktop',
+    width: typeof window !== 'undefined' ? window.innerWidth : 1280,
+  }))
 
   useEffect(() => {
     const mq = window.matchMedia(DESKTOP_MQ)
-    const update = () => setViewport(mq.matches ? 'desktop' : 'mobile')
+    const update = () => {
+      setState({
+        viewport: mq.matches ? 'desktop' : 'mobile',
+        width: window.innerWidth,
+      })
+    }
     update()
     mq.addEventListener('change', update)
-    return () => mq.removeEventListener('change', update)
+    window.addEventListener('resize', update)
+    return () => {
+      mq.removeEventListener('change', update)
+      window.removeEventListener('resize', update)
+    }
   }, [])
 
-  return viewport
+  return state
 }
 
 export function useTouchControlsEnabled(): boolean {

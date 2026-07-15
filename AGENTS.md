@@ -12,7 +12,7 @@ Repo: ProtosEschatos/Protos-Web
 
 ## Stack
 
-Next.js 14 App Router · TypeScript · Tailwind · next-intl (hr/en/de/it/es) · Supabase · Vercel.
+Next.js 16 App Router · React 19 · TypeScript · Tailwind · next-intl (hr/en/de/it/es/sr) · Supabase · Vercel.
 
 ## Project layout (post-refactor)
 
@@ -63,12 +63,10 @@ Push to `main` → Vercel production. **After every push verify live** (`vercel 
 
 **Critical:** `ADMIN_SECRET` lives on Vercel only — git revert does **not** restore it.
 
-## Current state (2026-07-11 23:10)
+## Current state (2026-07-15)
 
-- **Latest commit:** `3c039ed` — Admin Console v3.0 reskin
-- **Live:** https://www.protosweb.eu/admin
-- **Admin UI:** slate/indigo Console v3.0 (ref: Google-AI-Studio-Github-Connect)
+- **Stable codebase:** reverted to 2026-07-13 baseline + CI fixes on `main`
+- **Live:** https://www.protosweb.eu · showcase route: `/hr/portfolio-showcase`
+- **Rules:** `.cursorrules`, `.cursor/rules/protos-web.mdc`, `docs/architecture.md`
 - **Donacije:** Stripe LIVE · `/admin/donacije`
-- **Inbox:** Zoho + Gmail studio + Martina placeholder
-- **Docs:** `docs/admin-console.md`, `docs/stripe-donations.md`
-- Full memory: **Protos-Agent** `memory/sessions/2026-07-11-inbox-stripe-donations.md`
+- Full memory: **Protos-Agent** `memory/projects/protos-web.md`

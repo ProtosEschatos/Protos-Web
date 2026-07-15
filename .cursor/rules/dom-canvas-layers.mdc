@@ -67,7 +67,7 @@ Do not invent new `fixed inset-0` layers without removing or gating an existing 
 
 ## When adding a feature — ask first
 
-- **Needs SEO, forms, links, i18n?** → DOM in `sections/` or `[locale]/`.
+- **Needs SEO, forms, links, i18n?** → DOM in `features/` or `[locale]/`.
 - **Needs 3D spatial presence?** → R3F in `three/showcase/` or `three/backgrounds/*` via `SiteBackground`.
 - **Needs overlay on 3D?** → minimal DOM in `SpaceGallery`, one phase, no site Header/Footer.
 

@@ -51,7 +51,7 @@ Prisma/Convex plugin rules are marketplace defaults for other stacks. Protos-Web
 ## Env files
 
 - Do not touch `.env*` unless the user explicitly asks
-- Env vars: `.env.example` · `npm run check:env`
+- Env vars: `.env.example` (see `docs/compatibility.md`)
 - Compatibility: `docs/compatibility.md`
 
 ## Features

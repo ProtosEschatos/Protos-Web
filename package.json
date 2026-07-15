@@ -9,10 +9,12 @@
     "lint": "eslint .",
     "type-check": "tsc --noEmit",
     "upload:showcase-assets": "node scripts/upload-showcase-assets.mjs",
+    "upload:production-assets": "node scripts/upload-production-assets.mjs",
     "cleanup:showcase-assets": "node scripts/cleanup-showcase-assets.mjs",
     "normalize:showcase-screenshots": "node scripts/normalize-showcase-screenshots.mjs",
     "capture:showcase-screenshots": "node scripts/capture-showcase-screenshots.mjs",
-    "sync:showcase-assets": "node scripts/normalize-showcase-screenshots.mjs && node scripts/cleanup-showcase-assets.mjs && node scripts/upload-showcase-assets.mjs"
+    "sync:showcase-assets": "node scripts/normalize-showcase-screenshots.mjs && node scripts/cleanup-showcase-assets.mjs && node scripts/upload-showcase-assets.mjs",
+    "sync:production-assets": "node scripts/normalize-showcase-screenshots.mjs && node scripts/cleanup-showcase-assets.mjs && node scripts/upload-production-assets.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",

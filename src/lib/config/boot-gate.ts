@@ -1,6 +1,10 @@
+import { SITE_STORAGE, STORAGE_BUCKETS, getPublicStorageUrl } from '@/lib/assets/storage-cdn'
+
+/** Boot gate background video — Supabase CDN. */
+export const BOOT_VIDEO = getPublicStorageUrl(STORAGE_BUCKETS.site, SITE_STORAGE.loaderVideo)
+
 export const BOOT_SESSION_KEY = 'protos-boot-gate-v11'
 export const BOOT_COMPLETE_EVENT = 'protos-boot-complete'
-export const BOOT_VIDEO = '/loader/boot-bg.mp4'
 export const BOOT_BG = '#020818'
 
 /** Boot animation finished this browser session (Enter clicked). */

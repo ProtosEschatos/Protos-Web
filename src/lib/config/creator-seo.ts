@@ -14,6 +14,7 @@ import { getLiveProfileUrls, darioSocialItems, martinaSocialItems } from '@/lib/
 import { buildLocalePath } from '@/lib/config/seo'
 import { formatKeywords, getServiceTypesForLocale } from '@/lib/config/seo-keywords'
 import { aboutPathForLocale } from '@/lib/routes/localized-paths'
+import { siteFaviconUrl } from '@/lib/assets/storage-cdn'
 import type { Locale } from '@/i18n'
 
 const DARIO_PERSON_ID = `${SITE_URL}/#dario-imsirovic`
@@ -157,7 +158,7 @@ export function buildCreatorSeoGraph(locale: string) {
         alternateName: ['Protos Web Mark23', 'protosweb', 'Protos'],
         legalName: LEGAL_BUSINESS_NAME,
         url: SITE_URL,
-        image: `${SITE_URL}/favicon.svg`,
+        image: siteFaviconUrl,
         telephone: CONTACT_PHONE,
         email: CONTACT_EMAIL,
         taxID: LEGAL_OIB,

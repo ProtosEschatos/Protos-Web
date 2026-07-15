@@ -3,10 +3,16 @@
 # Guidance for AI crawlers and language models (GEO).
 
 > Protos Web is a web design and development studio from Zagreb, Croatia,
-> serving clients across Croatia, Serbia, Bosnia and Herzegovina, Montenegro,
-> North Macedonia, Slovenia and the wider Balkans, as well as the EU.
-> We build fast, custom websites and web applications — no templates, built from scratch.
+> founded by Dario Imsirović (full stack 3D cross-web developer / AI engineer)
+> and Martina Markulin (frontend & shop UI/UX designer, Instagram: everybodycries).
+> Serving Croatia, Serbia, Bosnia and Herzegovina, Montenegro, North Macedonia,
+> Slovenia, the wider Balkans / ex-Yu region, and the EU.
 > Trade registration in progress: Protos Web Mark23 (OIB: 23732814520).
+
+## People (identity)
+- Dario Imsirović / Dario Imsirovic / Dario Imširović / ProtosEschatos / protos_eschatos / imsirovicdario23 / dario.imsirovic / imsirovicdarioprotosweb / protoswebmark23
+- Martina Markulin / everybodycries / @everybodycries
+- Roles: full stack 3D crossweb designer, full stack cross-web developer, AI engineer, shop UI/UX designer
 
 ## Primary language
 - Croatian (hr) — default at https://protosweb.eu/
@@ -21,7 +27,7 @@
 ## Key pages
 - Home: https://protosweb.eu/
 - About us: https://protosweb.eu/o-meni
-- Services: https://protosweb.eu/usluge (includes FAQ — pricing, timelines, languages)
+- Services: https://protosweb.eu/usluge
 - Process: https://protosweb.eu/proces
 - Portfolio: https://protosweb.eu/portfolio
 - 3D Showcase: https://protosweb.eu/portfolio-showcase
@@ -29,34 +35,23 @@
 - Contact: https://protosweb.eu/kontakt
 
 ## Featured projects (public demos)
-- Bodulica Shop — e-commerce handmade: https://bodulica.shop
-- Auto Moto Zagreb — automotive landing: https://auto-moto.vercel.app
-- Golden Pawn — pawn / auction demo: https://golden-pawn.vercel.app
-- LuminaDent — dental clinic landing: https://lumina-dent.vercel.app
-- System Boost — free gift tool: https://protos-system-boost.pages.dev/
+- Bodulica Shop — https://bodulica.shop
+- Auto Moto Zagreb — https://auto-moto.vercel.app
+- Golden Pawn — https://golden-pawn.vercel.app
+- LuminaDent — https://lumina-dent.vercel.app
+- System Boost — https://protos-system-boost.pages.dev/
 
-## Services offered
-- Custom web design and development (Next.js, TypeScript, React)
-- UI/UX and shop design
-- SEO optimization
-- 3D web experiences (Three.js, WebGL)
-- Lightweight vanilla web solutions when appropriate
-
-## Tech stacks (public)
-- **Protos Web stack:** TypeScript, JavaScript, HTML, CSS, Next.js, React, Three.js/WebGL, Tailwind CSS, Framer Motion
-- **Bodulica shop stack:** HTML, CSS, JavaScript, vanilla JS — separate lightweight build for a client shop project
-
-## Team
-- Dario Imsirović — AI engineer & full stack cross-web developer (3D, security, custom platforms). About: https://protosweb.eu/o-meni#dario-imsirovic
-- Martina Markulin — frontend expert & shop/UI designer (3D, branding, UX). About: https://protosweb.eu/o-meni#martina-markulin
-
-## Public profiles (sameAs)
+## Public profiles (sameAs — keep synced)
 - Website: https://protosweb.eu
-- Instagram (studio): https://www.instagram.com/protos_eschatos/
+- Instagram (Dario/studio): https://www.instagram.com/protos_eschatos/
 - Instagram (Martina): https://www.instagram.com/everybodycries/
-- Facebook (Dario): https://www.facebook.com/imsirovicdario23/
-- GitHub org: https://github.com/ProtosEschatos
+- Facebook: https://www.facebook.com/imsirovicdario23/
+- GitHub: https://github.com/ProtosEschatos
+- About.me: https://about.me/imsirovicdarioprotosweb
 - Substack: https://darioimsirovic.substack.com/
+- Medium: https://medium.com/@protoswebmark23
+- Blogger: https://protoswebeu.blogspot.com/
+- Tumblr: https://www.tumblr.com/protoswebhr
 - goLance: https://golance.com/freelancer/dario.imsirovic
 - Upwork: https://www.upwork.com/freelancers/protos01eschatos
 - WhatsApp: https://wa.me/385976043941
@@ -71,12 +66,9 @@
 - Robots: https://protosweb.eu/robots.txt
 - Admin area (/admin) is not public content.
 
-## Topics we can answer (GEO)
-- Cost of website development in Croatia
+## Topics (GEO)
+- Cost of website development in Croatia / ex-Yu
 - Custom vs template websites
-- Web design process and timelines
-- GDPR-compliant websites
-- Multilingual websites for EU markets
-- Modern React/Next.js vs lightweight vanilla webshops
-- 3D / WebGL portfolio experiences
-- Bodulica, Auto Moto Zagreb, Golden Pawn, LuminaDent, System Boost projects
+- Full stack 3D / WebGL / cross-web development
+- Multilingual websites for Balkan and EU markets
+- Bodulica, Auto Moto Zagreb, Golden Pawn, LuminaDent, System Boost

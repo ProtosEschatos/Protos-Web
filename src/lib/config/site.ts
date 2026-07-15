@@ -7,7 +7,7 @@ export const INSTAGRAM_URL = 'https://www.instagram.com/protos_eschatos/'
 export const DARIO_INSTAGRAM_URL = INSTAGRAM_URL
 export const MARTINA_INSTAGRAM_URL = 'https://www.instagram.com/everybodycries/'
 
-/** Verified public social / freelance profiles (sameAs + presence tiles). */
+/** Verified public social / freelance / publishing profiles (sameAs + presence). */
 export const FACEBOOK_URL = 'https://www.facebook.com/imsirovicdario23/'
 export const GITHUB_ORG_URL = 'https://github.com/ProtosEschatos'
 export const SUBSTACK_URL = 'https://darioimsirovic.substack.com/'
@@ -17,6 +17,16 @@ export const UPWORK_URL = 'https://www.upwork.com/freelancers/protos01eschatos'
 /** Public goLance profile (not the private /freelancer/home dashboard). */
 export const GOLANCE_URL = 'https://golance.com/freelancer/dario.imsirovic'
 export const WHATSAPP_URL = 'https://wa.me/385976043941'
+
+/** Publishing / author profiles — keep in sync with SEO sameAs. */
+export const MEDIUM_URL = 'https://medium.com/@protoswebmark23'
+export const MEDIUM_FEATURED_POST_URL =
+  'https://medium.com/@protoswebmark23/zagreb-ima-web-studio-koji-malo-tko-zna-a-svi-bi-trebali-6b0ff8a4f376'
+export const BLOGGER_URL = 'https://protoswebeu.blogspot.com/'
+export const BLOGGER_FEATURED_POST_URL =
+  'https://protoswebeu.blogspot.com/2026/07/mali-studio-iz-zagreba-koji-gradi-web.html'
+export const TUMBLR_URL = 'https://www.tumblr.com/protoswebhr'
+export const ABOUT_ME_URL = 'https://about.me/imsirovicdarioprotosweb'
 
 /** Public contact + Resend/Zoho mailbox on protosweb.eu */
 export const CONTACT_EMAIL = 'dario.admin@protosweb.eu'
@@ -44,7 +54,9 @@ export const LEGAL_TERMS_VERSION = '2026-07-11-v3'
 /** Google Search Console — HTML meta verification (DNS TXT also on Cloudflare). */
 export const GOOGLE_SITE_VERIFICATION = '6SnN-0ojdBd99Wr_5Y5WmgDFSGUwtg-U0PgrDz7HL1A'
 
-/** Google Business Profile (Maps) — set NEXT_PUBLIC_GOOGLE_BUSINESS_URL when live. */
+/** Optional Google Business Profile / Maps share link when you have a listing.
+ * Not required for the site. When you create one in Google Business Profile,
+ * paste the public Maps URL into NEXT_PUBLIC_GOOGLE_BUSINESS_URL on Vercel. */
 export const GOOGLE_BUSINESS_PROFILE_URL =
   process.env.NEXT_PUBLIC_GOOGLE_BUSINESS_URL?.trim() || ''
 

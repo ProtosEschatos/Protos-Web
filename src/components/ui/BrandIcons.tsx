@@ -50,6 +50,10 @@ const LETTERMARKS: Record<string, string> = {
   otter: 'Ot',
   cursor: 'Cu',
   substack: 'Ss',
+  medium: 'Me',
+  blogger: 'Bl',
+  tumblr: 'Tu',
+  aboutme: 'Me',
 }
 
 function Lettermark({ text, className = 'w-5 h-5' }: { text: string; className?: string }) {

@@ -132,29 +132,31 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
 
   useEffect(() => {
     if (poklonFocus) return
+    if (webglReady === true) {
+      setProgress(100)
+      const timeout = setTimeout(() => setPhase('intro'), 400)
+      return () => clearTimeout(timeout)
+    }
     const interval = setInterval(() => {
-      setProgress((p) => {
-        const next = p + Math.random() * 15
-        if (next >= 100) {
-          clearInterval(interval)
-          setTimeout(() => setPhase('intro'), 500)
-          return 100
-        }
-        return next
-      })
-    }, 200)
+      setProgress((p) => Math.min(p + 12, 90))
+    }, 800)
     return () => clearInterval(interval)
-  }, [poklonFocus])
+  }, [poklonFocus, webglReady])
 
   useEffect(() => {
+    const syncActiveKeys = () => {
+      if (!touchControlsEnabled) {
+        setActiveKeys({
+          w: !!(keys.current.KeyW || keys.current.ArrowUp),
+          a: !!(keys.current.KeyA || keys.current.ArrowLeft),
+          s: !!(keys.current.KeyS || keys.current.ArrowDown),
+          d: !!(keys.current.KeyD || keys.current.ArrowRight),
+        })
+      }
+    }
     const onKeyDown = (e: KeyboardEvent) => {
       keys.current[e.code] = true
-      setActiveKeys({
-        w: !!(keys.current.KeyW || keys.current.ArrowUp),
-        a: !!(keys.current.KeyA || keys.current.ArrowLeft),
-        s: !!(keys.current.KeyS || keys.current.ArrowDown),
-        d: !!(keys.current.KeyD || keys.current.ArrowRight),
-      })
+      syncActiveKeys()
       if (e.code === 'Escape') setShowMenu((m) => !m)
       if (e.code === 'KeyE' && phase === 'playing') {
         if (nearestGift) {
@@ -166,12 +168,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
     }
     const onKeyUp = (e: KeyboardEvent) => {
       keys.current[e.code] = false
-      setActiveKeys({
-        w: !!(keys.current.KeyW || keys.current.ArrowUp),
-        a: !!(keys.current.KeyA || keys.current.ArrowLeft),
-        s: !!(keys.current.KeyS || keys.current.ArrowDown),
-        d: !!(keys.current.KeyD || keys.current.ArrowRight),
-      })
+      syncActiveKeys()
     }
     window.addEventListener('keydown', onKeyDown)
     window.addEventListener('keyup', onKeyUp)
@@ -179,7 +176,7 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
       window.removeEventListener('keydown', onKeyDown)
       window.removeEventListener('keyup', onKeyUp)
     }
-  }, [nearestProject, nearestGift, phase])
+  }, [nearestProject, nearestGift, phase, touchControlsEnabled])
 
   const handleNearestProject = useCallback((project: ShowcaseProject | null) => {
     setNearestProject(project)

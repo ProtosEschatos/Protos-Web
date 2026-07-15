@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import * as THREE from 'three'
+import { enqueueShowcaseTextureLoad, textureFromImage } from '@/lib/showcase/showcase-utils'
 
 function HoloFallback({ width, height, z, color }: { width: number; height: number; z: number; color: number }) {
   return (
@@ -45,6 +46,28 @@ function ScreenshotPlane({
   )
 }
 
+function loadTextureFromUrl(imageUrl: string): Promise<THREE.Texture> {
+  return enqueueShowcaseTextureLoad(
+    () =>
+      new Promise<THREE.Texture>((resolve, reject) => {
+        const loader = new THREE.TextureLoader()
+        if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+          loader.setCrossOrigin('anonymous')
+        }
+        loader.load(
+          imageUrl,
+          (loaded) => {
+            const image = loaded.image as HTMLImageElement
+            loaded.dispose()
+            resolve(textureFromImage(image))
+          },
+          undefined,
+          reject,
+        )
+      }),
+  )
+}
+
 function useSafeTexture(imageSources: string[]) {
   const sources = useMemo(
     () => [...new Set(imageSources.filter(Boolean))],
@@ -67,42 +90,27 @@ function useSafeTexture(imageSources: string[]) {
     setTexture(null)
     setSourceIndex(0)
 
-    const loader = new THREE.TextureLoader()
-
-    const tryLoad = (index: number) => {
+    const tryLoad = async (index: number) => {
       if (cancelled || index >= sources.length) {
         if (!cancelled) setFailed(true)
         return
       }
 
-      const imageUrl = sources[index]!
-      if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
-        loader.setCrossOrigin('anonymous')
+      try {
+        const loaded = await loadTextureFromUrl(sources[index]!)
+        if (cancelled) {
+          loaded.dispose()
+          return
+        }
+        setTexture(loaded)
+        setSourceIndex(index)
+        setFailed(false)
+      } catch {
+        if (!cancelled) await tryLoad(index + 1)
       }
-
-      loader.load(
-        imageUrl,
-        (loaded) => {
-          if (cancelled) {
-            loaded.dispose()
-            return
-          }
-          loaded.colorSpace = THREE.SRGBColorSpace
-          loaded.minFilter = THREE.LinearFilter
-          loaded.magFilter = THREE.LinearFilter
-          loaded.needsUpdate = true
-          setTexture(loaded)
-          setSourceIndex(index)
-          setFailed(false)
-        },
-        undefined,
-        () => {
-          if (!cancelled) tryLoad(index + 1)
-        },
-      )
     }
 
-    tryLoad(0)
+    void tryLoad(0)
 
     return () => {
       cancelled = true

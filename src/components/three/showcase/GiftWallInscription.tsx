@@ -47,7 +47,7 @@ type Props = {
 /** Back wall triptych: Astra Castra (left) | poklon (center) | Numen Lumen (right). */
 export function GiftWallInscription({ viewport }: Props) {
   const layout = getBackWallTriptychLayout(viewport)
-  const fontSize = viewport === 'mobile' ? 184 : 256
+  const fontSize = viewport === 'mobile' ? 128 : 192
 
   return (
     <group>
@@ -84,8 +84,6 @@ export function GiftWallInscription({ viewport }: Props) {
         fontSize={fontSize}
       />
 
-      <pointLight position={[layout.leftX, layout.centerY, layout.textZ + 1.2]} color="#22d3ee" intensity={6} distance={14} />
-      <pointLight position={[layout.rightX, layout.centerY, layout.textZ + 1.2]} color="#22d3ee" intensity={6} distance={14} />
     </group>
   )
 }

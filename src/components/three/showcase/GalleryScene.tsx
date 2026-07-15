@@ -10,7 +10,7 @@ import type { ShowcaseViewport } from '@/hooks/use-showcase-viewport'
 import type { TouchInput } from '@/hooks/use-showcase-viewport'
 import { AstronautCharacter, animateAstronautWalk, resetAstronautPose } from './AstronautCharacter'
 import { FrameScreenshot } from './FrameScreenshot'
-import { GiftPortal } from './GiftPortal'
+import { GiftPortal, getGiftPortalPosition } from './GiftPortal'
 import { GiftWallInscription } from './GiftWallInscription'
 
 function Starfield({ count = 500 }: { count?: number }) {
@@ -61,7 +61,6 @@ function ProjectFrame({
   index: number
   viewport: ShowcaseViewport
 }) {
-  const groupRef = useRef<THREE.Group>(null)
   const { viewW, viewH, frameW, depth, centerY } = getFrameDimensions(viewport)
   const outerW = viewW + frameW * 2
   const outerH = viewH + frameW * 2
@@ -71,15 +70,9 @@ function ProjectFrame({
   const { x, z, rotationY, floorX } = getFrameTransform(index, centerY)
   const baseY = centerY
 
-  useFrame((state) => {
-    if (groupRef.current) {
-      groupRef.current.position.y = baseY + Math.sin(state.clock.elapsedTime + index) * 0.01
-    }
-  })
-
   return (
     <>
-      <group ref={groupRef} position={[x, baseY, z]} rotation={[0, rotationY, 0]} renderOrder={10}>
+      <group position={[x, baseY, z]} rotation={[0, rotationY, 0]} renderOrder={10}>
         <mesh position={[0, 0, -depth * 0.5]} renderOrder={10}>
           <boxGeometry args={[outerW + 0.08, outerH + 0.08, depth]} />
           <meshStandardMaterial color={0x334155} metalness={0.6} roughness={0.35} />
@@ -127,11 +120,11 @@ function ProjectFrame({
       </group>
 
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[floorX, 0.02, z]}>
-        <ringGeometry args={[0.8, 1.2, 32]} />
+        <ringGeometry args={[0.8, 1.2, 16]} />
         <meshBasicMaterial color={edgeColor} transparent opacity={0.4} side={THREE.DoubleSide} />
       </mesh>
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[floorX, 0.015, z]}>
-        <circleGeometry args={[0.6, 32]} />
+        <circleGeometry args={[0.6, 16]} />
         <meshBasicMaterial color={0x06b6d4} transparent opacity={0.2} />
       </mesh>
     </>
@@ -147,7 +140,7 @@ function GalleryShell() {
         <planeGeometry args={[galleryWidth, galleryLength]} />
         <meshStandardMaterial color={0x1a1a2e} roughness={0.3} metalness={0.7} />
       </mesh>
-      <gridHelper args={[Math.max(galleryWidth, galleryLength), 20, 0x06b6d4, 0x1e3a5f]} position={[0, 0.01, 0]} />
+      <gridHelper args={[Math.max(galleryWidth, galleryLength), 10, 0x06b6d4, 0x1e3a5f]} position={[0, 0.01, 0]} />
 
       {[-galleryWidth / 2 + 0.05, galleryWidth / 2 - 0.05].map((x) => (
         <mesh key={x} rotation={[-Math.PI / 2, 0, 0]} position={[x, 0.02, 0]}>
@@ -222,15 +215,6 @@ function GalleryShell() {
           </group>
         ))
       })}
-
-      <mesh position={[-8, galleryHeight + 5, -20]}>
-        <sphereGeometry args={[1.5, 32, 32]} />
-        <meshStandardMaterial color={0x6366f1} roughness={0.8} metalness={0.2} />
-      </mesh>
-      <mesh position={[-8, galleryHeight + 5, -20]} rotation={[Math.PI / 3, 0, 0]}>
-        <torusGeometry args={[2.2, 0.15, 8, 32]} />
-        <meshStandardMaterial color={0x6366f1} roughness={0.5} transparent opacity={0.7} />
-      </mesh>
     </group>
   )
 }
@@ -245,7 +229,7 @@ function GalleryLighting() {
         position={[5, galleryHeight + 10, -10]}
         intensity={0.5}
         castShadow
-        shadow-mapSize={[2048, 2048]}
+        shadow-mapSize={[1024, 1024]}
       />
       <pointLight position={[-5, galleryHeight - 1, 0]} color={0x6366f1} intensity={0.6} distance={25} />
       <pointLight position={[5, galleryHeight - 1, 0]} color={0x06b6d4} intensity={0.6} distance={25} />
@@ -288,8 +272,11 @@ export function ShowcaseScene({
   const lastNearestLinkRef = useRef<string | null>(null)
   const lastGiftNearRef = useRef(false)
   const smoothTouch = useRef({ x: 0, y: 0 })
+  const logicAccum = useRef(0)
+  const giftPortalPos = useMemo(() => getGiftPortalPosition(viewport), [viewport])
   const yAxis = useMemo(() => new THREE.Vector3(0, 1, 0), [])
   const moveDir = useMemo(() => new THREE.Vector3(), [])
+  const cameraOffset = useMemo(() => new THREE.Vector3(0, 4, 6), [])
   const framePositions = useMemo(
     () =>
       projects.map((project, index) => {
@@ -377,20 +364,31 @@ export function ShowcaseScene({
         resetAstronautPose(character)
       }
 
-      let nearestProject: ShowcaseProject | null = null
-      let nearestDist = Infinity
-      for (const { project, pos } of framePositions) {
-        const dist = character.position.distanceTo(pos)
-        if (dist < 5 && dist < nearestDist) {
-          nearestDist = dist
-          nearestProject = project
+      logicAccum.current += dt
+      if (logicAccum.current >= 0.1) {
+        logicAccum.current = 0
+
+        let nearestProject: ShowcaseProject | null = null
+        let nearestDist = Infinity
+        for (const { project, pos } of framePositions) {
+          const dist = character.position.distanceTo(pos)
+          if (dist < 5 && dist < nearestDist) {
+            nearestDist = dist
+            nearestProject = project
+          }
         }
-      }
-      const activeProject = nearestDist < 4 ? nearestProject : null
-      const nextLink = activeProject?.link ?? null
-      if (nextLink !== lastNearestLinkRef.current) {
-        lastNearestLinkRef.current = nextLink
-        onNearestProject(activeProject)
+        const activeProject = nearestDist < 4 ? nearestProject : null
+        const nextLink = activeProject?.link ?? null
+        if (nextLink !== lastNearestLinkRef.current) {
+          lastNearestLinkRef.current = nextLink
+          onNearestProject(activeProject)
+        }
+
+        const giftNear = character.position.distanceTo(giftPortalPos) < 4.5
+        if (giftNear !== lastGiftNearRef.current) {
+          lastGiftNearRef.current = giftNear
+          onNearestGift(giftNear)
+        }
       }
     } else {
       if (lastNearestLinkRef.current !== null) {
@@ -404,9 +402,8 @@ export function ShowcaseScene({
       character.quaternion.setFromAxisAngle(yAxis, headingRef.current)
     }
 
-    const offset = new THREE.Vector3(0, 4, 6)
-    offset.applyQuaternion(character.quaternion)
-    camera.position.copy(character.position).add(offset)
+    cameraOffset.applyQuaternion(character.quaternion)
+    camera.position.copy(character.position).add(cameraOffset)
     camera.lookAt(character.position.x, character.position.y + 1.5, character.position.z)
   })
 
@@ -415,10 +412,10 @@ export function ShowcaseScene({
       <color attach="background" args={['#0a0a1a']} />
       <fog attach="fog" args={['#0a0a1a', 20, 80]} />
       <GalleryLighting />
-      <Starfield count={viewport === 'mobile' ? 180 : 500} />
+      <Starfield count={200} />
       <GalleryShell />
       <GiftWallInscription viewport={viewport} />
-      <GiftPortal viewport={viewport} characterRef={characterRef} onProximityChange={onNearestGift} />
+      <GiftPortal viewport={viewport} />
       {Array.from({ length: showcaseFrameSlotCount(projects.length) }).map((_, index) => (
         <ProjectFrame
           key={`frame-${index}-${viewport}`}

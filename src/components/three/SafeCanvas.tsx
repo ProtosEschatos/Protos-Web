@@ -51,7 +51,7 @@ export function SafeCanvas({
   mountKey = 0,
   onContextLost,
   onContextRestored,
-  dpr = [1, 1.5],
+  dpr = 1,
   gl,
   ...canvasProps
 }: SafeCanvasProps) {
@@ -86,8 +86,8 @@ export function SafeCanvas({
       className="pointer-events-none"
       gl={{
         alpha: true,
-        antialias: true,
-        powerPreference: 'high-performance',
+        antialias: false,
+        powerPreference: 'default',
         ...gl,
       }}
       {...canvasProps}

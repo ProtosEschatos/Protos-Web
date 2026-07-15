@@ -1,11 +1,12 @@
 import * as THREE from 'three'
 
+const CANVAS_WIDTH = 512
+const CANVAS_HEIGHT = 384
+
 export function buildTwoLineNeonTexture(line1: string, line2: string, fontSize: number): THREE.CanvasTexture {
-  const width = 1024
-  const height = 768
   const canvas = document.createElement('canvas')
-  canvas.width = width
-  canvas.height = height
+  canvas.width = CANVAS_WIDTH
+  canvas.height = CANVAS_HEIGHT
   const ctx = canvas.getContext('2d')
 
   if (!ctx) {
@@ -14,7 +15,7 @@ export function buildTwoLineNeonTexture(line1: string, line2: string, fontSize: 
     return fallback
   }
 
-  ctx.clearRect(0, 0, width, height)
+  ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
 
   const drawLine = (text: string, y: number) => {
     ctx.font = `300 ${fontSize}px Georgia, "Times New Roman", serif`
@@ -22,25 +23,17 @@ export function buildTwoLineNeonTexture(line1: string, line2: string, fontSize: 
     ctx.textBaseline = 'middle'
 
     ctx.shadowColor = '#22d3ee'
-    ctx.shadowBlur = 52
-    ctx.fillStyle = 'rgba(34, 211, 238, 0.5)'
-    ctx.fillText(text, width / 2, y)
-
-    ctx.shadowBlur = 28
-    ctx.fillStyle = '#67e8f9'
-    ctx.fillText(text, width / 2, y)
-
-    ctx.shadowBlur = 10
-    ctx.fillStyle = '#ecfeff'
-    ctx.fillText(text, width / 2, y)
+    ctx.shadowBlur = 24
+    ctx.fillStyle = 'rgba(34, 211, 238, 0.55)'
+    ctx.fillText(text, CANVAS_WIDTH / 2, y)
 
     ctx.shadowBlur = 0
     ctx.fillStyle = '#f8fdff'
-    ctx.fillText(text, width / 2, y)
+    ctx.fillText(text, CANVAS_WIDTH / 2, y)
   }
 
-  drawLine(line1, height * 0.38)
-  drawLine(line2, height * 0.64)
+  drawLine(line1, CANVAS_HEIGHT * 0.38)
+  drawLine(line2, CANVAS_HEIGHT * 0.64)
 
   const texture = new THREE.CanvasTexture(canvas)
   texture.colorSpace = THREE.SRGBColorSpace

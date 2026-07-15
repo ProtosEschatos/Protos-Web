@@ -1,7 +1,5 @@
 'use client'
 
-import { useRef } from 'react'
-import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { SHOWCASE_CONFIG } from './constants'
 import { getFrameDimensions } from './frameDimensions'
@@ -19,7 +17,7 @@ function WindowFrameBar({
   size: [number, number, number]
 }) {
   return (
-    <mesh position={position} castShadow>
+    <mesh position={position}>
       <boxGeometry args={size} />
       <meshStandardMaterial color={0x94a3b8} metalness={0.55} roughness={0.35} />
     </mesh>
@@ -28,38 +26,17 @@ function WindowFrameBar({
 
 type GiftPortalProps = {
   viewport: ShowcaseViewport
-  onProximityChange: (near: boolean) => void
-  characterRef: React.RefObject<THREE.Group | null>
 }
 
-export function GiftPortal({ viewport, onProximityChange, characterRef }: GiftPortalProps) {
-  const groupRef = useRef<THREE.Group>(null)
-  const lastNear = useRef(false)
+export function GiftPortal({ viewport }: GiftPortalProps) {
   const { viewW, viewH, frameW, depth } = getFrameDimensions(viewport)
   const centerY = getBackWallCenterY(viewport)
   const outerW = viewW + frameW * 2
   const outerH = viewH + frameW * 2
-  const portalZ = -SHOWCASE_CONFIG.galleryLength / 2 + 0.35
-  const z = portalZ
-
-  useFrame((state) => {
-    const character = characterRef.current
-    if (!character) return
-
-    if (groupRef.current) {
-      groupRef.current.position.y = centerY + Math.sin(state.clock.elapsedTime * 1.2) * 0.015
-    }
-
-    const portalPos = new THREE.Vector3(0, centerY, z)
-    const near = character.position.distanceTo(portalPos) < 4.5
-    if (near !== lastNear.current) {
-      lastNear.current = near
-      onProximityChange(near)
-    }
-  })
+  const z = -SHOWCASE_CONFIG.galleryLength / 2 + 0.35
 
   return (
-    <group ref={groupRef} position={[0, centerY, z]} rotation={[0, 0, 0]} renderOrder={20}>
+    <group position={[0, centerY, z]} rotation={[0, 0, 0]} renderOrder={20}>
       <mesh position={[0, 0, -depth * 0.5]} renderOrder={20}>
         <boxGeometry args={[outerW + 0.08, outerH + 0.08, depth]} />
         <meshStandardMaterial
@@ -104,7 +81,7 @@ export function GiftPortal({ viewport, onProximityChange, characterRef }: GiftPo
       <pointLight position={[0, -0.2, 0.4]} color={POKLON_ACCENT} intensity={0.9} distance={6} decay={2} />
 
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -outerH / 2 - 0.5, 0.8]}>
-        <ringGeometry args={[1, 1.5, 32]} />
+        <ringGeometry args={[1, 1.5, 16]} />
         <meshBasicMaterial color={POKLON_COLOR} transparent opacity={0.45} side={THREE.DoubleSide} />
       </mesh>
     </group>

@@ -27,12 +27,9 @@ export const PROJECT_LINKS: ProjectLink[] = []
 
 export const INITIAL_CHARACTER_HEADING = 0
 
-/**
- * Total frame slots rendered on the gallery walls (2 per side per row).
- * Filled from PROJECT_LINKS in order; remaining slots render as empty
- * placeholders ready for future designs.
- */
-export const FRAME_SLOTS = 8
+export function showcaseFrameSlotCount(projectCount: number): number {
+  return Math.max(projectCount, 1)
+}
 
 export type ShowcaseProject = {
   title: string
@@ -49,7 +46,8 @@ export type FrameMarker = {
 }
 
 export function initCharacterPosition(group: import('three').Group, heading = INITIAL_CHARACTER_HEADING) {
-  group.position.set(0, 0, SHOWCASE_CONFIG.galleryLength / 2 - 3)
+  // Start mid-gallery so side-wall frames are visible immediately (not at far entrance).
+  group.position.set(0, 0, 4)
   group.rotation.set(0, heading, 0, 'YXZ')
 }
 

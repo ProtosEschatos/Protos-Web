@@ -1,3 +1,5 @@
+import type { ShowcaseViewport } from '@/hooks/use-showcase-viewport'
+
 const BUCKET = 'showcase'
 
 function localFallback(path: string): string {
@@ -15,3 +17,18 @@ export function getShowcaseStorageUrl(path: string): string {
 export const SHOWCASE_STORAGE = {
   project: (slug: string, viewport: 'mobile' | 'desktop') => `projects/${viewport}-${slug}.jpg`,
 } as const
+
+/**
+ * Same-origin screenshot for 3D frame textures (WebGL + Three.js).
+ * Files live in public/showcase/ — avoids cross-origin texture failures.
+ */
+export function getShowcaseFrameImageUrl(slug: string, viewport: ShowcaseViewport): string {
+  const key = viewport === 'desktop' ? 'desktop' : 'mobile'
+  return `/showcase/${key}-${slug}.jpg`
+}
+
+/** Remote fallback when local public/showcase file is missing (e.g. golden-pawn). */
+export function getShowcaseFrameImageFallbackUrl(slug: string, viewport: ShowcaseViewport): string {
+  const key = viewport === 'desktop' ? 'desktop' : 'mobile'
+  return getShowcaseStorageUrl(SHOWCASE_STORAGE.project(slug, key))
+}

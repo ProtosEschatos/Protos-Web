@@ -3,7 +3,8 @@
 import { useMemo, useRef, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
-import { SHOWCASE_CONFIG, INITIAL_CHARACTER_HEADING, FRAME_SLOTS, getFrameTransform, type ShowcaseProject } from './constants'
+import { SHOWCASE_CONFIG, INITIAL_CHARACTER_HEADING, getFrameTransform, type ShowcaseProject } from './constants'
+import { showcaseFrameSlotCount } from './constants'
 import { getFrameDimensions } from './frameDimensions'
 import type { ShowcaseViewport } from '@/hooks/use-showcase-viewport'
 import type { TouchInput } from '@/hooks/use-showcase-viewport'
@@ -415,7 +416,7 @@ export function ShowcaseScene({
       <Starfield count={viewport === 'mobile' ? 180 : 500} />
       <GalleryShell />
       <GiftPortal viewport={viewport} characterRef={characterRef} onProximityChange={onNearestGift} />
-      {Array.from({ length: FRAME_SLOTS }).map((_, index) => (
+      {Array.from({ length: showcaseFrameSlotCount(projects.length) }).map((_, index) => (
         <ProjectFrame
           key={`frame-${index}-${viewport}`}
           project={projects[index] ?? null}

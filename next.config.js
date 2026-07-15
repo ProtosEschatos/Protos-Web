@@ -21,7 +21,7 @@ const securityHeaders = [
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self'",
-      "frame-src 'self' https://486493ea.protos-system-boost.pages.dev https://*.pages.dev",
+      "frame-src 'self'",
     ].join('; '),
   },
 ]

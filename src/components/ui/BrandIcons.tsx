@@ -49,6 +49,7 @@ const LETTERMARKS: Record<string, string> = {
   freecash: 'FC',
   otter: 'Ot',
   cursor: 'Cu',
+  substack: 'Ss',
 }
 
 function Lettermark({ text, className = 'w-5 h-5' }: { text: string; className?: string }) {

@@ -22,6 +22,12 @@ export const studioSocialItems: PresenceItem[] = [
   profileLink('github', 'GitHub', 'https://github.com/ProtosEschatos', '#e7e7f0'),
   profileLink('instagram', 'Instagram', INSTAGRAM_URL, '#e1306c'),
   profileLink('kofi', 'Ko-fi', KO_FI_URL, '#ff5e5b'),
+  profileLink(
+    'substack',
+    'Substack',
+    'https://open.substack.com/pub/darioimsirovic/p/protos-web-web-studio-iz-zagreba?r=8r3yr1&utm_campaign=post&utm_medium=web',
+    '#ff6719',
+  ),
   profileLink('facebook', 'Facebook', '#', '#1877f2'),
   profileLink('whatsapp', 'WhatsApp', WHATSAPP_URL, '#25d366'),
   profileLink('tiktok', 'TikTok', '#', '#00f2ea'),

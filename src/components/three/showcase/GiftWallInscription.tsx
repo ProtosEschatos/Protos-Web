@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import * as THREE from 'three'
 import { SHOWCASE_CONFIG } from './constants'
+import { getFrameDimensions } from './frameDimensions'
 import type { ShowcaseViewport } from '@/hooks/use-showcase-viewport'
 import { giftWallInscriptionUrl } from '@/lib/assets/storage-cdn'
 
@@ -10,14 +11,19 @@ type Props = {
   viewport: ShowcaseViewport
 }
 
-/** Large cyan neon inscription on the back wall — texture from Supabase CDN. */
+/** Cyan neon inscription just above the System Boost poklon frame on the back wall. */
 export function GiftWallInscription({ viewport }: Props) {
-  const { galleryLength, galleryHeight, galleryWidth } = SHOWCASE_CONFIG
-  const compact = viewport === 'mobile'
-  const z = -galleryLength / 2 + 0.18
-  const planeW = compact ? galleryWidth * 0.95 : galleryWidth * 0.98
-  const planeH = compact ? 3.2 : 4.2
-  const y = galleryHeight * 0.82
+  const { galleryLength } = SHOWCASE_CONFIG
+  const { viewW, viewH, frameW, centerY } = getFrameDimensions(viewport)
+  const outerW = viewW + frameW * 2
+  const outerH = viewH + frameW * 2
+
+  const portalZ = -galleryLength / 2 + 0.35
+  const z = portalZ + 0.05
+  const planeW = outerW * 1.08
+  const planeH = viewport === 'mobile' ? 1.55 : 1.85
+  const portalTop = centerY + outerH / 2
+  const y = portalTop + 0.12 + planeH / 2
 
   const [texture, setTexture] = useState<THREE.Texture | null>(null)
 
@@ -69,8 +75,7 @@ export function GiftWallInscription({ viewport }: Props) {
           side={THREE.FrontSide}
         />
       </mesh>
-      <pointLight position={[0, 0.5, 1.5]} color="#22d3ee" intensity={compact ? 6 : 10} distance={22} decay={1.2} />
-      <pointLight position={[0, -0.2, 1]} color="#06b6d4" intensity={compact ? 3 : 5} distance={18} decay={1.5} />
+      <pointLight position={[0, 0.2, 0.6]} color="#22d3ee" intensity={8} distance={12} decay={1.2} />
     </group>
   )
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { getBlogPostBySlug, getAllBlogSlugs } from '@/lib/queries/blog'
+import { getBlogPostBySlug } from '@/lib/queries/blog'
 import BlogPostContent from '@/components/features/blog/BlogPostContent'
 import { Link } from '@/navigation'
 import { ArrowLeft, Calendar } from 'lucide-react'
@@ -9,18 +9,8 @@ import { buildBlogPostMetadata, blogPostingJsonLd, normalizeAuthorSlug } from '@
 
 type Props = { params: Promise<{ locale: string; slug: string }> }
 
-export const revalidate = 3600
-
-/** Prebuild HR posts at deploy; other locales render on first request (avoids Vercel SSG timeout). */
-export async function generateStaticParams() {
-  const slugs = await getAllBlogSlugs()
-  return slugs
-    .filter((post) => post.language === 'hr')
-    .map((post) => ({
-      locale: post.language,
-      slug: post.slug,
-    }))
-}
+/** Render on request — never pre-render 200+ blog URLs at Vercel build (Supabase fetch timeouts). */
+export const dynamic = 'force-dynamic'
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params;

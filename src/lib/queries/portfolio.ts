@@ -1,6 +1,6 @@
 import { normalizePortfolioUrl, SHOWCASE_ALLOWLIST, isAllowedPortfolioUrl } from '@/lib/showcase/showcase-allowlist'
 import { withPortfolioImageFallback } from '@/lib/config/portfolio-image-fallbacks'
-import { getShowcaseFrameImageUrl } from '@/lib/showcase/showcase-storage'
+import { getPortfolioShowcaseImageUrl } from '@/lib/showcase/showcase-storage'
 import { supabase } from '@/lib/supabase'
 import type { PortfolioItem } from '@/types/portfolio'
 
@@ -11,7 +11,7 @@ function allowlistFallbackItems(language: string): PortfolioItem[] {
       title: entry.title,
       tag: entry.tag,
       description: entry.description,
-      image_url: getShowcaseFrameImageUrl(entry.slug, 'desktop'),
+      image_url: getPortfolioShowcaseImageUrl(entry.slug),
       project_url: entry.projectUrl,
       featured: false,
       sort_order: entry.sortOrder,
@@ -55,7 +55,7 @@ export async function getPortfolioItems(
 
 const HOME_FEATURED_SLUG = 'bodulica'
 
-/** Featured Bodulica card for home and /portfolio (local showcase screenshot). */
+/** Featured Bodulica card for home and /portfolio (Supabase showcase screenshot). */
 export async function getHomeFeaturedPortfolioItem(language = 'hr'): Promise<PortfolioItem | null> {
   const entry = SHOWCASE_ALLOWLIST.find((item) => item.slug === HOME_FEATURED_SLUG)
   if (!entry) return null
@@ -83,6 +83,6 @@ export async function getHomeFeaturedPortfolioItem(language = 'hr'): Promise<Por
 
   return {
     ...base,
-    image_url: getShowcaseFrameImageUrl(HOME_FEATURED_SLUG, 'desktop'),
+    image_url: getPortfolioShowcaseImageUrl(HOME_FEATURED_SLUG),
   }
 }

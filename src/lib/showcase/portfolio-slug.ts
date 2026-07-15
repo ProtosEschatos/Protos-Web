@@ -1,4 +1,4 @@
-/** Map portfolio project_url → showcase storage slug (public/showcase/*.jpg). */
+/** Map portfolio project_url → showcase storage slug (Supabase projects/*.jpg). */
 export function portfolioUrlToShowcaseSlug(projectUrl: string): string {
   try {
     const host = new URL(projectUrl).hostname.replace(/^www\./, '').toLowerCase()

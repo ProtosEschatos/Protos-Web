@@ -38,10 +38,11 @@ Full secret placement table: [`docs/security.md`](security.md).
 | Zone | Routes | Chrome |
 |------|--------|--------|
 | Site | all except below | PageLoader, Header, Footer, SiteBackground |
-| Showcase | `/portfolio` | SpaceGallery only — no site chrome; legacy `/portfolio-showcase` → 301 |
+| Showcase | `/portfolio-showcase` | SpaceGallery only — no Header/Footer; consent modal still required |
+| Portfolio grid | `/portfolio` | Normal site chrome — CMS grid + CTA to showcase |
 | Admin | `/admin` | AdminShell |
 | Legal | `/terms`, `/privacy`, `/cookies` | Header + Footer, no boot gate |
 
 Consent: one `SiteConsentModal` (terms + privacy + cookies), not a separate cookie banner.
 
-DOM = UI chrome; Canvas = 3D only (`src/components/three/**`). See `docs/architecture.md` and showcase layout in `src/components/layout/AppChrome.tsx`.
+DOM = UI chrome; Canvas = 3D only (`src/components/three/**`). Showcase layout: `src/components/layout/AppChrome.tsx`.

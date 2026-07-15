@@ -1,11 +1,17 @@
 ---
-description: Protos-Web stack rules — Supabase, deploy, agent memory (from AGENTS.md)
+description: Protos-Web stack guardrails — production repo, not agent memory
 alwaysApply: true
 ---
 
 # Protos-Web
 
 Live: https://www.protosweb.eu · Repo: ProtosEschatos/Protos-Web · Supabase: `laqnnzavwbojntfiqmxj`
+
+## Repo roles (mandatory)
+
+- **This repo** = production code only. Rules **guard** the codebase; they do not replace product decisions.
+- **Protos-Agent** = sessions, plans, long-term memory (`memory/projects/protos-web.md`). **Never duplicate** that content here.
+- Do not bulk-edit `.cursorrules`, `AGENTS.md`, or docs unless the user asks. One feature at a time.
 
 ## Stack
 
@@ -44,9 +50,9 @@ Prisma/Convex plugin rules are marketplace defaults for other stacks. Protos-Web
 
 ## Agent memory
 
-- Source: GitHub `ProtosEschatos/Protos-Agent` only (`src/lib/agent-memory.ts`)
-- Private repo needs `GITHUB_TOKEN` on Vercel
-- Never hardcode machine filesystem paths
+- **Write** sessions/plans/learnings → **Protos-Agent** repo only
+- **Read** in app: `src/lib/agent-memory.ts` → `/admin/memory`
+- Never hardcode machine filesystem paths in committed code
 
 ## Env files
 

@@ -1,102 +1,14 @@
-# Protos Web — Cursor AI Rules
-# =============================
-# Coding standards for Cursor AI. Canonical always-on rules: `.cursor/rules/*.mdc`
-# Stack reference: `docs/architecture.md` · deploy: `docs/cursor-stack.md`
+# Protos Web — Cursor entrypoint
+#
+# This repo is PRODUCTION CODE. Rules guard the codebase — they do not define the product.
+# Full coding standards: .cursor/rules/*.mdc (alwaysApply)
+# Long-term memory: Protos-Agent repo — NOT here.
 
-## Project Stack
-- **Framework**: Next.js 16 (App Router) with `src/` directory · React 19
-- **Language**: TypeScript (strict mode)
-- **Styling**: Tailwind CSS with CSS custom properties (`src/app/globals.css`)
-- **Animations**: Framer Motion — GSAP is NOT installed
-- **3D**: React Three Fiber (`@react-three/fiber`, `@react-three/drei`, `three`) — NOT vanilla Three.js outside R3F
-- **Smooth scroll**: `lenis` (via LenisProvider)
-- **State**: `zustand` where shared client state is needed
-- **DOM + Canvas layers**: `.cursor/rules/dom-canvas-layers.mdc` — mandatory for UI/3D work
-- **i18n**: `next-intl` — 6 locales: hr, en, de, it, es, sr (default: hr)
-- **Icons**: `lucide-react` only
-- **Backend**: Supabase only (Postgres, RLS, Storage, Edge Functions) — no Prisma, Convex, Firebase
-- **Deploy**: `git push origin main` → GitHub CI + Vercel auto-deploy — never Vercel CLI
-- **Admin secret**: `ADMIN_SECRET` on Vercel only — see `docs/security.md`
+Read first:
+- .cursor/rules/protos-web.mdc      — stack, deploy, Supabase-only, repo roles
+- .cursor/rules/dom-canvas-layers.mdc — showcase vs site chrome (mandatory for 3D/UI)
+- .cursor/rules/fix-not-remove.mdc  — do not delete working features
+- docs/architecture.md              — zones, backend ownership
+- docs/security.md                  — secret placement
 
-## File Structure
-- Pages: `src/app/[locale]/` (+ `src/app/api/`, admin under `[locale]/admin/`)
-- Components: `src/components/` — `features/`, `layout/`, `navigation/`, `providers/`, `three/`, `ui/`, `showcase/`, `legal/`, `seo/`
-- Lib: `src/lib/` — `auth/`, `config/`, `queries/`, `routes/`, `showcase/`, `supabase/`
-- Hooks: `src/hooks/`
-- Types: `src/types/`
-- Server actions: `src/actions/` (admin-*, contact)
-- Messages: `src/messages/{locale}.json` (all 6 locales)
-- Supabase: `supabase/migrations/`, `supabase/functions/` — coordinate with live remote before new migrations
-
-## Component Rules
-1. **`'use client'`** when using hooks, Framer Motion, browser APIs, R3F, or event handlers.
-
-2. **R3F components MUST**:
-   - Use `@react-three/fiber` + `@react-three/drei`
-   - Dynamic import with `next/dynamic` and `{ ssr: false }`
-   - Wrap in `<Canvas>` (or project `SafeCanvas` wrapper)
-   - Provide `<Suspense>` / fallback UI (`ShowcaseFallback` on showcase routes)
-
-3. **DOM + Canvas** (full spec: `.cursor/rules/dom-canvas-layers.mdc`):
-   - Site pages: `SiteBackground` → `PageBackgroundCanvas` / `three/backgrounds/*` (fixed, behind)
-   - Showcase: route `/portfolio-showcase` — fullscreen Canvas; NO Header/Footer/SiteBackground (`AppChrome` gates chrome)
-   - One showcase phase at a time: `loading` | `intro` | `playing`
-   - 3D in Canvas only — no CSS “fake 3D” for showcase frames
-   - Showcase entry: `ShowcasePrefetchLink`; bypass site boot veil on showcase route
-
-4. **Framer Motion**: `whileInView` + `viewport={{ once: true }}` for scroll; `AnimatePresence` for enter/exit; UI 0.3–0.8s, hero up to ~1.2s.
-
-## Styling
-- Tailwind first; theme via CSS vars: `--primary`, `--secondary`, `--accent`, `--dark`, `--dark-card`, `--light`, `--light-muted`
-- Gradients: `var(--gradient-hero)` or Tailwind + CSS vars
-- **Dark theme only** — do not add light mode
-
-## Naming
-- Components: PascalCase · Pages: `page.tsx` · Utils/hooks: camelCase · i18n keys: dot notation (`nav.home`)
-
-## Performance
-- Dynamic import heavy 3D/chart/map components (`ssr: false`)
-- `next/image` with width/height/alt · `next/font` for Inter
-- `useMemo` / `useCallback` in hot R3F paths; never `setState` every frame in `useFrame`
-
-## Backend
-- Public reads: `src/lib/supabase.ts` + `src/lib/queries/*`
-- Admin writes: `src/lib/supabase-admin.ts` (service role) via `src/actions/admin-*.ts`
-- Env helpers: `src/lib/supabase/env.ts`
-- Edge functions: `supabase/functions/` — see `supabase/functions/README.md`
-- API ownership: `docs/api-ownership.md`
-
-## i18n
-- All user-facing copy via `useTranslations()` / server helpers
-- Update all 6 locale JSON files for new keys
-- Public URL segments stay Croatian (`/proces`, `/o-meni`, `/usluge`, `/kontakt`, `/portfolio-showcase`)
-- Language selector: all 6 locales with flag emojis (`src/i18n.ts`)
-
-## Agent memory & env
-- Long-term memory: GitHub `ProtosEschatos/Protos-Agent` only (`src/lib/agent-memory.ts`) — no machine filesystem paths in code
-- Do **not** touch `.env*` unless the user explicitly asks
-- Env reference: `.env.example`
-
-## Git & workflow
-- Commit only when the user asks
-- Messages: English, imperative — `feat:`, `fix:`, `refactor:`, `style:`, `chore:`, `docs:`
-- One logical change per commit
-- Never commit `node_modules/`, `.next/`, `.env*`
-- Before push: `npm run lint && npm run type-check && npm run build`
-- **Fix, don't remove** working features without explicit user approval (`.cursor/rules/fix-not-remove.mdc`)
-
-## FORBIDDEN
-- ❌ Prisma, Convex, Firebase, Vercel CLI, or other backends not in stack
-- ❌ Site chrome on `/portfolio-showcase`
-- ❌ Multiple simultaneous `fixed inset-0` overlays (site or showcase)
-- ❌ GSAP unless user adds it to `package.json`
-- ❌ Vanilla Three.js scene setup outside R3F patterns
-- ❌ `pages/` router — App Router only
-- ❌ CSS modules / styled-components — Tailwind + CSS vars only
-- ❌ Light mode
-- ❌ New SQL migrations without checking remote Supabase history
-- ❌ `any` without strong reason
-- ❌ Inline styles when Tailwind suffices
-- ❌ Files outside the structure above
-- ❌ Deleting user files or `.env*` without explicit approval
-- ❌ Broad drive-by refactors or many commits without CI/user checkpoint
+Memory / sessions / plans → ProtosEschatos/Protos-Agent (or /admin/memory). Do not duplicate in this repo.

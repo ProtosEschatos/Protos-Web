@@ -20,8 +20,8 @@ export function GiftWallInscription({ viewport }: Props) {
 
   const portalZ = -galleryLength / 2 + 0.35
   const z = portalZ + 0.05
-  const planeW = outerW * 1.08
-  const planeH = viewport === 'mobile' ? 1.55 : 1.85
+  const planeW = outerW * 2.16
+  const planeH = (viewport === 'mobile' ? 1.55 : 1.85) * 2
   const portalTop = centerY + outerH / 2
   const y = portalTop + 0.12 + planeH / 2
 

@@ -37,6 +37,7 @@ export type ShowcaseProject = {
   color: number
   link: string
   imageUrl: string | null
+  imageSources: string[]
 }
 
 export type FrameMarker = {

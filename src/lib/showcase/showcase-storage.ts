@@ -27,8 +27,21 @@ export function getShowcaseFrameImageUrl(slug: string, viewport: ShowcaseViewpor
   return `/showcase/${key}-${slug}.jpg`
 }
 
-/** Remote fallback when local public/showcase file is missing (e.g. golden-pawn). */
+/** Supabase CDN mirror — used when local public file fails or on preview deploys. */
 export function getShowcaseFrameImageFallbackUrl(slug: string, viewport: ShowcaseViewport): string {
   const key = viewport === 'desktop' ? 'desktop' : 'mobile'
   return getShowcaseStorageUrl(SHOWCASE_STORAGE.project(slug, key))
+}
+
+/** Local first, then Supabase Storage CDN. */
+export function getShowcaseFrameImageSources(slug: string, viewport: ShowcaseViewport): string[] {
+  const primary = getShowcaseFrameImageUrl(slug, viewport)
+  const remote = getShowcaseFrameImageFallbackUrl(slug, viewport)
+  if (primary === remote) return [primary]
+  return [primary, remote]
+}
+
+/** Portfolio cards always use optimized local desktop JPEG from public/showcase/. */
+export function getPortfolioShowcaseImageUrl(slug: string): string {
+  return getShowcaseFrameImageUrl(slug, 'desktop')
 }

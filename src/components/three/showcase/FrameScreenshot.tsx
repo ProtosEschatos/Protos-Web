@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import * as THREE from 'three'
 
 function HoloFallback({ width, height, z, color }: { width: number; height: number; z: number; color: number }) {
@@ -45,50 +45,69 @@ function ScreenshotPlane({
   )
 }
 
-function useSafeTexture(imageUrl: string | null) {
+function useSafeTexture(imageSources: string[]) {
+  const sources = useMemo(
+    () => [...new Set(imageSources.filter(Boolean))],
+    [imageSources],
+  )
   const [texture, setTexture] = useState<THREE.Texture | null>(null)
-  const [failed, setFailed] = useState(!imageUrl)
+  const [failed, setFailed] = useState(sources.length === 0)
+  const [sourceIndex, setSourceIndex] = useState(0)
 
   useEffect(() => {
-    if (!imageUrl) {
+    if (sources.length === 0) {
       setTexture(null)
       setFailed(true)
+      setSourceIndex(0)
       return
     }
 
     let cancelled = false
     setFailed(false)
     setTexture(null)
+    setSourceIndex(0)
 
     const loader = new THREE.TextureLoader()
-    if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
-      loader.setCrossOrigin('anonymous')
+
+    const tryLoad = (index: number) => {
+      if (cancelled || index >= sources.length) {
+        if (!cancelled) setFailed(true)
+        return
+      }
+
+      const imageUrl = sources[index]!
+      if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+        loader.setCrossOrigin('anonymous')
+      }
+
+      loader.load(
+        imageUrl,
+        (loaded) => {
+          if (cancelled) {
+            loaded.dispose()
+            return
+          }
+          loaded.colorSpace = THREE.SRGBColorSpace
+          loaded.minFilter = THREE.LinearFilter
+          loaded.magFilter = THREE.LinearFilter
+          loaded.needsUpdate = true
+          setTexture(loaded)
+          setSourceIndex(index)
+          setFailed(false)
+        },
+        undefined,
+        () => {
+          if (!cancelled) tryLoad(index + 1)
+        },
+      )
     }
 
-    loader.load(
-      imageUrl,
-      (loaded) => {
-        if (cancelled) {
-          loaded.dispose()
-          return
-        }
-        loaded.colorSpace = THREE.SRGBColorSpace
-        loaded.minFilter = THREE.LinearFilter
-        loaded.magFilter = THREE.LinearFilter
-        loaded.needsUpdate = true
-        setTexture(loaded)
-        setFailed(false)
-      },
-      undefined,
-      () => {
-        if (!cancelled) setFailed(true)
-      },
-    )
+    tryLoad(0)
 
     return () => {
       cancelled = true
     }
-  }, [imageUrl])
+  }, [sources])
 
   useEffect(() => {
     return () => {
@@ -96,25 +115,29 @@ function useSafeTexture(imageUrl: string | null) {
     }
   }, [texture])
 
-  return { texture, failed, loading: !!imageUrl && !texture && !failed }
+  const loading = sources.length > 0 && !texture && !failed
+  return { texture, failed, loading, sourceIndex }
 }
 
 export function FrameScreenshot({
   imageUrl,
+  imageSources,
   width,
   height,
   z,
   fallbackColor,
 }: {
   imageUrl: string | null
+  imageSources?: string[]
   width: number
   height: number
   z: number
   fallbackColor: number
 }) {
-  const { texture, failed, loading } = useSafeTexture(imageUrl)
+  const sources = imageSources?.length ? imageSources : imageUrl ? [imageUrl] : []
+  const { texture, failed, loading } = useSafeTexture(sources)
 
-  if (!imageUrl || failed) {
+  if (sources.length === 0 || failed) {
     return <HoloFallback width={width} height={height} z={z} color={fallbackColor} />
   }
 

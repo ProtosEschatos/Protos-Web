@@ -2,6 +2,13 @@ name: Upload Showcase Assets
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'public/showcase/**'
+      - 'scripts/normalize-showcase-screenshots.mjs'
+      - 'scripts/upload-showcase-assets.mjs'
+      - 'scripts/cleanup-showcase-assets.mjs'
 
 permissions:
   contents: read
@@ -19,6 +26,12 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Install Pillow for JPEG normalization
+        run: pip3 install --user Pillow
+
+      - name: Normalize showcase JPEGs (PNG-as-JPG from Firefox → real JPEG)
+        run: npm run normalize:showcase-screenshots
 
       - name: Remove obsolete showcase assets from Supabase Storage
         run: npm run cleanup:showcase-assets

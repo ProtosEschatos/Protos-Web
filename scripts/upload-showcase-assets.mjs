@@ -13,6 +13,15 @@ if (!base || !key) {
   process.exit(1)
 }
 
+function detectContentType(buffer, filename) {
+  if (buffer[0] === 0xff && buffer[1] === 0xd8) return 'image/jpeg'
+  if (buffer[0] === 0x89 && buffer[1] === 0x50) return 'image/png'
+  if (buffer[0] === 0x52 && buffer[1] === 0x49) return 'image/webp'
+  if (/\.png$/i.test(filename)) return 'image/png'
+  if (/\.webp$/i.test(filename)) return 'image/webp'
+  return 'image/jpeg'
+}
+
 function collectFiles(dir, prefix = '') {
   const entries = []
   for (const name of readdirSync(dir)) {
@@ -23,8 +32,7 @@ function collectFiles(dir, prefix = '') {
     } else if (/\.(jpe?g|png|webp)$/i.test(name)) {
       let storagePath = rel
       if (!rel.includes('/')) {
-        if (/^(desktop|mobile)-/i.test(name)) storagePath = `projects/${name}`
-        else storagePath = `projects/${name}`
+        storagePath = `projects/${name}`
       }
       entries.push({ full, storagePath })
     }
@@ -36,7 +44,7 @@ const files = collectFiles(showcaseDir)
 
 for (const { full, storagePath } of files) {
   const body = readFileSync(full)
-  const contentType = full.endsWith('.png') ? 'image/png' : 'image/jpeg'
+  const contentType = detectContentType(body, full)
 
   const res = await fetch(`${base}/storage/v1/object/showcase/${storagePath}`, {
     method: 'POST',
@@ -53,7 +61,7 @@ for (const { full, storagePath } of files) {
     console.error(`FAIL ${storagePath}: ${res.status} ${text}`)
     process.exitCode = 1
   } else {
-    console.log(`OK ${storagePath}`)
+    console.log(`OK ${storagePath} (${contentType}, ${Math.round(body.length / 1024)}KB)`)
   }
 }
 

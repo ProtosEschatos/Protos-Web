@@ -1,6 +1,6 @@
 import { isAllowedPortfolioUrl } from '@/lib/showcase/showcase-allowlist'
 import { portfolioUrlToShowcaseSlug } from '@/lib/showcase/portfolio-slug'
-import { getShowcaseFrameImageUrl } from '@/lib/showcase/showcase-storage'
+import { getPortfolioShowcaseImageUrl } from '@/lib/showcase/showcase-storage'
 
 /** Local SVG placeholders when project URL is not on the showcase allowlist. */
 const SVG_FALLBACKS: Record<string, string> = {
@@ -25,7 +25,7 @@ export function getPortfolioImageFallback(projectUrl: string | null | undefined)
 
   if (isAllowedPortfolioUrl(projectUrl)) {
     const slug = portfolioUrlToShowcaseSlug(projectUrl)
-    return getShowcaseFrameImageUrl(slug, 'desktop')
+    return getPortfolioShowcaseImageUrl(slug)
   }
 
   const host = normalizeHost(projectUrl)
@@ -38,7 +38,7 @@ export function withPortfolioImageFallback<T extends { image_url: string | null;
 ): T {
   if (item.project_url && isAllowedPortfolioUrl(item.project_url)) {
     const slug = portfolioUrlToShowcaseSlug(item.project_url)
-    return { ...item, image_url: getShowcaseFrameImageUrl(slug, 'desktop') }
+    return { ...item, image_url: getPortfolioShowcaseImageUrl(slug) }
   }
 
   if (item.image_url) return item

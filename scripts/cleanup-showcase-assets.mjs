@@ -16,6 +16,12 @@ const OBSOLETE_PATHS = [
   'environment/synthwave-360-panorama.jpg',
   'synthwave-room.jpg',
   'synthwave-360-sheet.jpg',
+  'projects/desktop-cosmic-blueprint.jpg',
+  'projects/mobile-cosmic-blueprint.jpg',
+  'projects/desktop-protosweb.jpg',
+  'projects/mobile-protosweb.jpg',
+  'projects/desktop-zeustrading.jpg',
+  'projects/mobile-zeustrading.jpg',
 ]
 
 async function deletePath(storagePath) {

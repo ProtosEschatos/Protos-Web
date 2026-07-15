@@ -1,7 +1,7 @@
 import type { PortfolioItem } from '@/types/portfolio'
 import type { ShowcaseViewport } from '@/hooks/use-showcase-viewport'
 import { SHOWCASE_ALLOWLIST } from '@/lib/showcase/showcase-allowlist'
-import { getShowcaseFrameImageUrl } from '@/lib/showcase/showcase-storage'
+import { getShowcaseFrameImageSources } from '@/lib/showcase/showcase-storage'
 import { type ShowcaseProject } from './constants'
 
 const FRAME_COLORS = [0x6366f1, 0x06b6d4, 0xf59e0b, 0x818cf8, 0xff6600, 0x8b5cf6, 0x10b981, 0xec4899]
@@ -17,6 +17,7 @@ export function buildShowcaseProjects(
       link: entry.projectUrl,
       title: entry.title,
       description: entry.description,
-      imageUrl: getShowcaseFrameImageUrl(entry.slug, viewport),
+      imageUrl: getShowcaseFrameImageSources(entry.slug, viewport)[0] ?? null,
+      imageSources: getShowcaseFrameImageSources(entry.slug, viewport),
     }))
 }

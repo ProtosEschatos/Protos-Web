@@ -92,6 +92,7 @@ function ProjectFrame({
 
         <FrameScreenshot
           imageUrl={project?.imageUrl ?? null}
+          imageSources={project?.imageSources}
           width={viewW * 0.94}
           height={viewH * 0.94}
           z={0.012}

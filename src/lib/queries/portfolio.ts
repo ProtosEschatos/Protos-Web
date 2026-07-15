@@ -1,5 +1,6 @@
 import { normalizePortfolioUrl, SHOWCASE_ALLOWLIST, isAllowedPortfolioUrl } from '@/lib/showcase/showcase-allowlist'
 import { withPortfolioImageFallback } from '@/lib/config/portfolio-image-fallbacks'
+import { getShowcaseFrameImageUrl } from '@/lib/showcase/showcase-storage'
 import { supabase } from '@/lib/supabase'
 import type { PortfolioItem } from '@/types/portfolio'
 
@@ -54,25 +55,34 @@ export async function getPortfolioItems(
 
 const HOME_FEATURED_SLUG = 'bodulica'
 
-/** Single featured project on the home page (Bodulica only). */
+/** Featured Bodulica card for home and /portfolio (local showcase screenshot). */
 export async function getHomeFeaturedPortfolioItem(language = 'hr'): Promise<PortfolioItem | null> {
   const entry = SHOWCASE_ALLOWLIST.find((item) => item.slug === HOME_FEATURED_SLUG)
   if (!entry) return null
 
   const items = await getPortfolioItems(language, 12)
-  const match = items.find((item) => isAllowedPortfolioUrl(item.project_url) && normalizePortfolioUrl(item.project_url!) === normalizePortfolioUrl(entry.projectUrl))
+  const match = items.find(
+    (item) =>
+      isAllowedPortfolioUrl(item.project_url) &&
+      normalizePortfolioUrl(item.project_url!) === normalizePortfolioUrl(entry.projectUrl),
+  )
 
-  if (match) return match
+  const base =
+    match ??
+    withPortfolioImageFallback({
+      id: entry.slug,
+      title: entry.title,
+      tag: entry.tag,
+      description: entry.description,
+      image_url: null,
+      project_url: entry.projectUrl,
+      featured: true,
+      sort_order: entry.sortOrder,
+      language,
+    })
 
-  return withPortfolioImageFallback({
-    id: entry.slug,
-    title: entry.title,
-    tag: entry.tag,
-    description: entry.description,
-    image_url: `/showcase/desktop-${entry.slug}.jpg`,
-    project_url: entry.projectUrl,
-    featured: true,
-    sort_order: entry.sortOrder,
-    language,
-  })
+  return {
+    ...base,
+    image_url: getShowcaseFrameImageUrl(HOME_FEATURED_SLUG, 'desktop'),
+  }
 }

@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { getPortfolioItems } from '@/lib/queries/portfolio'
+import { getHomeFeaturedPortfolioItem, getPortfolioItems } from '@/lib/queries/portfolio'
+import FeaturedPortfolioCard from '@/components/features/portfolio/FeaturedPortfolioCard'
 import JsonLd from '@/components/seo/JsonLd'
 import { portfolioItemListJsonLd } from '@/lib/config/seo'
 import { PROTOS_WEB_MARQUEE } from '@/lib/config/tech-stacks'
@@ -18,6 +19,7 @@ export default async function PortfolioPage(props: Props) {
   setRequestLocale(locale)
   const t = await getTranslations({ locale, namespace: 'portfolioPage' })
   const items = await getPortfolioItems(locale, 12)
+  const featured = await getHomeFeaturedPortfolioItem(locale)
   const itemListLd = portfolioItemListJsonLd(items, locale)
 
   const marqueeItems = PROTOS_WEB_MARQUEE
@@ -67,6 +69,8 @@ export default async function PortfolioPage(props: Props) {
               </Link>
             </div>
           </div>
+
+          {featured ? <FeaturedPortfolioCard item={featured} className="mt-16" /> : null}
         </div>
       </section>
     </>

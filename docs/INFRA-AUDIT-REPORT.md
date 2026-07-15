@@ -129,7 +129,7 @@
 
 | # | Issue | Fix |
 |---|-------|-----|
-| 5 | Cloudflare CI `continue-on-error: true` | Removed; job skips if secrets missing |
+| 5 | Cloudflare CI `continue-on-error: true` | Removed strict block; restored `continue-on-error` — GitHub `CLOUDFLARE_API_TOKEN` returns 403 (rotate to Zone:Read token) |
 | 6 | `check-env.mjs` not in CI | Added `npm run check-env` to build job |
 | 7 | Blog `force-dynamic` | Documented tradeoff; keep until SSG strategy tested |
 | 8 | Stale `migrations/README.md` (said 24) | Updated to 38 + duplicate pairs |

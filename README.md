@@ -49,9 +49,7 @@ src/
 │   │   ├── page.tsx           # Home page (Hero, Process, Portfolio, Services, Blog, Contact)
 │   │   ├── o-meni/page.tsx    # About page ("Full Stack Duo iz Zagreba")
 │   │   ├── proces/page.tsx    # Process page
-│   │   ├── portfolio/page.tsx # Portfolio page
-│   │   ├── portfolio/page.tsx          # R3F 3D space gallery
-│   │   ├── portfolio-showcase/page.tsx # 301 redirect → /portfolio
+│   │   ├── portfolio/page.tsx          # R3F 3D space gallery (legacy /portfolio-showcase → 301)
 │   │   ├── usluge/page.tsx    # Services page
 │   │   ├── blog/page.tsx      # Blog listing (Supabase)
 │   │   ├── blog/[slug]/page.tsx # Blog post detail
@@ -156,7 +154,7 @@ src/
 - [x] API routes: POST /api/contact, GET /api/blog
 - [x] i18n with next-intl (6 languages)
 - [x] hreflang alternates + dynamic sitemap with blog posts
-- [x] All config files (tailwind, next, tsconfig, postcss, middleware, i18n)
+- [x] All config files (tailwind, next, tsconfig, postcss, proxy, i18n)
 - [x] Agent docs (`AGENTS.md`, `.cursor/rules/`)
 
 ### Backend

@@ -6,7 +6,7 @@ Practical security map for `protosweb.eu`. No system is immune to every attack; 
 
 | Secret | Platform | Used by |
 |--------|----------|---------|
-| `ADMIN_SECRET` | **Vercel only** | `/admin` login + middleware (Next.js) |
+| `ADMIN_SECRET` | **Vercel only** | `/admin` login + edge proxy (Next.js) |
 | `RESEND_API_KEY`, `BREVO_API_KEY` | **Supabase Edge secrets** | `submit-form`, `subscribe` |
 | `RESEND_FROM_EMAIL`, `CONTACT_EMAIL` | **Supabase Edge secrets** | Email from addresses |
 | `KEEP_ALIVE_SECRET` | **Supabase** + **GitHub** | `keep-alive` edge fn + cron |

@@ -76,7 +76,7 @@ src/
 - **Supabase backend** — dedicated GitHub workflows (`supabase-db-push.yml`, `supabase-deploy-functions.yml`, `supabase-keep-alive.yml`)
 - Cloudflare DNS: manual `cloudflare-dns-check.yml` only
 - Cursor plugins: `docs/cursor-stack.md` — **disable Prisma, Convex** marketplace ORM rules
-- Env check: `npm run check:env` — see `.env.example`
+- Env check: `npm run check:env` (required Supabase vars only)
 - Compatibility: `docs/compatibility.md` — all devices/browsers; showcase WebGL fallback
 
 **Critical:** `ADMIN_SECRET` on Vercel only — git revert does not restore it.

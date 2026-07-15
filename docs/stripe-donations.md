@@ -48,16 +48,9 @@ Ili primijeni `20260711150000_donations_stripe_integration.sql` u SQL Editoru.
 
 ## Cilj donacije
 
-Jedan **primarni** CTA na `/o-meni` → [Ko-fi](https://ko-fi.com/protoswebmark23). Sekundarni → Stripe Checkout (cause `resources`).
+Jedan gumb na `/o-meni` → Stripe Checkout (cause slug `resources`).
 
-## Ko-fi (primarni tip jar)
-
-- Tipke / linkovi: `/o-meni` (primarni gumb), Stripe modal alternative, studio social, admin hub
-- **Isplata:** Ko-fi **ne drži** novac — supporter plaća direktno na tvoj povezani **PayPal** ili **Stripe** account ([How do I get paid?](https://help.ko-fi.com/hc/en-us/articles/115003980093-How-do-I-get-paid))
-- **Naknade (Free plan):** **0%** Ko-fi na one-time tipove; + normalni PayPal/Stripe processing fee. Membership/shop: ~5% Ko-fi ([pricing](https://ko-fi.com/pricing))
-- **Ne** ide automatski u `donations` tablicu / `/admin/donacije`
-
-Ako većina podrške ide preko Ko-fi, manje Stripe Checkout sesija na našem edge flowu → manje “svojeg” Stripe volumena sa sajta.
+Ko-fi API key može stajati na Vercelu (`KO_FI_API_KEY`) za buduće admin sync — **nije** javni payment CTA.
 
 ## Produkcija (live)
 

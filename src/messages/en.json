@@ -451,9 +451,7 @@
     "supportTitle": "Projects that change",
     "supportTitleHighlight": "the digital Balkans",
     "supportSubtitle": "Every donation contributes to developing a platform for protection against internet fraud and building a freer digital space for our region.",
-    "supportButton": "Donate via Ko-fi",
-    "supportStripeButton": "Formal donation (Stripe)",
-    "supportKoFiHint": "Small tips go through Ko-fi (lower fees; money lands in your PayPal/Stripe). Stripe stays for amounts we track in /admin.",
+    "supportButton": "Support studio resources",
     "donationForm": {
       "title": "Donate",
       "amountLabel": "Amount (EUR)",
@@ -466,8 +464,7 @@
       "processing": "Loading…",
       "errorGeneric": "Donation failed. Please try again.",
       "successToast": "Thank you! Your donation was received.",
-      "cancelledToast": "Payment was cancelled. You can try again anytime.",
-      "kofiAlt": "Or support on Ko-fi (lower fees)"
+      "cancelledToast": "Payment was cancelled. You can try again anytime."
     },
     "dualStacks": {
       "label": "STACKS",

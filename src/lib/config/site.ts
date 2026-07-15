@@ -37,5 +37,5 @@ export const GOOGLE_BUSINESS_PROFILE_URL =
 export const GA4_MEASUREMENT_ID =
   process.env.NEXT_PUBLIC_GA_ID?.trim() || 'G-LP29SJ3MM3'
 
-/** Ko-fi tip jar — lower fees than Stripe for small donations; no admin DB sync. */
+/** Ko-fi page URL — kept for admin/tools; public donate CTA is Stripe Checkout. */
 export const KO_FI_URL = 'https://ko-fi.com/protoswebmark23'

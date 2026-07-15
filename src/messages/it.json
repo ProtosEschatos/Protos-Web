@@ -630,9 +630,7 @@
     "supportTitle": "Progetti che cambiano",
     "supportTitleHighlight": "i Balcani digitali",
     "supportSubtitle": "Ogni donazione contribuisce allo sviluppo di una piattaforma per la protezione dalle frodi online e alla costruzione di uno spazio digitale più libero per la nostra regione.",
-    "supportButton": "Dona con Ko-fi",
-    "supportStripeButton": "Donazione formale (Stripe)",
-    "supportKoFiHint": "Le mance piccole passano da Ko-fi (commission più basse; fondi sul tuo PayPal/Stripe). Stripe resta per gli importi che registriamo in /admin.",
+    "supportButton": "Sostieni le risorse dello studio",
     "donationForm": {
       "title": "Dona",
       "amountLabel": "Importo (EUR)",
@@ -645,8 +643,7 @@
       "processing": "Caricamento…",
       "errorGeneric": "Donazione non riuscita. Riprova.",
       "successToast": "Grazie! La tua donazione è stata ricevuta.",
-      "cancelledToast": "Pagamento annullato. Puoi riprovare quando vuoi.",
-      "kofiAlt": "Oppure sostieni su Ko-fi (commissioni più basse)"
+      "cancelledToast": "Pagamento annullato. Puoi riprovare quando vuoi."
     },
     "dualStacks": {
       "label": "STACK",

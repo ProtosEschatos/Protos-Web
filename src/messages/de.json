@@ -630,9 +630,7 @@
     "supportTitle": "Projekte, die den",
     "supportTitleHighlight": "digitalen Balkan verändern",
     "supportSubtitle": "Jede Spende trägt zur Entwicklung einer Plattform zum Schutz vor Internetbetrug und zum Aufbau eines freieren digitalen Raums für unsere Region bei.",
-    "supportButton": "Über Ko-fi spenden",
-    "supportStripeButton": "Formale Spende (Stripe)",
-    "supportKoFiHint": "Kleine Tipps über Ko-fi (geringere Gebühren; Geld geht direkt an PayPal/Stripe). Stripe bleibt für Beträge, die wir im System erfassen.",
+    "supportButton": "Studio-Ressourcen unterstützen",
     "donationForm": {
       "title": "Spenden",
       "amountLabel": "Betrag (EUR)",
@@ -645,8 +643,7 @@
       "processing": "Laden…",
       "errorGeneric": "Spende fehlgeschlagen. Bitte erneut versuchen.",
       "successToast": "Danke! Deine Spende wurde empfangen.",
-      "cancelledToast": "Zahlung abgebrochen. Du kannst es jederzeit erneut versuchen.",
-      "kofiAlt": "Oder auf Ko-fi unterstützen (geringere Gebühren)"
+      "cancelledToast": "Zahlung abgebrochen. Du kannst es jederzeit erneut versuchen."
     },
     "dualStacks": {
       "label": "STACKS",

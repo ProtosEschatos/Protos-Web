@@ -8,7 +8,6 @@ import { localeLabels, localeFlags, locales, type Locale } from '@/i18n'
 import MobileMenu from './MobileMenu'
 import { ChevronDown, Globe, MousePointer2 } from 'lucide-react'
 import ProtosLogo from '@/components/ui/ProtosLogo'
-import KoFiButton from '@/components/ui/KoFiButton'
 import { MAIN_NAV_ITEMS, isNavItemActive, navPublicHref } from '@/lib/routes/main-nav'
 
 export default function Header() {
@@ -85,7 +84,6 @@ export default function Header() {
             </nav>
 
             <div className="hidden lg:flex items-center gap-2.5">
-              <KoFiButton label={th('kofi')} variant="header" />
               <a
                 href="https://cursor.com/referral?code=1HM5DWZJCWXH"
                 target="_blank"
@@ -132,7 +130,6 @@ export default function Header() {
             </div>
 
             <div className="flex items-center gap-2 lg:hidden">
-              <KoFiButton label={th('kofi')} variant="headerMobile" />
               <a
                 href="https://cursor.com/referral?code=1HM5DWZJCWXH"
                 target="_blank"

@@ -45,6 +45,10 @@ const LETTERMARKS: Record<string, string> = {
   golance: 'gL',
   hubstaff: 'Hb',
   jobbers: 'Jo',
+  kofi: 'Ko',
+  freecash: 'FC',
+  otter: 'Ot',
+  cursor: 'Cu',
 }
 
 function Lettermark({ text, className = 'w-5 h-5' }: { text: string; className?: string }) {

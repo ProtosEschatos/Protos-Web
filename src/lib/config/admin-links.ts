@@ -1,5 +1,5 @@
 import { CONTACT_EMAIL, SITE_URL, SUPABASE_PROJECT_REF } from '@/lib/config/site'
-import { platformItems, socialItems } from '@/lib/config/social-links'
+import { partnerReferralItems, platformItems, socialItems } from '@/lib/config/social-links'
 
 /** Single source for email/comms service roles — used by admin dashboard + detail pages. */
 export const ADMIN_COMMS_SERVICES = {
@@ -154,6 +154,14 @@ export const adminSocialLinks: AdminHubLink[] = socialItems.map((item) => ({
 }))
 
 export const adminFreelanceLinks: AdminHubLink[] = platformItems.map((item) => ({
+  id: item.id,
+  label: item.label,
+  href: item.href,
+  external: true,
+  pending: item.pending,
+}))
+
+export const adminReferralLinks: AdminHubLink[] = partnerReferralItems.map((item) => ({
   id: item.id,
   label: item.label,
   href: item.href,

@@ -51,6 +51,13 @@ export const freelancePlatformItems: PresenceItem[] = [
   profileLink('jobbers', 'Jobbers.io', '#', '#6c5cef'),
 ]
 
+/** Partner / referral tools (rewards, AI, editor — not freelance platforms). */
+export const partnerReferralItems: PresenceItem[] = [
+  profileLink('freecash', 'Free Cash', 'https://freecash.com/r/11DJW3', '#1db954'),
+  profileLink('otter', 'Otter.ai', 'https://otter.ai/referrals/P78SAFF6', '#1a73e8'),
+  profileLink('cursor', 'Cursor', 'https://cursor.com/referral?code=1HM5DWZJCWXH', '#7c3aed'),
+]
+
 export function getLiveProfileUrls(items: PresenceItem[]): string[] {
   return items.map((item) => item.href).filter((href) => href && href !== '#')
 }

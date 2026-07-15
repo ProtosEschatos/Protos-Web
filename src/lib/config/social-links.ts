@@ -13,4 +13,4 @@ export type PresenceItem = {
 }
 
 /** @deprecated Use studioSocialItems from team-profiles.ts */
-export { studioSocialItems as socialItems, freelancePlatformItems as platformItems } from '@/lib/config/team-profiles'
+export { studioSocialItems as socialItems, freelancePlatformItems as platformItems, partnerReferralItems } from '@/lib/config/team-profiles'

@@ -8,6 +8,7 @@ import {
   darioSocialItems,
   freelancePlatformItems,
   martinaSocialItems,
+  partnerReferralItems,
   studioSocialItems,
 } from '@/lib/config/team-profiles'
 
@@ -167,6 +168,22 @@ export default function OnlinePresence() {
                 key={item.id}
                 item={item}
                 index={30 + i}
+                pendingLabel={pendingLabel}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-10">
+          <h3 className="text-xs font-semibold tracking-[0.15em] uppercase text-[var(--light-muted)] mb-4">
+            {t('referralsTitle')}
+          </h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+            {partnerReferralItems.map((item, i) => (
+              <PresenceTile
+                key={item.id}
+                item={item}
+                index={40 + i}
                 pendingLabel={pendingLabel}
               />
             ))}

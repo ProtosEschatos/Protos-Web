@@ -9,6 +9,7 @@ import {
   adminFreelanceLinks,
   adminMarketingLinks,
   adminPlatformLinks,
+  adminReferralLinks,
   adminSocialLinks,
 } from '@/lib/config/admin-links'
 import { Inbox, Mail, Megaphone, Send } from 'lucide-react'
@@ -98,6 +99,21 @@ export default async function AdminToolsPage(props: Props) {
               href={link.href}
               label={link.label}
               icon={Bell}
+              external
+              pending={link.pending}
+            />
+          ))}
+        </div>
+      </AdminSection>
+
+      <AdminSection title="Preporuke / referral">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {adminReferralLinks.map((link) => (
+            <AdminHubCard
+              key={link.id}
+              href={link.href}
+              label={link.label}
+              icon={Share2}
               external
               pending={link.pending}
             />

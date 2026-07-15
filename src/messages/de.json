@@ -628,9 +628,9 @@
     "supportTitle": "Projekte, die den",
     "supportTitleHighlight": "digitalen Balkan verändern",
     "supportSubtitle": "Jede Spende trägt zur Entwicklung einer Plattform zum Schutz vor Internetbetrug und zum Aufbau eines freieren digitalen Raums für unsere Region bei.",
-    "supportButton": "Studio-Ressourcen unterstützen",
-    "supportKoFiButton": "Über Ko-fi spenden",
-    "supportKoFiHint": "Ko-fi ist ein schnellerer Weg mit geringeren Gebühren. Stripe bleibt für formale Spenden, die wir im System erfassen.",
+    "supportButton": "Über Ko-fi spenden",
+    "supportStripeButton": "Formale Spende (Stripe)",
+    "supportKoFiHint": "Kleine Tipps über Ko-fi (geringere Gebühren; Geld geht direkt an PayPal/Stripe). Stripe bleibt für Beträge, die wir im System erfassen.",
     "donationForm": {
       "title": "Spenden",
       "amountLabel": "Betrag (EUR)",

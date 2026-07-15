@@ -48,17 +48,16 @@ Ili primijeni `20260711150000_donations_stripe_integration.sql` u SQL Editoru.
 
 ## Cilj donacije
 
-Jedan gumb na `/o-meni` → cause slug `resources` (bez javnih ciljeva / progress barova).
+Jedan **primarni** CTA na `/o-meni` → [Ko-fi](https://ko-fi.com/protoswebmark23). Sekundarni → Stripe Checkout (cause `resources`).
 
-## Ko-fi (paralelno)
+## Ko-fi (primarni tip jar)
 
-Javni tip jar: https://ko-fi.com/protoswebmark23
+- Tipke / linkovi: `/o-meni` (primarni gumb), Stripe modal alternative, studio social, admin hub
+- **Isplata:** Ko-fi **ne drži** novac — supporter plaća direktno na tvoj povezani **PayPal** ili **Stripe** account ([How do I get paid?](https://help.ko-fi.com/hc/en-us/articles/115003980093-How-do-I-get-paid))
+- **Naknade (Free plan):** **0%** Ko-fi na one-time tipove; + normalni PayPal/Stripe processing fee. Membership/shop: ~5% Ko-fi ([pricing](https://ko-fi.com/pricing))
+- **Ne** ide automatski u `donations` tablicu / `/admin/donacije`
 
-- Tipka **Doniraj preko Ko-fi** na `/o-meni` + link u Stripe modalu + social/admin hub
-- Ko-fi: manje platformskih naknada za tipove; **ne** ide automatski u `donations` tablicu / `/admin/donacije`
-- Stripe: formalne donacije koje webhook bilježi u bazu
-
-Ako većina podrške ide preko Ko-fi, Stripe Checkout ima manje transakcija → manje Stripe fee-a.
+Ako većina podrške ide preko Ko-fi, manje Stripe Checkout sesija na našem edge flowu → manje “svojeg” Stripe volumena sa sajta.
 
 ## Produkcija (live)
 

@@ -455,9 +455,9 @@
     "supportTitle": "Пројекти који мијењају",
     "supportTitleHighlight": "дигиталне Балкане",
     "supportSubtitle": "Свака донација доприноси развоју платформе за заштиту од интернетских пријевара и градњи слободнијег дигиталног простора за нашу регију.",
-    "supportButton": "Подржи ресурсе студија",
-    "supportKoFiButton": "Донирај преко Ko-fi",
-    "supportKoFiHint": "Ko-fi је бржи начин уз мање накнаде. Stripe остаје за формалне донације које биљежимо у систему.",
+    "supportButton": "Донирај преко Ko-fi",
+    "supportStripeButton": "Формална донација (Stripe)",
+    "supportKoFiHint": "Ситне подршке иду преко Ko-fi (мање накнаде; новац иде директно на PayPal/Stripe). Stripe остаје за износе које биљежимо у /admin.",
     "donationForm": {
       "title": "Донирај",
       "amountLabel": "Износ (ЕУР)",

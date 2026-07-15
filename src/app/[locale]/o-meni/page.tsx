@@ -263,21 +263,21 @@ export default function AboutPage() {
             </p>
           ) : null}
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <button
-              type="button"
-              onClick={() => setDonationModalOpen(true)}
-              className="inline-flex items-center justify-center px-8 py-4 rounded-full text-sm font-semibold text-white bg-[var(--primary)] transition-all duration-300 hover:brightness-110"
-            >
-              {t('supportButton')}
-            </button>
             <a
               href={KO_FI_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-8 py-4 rounded-full text-sm font-semibold text-[var(--light)] border border-white/20 bg-white/[0.04] transition-all duration-300 hover:border-[#ff5e5b]/60 hover:bg-[#ff5e5b]/10"
+              className="inline-flex items-center justify-center px-8 py-4 rounded-full text-sm font-semibold text-white bg-[var(--primary)] transition-all duration-300 hover:brightness-110"
             >
-              {t('supportKoFiButton')}
+              {t('supportButton')}
             </a>
+            <button
+              type="button"
+              onClick={() => setDonationModalOpen(true)}
+              className="inline-flex items-center justify-center px-8 py-4 rounded-full text-sm font-semibold text-[var(--light)] border border-white/20 bg-white/[0.04] transition-all duration-300 hover:border-white/40 hover:bg-white/[0.08]"
+            >
+              {t('supportStripeButton')}
+            </button>
           </div>
           <p className="mt-5 text-xs text-[var(--light-muted)] max-w-[420px] mx-auto leading-5">
             {t('supportKoFiHint')}

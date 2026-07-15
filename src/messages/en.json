@@ -449,9 +449,9 @@
     "supportTitle": "Projects that change",
     "supportTitleHighlight": "the digital Balkans",
     "supportSubtitle": "Every donation contributes to developing a platform for protection against internet fraud and building a freer digital space for our region.",
-    "supportButton": "Support studio resources",
-    "supportKoFiButton": "Donate via Ko-fi",
-    "supportKoFiHint": "Ko-fi is a quicker tip jar with lower fees. Stripe stays for formal donations we track in the system.",
+    "supportButton": "Donate via Ko-fi",
+    "supportStripeButton": "Formal donation (Stripe)",
+    "supportKoFiHint": "Small tips go through Ko-fi (lower fees; money lands in your PayPal/Stripe). Stripe stays for amounts we track in /admin.",
     "donationForm": {
       "title": "Donate",
       "amountLabel": "Amount (EUR)",

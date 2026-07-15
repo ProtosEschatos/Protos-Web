@@ -628,9 +628,9 @@
     "supportTitle": "Proyectos que cambian",
     "supportTitleHighlight": "los Balcanes digitales",
     "supportSubtitle": "Cada donación contribuye al desarrollo de una plataforma de protección contra fraudes online y a construir un espacio digital más libre para nuestra región.",
-    "supportButton": "Apoyar recursos del estudio",
-    "supportKoFiButton": "Donar con Ko-fi",
-    "supportKoFiHint": "Ko-fi es una vía más rápida con menores comisiones. Stripe permanece para donaciones formales que registramos en el sistema.",
+    "supportButton": "Donar con Ko-fi",
+    "supportStripeButton": "Donación formal (Stripe)",
+    "supportKoFiHint": "Propinas pequeñas van por Ko-fi (menos comisiones; el dinero llega a tu PayPal/Stripe). Stripe queda para importes que registramos en /admin.",
     "donationForm": {
       "title": "Donar",
       "amountLabel": "Importe (EUR)",

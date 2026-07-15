@@ -1,20 +1,20 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/navigation'
-import { ArrowRight, Layers } from 'lucide-react'
+import { ArrowRight, ExternalLink, ImageIcon, Layers } from 'lucide-react'
 import type { PortfolioItem } from '@/types/portfolio'
-import PortfolioGrid from '@/components/features/portfolio/PortfolioGrid'
 import { PROTOS_WEB_MARQUEE } from '@/lib/config/tech-stacks'
 
 const marqueeItems = PROTOS_WEB_MARQUEE
 
 type Props = {
-  items: PortfolioItem[]
+  featured: PortfolioItem | null
 }
 
-export default function Portfolio({ items }: Props) {
+export default function Portfolio({ featured }: Props) {
   const t = useTranslations('portfolio')
 
   return (
@@ -35,7 +35,55 @@ export default function Portfolio({ items }: Props) {
           </div>
         </div>
 
-        <PortfolioGrid items={items} />
+        {featured ? (
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6 }}
+            className="mx-auto mt-10 max-w-4xl text-left"
+          >
+            <div className="cosmic-panel overflow-hidden rounded-3xl hover:-translate-y-1 hover:shadow-[0_8px_40px_rgba(0,0,0,0.35)] transition-all duration-300">
+              {featured.image_url ? (
+                <div className="relative w-full aspect-[16/9] sm:aspect-[21/9]">
+                  <Image
+                    src={featured.image_url}
+                    alt={featured.title}
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 768px) 100vw, 896px"
+                    priority
+                  />
+                </div>
+              ) : (
+                <div className="flex aspect-[16/9] w-full items-center justify-center bg-gradient-to-br from-[var(--dark-surface)] to-[var(--dark-card-hover)] sm:aspect-[21/9]">
+                  <ImageIcon className="h-10 w-10 text-[var(--light-muted)] opacity-30" />
+                </div>
+              )}
+              <div className="p-6 sm:p-8">
+                {featured.tag ? (
+                  <div className="mb-3 text-[0.75rem] font-semibold uppercase tracking-[0.18em] text-[var(--primary)]">
+                    {featured.tag}
+                  </div>
+                ) : null}
+                <h3 className="mb-2 text-2xl font-bold text-[var(--light)] sm:text-3xl">{featured.title}</h3>
+                {featured.description ? (
+                  <p className="max-w-2xl text-base leading-7 text-[var(--light-muted)] sm:text-lg">{featured.description}</p>
+                ) : null}
+                {featured.project_url ? (
+                  <a
+                    href={featured.project_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-5 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-[var(--primary)] hover:underline"
+                  >
+                    {t('viewProject')} <ExternalLink className="h-4 w-4" />
+                  </a>
+                ) : null}
+              </div>
+            </div>
+          </motion.div>
+        ) : null}
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}

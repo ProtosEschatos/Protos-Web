@@ -1,4 +1,4 @@
-import { isAllowedPortfolioUrl, SHOWCASE_ALLOWLIST } from '@/lib/showcase/showcase-allowlist'
+import { normalizePortfolioUrl, SHOWCASE_ALLOWLIST, isAllowedPortfolioUrl } from '@/lib/showcase/showcase-allowlist'
 import { withPortfolioImageFallback } from '@/lib/config/portfolio-image-fallbacks'
 import { supabase } from '@/lib/supabase'
 import type { PortfolioItem } from '@/types/portfolio'
@@ -50,4 +50,29 @@ export async function getPortfolioItems(
   if (filtered.length > 0) return filtered
 
   return allowlistFallbackItems(language).slice(0, limit)
+}
+
+const HOME_FEATURED_SLUG = 'bodulica'
+
+/** Single featured project on the home page (Bodulica only). */
+export async function getHomeFeaturedPortfolioItem(language = 'hr'): Promise<PortfolioItem | null> {
+  const entry = SHOWCASE_ALLOWLIST.find((item) => item.slug === HOME_FEATURED_SLUG)
+  if (!entry) return null
+
+  const items = await getPortfolioItems(language, 12)
+  const match = items.find((item) => isAllowedPortfolioUrl(item.project_url) && normalizePortfolioUrl(item.project_url!) === normalizePortfolioUrl(entry.projectUrl))
+
+  if (match) return match
+
+  return withPortfolioImageFallback({
+    id: entry.slug,
+    title: entry.title,
+    tag: entry.tag,
+    description: entry.description,
+    image_url: `/showcase/desktop-${entry.slug}.jpg`,
+    project_url: entry.projectUrl,
+    featured: true,
+    sort_order: entry.sortOrder,
+    language,
+  })
 }

@@ -1,6 +1,5 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { getPortfolioItems } from '@/lib/queries/portfolio'
-import PortfolioGrid from '@/components/features/portfolio/PortfolioGrid'
 import JsonLd from '@/components/seo/JsonLd'
 import { portfolioItemListJsonLd } from '@/lib/config/seo'
 import { PROTOS_WEB_MARQUEE } from '@/lib/config/tech-stacks'
@@ -47,11 +46,10 @@ export default async function PortfolioPage(props: Props) {
       </div>
 
       <section className="py-16 cosmic-section">
-        <div className="max-w-[1200px] mx-auto px-6">
+        <div className="max-w-[900px] mx-auto px-6">
           <p className="text-center text-[var(--light-muted)] mb-10 leading-7 max-w-2xl mx-auto">{t('showcaseOnlyHint')}</p>
-          <PortfolioGrid items={items} />
 
-          <div className="mt-16 bg-gradient-to-r from-[var(--secondary)]/15 to-[var(--accent)]/10 border border-[var(--secondary)]/20 rounded-3xl p-8 sm:px-10 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="bg-gradient-to-r from-[var(--secondary)]/15 to-[var(--accent)]/10 border border-[var(--secondary)]/20 rounded-3xl p-8 sm:px-10 flex flex-col sm:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-5">
               <div className="w-12 h-12 rounded-xl bg-[var(--secondary)]/20 flex items-center justify-center text-[var(--secondary)] text-lg">
                 <Layers className="w-5 h-5" />

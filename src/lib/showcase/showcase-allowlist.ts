@@ -1,5 +1,5 @@
 /**
- * Single source of truth for 3D showcase wall frames and public portfolio grid.
+ * Single source of truth for 3D showcase wall frames.
  * Only repos/projects explicitly approved by the studio owner belong here.
  * System Boost is the back-wall poklon — see featured-demo.ts, not this list.
  */

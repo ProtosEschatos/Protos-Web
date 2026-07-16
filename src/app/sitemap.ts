@@ -4,6 +4,9 @@ import { locales } from '@/i18n'
 import { buildLocaleUrl } from '@/lib/config/seo'
 import { aboutPathForLocale } from '@/lib/routes/localized-paths'
 
+/** Keep sitemap warm for Googlebot; avoid empty Last read / fetch stalls. */
+export const revalidate = 3600
+
 type PathConfig = {
   path: string
   priority: number
@@ -24,10 +27,8 @@ const pathConfigs: PathConfig[] = [
   { path: '/cookies', priority: 0.3, changeFrequency: 'yearly' },
 ]
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+function buildStaticEntries(now: Date): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = []
-  const now = new Date()
-
   for (const locale of locales) {
     for (const { path, priority, changeFrequency } of pathConfigs) {
       const localizedPath = path === '/o-meni' ? aboutPathForLocale(locale) : path
@@ -39,15 +40,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       })
     }
   }
+  return entries
+}
 
-  const blogSlugs = await getAllBlogSlugs()
-  for (const post of blogSlugs) {
-    entries.push({
-      url: buildLocaleUrl(post.language, `/blog/${post.slug}`),
-      lastModified: new Date(post.updated_at),
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    })
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const now = new Date()
+  const entries = buildStaticEntries(now)
+
+  try {
+    const blogSlugs = await getAllBlogSlugs()
+    for (const post of blogSlugs) {
+      entries.push({
+        url: buildLocaleUrl(post.language, `/blog/${post.slug}`),
+        lastModified: new Date(post.updated_at),
+        changeFrequency: 'monthly',
+        priority: 0.6,
+      })
+    }
+  } catch (error) {
+    console.error('[sitemap] blog slugs skipped:', error)
   }
 
   return entries

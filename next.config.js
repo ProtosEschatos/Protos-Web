@@ -45,7 +45,36 @@ const nextConfig = {
   transpilePackages: ['three', '@react-three/fiber', '@react-three/drei'],
 
   async headers() {
-    return [{ source: '/(.*)', headers: securityHeaders }]
+    return [
+      {
+        source: '/sitemap.xml',
+        headers: [
+          ...securityHeaders,
+          { key: 'Content-Type', value: 'application/xml; charset=utf-8' },
+          { key: 'Cache-Control', value: 'public, max-age=3600, s-maxage=3600' },
+        ],
+      },
+      {
+        source: '/robots.txt',
+        headers: [
+          ...securityHeaders,
+          { key: 'Content-Type', value: 'text/plain; charset=utf-8' },
+          { key: 'Cache-Control', value: 'public, max-age=3600, s-maxage=3600' },
+        ],
+      },
+      { source: '/(.*)', headers: securityHeaders },
+    ]
+  },
+
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.protosweb.eu' }],
+        destination: 'https://protosweb.eu/:path*',
+        permanent: true,
+      },
+    ]
   },
 }
 

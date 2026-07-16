@@ -31,39 +31,13 @@ export const viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Protos Web — Web stranice s dušom | Zagreb',
+    default: 'Izrada web stranica Zagreb | Protos Web — 3D & Full Stack Studio',
     template: '%s | Protos Web',
   },
   description:
     'Protos Web — web studio iz Zagreba. Izrada web stranica, UI/UX, SEO, e-trgovina i 3D WebGL showcase. Dario Imsirović i Martina Markulin. Hrvatska, Balkan i EU.',
-  keywords: [
-    'Dario Imsirović',
-    'Dario Imsirovic',
-    'Dario Imširović',
-    'Martina Markulin',
-    'everybodycries',
-    'ProtosEschatos',
-    'protos_eschatos',
-    'Protos Web',
-    'protosweb',
-    'Protos Web Mark23',
-    'full stack 3D crossweb designer',
-    'full stack cross-web developer',
-    'izrada web stranica',
-    'web developer zagreb',
-    'web dizajn zagreb',
-    'ex-Yu',
-    'Balkan',
-    'Hrvatska',
-    'Srbija',
-    'Bodulica Shop',
-    'Three.js',
-    'WebGL',
-    'goLance',
-  ],
   authors: [
-    { name: LEGAL_OWNER, url: `${SITE_URL}/o-meni#dario-imsirovic` },
-    { name: LEGAL_COLLABORATOR, url: `${SITE_URL}/o-meni#martina-markulin` },
+    { name: `${LEGAL_OWNER}, ${LEGAL_COLLABORATOR}`, url: `${SITE_URL}/o-meni` },
   ],
   creator: `${LEGAL_OWNER} & ${LEGAL_COLLABORATOR} — Protos Web`,
   openGraph: {
@@ -71,7 +45,7 @@ export const metadata: Metadata = {
     locale: 'hr_HR',
     siteName: 'Protos Web',
     url: siteUrl,
-    title: 'Protos Web — Web stranice s dušom | Zagreb',
+    title: 'Izrada web stranica Zagreb | Protos Web — 3D & Full Stack Studio',
     description:
       'Brze, lagane i robusne web stranice po mjeri. Next.js, React, Three.js. Portfolio: Bodulica, Auto Moto, Golden Pawn, LuminaDent. Zagreb, Hrvatska.',
     images: [ogImage],
@@ -80,7 +54,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@protos_eschatos',
     creator: '@protos_eschatos',
-    title: 'Protos Web — Web stranice s dušom | Zagreb',
+    title: 'Izrada web stranica Zagreb | Protos Web — 3D & Full Stack Studio',
     description:
       'Web studio iz Zagreba — custom websites, UI/UX, SEO i 3D portfolio. Dario Imsirović & Martina Markulin.',
     images: [ogImage.url],
@@ -88,12 +62,6 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || GOOGLE_SITE_VERIFICATION,

@@ -18,7 +18,7 @@ export function normalizeSiteUrl(url?: string): string {
 export const siteUrl = SITE_URL
 
 export const ogImage = {
-  url: '/api/og',
+  url: `${SITE_URL}/api/og`,
   width: 1200,
   height: 630,
   alt: 'Protos Web',
@@ -72,7 +72,12 @@ export function buildPageMetadata({
   const safeLocale = (locale in openGraphLocale ? locale : defaultLocale) as Locale
   const pathForLocale = (loc: Locale) => pathsByLocale?.[loc] ?? path
   const canonical = buildLocaleUrl(safeLocale, pathForLocale(safeLocale))
-  const ogImageUrl = ogImagePath ? { ...ogImage, url: ogImagePath } : ogImage
+  const ogImageUrl = ogImagePath
+    ? { ...ogImage, url: ogImagePath.startsWith('http') ? ogImagePath : `${siteUrl}${ogImagePath}` }
+    : ogImage
+  const ogImageAbsolute = ogImageUrl.url.startsWith('http')
+    ? ogImageUrl.url
+    : `${siteUrl}${ogImageUrl.url}`
 
   const languages: Record<string, string> = {}
   for (const loc of locales) {
@@ -100,13 +105,13 @@ export function buildPageMetadata({
       alternateLocale: alternateLocales,
       siteName: 'Protos Web',
       url: canonical,
-      images: [ogImageUrl],
+      images: [{ ...ogImageUrl, url: ogImageAbsolute }],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: [`${siteUrl}${ogImageUrl.url}`],
+      images: [ogImageAbsolute],
     },
   }
 }

@@ -615,10 +615,101 @@ export function getPageKeywords(locale: string, page: SeoPageKey): string[] {
   return PAGE_KEYWORDS[loc][page] ?? []
 }
 
+/** Short meta keywords only — full KEYWORDS_BY_LOCALE stays for JSON-LD / internal. */
+const META_KEYWORDS_BY_LOCALE: Record<Locale, string[]> = {
+  hr: [
+    'Protos Web',
+    'izrada web stranica Zagreb',
+    'web developer Zagreb',
+    'web dizajn Zagreb',
+    'Dario Imsirović',
+    'Martina Markulin',
+    'UI/UX',
+    'SEO',
+    'Three.js',
+    'WebGL',
+    'e-trgovina',
+    'full stack',
+  ],
+  sr: [
+    'Protos Web',
+    'izrada web stranica Zagreb',
+    'web developer Zagreb',
+    'web dizajn Zagreb',
+    'Дарио Имсировић',
+    'Мартина Маркулин',
+    'UI/UX',
+    'SEO',
+    'Three.js',
+    'WebGL',
+    'e-trgovina',
+    'full stack',
+  ],
+  en: [
+    'Protos Web',
+    'web development Zagreb',
+    'web designer Zagreb',
+    'custom websites Croatia',
+    'Dario Imsirović',
+    'Martina Markulin',
+    'UI/UX',
+    'SEO',
+    'Three.js',
+    'WebGL',
+    'e-commerce',
+    'full stack',
+  ],
+  de: [
+    'Protos Web',
+    'Webentwicklung Zagreb',
+    'Webdesign Zagreb',
+    'Websites Kroatien',
+    'Dario Imsirović',
+    'Martina Markulin',
+    'UI/UX',
+    'SEO',
+    'Three.js',
+    'WebGL',
+    'E-Commerce',
+    'Full Stack',
+  ],
+  it: [
+    'Protos Web',
+    'sviluppo web Zagabria',
+    'web design Zagabria',
+    'siti web Croazia',
+    'Dario Imsirović',
+    'Martina Markulin',
+    'UI/UX',
+    'SEO',
+    'Three.js',
+    'WebGL',
+    'e-commerce',
+    'full stack',
+  ],
+  es: [
+    'Protos Web',
+    'desarrollo web Zagreb',
+    'diseño web Zagreb',
+    'sitios web Croacia',
+    'Dario Imsirović',
+    'Martina Markulin',
+    'UI/UX',
+    'SEO',
+    'Three.js',
+    'WebGL',
+    'e-commerce',
+    'full stack',
+  ],
+}
+
+const META_KEYWORDS_MAX = 12
+
 export function formatKeywords(locale: string, page?: SeoPageKey): string {
-  const global = getGlobalKeywords(locale)
-  const pageSpecific = page ? getPageKeywords(locale, page) : []
-  return dedupeKeywords([...global, ...pageSpecific]).join(', ')
+  const loc = (locale in META_KEYWORDS_BY_LOCALE ? locale : 'en') as Locale
+  const base = META_KEYWORDS_BY_LOCALE[loc]
+  const pageSpecific = page ? getPageKeywords(locale, page).slice(0, 3) : []
+  return dedupeKeywords([...base, ...pageSpecific]).slice(0, META_KEYWORDS_MAX).join(', ')
 }
 
 export function getServiceTypesForLocale(locale: string): string[] {

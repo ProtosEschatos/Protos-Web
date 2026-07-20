@@ -66,16 +66,6 @@ const nextConfig = {
     ]
   },
 
-  async redirects() {
-    return [
-      {
-        source: '/:path*',
-        has: [{ type: 'host', value: 'www.protosweb.eu' }],
-        destination: 'https://protosweb.eu/:path*',
-        permanent: true,
-      },
-    ]
-  },
 }
 
 module.exports = withNextIntl(nextConfig)

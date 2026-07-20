@@ -14,6 +14,7 @@
     "check-env": "node scripts/check-env.mjs",
     "upload:showcase-assets": "node scripts/upload-showcase-assets.mjs",
     "upload:production-assets": "node scripts/upload-production-assets.mjs",
+    "upload:visual-references": "node scripts/upload-visual-references.mjs",
     "cleanup:showcase-assets": "node scripts/cleanup-showcase-assets.mjs",
     "normalize:showcase-screenshots": "node scripts/normalize-showcase-screenshots.mjs",
     "capture:showcase-screenshots": "node scripts/capture-showcase-screenshots.mjs",

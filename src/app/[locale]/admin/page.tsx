@@ -10,6 +10,7 @@ import { adminGetInsights } from '@/actions/admin-insights'
 import { adminGetCommsChannels, adminGetSecurityInsights } from '@/actions/admin-ops-insights'
 import { adminGetLiveServiceStatus } from '@/actions/admin-live-status'
 import { adminGetMemorySnapshot } from '@/lib/queries/admin/memory'
+import { getUltimatePanelStats } from '@/lib/queries/admin/panel-stats'
 import { getAiProviderStatus } from '@/lib/ai/providers'
 import { ADMIN_NAV_SECTIONS } from '@/lib/admin-nav'
 import { adminNavIcon } from '@/lib/admin-nav-icons'
@@ -26,16 +27,18 @@ export default async function AdminPage(props: Props) {
 
   setRequestLocale(locale)
   const notifications = await adminGetNotifications()
-  const [marketing, security, comms, liveServices, memoryResult] = await Promise.all([
+  const [marketing, security, comms, liveServices, memoryResult, panelStats] = await Promise.all([
     adminGetInsights(),
     adminGetSecurityInsights(),
     adminGetCommsChannels(notifications),
     adminGetLiveServiceStatus(),
     adminGetMemorySnapshot().catch(() => null),
+    getUltimatePanelStats().catch(() => null),
   ])
   const memory = memoryResult
   const aiStatus = getAiProviderStatus()
   const pageSection = ADMIN_NAV_SECTIONS.find((s) => s.id === 'pages')
+  const studioSection = ADMIN_NAV_SECTIONS.find((s) => s.id === 'studio')
   const systemSection = ADMIN_NAV_SECTIONS.find((s) => s.id === 'system')
 
   return (
@@ -99,6 +102,69 @@ export default async function AdminPage(props: Props) {
         <AdminSection title="Marketing & SEO" className="mt-10">
           <AdminInsightGrid insights={marketing.insights} checkedAt={marketing.checkedAt} />
         </AdminSection>
+
+        {panelStats ? (
+          <AdminSection title="Ultimate panel" className="mt-10">
+            <AdminStatGrid
+              stats={[
+                {
+                  value: panelStats.apiKeys.active,
+                  label: `Aktivnih API ključeva${panelStats.apiKeys.total ? ` / ${panelStats.apiKeys.total} ukupno` : ''}`,
+                  tone: panelStats.apiKeys.cryptoConfigured
+                    ? panelStats.apiKeys.active > 0
+                      ? 'ok'
+                      : 'default'
+                    : 'warn',
+                },
+                {
+                  value: panelStats.automations.enabled,
+                  label: `Aktivnih webhookova${panelStats.automations.total ? ` / ${panelStats.automations.total} ukupno` : ''}`,
+                  tone: panelStats.automations.enabled > 0 ? 'ok' : 'default',
+                },
+                {
+                  value: panelStats.automations.totalFires,
+                  label: 'Ukupno okidanja webhookova',
+                },
+                {
+                  value:
+                    panelStats.automations.lastStatusCode == null
+                      ? '—'
+                      : String(panelStats.automations.lastStatusCode),
+                  label: panelStats.automations.lastFiredAt
+                    ? `Zadnji fire: ${new Intl.DateTimeFormat('hr-HR', { dateStyle: 'short', timeStyle: 'short' }).format(new Date(panelStats.automations.lastFiredAt))}`
+                    : 'Zadnji fire: —',
+                  tone:
+                    panelStats.automations.lastStatusOk == null
+                      ? 'default'
+                      : panelStats.automations.lastStatusOk
+                        ? 'ok'
+                        : 'warn',
+                },
+              ]}
+            />
+            {!panelStats.apiKeys.cryptoConfigured ? (
+              <p className="admin-mono mt-3 text-[11px] text-amber-300">
+                Postavi <code>ADMIN_KEYS_ENCRYPTION_KEY</code> u Vercel env-u da bi vault i webhook auth radili.
+              </p>
+            ) : null}
+          </AdminSection>
+        ) : null}
+
+        {studioSection ? (
+          <AdminSection title="Studio" className="mt-10">
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {studioSection.items.map((item) => (
+                <AdminHubCard
+                  key={item.id}
+                  href={item.href}
+                  label={item.label}
+                  description={item.description}
+                  icon={adminNavIcon(item.id)}
+                />
+              ))}
+            </div>
+          </AdminSection>
+        ) : null}
 
         {systemSection ? (
           <AdminSection title="Sustav" className="mt-10">

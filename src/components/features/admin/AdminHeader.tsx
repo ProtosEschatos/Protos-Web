@@ -10,6 +10,7 @@ import AdminLogoutButton from '@/components/features/admin/AdminLogoutButton'
 import { findAdminNavItem } from '@/lib/admin-nav'
 import { usePathname } from '@/navigation'
 import { SITE_URL } from '@/lib/config/site'
+import { toast } from '@/lib/stores/toast-store'
 
 export default function AdminHeader() {
   const pathname = usePathname()
@@ -20,6 +21,7 @@ export default function AdminHeader() {
   function handleRefresh() {
     startTransition(() => {
       router.refresh()
+      toast.success('Sinkronizirano', current?.label ? `Osvježeno: ${current.label}` : undefined, 2500)
     })
   }
 

@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import { Download, ExternalLink, Loader2, Search } from 'lucide-react'
+import AdminLink from '@/components/features/admin/AdminLink'
 import {
   adminGetSketchfabDownload,
   adminSearchSketchfab,
@@ -71,7 +72,11 @@ export default function SketchfabBrowser() {
         </h3>
         <p className="mt-1 text-[11px] text-slate-500">
           Traži downloadable 3D modele i učitaj ih izravno u scenu.
-          Zahtijeva Sketchfab token u <a href="/admin/kljucevi" className="text-indigo-400 hover:underline">API ključevima</a>.
+          Zahtijeva Sketchfab token u{' '}
+          <AdminLink href="/admin/kljucevi" className="text-indigo-400 hover:underline">
+            API ključevima
+          </AdminLink>
+          .
         </p>
       </div>
 
@@ -100,7 +105,11 @@ export default function SketchfabBrowser() {
 
       {!state.configured && state.loaded ? (
         <p className="text-[11px] text-amber-300">
-          Sketchfab token nije postavljen. Dodaj ga u <a className="underline" href="/admin/kljucevi">API ključevima</a> pod providerom <code className="admin-mono">sketchfab</code>.
+          Sketchfab token nije postavljen. Dodaj ga u{' '}
+          <AdminLink href="/admin/kljucevi" className="underline">
+            API ključevima
+          </AdminLink>{' '}
+          pod providerom <code className="admin-mono">sketchfab</code>.
         </p>
       ) : null}
 

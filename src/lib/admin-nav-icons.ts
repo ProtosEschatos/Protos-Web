@@ -4,6 +4,7 @@ import {
   BookOpen,
   Bot,
   FileText,
+  Gauge,
   Heart,
   Inbox,
   KeyRound,
@@ -32,6 +33,7 @@ export const ADMIN_NAV_ICONS: Record<string, LucideIcon> = {
   ai: Bot,
   keys: KeyRound,
   automations: Webhook,
+  seo: Gauge,
   tools: Wrench,
 }
 

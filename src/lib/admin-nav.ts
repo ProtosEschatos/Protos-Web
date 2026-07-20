@@ -131,6 +131,12 @@ export const ADMIN_NAV_SECTIONS: AdminNavSection[] = [
         description: 'Zapier, n8n, Make, Slack — outbound webhookovi',
       },
       {
+        id: 'seo',
+        href: '/admin/seo',
+        label: 'SEO & Analitika',
+        description: 'GA4, GSC, Plausible, sitemap, robots, verifikacije',
+      },
+      {
         id: 'tools',
         href: '/admin/tools',
         label: 'Alati',

@@ -3,7 +3,6 @@
 import { Suspense, useTransition } from 'react'
 import { Monitor, RefreshCw } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import AdminLink from '@/components/features/admin/AdminLink'
 import AdminActivityBadge from '@/components/features/admin/AdminActivityBadge'
 import AdminClock from '@/components/features/admin/AdminClock'
 import AdminLogoutButton from '@/components/features/admin/AdminLogoutButton'

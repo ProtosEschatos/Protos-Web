@@ -380,7 +380,11 @@
     "webglContextLostTitle": "3D-Ansicht pausiert",
     "webglContextLostDesc": "Die GPU hat die 3D-Ansicht vorubergehend freigegeben. Durchsuchen Sie die Projekte unten oder versuchen Sie 3D erneut.",
     "webglRetry": "3D erneut versuchen",
-    "webglViewPortfolio": "Ganzes Portfolio ansehen"
+    "webglViewPortfolio": "Ganzes Portfolio ansehen",
+    "poklonTitle": "System Boost — kostenloses Geschenk",
+    "poklonDesc": "Der ultimative Leitfaden zur Beschleunigung Ihres Laptops (CPU + RAM). Drücken Sie E oder tippen Sie auf die Schaltfläche.",
+    "poklonOpen": "Geschenk öffnen",
+    "poklonClose": "Schließen"
   },
   "legalPages": {
     "lastUpdated": "Zuletzt aktualisiert",
@@ -396,7 +400,8 @@
         "title": "1. Einleitung und Annahme",
         "paragraphs": [
           "Diese Nutzungsbedingungen (\"Bedingungen\") regeln den Zugang zu und die Nutzung der Website www.protosweb.eu (die \"Website\"), betrieben von Dario Imsirović — Protos Web, Zagreb, Republik Kroatien (\"Protos Web\", \"wir\", \"uns\").",
-          "Mit dem Zugriff auf die Website bestätigen Sie, dass Sie diese Bedingungen gelesen, verstanden und vollständig akzeptiert haben. Wenn Sie nicht einverstanden sind, nutzen Sie die Website nicht."
+          "Mit dem Zugriff auf die Website bestätigen Sie, dass Sie diese Bedingungen gelesen, verstanden und vollständig akzeptiert haben. Wenn Sie nicht einverstanden sind, nutzen Sie die Website nicht.",
+          "Mit dem Zugriff nach der Annahme bestätigen Sie, dass Sie diese Bedingungen gelesen, verstanden und vollständig akzeptiert haben. Wenn Sie nicht einverstanden sind, schließen Sie die Website und benutzen Sie sie nicht."
         ]
       },
       {
@@ -404,7 +409,8 @@
         "paragraphs": [
           "Der gesamte Inhalt der Website — einschließlich visueller Identität, UI/UX-Design, Layout, Typografie, Grafiken, Animationen, 3D-Inhalte, Quellcode, Texte, Übersetzungen, Blogbeiträge, SEO-Metadaten und technischer Implementierungen — ist originales geistiges Eigentum von Dario Imsirović und/oder Protos Web, sofern nicht ausdrücklich anders angegeben.",
           "Alle Elemente sind durch kroatisches und EU-Recht zum Urheberrecht und geistigen Eigentum geschützt.",
-          "Es wird keine stillschweigende Lizenz zur Nutzung ohne vorherige schriftliche Zustimmung gewährt."
+          "Es wird keine stillschweigende Lizenz zur Nutzung ohne vorherige schriftliche Zustimmung gewährt.",
+          "Kein Teil der Website darf als in die Öffentlichkeit freigegeben angesehen werden, noch wird irgendeine Lizenz zur Nutzung ohne vorherige ausdrückliche schriftliche Zustimmung von Dario Imširović / Protos Web impliziert."
         ]
       },
       {
@@ -426,31 +432,43 @@
         "title": "5. Portfolio und Demo-Inhalte",
         "paragraphs": [
           "Portfolio- und Demo-Anzeigen dienen nur der Präsentation und erlauben keine Reproduktion der gezeigten Lösungen.",
-          "Kundenprojekte werden mit Zustimmung angezeigt; Rechte ergeben sich aus jeweiligen Verträgen."
+          "Kundenprojekte werden mit Zustimmung angezeigt; Rechte ergeben sich aus jeweiligen Verträgen.",
+          "Kunden, Besucher und Dritte müssen sich bewusst sein, dass das unbefugte Kopieren, Herunterladen, Anpassen, Weiterverkaufen oder Verbreiten jeglicher Vorlagen, Komponenten oder Kundenauslieferungen von Protos Web verboten ist und zivil- und strafrechtliche Verfolgung nach sich ziehen kann, unabhängig davon, ob die Arbeit im Portfolio gezeigt oder an den Kunden geliefert wurde.",
+          "Die Darstellung von Arbeiten im Portfolio, in der 3D-Showcase-Umgebung oder in Demo-Umgebungen erteilt keine Lizenz zur Reproduktion. Jeder Kunde bestätigt, dass er diese Bedingungen bei der Nutzung der Website und/oder beim Eingehen einer Geschäftsbeziehung mit Protos Web kennt."
         ]
       },
       {
         "title": "6. Externe Links",
         "paragraphs": [
-          "Links zu Drittanbietern unterliegen deren eigenen Bedingungen. Protos Web ist nicht für deren Inhalte verantwortlich."
+          "Links zu Drittanbietern unterliegen deren eigenen Bedingungen. Protos Web ist nicht für deren Inhalte verantwortlich.",
+          "Das unbefugte Kopieren der dargestellten Arbeiten — einschließlich der für Kunden erstellten Arbeiten — ist ebenfalls verboten und unterliegt denselben rechtlichen Maßnahmen."
         ]
       },
       {
         "title": "7. Haftungsbeschränkung",
         "paragraphs": [
-          "Die Website wird \"wie besehen\" bereitgestellt. Haftung für indirekte Schäden ist im gesetzlich zulässigen Umfang ausgeschlossen."
+          "Die Website wird \"wie besehen\" bereitgestellt. Haftung für indirekte Schäden ist im gesetzlich zulässigen Umfang ausgeschlossen.",
+          "Die Nutzung von Diensten Dritter (z. B. Hosting, E-Mail, Zahlungen) unterliegt den Bedingungen dieser Anbieter."
         ]
       },
       {
         "title": "8. Änderungen",
         "paragraphs": [
-          "Wir können diese Bedingungen aktualisieren. Fortgesetzte Nutzung gilt als Annahme der geänderten Bedingungen."
+          "Wir können diese Bedingungen aktualisieren. Fortgesetzte Nutzung gilt als Annahme der geänderten Bedingungen.",
+          "Nichts in diesen Bedingungen beschränkt die Haftung, die nach den zwingenden Vorschriften der Republik Kroatien nicht ausgeschlossen werden kann."
         ]
       },
       {
         "title": "9. Anwendbares Recht",
         "paragraphs": [
           "Es gilt das Recht der Republik Kroatien. Gerichtsstand: zuständige Gerichte in Kroatien. Kontakt: dario.admin@protosweb.eu."
+        ]
+      },
+      {
+        "title": "10. Anwendbares Recht und Gerichtsstand",
+        "paragraphs": [
+          "Auf diese Bedingungen findet das Recht der Republik Kroatien Anwendung. Für Streitigkeiten ist das sachlich zuständige Gericht in der Republik Kroatien zuständig, sofern zwingende Vorschriften nichts anderes bestimmen.",
+          "Für Fragen zum geistigen Eigentum und zu diesen Bedingungen kontaktieren Sie: dario.admin@protosweb.eu."
         ]
       }
     ],
@@ -464,31 +482,42 @@
       {
         "title": "2. Erhobene Daten",
         "paragraphs": [
-          "Kontaktformular, Newsletter, Cookies (mit Einwilligung), technische Protokolle für Sicherheit und Betrieb."
+          "Kontaktformular, Newsletter, Cookies (mit Einwilligung), technische Protokolle für Sicherheit und Betrieb.",
+          "Newsletter: E-Mail-Adresse und Zeitpunkt der Anmeldung.",
+          "Cookies und Analytik: Besuchs- und Interaktionsdaten, nur mit Ihrer Zustimmung für nicht wesentliche Cookies (siehe Cookie-Richtlinie).",
+          "Technische Protokolle: IP-Adresse, Browsertyp, Zugriffszeit — zu Sicherheits- und Betriebszwecken."
         ]
       },
       {
         "title": "3. Zweck und Rechtsgrundlage",
         "paragraphs": [
-          "Kommunikation (berechtigtes Interesse/Vertrag), Newsletter (Einwilligung), Sicherheit (berechtigtes Interesse), Analyse-Cookies (Einwilligung)."
+          "Kommunikation (berechtigtes Interesse/Vertrag), Newsletter (Einwilligung), Sicherheit (berechtigtes Interesse), Analyse-Cookies (Einwilligung).",
+          "Newsletter — Ihre ausdrückliche Zustimmung; Sie können sie jederzeit widerrufen.",
+          "Sicherheit, Wartung und Verbesserung der Website — berechtigtes Interesse.",
+          "Analytische Cookies — Ihre Zustimmung, wo erforderlich."
         ]
       },
       {
         "title": "4. Auftragsverarbeiter",
         "paragraphs": [
-          "Vercel, Supabase, Resend/Brevo, Cloudflare — vertraglich gebunden. Kein Verkauf personenbezogener Daten."
+          "Vercel, Supabase, Resend/Brevo, Cloudflare — vertraglich gebunden. Kein Verkauf personenbezogener Daten.",
+          "Wir verkaufen Ihre personenbezogenen Daten nicht an Dritte."
         ]
       },
       {
         "title": "5. Speicherdauer",
         "paragraphs": [
-          "Daten werden nur so lange gespeichert, wie für den jeweiligen Zweck erforderlich."
+          "Daten werden nur so lange gespeichert, wie für den jeweiligen Zweck erforderlich.",
+          "Newsletter-Anmeldungen werden bis zur Abmeldung gespeichert.",
+          "Technische Protokolle werden innerhalb eines angemessenen Zeitraums, der für Sicherheit und Wartung erforderlich ist, aufbewahrt."
         ]
       },
       {
         "title": "6. Ihre Rechte",
         "paragraphs": [
-          "Auskunft, Berichtigung, Löschung, Einschränkung, Widerspruch, Datenübertragbarkeit, Widerruf der Einwilligung. Beschwerde bei AZOP, Zagreb."
+          "Auskunft, Berichtigung, Löschung, Einschränkung, Widerspruch, Datenübertragbarkeit, Widerruf der Einwilligung. Beschwerde bei AZOP, Zagreb.",
+          "Zur Ausübung Ihrer Rechte senden Sie eine Anfrage an dario.admin@protosweb.eu. Wir antworten innerhalb der von der DSGVO vorgeschriebenen Frist.",
+          "Sie haben das Recht, eine Beschwerde bei der kroatischen Datenschutzbehörde (AZOP), Ulica grada Vukovara 54, 10000 Zagreb, einzureichen."
         ]
       },
       {
@@ -514,13 +543,15 @@
       {
         "title": "2. Cookie-Arten",
         "paragraphs": [
-          "Essenzielle Cookies (immer aktiv) und optionale Analyse-Cookies (nur mit Einwilligung)."
+          "Essenzielle Cookies (immer aktiv) und optionale Analyse-Cookies (nur mit Einwilligung).",
+          "Analytische Cookies (optional): helfen uns, die Nutzung der Website zu verstehen und das Nutzererlebnis zu verbessern. Sie werden nur mit Ihrer Zustimmung aktiviert."
         ]
       },
       {
         "title": "3. Einwilligung",
         "paragraphs": [
-          "Auswahl über Modal/Banner, lokal im Browser gespeichert. Löschung in Browsereinstellungen möglich."
+          "Auswahl über Modal/Banner, lokal im Browser gespeichert. Löschung in Browsereinstellungen möglich.",
+          "Sie können Cookies in den Einstellungen Ihres Browsers löschen oder blockieren. Das Löschen notwendiger Cookies kann die Funktionalität der Website beeinträchtigen."
         ]
       },
       {
@@ -590,7 +621,12 @@
         "name": "Dario Imsirović",
         "role": "KI-Ingenieur & Full Stack Cross-Web Developer",
         "bio": "KI-Ingenieur und Full Stack Developer aus Zagreb mit 5 Jahren Erfahrung. Custom-Plattformen, Webshops, CRM und 3D-Web-Erlebnisse — von Landing Pages bis zu komplexen Cross-Web-Lösungen.",
-        "expertise": ["KI-Engineering", "Full Stack", "3D / WebGL", "Cyber Security"],
+        "expertise": [
+          "KI-Engineering",
+          "Full Stack",
+          "3D / WebGL",
+          "Cyber Security"
+        ],
         "fields": {
           "location": "Zagreb, Kroatien",
           "experience": "5 Jahre",
@@ -605,7 +641,12 @@
         "name": "Martina Markulin",
         "role": "Frontend-Expertin & Top Shop/UI-Designerin",
         "bio": "Martina ist das Herz der visuellen Identität und des emotionalen Erlebnisses unserer Projekte. Als Frontend-Expertin und Shop-Designerin mit 5 Jahren Erfahrung gestaltet sie Interfaces, Farben, Typografie und UX. Sie leitet 3D-Innovationen — der Astronaut im Portfolio-Showcase wurde von ihrem Schlüsselanhänger inspiriert.",
-        "expertise": ["Frontend", "Shop-Design", "UI/UX", "3D-Innovationen"],
+        "expertise": [
+          "Frontend",
+          "Shop-Design",
+          "UI/UX",
+          "3D-Innovationen"
+        ],
         "fields": {
           "experience": "5 Jahre",
           "focus": "UI/UX-Design, visuelle Konzepte, Branding, 3D-Showcase",

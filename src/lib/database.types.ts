@@ -14,53 +14,6 @@ export type Database = {
   }
   public: {
     Tables: {
-      blog_posts: {
-        Row: {
-          author_slug: string
-          content: string | null
-          created_at: string | null
-          excerpt: string | null
-          id: string
-          is_published: boolean | null
-          language: string
-          site_id: string | null
-          slug: string
-          title: string
-        }
-        Insert: {
-          author_slug?: string
-          content?: string | null
-          created_at?: string | null
-          excerpt?: string | null
-          id?: string
-          is_published?: boolean | null
-          language?: string
-          site_id?: string | null
-          slug: string
-          title: string
-        }
-        Update: {
-          author_slug?: string
-          content?: string | null
-          created_at?: string | null
-          excerpt?: string | null
-          id?: string
-          is_published?: boolean | null
-          language?: string
-          site_id?: string | null
-          slug?: string
-          title?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "blog_posts_site_id_fkey"
-            columns: ["site_id"]
-            isOneToOne: false
-            referencedRelation: "sites"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       admin_api_keys: {
         Row: {
           auth_tag: string
@@ -111,22 +64,79 @@ export type Database = {
       }
       admin_mail_sync: {
         Row: {
+          error: string | null
           mailbox_id: string
           messages: Json
-          error: string | null
           synced_at: string
         }
         Insert: {
+          error?: string | null
           mailbox_id: string
           messages?: Json
-          error?: string | null
           synced_at?: string
         }
         Update: {
+          error?: string | null
           mailbox_id?: string
           messages?: Json
-          error?: string | null
           synced_at?: string
+        }
+        Relationships: []
+      }
+      agent_memories: {
+        Row: {
+          created_at: string
+          id: string
+          key: string
+          namespace: string
+          tags: string[]
+          updated_at: string
+          user_id: string | null
+          value: Json
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          key: string
+          namespace: string
+          tags?: string[]
+          updated_at?: string
+          user_id?: string | null
+          value?: Json
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          key?: string
+          namespace?: string
+          tags?: string[]
+          updated_at?: string
+          user_id?: string | null
+          value?: Json
+        }
+        Relationships: []
+      }
+      audit_events: {
+        Row: {
+          created_at: string
+          event: string
+          id: number
+          payload: Json
+          source: string
+        }
+        Insert: {
+          created_at?: string
+          event: string
+          id?: number
+          payload?: Json
+          source: string
+        }
+        Update: {
+          created_at?: string
+          event?: string
+          id?: number
+          payload?: Json
+          source?: string
         }
         Relationships: []
       }
@@ -198,6 +208,53 @@ export type Database = {
           url?: string
         }
         Relationships: []
+      }
+      blog_posts: {
+        Row: {
+          author_slug: string
+          content: string | null
+          created_at: string | null
+          excerpt: string | null
+          id: string
+          is_published: boolean | null
+          language: string
+          site_id: string | null
+          slug: string
+          title: string
+        }
+        Insert: {
+          author_slug?: string
+          content?: string | null
+          created_at?: string | null
+          excerpt?: string | null
+          id?: string
+          is_published?: boolean | null
+          language?: string
+          site_id?: string | null
+          slug: string
+          title: string
+        }
+        Update: {
+          author_slug?: string
+          content?: string | null
+          created_at?: string | null
+          excerpt?: string | null
+          id?: string
+          is_published?: boolean | null
+          language?: string
+          site_id?: string | null
+          slug?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_posts_site_id_fkey"
+            columns: ["site_id"]
+            isOneToOne: false
+            referencedRelation: "sites"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       contacts: {
         Row: {
@@ -331,6 +388,65 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "donations_site_id_fkey"
+            columns: ["site_id"]
+            isOneToOne: false
+            referencedRelation: "sites"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      page_backgrounds: {
+        Row: {
+          created_at: string
+          enabled: boolean
+          fallback_css: string
+          fog_color: string
+          glow_color: string
+          id: string
+          particle_density: number
+          poster_path: string | null
+          route_key: string
+          scene_type: string
+          site_id: string
+          sort_order: number
+          updated_at: string
+          webgl_enabled: boolean
+        }
+        Insert: {
+          created_at?: string
+          enabled?: boolean
+          fallback_css: string
+          fog_color?: string
+          glow_color?: string
+          id?: string
+          particle_density?: number
+          poster_path?: string | null
+          route_key: string
+          scene_type?: string
+          site_id: string
+          sort_order?: number
+          updated_at?: string
+          webgl_enabled?: boolean
+        }
+        Update: {
+          created_at?: string
+          enabled?: boolean
+          fallback_css?: string
+          fog_color?: string
+          glow_color?: string
+          id?: string
+          particle_density?: number
+          poster_path?: string | null
+          route_key?: string
+          scene_type?: string
+          site_id?: string
+          sort_order?: number
+          updated_at?: string
+          webgl_enabled?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "page_backgrounds_site_id_fkey"
             columns: ["site_id"]
             isOneToOne: false
             referencedRelation: "sites"
@@ -782,17 +898,14 @@ export type Database = {
       }
       get_submission_counts: { Args: never; Returns: Json }
       submit_contact: {
-        // NOTE: p_phone, p_service and p_ip are nullable in the SQL function
-        // (text params that accept NULL); the type generator emits them as
-        // non-null, so they are widened to `string | null` by hand here.
         Args: {
           p_email: string
-          p_ip: string | null
+          p_ip: string
           p_language: string
           p_message: string
           p_name: string
-          p_phone: string | null
-          p_service: string | null
+          p_phone: string
+          p_service: string
         }
         Returns: Json
       }

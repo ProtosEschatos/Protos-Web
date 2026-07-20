@@ -3,6 +3,23 @@ const createNextIntlPlugin = require('next-intl/plugin')
 const withNextIntl = createNextIntlPlugin('./src/i18n.ts')
 
 const SYSTEM_BOOST_PAGES_ORIGIN = 'https://protos-system-boost.pages.dev'
+const isDev = process.env.NODE_ENV !== 'production'
+
+// `'unsafe-eval'` is only needed by the Next.js dev server (eval-based HMR
+// source maps). Production Next.js + Three.js/@react-three/fiber do not use
+// eval, so we drop it in prod to shrink the XSS blast radius.
+// `'unsafe-inline'` still has to stay: GA4's `dataLayer` bootstrap, Tailwind
+// arbitrary-value inline styles, and Vercel Analytics ping all rely on it.
+const scriptSrc = [
+  "'self'",
+  "'unsafe-inline'",
+  isDev ? "'unsafe-eval'" : null,
+  'https://www.googletagmanager.com',
+  'https://www.google-analytics.com',
+  'https://va.vercel-scripts.com',
+]
+  .filter(Boolean)
+  .join(' ')
 
 const securityHeaders = [
   { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
@@ -14,15 +31,18 @@ const securityHeaders = [
     key: 'Content-Security-Policy',
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://va.vercel-scripts.com",
+      `script-src ${scriptSrc}`,
       "connect-src 'self' https://*.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://vitals.vercel-insights.com https://va.vercel-scripts.com",
       "img-src 'self' data: blob: https:",
       "style-src 'self' 'unsafe-inline'",
       "font-src 'self' data:",
       "media-src 'self' blob:",
+      "worker-src 'self' blob:",
+      "object-src 'none'",
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self'",
+      "upgrade-insecure-requests",
       `frame-src 'self' ${SYSTEM_BOOST_PAGES_ORIGIN}`,
     ].join('; '),
   },

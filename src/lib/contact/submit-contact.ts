@@ -20,11 +20,11 @@ export async function submitContact(
   const { error } = await supabase.rpc('submit_contact', {
     p_name: data.name,
     p_email: data.email,
-    p_phone: null,
-    p_service: data.service || null,
+    p_phone: '',
+    p_service: data.service ?? '',
     p_message: data.message,
-    p_language: data.language || 'hr',
-    p_ip: null,
+    p_language: data.language ?? 'hr',
+    p_ip: '',
   })
 
   if (error) {

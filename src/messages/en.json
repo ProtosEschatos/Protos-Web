@@ -411,7 +411,12 @@
         "name": "Dario Imsirović",
         "role": "AI Engineer & Full Stack Cross-Web Developer",
         "bio": "AI engineer and Full Stack Developer from Zagreb with 5 years of experience. I build custom platforms, web shops, CRM systems and 3D web experiences — from landing pages to complex cross-web solutions. No pre-made themes, with a focus on security and performance.",
-        "expertise": ["AI engineering", "Full stack", "3D / WebGL", "Cyber security"],
+        "expertise": [
+          "AI engineering",
+          "Full stack",
+          "3D / WebGL",
+          "Cyber security"
+        ],
         "fields": {
           "location": "Zagreb, Croatia",
           "experience": "5 years",
@@ -426,7 +431,12 @@
         "name": "Martina Markulin",
         "role": "Frontend expert & top-tier shop/UI designer",
         "bio": "Martina is the heart of our visual identity and emotional experience in every project. A frontend expert and shop designer with 5 years of experience, she shapes interfaces, palettes, typography and UX. She leads 3D innovations — the astronaut in our portfolio showcase was inspired by her keychain charm.",
-        "expertise": ["Frontend", "Shop design", "UI/UX", "3D innovations"],
+        "expertise": [
+          "Frontend",
+          "Shop design",
+          "UI/UX",
+          "3D innovations"
+        ],
         "fields": {
           "experience": "5 years",
           "focus": "UI/UX design, visual concepts, branding, 3D showcase",

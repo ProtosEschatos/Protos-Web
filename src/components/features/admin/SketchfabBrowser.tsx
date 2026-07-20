@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useTransition } from 'react'
+import Image from 'next/image'
 import { Download, ExternalLink, Loader2, Search } from 'lucide-react'
 import AdminLink from '@/components/features/admin/AdminLink'
 import {
@@ -127,12 +128,16 @@ export default function SketchfabBrowser() {
                 className="group relative overflow-hidden rounded-lg border border-slate-800 bg-slate-950/60"
               >
                 {model.thumbnailUrl ? (
-                  <img
-                    src={model.thumbnailUrl}
-                    alt={model.name}
-                    className="aspect-[4/3] w-full object-cover"
-                    loading="lazy"
-                  />
+                  <div className="relative aspect-[4/3] w-full">
+                    <Image
+                      src={model.thumbnailUrl}
+                      alt={model.name}
+                      fill
+                      sizes="(max-width: 768px) 50vw, 25vw"
+                      className="object-cover"
+                      unoptimized
+                    />
+                  </div>
                 ) : (
                   <div className="aspect-[4/3] w-full bg-slate-900" />
                 )}

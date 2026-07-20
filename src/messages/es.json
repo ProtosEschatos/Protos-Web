@@ -380,7 +380,11 @@
     "webglContextLostTitle": "Vista 3D en pausa",
     "webglContextLostDesc": "La GPU libero temporalmente la vista 3D. Explora los proyectos abajo o intenta 3D de nuevo.",
     "webglRetry": "Intentar 3D de nuevo",
-    "webglViewPortfolio": "Ver portfolio completo"
+    "webglViewPortfolio": "Ver portfolio completo",
+    "poklonTitle": "System Boost — regalo gratuito",
+    "poklonDesc": "La guía definitiva para acelerar tu portátil (CPU + RAM). Pulsa E o toca el botón.",
+    "poklonOpen": "Abrir el regalo",
+    "poklonClose": "Cerrar"
   },
   "legalPages": {
     "lastUpdated": "Ultima actualizacion",
@@ -396,7 +400,8 @@
         "title": "1. Introduccion y aceptacion",
         "paragraphs": [
           "Estos Terminos de servicio (\"Terminos\") regulan el acceso y uso del sitio www.protosweb.eu (el \"Sitio\") operado por Dario Imsirovic — Protos Web, Zagreb, Republica de Croacia (\"Protos Web\", \"nosotros\").",
-          "Al acceder al Sitio confirma que ha leido, entendido y aceptado plenamente estos Terminos. Si no esta de acuerdo, no utilice el Sitio."
+          "Al acceder al Sitio confirma que ha leido, entendido y aceptado plenamente estos Terminos. Si no esta de acuerdo, no utilice el Sitio.",
+          "Al acceder tras la aceptación, confirmáis haber leído, comprendido y aceptado íntegramente estos Términos. Si no estáis de acuerdo, cerrad el Sitio y no lo utilicéis."
         ]
       },
       {
@@ -404,7 +409,8 @@
         "paragraphs": [
           "Todo el contenido del Sitio — identidad visual, diseno UI/UX, disposicion, tipografia, graficos, animaciones, contenido 3D, codigo fuente, textos, traducciones, blog, metadatos SEO e implementaciones tecnicas — es propiedad intelectual original de Dario Imsirovic y/o Protos Web, salvo indicacion expresa.",
           "Todos los elementos estan protegidos por las leyes de Croacia y la UE sobre derechos de autor y propiedad intelectual.",
-          "No se concede ninguna licencia implicita sin consentimiento escrito previo."
+          "No se concede ninguna licencia implicita sin consentimiento escrito previo.",
+          "Ninguna parte del Sitio se considerará cedida al dominio público, ni se sobreentiende licencia alguna de uso sin la autorización previa expresa por escrito de Dario Imširović / Protos Web."
         ]
       },
       {
@@ -426,31 +432,43 @@
         "title": "5. Portfolio y contenido demo",
         "paragraphs": [
           "Portfolio y demos son solo demostrativos y no autorizan la reproduccion de las soluciones mostradas.",
-          "Proyectos de clientes se muestran con consentimiento; los derechos se definen en contratos individuales."
+          "Proyectos de clientes se muestran con consentimiento; los derechos se definen en contratos individuales.",
+          "Clientes, visitantes y terceros deben ser conscientes de que la copia, descarga, adaptación, reventa o distribución no autorizadas de cualquier plantilla, componente o entrega para clientes de Protos Web están prohibidas y pueden acarrear responsabilidad civil y penal, con independencia de si el trabajo se muestra en el portafolio o se entrega al cliente.",
+          "La exhibición de trabajos en el portafolio, en el 3D showcase o en entornos de demo no otorga licencia de reproducción. Cada cliente confirma que conoce estos Términos al usar el Sitio y/o al establecer una relación comercial con Protos Web."
         ]
       },
       {
         "title": "6. Enlaces externos",
         "paragraphs": [
-          "Los enlaces a terceros estan sujetos a sus propias condiciones. Protos Web no controla su contenido."
+          "Los enlaces a terceros estan sujetos a sus propias condiciones. Protos Web no controla su contenido.",
+          "La copia no autorizada de los trabajos mostrados — incluidos los trabajos realizados para clientes — está igualmente prohibida y sujeta a las mismas medidas legales."
         ]
       },
       {
         "title": "7. Limitacion de responsabilidad",
         "paragraphs": [
-          "El Sitio se proporciona \"tal cual\". La responsabilidad por danos indirectos queda excluida en la medida permitida por la ley."
+          "El Sitio se proporciona \"tal cual\". La responsabilidad por danos indirectos queda excluida en la medida permitida por la ley.",
+          "El uso de servicios de terceros (p. ej. hosting, correo, pagos) está sujeto a las condiciones de dichos proveedores."
         ]
       },
       {
         "title": "8. Cambios",
         "paragraphs": [
-          "Podemos actualizar estos Terminos. El uso continuado implica aceptacion de los cambios."
+          "Podemos actualizar estos Terminos. El uso continuado implica aceptacion de los cambios.",
+          "Nada de lo previsto en estos Términos limita la responsabilidad que no pueda excluirse conforme a las normas imperativas de la República de Croacia."
         ]
       },
       {
         "title": "9. Ley aplicable",
         "paragraphs": [
           "Se aplica la ley de la Republica de Croacia. Jurisdiccion: tribunales competentes en Croacia. Contacto: dario.admin@protosweb.eu."
+        ]
+      },
+      {
+        "title": "10. Ley aplicable y jurisdicción",
+        "paragraphs": [
+          "A estos Términos les es de aplicación el derecho de la República de Croacia. Para las controversias es competente el tribunal materialmente competente de la República de Croacia, salvo que las normas imperativas dispongan otra cosa.",
+          "Para consultas sobre propiedad intelectual y estos Términos, contactad: dario.admin@protosweb.eu."
         ]
       }
     ],
@@ -464,31 +482,42 @@
       {
         "title": "2. Datos que recopilamos",
         "paragraphs": [
-          "Formulario de contacto, newsletter, cookies (con consentimiento), registros tecnicos para seguridad y funcionamiento."
+          "Formulario de contacto, newsletter, cookies (con consentimiento), registros tecnicos para seguridad y funcionamiento.",
+          "Newsletter: dirección de correo electrónico y hora de suscripción.",
+          "Cookies y analítica: datos de visita e interacción, solo con vuestro consentimiento para cookies no esenciales (ver Política de cookies).",
+          "Registros técnicos: dirección IP, tipo de navegador, hora de acceso — con fines de seguridad y funcionamiento de la infraestructura."
         ]
       },
       {
         "title": "3. Finalidad y base legal",
         "paragraphs": [
-          "Comunicacion (interes legitimo/servicio), newsletter (consentimiento), seguridad (interes legitimo), cookies analiticas (consentimiento)."
+          "Comunicacion (interes legitimo/servicio), newsletter (consentimiento), seguridad (interes legitimo), cookies analiticas (consentimiento).",
+          "Newsletter — vuestro consentimiento expreso; podéis revocarlo en cualquier momento.",
+          "Seguridad, mantenimiento y mejora del Sitio — interés legítimo.",
+          "Cookies analíticas — vuestro consentimiento, cuando sea necesario."
         ]
       },
       {
         "title": "4. Destinatarios",
         "paragraphs": [
-          "Vercel, Supabase, Resend/Brevo, Cloudflare — vinculados contractualmente. No vendemos datos personales."
+          "Vercel, Supabase, Resend/Brevo, Cloudflare — vinculados contractualmente. No vendemos datos personales.",
+          "No vendemos vuestros datos personales a terceros."
         ]
       },
       {
         "title": "5. Conservacion",
         "paragraphs": [
-          "Los datos se conservan solo el tiempo necesario para cada finalidad."
+          "Los datos se conservan solo el tiempo necesario para cada finalidad.",
+          "Las suscripciones a la newsletter se conservan hasta la baja.",
+          "Los registros técnicos se conservan durante el tiempo razonable necesario para la seguridad y el mantenimiento."
         ]
       },
       {
         "title": "6. Sus derechos",
         "paragraphs": [
-          "Acceso, rectificacion, supresion, limitacion, oposicion, portabilidad, retirada del consentimiento. Reclamacion ante AZOP, Zagreb."
+          "Acceso, rectificacion, supresion, limitacion, oposicion, portabilidad, retirada del consentimiento. Reclamacion ante AZOP, Zagreb.",
+          "Para ejercer vuestros derechos, enviad una solicitud a dario.admin@protosweb.eu. Respondemos dentro del plazo previsto por el RGPD.",
+          "Tenéis derecho a presentar una reclamación ante la Agencia croata de protección de datos (AZOP), Ulica grada Vukovara 54, 10000 Zagreb."
         ]
       },
       {
@@ -514,13 +543,15 @@
       {
         "title": "2. Tipos de cookies",
         "paragraphs": [
-          "Cookies esenciales (siempre activas) y cookies analiticas opcionales (solo con consentimiento)."
+          "Cookies esenciales (siempre activas) y cookies analiticas opcionales (solo con consentimiento).",
+          "Cookies analíticas (opcionales): nos ayudan a comprender el uso del Sitio y mejorar la experiencia de usuario. Se activan solo con vuestro consentimiento."
         ]
       },
       {
         "title": "3. Gestion del consentimiento",
         "paragraphs": [
-          "Eleccion mediante modal/banner, guardada localmente. Eliminacion en ajustes del navegador."
+          "Eleccion mediante modal/banner, guardada localmente. Eliminacion en ajustes del navegador.",
+          "Podéis eliminar o bloquear las cookies en la configuración del navegador. Eliminar las cookies necesarias puede afectar a la funcionalidad del Sitio."
         ]
       },
       {
@@ -590,7 +621,12 @@
         "name": "Dario Imsirović",
         "role": "Ingeniero AI & Full Stack Cross-Web Developer",
         "bio": "Ingeniero AI y Full Stack Developer de Zagreb con 5 anos de experiencia. Plataformas custom, tiendas web, CRM y experiencias 3D — desde landing pages hasta soluciones cross-web complejas.",
-        "expertise": ["Ingenieria AI", "Full stack", "3D / WebGL", "Cyber seguridad"],
+        "expertise": [
+          "Ingenieria AI",
+          "Full stack",
+          "3D / WebGL",
+          "Cyber seguridad"
+        ],
         "fields": {
           "location": "Zagreb, Croacia",
           "experience": "5 años",
@@ -605,7 +641,12 @@
         "name": "Martina Markulin",
         "role": "Experta frontend & disenadora shop/UI de primer nivel",
         "bio": "Martina es el corazon de la identidad visual y la experiencia emocional de nuestros proyectos. Experta frontend y disenadora de shop con 5 anos de experiencia, modela interfaces, paletas, tipografia y UX. Lidera las innovaciones 3D — el astronauta del portfolio showcase esta inspirado en su llavero.",
-        "expertise": ["Frontend", "Diseno shop", "UI/UX", "Innovaciones 3D"],
+        "expertise": [
+          "Frontend",
+          "Diseno shop",
+          "UI/UX",
+          "Innovaciones 3D"
+        ],
         "fields": {
           "experience": "5 anos",
           "focus": "Diseno UI/UX, conceptos visuales, branding, showcase 3D",

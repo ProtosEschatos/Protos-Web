@@ -24,6 +24,8 @@ const OBSOLETE_PATHS = [
   'projects/mobile-zeustrading.jpg',
 ]
 
+let warnCount = 0
+
 async function deletePath(storagePath) {
   const res = await fetch(`${base}/storage/v1/object/showcase/${storagePath}`, {
     method: 'DELETE',
@@ -41,6 +43,18 @@ async function deletePath(storagePath) {
       console.log(`SKIP ${storagePath} (not found)`)
       return
     }
+    // Signature-verification / auth failures are treated as WARN (not FAIL):
+    // the service-role key in CI can lag behind Supabase rotations, and this
+    // cleanup step is idempotent — a stale key just means the obsolete file
+    // stays a little longer, not a broken deploy. Real deletes will succeed
+    // the next time the key is refreshed.
+    if (res.status === 401 || res.status === 403) {
+      console.warn(
+        `WARN ${storagePath}: ${res.status} — service-role key rejected (skipping cleanup, not blocking CI)`,
+      )
+      warnCount++
+      return
+    }
     console.error(`FAIL ${storagePath}: ${res.status} ${text}`)
     process.exitCode = 1
     return
@@ -53,4 +67,10 @@ for (const path of OBSOLETE_PATHS) {
   await deletePath(path)
 }
 
-console.log('Cleanup done.')
+if (warnCount > 0) {
+  console.warn(
+    `Cleanup finished with ${warnCount} auth warnings — rotate SUPABASE_SERVICE_ROLE_KEY in GitHub Secrets to actually delete stale assets.`,
+  )
+} else {
+  console.log('Cleanup done.')
+}

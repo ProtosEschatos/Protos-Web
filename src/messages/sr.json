@@ -380,7 +380,11 @@
     "webglContextLostTitle": "3D приказ је паузиран",
     "webglContextLostDesc": "Графичка картица је привремено ослободила 3D приказ. Можете наставити прегледавати пројекте или покушати поново.",
     "webglRetry": "Покушај поново 3D",
-    "webglViewPortfolio": "Погледај цијели портфолио"
+    "webglViewPortfolio": "Погледај цијели портфолио",
+    "poklonTitle": "System Boost — бесплатан поклон",
+    "poklonDesc": "Ултимативни водич за убрзање лаптопа (CPU + RAM). Притисните E или додирните дугме.",
+    "poklonOpen": "Отвори поклон",
+    "poklonClose": "Затвори"
   },
   "aboutPage": {
     "label": "О МЕНИ",

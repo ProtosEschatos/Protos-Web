@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import * as Sentry from '@sentry/nextjs'
 
 /**
  * Absolute last-resort fallback. Rendered by Next.js when even the locale /
@@ -18,6 +19,10 @@ export default function GlobalError({
     if (typeof console !== 'undefined') {
       console.error('[global-error]', error)
     }
+    Sentry.captureException(error, {
+      tags: { boundary: 'global-error' },
+      extra: error.digest ? { digest: error.digest } : undefined,
+    })
   }, [error])
 
   return (

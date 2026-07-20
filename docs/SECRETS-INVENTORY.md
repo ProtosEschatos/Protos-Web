@@ -56,10 +56,10 @@
 | `VERCEL_TOKEN` | ❓ provjeri dashboard | vercel.com/account/tokens |
 | `VERCEL_PROJECT_ID` | ❓ | `.vercel/project.json` ili dashboard |
 | `VERCEL_TEAM_ID` | opcionalno | team projekti |
-| `SENTRY_AUTH_TOKEN` | ❓ | sentry.io → Auth Tokens |
-| `SENTRY_ORG_SLUG` | ❌ prazno (checkpoint) | URL organizacije |
-| `SENTRY_PROJECT_SLUG` | ❌ prazno | project settings |
-| `NEXT_PUBLIC_SENTRY_DSN` | ❓ | error monitoring |
+| `NEXT_PUBLIC_SENTRY_DSN` | **required for capture** | Sentry → Settings → Projects → protosweb → Client Keys (DSN). Ako prazno, `@sentry/nextjs` ostaje silent. |
+| `SENTRY_AUTH_TOKEN` | **required for source maps** | Sentry → Settings → Auth Tokens (scope: `project:read`, `project:releases`, `org:read`). Bez ovoga stack traces = webpack minified gibberish. Server-only. |
+| `SENTRY_ORG_SLUG` | ✅ `protoseschatos` | Pre-set u `.env.example` i `next.config.js`. |
+| `SENTRY_PROJECT_SLUG` | ✅ `protosweb` | Pre-set u `.env.example` i `next.config.js`. |
 
 ### Admin AI / memory
 

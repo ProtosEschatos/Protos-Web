@@ -1,6 +1,7 @@
 'use client'
 
 import { Component, type ErrorInfo, type ReactNode } from 'react'
+import * as Sentry from '@sentry/nextjs'
 import { AlertTriangle, RefreshCw } from 'lucide-react'
 
 /**
@@ -42,6 +43,15 @@ export default class ClientErrorBoundary extends Component<Props, State> {
     if (typeof console !== 'undefined') {
       console.error('[ClientErrorBoundary]', this.props.label ?? '', error, info)
     }
+    Sentry.captureException(error, {
+      tags: {
+        boundary: 'ClientErrorBoundary',
+        label: this.props.label ?? 'unknown',
+      },
+      contexts: {
+        react: { componentStack: info.componentStack ?? null },
+      },
+    })
     this.props.onError?.(error, info)
   }
 

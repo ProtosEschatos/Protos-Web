@@ -43,6 +43,7 @@ const required = [
 const recommended = [
   { ok: Boolean(env.SUPABASE_SERVICE_ROLE_KEY), label: 'SUPABASE_SERVICE_ROLE_KEY (admin writes)' },
   { ok: Boolean(env.ADMIN_SECRET), label: 'ADMIN_SECRET (/admin login)' },
+  { ok: Boolean(env.ADMIN_KEYS_ENCRYPTION_KEY), label: 'ADMIN_KEYS_ENCRYPTION_KEY (/admin/kljucevi vault)' },
 ]
 
 let failed = false

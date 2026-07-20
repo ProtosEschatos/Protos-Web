@@ -107,6 +107,12 @@ export const ADMIN_NAV_SECTIONS: AdminNavSection[] = [
         description: 'DeepSeek / Gemini chat',
       },
       {
+        id: 'keys',
+        href: '/admin/kljucevi',
+        label: 'API ključevi',
+        description: 'Enkriptirani runtime vault (AES-256-GCM)',
+      },
+      {
         id: 'tools',
         href: '/admin/tools',
         label: 'Alati',

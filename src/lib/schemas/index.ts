@@ -1,4 +1,5 @@
 export * from './locale'
 export * from './contact'
 export * from './subscribe'
+export * from './api-key'
 export * from './utils'

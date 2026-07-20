@@ -5,6 +5,7 @@ import {
   FileText,
   Heart,
   Inbox,
+  KeyRound,
   LayoutDashboard,
   LayoutGrid,
   Mail,
@@ -26,6 +27,7 @@ export const ADMIN_NAV_ICONS: Record<string, LucideIcon> = {
   subscribers: Mail,
   memory: BookOpen,
   ai: Bot,
+  keys: KeyRound,
   tools: Wrench,
 }
 

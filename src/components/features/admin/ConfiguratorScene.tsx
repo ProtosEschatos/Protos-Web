@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense } from 'react'
+import { Component, ReactNode, Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
 import {
   ContactShadows,
@@ -22,8 +22,14 @@ function Primitive() {
     gltfUrl,
   } = useSceneStore()
 
-  if ((primitive === 'gltf-url' || primitive === 'sketchfab') && gltfUrl) {
-    return <LoadedGltf url={gltfUrl} />
+  if ((primitive === 'gltf-url' || primitive === 'sketchfab' || primitive === 'poly-pizza') && gltfUrl) {
+    return (
+      <SceneErrorBoundary fallback={<FallbackPrimitive color={color} />}>
+        <Suspense fallback={<FallbackPrimitive color={color} />}>
+          <LoadedGltf url={gltfUrl} />
+        </Suspense>
+      </SceneErrorBoundary>
+    )
   }
 
   const material = (
@@ -61,9 +67,40 @@ function Primitive() {
   )
 }
 
+function FallbackPrimitive({ color }: { color: string }) {
+  return (
+    <mesh castShadow receiveShadow>
+      <sphereGeometry args={[1, 32, 32]} />
+      <meshStandardMaterial color={color} wireframe />
+    </mesh>
+  )
+}
+
 function LoadedGltf({ url }: { url: string }) {
   const { scene } = useGLTF(url)
   return <primitive object={scene} dispose={null} />
+}
+
+class SceneErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: { children: ReactNode; fallback: ReactNode }) {
+    super(props)
+    this.state = { hasError: false }
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true }
+  }
+  componentDidCatch(error: unknown) {
+    if (typeof console !== 'undefined') {
+      console.warn('[ConfiguratorScene] GLTF/model load failed', error)
+    }
+  }
+  render() {
+    if (this.state.hasError) return this.props.fallback
+    return this.props.children
+  }
 }
 
 export default function ConfiguratorScene() {
@@ -81,8 +118,8 @@ export default function ConfiguratorScene() {
       shadows
       dpr={[1, 2]}
       camera={{ position: [3, 2, 4], fov: 45 }}
-      gl={{ antialias: true, preserveDrawingBuffer: true }}
-      style={{ background }}
+      gl={{ antialias: true }}
+      style={{ background, width: '100%', height: '100%' }}
     >
       <ambientLight intensity={ambientIntensity} />
       <directionalLight
@@ -92,10 +129,19 @@ export default function ConfiguratorScene() {
         shadow-mapSize-width={2048}
         shadow-mapSize-height={2048}
       />
+
+      {/* Primitive renders unconditionally — never blocked by HDRI load */}
       <Suspense fallback={null}>
         <Primitive />
-        <Environment preset={environment} environmentIntensity={environmentIntensity} />
       </Suspense>
+
+      {/* Environment in its own Suspense — if HDRI CDN fails, scene stays visible */}
+      <SceneErrorBoundary fallback={null}>
+        <Suspense fallback={null}>
+          <Environment preset={environment} environmentIntensity={environmentIntensity} />
+        </Suspense>
+      </SceneErrorBoundary>
+
       <ContactShadows position={[0, -1, 0]} opacity={0.4} scale={8} blur={2} />
       <OrbitControls
         autoRotate={autoRotate}

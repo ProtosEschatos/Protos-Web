@@ -2,7 +2,7 @@
 
 import { create } from 'zustand'
 
-export type ScenePrimitive = 'box' | 'sphere' | 'torus' | 'sketchfab' | 'gltf-url'
+export type ScenePrimitive = 'box' | 'sphere' | 'torus' | 'sketchfab' | 'poly-pizza' | 'gltf-url'
 
 export type SceneEnvironment =
   | 'studio'

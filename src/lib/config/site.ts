@@ -37,6 +37,18 @@ export const CONTACT_PHONE_DISPLAY = '+385 97 604 39 41'
 export const AIRCASH_PHONE = CONTACT_PHONE
 export const AIRCASH_PHONE_DISPLAY = CONTACT_PHONE_DISPLAY
 
+/** AirCash referral link — new users get bonus + we get a bonus on their first deposit.
+ *  Override via NEXT_PUBLIC_AIRCASH_REFERRAL_URL. */
+export const AIRCASH_REFERRAL_URL =
+  process.env.NEXT_PUBLIC_AIRCASH_REFERRAL_URL?.trim() ||
+  'https://link.aircash.eu/Referral/Index?referralCode=darioi182'
+
+/** Revolut referral link — sign-up + first spend rewards both sides.
+ *  Override via NEXT_PUBLIC_REVOLUT_REFERRAL_URL. */
+export const REVOLUT_REFERRAL_URL =
+  process.env.NEXT_PUBLIC_REVOLUT_REFERRAL_URL?.trim() ||
+  'https://revolut.com/referral/?referral-code=darmar58!JUL2-26-AR-H1&geo-redirect'
+
 /** Supabase project ref (laqnnzavwbojntfiqmxj) */
 export const SUPABASE_PROJECT_REF = 'laqnnzavwbojntfiqmxj'
 

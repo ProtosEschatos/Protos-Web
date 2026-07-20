@@ -9,6 +9,7 @@ import OnlinePresence from '@/components/features/home/sections/OnlinePresence'
 import DualStacksSection from '@/components/features/home/sections/DualStacksSection'
 import AirCashButton from '@/components/features/donations/AirCashButton'
 import DonationModal from '@/components/features/donations/DonationModal'
+import ReferralButtons from '@/components/features/donations/ReferralButtons'
 import { DARIO_INSTAGRAM_URL, MARTINA_INSTAGRAM_URL } from '@/lib/config/site'
 import { DONATION_DEFAULT_CAUSE } from '@/lib/donations'
 
@@ -85,6 +86,11 @@ export default function AboutPage() {
     aircashLabel: string
     aircashCopied: string
     aircashHint: string
+    referralHeading: string
+    revolutLabel: string
+    revolutHint: string
+    aircashReferralLabel: string
+    aircashReferralHint: string
   }
 
   const [donationModalOpen, setDonationModalOpen] = useState(false)
@@ -278,6 +284,18 @@ export default function AboutPage() {
               label={donationLabels.aircashLabel}
               copiedLabel={donationLabels.aircashCopied}
               hint={donationLabels.aircashHint}
+            />
+          </div>
+
+          <div className="mx-auto mt-10 max-w-2xl">
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--primary)]">
+              {donationLabels.referralHeading}
+            </p>
+            <ReferralButtons
+              revolutLabel={donationLabels.revolutLabel}
+              revolutHint={donationLabels.revolutHint}
+              aircashLabel={donationLabels.aircashReferralLabel}
+              aircashHint={donationLabels.aircashReferralHint}
             />
           </div>
         </div>

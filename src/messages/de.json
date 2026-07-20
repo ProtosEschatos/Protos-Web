@@ -287,7 +287,11 @@
       "UI/UX Design",
       "SEO & Marketing",
       "Wartung"
-    ]
+    ],
+    "revolutReferralHeading": "Empfehlungsbonus",
+    "revolutReferralTitle": "Revolut eröffnen und mich unterstützen",
+    "revolutReferralBody": "Registriere dich über meinen Link — beide bekommen einen Bonus nach deiner ersten Kartenzahlung.",
+    "revolutReferralCta": "Revolut-Konto eröffnen"
   },
   "transition": {
     "loading": "Laden...",
@@ -646,7 +650,12 @@
       "cancelledToast": "Zahlung abgebrochen. Du kannst es jederzeit erneut versuchen.",
       "aircashLabel": "Zahlung per AirCash",
       "aircashCopied": "Nummer kopiert",
-      "aircashHint": "Tippen zum Kopieren — in der AirCash-App senden"
+      "aircashHint": "Tippen zum Kopieren — in der AirCash-App senden",
+      "referralHeading": "Über Empfehlung registrieren und mich unterstützen — beide bekommen einen Bonus",
+      "revolutLabel": "Revolut-Konto eröffnen",
+      "revolutHint": "Gemeinsamer Bonus bei erster Kartenzahlung",
+      "aircashReferralLabel": "AirCash-Wallet eröffnen",
+      "aircashReferralHint": "Beide erhalten einen Bonus nach der ersten Aufladung"
     },
     "dualStacks": {
       "label": "STACKS",

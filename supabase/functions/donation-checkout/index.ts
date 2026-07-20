@@ -68,14 +68,42 @@ async function createStripeCheckoutSession(params: {
   body.set('cancel_url', params.cancelUrl)
   body.set('customer_email', params.email)
   body.set('client_reference_id', String(params.donationId))
+  body.set('submit_type', 'donate')
+  body.set('locale', 'auto')
+  body.set('billing_address_collection', 'auto')
+  body.set('allow_promotion_codes', 'true')
   body.set('metadata[donation_id]', String(params.donationId))
   body.set('metadata[cause]', params.cause)
   body.set('metadata[locale]', params.locale)
   if (params.name) body.set('metadata[donor_name]', params.name)
+
+  // Enable cheapest EU-first payment methods (Stripe honours the array order in
+  // the Checkout hosted UI). SEPA is far cheaper for larger donations
+  // (0.8% + 0.35 EUR, capped at 6 EUR) than card (1.5% + 0.25 EUR EEA / 2.5% + 0.25 EUR non-EEA).
+  // `link` = Stripe Link 1-click; same fee as card but drastically better conversion.
+  const paymentMethods = ['card', 'link', 'sepa_debit', 'bancontact', 'ideal', 'p24', 'eps']
+  paymentMethods.forEach((m, i) => body.set(`payment_method_types[${i}]`, m))
+
+  // Reuse Stripe customer email so repeat donors skip retyping card details next time.
+  body.set('payment_intent_data[setup_future_usage]', 'off_session')
+  body.set(
+    'payment_intent_data[description]',
+    `Donacija Protos Web — cilj: ${params.cause}, id: ${params.donationId}`,
+  )
+  body.set('payment_intent_data[statement_descriptor_suffix]', 'Protos Web')
+
   body.set('line_items[0][quantity]', '1')
   body.set('line_items[0][price_data][currency]', 'eur')
   body.set('line_items[0][price_data][unit_amount]', String(cents))
   body.set('line_items[0][price_data][product_data][name]', productName)
+  body.set(
+    'line_items[0][price_data][product_data][description]',
+    'Podrška za studio Protos Web (razvoj, obrazovni sadržaj, otvoreni resursi).',
+  )
+  body.set(
+    'custom_text[submit][message]',
+    'Hvala na podršci! Uplata se koristi za razvoj studija. Za pitanja piši na dario.admin@protosweb.eu.',
+  )
 
   const res = await fetch('https://api.stripe.com/v1/checkout/sessions', {
     method: 'POST',

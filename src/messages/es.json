@@ -287,7 +287,11 @@
       "Diseno UI/UX",
       "SEO y Marketing",
       "Mantenimiento"
-    ]
+    ],
+    "revolutReferralHeading": "Bono por referido",
+    "revolutReferralTitle": "Abre Revolut y apóyame",
+    "revolutReferralBody": "Regístrate con mi enlace — ambos recibimos un bono tras tu primer pago con tarjeta.",
+    "revolutReferralCta": "Abrir cuenta Revolut"
   },
   "transition": {
     "loading": "Cargando...",
@@ -646,7 +650,12 @@
       "cancelledToast": "Pago cancelado. Puedes intentarlo de nuevo cuando quieras.",
       "aircashLabel": "Pago con AirCash",
       "aircashCopied": "Número copiado",
-      "aircashHint": "Toca para copiar el número — envía desde la app AirCash"
+      "aircashHint": "Toca para copiar el número — envía desde la app AirCash",
+      "referralHeading": "Regístrate con referido y apóyame — bono para ambos",
+      "revolutLabel": "Abrir cuenta Revolut",
+      "revolutHint": "Bono compartido en el primer pago con tarjeta",
+      "aircashReferralLabel": "Abrir wallet AirCash",
+      "aircashReferralHint": "Ambos reciben un bono tras la primera recarga"
     },
     "dualStacks": {
       "label": "STACKS",

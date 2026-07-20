@@ -287,7 +287,11 @@
       "UI/UX dizajn",
       "SEO i marketing",
       "Održavanje"
-    ]
+    ],
+    "revolutReferralHeading": "Bonus preko referrala",
+    "revolutReferralTitle": "Otvori Revolut i podrži me",
+    "revolutReferralBody": "Registriraj se putem mog linka — obojica dobivamo bonus nakon tvoje prve potrošnje karticom.",
+    "revolutReferralCta": "Otvori Revolut račun"
   },
   "transition": {
     "loading": "Učitavam...",
@@ -467,7 +471,12 @@
       "cancelledToast": "Plaćanje je otkazano. Možeš pokušati ponovo kad god želiš.",
       "aircashLabel": "Uplata AirCash",
       "aircashCopied": "Broj kopiran",
-      "aircashHint": "Dodirni za kopiranje broja — uplati u AirCash aplikaciji"
+      "aircashHint": "Dodirni za kopiranje broja — uplati u AirCash aplikaciji",
+      "referralHeading": "Registriraj se preko referrala i podrži me — obojica dobijemo bonus",
+      "revolutLabel": "Otvori Revolut račun",
+      "revolutHint": "Zajednički bonus na prvu potrošnju karticom",
+      "aircashReferralLabel": "Otvori AirCash novčanik",
+      "aircashReferralHint": "Bonus obojici nakon prve uplate"
     },
     "dualStacks": {
       "label": "STACKOVI",

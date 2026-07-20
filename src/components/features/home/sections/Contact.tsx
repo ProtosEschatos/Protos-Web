@@ -3,8 +3,8 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
-import { ArrowRight, Mail, MapPin, Phone } from 'lucide-react'
-import { CONTACT_EMAIL } from '@/lib/config/site'
+import { ArrowRight, ExternalLink, Mail, MapPin, Phone, Wallet } from 'lucide-react'
+import { CONTACT_EMAIL, REVOLUT_REFERRAL_URL } from '@/lib/config/site'
 
 export default function Contact() {
   const t = useTranslations('contact')
@@ -66,6 +66,32 @@ export default function Contact() {
                 </div>
               ))}
             </div>
+
+            <a
+              href={REVOLUT_REFERRAL_URL}
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              className="mt-10 group flex items-start gap-4 rounded-2xl border border-sky-400/30 bg-sky-500/10 p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-sky-300/60 hover:bg-sky-500/15"
+            >
+              <span className="mt-0.5 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-sky-500/20 text-sky-200">
+                <Wallet className="h-5 w-5" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <div className="text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-sky-300">
+                  {t('revolutReferralHeading')}
+                </div>
+                <div className="mt-1 text-base font-semibold text-[var(--light)]">
+                  {t('revolutReferralTitle')}
+                </div>
+                <p className="mt-1 text-sm text-[var(--light-muted)] leading-6">
+                  {t('revolutReferralBody')}
+                </p>
+                <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-sky-200 transition-transform group-hover:translate-x-0.5">
+                  {t('revolutReferralCta')}
+                  <ExternalLink className="h-3.5 w-3.5" />
+                </span>
+              </div>
+            </a>
           </motion.div>
 
           <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }} className="cosmic-panel rounded-3xl p-10">

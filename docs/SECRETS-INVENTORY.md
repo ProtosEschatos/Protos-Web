@@ -73,6 +73,51 @@
 | `GITHUB_TOKEN` | ✅ za private Protos-Agent |
 | `AGENT_MEMORY_REPO` | default OK |
 
+### Dodatni AI (opcionalno — spremaju se u /admin/kljucevi vault)
+
+| Variable | Provider |
+|----------|----------|
+| `OPENAI_API_KEY` | OpenAI |
+| `ANTHROPIC_API_KEY` | Anthropic Claude |
+| `XAI_API_KEY` | xAI (Grok) |
+| `MISTRAL_API_KEY` | Mistral AI |
+| `PERPLEXITY_API_KEY` | Perplexity |
+| `GROQ_API_KEY` / `CEREBRAS_API_KEY` / `OPENROUTER_API_KEY` | GPT-OSS-120B hosts |
+| `TOGETHER_API_KEY` | Together AI |
+| `HF_TOKEN` | Hugging Face Inference |
+| `FAL_KEY` / `REPLICATE_API_TOKEN` | Image/video generation |
+
+### Web istraživanje (research)
+
+| Variable | Provider |
+|----------|----------|
+| `FIRECRAWL_API_KEY` | Firecrawl (scrape/crawl, `fc_...`) |
+| `TAVILY_API_KEY` | Tavily AI search (`tvly-...`) |
+| `EXA_API_KEY` | Exa neural web search |
+| `SERPAPI_KEY` | SerpAPI (raw Google SERPs) |
+
+### Chat botovi / messaging
+
+| Variable | Provider |
+|----------|----------|
+| `TELEGRAM_BOT_TOKEN` / `TELEGRAM_CHAT_ID` | Telegram (BotFather → `/newbot`) |
+| `DISCORD_BOT_TOKEN` / `DISCORD_WEBHOOK_URL` | Discord (bot ili webhook) |
+| `WHATSAPP_ACCESS_TOKEN` / `WHATSAPP_PHONE_NUMBER_ID` | WhatsApp Business (Meta) |
+
+### Automatizacije (uz Zapier)
+
+| Variable | Provider |
+|----------|----------|
+| `MAKE_API_KEY` | Make.com (Integromat) |
+| `N8N_API_KEY` | n8n (self-hosted) |
+| `AIRTABLE_PAT` | Airtable (PAT `pat...`) |
+| `NOTION_TOKEN` | Notion (`secret_...`) |
+| `SLACK_WEBHOOK_URL` | Slack incoming webhook |
+
+**Sve iznad** ne moraju biti postavljene u Vercel — mogu se dodati kroz
+`/admin/kljucevi` (enkriptirano AES-256-GCM), i tamo se čitaju runtime
+kroz `getApiKeyValue(provider, label?)` bez potrebe za redeployem.
+
 ### IMAP (admin inbox — Vercel only)
 
 | Variable | Status |

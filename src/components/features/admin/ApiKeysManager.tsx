@@ -311,7 +311,7 @@ type DialogProps = {
 }
 
 function NewKeyDialog({ onClose, onCreated }: DialogProps) {
-  const [provider, setProvider] = useState<string>('openai')
+  const [provider, setProvider] = useState<string>('gpt-oss')
   const [customProvider, setCustomProvider] = useState('')
   const [label, setLabel] = useState('')
   const [envTarget, setEnvTarget] = useState<AdminApiKeyEnvTarget>('all')
@@ -322,6 +322,16 @@ function NewKeyDialog({ onClose, onCreated }: DialogProps) {
   const providerMeta: AdminApiKeyProviderMeta = findApiKeyProvider(provider)
   const isCustom = provider === 'custom'
   const finalProvider = isCustom ? customProvider.trim().toLowerCase() : provider
+
+  const providersByCategory = useMemo(() => {
+    const grouped = new Map<AdminApiKeyProviderMeta['category'], AdminApiKeyProviderMeta[]>()
+    for (const p of ADMIN_API_KEY_PROVIDERS) {
+      const bucket = grouped.get(p.category) ?? []
+      bucket.push(p)
+      grouped.set(p.category, bucket)
+    }
+    return Array.from(grouped.entries())
+  }, [])
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault()
@@ -390,10 +400,14 @@ function NewKeyDialog({ onClose, onCreated }: DialogProps) {
               onChange={(e) => setProvider(e.target.value)}
               className="w-full rounded-md border border-slate-800 bg-slate-950 px-3 py-2 text-sm text-slate-100 focus:border-indigo-500 focus:outline-none"
             >
-              {ADMIN_API_KEY_PROVIDERS.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.label}
-                </option>
+              {providersByCategory.map(([category, items]) => (
+                <optgroup key={category} label={ADMIN_API_KEY_CATEGORIES[category] ?? category}>
+                  {items.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      {p.label}
+                    </option>
+                  ))}
+                </optgroup>
               ))}
             </select>
           </label>

@@ -68,3 +68,4 @@ playwright-report/
 # logs
 logs/
 *.log
+.env*

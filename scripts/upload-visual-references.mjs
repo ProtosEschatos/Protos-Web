@@ -29,8 +29,13 @@ import { homedir } from 'node:os'
 
 import { VISUAL_REFERENCES, TOTAL_COMPONENT_COUNT } from './visual-references-manifest.mjs'
 
-const base = (process.env.NEXT_PUBLIC_SUPABASE_URL ?? process.env.SUPABASE_URL ?? '').replace(/\/$/, '')
-const key = process.env.SUPABASE_SERVICE_ROLE_KEY
+/** Strip surrounding quotes that `vercel env pull` sometimes emits. */
+function cleanEnv(v) {
+  if (!v) return ''
+  return v.trim().replace(/^['"]|['"]$/g, '')
+}
+const base = cleanEnv(process.env.NEXT_PUBLIC_SUPABASE_URL ?? process.env.SUPABASE_URL).replace(/\/$/, '')
+const key = cleanEnv(process.env.SUPABASE_SERVICE_ROLE_KEY)
 
 if (!base) {
   console.error('Missing NEXT_PUBLIC_SUPABASE_URL / SUPABASE_URL')

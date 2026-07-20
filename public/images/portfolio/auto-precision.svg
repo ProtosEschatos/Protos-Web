@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="Auto Precision preview">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f1f"/>
+      <stop offset="100%" stop-color="#1a1a2e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#f97316"/>
+    </linearGradient>
+    <radialGradient id="spot" cx="50%" cy="30%" r="45%">
+      <stop offset="0%" stop-color="#ef4444" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#0a0f1f" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <rect x="48" y="48" width="704" height="504" rx="24" fill="#0f0f1f" stroke="#2a2a3f" stroke-width="2"/>
+  <!-- Hood spot -->
+  <ellipse cx="400" cy="260" rx="320" ry="140" fill="url(#spot)"/>
+  <!-- Car silhouette -->
+  <path d="M 220 320 L 260 260 L 340 240 L 460 240 L 540 260 L 580 320 L 560 340 L 240 340 Z" fill="#1f2937" stroke="#ef4444" stroke-width="2" opacity="0.9"/>
+  <circle cx="290" cy="340" r="26" fill="#0f0f1f" stroke="#ef4444" stroke-width="2"/>
+  <circle cx="510" cy="340" r="26" fill="#0f0f1f" stroke="#ef4444" stroke-width="2"/>
+  <rect x="340" y="260" width="120" height="42" rx="4" fill="#0ea5e9" opacity="0.4"/>
+  <!-- Content strip -->
+  <rect x="96" y="400" width="180" height="20" rx="10" fill="url(#accent)"/>
+  <rect x="96" y="432" width="480" height="12" rx="6" fill="#475569"/>
+  <rect x="96" y="452" width="360" height="12" rx="6" fill="#334155"/>
+  <text x="400" y="510" text-anchor="middle" fill="#f8fafc" font-family="system-ui,sans-serif" font-size="24" font-weight="700">Auto Precision</text>
+  <text x="400" y="536" text-anchor="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="14">Servis, dijagnostika, rezervacije</text>
+</svg>

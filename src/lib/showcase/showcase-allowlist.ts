@@ -8,8 +8,23 @@ export type ShowcaseAllowlistEntry = {
   title: string
   tag: string
   description: string
+  /**
+   * Primary CTA link on the card + 3D frame click target. Usually the live
+   * URL; falls back to the GitHub repo when the project isn't deployed yet.
+   */
   projectUrl: string
   repoUrl: string
+  /**
+   * Optional local (or absolute) poster image. When set, this wins over the
+   * Supabase Storage lookup keyed by slug — useful for repo-only entries
+   * where no production screenshot has been uploaded yet.
+   */
+  posterImage?: string
+  /**
+   * Marks the entry as repo-only (no live deploy). The public card labels
+   * the CTA "GitHub repo" instead of "Live". Optional; defaults to false.
+   */
+  repoOnly?: boolean
   sortOrder: number
 }
 
@@ -50,6 +65,39 @@ export const SHOWCASE_ALLOWLIST: readonly ShowcaseAllowlistEntry[] = [
     repoUrl: 'https://github.com/ProtosEschatos/Dentalna-Ordinacija',
     sortOrder: 4,
   },
+  {
+    slug: 'apartman-mihael',
+    title: 'Apartman Mihael',
+    tag: 'Hospitality',
+    description: 'Booking landing za apartman — galerija, dostupnost, kontakt (Cloudflare Pages, Mark23 CAP kao admin).',
+    projectUrl: 'https://github.com/ProtosEschatos/Apartman-Mihael',
+    repoUrl: 'https://github.com/ProtosEschatos/Apartman-Mihael',
+    posterImage: '/images/portfolio/apartman-mihael.svg',
+    repoOnly: true,
+    sortOrder: 5,
+  },
+  {
+    slug: 'auto-precision',
+    title: 'Auto Precision',
+    tag: 'Automotive',
+    description: 'Landing za auto servis — usluge, tim, dijagnostika, rezervacije.',
+    projectUrl: 'https://github.com/ProtosEschatos/Auto-Precision',
+    repoUrl: 'https://github.com/ProtosEschatos/Auto-Precision',
+    posterImage: '/images/portfolio/auto-precision.svg',
+    repoOnly: true,
+    sortOrder: 6,
+  },
+  {
+    slug: 'mark23-cap',
+    title: 'Mark23 Custom Admin Panel',
+    tag: 'Admin Console',
+    description: 'Standalone custom admin panel (React + TS, Cloudflare Pages) — spojen s Apartman Mihael projektom. Repo trenutno privatan.',
+    projectUrl: 'https://github.com/ProtosEschatos/Protos-Web-Mark23-Custom-Admin-Panel',
+    repoUrl: 'https://github.com/ProtosEschatos/Protos-Web-Mark23-Custom-Admin-Panel',
+    posterImage: '/images/portfolio/mark23-cap.svg',
+    repoOnly: true,
+    sortOrder: 7,
+  },
 ] as const
 
 const ALLOWED_URLS = new Set(SHOWCASE_ALLOWLIST.map((entry) => normalizePortfolioUrl(entry.projectUrl)))
@@ -73,4 +121,17 @@ export function isAllowedPortfolioUrl(projectUrl: string | null | undefined): bo
 
 export function getAllowlistSlugs(): Set<string> {
   return new Set(SHOWCASE_ALLOWLIST.map((entry) => entry.slug))
+}
+
+/**
+ * Resolve the allowlist entry for a given project URL (or null if not on the
+ * allowlist). Used to look up posterImage overrides without duplicating the
+ * URL normalization logic.
+ */
+export function findAllowlistEntryByUrl(
+  projectUrl: string | null | undefined,
+): ShowcaseAllowlistEntry | null {
+  if (!projectUrl) return null
+  const key = normalizePortfolioUrl(projectUrl)
+  return SHOWCASE_ALLOWLIST.find((e) => normalizePortfolioUrl(e.projectUrl) === key) ?? null
 }

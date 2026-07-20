@@ -1,5 +1,12 @@
+import { findAllowlistEntryByUrl } from './showcase-allowlist'
+
 /** Map portfolio project_url → showcase storage slug (Supabase projects/*.jpg). */
 export function portfolioUrlToShowcaseSlug(projectUrl: string): string {
+  // Allowlist match wins — handles GitHub-repo-only entries where the host
+  // ("github.com") tells us nothing about which project it is.
+  const entry = findAllowlistEntryByUrl(projectUrl)
+  if (entry) return entry.slug
+
   try {
     const host = new URL(projectUrl).hostname.replace(/^www\./, '').toLowerCase()
     if (host.includes('bodulica')) return 'bodulica'

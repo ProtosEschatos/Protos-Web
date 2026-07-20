@@ -61,6 +61,54 @@ export type Database = {
           },
         ]
       }
+      admin_api_keys: {
+        Row: {
+          auth_tag: string
+          ciphertext: string
+          created_at: string
+          env_target: string
+          id: string
+          is_active: boolean
+          iv: string
+          label: string
+          last_used_at: string | null
+          masked_hint: string | null
+          notes: string | null
+          provider: string
+          updated_at: string
+        }
+        Insert: {
+          auth_tag: string
+          ciphertext: string
+          created_at?: string
+          env_target?: string
+          id?: string
+          is_active?: boolean
+          iv: string
+          label: string
+          last_used_at?: string | null
+          masked_hint?: string | null
+          notes?: string | null
+          provider: string
+          updated_at?: string
+        }
+        Update: {
+          auth_tag?: string
+          ciphertext?: string
+          created_at?: string
+          env_target?: string
+          id?: string
+          is_active?: boolean
+          iv?: string
+          label?: string
+          last_used_at?: string | null
+          masked_hint?: string | null
+          notes?: string | null
+          provider?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       admin_mail_sync: {
         Row: {
           mailbox_id: string
@@ -79,6 +127,75 @@ export type Database = {
           messages?: Json
           error?: string | null
           synced_at?: string
+        }
+        Relationships: []
+      }
+      automation_webhooks: {
+        Row: {
+          auth_ciphertext: string | null
+          auth_header_name: string | null
+          auth_iv: string | null
+          auth_tag: string | null
+          auth_type: string
+          body_template: Json | null
+          created_at: string
+          event: string
+          fire_count: number
+          headers_json: Json
+          id: string
+          is_enabled: boolean
+          last_fired_at: string | null
+          last_response: string | null
+          last_status_code: number | null
+          method: string
+          name: string
+          notes: string | null
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          auth_ciphertext?: string | null
+          auth_header_name?: string | null
+          auth_iv?: string | null
+          auth_tag?: string | null
+          auth_type?: string
+          body_template?: Json | null
+          created_at?: string
+          event?: string
+          fire_count?: number
+          headers_json?: Json
+          id?: string
+          is_enabled?: boolean
+          last_fired_at?: string | null
+          last_response?: string | null
+          last_status_code?: number | null
+          method?: string
+          name: string
+          notes?: string | null
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          auth_ciphertext?: string | null
+          auth_header_name?: string | null
+          auth_iv?: string | null
+          auth_tag?: string | null
+          auth_type?: string
+          body_template?: Json | null
+          created_at?: string
+          event?: string
+          fire_count?: number
+          headers_json?: Json
+          id?: string
+          is_enabled?: boolean
+          last_fired_at?: string | null
+          last_response?: string | null
+          last_status_code?: number | null
+          method?: string
+          name?: string
+          notes?: string | null
+          updated_at?: string
+          url?: string
         }
         Relationships: []
       }

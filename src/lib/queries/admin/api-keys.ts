@@ -1,5 +1,6 @@
 import 'server-only'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import type { Database } from '@/lib/database.types'
 import {
   decryptSecret,
   encryptSecret,
@@ -11,6 +12,7 @@ import type {
 } from '@/types/admin-api-keys'
 
 const TABLE = 'admin_api_keys'
+type ApiKeyUpdate = Database['public']['Tables']['admin_api_keys']['Update']
 
 type Row = {
   id: string
@@ -95,7 +97,7 @@ export async function updateAdminApiKey(
 ): Promise<void> {
   if (!supabaseAdmin) throw new Error('Supabase nije konfiguriran')
 
-  const row: Record<string, unknown> = {}
+  const row: ApiKeyUpdate = {}
   if (patch.label !== undefined) row.label = patch.label
   if (patch.envTarget !== undefined) row.env_target = patch.envTarget
   if (patch.notes !== undefined) row.notes = patch.notes

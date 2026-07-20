@@ -1,5 +1,6 @@
 import 'server-only'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import type { Database } from '@/lib/database.types'
 import {
   decryptSecret,
   encryptSecret,
@@ -14,6 +15,8 @@ import type {
 } from '@/types/admin-automations'
 
 const TABLE = 'automation_webhooks'
+type WebhookInsert = Database['public']['Tables']['automation_webhooks']['Insert']
+type WebhookUpdate = Database['public']['Tables']['automation_webhooks']['Update']
 
 type Row = {
   id: string
@@ -87,7 +90,7 @@ export async function createAutomationWebhook(input: {
 }): Promise<{ id: string }> {
   if (!supabaseAdmin) throw new Error('Supabase nije konfiguriran')
 
-  const row: Record<string, unknown> = {
+  const row: WebhookInsert = {
     name: input.name,
     url: input.url,
     method: input.method,
@@ -95,7 +98,7 @@ export async function createAutomationWebhook(input: {
     auth_type: input.authType,
     auth_header_name: input.authHeaderName ?? null,
     headers_json: input.headersJson,
-    body_template: input.bodyTemplate ?? null,
+    body_template: (input.bodyTemplate ?? null) as WebhookInsert['body_template'],
     notes: input.notes ?? null,
     is_enabled: input.isEnabled ?? true,
   }
@@ -132,7 +135,7 @@ export async function updateAutomationWebhook(
 ): Promise<void> {
   if (!supabaseAdmin) throw new Error('Supabase nije konfiguriran')
 
-  const row: Record<string, unknown> = {}
+  const row: WebhookUpdate = {}
   if (patch.name !== undefined) row.name = patch.name
   if (patch.url !== undefined) row.url = patch.url
   if (patch.method !== undefined) row.method = patch.method
@@ -140,7 +143,7 @@ export async function updateAutomationWebhook(
   if (patch.authType !== undefined) row.auth_type = patch.authType
   if (patch.authHeaderName !== undefined) row.auth_header_name = patch.authHeaderName
   if (patch.headersJson !== undefined) row.headers_json = patch.headersJson
-  if (patch.bodyTemplate !== undefined) row.body_template = patch.bodyTemplate
+  if (patch.bodyTemplate !== undefined) row.body_template = patch.bodyTemplate as WebhookUpdate['body_template']
   if (patch.notes !== undefined) row.notes = patch.notes
   if (patch.isEnabled !== undefined) row.is_enabled = patch.isEnabled
 

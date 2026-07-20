@@ -714,6 +714,54 @@ export type Database = {
           },
         ]
       }
+      published_posts: {
+        Row: {
+          body_preview: string | null
+          created_at: string
+          created_by: string | null
+          error_message: string | null
+          id: string
+          kind: string
+          platform: string
+          remote_id: string | null
+          remote_url: string | null
+          request_payload: Json
+          response_payload: Json
+          status: string
+          title: string | null
+        }
+        Insert: {
+          body_preview?: string | null
+          created_at?: string
+          created_by?: string | null
+          error_message?: string | null
+          id?: string
+          kind: string
+          platform: string
+          remote_id?: string | null
+          remote_url?: string | null
+          request_payload?: Json
+          response_payload?: Json
+          status?: string
+          title?: string | null
+        }
+        Update: {
+          body_preview?: string | null
+          created_at?: string
+          created_by?: string | null
+          error_message?: string | null
+          id?: string
+          kind?: string
+          platform?: string
+          remote_id?: string | null
+          remote_url?: string | null
+          request_payload?: Json
+          response_payload?: Json
+          status?: string
+          title?: string | null
+        }
+        Relationships: []
+      }
       services: {
         Row: {
           active: boolean | null

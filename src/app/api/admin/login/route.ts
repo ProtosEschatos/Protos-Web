@@ -6,6 +6,7 @@ import {
   verifyAdminPassword,
 } from '@/lib/auth/admin-auth'
 import { checkRateLimit, getClientIp, recordFailedAttempt } from '@/lib/auth/admin-rate-limit'
+import { recordAudit } from '@/lib/audit/record'
 
 const GENERIC_ERROR = 'Neispravna lozinka ili pristup trenutno nije dostupan.'
 
@@ -34,10 +35,20 @@ export async function POST(request: Request) {
 
     if (!verifyAdminPassword(password)) {
       recordFailedAttempt(ip)
+      await recordAudit({
+        event: 'admin.login.failed',
+        source: 'admin-auth',
+        payload: { ip },
+      })
       await delay(400)
       return NextResponse.json({ success: false, message: GENERIC_ERROR }, { status: 401 })
     }
 
+    await recordAudit({
+      event: 'admin.login.ok',
+      source: 'admin-auth',
+      payload: { ip },
+    })
     const response = NextResponse.json({ success: true })
     response.cookies.set(ADMIN_COOKIE, getAdminSessionToken(), adminCookieOptions)
     return response

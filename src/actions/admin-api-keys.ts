@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache'
 import { requireAdmin } from '@/lib/auth/require-admin'
+import { recordAudit } from '@/lib/audit/record'
 import { isCryptoConfigured } from '@/lib/security/api-keys-crypto'
 import {
   createAdminApiKey,
@@ -64,6 +65,15 @@ export async function adminCreateApiKey(input: AdminApiKeyFormInput): Promise<Re
       notes: parsed.data.notes ?? null,
       isActive: parsed.data.isActive,
     })
+    await recordAudit({
+      event: 'api-key.create',
+      source: 'admin-api-keys',
+      payload: {
+        id: created.id,
+        provider: parsed.data.provider.toLowerCase(),
+        label: parsed.data.label,
+      },
+    })
     revalidatePath(ADMIN_PATH)
     return ok(created)
   } catch (err) {
@@ -91,6 +101,11 @@ export async function adminUpdateApiKey(
       notes: parsed.data.notes ?? undefined,
       isActive: parsed.data.isActive,
     })
+    await recordAudit({
+      event: 'api-key.update',
+      source: 'admin-api-keys',
+      payload: { id, label: parsed.data.label, rotated: !!parsed.data.value },
+    })
     revalidatePath(ADMIN_PATH)
     return ok()
   } catch (err) {
@@ -102,6 +117,11 @@ export async function adminDeleteApiKey(id: string): Promise<Result> {
   await requireAdmin()
   try {
     await deleteAdminApiKey(id)
+    await recordAudit({
+      event: 'api-key.delete',
+      source: 'admin-api-keys',
+      payload: { id },
+    })
     revalidatePath(ADMIN_PATH)
     return ok()
   } catch (err) {

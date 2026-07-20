@@ -143,6 +143,18 @@ export const ADMIN_NAV_SECTIONS: AdminNavSection[] = [
         description: 'GA4, GSC, Plausible, sitemap, robots, verifikacije',
       },
       {
+        id: 'publish',
+        href: '/admin/publish',
+        label: 'Objavi',
+        description: 'Bluesky · Mastodon · Threads · FB · IG · Ghost · Hashnode · Dev.to',
+      },
+      {
+        id: 'audit',
+        href: '/admin/audit',
+        label: 'Audit log',
+        description: 'Kronologija svih write akcija (publish, keys, webhooks)',
+      },
+      {
         id: 'tools',
         href: '/admin/tools',
         label: 'Alati',

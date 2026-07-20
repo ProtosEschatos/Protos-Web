@@ -54,15 +54,20 @@ export const LEGAL_TERMS_VERSION = '2026-07-11-v3'
 /** Google Search Console — HTML meta verification (DNS TXT also on Cloudflare). */
 export const GOOGLE_SITE_VERIFICATION = '6SnN-0ojdBd99Wr_5Y5WmgDFSGUwtg-U0PgrDz7HL1A'
 
-/** Optional Google Business Profile / Maps share link when you have a listing.
- * Not required for the site. When you create one in Google Business Profile,
- * paste the public Maps URL into NEXT_PUBLIC_GOOGLE_BUSINESS_URL on Vercel. */
+/** Google Business Profile — Maps share link for the verified listing.
+ * Override with NEXT_PUBLIC_GOOGLE_BUSINESS_URL on Vercel when the URL changes. */
 export const GOOGLE_BUSINESS_PROFILE_URL =
-  process.env.NEXT_PUBLIC_GOOGLE_BUSINESS_URL?.trim() || ''
+  process.env.NEXT_PUBLIC_GOOGLE_BUSINESS_URL?.trim() ||
+  'https://share.google/WMPSacg3oKW1Gy8W8'
 
 /** GA4 measurement ID — override via NEXT_PUBLIC_GA_ID on Vercel. */
 export const GA4_MEASUREMENT_ID =
-  process.env.NEXT_PUBLIC_GA_ID?.trim() || 'G-LP29SJ3MM3'
+  process.env.NEXT_PUBLIC_GA_ID?.trim() || 'G-BGR7VHFCB2'
+
+/** Plausible analytics domain — override via NEXT_PUBLIC_PLAUSIBLE_DOMAIN on Vercel.
+ * Runs consent-gated alongside GA when both are present. */
+export const PLAUSIBLE_DOMAIN =
+  process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN?.trim() || 'protosweb.eu'
 
 /** Ko-fi page URL — kept for admin/tools; public donate CTA is Stripe Checkout. */
 export const KO_FI_URL = 'https://ko-fi.com/protoswebmark23'

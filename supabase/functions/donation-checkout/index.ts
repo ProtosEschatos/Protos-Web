@@ -77,12 +77,12 @@ async function createStripeCheckoutSession(params: {
   body.set('metadata[locale]', params.locale)
   if (params.name) body.set('metadata[donor_name]', params.name)
 
-  // Enable cheapest EU-first payment methods (Stripe honours the array order in
-  // the Checkout hosted UI). SEPA is far cheaper for larger donations
-  // (0.8% + 0.35 EUR, capped at 6 EUR) than card (1.5% + 0.25 EUR EEA / 2.5% + 0.25 EUR non-EEA).
-  // `link` = Stripe Link 1-click; same fee as card but drastically better conversion.
-  const paymentMethods = ['card', 'link', 'sepa_debit', 'bancontact', 'ideal', 'p24', 'eps']
-  paymentMethods.forEach((m, i) => body.set(`payment_method_types[${i}]`, m))
+  // Intentionally omit `payment_method_types` — for Checkout Sessions, that
+  // makes Stripe fall back to every payment method activated in the merchant
+  // dashboard (Payments → Payment methods) and choose the cheapest one Stripe
+  // sees fit for the donor's country/currency. Enable SEPA Direct Debit + Link
+  // + Bancontact/iDEAL/P24/EPS in the Stripe dashboard to unlock the lowest
+  // EU fees (~0.8% + 0.35 EUR for SEPA vs 1.5% + 0.25 EUR EEA cards).
 
   // Reuse Stripe customer email so repeat donors skip retyping card details next time.
   body.set('payment_intent_data[setup_future_usage]', 'off_session')

@@ -31,9 +31,27 @@
 | `/admin/donacije` | Stripe donacije (`donations` tablica) |
 | `/admin/blog`, `/admin/portfolio` | CMS CRUD |
 | `/admin/stranice/*` | Statičke stranice (i18n u `messages/`) |
+| `/admin/assets` | Slike, videa, 3D modeli, teksture, audio → Supabase Storage (`admin-uploads` bucket) + `admin_assets` metadata tablica |
+| `/admin/konfigurator` | Live 3D scena (R3F) + assets library (isti bucket) + Sketchfab / Poly.Pizza + chat asistent |
 | `/admin/memory` | Protos-Agent memorija (GitHub raw, `GITHUB_TOKEN` ako je repo privatan) |
 | `/admin/ai` | GPT-OSS-120B → DeepSeek → Gemini cascade (`GPT_OSS_API_KEY` → `DEEPSEEK_API_KEY` → `GEMINI_API_KEY`) |
 | `/admin/tools` | Linkovi na Vercel, DNS, platforme |
+
+## Asset pipeline (`/admin/assets` + `/admin/konfigurator` → Studio tab)
+
+Slike, videa, 3D modeli i teksture koje admin uploada:
+
+| Sloj | Gdje živi | Kako se čita |
+|------|-----------|--------------|
+| Binary content | **Supabase Storage**, privatni bucket `admin-uploads` | Server mint-a signed URL (`lib/storage/admin-uploads.ts` → `createSignedReadUrl`) |
+| Metadata | **Postgres**, tablica `public.admin_assets` (kategorija, MIME, dimenzije, tagovi, `is_published`) | `adminListAssets()` u adminu; `getPublishedAssets({ tag })` (server-only, `lib/assets/index.ts`) na javnim stranicama |
+| Upload flow | Browser dropzone → server action `adminCreateAssetUpload()` mint-a signed upload URL → browser PUT direktno u Supabase → `adminFinalizeAssetUpload()` insertira metadata | `src/components/features/admin/AssetUploader.tsx` |
+| Publikacija | Toggle "LIVE" u gridu → `is_published = true` → RLS pušta `anon SELECT` samo za te retke | `src/components/features/admin/AssetLibrary.tsx` |
+| Integracija u scenu | Klik na `model_glb/gltf` → `useSceneStore.loadGltf(signedUrl)` | `ConfiguratorManager` "Moji assets" tab |
+
+**Bitno:** Protos-Agent repo (GitHub) je **isključivo za AI memoriju** (markdown/JSONL). **Nikada** ne treba u njega gurati binary assete — koristi ovaj pipeline.
+
+Zavisi o env varijablama: `NEXT_PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` (na Vercelu, već postoji).
 
 ## IMAP env (Vercel Production)
 

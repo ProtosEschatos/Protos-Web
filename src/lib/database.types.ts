@@ -62,6 +62,66 @@ export type Database = {
         }
         Relationships: []
       }
+      admin_assets: {
+        Row: {
+          bucket: string
+          category: string
+          created_at: string
+          duration_seconds: number | null
+          height: number | null
+          id: string
+          is_published: boolean
+          label: string | null
+          metadata: Json
+          mime_type: string | null
+          original_filename: string | null
+          size_bytes: number | null
+          storage_path: string
+          tags: string[]
+          updated_at: string
+          uploaded_by: string | null
+          width: number | null
+        }
+        Insert: {
+          bucket?: string
+          category: string
+          created_at?: string
+          duration_seconds?: number | null
+          height?: number | null
+          id?: string
+          is_published?: boolean
+          label?: string | null
+          metadata?: Json
+          mime_type?: string | null
+          original_filename?: string | null
+          size_bytes?: number | null
+          storage_path: string
+          tags?: string[]
+          updated_at?: string
+          uploaded_by?: string | null
+          width?: number | null
+        }
+        Update: {
+          bucket?: string
+          category?: string
+          created_at?: string
+          duration_seconds?: number | null
+          height?: number | null
+          id?: string
+          is_published?: boolean
+          label?: string | null
+          metadata?: Json
+          mime_type?: string | null
+          original_filename?: string | null
+          size_bytes?: number | null
+          storage_path?: string
+          tags?: string[]
+          updated_at?: string
+          uploaded_by?: string | null
+          width?: number | null
+        }
+        Relationships: []
+      }
       admin_mail_sync: {
         Row: {
           error: string | null

@@ -89,10 +89,16 @@ export const ADMIN_NAV_SECTIONS: AdminNavSection[] = [
     label: 'Studio',
     items: [
       {
+        id: 'assets',
+        href: '/admin/assets',
+        label: 'Assets',
+        description: 'Slike, videa, 3D modeli u Supabase Storage',
+      },
+      {
         id: 'configurator',
         href: '/admin/konfigurator',
         label: '3D Konfigurator',
-        description: 'Live scena + Sketchfab pretraga (asset pipeline)',
+        description: 'Live scena + assets library + Sketchfab / Poly.Pizza',
       },
     ],
   },

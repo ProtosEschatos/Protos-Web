@@ -2,7 +2,9 @@
 
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
-import { Box, Link as LinkIcon, type LucideIcon, Package, Pizza, X } from 'lucide-react'
+import { Box, FolderOpen, Link as LinkIcon, type LucideIcon, Package, Pizza, X } from 'lucide-react'
+import AssetLibrary from '@/components/features/admin/AssetLibrary'
+import AssetUploader from '@/components/features/admin/AssetUploader'
 import ConfiguratorControls from '@/components/features/admin/ConfiguratorControls'
 import SketchfabBrowser from '@/components/features/admin/SketchfabBrowser'
 import PolyPizzaBrowser from '@/components/features/admin/PolyPizzaBrowser'
@@ -10,7 +12,7 @@ import SceneChatPanel from '@/components/features/admin/SceneChatPanel'
 import { useSceneStore } from '@/lib/stores/scene-store'
 import { toast } from '@/lib/stores/toast-store'
 
-type ImportTab = 'poly-pizza' | 'sketchfab' | 'url'
+type ImportTab = 'assets' | 'poly-pizza' | 'sketchfab' | 'url'
 
 const ConfiguratorScene = dynamic(
   () => import('@/components/features/admin/ConfiguratorScene'),
@@ -25,14 +27,16 @@ const ConfiguratorScene = dynamic(
 )
 
 const TABS: { id: ImportTab; label: string; Icon: LucideIcon }[] = [
+  { id: 'assets', label: 'Moji assets', Icon: FolderOpen },
   { id: 'poly-pizza', label: 'Poly.Pizza', Icon: Pizza },
   { id: 'sketchfab', label: 'Sketchfab', Icon: Package },
   { id: 'url', label: 'URL', Icon: LinkIcon },
 ]
 
 export default function ConfiguratorManager() {
-  const [activeTab, setActiveTab] = useState<ImportTab>('poly-pizza')
+  const [activeTab, setActiveTab] = useState<ImportTab>('assets')
   const [urlInput, setUrlInput] = useState('')
+  const [assetRefreshKey, setAssetRefreshKey] = useState(0)
   const primitive = useSceneStore((s) => s.primitive)
   const gltfUrl = useSceneStore((s) => s.gltfUrl)
   const loadGltf = useSceneStore((s) => s.loadGltf)
@@ -114,6 +118,15 @@ export default function ConfiguratorManager() {
           </div>
 
           <div className="p-4">
+            {activeTab === 'assets' ? (
+              <div className="space-y-3">
+                <AssetUploader
+                  onUploaded={() => setAssetRefreshKey((n) => n + 1)}
+                  allowedCategories={['image', 'video', 'model_glb', 'model_gltf', 'texture', 'audio']}
+                />
+                <AssetLibrary refreshKey={assetRefreshKey} />
+              </div>
+            ) : null}
             {activeTab === 'poly-pizza' ? <PolyPizzaBrowser /> : null}
             {activeTab === 'sketchfab' ? <SketchfabBrowser /> : null}
             {activeTab === 'url' ? (

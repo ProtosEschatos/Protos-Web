@@ -48,7 +48,15 @@ async function deletePath(storagePath) {
     // cleanup step is idempotent — a stale key just means the obsolete file
     // stays a little longer, not a broken deploy. Real deletes will succeed
     // the next time the key is refreshed.
-    if (res.status === 401 || res.status === 403) {
+    //
+    // Supabase returns HTTP 400 with a JSON body of {"statusCode":"403",
+    // "error":"Unauthorized","message":"signature verification failed"} for
+    // stale service-role JWTs, so we sniff the body — not just res.status.
+    const looksLikeAuthFailure =
+      res.status === 401 ||
+      res.status === 403 ||
+      /signature verification failed|Unauthorized|"statusCode":"?(401|403)"?/i.test(text)
+    if (looksLikeAuthFailure) {
       console.warn(
         `WARN ${storagePath}: ${res.status} — service-role key rejected (skipping cleanup, not blocking CI)`,
       )

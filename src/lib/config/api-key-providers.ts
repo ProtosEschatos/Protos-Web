@@ -23,12 +23,35 @@ export type AdminApiKeyProviderId =
   | 'mapbox'
   | 'zapier'
   | 'slack'
+  | 'youtube'
+  | 'instagram'
+  | 'facebook'
+  | 'tiktok'
+  | 'linkedin'
+  | 'x-twitter'
+  | 'medium'
+  | 'substack'
+  | 'blogger'
+  | 'tumblr'
+  | 'aboutme'
+  | 'payhip'
+  | 'ko-fi'
   | 'custom'
 
 export type AdminApiKeyProviderMeta = {
   id: AdminApiKeyProviderId
   label: string
-  category: 'ai' | 'payments' | 'email' | 'deploy' | 'observability' | 'assets-3d' | 'automations' | 'other'
+  category:
+    | 'ai'
+    | 'payments'
+    | 'email'
+    | 'deploy'
+    | 'observability'
+    | 'assets-3d'
+    | 'automations'
+    | 'social'
+    | 'publishing'
+    | 'other'
   docsUrl: string
   /** Optional Vercel env var name where this key typically lives. Displayed as a hint. */
   envHint?: string
@@ -62,6 +85,21 @@ export const ADMIN_API_KEY_PROVIDERS: AdminApiKeyProviderMeta[] = [
   { id: 'zapier',     label: 'Zapier',              category: 'automations',   docsUrl: 'https://zapier.com/app/settings/mcp',             envHint: 'ZAPIER_MCP_URL' },
   { id: 'slack',      label: 'Slack (webhook)',     category: 'automations',   docsUrl: 'https://api.slack.com/apps',                      envHint: 'SLACK_WEBHOOK_URL' },
 
+  { id: 'youtube',    label: 'YouTube Data API',    category: 'social',        docsUrl: 'https://console.cloud.google.com/apis/credentials', envHint: 'YOUTUBE_API_KEY' },
+  { id: 'instagram',  label: 'Instagram Graph',     category: 'social',        docsUrl: 'https://developers.facebook.com/apps',            envHint: 'INSTAGRAM_ACCESS_TOKEN' },
+  { id: 'facebook',   label: 'Facebook Graph',      category: 'social',        docsUrl: 'https://developers.facebook.com/apps',            envHint: 'FACEBOOK_PAGE_ACCESS_TOKEN' },
+  { id: 'tiktok',     label: 'TikTok for Developers', category: 'social',      docsUrl: 'https://developers.tiktok.com/apps',              envHint: 'TIKTOK_ACCESS_TOKEN' },
+  { id: 'linkedin',   label: 'LinkedIn',            category: 'social',        docsUrl: 'https://www.linkedin.com/developers/apps',        envHint: 'LINKEDIN_ACCESS_TOKEN' },
+  { id: 'x-twitter',  label: 'X (Twitter)',         category: 'social',        docsUrl: 'https://developer.x.com/en/portal/dashboard',     envHint: 'X_BEARER_TOKEN' },
+
+  { id: 'medium',     label: 'Medium (integration)', category: 'publishing',   docsUrl: 'https://medium.com/me/settings/security',         envHint: 'MEDIUM_INTEGRATION_TOKEN' },
+  { id: 'substack',   label: 'Substack (RSS/webhook)', category: 'publishing', docsUrl: 'https://substack.com/settings',                   envHint: 'SUBSTACK_PUBLICATION_URL' },
+  { id: 'blogger',    label: 'Blogger v3 (Google)', category: 'publishing',    docsUrl: 'https://console.cloud.google.com/apis/library/blogger.googleapis.com', envHint: 'BLOGGER_API_KEY' },
+  { id: 'tumblr',     label: 'Tumblr OAuth',        category: 'publishing',    docsUrl: 'https://www.tumblr.com/oauth/apps',               envHint: 'TUMBLR_OAUTH_TOKEN' },
+  { id: 'aboutme',    label: 'About.me (manual)',   category: 'publishing',    docsUrl: 'https://about.me/edit',                           envHint: 'ABOUTME_PROFILE_URL' },
+  { id: 'payhip',     label: 'Payhip',              category: 'publishing',    docsUrl: 'https://payhip.com/account/api',                  envHint: 'PAYHIP_API_KEY' },
+  { id: 'ko-fi',      label: 'Ko-fi',               category: 'publishing',    docsUrl: 'https://ko-fi.com/manage/api',                    envHint: 'KO_FI_API_KEY' },
+
   { id: 'custom',     label: 'Custom / other',      category: 'other',         docsUrl: 'https://protosweb.eu' },
 ]
 
@@ -79,5 +117,7 @@ export const ADMIN_API_KEY_CATEGORIES: Record<AdminApiKeyProviderMeta['category'
   observability: 'Praćenje',
   'assets-3d': '3D & assetsi',
   automations: 'Automatizacije',
+  social: 'Društvene mreže',
+  publishing: 'Publikacije',
   other: 'Ostalo',
 }

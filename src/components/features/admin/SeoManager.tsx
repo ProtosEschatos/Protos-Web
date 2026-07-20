@@ -10,20 +10,27 @@ import {
   Gauge,
   Globe2,
   Image as ImageIcon,
+  KeyRound,
   Layers,
+  Newspaper,
   Search,
   ShieldCheck,
+  Sparkles,
   Tag,
+  Users,
   X,
 } from 'lucide-react'
 import type {
   LiveSitemapStats,
   SeoEnvStatus,
   SeoOverview,
+  SocialPublishingConnection,
 } from '@/lib/queries/admin/seo-overview'
 import { toast } from '@/lib/stores/toast-store'
+import SeoContentStudio from '@/components/features/admin/SeoContentStudio'
+import AdminLink from '@/components/features/admin/AdminLink'
 
-type Tab = 'pregled' | 'analitika' | 'metadata' | 'sitemap' | 'verifikacija'
+type Tab = 'pregled' | 'analitika' | 'metadata' | 'sitemap' | 'verifikacija' | 'ai-content'
 
 const TABS: { id: Tab; label: string; Icon: typeof BarChart3 }[] = [
   { id: 'pregled', label: 'Pregled', Icon: Gauge },
@@ -31,6 +38,7 @@ const TABS: { id: Tab; label: string; Icon: typeof BarChart3 }[] = [
   { id: 'metadata', label: 'Metadata & tagovi', Icon: Tag },
   { id: 'sitemap', label: 'Sitemap & robots', Icon: FileText },
   { id: 'verifikacija', label: 'Verifikacija', Icon: ShieldCheck },
+  { id: 'ai-content', label: 'AI content studio', Icon: Sparkles },
 ]
 
 type Props = {
@@ -81,6 +89,47 @@ export default function SeoManager({ overview, liveSitemap, robotsSnippet }: Pro
       {tab === 'metadata' ? <MetadataTab overview={overview} /> : null}
       {tab === 'sitemap' ? <SitemapTab overview={overview} live={liveSitemap} robotsSnippet={robotsSnippet} /> : null}
       {tab === 'verifikacija' ? <VerificationTab overview={overview} /> : null}
+      {tab === 'ai-content' ? <SeoContentStudio /> : null}
+    </div>
+  )
+}
+
+function ConnectionCard({ conn }: { conn: SocialPublishingConnection }) {
+  const hasAny = conn.vaultActive > 0 || conn.envConfigured
+  return (
+    <div className="admin-card flex items-start justify-between gap-3 p-3">
+      <div className="min-w-0 flex-1">
+        <div className="flex items-center gap-2">
+          <p className="text-xs font-medium text-slate-100">{conn.label}</p>
+          <StatusPill configured={hasAny} />
+        </div>
+        {conn.envHint ? (
+          <p className="admin-mono mt-1 truncate text-[10px] text-slate-500" title={conn.envHint}>
+            {conn.envHint}
+          </p>
+        ) : null}
+        <p className="admin-mono mt-1 text-[10px] text-slate-500">
+          Vault: {conn.vaultActive}/{conn.vaultCount} aktivnih
+          {conn.envConfigured ? ' · env postavljen' : ''}
+        </p>
+      </div>
+      <div className="flex shrink-0 flex-col items-end gap-1">
+        <AdminLink
+          href={`/admin/kljucevi?provider=${conn.provider}`}
+          className="admin-mono rounded-md border border-slate-700 bg-slate-900 px-2 py-1 text-[10px] text-slate-300 hover:border-indigo-500/40 hover:text-indigo-300"
+        >
+          {hasAny ? 'Uredi' : 'Dodaj'}
+        </AdminLink>
+        <a
+          href={conn.docsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-slate-500 hover:text-indigo-300"
+          title="Docs / dashboard"
+        >
+          <ExternalLink className="h-3 w-3" />
+        </a>
+      </div>
     </div>
   )
 }
@@ -219,6 +268,48 @@ function OverviewTab({
         <div className="grid gap-2 lg:grid-cols-3">
           {overview.env.monitoring.map((env) => (
             <EnvRow key={env.key} env={env} />
+          ))}
+        </div>
+      </section>
+
+      <section className="space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 className="admin-mono flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-400">
+            <Users className="h-3.5 w-3.5 text-indigo-400" />
+            Društvene mreže
+          </h2>
+          <AdminLink
+            href="/admin/kljucevi"
+            className="inline-flex items-center gap-1 text-[11px] text-indigo-400 hover:text-indigo-300"
+          >
+            <KeyRound className="h-3 w-3" />
+            Otvori vault
+          </AdminLink>
+        </div>
+        <p className="text-[11px] text-slate-500">
+          Poveži YouTube, Instagram, Facebook, TikTok i sl. Ključevi žive u{' '}
+          <span className="text-emerald-400">API ključevi</span> (AES-256-GCM) — koriste ih AI content studio i
+          budući cross-posteri.
+        </p>
+        <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-3">
+          {overview.connections.social.map((conn) => (
+            <ConnectionCard key={conn.provider} conn={conn} />
+          ))}
+        </div>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="admin-mono flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-400">
+          <Newspaper className="h-3.5 w-3.5 text-indigo-400" />
+          Publikacijske platforme
+        </h2>
+        <p className="text-[11px] text-slate-500">
+          Medium, Substack, Blogger, Tumblr, About.me, Payhip — pripremljeni provideri za article rewriter u{' '}
+          <span className="text-indigo-300">AI content studio</span> tabu.
+        </p>
+        <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-3">
+          {overview.connections.publishing.map((conn) => (
+            <ConnectionCard key={conn.provider} conn={conn} />
           ))}
         </div>
       </section>

@@ -31,8 +31,10 @@ export default async function AdminSeoPage(props: Props) {
   const { locale } = await props.params
   setRequestLocale(locale)
 
-  const overview = getSeoOverview()
-  const liveSitemap = await getLiveSitemapStats()
+  const [overview, liveSitemap] = await Promise.all([
+    getSeoOverview(),
+    getLiveSitemapStats(),
+  ])
 
   return (
     <AdminPageShell

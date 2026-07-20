@@ -8,6 +8,12 @@ import {
 } from '@/lib/config/site'
 import { locales } from '@/i18n'
 import { ogImage, siteUrl } from '@/lib/config/seo'
+import {
+  ADMIN_API_KEY_PROVIDERS,
+  type AdminApiKeyProviderId,
+  type AdminApiKeyProviderMeta,
+} from '@/lib/config/api-key-providers'
+import { listAdminApiKeys } from '@/lib/queries/admin/api-keys'
 
 export type SeoEnvStatus = {
   key: string
@@ -48,6 +54,20 @@ export type SeoOverview = {
     ogWidth: number
     ogHeight: number
   }
+  connections: {
+    social: SocialPublishingConnection[]
+    publishing: SocialPublishingConnection[]
+  }
+}
+
+export type SocialPublishingConnection = {
+  provider: AdminApiKeyProviderId
+  label: string
+  docsUrl: string
+  envHint?: string
+  vaultCount: number
+  vaultActive: number
+  envConfigured: boolean
 }
 
 const HR_TITLE =
@@ -59,7 +79,30 @@ function isNonEmpty(value: string | undefined | null): boolean {
   return Boolean(value && value.trim().length > 0)
 }
 
-export function getSeoOverview(): SeoOverview {
+function buildConnections(
+  category: 'social' | 'publishing',
+  vaultByProvider: Map<string, { total: number; active: number }>,
+): SocialPublishingConnection[] {
+  return ADMIN_API_KEY_PROVIDERS.filter(
+    (p: AdminApiKeyProviderMeta) => p.category === category,
+  ).map((p) => {
+    const stats = vaultByProvider.get(p.id) ?? { total: 0, active: 0 }
+    const envConfigured = Boolean(
+      p.envHint && process.env[p.envHint]?.trim(),
+    )
+    return {
+      provider: p.id,
+      label: p.label,
+      docsUrl: p.docsUrl,
+      envHint: p.envHint,
+      vaultCount: stats.total,
+      vaultActive: stats.active,
+      envConfigured,
+    }
+  })
+}
+
+export async function getSeoOverview(): Promise<SeoOverview> {
   const gaEnv = process.env.NEXT_PUBLIC_GA_ID?.trim()
   const plausibleEnv = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN?.trim()
   const gscEnv = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?.trim()
@@ -209,6 +252,19 @@ export function getSeoOverview(): SeoOverview {
     { path: '/kontakt', label: 'Kontakt', description: 'ContactPage + ContactPoint' },
   ]
 
+  const vaultByProvider = new Map<string, { total: number; active: number }>()
+  try {
+    const keys = await listAdminApiKeys()
+    for (const key of keys) {
+      const bucket = vaultByProvider.get(key.provider) ?? { total: 0, active: 0 }
+      bucket.total += 1
+      if (key.isActive) bucket.active += 1
+      vaultByProvider.set(key.provider, bucket)
+    }
+  } catch {
+    // vault unavailable — connections show env-only status
+  }
+
   return {
     siteUrl,
     ogImageUrl: ogImage.url,
@@ -223,6 +279,10 @@ export function getSeoOverview(): SeoOverview {
       description: HR_DESC,
       ogWidth: ogImage.width,
       ogHeight: ogImage.height,
+    },
+    connections: {
+      social: buildConnections('social', vaultByProvider),
+      publishing: buildConnections('publishing', vaultByProvider),
     },
   }
 }

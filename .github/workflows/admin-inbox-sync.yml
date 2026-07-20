@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Sync admin mailboxes via production API
         run: |
-          response=$(curl -sS -w "\n%{http_code}" \
+          response=$(curl -sSL -w "\n%{http_code}" \
             -H "Authorization: Bearer ${CRON_SECRET}" \
             "${SITE_URL}/api/cron/sync-inbox")
           body=$(echo "$response" | head -n -1)
@@ -29,5 +29,5 @@ jobs:
             exit 1
           fi
         env:
-          SITE_URL: https://protosweb.eu
+          SITE_URL: https://www.protosweb.eu
           CRON_SECRET: ${{ secrets.CRON_SECRET }}

@@ -31,7 +31,12 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
 
-  const provider: AiProvider = body.provider === 'gemini' ? 'gemini' : 'deepseek'
+  const provider: AiProvider =
+    body.provider === 'gemini'
+      ? 'gemini'
+      : body.provider === 'gpt-oss'
+        ? 'gpt-oss'
+        : 'deepseek'
 
   let memoryContext: string | undefined
   if (body.useMemory) {

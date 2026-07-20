@@ -44,6 +44,13 @@ const recommended = [
   { ok: Boolean(env.SUPABASE_SERVICE_ROLE_KEY), label: 'SUPABASE_SERVICE_ROLE_KEY (admin writes)' },
   { ok: Boolean(env.ADMIN_SECRET), label: 'ADMIN_SECRET (/admin login)' },
   { ok: Boolean(env.ADMIN_KEYS_ENCRYPTION_KEY), label: 'ADMIN_KEYS_ENCRYPTION_KEY (/admin/kljucevi vault)' },
+  {
+    ok:
+      Boolean(env.GPT_OSS_API_KEY) ||
+      Boolean(env.DEEPSEEK_API_KEY) ||
+      Boolean(env.GEMINI_API_KEY),
+    label: 'GPT_OSS_API_KEY | DEEPSEEK_API_KEY | GEMINI_API_KEY (at least one for AI cascade)',
+  },
 ]
 
 let failed = false

@@ -180,9 +180,13 @@ export default async function AdminPage(props: Props) {
                     : undefined
                 const description =
                   item.id === 'ai'
-                    ? aiStatus.deepseek
-                      ? 'DeepSeek spreman'
-                      : 'Dodaj DEEPSEEK_API_KEY'
+                    ? aiStatus.gptOss
+                      ? 'GPT-OSS-120B spreman'
+                      : aiStatus.deepseek
+                        ? 'DeepSeek spreman'
+                        : aiStatus.gemini
+                          ? 'Gemini spreman'
+                          : 'Dodaj GPT_OSS_API_KEY, DEEPSEEK_API_KEY ili GEMINI_API_KEY'
                     : item.description
                 return (
                   <AdminHubCard

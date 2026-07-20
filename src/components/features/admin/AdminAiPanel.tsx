@@ -3,7 +3,19 @@
 import { useEffect, useState } from 'react'
 import { Clock, Loader2 } from 'lucide-react'
 
-type Provider = 'deepseek' | 'gemini'
+type Provider = 'gpt-oss' | 'deepseek' | 'gemini'
+
+const PROVIDER_LABELS: Record<Provider, string> = {
+  'gpt-oss': 'GPT-OSS-120B',
+  deepseek: 'DeepSeek',
+  gemini: 'Gemini',
+}
+
+const PROVIDER_ENV: Record<Provider, string> = {
+  'gpt-oss': 'GPT_OSS_API_KEY',
+  deepseek: 'DEEPSEEK_API_KEY',
+  gemini: 'GEMINI_API_KEY',
+}
 
 type ChatMessage = {
   role: 'user' | 'assistant'
@@ -23,12 +35,21 @@ const TASK_PRESETS = [
 ] as const
 
 type Props = {
+  gptOssReady: boolean
   deepseekReady: boolean
   geminiReady: boolean
 }
 
-export default function AdminAiPanel({ deepseekReady, geminiReady }: Props) {
-  const [provider, setProvider] = useState<Provider>('deepseek')
+export default function AdminAiPanel({ gptOssReady, deepseekReady, geminiReady }: Props) {
+  const readiness: Record<Provider, boolean> = {
+    'gpt-oss': gptOssReady,
+    deepseek: deepseekReady,
+    gemini: geminiReady,
+  }
+  const initialProvider: Provider =
+    (['gpt-oss', 'deepseek', 'gemini'] as const).find((p) => readiness[p]) ?? 'gpt-oss'
+
+  const [provider, setProvider] = useState<Provider>(initialProvider)
   const [useMemory, setUseMemory] = useState(true)
   const [context, setContext] = useState('')
   const [messages, setMessages] = useState<ChatMessage[]>([])
@@ -36,15 +57,11 @@ export default function AdminAiPanel({ deepseekReady, geminiReady }: Props) {
   const [error, setError] = useState('')
   const [queue, setQueue] = useState<string[]>([])
 
-  const providerReady = provider === 'deepseek' ? deepseekReady : geminiReady
+  const providerReady = readiness[provider]
 
   const send = async (taskOverride?: string, queuedContent?: string) => {
     if (!providerReady) {
-      setError(
-        provider === 'deepseek'
-          ? 'Dodaj DEEPSEEK_API_KEY na Vercel.'
-          : 'Dodaj GEMINI_API_KEY na Vercel.',
-      )
+      setError(`Dodaj ${PROVIDER_ENV[provider]} na Vercel.`)
       return
     }
 
@@ -121,8 +138,8 @@ export default function AdminAiPanel({ deepseekReady, geminiReady }: Props) {
     <div className="grid gap-6 lg:grid-cols-[1fr_280px]">
       <div className="space-y-4">
         <div className="flex flex-wrap items-center gap-2">
-          {(['deepseek', 'gemini'] as const).map((p) => {
-            const ready = p === 'deepseek' ? deepseekReady : geminiReady
+          {(['gpt-oss', 'deepseek', 'gemini'] as const).map((p) => {
+            const ready = readiness[p]
             return (
               <button
                 key={p}
@@ -134,7 +151,7 @@ export default function AdminAiPanel({ deepseekReady, geminiReady }: Props) {
                     : 'border-slate-700 text-slate-400 hover:border-slate-600'
                 }`}
               >
-                {p}
+                {PROVIDER_LABELS[p]}
                 {!ready ? ' · nema ključa' : ''}
               </button>
             )
@@ -230,8 +247,11 @@ export default function AdminAiPanel({ deepseekReady, geminiReady }: Props) {
           </button>
         ))}
         <p className="text-xs text-slate-400 leading-relaxed">
-          Vercel env: <code className="text-cyan-300">DEEPSEEK_API_KEY</code> (aktivan), opcionalno{' '}
-          <code className="text-cyan-300">GEMINI_API_KEY</code>
+          Vercel env cascade:{' '}
+          <code className="text-cyan-300">GPT_OSS_API_KEY</code> →{' '}
+          <code className="text-cyan-300">DEEPSEEK_API_KEY</code> →{' '}
+          <code className="text-cyan-300">GEMINI_API_KEY</code>. Prvi konfigurirani se koristi;
+          ostali su failover.
         </p>
       </aside>
     </div>

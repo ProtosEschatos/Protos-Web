@@ -34,15 +34,20 @@ export default async function AdminAiPage(props: Props) {
   return (
     <AdminPageShell
       title="AI asistent"
-      description="DeepSeek (i opcionalno Gemini) za sadržaj, planove i pomoć — ključevi samo na Vercelu."
+      description="GPT-OSS-120B (Groq/Cerebras/OpenRouter/self-host) → DeepSeek → Gemini cascade. Prvi konfigurirani se koristi; ostali su failover. Ključevi žive samo na Vercelu."
       actions={
         <div className="flex flex-wrap gap-2">
+          <ProviderPill label="GPT-OSS-120B" ready={status.gptOss} />
           <ProviderPill label="DeepSeek" ready={status.deepseek} />
           <ProviderPill label="Gemini" ready={status.gemini} />
         </div>
       }
     >
-      <AdminAiPanel deepseekReady={status.deepseek} geminiReady={status.gemini} />
+      <AdminAiPanel
+        gptOssReady={status.gptOss}
+        deepseekReady={status.deepseek}
+        geminiReady={status.gemini}
+      />
     </AdminPageShell>
   )
 }

@@ -11,9 +11,7 @@ import {
   type SeoBriefResponse,
   type SocialPlatform,
 } from '@/lib/schemas/seo-content'
-
-const DEEPSEEK_URL = 'https://api.deepseek.com/chat/completions'
-const GEMINI_BASE = 'https://generativelanguage.googleapis.com/v1beta/models'
+import { callAiJsonCascade, type AiProviderId } from '@/lib/ai/providers'
 
 const SOCIAL_META: Record<SocialPlatform, { label: string; length: string; style: string }> = {
   youtube: {
@@ -171,89 +169,12 @@ function buildRewritePrompt(input: ArticleRewriteRequest): string {
     .join('\n')
 }
 
-type AiCallResult = { content: string; provider: 'deepseek' | 'gemini' }
-
-async function callAiJson(prompt: string, maxTokens: number): Promise<AiCallResult> {
-  const hasDeepSeek = Boolean(process.env.DEEPSEEK_API_KEY?.trim())
-  const hasGemini = Boolean(process.env.GEMINI_API_KEY?.trim())
-  if (!hasDeepSeek && !hasGemini) {
-    throw new Error('Nema AI providera. Postavi DEEPSEEK_API_KEY ili GEMINI_API_KEY na Vercelu.')
-  }
-
-  let lastErr = ''
-  if (hasDeepSeek) {
-    try {
-      const res = await fetch(DEEPSEEK_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${process.env.DEEPSEEK_API_KEY!.trim()}`,
-        },
-        body: JSON.stringify({
-          model: 'deepseek-v4-pro',
-          messages: [
-            { role: 'system', content: 'Odgovaraj ISKLJUČIVO validnim JSON-om, bez markdown fenceova.' },
-            { role: 'user', content: prompt },
-          ],
-          temperature: 0.6,
-          max_tokens: maxTokens,
-          response_format: { type: 'json_object' },
-        }),
-        signal: AbortSignal.timeout(45_000),
-      })
-      if (res.ok) {
-        const data = (await res.json()) as { choices?: Array<{ message?: { content?: string } }> }
-        const content = data.choices?.[0]?.message?.content?.trim()
-        if (content) return { content, provider: 'deepseek' }
-        lastErr = 'DeepSeek: prazan odgovor'
-      } else {
-        lastErr = `DeepSeek ${res.status}: ${(await res.text().catch(() => '')).slice(0, 200)}`
-      }
-    } catch (err) {
-      lastErr = (err as Error).message
-    }
-  }
-
-  if (hasGemini) {
-    try {
-      const url = `${GEMINI_BASE}/gemini-2.0-flash:generateContent?key=${encodeURIComponent(process.env.GEMINI_API_KEY!.trim())}`
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ role: 'user', parts: [{ text: prompt }] }],
-          generationConfig: {
-            temperature: 0.6,
-            maxOutputTokens: maxTokens,
-            responseMimeType: 'application/json',
-          },
-        }),
-        signal: AbortSignal.timeout(45_000),
-      })
-      if (res.ok) {
-        const data = (await res.json()) as {
-          candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>
-        }
-        const content = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim()
-        if (content) return { content, provider: 'gemini' }
-        lastErr = 'Gemini: prazan odgovor'
-      } else {
-        lastErr = `Gemini ${res.status}: ${(await res.text().catch(() => '')).slice(0, 200)}`
-      }
-    } catch (err) {
-      lastErr = (err as Error).message
-    }
-  }
-
-  throw new Error(lastErr || 'AI provider nije uspio')
-}
-
 function stripFences(text: string): string {
   return text.replace(/^```(?:json)?\s*/i, '').replace(/```\s*$/i, '').trim()
 }
 
 export type SeoBriefResult =
-  | { ok: true; brief: SeoBriefResponse; provider: 'deepseek' | 'gemini' }
+  | { ok: true; brief: SeoBriefResponse; provider: AiProviderId }
   | { ok: false; error: string }
 
 export async function generateSeoBrief(raw: unknown): Promise<SeoBriefResult> {
@@ -263,7 +184,7 @@ export async function generateSeoBrief(raw: unknown): Promise<SeoBriefResult> {
   }
 
   try {
-    const { content, provider } = await callAiJson(buildSeoBriefPrompt(parsed.data), 2000)
+    const { content, provider } = await callAiJsonCascade(buildSeoBriefPrompt(parsed.data), 2000)
     const json = JSON.parse(stripFences(content))
     const validated = seoBriefResponse.safeParse(json)
     if (!validated.success) {
@@ -279,7 +200,7 @@ export async function generateSeoBrief(raw: unknown): Promise<SeoBriefResult> {
 }
 
 export type ArticleRewriteResult =
-  | { ok: true; response: ArticleRewriteResponse; provider: 'deepseek' | 'gemini' }
+  | { ok: true; response: ArticleRewriteResponse; provider: AiProviderId }
   | { ok: false; error: string }
 
 export async function rewriteArticle(raw: unknown): Promise<ArticleRewriteResult> {
@@ -289,7 +210,7 @@ export async function rewriteArticle(raw: unknown): Promise<ArticleRewriteResult
   }
 
   try {
-    const { content, provider } = await callAiJson(buildRewritePrompt(parsed.data), 6000)
+    const { content, provider } = await callAiJsonCascade(buildRewritePrompt(parsed.data), 6000)
     const json = JSON.parse(stripFences(content))
     const validated = articleRewriteResponse.safeParse(json)
     if (!validated.success) {

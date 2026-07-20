@@ -1,5 +1,6 @@
 import type { LucideIcon } from 'lucide-react'
 import {
+  Blocks,
   BookOpen,
   Bot,
   FileText,
@@ -25,6 +26,7 @@ export const ADMIN_NAV_ICONS: Record<string, LucideIcon> = {
   blog: FileText,
   contact: Inbox,
   donations: Heart,
+  configurator: Blocks,
   subscribers: Mail,
   memory: BookOpen,
   ai: Bot,

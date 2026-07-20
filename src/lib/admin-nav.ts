@@ -85,6 +85,18 @@ export const ADMIN_NAV_SECTIONS: AdminNavSection[] = [
     ],
   },
   {
+    id: 'studio',
+    label: 'Studio',
+    items: [
+      {
+        id: 'configurator',
+        href: '/admin/konfigurator',
+        label: '3D Konfigurator',
+        description: 'Live scena + Sketchfab pretraga (asset pipeline)',
+      },
+    ],
+  },
+  {
     id: 'system',
     label: 'Sustav',
     items: [

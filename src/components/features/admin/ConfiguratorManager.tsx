@@ -9,6 +9,7 @@ import ConfiguratorControls from '@/components/features/admin/ConfiguratorContro
 import SketchfabBrowser from '@/components/features/admin/SketchfabBrowser'
 import PolyPizzaBrowser from '@/components/features/admin/PolyPizzaBrowser'
 import SceneChatPanel from '@/components/features/admin/SceneChatPanel'
+import ClientErrorBoundary from '@/components/ui/ClientErrorBoundary'
 import { useSceneStore } from '@/lib/stores/scene-store'
 import { toast } from '@/lib/stores/toast-store'
 
@@ -34,6 +35,14 @@ const TABS: { id: ImportTab; label: string; Icon: LucideIcon }[] = [
 ]
 
 export default function ConfiguratorManager() {
+  return (
+    <ClientErrorBoundary label="3D Konfigurator">
+      <ConfiguratorManagerInner />
+    </ClientErrorBoundary>
+  )
+}
+
+function ConfiguratorManagerInner() {
   const [activeTab, setActiveTab] = useState<ImportTab>('assets')
   const [urlInput, setUrlInput] = useState('')
   const [assetRefreshKey, setAssetRefreshKey] = useState(0)
@@ -67,7 +76,28 @@ export default function ConfiguratorManager() {
       <div className="space-y-4">
         <div className="admin-card relative overflow-hidden">
           <div className="aspect-[4/3] min-h-[380px] w-full lg:aspect-auto lg:h-[62vh]">
-            <ConfiguratorScene />
+            <ClientErrorBoundary
+              label="3D scena"
+              fallback={({ error, reset }) => (
+                <div className="flex h-full w-full flex-col items-center justify-center gap-2 p-6 text-center">
+                  <p className="admin-mono text-[11px] text-amber-300">
+                    3D scena nije mogla biti prikazana.
+                  </p>
+                  <p className="admin-mono max-w-md text-[10px] text-slate-500 break-words">
+                    {error.message || 'WebGL/R3F greška'}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={reset}
+                    className="rounded-md border border-slate-700 bg-slate-900 px-3 py-1.5 text-[11px] text-slate-200 hover:border-slate-500"
+                  >
+                    Pokušaj ponovo mount-ati scenu
+                  </button>
+                </div>
+              )}
+            >
+              <ConfiguratorScene />
+            </ClientErrorBoundary>
           </div>
           {isModelLoaded ? (
             <div className="pointer-events-auto absolute right-3 top-3 flex items-center gap-1 rounded-md border border-slate-800 bg-slate-950/85 p-1 admin-mono text-[10px] text-slate-400 backdrop-blur">
@@ -89,13 +119,17 @@ export default function ConfiguratorManager() {
           </div>
         </div>
 
-        <SceneChatPanel />
+        <ClientErrorBoundary label="Scene AI chat">
+          <SceneChatPanel />
+        </ClientErrorBoundary>
       </div>
 
       {/* Right: controls + import */}
       <aside className="space-y-4">
         <div className="admin-card p-4">
-          <ConfiguratorControls />
+          <ClientErrorBoundary label="Kontrole scene">
+            <ConfiguratorControls />
+          </ClientErrorBoundary>
         </div>
 
         <div className="admin-card overflow-hidden">
@@ -119,16 +153,26 @@ export default function ConfiguratorManager() {
 
           <div className="p-4">
             {activeTab === 'assets' ? (
-              <div className="space-y-3">
-                <AssetUploader
-                  onUploaded={() => setAssetRefreshKey((n) => n + 1)}
-                  allowedCategories={['image', 'video', 'model_glb', 'model_gltf', 'texture', 'audio']}
-                />
-                <AssetLibrary refreshKey={assetRefreshKey} />
-              </div>
+              <ClientErrorBoundary label="Assets tab">
+                <div className="space-y-3">
+                  <AssetUploader
+                    onUploaded={() => setAssetRefreshKey((n) => n + 1)}
+                    allowedCategories={['image', 'video', 'model_glb', 'model_gltf', 'texture', 'audio']}
+                  />
+                  <AssetLibrary refreshKey={assetRefreshKey} />
+                </div>
+              </ClientErrorBoundary>
             ) : null}
-            {activeTab === 'poly-pizza' ? <PolyPizzaBrowser /> : null}
-            {activeTab === 'sketchfab' ? <SketchfabBrowser /> : null}
+            {activeTab === 'poly-pizza' ? (
+              <ClientErrorBoundary label="Poly.Pizza pretraga">
+                <PolyPizzaBrowser />
+              </ClientErrorBoundary>
+            ) : null}
+            {activeTab === 'sketchfab' ? (
+              <ClientErrorBoundary label="Sketchfab pretraga">
+                <SketchfabBrowser />
+              </ClientErrorBoundary>
+            ) : null}
             {activeTab === 'url' ? (
               <form onSubmit={handleLoadUrl} className="space-y-2">
                 <label className="admin-mono flex items-center gap-2 text-[10px] font-semibold uppercase tracking-wider text-slate-500">

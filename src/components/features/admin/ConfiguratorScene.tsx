@@ -130,10 +130,14 @@ export default function ConfiguratorScene() {
         shadow-mapSize-height={2048}
       />
 
-      {/* Primitive renders unconditionally — never blocked by HDRI load */}
-      <Suspense fallback={null}>
-        <Primitive />
-      </Suspense>
+      {/* Primitive renders unconditionally — never blocked by HDRI load.
+          Wrapped in its own boundary so a bad geometry/material can't take
+          the whole Canvas down (previously only LoadedGltf was protected). */}
+      <SceneErrorBoundary fallback={null}>
+        <Suspense fallback={null}>
+          <Primitive />
+        </Suspense>
+      </SceneErrorBoundary>
 
       {/* Environment in its own Suspense — if HDRI CDN fails, scene stays visible */}
       <SceneErrorBoundary fallback={null}>
@@ -142,14 +146,18 @@ export default function ConfiguratorScene() {
         </Suspense>
       </SceneErrorBoundary>
 
-      <ContactShadows position={[0, -1, 0]} opacity={0.4} scale={8} blur={2} />
-      <OrbitControls
-        autoRotate={autoRotate}
-        autoRotateSpeed={0.6}
-        enablePan={false}
-        maxDistance={12}
-        minDistance={2}
-      />
+      <SceneErrorBoundary fallback={null}>
+        <ContactShadows position={[0, -1, 0]} opacity={0.4} scale={8} blur={2} />
+      </SceneErrorBoundary>
+      <SceneErrorBoundary fallback={null}>
+        <OrbitControls
+          autoRotate={autoRotate}
+          autoRotateSpeed={0.6}
+          enablePan={false}
+          maxDistance={12}
+          minDistance={2}
+        />
+      </SceneErrorBoundary>
     </Canvas>
   )
 }

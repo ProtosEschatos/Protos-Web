@@ -23,7 +23,7 @@
   "dependencies": {
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.1",
-    "@supabase/supabase-js": "^2.110.2",
+    "@supabase/supabase-js": "^2.110.7",
     "@vercel/speed-insights": "^2.0.0",
     "framer-motion": "^12.42.2",
     "imapflow": "^1.0.184",

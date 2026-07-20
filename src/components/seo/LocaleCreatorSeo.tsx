@@ -1,5 +1,6 @@
 import { buildCreatorSeoGraph, CREATOR_ME_LINKS } from '@/lib/config/creator-seo'
 import { LEGAL_COLLABORATOR, LEGAL_OWNER } from '@/lib/config/site'
+import { serializeJsonLd } from '@/lib/seo/json-ld'
 
 type Props = { locale: string }
 
@@ -21,7 +22,7 @@ export default function LocaleCreatorSeo({ locale }: Props) {
       <meta name="designer" content={LEGAL_COLLABORATOR} />
       <meta name="creator" content={LEGAL_OWNER} />
       <meta name="publisher" content="Protos Web" />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(graph) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(graph) }} />
     </>
   )
 }

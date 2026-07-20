@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { buildPageMetadata } from '@/lib/config/seo'
 import { buildAboutPageJsonLd } from '@/lib/config/creator-seo'
 import { LOCALIZED_PATHS, aboutPathForLocale } from '@/lib/routes/localized-paths'
+import { serializeJsonLd } from '@/lib/seo/json-ld'
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -48,7 +49,7 @@ export default async function AboutLayout(props: Props) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
       />
       {children}
     </>

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { faqPageJsonLd, buildLocaleUrl } from '@/lib/config/seo'
+import { serializeJsonLd } from '@/lib/seo/json-ld'
 
 type FaqItem = { question: string; answer: string }
 
@@ -20,7 +21,7 @@ export default function FaqSection({ title, subtitle, items, locale, pagePath = 
 
   return (
     <section className="py-16 border-t border-white/[0.06]" aria-labelledby="faq-heading">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
       <div className="max-w-[800px] mx-auto px-6">
         <h2 id="faq-heading" className="text-2xl font-extrabold text-center mb-3">
           {title}

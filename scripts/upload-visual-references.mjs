@@ -22,7 +22,7 @@
  * service-role key does not fail CI; the row for that file is skipped and
  * can be retried after the next key rotation.
  */
-import { readFileSync, existsSync, statSync } from 'node:fs'
+import { readFileSync, existsSync } from 'node:fs'
 import { readdir } from 'node:fs/promises'
 import { extname, join, resolve } from 'node:path'
 import { homedir } from 'node:os'

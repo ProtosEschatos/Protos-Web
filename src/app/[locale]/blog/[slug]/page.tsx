@@ -6,6 +6,7 @@ import BlogPostContent from '@/components/features/blog/BlogPostContent'
 import { Link } from '@/navigation'
 import { ArrowLeft, Calendar } from 'lucide-react'
 import { buildBlogPostMetadata, blogPostingJsonLd, normalizeAuthorSlug } from '@/lib/config/seo'
+import { serializeJsonLd } from '@/lib/seo/json-ld'
 
 type Props = { params: Promise<{ locale: string; slug: string }> }
 
@@ -78,7 +79,7 @@ export default async function BlogPostPage(props: Props) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
       />
       <article className="pt-36 pb-24">
         <div className="max-w-[800px] mx-auto px-6">

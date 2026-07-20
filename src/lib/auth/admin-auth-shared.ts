@@ -1,3 +1,8 @@
+import {
+  isAdminPath as sharedIsAdminPath,
+  isAdminLoginPath as sharedIsAdminLoginPath,
+} from '@/lib/auth/admin-paths'
+
 export const ADMIN_COOKIE = 'protos-admin-session'
 export const SESSION_SALT = 'protos-admin-v1'
 
@@ -9,19 +14,8 @@ export const adminCookieOptions = {
   maxAge: 60 * 60 * 24 * 7,
 }
 
-export function isAdminPath(pathname: string): boolean {
-  const path = pathname.split('?')[0]
-  return (
-    path === '/admin' ||
-    path.startsWith('/admin/') ||
-    /^\/(en|de|it|es)\/admin(\/|$)/.test(path)
-  )
-}
-
-export function isAdminLoginPath(pathname: string): boolean {
-  const path = pathname.split('?')[0]
-  return path === '/admin/login' || /^\/(en|de|it|es)\/admin\/login$/.test(path)
-}
+export const isAdminPath = sharedIsAdminPath
+export const isAdminLoginPath = sharedIsAdminLoginPath
 
 async function hmacHex(secret: string, message: string): Promise<string> {
   const enc = new TextEncoder()

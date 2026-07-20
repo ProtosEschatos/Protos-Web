@@ -116,7 +116,7 @@ export const ADMIN_NAV_SECTIONS: AdminNavSection[] = [
         id: 'ai',
         href: '/admin/ai',
         label: 'AI asistent',
-        description: 'DeepSeek / Gemini chat',
+        description: 'GPT-OSS-120B → DeepSeek → Gemini cascade',
       },
       {
         id: 'keys',

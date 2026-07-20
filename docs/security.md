@@ -14,8 +14,11 @@ Practical security map for `protosweb.eu`. No system is immune to every attack; 
 | `SUPABASE_SERVICE_ROLE_KEY` | **Vercel** (server) + **GitHub** | Server actions / CI only — never expose to browser |
 | `SUPABASE_ACCESS_TOKEN`, `SUPABASE_PROJECT_REF` | **GitHub** | Deploy edge functions on push |
 | `GITHUB_TOKEN` | **Vercel** (optional) | `/admin/memory` — **required** if Protos-Agent repo is private |
-| `DEEPSEEK_API_KEY` | **Vercel** | `/admin/ai` — DeepSeek chat (već postavljen) |
-| `GEMINI_API_KEY` | **Vercel** (optional) | `/admin/ai` — alternativni provider |
+| `GPT_OSS_API_KEY` | **Vercel** | AI cascade primary — Groq / Cerebras / OpenRouter / fal.ai / self-hosted GPT-OSS-120B |
+| `GPT_OSS_BASE_URL` | **Vercel** (optional) | Override base URL (default `https://api.groq.com/openai/v1`) |
+| `GPT_OSS_MODEL` | **Vercel** (optional) | Override model id (default `openai/gpt-oss-120b`) |
+| `DEEPSEEK_API_KEY` | **Vercel** (optional) | AI cascade fallback #1 |
+| `GEMINI_API_KEY` | **Vercel** (optional) | AI cascade fallback #2 |
 | `AGENT_MEMORY_REPO` | **Vercel** (optional) | Default `ProtosEschatos/Protos-Agent` — override repo for memory fetch |
 | `AGENT_MEMORY_LOCAL_PATH` | **Local dev only** | Filesystem fallback (default `~/Protos-Agent/memory` in development) |
 

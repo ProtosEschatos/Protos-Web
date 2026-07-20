@@ -65,8 +65,11 @@
 
 | Variable | Status |
 |----------|--------|
-| `DEEPSEEK_API_KEY` | ✅ (checkpoint) |
-| `GEMINI_API_KEY` | ✅ (checkpoint) |
+| `GPT_OSS_API_KEY` | AI cascade primary (Groq / Cerebras / OpenRouter / fal.ai / self-host) |
+| `GPT_OSS_BASE_URL` | Optional override — default `https://api.groq.com/openai/v1` |
+| `GPT_OSS_MODEL` | Optional override — default `openai/gpt-oss-120b` |
+| `DEEPSEEK_API_KEY` | AI cascade fallback #1 |
+| `GEMINI_API_KEY` | AI cascade fallback #2 |
 | `GITHUB_TOKEN` | ✅ za private Protos-Agent |
 | `AGENT_MEMORY_REPO` | default OK |
 

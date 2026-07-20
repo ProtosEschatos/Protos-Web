@@ -32,7 +32,7 @@
 | `/admin/blog`, `/admin/portfolio` | CMS CRUD |
 | `/admin/stranice/*` | Statičke stranice (i18n u `messages/`) |
 | `/admin/memory` | Protos-Agent memorija (GitHub raw, `GITHUB_TOKEN` ako je repo privatan) |
-| `/admin/ai` | DeepSeek (`DEEPSEEK_API_KEY`) |
+| `/admin/ai` | GPT-OSS-120B → DeepSeek → Gemini cascade (`GPT_OSS_API_KEY` → `DEEPSEEK_API_KEY` → `GEMINI_API_KEY`) |
 | `/admin/tools` | Linkovi na Vercel, DNS, platforme |
 
 ## IMAP env (Vercel Production)

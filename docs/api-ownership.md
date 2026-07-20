@@ -31,7 +31,7 @@ Stripe keys live on **Supabase Edge secrets**, not Vercel. Webhook handler: Edge
 | `POST /api/admin/login` | Next.js | nodejs | `ADMIN_SECRET` session cookie | — |
 | `GET /api/admin/session` | Next.js | nodejs | Session check | — |
 | `POST /api/admin/logout` | Next.js | nodejs | Clear session | — |
-| `POST /api/admin/ai` | Next.js | nodejs | Admin AI assistant | DeepSeek, Gemini |
+| `POST /api/admin/ai` | Next.js | nodejs | Admin AI assistant | GPT-OSS-120B (primary), DeepSeek, Gemini (cascade) |
 | `GET /api/admin/notifications/badge` | Next.js | nodejs | Admin badge count | Supabase service role |
 | `GET /api/blog` | Next.js | nodejs | Public blog JSON | Supabase anon |
 | `GET /api/og` | Next.js | **edge** | Dynamic OG images | — |

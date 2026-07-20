@@ -12,7 +12,6 @@
     "lint": "eslint .",
     "type-check": "tsc --noEmit",
     "check-env": "node scripts/check-env.mjs",
-    "translate:i18n": "node scripts/translate-i18n.mjs",
     "upload:showcase-assets": "node scripts/upload-showcase-assets.mjs",
     "upload:production-assets": "node scripts/upload-production-assets.mjs",
     "cleanup:showcase-assets": "node scripts/cleanup-showcase-assets.mjs",

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import * as Sentry from '@sentry/nextjs'
 
 /**
  * Locale-segment fallback for public routes when a page throws before
@@ -19,6 +20,10 @@ export default function LocaleError({
     if (typeof console !== 'undefined') {
       console.error('[locale/error]', error)
     }
+    Sentry.captureException(error, {
+      tags: { boundary: 'locale/error' },
+      extra: error.digest ? { digest: error.digest } : undefined,
+    })
   }, [error])
 
   return (

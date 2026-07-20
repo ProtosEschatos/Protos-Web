@@ -24,6 +24,7 @@
   "dependencies": {
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.1",
+    "@sentry/nextjs": "^10.67.0",
     "@supabase/supabase-js": "^2.110.2",
     "@vercel/speed-insights": "^2.0.0",
     "framer-motion": "^12.42.2",

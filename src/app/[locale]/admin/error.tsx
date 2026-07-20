@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import * as Sentry from '@sentry/nextjs'
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react'
 import AdminLink from '@/components/features/admin/AdminLink'
 
@@ -20,6 +21,10 @@ export default function AdminError({
     if (typeof console !== 'undefined') {
       console.error('[admin/error]', error)
     }
+    Sentry.captureException(error, {
+      tags: { boundary: 'admin/error' },
+      extra: error.digest ? { digest: error.digest } : undefined,
+    })
   }, [error])
 
   return (

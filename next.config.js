@@ -44,6 +44,15 @@ const nextConfig = {
 
   transpilePackages: ['three', '@react-three/fiber', '@react-three/drei'],
 
+  async redirects() {
+    return [
+      // Legacy Croatian slug — permanent 308 redirect after o-meni → o-nama rename.
+      // Google, bookmarks, and external social links keep working.
+      { source: '/o-meni', destination: '/o-nama', permanent: true },
+      { source: '/o-meni/:path*', destination: '/o-nama/:path*', permanent: true },
+    ]
+  },
+
   async headers() {
     return [
       {

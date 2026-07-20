@@ -52,7 +52,7 @@ type PageMetadataInput = {
   title: string
   description: string
   locale: string
-  /** Path without locale prefix, e.g. `/o-meni` or `` for home */
+  /** Path without locale prefix, e.g. `/o-nama` or `` for home */
   path?: string
   /** Per-locale paths for hreflang (e.g. about page) */
   pathsByLocale?: Partial<Record<Locale, string>>

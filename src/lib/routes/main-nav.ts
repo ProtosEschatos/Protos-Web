@@ -4,7 +4,7 @@ import { ABOUT_INTERNAL_HREF, aboutPathForLocale, isAboutPath } from '@/lib/rout
 /** Javni navbar — jedini izvor istine za Header, MobileMenu i page transitions. */
 export const MAIN_NAV_ITEMS = [
   { href: '/', key: 'home' },
-  { href: '/o-meni', key: 'about' },
+  { href: '/o-nama', key: 'about' },
   { href: '/proces', key: 'process' },
   { href: '/portfolio', key: 'portfolio' },
   { href: '/usluge', key: 'services' },

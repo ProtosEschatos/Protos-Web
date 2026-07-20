@@ -26,7 +26,7 @@
 
 ## Key pages
 - Home: https://protosweb.eu/
-- About us: https://protosweb.eu/o-meni
+- About us: https://protosweb.eu/o-nama
 - Services: https://protosweb.eu/usluge
 - Process: https://protosweb.eu/proces
 - Portfolio: https://protosweb.eu/portfolio

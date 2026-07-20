@@ -26,7 +26,7 @@ export default async function AdminDonationsPage(props: Props) {
   return (
     <AdminPageShell
       title="Donacije"
-      description="Stripe uplate s /o-meni — iznosi 1–1000 EUR."
+      description="Stripe uplate s /o-nama — iznosi 1–1000 EUR."
     >
       <div className="grid gap-4 sm:grid-cols-3 mb-8">
         <div className="rounded-2xl border border-white/10 bg-[var(--dark-card)]/55 p-5">

@@ -10,11 +10,12 @@ const MIN_EUR = 1
 const MAX_EUR = 1000
 
 const ABOUT_PATHS: Record<string, string> = {
-  hr: '/o-meni',
+  hr: '/o-nama',
   en: '/about',
   de: '/ueber-uns',
   it: '/chi-siamo',
   es: '/sobre-nosotros',
+  sr: '/o-nama',
 }
 
 function aboutPublicPath(locale: string): string {

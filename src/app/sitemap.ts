@@ -17,7 +17,7 @@ const pathConfigs: PathConfig[] = [
   { path: '', priority: 1, changeFrequency: 'weekly' },
   { path: '/usluge', priority: 0.9, changeFrequency: 'monthly' },
   { path: '/kontakt', priority: 0.9, changeFrequency: 'monthly' },
-  { path: '/o-meni', priority: 0.85, changeFrequency: 'monthly' },
+  { path: '/o-nama', priority: 0.85, changeFrequency: 'monthly' },
   { path: '/proces', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/portfolio', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/blog', priority: 0.75, changeFrequency: 'daily' },
@@ -31,7 +31,7 @@ function buildStaticEntries(now: Date): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = []
   for (const locale of locales) {
     for (const { path, priority, changeFrequency } of pathConfigs) {
-      const localizedPath = path === '/o-meni' ? aboutPathForLocale(locale) : path
+      const localizedPath = path === '/o-nama' ? aboutPathForLocale(locale) : path
       entries.push({
         url: buildLocaleUrl(locale, localizedPath),
         lastModified: now,

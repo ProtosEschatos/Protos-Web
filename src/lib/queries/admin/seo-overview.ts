@@ -245,7 +245,7 @@ export async function getSeoOverview(): Promise<SeoOverview> {
   const keyPages = [
     { path: '/', label: 'Naslovnica', description: 'Hero + hreflang za sve lokalih' },
     { path: '/usluge', label: 'Usluge', description: 'ProfessionalService schema' },
-    { path: '/o-meni', label: 'O nama', description: 'Person + Organization graph' },
+    { path: '/o-nama', label: 'O nama', description: 'Person + Organization graph' },
     { path: '/portfolio', label: 'Portfolio', description: 'CreativeWork item list' },
     { path: '/portfolio-showcase', label: '3D Showcase', description: 'WebApplication schema' },
     { path: '/blog', label: 'Blog index', description: 'Blog + ItemList schema' },

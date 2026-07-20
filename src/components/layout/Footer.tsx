@@ -12,7 +12,7 @@ import type { Locale } from '@/i18n'
 
 const footerLinks = [
   { href: '/', key: 'home' as const },
-  { href: '/o-meni', key: 'about' as const },
+  { href: '/o-nama', key: 'about' as const },
   { href: '/usluge', key: 'services' as const },
   { href: '/portfolio', key: 'portfolio' as const },
   { href: '/proces', key: 'process' as const },

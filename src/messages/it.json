@@ -296,7 +296,7 @@
   "transition": {
     "loading": "Caricamento...",
     "toHome": "Home",
-    "toAbout": "Chi sono",
+    "toAbout": "Chi siamo",
     "toProcess": "Processo",
     "toPortfolio": "Portfolio",
     "toServices": "Servizi",

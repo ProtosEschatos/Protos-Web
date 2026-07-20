@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   description:
     'Protos Web — web studio iz Zagreba. Izrada web stranica, UI/UX, SEO, e-trgovina i 3D WebGL showcase. Dario Imsirović i Martina Markulin. Hrvatska, Balkan i EU.',
   authors: [
-    { name: `${LEGAL_OWNER}, ${LEGAL_COLLABORATOR}`, url: `${SITE_URL}/o-meni` },
+    { name: `${LEGAL_OWNER}, ${LEGAL_COLLABORATOR}`, url: `${SITE_URL}/o-nama` },
   ],
   creator: `${LEGAL_OWNER} & ${LEGAL_COLLABORATOR} — Protos Web`,
   openGraph: {

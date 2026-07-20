@@ -22,12 +22,12 @@ export default async function AdminAboutPage(props: Props) {
       <AdminStaticPagePanel
         title="Stranica O nama"
         description="Tim (Dario & Martina), misija i hero tekst. CMS za statičke sekcije još nije odvojen — sadržaj je u React komponentama i i18n datotekama."
-        publicHref="/o-meni"
+        publicHref="/o-nama"
         sourceHint="Za izmjene teksta koristi messages/*.json (aboutPage) ili komponente u src/components/features/home/sections/."
         sourcePaths={[
           { label: 'Home sekcije', path: 'src/components/features/home/sections/' },
           { label: 'Prijevodi (hr)', path: 'src/messages/hr.json → aboutPage' },
-          { label: 'Javna ruta', path: 'src/app/[locale]/o-meni/page.tsx' },
+          { label: 'Javna ruta', path: 'src/app/[locale]/o-nama/page.tsx' },
         ]}
       />
     </AdminPageShell>

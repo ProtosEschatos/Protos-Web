@@ -1,6 +1,6 @@
 # Stripe donacije — Protos Web
 
-Varijabilni iznosi **1–1000 EUR** s `/o-meni` → Stripe Checkout → webhook → `donations` tablica → `/admin/donacije`.
+Varijabilni iznosi **1–1000 EUR** s `/o-nama` → Stripe Checkout → webhook → `donations` tablica → `/admin/donacije`.
 
 ## Što ti treba od Stripe (jednom)
 
@@ -48,7 +48,7 @@ Ili primijeni `20260711150000_donations_stripe_integration.sql` u SQL Editoru.
 
 ## Cilj donacije
 
-Jedan gumb na `/o-meni` → Stripe Checkout (cause slug `resources`).
+Jedan gumb na `/o-nama` → Stripe Checkout (cause slug `resources`).
 
 Ko-fi API key može stajati na Vercelu (`KO_FI_API_KEY`) za buduće admin sync — **nije** javni payment CTA.
 

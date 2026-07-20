@@ -35,9 +35,9 @@ export const ADMIN_NAV_SECTIONS: AdminNavSection[] = [
     items: [
       {
         id: 'about',
-        href: '/admin/stranice/o-meni',
+        href: '/admin/stranice/o-nama',
         label: 'O nama',
-        publicHref: '/o-meni',
+        publicHref: '/o-nama',
         description: 'Tim, misija i hero sekcija',
       },
       {
@@ -79,7 +79,7 @@ export const ADMIN_NAV_SECTIONS: AdminNavSection[] = [
         id: 'donations',
         href: '/admin/donacije',
         label: 'Donacije',
-        publicHref: '/o-meni',
+        publicHref: '/o-nama',
         description: 'Stripe uplate s O nama stranice',
       },
     ],

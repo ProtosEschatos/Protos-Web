@@ -113,6 +113,12 @@ export const ADMIN_NAV_SECTIONS: AdminNavSection[] = [
         description: 'Enkriptirani runtime vault (AES-256-GCM)',
       },
       {
+        id: 'automations',
+        href: '/admin/automations',
+        label: 'Automatizacije',
+        description: 'Zapier, n8n, Make, Slack — outbound webhookovi',
+      },
+      {
         id: 'tools',
         href: '/admin/tools',
         label: 'Alati',

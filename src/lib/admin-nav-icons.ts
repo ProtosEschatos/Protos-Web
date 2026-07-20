@@ -11,6 +11,7 @@ import {
   Mail,
   Sparkles,
   UserRound,
+  Webhook,
   Wrench,
   Workflow,
 } from 'lucide-react'
@@ -28,6 +29,7 @@ export const ADMIN_NAV_ICONS: Record<string, LucideIcon> = {
   memory: BookOpen,
   ai: Bot,
   keys: KeyRound,
+  automations: Webhook,
   tools: Wrench,
 }
 

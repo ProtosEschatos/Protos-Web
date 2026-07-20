@@ -8,6 +8,7 @@ import '@/styles/globals.css'
 import AppChrome from '@/components/layout/AppChrome'
 import LenisProvider from '@/components/providers/LenisProvider'
 import Analytics from '@/components/providers/Analytics'
+import ToastProvider from '@/components/ui/ToastProvider'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { locales, CYRILLIC_LOCALES, type Locale } from '@/i18n'
 import { ogImage, siteUrl } from '@/lib/config/seo'
@@ -130,6 +131,7 @@ export default async function LocaleLayout(
           <LenisProvider>
             <Analytics />
             <AppChrome>{children}</AppChrome>
+            <ToastProvider />
             <SpeedInsights />
           </LenisProvider>
         </NextIntlClientProvider>

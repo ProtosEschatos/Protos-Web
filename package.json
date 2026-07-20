@@ -42,7 +42,7 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@types/three": "^0.185.0",
-    "autoprefixer": "^10.4.20",
+    "autoprefixer": "^10.5.4",
     "eslint": "^9.39.2",
     "eslint-config-next": "^16.2.10",
     "postcss": "^8.4.47",

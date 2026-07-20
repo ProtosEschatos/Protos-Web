@@ -20,14 +20,26 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
-      - run: npm run check-env
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check
+        run: npm run type-check
+
+      # Env + build require Supabase secrets, which Dependabot PRs cannot access.
+      # Run them only on push to main (and human PRs, which do have secret access).
+      - name: Check env
+        if: github.actor != 'dependabot[bot]'
+        run: npm run check-env
         env:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-      - run: npm run lint
-      - run: npm run type-check
-      - run: npm run build
+
+      - name: Build
+        if: github.actor != 'dependabot[bot]'
+        run: npm run build
         env:
           NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || 'https://protosweb.eu' }}
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
@@ -37,6 +49,7 @@ jobs:
   supabase:
     name: Supabase
     runs-on: ubuntu-latest
+    if: github.actor != 'dependabot[bot]'
     steps:
       - name: Ping keep-alive edge function
         run: |
@@ -79,6 +92,7 @@ jobs:
   cloudflare:
     name: Cloudflare DNS
     runs-on: ubuntu-latest
+    if: github.actor != 'dependabot[bot]'
     steps:
       - name: Verify Cloudflare zone (read-only)
         run: |

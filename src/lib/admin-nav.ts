@@ -103,6 +103,18 @@ export const ADMIN_NAV_SECTIONS: AdminNavSection[] = [
     ],
   },
   {
+    id: 'reference',
+    label: 'Priručnik',
+    items: [
+      {
+        id: 'handbook',
+        href: '/admin/prirucnik',
+        label: 'Priručnik',
+        description: 'Stack, servisi, folder struktura, pravila',
+      },
+    ],
+  },
+  {
     id: 'system',
     label: 'Sustav',
     items: [

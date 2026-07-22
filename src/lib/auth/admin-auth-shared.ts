@@ -30,25 +30,40 @@ async function sha256Hex(input: string): Promise<string> {
  * Edge-compatible session verify.
  *
  * Runs in Next.js middleware / edge runtime — cannot import `node:crypto`
- * or `@supabase/supabase-js` directly (well, supabase-js does work on edge,
- * but a raw REST call keeps the bundle smaller and dependencies flatter).
+ * or `@supabase/supabase-js` directly.
  *
  * Verification flow:
  *   1. SHA-256(cookie value) via WebCrypto.
- *   2. `GET /rest/v1/admin_sessions?token_hash=eq.<hash>&select=...` with
- *      service_role key (edge env is server-only, never bundled to client).
- *   3. Row must exist, `revoked_at` must be null, `expires_at` must be in
- *      the future.
+ *   2. `POST /rest/v1/rpc/verify_admin_session_by_hash` with **anon key**
+ *      and body `{"t": tokenHash}`. The RPC is a `SECURITY DEFINER`
+ *      function on the DB side — it bypasses RLS for a single narrow
+ *      read (returning only revoked_at + expires_at, no enumeration).
+ *   3. Row must exist, `revoked_at` must be null, `expires_at` must be
+ *      in the future.
  *
- * Fails closed on any error (missing env, network, non-2xx, empty row).
+ * Why anon and not service_role:
+ *   - The Edge runtime env can go stale if service_role is ever rotated
+ *     in Supabase — one un-updated Vercel env variable locks the entire
+ *     admin panel behind a redirect loop. That happened around 2026-07-22
+ *     and blocked ALL admin routes for hours.
+ *   - Anon key is public / bundled to the client anyway (it's how the
+ *     browser talks to Supabase for public reads). No reduction in
+ *     confidentiality.
+ *   - The actual security invariant — "possess the token to auth" — is
+ *     enforced by the RPC (WHERE token_hash = <caller supplied>). No
+ *     enumeration is possible because the caller must already know the
+ *     exact sha256 hash.
+ *
+ * Fails closed on any error (missing env, network, non-2xx, empty row,
+ * timeout).
  */
 export async function verifyAdminSessionEdge(
   token: string | undefined | null,
 ): Promise<boolean> {
   if (!token) return false
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
-  if (!supabaseUrl || !serviceRoleKey) return false
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  if (!supabaseUrl || !anonKey) return false
 
   let tokenHash: string
   try {
@@ -67,14 +82,15 @@ export async function verifyAdminSessionEdge(
   const timeoutId = setTimeout(() => controller.abort(), 2000)
 
   try {
-    const url = `${supabaseUrl}/rest/v1/admin_sessions?token_hash=eq.${encodeURIComponent(tokenHash)}&select=revoked_at,expires_at&limit=1`
-    const res = await fetch(url, {
-      method: 'GET',
+    const res = await fetch(`${supabaseUrl}/rest/v1/rpc/verify_admin_session_by_hash`, {
+      method: 'POST',
       headers: {
-        apikey: serviceRoleKey,
-        Authorization: `Bearer ${serviceRoleKey}`,
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+        'Content-Type': 'application/json',
         Accept: 'application/json',
       },
+      body: JSON.stringify({ t: tokenHash }),
       // Edge/middleware — no cache; every request is authoritative.
       cache: 'no-store',
       signal: controller.signal,

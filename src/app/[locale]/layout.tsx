@@ -67,8 +67,15 @@ export const metadata: Metadata = {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || GOOGLE_SITE_VERIFICATION,
   },
   icons: {
-    icon: [{ url: '/favicon.svg?v=20260722b', type: 'image/svg+xml' }],
-    shortcut: '/favicon.svg?v=20260722b',
+    // Stable URLs (no query) — Google SERP caches favicons for days/weeks.
+    // PNG 48×48 is what Google Search prefers; SVG for modern browsers.
+    icon: [
+      { url: '/favicon-48.png', sizes: '48x48', type: 'image/png' },
+      { url: '/favicon-32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    shortcut: '/favicon-48.png',
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
   },
 }
 

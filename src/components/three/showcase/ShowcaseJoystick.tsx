@@ -79,7 +79,9 @@ export function ShowcaseJoystick({ touchInput }: ShowcaseJoystickProps) {
       style={{
         width: OUTER,
         height: OUTER,
-        left: 'max(0.75rem, env(safe-area-inset-left, 0px))',
+        // Center under astronaut view on mobile (was bottom-left).
+        left: '50%',
+        transform: 'translateX(-50%)',
         bottom: 'calc(env(safe-area-inset-bottom, 0px) + 1rem)',
       }}
       onPointerDown={onPointerDown}

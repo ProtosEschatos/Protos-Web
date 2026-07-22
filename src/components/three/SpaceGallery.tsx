@@ -307,8 +307,8 @@ export function SpaceGallery({ portfolioItems = [] }: SpaceGalleryProps) {
           <div
             className={`fixed z-40 rounded-2xl border px-5 py-5 text-center backdrop-blur-md transition-all duration-300 sm:px-8 sm:py-6 ${
               touchControlsEnabled
-                ? // Mobile: sit bottom-right clear of left joystick; desktop unchanged center
-                  'bottom-[calc(env(safe-area-inset-bottom)+1rem)] left-auto right-[max(0.75rem,env(safe-area-inset-right))] w-[min(22rem,calc(100%-8.5rem))] translate-x-0 md:bottom-32 md:left-1/2 md:right-auto md:w-[calc(100%-2rem)] md:max-w-md md:-translate-x-1/2'
+                ? // Mobile: centered above the bottom joystick; desktop unchanged
+                  'bottom-[calc(env(safe-area-inset-bottom)+9.5rem)] left-1/2 w-[calc(100%-2rem)] max-w-md -translate-x-1/2 md:bottom-32'
                 : 'bottom-[calc(env(safe-area-inset-bottom)+2rem)] left-1/2 w-[calc(100%-2rem)] max-w-md -translate-x-1/2 md:bottom-32'
             } ${
               nearestGift && phase === 'playing'

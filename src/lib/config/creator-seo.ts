@@ -208,7 +208,7 @@ export function buildCreatorSeoGraph(locale: string) {
         alternateName: ['Protos Web Mark23', 'protosweb', 'Protos'],
         legalName: LEGAL_BUSINESS_NAME,
         url: SITE_URL,
-        image: `${SITE_URL}/favicon.svg`,
+        image: `${SITE_URL}/favicon-48.png`,
         telephone: CONTACT_PHONE,
         email: CONTACT_EMAIL,
         taxID: LEGAL_OIB,

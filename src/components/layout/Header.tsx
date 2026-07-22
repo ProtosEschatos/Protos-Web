@@ -7,7 +7,7 @@ import TransitionLink from '@/components/navigation/TransitionLink'
 import { localeLabels, localeFlags, locales, type Locale } from '@/i18n'
 import MobileMenu from './MobileMenu'
 import { ChevronDown, Globe, MousePointer2 } from 'lucide-react'
-import ProtosLogo from '@/components/ui/ProtosLogo'
+import ImLogo from '@/components/ui/ImLogo'
 import { MAIN_NAV_ITEMS, isNavItemActive, navPublicHref } from '@/lib/routes/main-nav'
 
 export default function Header() {
@@ -59,7 +59,7 @@ export default function Header() {
         <div className="max-w-[1400px] mx-auto px-6">
           <div className="flex items-center justify-between h-20">
             <TransitionLink href="/" className="group/logo flex items-center gap-2.5 font-bold text-lg text-[var(--light)]">
-              <ProtosLogo size={36} className="group-hover/logo:drop-shadow-[0_0_10px_rgba(255,136,0,0.55)]" />
+              <ImLogo size={36} compact className="group-hover/logo:drop-shadow-[0_0_12px_rgba(92,200,255,0.55)]" />
               <span className="hidden sm:block transition-colors duration-300 group-hover/logo:text-[#ffb347]">
                 {th('brand')}
               </span>

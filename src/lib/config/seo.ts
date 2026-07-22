@@ -3,7 +3,6 @@ import { locales, defaultLocale, type Locale } from '@/i18n'
 import type { SeoPageKey } from '@/lib/config/seo-keywords'
 import { formatKeywords } from '@/lib/config/seo-keywords'
 import { buildBlogAuthorGraph } from '@/lib/config/creator-seo'
-import { siteFaviconUrl } from '@/lib/assets/storage-cdn'
 
 import { SITE_URL } from '@/lib/config/site'
 
@@ -165,7 +164,7 @@ export function blogPostingJsonLd(post: {
       name: 'Protos Web',
       logo: {
         '@type': 'ImageObject',
-        url: siteFaviconUrl,
+        url: `${SITE_URL}/favicon.svg`,
       },
     },
   }

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 64" role="img" aria-label="I'M">
+  <defs>
+    <linearGradient id="iGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="40%" stop-color="#c8efff"/>
+      <stop offset="100%" stop-color="#4ec8ff"/>
+    </linearGradient>
+    <linearGradient id="mMetal" x1="10%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%" stop-color="#f7fbff"/>
+      <stop offset="32%" stop-color="#c8d8ec"/>
+      <stop offset="68%" stop-color="#8eafd2"/>
+      <stop offset="100%" stop-color="#5f87b0"/>
+    </linearGradient>
+    <radialGradient id="burst" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="45%" stop-color="#d6ecff" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#7ec8ff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect x="1.5" y="1.5" width="117" height="61" rx="10" ry="10" fill="#050b18" stroke="#5cc8ff" stroke-width="1.25"/>
+  <path d="M8 46 C16 34, 22 26, 30 18 S40 10, 40 20" fill="none" stroke="rgba(180,230,255,0.5)" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="16" cy="18" r="1" fill="#eaf8ff"/>
+  <circle cx="30" cy="24" r="0.8" fill="#eaf8ff"/>
+  <circle cx="12" cy="36" r="0.7" fill="#eaf8ff"/>
+  <path d="M20 11 L28 11 L28 15.5 L25.4 15.5 L25.4 48.5 L28 48.5 L28 53 L20 53 L20 48.5 L22.6 48.5 L22.6 15.5 L20 15.5 Z" fill="url(#iGlow)"/>
+  <path d="M48 15.5 C50.2 13.2, 54 13.5, 54.5 17 C54.8 19.5, 52.2 25, 50.2 29 C49.4 30.6, 47.6 30, 47.9 28 C48.8 24, 50.2 20, 49 17.8 C48.4 16.6, 47.6 16, 48 15.5 Z" fill="#eaf8ff"/>
+  <g stroke="rgba(230,245,255,0.55)" stroke-linecap="round">
+    <line x1="88" y1="32" x2="108" y2="32" stroke-width="1.1"/>
+    <line x1="88" y1="32" x2="68" y2="32" stroke-width="0.7"/>
+    <line x1="88" y1="32" x2="88" y2="12" stroke-width="0.7"/>
+    <line x1="88" y1="32" x2="88" y2="52" stroke-width="0.7"/>
+    <line x1="88" y1="32" x2="102" y2="18" stroke-width="0.55"/>
+    <line x1="88" y1="32" x2="74" y2="18" stroke-width="0.55"/>
+    <line x1="88" y1="32" x2="102" y2="46" stroke-width="0.55"/>
+    <line x1="88" y1="32" x2="74" y2="46" stroke-width="0.55"/>
+  </g>
+  <circle cx="88" cy="32" r="13" fill="url(#burst)"/>
+  <path d="M67 11 L73.2 11 L73.2 42.5 L80.2 20.5 L85.8 20.5 L92.8 42.5 L92.8 11 L99 11 L99 53 L91.2 53 L85.5 34.5 L79.8 53 L72 53 L67 53 Z" fill="url(#mMetal)"/>
+</svg>

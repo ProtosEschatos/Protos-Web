@@ -12,7 +12,6 @@ import ToastProvider from '@/components/ui/ToastProvider'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { locales, CYRILLIC_LOCALES, type Locale } from '@/i18n'
 import { ogImage, siteUrl } from '@/lib/config/seo'
-import { siteFaviconUrl } from '@/lib/assets/storage-cdn'
 import { LEGAL_OWNER, LEGAL_COLLABORATOR, SITE_URL, GOOGLE_SITE_VERIFICATION } from '@/lib/config/site'
 import LocaleCreatorSeo from '@/components/seo/LocaleCreatorSeo'
 import { BOOT_GATE_INIT_SCRIPT } from '@/lib/config/boot-gate'
@@ -68,7 +67,8 @@ export const metadata: Metadata = {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || GOOGLE_SITE_VERIFICATION,
   },
   icons: {
-    icon: siteFaviconUrl,
+    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
+    shortcut: '/favicon.svg',
   },
 }
 
@@ -124,7 +124,14 @@ export default async function LocaleLayout(
           `}
         </Script>
         <div id="boot-ssr-veil" aria-hidden suppressHydrationWarning>
-          <div className="boot-ssr-spinner" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/brand/im-logo.svg"
+            alt=""
+            width={180}
+            height={96}
+            className="boot-ssr-logo"
+          />
           <p className="boot-ssr-title">Protos Web</p>
         </div>
         <NextIntlClientProvider locale={locale} messages={messages}>

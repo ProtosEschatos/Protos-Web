@@ -6,7 +6,7 @@ import { MousePointer2, Heart } from 'lucide-react'
 import { Link } from '@/navigation'
 import TransitionLink from '@/components/navigation/TransitionLink'
 import SocialLinks from '@/components/ui/SocialLinks'
-import ProtosLogo from '@/components/ui/ProtosLogo'
+import ImLogo from '@/components/ui/ImLogo'
 import { navPublicHref } from '@/lib/routes/main-nav'
 import type { Locale } from '@/i18n'
 
@@ -58,7 +58,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-[2fr_1.4fr_auto] gap-10 mb-12">
           <div>
             <TransitionLink href="/" className="inline-flex items-center gap-2.5 font-bold text-lg text-[var(--light)] mb-1">
-              <ProtosLogo size={28} />
+              <ImLogo size={28} compact />
               <span>{th('brand')}</span>
             </TransitionLink>
             <p className="text-sm text-[var(--light-muted)] leading-7 mt-4 max-w-[340px]">

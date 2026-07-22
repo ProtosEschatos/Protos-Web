@@ -11,7 +11,7 @@
       <stop offset="100%" stop-color="#7ea0c4"/>
     </linearGradient>
   </defs>
-  <path d="M10 15 H20 V20 H17 V44 H20 V49 H10 V44 H13 V20 H10 Z" fill="url(#i)"/>
-  <path d="M24 17 C26 15, 29.2 15.3, 29.6 18.2 C29.9 20.5, 27.6 25.5, 26 28.8 C25.4 30.2, 24 29.8, 24.2 27.9 C24.9 24.2, 27 20.5, 25.5 18.5 C25.1 17.6, 23.9 17.3, 24 17 Z" fill="#eaf8ff"/>
-  <path d="M33 15 H39.5 V35 L45.5 18 H50 L56 35 V15 H61.5 V49 H54 L50 33 L46 49 H39.5 L33 49 Z" fill="url(#m)"/>
+  <text x="16" y="44" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="28" fill="url(#i)">I</text>
+  <text x="28" y="26" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="700" font-size="16" fill="#eaf8ff">'</text>
+  <text x="44" y="44" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="28" fill="url(#m)">M</text>
 </svg>

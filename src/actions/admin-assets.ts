@@ -12,40 +12,16 @@ import {
   createSignedUploadUrl,
   deleteObject,
 } from '@/lib/storage/admin-uploads'
+import {
+  ADMIN_ASSET_CATEGORIES,
+  type AdminAsset,
+  type AdminAssetCategory,
+} from '@/lib/admin-assets-types'
+
+export type { AdminAsset, AdminAssetCategory }
+export { ADMIN_ASSET_CATEGORIES }
 
 // ── Types ────────────────────────────────────────────────────────────────
-
-export const ADMIN_ASSET_CATEGORIES = [
-  'image',
-  'video',
-  'model_glb',
-  'model_gltf',
-  'texture',
-  'audio',
-  'document',
-  'other',
-] as const
-
-export type AdminAssetCategory = (typeof ADMIN_ASSET_CATEGORIES)[number]
-
-export type AdminAsset = {
-  id: string
-  category: AdminAssetCategory
-  bucket: string
-  storagePath: string
-  mimeType: string | null
-  sizeBytes: number | null
-  width: number | null
-  height: number | null
-  durationSeconds: number | null
-  originalFilename: string | null
-  label: string | null
-  tags: string[]
-  isPublished: boolean
-  uploadedBy: string | null
-  createdAt: string
-  updatedAt: string
-}
 
 type Result<T> = { success: true; data: T } | { success: false; error: string }
 

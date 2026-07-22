@@ -54,10 +54,30 @@ const DEFAULTS: Omit<SceneState, 'setPartial' | 'reset' | 'loadGltf'> = {
   wireframe: false,
 }
 
+/**
+ * Browser CSP blocks direct fetches to Sketchfab / Poly.Pizza CDNs.
+ * Same-origin admin proxy keeps `useGLTF` working online.
+ * Supabase signed URLs already allowed via `connect-src *.supabase.co`.
+ */
+export function rewriteGltfUrlForBrowser(url: string): string {
+  const trimmed = url.trim()
+  if (!trimmed) return trimmed
+  if (trimmed.startsWith('/')) return trimmed
+  try {
+    const parsed = new URL(trimmed)
+    if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') return trimmed
+    if (parsed.hostname.endsWith('.supabase.co')) return trimmed
+    if (parsed.pathname.startsWith('/api/admin/gltf-proxy')) return trimmed
+    return `/api/admin/gltf-proxy?url=${encodeURIComponent(parsed.toString())}`
+  } catch {
+    return trimmed
+  }
+}
+
 export const useSceneStore = create<SceneState>((set) => ({
   ...DEFAULTS,
   setPartial: (patch) => set((state) => ({ ...state, ...patch })),
   reset: () => set(() => ({ ...DEFAULTS })),
   loadGltf: (url) =>
-    set(() => ({ primitive: 'gltf-url', gltfUrl: url })),
+    set(() => ({ primitive: 'gltf-url', gltfUrl: rewriteGltfUrlForBrowser(url) })),
 }))

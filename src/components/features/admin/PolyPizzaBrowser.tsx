@@ -75,9 +75,9 @@ export default function PolyPizzaBrowser() {
     <div className="space-y-4">
       <div>
         <p className="text-[11px] text-slate-500">
-          Free CC-BY 3D modeli. Radi bez tokena (~30 req/min); s tokenom (dodaj u{' '}
-          <span className="text-emerald-400">API ključevi</span> pod{' '}
-          <code className="admin-mono">polypizza</code>) više.
+          Free CC-BY 3D modeli. Treba API key — vault provider{' '}
+          <code className="admin-mono">polypizza</code> ili env{' '}
+          <code className="admin-mono">POLY_PIZZA_API_KEY</code> na Vercelu.
         </p>
       </div>
 

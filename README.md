@@ -62,7 +62,7 @@ Private control panel on the main domain (not a subdomain). Sections:
 | Pages | `/admin/stranice/*` | `o-nama`, `proces`, `usluge` |
 | Portfolio | `/admin/portfolio` | Supabase-backed projects |
 | Blog | `/admin/blog` | Articles, categories, tags |
-| Inbox | `/admin/inbox` | Zoho + Gmail IMAP + contact form |
+| Inbox | `/admin/inbox` | Zoho IMAP (+ Martina) + contact form |
 | Donations | `/admin/donacije` | Stripe checkouts (from `/o-nama`) |
 | Configurator | `/admin/konfigurator` | R3F scene + Sketchfab + Poly.Pizza + AI chat |
 | Subscribers | `/admin/subscribers` | Brevo lists |

@@ -79,8 +79,16 @@ html.boot-complete #boot-ssr-veil {
 }
 
 @keyframes boot-ssr-logo-pulse {
-  0%, 100% { transform: scale(1); opacity: 0.88; }
-  50% { transform: scale(1.04); opacity: 1; }
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.88;
+    filter: drop-shadow(0 0 10px rgba(92, 200, 255, 0.4));
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+    filter: drop-shadow(0 0 28px rgba(154, 230, 255, 0.95));
+  }
 }
 
 body,

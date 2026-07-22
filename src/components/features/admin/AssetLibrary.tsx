@@ -15,14 +15,16 @@ import {
   EyeOff,
 } from 'lucide-react'
 import {
-  ADMIN_ASSET_CATEGORIES,
   adminDeleteAsset,
   adminGetAssetSignedUrl,
   adminListAssets,
   adminUpdateAsset,
+} from '@/actions/admin-assets'
+import {
+  ADMIN_ASSET_CATEGORIES,
   type AdminAsset,
   type AdminAssetCategory,
-} from '@/actions/admin-assets'
+} from '@/lib/admin-assets-types'
 import { toast } from '@/lib/stores/toast-store'
 import { useSceneStore } from '@/lib/stores/scene-store'
 

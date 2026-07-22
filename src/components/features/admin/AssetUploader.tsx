@@ -3,12 +3,14 @@
 import { useRef, useState, type DragEvent, type ChangeEvent } from 'react'
 import { Loader2, Upload, X, CheckCircle2, AlertCircle } from 'lucide-react'
 import {
-  ADMIN_ASSET_CATEGORIES,
   adminCreateAssetUpload,
   adminFinalizeAssetUpload,
-  type AdminAssetCategory,
-  type AdminAsset,
 } from '@/actions/admin-assets'
+import {
+  ADMIN_ASSET_CATEGORIES,
+  type AdminAsset,
+  type AdminAssetCategory,
+} from '@/lib/admin-assets-types'
 import { toast } from '@/lib/stores/toast-store'
 
 /** Cheap MIME sniff → category default. User can still override in the form. */

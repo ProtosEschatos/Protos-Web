@@ -67,6 +67,13 @@ if (existsSync(portfolioDir)) {
 addFile(join(publicDir, 'loader/boot-bg.mp4'), 'site-assets', 'loader/boot-bg.mp4')
 addFile(join(publicDir, 'favicon.svg'), 'site-assets', 'brand/favicon.svg')
 addFile(join(publicDir, 'og-image.svg'), 'site-assets', 'brand/og-image.svg')
+addFile(join(publicDir, 'brand/im-logo.svg'), 'site-assets', 'brand/im-logo.svg')
+addFile(join(publicDir, 'brand/im-i-swirl.svg'), 'site-assets', 'brand/im-i-swirl.svg')
+addFile(join(publicDir, 'brand/im-m-burst.svg'), 'site-assets', 'brand/im-m-burst.svg')
+addFile(join(publicDir, 'brand/im-i-swirl.png'), 'site-assets', 'brand/im-i-swirl.png')
+addFile(join(publicDir, 'brand/im-m-burst.png'), 'site-assets', 'brand/im-m-burst.png')
+addFile(join(publicDir, 'brand/im-i-swirl-fx.png'), 'site-assets', 'brand/im-i-swirl-fx.png')
+addFile(join(publicDir, 'brand/im-m-burst-fx.png'), 'site-assets', 'brand/im-m-burst-fx.png')
 
 let warnCount = 0
 let okCount = 0

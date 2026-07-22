@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="I'M">
-  <rect x="1.5" y="1.5" width="61" height="61" rx="12" fill="#050b18" stroke="#5cc8ff" stroke-width="1.5"/>
+  <rect x="1.5" y="1.5" width="61" height="61" rx="12" fill="#050b18" stroke="#5cc8ff" stroke-opacity="0.7" stroke-width="1.4"/>
   <defs>
-    <linearGradient id="i" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#4ec8ff"/></linearGradient>
-    <linearGradient id="m" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#6f95bb"/></linearGradient>
+    <linearGradient id="i" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#4ec8ff"/>
+    </linearGradient>
+    <linearGradient id="m" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#7ea0c4"/>
+    </linearGradient>
   </defs>
-  <text x="14" y="44" font-family="Arial Black, DejaVu Sans, sans-serif" font-size="28" font-weight="800" fill="url(#i)">I</text>
-  <text x="28" y="28" font-family="Arial Black, DejaVu Sans, sans-serif" font-size="18" fill="#eaf8ff">'</text>
-  <text x="34" y="44" font-family="Arial Black, DejaVu Sans, sans-serif" font-size="28" font-weight="800" fill="url(#m)">M</text>
+  <path d="M10 15 H20 V20 H17 V44 H20 V49 H10 V44 H13 V20 H10 Z" fill="url(#i)"/>
+  <path d="M24 17 C26 15, 29.2 15.3, 29.6 18.2 C29.9 20.5, 27.6 25.5, 26 28.8 C25.4 30.2, 24 29.8, 24.2 27.9 C24.9 24.2, 27 20.5, 25.5 18.5 C25.1 17.6, 23.9 17.3, 24 17 Z" fill="#eaf8ff"/>
+  <path d="M33 15 H39.5 V35 L45.5 18 H50 L56 35 V15 H61.5 V49 H54 L50 33 L46 49 H39.5 L33 49 Z" fill="url(#m)"/>
 </svg>

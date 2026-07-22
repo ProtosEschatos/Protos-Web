@@ -1,4 +1,5 @@
 import { ImageResponse } from 'next/og'
+import { checkRateLimitStrict, getClientIp } from '@/lib/security/rate-limit'
 
 export const runtime = 'edge'
 
@@ -12,7 +13,22 @@ function resolveVariant(searchParams: URLSearchParams): OgVariant {
   return searchParams.get('type') === 'about' ? 'about' : 'default'
 }
 
-export function GET(request: Request) {
+// Rate-limit the OG endpoint at 60/min per IP. Purely a burn-protection
+// against scrape loops — social crawlers hit it 1–2× per shared URL, humans
+// never see it directly.
+export async function GET(request: Request) {
+  const ip = getClientIp(request)
+  const rl = await checkRateLimitStrict('public-og', ip, 60, 60_000)
+  if (!rl.ok) {
+    return new Response(
+      JSON.stringify({ error: `Previše zahtjeva. Pokušaj ponovno za ${rl.retryAfterSec}s.` }),
+      {
+        status: 429,
+        headers: { 'Content-Type': 'application/json', 'Retry-After': String(rl.retryAfterSec) },
+      },
+    )
+  }
+
   const { searchParams } = new URL(request.url)
   const variant = resolveVariant(searchParams)
   const isAbout = variant === 'about'

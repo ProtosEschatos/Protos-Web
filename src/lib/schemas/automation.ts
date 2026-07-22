@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { isBlockedHostLiteral } from '@/lib/security/ssrf'
 
 export const automationMethodSchema = z.enum(['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])
 export const automationAuthTypeSchema = z.enum(['none', 'bearer', 'basic', 'custom'])
@@ -25,8 +26,10 @@ const httpsUrlSchema = z
   .refine((value) => value.startsWith('https://') || value.startsWith('http://'), {
     message: 'URL mora početi s http(s)://',
   })
-  .refine((value) => !/^(https?:\/\/)?(localhost|127\.|0\.0\.0\.0|10\.|192\.168\.|169\.254\.)/i.test(value), {
-    message: 'Interni / lokalni URL-ovi nisu dozvoljeni',
+  .refine((value) => !isBlockedHostLiteral(value), {
+    // Authoritative runtime check happens in `assertPublicUrl()` right before
+    // fetch — this is only a fast fail-early at admin-write time.
+    message: 'Interni / lokalni URL-ovi (RFC1918, loopback, link-local, IPv6 unique local) nisu dozvoljeni',
   })
 
 export const automationWebhookCreateSchema = z.object({

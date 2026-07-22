@@ -4,5 +4,5 @@ import { ADMIN_COOKIE, verifyAdminSession } from '@/lib/auth/admin-auth'
 
 export async function GET() {
   const token = (await cookies()).get(ADMIN_COOKIE)?.value
-  return NextResponse.json({ authenticated: verifyAdminSession(token) })
+  return NextResponse.json({ authenticated: await verifyAdminSession(token) })
 }

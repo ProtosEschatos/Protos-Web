@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import * as Sentry from '@sentry/nextjs'
 import { isAdminAuthenticated } from '@/lib/auth/require-admin'
+import { checkRateLimitStrict, getClientIp } from '@/lib/security/rate-limit'
 
 /**
  * Admin-guarded Sentry smoke test.
@@ -20,6 +21,17 @@ export const runtime = 'nodejs'
 export async function GET(request: Request) {
   if (!(await isAdminAuthenticated())) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  // Cap Sentry-test spam: 5/min per IP. Even authenticated, we don't want a
+  // leaked cookie chewing Sentry quota via loop.
+  const ip = getClientIp(request)
+  const rl = await checkRateLimitStrict('admin-sentry-test', ip, 5, 60_000)
+  if (!rl.ok) {
+    return NextResponse.json(
+      { error: `Previše zahtjeva. Pokušaj ponovno za ${rl.retryAfterSec}s.` },
+      { status: 429, headers: { 'Retry-After': String(rl.retryAfterSec) } },
+    )
   }
 
   const url = new URL(request.url)

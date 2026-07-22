@@ -4,6 +4,9 @@ import {
 } from '@/lib/auth/admin-paths'
 
 export const ADMIN_COOKIE = 'protos-admin-session'
+// Retained only for backwards-compat with any tooling that grep-ed for it.
+// The DB-backed session model no longer HMACs anything; cookie value is a
+// pure random opaque token.
 export const SESSION_SALT = 'protos-admin-v1'
 
 export const adminCookieOptions = {
@@ -17,32 +20,66 @@ export const adminCookieOptions = {
 export const isAdminPath = sharedIsAdminPath
 export const isAdminLoginPath = sharedIsAdminLoginPath
 
-async function hmacHex(secret: string, message: string): Promise<string> {
+async function sha256Hex(input: string): Promise<string> {
   const enc = new TextEncoder()
-  const key = await crypto.subtle.importKey(
-    'raw',
-    enc.encode(secret),
-    { name: 'HMAC', hash: 'SHA-256' },
-    false,
-    ['sign'],
-  )
-  const sig = await crypto.subtle.sign('HMAC', key, enc.encode(message))
-  return [...new Uint8Array(sig)].map((b) => b.toString(16).padStart(2, '0')).join('')
+  const buf = await crypto.subtle.digest('SHA-256', enc.encode(input))
+  return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('')
 }
 
-export async function getAdminSessionTokenEdge(): Promise<string> {
-  const secret = process.env.ADMIN_SECRET?.trim()
-  if (!secret) return ''
-  return hmacHex(secret, SESSION_SALT)
-}
+/**
+ * Edge-compatible session verify.
+ *
+ * Runs in Next.js middleware / edge runtime — cannot import `node:crypto`
+ * or `@supabase/supabase-js` directly (well, supabase-js does work on edge,
+ * but a raw REST call keeps the bundle smaller and dependencies flatter).
+ *
+ * Verification flow:
+ *   1. SHA-256(cookie value) via WebCrypto.
+ *   2. `GET /rest/v1/admin_sessions?token_hash=eq.<hash>&select=...` with
+ *      service_role key (edge env is server-only, never bundled to client).
+ *   3. Row must exist, `revoked_at` must be null, `expires_at` must be in
+ *      the future.
+ *
+ * Fails closed on any error (missing env, network, non-2xx, empty row).
+ */
+export async function verifyAdminSessionEdge(
+  token: string | undefined | null,
+): Promise<boolean> {
+  if (!token) return false
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+  if (!supabaseUrl || !serviceRoleKey) return false
 
-export async function verifyAdminSessionEdge(token: string | undefined | null): Promise<boolean> {
-  if (!token || !process.env.ADMIN_SECRET) return false
-  const expected = await getAdminSessionTokenEdge()
-  if (!expected || token.length !== expected.length) return false
-  let mismatch = 0
-  for (let i = 0; i < token.length; i++) {
-    mismatch |= token.charCodeAt(i) ^ expected.charCodeAt(i)
+  let tokenHash: string
+  try {
+    tokenHash = await sha256Hex(token)
+  } catch {
+    return false
   }
-  return mismatch === 0
+
+  try {
+    const url = `${supabaseUrl}/rest/v1/admin_sessions?token_hash=eq.${encodeURIComponent(tokenHash)}&select=revoked_at,expires_at&limit=1`
+    const res = await fetch(url, {
+      method: 'GET',
+      headers: {
+        apikey: serviceRoleKey,
+        Authorization: `Bearer ${serviceRoleKey}`,
+        Accept: 'application/json',
+      },
+      // Edge/middleware — no cache; every request is authoritative.
+      cache: 'no-store',
+    })
+    if (!res.ok) return false
+    const rows = (await res.json()) as Array<{
+      revoked_at: string | null
+      expires_at: string
+    }>
+    const row = rows[0]
+    if (!row) return false
+    if (row.revoked_at) return false
+    if (new Date(row.expires_at).getTime() <= Date.now()) return false
+    return true
+  } catch {
+    return false
+  }
 }

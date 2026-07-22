@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { timingSafeEqual } from 'node:crypto'
 import { syncAllMailboxes } from '@/lib/mail/inbox-sync'
 
 function isAuthorized(request: Request): boolean {
@@ -6,7 +7,15 @@ function isAuthorized(request: Request): boolean {
   if (!secret) return false
 
   const auth = request.headers.get('authorization')
-  return auth === `Bearer ${secret}`
+  if (!auth) return false
+
+  const expected = `Bearer ${secret}`
+  // Constant-time compare to avoid timing side-channels on secret length/prefix.
+  // Length check first so timingSafeEqual doesn't throw (it requires equal lengths).
+  const authBuf = Buffer.from(auth)
+  const expectedBuf = Buffer.from(expected)
+  if (authBuf.length !== expectedBuf.length) return false
+  return timingSafeEqual(authBuf, expectedBuf)
 }
 
 export async function GET(request: Request) {

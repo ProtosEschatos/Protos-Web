@@ -143,6 +143,39 @@ export type Database = {
         }
         Relationships: []
       }
+      admin_sessions: {
+        Row: {
+          id: string
+          token_hash: string
+          ip: string | null
+          user_agent: string | null
+          created_at: string
+          last_seen_at: string
+          expires_at: string
+          revoked_at: string | null
+        }
+        Insert: {
+          id?: string
+          token_hash: string
+          ip?: string | null
+          user_agent?: string | null
+          created_at?: string
+          last_seen_at?: string
+          expires_at: string
+          revoked_at?: string | null
+        }
+        Update: {
+          id?: string
+          token_hash?: string
+          ip?: string | null
+          user_agent?: string | null
+          created_at?: string
+          last_seen_at?: string
+          expires_at?: string
+          revoked_at?: string | null
+        }
+        Relationships: []
+      }
       agent_memories: {
         Row: {
           created_at: string

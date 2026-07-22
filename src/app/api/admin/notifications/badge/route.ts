@@ -5,7 +5,7 @@ import { adminGetActivityBadgeCount } from '@/actions/admin-notifications'
 
 export async function GET() {
   const token = (await cookies()).get(ADMIN_COOKIE)?.value
-  if (!verifyAdminSession(token)) {
+  if (!(await verifyAdminSession(token))) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 

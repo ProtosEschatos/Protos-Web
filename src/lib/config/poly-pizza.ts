@@ -2,12 +2,11 @@ import 'server-only'
 import { getActiveApiKey } from '@/lib/queries/admin/api-keys'
 
 /**
- * Poly.Pizza — free 3D asset registry (CC-BY). Public search endpoint works
- * without a key at ~30 requests/min. With an API key, higher limits apply.
+ * Poly.Pizza — free 3D asset registry (CC-BY).
+ * API key is **required** (anonymous search returns 401 as of 2026-07).
+ * Prefer vault provider `polypizza`, else `POLY_PIZZA_API_KEY` on Vercel.
  *
- * Docs (unofficial, community-maintained): https://poly.pizza/api
- * The public endpoint returns JSON with model metadata + a `Download` URL
- * pointing to a .glb we can load directly into R3F.
+ * Docs: https://poly.pizza/api
  */
 
 export type PolyPizzaModel = {
@@ -84,6 +83,14 @@ export async function searchPolyPizza(
   const q = query.trim()
   if (q.length < 2) return { models: [], configured: true, error: 'Upit prekratak' }
   const token = await resolveToken()
+  if (!token) {
+    return {
+      models: [],
+      configured: false,
+      error:
+        'Poly.Pizza API key nije postavljen (vault provider polypizza ili POLY_PIZZA_API_KEY na Vercelu).',
+    }
+  }
   const url = new URL(`${SEARCH_URL}/${encodeURIComponent(q)}`)
   url.searchParams.set('limit', String(Math.min(opts?.limit ?? 24, 24)))
 
@@ -92,7 +99,7 @@ export async function searchPolyPizza(
       method: 'GET',
       headers: {
         Accept: 'application/json',
-        ...(token ? { 'x-auth-token': token } : {}),
+        'x-auth-token': token,
       },
       cache: 'no-store',
       // 8s timeout via AbortController
@@ -102,18 +109,18 @@ export async function searchPolyPizza(
     if (!response.ok) {
       return {
         models: [],
-        configured: Boolean(token),
+        configured: true,
         error: `Poly.Pizza ${response.status}: ${(await response.text().catch(() => '')).slice(0, 200)}`,
       }
     }
 
     const payload = (await response.json()) as PolyPizzaSearchResponse
     const models = (payload.results ?? []).map(normalize).filter((m) => m.id && m.downloadUrl)
-    return { models, configured: Boolean(token) }
+    return { models, configured: true }
   } catch (err) {
     return {
       models: [],
-      configured: Boolean(token),
+      configured: true,
       error: `Poly.Pizza fetch failed: ${(err as Error).message}`.slice(0, 200),
     }
   }

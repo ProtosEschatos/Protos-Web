@@ -1,13 +1,13 @@
 'use client'
 
 import { Component, ReactNode, Suspense } from 'react'
-import { Canvas } from '@react-three/fiber'
 import {
   ContactShadows,
   Environment,
   OrbitControls,
   useGLTF,
 } from '@react-three/drei'
+import { SafeCanvas } from '@/components/three/SafeCanvas'
 import { useSceneStore } from '@/lib/stores/scene-store'
 
 function Primitive() {
@@ -114,12 +114,17 @@ export default function ConfiguratorScene() {
   } = useSceneStore()
 
   return (
-    <Canvas
+    <SafeCanvas
       shadows
       dpr={[1, 2]}
       camera={{ position: [3, 2, 4], fov: 45 }}
       gl={{ antialias: true }}
       style={{ background, width: '100%', height: '100%' }}
+      fallback={
+        <div className="flex h-full w-full items-center justify-center bg-slate-950 text-sm text-slate-400">
+          WebGL nije dostupan — 3D scena se ne može prikazati.
+        </div>
+      }
     >
       <ambientLight intensity={ambientIntensity} />
       <directionalLight
@@ -158,6 +163,6 @@ export default function ConfiguratorScene() {
           minDistance={2}
         />
       </SceneErrorBoundary>
-    </Canvas>
+    </SafeCanvas>
   )
 }

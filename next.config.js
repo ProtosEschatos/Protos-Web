@@ -28,6 +28,8 @@ const scriptSrc = [
 //   - `raw.githack.com`: @react-three/drei HDRI preset fetches
 //     (`<Environment preset="warehouse">` -> raw.githack.com/pmndrs/drei-assets/...)
 //   - `www.gstatic.com`: Draco decoder fallback for `useGLTF`
+//   - Sketchfab / Poly.Pizza: configurator thumbnails + any direct CDN probes
+//     (primary GLB load goes through same-origin `/api/admin/gltf-proxy`)
 const connectSrc = [
   "'self'",
   'https://*.supabase.co',
@@ -38,6 +40,11 @@ const connectSrc = [
   'https://va.vercel-scripts.com',
   'https://raw.githack.com',
   'https://www.gstatic.com',
+  'https://*.sketchfab.com',
+  'https://api.sketchfab.com',
+  'https://*.poly.pizza',
+  'https://api.poly.pizza',
+  'https://poly.pizza',
 ].join(' ')
 
 const securityHeaders = [
@@ -78,6 +85,10 @@ const nextConfig = {
       { protocol: 'https', hostname: '**.supabase.co' },
       { protocol: 'https', hostname: 'protosweb.eu' },
       { protocol: 'https', hostname: 'www.protosweb.eu' },
+      { protocol: 'https', hostname: '**.sketchfab.com' },
+      { protocol: 'https', hostname: 'media.sketchfab.com' },
+      { protocol: 'https', hostname: '**.poly.pizza' },
+      { protocol: 'https', hostname: 'poly.pizza' },
     ],
   },
 

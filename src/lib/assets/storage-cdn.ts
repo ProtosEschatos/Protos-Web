@@ -29,10 +29,16 @@ export const SITE_STORAGE = {
   loaderVideo: 'loader/boot-bg.mp4',
   favicon: 'brand/favicon.svg',
   ogImage: 'brand/og-image.svg',
+  imLogo: 'brand/im-logo.svg',
+  imISwirl: 'brand/im-i-swirl.svg',
+  imMBurst: 'brand/im-m-burst.svg',
 } as const
 
 export const siteFaviconUrl = getPublicStorageUrl(STORAGE_BUCKETS.site, SITE_STORAGE.favicon)
 export const siteBrandOgImageUrl = getPublicStorageUrl(STORAGE_BUCKETS.site, SITE_STORAGE.ogImage)
+export const siteImLogoUrl = getPublicStorageUrl(STORAGE_BUCKETS.site, SITE_STORAGE.imLogo)
+export const siteImISwirlUrl = getPublicStorageUrl(STORAGE_BUCKETS.site, SITE_STORAGE.imISwirl)
+export const siteImMBurstUrl = getPublicStorageUrl(STORAGE_BUCKETS.site, SITE_STORAGE.imMBurst)
 export const giftWallInscriptionUrl = getPublicStorageUrl(
   STORAGE_BUCKETS.showcase,
   SHOWCASE_STORAGE.giftWallInscription,

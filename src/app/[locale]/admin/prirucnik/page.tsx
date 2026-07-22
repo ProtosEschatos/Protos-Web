@@ -686,7 +686,7 @@ function buildStackRows(pkg: PackageJson): Array<{
     { layer: '3D', name: 'three', version: deps.three ?? '—', role: 'WebGL' },
     { layer: 'Data', name: '@supabase/supabase-js', version: deps['@supabase/supabase-js'] ?? '—', role: 'Postgres, Storage, Edge Functions' },
     { layer: 'Icons', name: 'lucide-react', version: deps['lucide-react'] ?? '—', role: 'SVG ikone' },
-    { layer: 'Mail', name: 'imapflow', version: deps.imapflow ?? '—', role: 'Zoho + Gmail IMAP fetch' },
+    { layer: 'Mail', name: 'imapflow', version: deps.imapflow ?? '—', role: 'Zoho IMAP fetch (admin inbox)' },
     { layer: 'Perf', name: '@vercel/speed-insights', version: deps['@vercel/speed-insights'] ?? '—', role: 'Core Web Vitals' },
   ]
 }

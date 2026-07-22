@@ -121,7 +121,6 @@ kroz `getApiKeyValue(provider, label?)` bez potrebe za redeployem.
 | Variable | Status |
 |----------|--------|
 | `ZOHO_IMAP_USER` / `PASSWORD` | ❌ password prazan u checkpointu |
-| `GMAIL_STUDIO_IMAP_*` | ❌ App Password prazan |
 | `MARTINA_IMAP_*` | ❌ kad mailbox live |
 
 ### Stripe (javni pk na Vercel OK; secret na Supabase)

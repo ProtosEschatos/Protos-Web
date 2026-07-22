@@ -40,7 +40,11 @@ export default async function AdminInboxPage(props: Props) {
       description="Svi mail sandučići i kontakt upiti — sve na jednom mjestu u adminu."
     >
       <p className="text-sm text-[var(--light-muted)] mb-8">
-        Zoho ({mailboxStatuses.find((m) => m.id === 'zoho')?.email}) i Gmail studio — bez vanjskog webmaila.
+        Zoho ({mailboxStatuses.find((m) => m.id === 'zoho')?.email})
+        {mailboxStatuses.find((m) => m.id === 'martina')?.configured
+          ? ` i Martina (${mailboxStatuses.find((m) => m.id === 'martina')?.email})`
+          : ''}
+        {' '}— bez vanjskog webmaila.
         {' · '}
         <AdminLink href="/admin" className="text-[var(--primary)] hover:underline">
           ← pregled

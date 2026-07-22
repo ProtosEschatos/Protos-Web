@@ -19,7 +19,11 @@
     "normalize:showcase-screenshots": "node scripts/normalize-showcase-screenshots.mjs",
     "capture:showcase-screenshots": "node scripts/capture-showcase-screenshots.mjs",
     "sync:showcase-assets": "node scripts/normalize-showcase-screenshots.mjs && node scripts/cleanup-showcase-assets.mjs && node scripts/upload-showcase-assets.mjs",
-    "sync:production-assets": "node scripts/normalize-showcase-screenshots.mjs && node scripts/cleanup-showcase-assets.mjs && node scripts/upload-production-assets.mjs"
+    "sync:production-assets": "node scripts/normalize-showcase-screenshots.mjs && node scripts/cleanup-showcase-assets.mjs && node scripts/upload-production-assets.mjs",
+    "3d:inspect": "gltf-transform inspect",
+    "3d:optimize": "gltf-transform optimize",
+    "3d:pipeline": "gltf-pipeline",
+    "3d:jsx": "gltfjsx"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
@@ -43,6 +47,7 @@
     "zustand": "^5.0.14"
   },
   "devDependencies": {
+    "@gltf-transform/cli": "^4.4.1",
     "@types/node": "^22.8.4",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
@@ -50,6 +55,8 @@
     "autoprefixer": "^10.4.20",
     "eslint": "^9.39.2",
     "eslint-config-next": "^16.2.10",
+    "gltf-pipeline": "^4.3.1",
+    "gltfjsx": "^6.5.3",
     "postcss": "^8.5.10",
     "tailwindcss": "^3.4.14",
     "typescript": "^5.6.3"

@@ -2,6 +2,7 @@
 
 import { z } from 'zod'
 import { revalidatePath } from 'next/cache'
+import { recordAudit } from '@/lib/audit/record'
 import { requireAdmin } from '@/lib/auth/require-admin'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import {
@@ -214,8 +215,26 @@ export async function adminFinalizeAssetUpload(
   if (error || !data) {
     // Best-effort cleanup: if the metadata insert fails, remove the object.
     await deleteObject(storagePath)
+    await recordAudit({
+      event: 'asset.finalize.error',
+      source: 'admin-panel',
+      payload: { storagePath, category, sizeBytes, error: error?.message ?? 'insert failed' },
+    })
     return { success: false, error: error?.message ?? 'Neuspješan zapis u bazi' }
   }
+
+  await recordAudit({
+    event: 'asset.finalize.ok',
+    source: 'admin-panel',
+    payload: {
+      id: (data as DbRow).id,
+      category,
+      sizeBytes,
+      mimeType,
+      isPublished,
+      originalFilename,
+    },
+  })
 
   revalidatePath('/admin/assets')
   revalidatePath('/admin/konfigurator')
@@ -275,6 +294,17 @@ export async function adminUpdateAsset(
 
   if (error || !data) return { success: false, error: error?.message ?? 'Zapis ne postoji' }
 
+  await recordAudit({
+    event: 'asset.update.ok',
+    source: 'admin-panel',
+    payload: {
+      id,
+      label: patch.label ?? undefined,
+      isPublished: patch.isPublished,
+      tagCount: patch.tags?.length,
+    },
+  })
+
   revalidatePath('/admin/assets')
   revalidatePath('/admin/konfigurator')
 
@@ -294,10 +324,24 @@ export async function adminDeleteAsset(id: string): Promise<Result<null>> {
 
   if (readError || !row) return { success: false, error: readError?.message ?? 'Zapis ne postoji' }
 
-  await deleteObject((row as { storage_path: string }).storage_path)
+  const storagePath = (row as { storage_path: string }).storage_path
+  await deleteObject(storagePath)
 
   const { error } = await supabaseAdmin.from('admin_assets').delete().eq('id', id)
-  if (error) return { success: false, error: error.message }
+  if (error) {
+    await recordAudit({
+      event: 'asset.delete.error',
+      source: 'admin-panel',
+      payload: { id, storagePath, error: error.message },
+    })
+    return { success: false, error: error.message }
+  }
+
+  await recordAudit({
+    event: 'asset.delete.ok',
+    source: 'admin-panel',
+    payload: { id, storagePath },
+  })
 
   revalidatePath('/admin/assets')
   revalidatePath('/admin/konfigurator')

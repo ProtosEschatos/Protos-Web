@@ -9,6 +9,14 @@ import {
   callAiProvider,
   type AiProvider,
 } from '@/lib/ai/providers'
+import { checkRateLimitStrict, getClientIp } from '@/lib/security/rate-limit'
+
+// Cap admin-triggered generic AI calls: 10 per minute per IP. Prevents a
+// leaked admin cookie from burning LLM credits at scale. Uses the strict
+// variant so the first request is rate-limited too (avoids the deferred-
+// decision window). Falls back to in-memory when Upstash env is absent.
+const RATE_LIMIT_MAX = 10
+const RATE_LIMIT_WINDOW_MS = 60_000
 
 type AiRequestBody = {
   provider?: AiProvider
@@ -20,8 +28,17 @@ type AiRequestBody = {
 
 export async function POST(request: Request) {
   const token = (await cookies()).get(ADMIN_COOKIE)?.value
-  if (!verifyAdminSession(token)) {
+  if (!(await verifyAdminSession(token))) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  const ip = getClientIp(request)
+  const rl = await checkRateLimitStrict('admin-ai', ip, RATE_LIMIT_MAX, RATE_LIMIT_WINDOW_MS)
+  if (!rl.ok) {
+    return NextResponse.json(
+      { error: `Previše zahtjeva. Pokušaj ponovno za ${rl.retryAfterSec}s.` },
+      { status: 429, headers: { 'Retry-After': String(rl.retryAfterSec) } },
+    )
   }
 
   let body: AiRequestBody

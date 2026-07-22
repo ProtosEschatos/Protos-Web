@@ -27,7 +27,7 @@ function rateLimit(key: string): { allowed: boolean; retryIn?: number } {
 export async function POST(request: Request) {
   const cookieStore = await cookies()
   const token = cookieStore.get(ADMIN_COOKIE)?.value
-  if (!verifyAdminSession(token)) {
+  if (!(await verifyAdminSession(token))) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 

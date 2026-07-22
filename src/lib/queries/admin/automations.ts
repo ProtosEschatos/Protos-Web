@@ -6,6 +6,7 @@ import {
   encryptSecret,
   isCryptoConfigured,
 } from '@/lib/security/api-keys-crypto'
+import { assertPublicUrl } from '@/lib/security/ssrf'
 import type {
   AutomationAuthType,
   AutomationEvent,
@@ -241,6 +242,12 @@ export async function fireAutomationWebhook(
   let errorMessage: string | undefined
 
   try {
+    // SSRF gate: resolve hostname + verify no private/blocked IP before fetch.
+    // Fail-closed on any private range (RFC1918, loopback, link-local, CGN,
+    // IPv6 unique local / link-local, IPv4-mapped IPv6). Runtime is Node
+    // (server action → not edge) so `node:dns` is available.
+    await assertPublicUrl(row.url)
+
     const requestInit: RequestInit = {
       method: row.method,
       headers,

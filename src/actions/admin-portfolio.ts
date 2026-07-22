@@ -1,6 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
+import { recordAudit } from '@/lib/audit/record'
 import { requireAdmin } from '@/lib/auth/require-admin'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import type { Database } from '@/lib/database.types'
@@ -28,7 +29,20 @@ export async function adminCreatePortfolioItem(
   }
 
   const { data, error } = await supabaseAdmin.from('portfolio_items').insert(row).select('id').single()
-  if (error) return { success: false, error: error.message }
+  if (error) {
+    await recordAudit({
+      event: 'portfolio.item.create.error',
+      source: 'admin-panel',
+      payload: { title: row.title, language: input.language, error: error.message },
+    })
+    return { success: false, error: error.message }
+  }
+
+  await recordAudit({
+    event: 'portfolio.item.create.ok',
+    source: 'admin-panel',
+    payload: { id: data.id, title: row.title, language: input.language, active: input.active },
+  })
 
   revalidatePath('/portfolio')
   revalidatePath('/portfolio-showcase')
@@ -56,7 +70,20 @@ export async function adminUpdatePortfolioItem(
   }
 
   const { error } = await supabaseAdmin.from('portfolio_items').update(row).eq('id', id)
-  if (error) return { success: false, error: error.message }
+  if (error) {
+    await recordAudit({
+      event: 'portfolio.item.update.error',
+      source: 'admin-panel',
+      payload: { id, error: error.message },
+    })
+    return { success: false, error: error.message }
+  }
+
+  await recordAudit({
+    event: 'portfolio.item.update.ok',
+    source: 'admin-panel',
+    payload: { id, language: input.language, active: input.active },
+  })
 
   revalidatePath('/portfolio')
   revalidatePath('/portfolio-showcase')
@@ -69,7 +96,20 @@ export async function adminDeletePortfolioItem(id: string): Promise<{ success: b
   if (!supabaseAdmin) return { success: false, error: 'Supabase nije konfiguriran' }
 
   const { error } = await supabaseAdmin.from('portfolio_items').delete().eq('id', id)
-  if (error) return { success: false, error: error.message }
+  if (error) {
+    await recordAudit({
+      event: 'portfolio.item.delete.error',
+      source: 'admin-panel',
+      payload: { id, error: error.message },
+    })
+    return { success: false, error: error.message }
+  }
+
+  await recordAudit({
+    event: 'portfolio.item.delete.ok',
+    source: 'admin-panel',
+    payload: { id },
+  })
 
   revalidatePath('/portfolio')
   revalidatePath('/portfolio-showcase')

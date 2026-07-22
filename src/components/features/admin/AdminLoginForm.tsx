@@ -2,12 +2,14 @@
 
 import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Eye, EyeOff, Monitor } from 'lucide-react'
+import { Eye, EyeOff, Monitor, ShieldCheck } from 'lucide-react'
 
 export default function AdminLoginForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [password, setPassword] = useState('')
+  const [totp, setTotp] = useState('')
+  const [needsTotp, setNeedsTotp] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
@@ -21,17 +23,30 @@ export default function AdminLoginForm() {
       const res = await fetch('/api/admin/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({ password, totp: totp || undefined }),
       })
       const data = await res.json()
 
       if (!res.ok) {
-        setError(data.message || 'Neispravna lozinka ili pristup trenutno nije dostupan.')
+        // Backend signals that a valid password was accepted but a TOTP
+        // code is still required. Reveal the 2FA input and let the user
+        // paste/type without re-entering the password.
+        if (data?.needsTotp) {
+          setNeedsTotp(true)
+          setError(data.message || 'Unesi 6-cifreni 2FA kod.')
+        } else {
+          setError(data.message || 'Neispravna lozinka ili pristup trenutno nije dostupan.')
+        }
         return
       }
 
-      const from = searchParams.get('from') || '/admin'
-      router.push(from)
+      // Sanitize `from` param — only allow internal absolute paths.
+      // Blocks open-redirect vectors like ?from=https://evil.com
+      // and protocol-relative ?from=//evil.com/steal
+      const rawFrom = searchParams.get('from') || '/admin'
+      const safeFrom =
+        rawFrom.startsWith('/') && !rawFrom.startsWith('//') ? rawFrom : '/admin'
+      router.push(safeFrom)
       router.refresh()
     } catch {
       setError('Greška pri prijavi. Pokušaj ponovno.')
@@ -80,6 +95,29 @@ export default function AdminLoginForm() {
               </button>
             </div>
           </div>
+
+          {needsTotp ? (
+            <div>
+              <label htmlFor="admin-totp" className="admin-mono mb-2 flex items-center gap-1.5 text-xs text-slate-400">
+                <ShieldCheck className="h-3.5 w-3.5 text-indigo-400" />
+                2FA kod (Authenticator)
+              </label>
+              <input
+                id="admin-totp"
+                type="text"
+                value={totp}
+                onChange={(e) => setTotp(e.target.value.replace(/\s+/g, '').slice(0, 6))}
+                autoComplete="one-time-code"
+                inputMode="numeric"
+                pattern="\d{6}"
+                maxLength={6}
+                placeholder="000000"
+                className="admin-mono w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-3 text-center text-lg tracking-[0.5em] text-slate-100 outline-none focus:border-indigo-500/50"
+                required
+                autoFocus
+              />
+            </div>
+          ) : null}
 
           {error ? <p className="text-sm text-rose-400">{error}</p> : null}
 

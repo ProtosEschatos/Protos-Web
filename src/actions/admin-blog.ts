@@ -1,6 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
+import { recordAudit } from '@/lib/audit/record'
 import { requireAdmin } from '@/lib/auth/require-admin'
 import { slugify } from '@/lib/slug'
 import { supabaseAdmin } from '@/lib/supabase-admin'
@@ -27,7 +28,20 @@ export async function adminCreateBlogPost(
   }
 
   const { data, error } = await supabaseAdmin.from('blog_posts').insert(row).select('id').single()
-  if (error) return { success: false, error: error.message }
+  if (error) {
+    await recordAudit({
+      event: 'blog.post.create.error',
+      source: 'admin-panel',
+      payload: { slug, language: input.language, error: error.message },
+    })
+    return { success: false, error: error.message }
+  }
+
+  await recordAudit({
+    event: 'blog.post.create.ok',
+    source: 'admin-panel',
+    payload: { id: data.id, slug, language: input.language, published: input.is_published },
+  })
 
   revalidatePath('/blog')
   revalidatePath('/')
@@ -51,7 +65,20 @@ export async function adminUpdateBlogPost(
   }
 
   const { error } = await supabaseAdmin.from('blog_posts').update(row).eq('id', id)
-  if (error) return { success: false, error: error.message }
+  if (error) {
+    await recordAudit({
+      event: 'blog.post.update.error',
+      source: 'admin-panel',
+      payload: { id, language: input.language, error: error.message },
+    })
+    return { success: false, error: error.message }
+  }
+
+  await recordAudit({
+    event: 'blog.post.update.ok',
+    source: 'admin-panel',
+    payload: { id, language: input.language, published: input.is_published },
+  })
 
   revalidatePath('/blog')
   revalidatePath('/')
@@ -63,7 +90,20 @@ export async function adminDeleteBlogPost(id: string): Promise<{ success: boolea
   if (!supabaseAdmin) return { success: false, error: 'Supabase nije konfiguriran' }
 
   const { error } = await supabaseAdmin.from('blog_posts').delete().eq('id', id)
-  if (error) return { success: false, error: error.message }
+  if (error) {
+    await recordAudit({
+      event: 'blog.post.delete.error',
+      source: 'admin-panel',
+      payload: { id, error: error.message },
+    })
+    return { success: false, error: error.message }
+  }
+
+  await recordAudit({
+    event: 'blog.post.delete.ok',
+    source: 'admin-panel',
+    payload: { id },
+  })
 
   revalidatePath('/blog')
   revalidatePath('/')

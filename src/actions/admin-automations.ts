@@ -1,6 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
+import { recordAudit } from '@/lib/audit/record'
 import { requireAdmin } from '@/lib/auth/require-admin'
 import {
   createAutomationWebhook,
@@ -66,10 +67,28 @@ export async function adminCreateAutomation(
       notes: parsed.data.notes ?? null,
       isEnabled: parsed.data.isEnabled,
     })
+    await recordAudit({
+      event: 'automation.webhook.create.ok',
+      source: 'admin-panel',
+      payload: {
+        id: created.id,
+        name: parsed.data.name,
+        event: parsed.data.event,
+        method: parsed.data.method,
+        // URL host only — do not log full URL (may contain path secrets in some setups).
+        urlHost: safeUrlHost(parsed.data.url),
+      },
+    })
     revalidatePath(ADMIN_PATH)
     return ok(created)
   } catch (err) {
-    return fail((err as Error).message)
+    const message = (err as Error).message
+    await recordAudit({
+      event: 'automation.webhook.create.error',
+      source: 'admin-panel',
+      payload: { name: parsed.data.name, error: message },
+    })
+    return fail(message)
   }
 }
 
@@ -96,10 +115,25 @@ export async function adminUpdateAutomation(
       isEnabled: parsed.data.isEnabled,
       clearAuthSecret: parsed.data.clearAuthSecret,
     })
+    await recordAudit({
+      event: 'automation.webhook.update.ok',
+      source: 'admin-panel',
+      payload: {
+        id,
+        isEnabled: parsed.data.isEnabled,
+        urlHost: parsed.data.url ? safeUrlHost(parsed.data.url) : undefined,
+      },
+    })
     revalidatePath(ADMIN_PATH)
     return ok()
   } catch (err) {
-    return fail((err as Error).message)
+    const message = (err as Error).message
+    await recordAudit({
+      event: 'automation.webhook.update.error',
+      source: 'admin-panel',
+      payload: { id, error: message },
+    })
+    return fail(message)
   }
 }
 
@@ -107,10 +141,21 @@ export async function adminDeleteAutomation(id: string): Promise<Result> {
   await requireAdmin()
   try {
     await deleteAutomationWebhook(id)
+    await recordAudit({
+      event: 'automation.webhook.delete.ok',
+      source: 'admin-panel',
+      payload: { id },
+    })
     revalidatePath(ADMIN_PATH)
     return ok()
   } catch (err) {
-    return fail((err as Error).message)
+    const message = (err as Error).message
+    await recordAudit({
+      event: 'automation.webhook.delete.error',
+      source: 'admin-panel',
+      payload: { id, error: message },
+    })
+    return fail(message)
   }
 }
 
@@ -118,9 +163,33 @@ export async function adminFireAutomation(id: string): Promise<Result<Automation
   await requireAdmin()
   try {
     const result = await fireAutomationWebhook(id)
+    await recordAudit({
+      event: result.ok ? 'automation.webhook.fire.ok' : 'automation.webhook.fire.error',
+      source: 'admin-panel',
+      payload: {
+        id,
+        status: result.status,
+        durationMs: result.durationMs,
+        error: result.error,
+      },
+    })
     revalidatePath(ADMIN_PATH)
     return ok(result)
   } catch (err) {
-    return fail((err as Error).message)
+    const message = (err as Error).message
+    await recordAudit({
+      event: 'automation.webhook.fire.error',
+      source: 'admin-panel',
+      payload: { id, error: message },
+    })
+    return fail(message)
+  }
+}
+
+function safeUrlHost(rawUrl: string): string | null {
+  try {
+    return new URL(rawUrl).host
+  } catch {
+    return null
   }
 }

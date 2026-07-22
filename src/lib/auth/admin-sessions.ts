@@ -72,16 +72,34 @@ export async function createSession(input: {
 }
 
 /**
- * Verify a plaintext token from the cookie. Returns session row if valid,
- * or null if unknown / expired / revoked. Side-effect: bumps `last_seen_at`
- * (fire-and-forget — never blocks verification).
+ * Verify a plaintext token from the cookie. Returns a session-shaped row
+ * if valid, or null if unknown / expired / revoked.
+ *
+ * Prefer the same SECURITY DEFINER RPC that Edge middleware uses
+ * (`verify_admin_session_by_hash`) with the anon key. That path stays
+ * healthy even when `SUPABASE_SERVICE_ROLE_KEY` on Vercel is stale —
+ * which previously locked every `requireAdmin()` call behind Unauthorized
+ * while Edge auth still (after PR #48) let the request through.
+ *
+ * Falls back to a direct `supabaseAdmin` select when the RPC/env path is
+ * unavailable (local/dev without public URL). Side-effect: bumps
+ * `last_seen_at` via service_role when available (fire-and-forget).
  */
 export async function verifySessionToken(
   token: string | undefined | null,
 ): Promise<SessionRow | null> {
-  if (!token || !supabaseAdmin) return null
+  if (!token) return null
   const tokenHash = hashToken(token)
 
+  const viaRpc = await verifySessionViaAnonRpc(tokenHash)
+  if (viaRpc === 'invalid') return null
+  if (viaRpc) {
+    bumpLastSeenByHashBestEffort(tokenHash)
+    return viaRpc
+  }
+
+  // Fallback: direct service_role read (legacy / when RPC unreachable).
+  if (!supabaseAdmin) return null
   const { data, error } = await supabaseAdmin
     .from('admin_sessions')
     .select('*')
@@ -94,9 +112,6 @@ export async function verifySessionToken(
   if (row.revoked_at) return null
   if (new Date(row.expires_at).getTime() <= Date.now()) return null
 
-  // Constant-time compare of stored hash vs computed hash (defense in depth
-  // — .eq already matched, but keeps us honest if the query ever becomes
-  // fuzzy in a refactor).
   try {
     const a = Buffer.from(row.token_hash)
     const b = Buffer.from(tokenHash)
@@ -105,14 +120,67 @@ export async function verifySessionToken(
     return null
   }
 
-  // Fire-and-forget last_seen update. Errors ignored.
+  bumpLastSeenByHashBestEffort(tokenHash)
+  return row
+}
+
+/** RPC result: SessionRow-lite, `'invalid'` for definitive miss, `null` for transport failure. */
+async function verifySessionViaAnonRpc(
+  tokenHash: string,
+): Promise<SessionRow | 'invalid' | null> {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const anonKey =
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? process.env.SUPABASE_ANON_KEY
+  if (!supabaseUrl || !anonKey) return null
+
+  try {
+    const res = await fetch(`${supabaseUrl}/rest/v1/rpc/verify_admin_session_by_hash`, {
+      method: 'POST',
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({ t: tokenHash }),
+      cache: 'no-store',
+    })
+    if (!res.ok) return null
+    const rows = (await res.json()) as Array<{
+      revoked_at: string | null
+      expires_at: string
+    }>
+    const row = rows[0]
+    if (!row) return 'invalid'
+    if (row.revoked_at) return 'invalid'
+    if (new Date(row.expires_at).getTime() <= Date.now()) return 'invalid'
+
+    // RPC only returns revoked_at + expires_at. Synthesize the fields
+    // callers actually need from verify; id is unknown without a second
+    // privileged read — use a stable placeholder hash-derived id for
+    // last_seen bump lookups by token_hash instead.
+    return {
+      id: '',
+      token_hash: tokenHash,
+      ip: null,
+      user_agent: null,
+      created_at: '',
+      last_seen_at: '',
+      expires_at: row.expires_at,
+      revoked_at: row.revoked_at,
+    } satisfies SessionRow
+  } catch {
+    return null
+  }
+}
+
+function bumpLastSeenByHashBestEffort(tokenHash: string): void {
+  if (!supabaseAdmin || !tokenHash) return
   supabaseAdmin
     .from('admin_sessions')
     .update({ last_seen_at: new Date().toISOString() })
-    .eq('id', row.id)
+    .eq('token_hash', tokenHash)
     .then(() => undefined, () => undefined)
-
-  return row
 }
 
 export async function revokeSession(sessionId: string): Promise<boolean> {

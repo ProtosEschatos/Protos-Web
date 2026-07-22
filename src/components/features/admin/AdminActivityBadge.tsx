@@ -1,7 +1,34 @@
-import { adminGetActivityBadgeCount } from '@/actions/admin-notifications'
+'use client'
 
-export default async function AdminActivityBadge() {
-  const count = await adminGetActivityBadgeCount()
+import { useEffect, useState } from 'react'
+
+/**
+ * Client badge — must NOT be an async Server Component.
+ *
+ * It is rendered from `AdminHeader` (`'use client'`). Calling a `'use server'`
+ * action during that tree's initial render throws:
+ *   "Server Functions cannot be called during initial render"
+ * which 500'd every authenticated admin page after the Edge session gate
+ * started passing (PR #48). Fetch the existing JSON route instead.
+ */
+export default function AdminActivityBadge() {
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    let cancelled = false
+    fetch('/api/admin/notifications/badge', { credentials: 'same-origin' })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((body: { count?: number } | null) => {
+        if (!cancelled && typeof body?.count === 'number' && body.count > 0) {
+          setCount(body.count)
+        }
+      })
+      .catch(() => undefined)
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
   if (count <= 0) return null
 
   return (

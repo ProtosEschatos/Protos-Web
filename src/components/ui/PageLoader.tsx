@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import SiteConsentModal from '@/components/legal/SiteConsentModal'
 import BootSkyBackground from '@/components/ui/BootSkyBackground'
+import ImLogo from '@/components/ui/ImLogo'
 import { hasSiteConsent } from '@/lib/config/site-consent'
 import {
   BOOT_SESSION_KEY,
@@ -123,22 +124,14 @@ export default function PageLoader() {
                 className="pointer-events-none absolute inset-3 -z-10 rounded-[1.35rem] bg-[radial-gradient(ellipse_at_center,rgba(186,230,253,0.28)_0%,transparent_68%)]"
                 aria-hidden
               />
-              <div className="relative w-24 h-24 mb-8">
+              <div className="relative mb-8 flex items-center justify-center">
                 <motion.div
-                  className="absolute inset-0 rounded-full border-2 border-[var(--primary)]"
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+                  className="absolute h-36 w-56 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(92,200,255,0.35)_0%,transparent_70%)] blur-2xl"
+                  animate={{ opacity: [0.45, 0.85, 0.45], scale: [0.95, 1.08, 0.95] }}
+                  transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
+                  aria-hidden
                 />
-                <motion.div
-                  className="absolute inset-2 rounded-full border-2 border-[var(--secondary)] border-t-transparent"
-                  animate={{ rotate: -360 }}
-                  transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-                />
-                <motion.div
-                  className="absolute inset-4 rounded-full bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)]"
-                  animate={{ scale: [0.8, 1.1, 0.8] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                />
+                <ImLogo size={88} dramatic />
               </div>
 
               <h2

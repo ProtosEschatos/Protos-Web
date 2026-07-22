@@ -56,10 +56,8 @@
 | `VERCEL_TOKEN` | ❓ provjeri dashboard | vercel.com/account/tokens |
 | `VERCEL_PROJECT_ID` | ❓ | `.vercel/project.json` ili dashboard |
 | `VERCEL_TEAM_ID` | opcionalno | team projekti |
-| `NEXT_PUBLIC_SENTRY_DSN` | **required for capture** | Sentry → Settings → Projects → protosweb → Client Keys (DSN). Ako prazno, `@sentry/nextjs` ostaje silent. |
-| `SENTRY_AUTH_TOKEN` | **required for source maps** | Sentry → Settings → Auth Tokens (scope: `project:read`, `project:releases`, `org:read`). Bez ovoga stack traces = webpack minified gibberish. Server-only. |
-| `SENTRY_ORG_SLUG` | ✅ `protoseschatos` | Pre-set u `.env.example` i `next.config.js`. |
-| `SENTRY_PROJECT_SLUG` | ✅ `protosweb` | Pre-set u `.env.example` i `next.config.js`. |
+
+> `SENTRY_*` / `NEXT_PUBLIC_SENTRY_DSN` — **uklonjeno 2026-07-22**. Sentry integracija je izvučena iz repoa (PR fix/kill-sentry-and-instrument-boundaries). Env vrijednosti ostaju na Vercelu kao dead entries; obriši ih ručno kad hoćeš.
 
 ### Admin AI / memory
 
@@ -201,7 +199,7 @@ Provjera: Supabase Dashboard → Edge Functions → svaka fn → Logs (200 na ke
 - Kreirati Cloudflare **DNS Edit** token za skripte (moraš ti u dashboardu)
 - Rotirati token ako je bio izložen u chatu — ažuriraj GitHub + Vercel secret
 - Čitati Vercel/Supabase dashboard env vrijednosti
-- Popuniti IMAP lozinke, `VERCEL_TOKEN`, Sentry slugove
+- Popuniti IMAP lozinke, `VERCEL_TOKEN`, Cloudflare tokene
 - Brisati migration fileove s remote-a (razbio bi sync)
 - Mijenjati `.env*` u repou
 

@@ -108,7 +108,6 @@ export async function getSeoOverview(): Promise<SeoOverview> {
   const gscEnv = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?.trim()
   const gbpEnv = process.env.NEXT_PUBLIC_GOOGLE_BUSINESS_URL?.trim()
   const cfEnv = process.env.CLOUDFLARE_API_TOKEN?.trim()
-  const sentryEnv = process.env.SENTRY_AUTH_TOKEN?.trim()
   const vercelEnv = process.env.VERCEL_TOKEN?.trim()
 
   const analytics: SeoEnvStatus[] = [
@@ -162,15 +161,6 @@ export async function getSeoOverview(): Promise<SeoOverview> {
       configured: isNonEmpty(cfEnv),
       hint: 'Read-only token — DNS status, Zaptio audit.',
       docsUrl: 'https://dash.cloudflare.com/profile/api-tokens',
-    },
-    {
-      key: 'SENTRY_AUTH_TOKEN',
-      label: 'Sentry (error monitoring)',
-      value: sentryEnv ? '••••••••' : null,
-      fromEnv: isNonEmpty(sentryEnv),
-      configured: isNonEmpty(sentryEnv),
-      hint: 'project:read scope za /admin live status.',
-      docsUrl: 'https://sentry.io',
     },
     {
       key: 'VERCEL_TOKEN',

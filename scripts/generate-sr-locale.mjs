@@ -81,7 +81,6 @@ const PROTECTED_TERMS = [
   'Zoho',
   'Resend',
   'Brevo',
-  'Sentry',
   'WhatsApp',
   'Instagram',
   'Facebook',

@@ -95,7 +95,7 @@ export default async function AdminPage(props: Props) {
           <AdminInsightGrid
             insights={liveServices.insights}
             checkedAt={liveServices.checkedAt}
-            footnote="GitHub, Cloudflare, Sentry i Vercel — pravi podaci gdje je token postavljen, inače 'Nije podešeno'."
+            footnote="GitHub, Cloudflare i Vercel — pravi podaci gdje je token postavljen, inače 'Nije podešeno'."
           />
         </AdminSection>
 

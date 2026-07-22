@@ -1,5 +1,4 @@
 const createNextIntlPlugin = require('next-intl/plugin')
-const { withSentryConfig } = require('@sentry/nextjs')
 
 const withNextIntl = createNextIntlPlugin('./src/i18n.ts')
 
@@ -22,6 +21,25 @@ const scriptSrc = [
   .filter(Boolean)
   .join(' ')
 
+// `connect-src`: allow the origins the app fetches from at runtime.
+//   - `*.supabase.co`: DB + storage
+//   - `*.google-analytics.com` / `analytics.google.com`: GA4
+//   - `vitals.vercel-insights.com` / `va.vercel-scripts.com`: Vercel Analytics
+//   - `raw.githack.com`: @react-three/drei HDRI preset fetches
+//     (`<Environment preset="warehouse">` -> raw.githack.com/pmndrs/drei-assets/...)
+//   - `www.gstatic.com`: Draco decoder fallback for `useGLTF`
+const connectSrc = [
+  "'self'",
+  'https://*.supabase.co',
+  'https://www.google-analytics.com',
+  'https://*.google-analytics.com',
+  'https://analytics.google.com',
+  'https://vitals.vercel-insights.com',
+  'https://va.vercel-scripts.com',
+  'https://raw.githack.com',
+  'https://www.gstatic.com',
+].join(' ')
+
 const securityHeaders = [
   { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
   { key: 'X-Frame-Options', value: 'DENY' },
@@ -33,7 +51,7 @@ const securityHeaders = [
     value: [
       "default-src 'self'",
       `script-src ${scriptSrc}`,
-      "connect-src 'self' https://*.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://vitals.vercel-insights.com https://va.vercel-scripts.com",
+      `connect-src ${connectSrc}`,
       "img-src 'self' data: blob: https:",
       "style-src 'self' 'unsafe-inline'",
       "font-src 'self' data:",
@@ -95,37 +113,6 @@ const nextConfig = {
       { source: '/(.*)', headers: securityHeaders },
     ]
   },
-
 }
 
-module.exports = withSentryConfig(withNextIntl(nextConfig), {
-  // Sentry project identity — safe to hard-code; slugs are not secrets.
-  org: 'protoseschatos',
-  project: 'protosweb',
-
-  // Auth token used at build time to upload source maps. Missing token in
-  // local dev is fine — Sentry SDK silently skips the upload.
-  authToken: process.env.SENTRY_AUTH_TOKEN,
-
-  // Keep Vercel build logs quiet unless CI (Vercel sets CI=1) — locally
-  // devs see Sentry chatter, in Vercel the useful lines still surface.
-  silent: !process.env.CI,
-
-  // Widen client source-map upload so stack traces from RSCs, App Router
-  // pages, and edge handlers are all resolvable.
-  widenClientFileUpload: true,
-
-  // Strip source maps from client bundles after upload — production users
-  // don't ship them, but Sentry still has them for symbolication.
-  hideSourceMaps: true,
-
-  // Note: `disableLogger` was removed — deprecated in Sentry v10 and a
-  // no-op under Turbopack (Next.js 16 default). If we ever want SDK-side
-  // log tree-shaking back, use webpack.treeshake.removeDebugLogging under
-  // a non-Turbopack build.
-
-  // Tunnel client → Sentry traffic through /monitoring on the same origin.
-  // Bypasses ad-blockers that would otherwise drop /api/ requests to
-  // ingest.sentry.io, and means we don't have to widen the CSP connect-src.
-  tunnelRoute: '/monitoring',
-})
+module.exports = withNextIntl(nextConfig)

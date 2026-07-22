@@ -57,6 +57,15 @@ export async function verifyAdminSessionEdge(
     return false
   }
 
+  // Hard 2s timeout on the Supabase REST call. Vercel Edge functions have
+  // a 25s hard timeout for the whole request; if Supabase is degraded or
+  // stalled, we don't want middleware to wedge every admin page load for
+  // 25 seconds. Fail-closed on timeout so the user gets bounced to login
+  // (predictable UX) instead of a spinner-to-500. Supabase REST p99 is
+  // ~200ms, so 2s is 10x headroom.
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), 2000)
+
   try {
     const url = `${supabaseUrl}/rest/v1/admin_sessions?token_hash=eq.${encodeURIComponent(tokenHash)}&select=revoked_at,expires_at&limit=1`
     const res = await fetch(url, {
@@ -68,6 +77,7 @@ export async function verifyAdminSessionEdge(
       },
       // Edge/middleware — no cache; every request is authoritative.
       cache: 'no-store',
+      signal: controller.signal,
     })
     if (!res.ok) return false
     const rows = (await res.json()) as Array<{
@@ -81,5 +91,7 @@ export async function verifyAdminSessionEdge(
     return true
   } catch {
     return false
+  } finally {
+    clearTimeout(timeoutId)
   }
 }

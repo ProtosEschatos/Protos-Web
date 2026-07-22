@@ -15,7 +15,6 @@ export type AdminApiKeyProviderId =
   | 'github'
   | 'vercel'
   | 'cloudflare'
-  | 'sentry'
   | 'posthog'
   | 'sketchfab'
   | 'meshy'
@@ -128,7 +127,6 @@ export const ADMIN_API_KEY_PROVIDERS: AdminApiKeyProviderMeta[] = [
   { id: 'github',     label: 'GitHub (PAT)',              category: 'deploy', docsUrl: 'https://github.com/settings/tokens',              envHint: 'GITHUB_TOKEN' },
 
   // ─── Observability ───────────────────────────────────────────────────────
-  { id: 'sentry',     label: 'Sentry',                    category: 'observability', docsUrl: 'https://sentry.io/settings/account/api/auth-tokens/', envHint: 'SENTRY_AUTH_TOKEN' },
   { id: 'posthog',    label: 'PostHog',                   category: 'observability', docsUrl: 'https://app.posthog.com/settings/project#variables', envHint: 'POSTHOG_API_KEY' },
 
   // ─── 3D / assets ─────────────────────────────────────────────────────────

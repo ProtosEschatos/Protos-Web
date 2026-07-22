@@ -51,7 +51,6 @@ export async function adminGetSecurityInsights(): Promise<AdminInsightsSnapshot>
   )
   const emailDnsOk = emailDns.filter((d) => d.ok).length
 
-  const sentryConfigured = Boolean(process.env.NEXT_PUBLIC_SENTRY_DSN || process.env.SENTRY_DSN)
   const githubTokenConfigured = Boolean(process.env.GITHUB_TOKEN?.trim())
   const zohoImapConfigured = isZohoImapConfigured()
 
@@ -104,17 +103,6 @@ export async function adminGetSecurityInsights(): Promise<AdminInsightsSnapshot>
       statusLabel: 'Aktivno',
       detail: `${SITE_URL} · Vercel + Cloudflare`,
       href: SITE_URL,
-      external: true,
-    },
-    {
-      id: 'sentry',
-      label: 'Sentry (greške)',
-      status: sentryConfigured ? 'ok' : 'off',
-      statusLabel: sentryConfigured ? 'Aktivan' : 'Opcionalno',
-      detail: sentryConfigured
-        ? 'Production error monitoring'
-        : 'Nije konfiguriran — postavi SENTRY_DSN ako želiš',
-      href: 'https://sentry.io/',
       external: true,
     },
     {

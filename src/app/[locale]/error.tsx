@@ -1,13 +1,17 @@
 'use client'
 
 import { useEffect } from 'react'
-import * as Sentry from '@sentry/nextjs'
 
 /**
  * Locale-segment fallback for public routes when a page throws before
  * `admin/error.tsx` can catch it. Intentionally minimal — public pages
  * should never rely on this as UI, it's a last resort before
  * `global-error.tsx`.
+ *
+ * Kept fully self-contained: no context-dependent hooks (`useLocale`,
+ * `useTranslations`), no Sentry import, no custom `Link` component.
+ * If the parent tree died, any of those can throw here and escalate to
+ * `global-error.tsx` — resulting in a fully-blank screen.
  */
 export default function LocaleError({
   error,
@@ -20,14 +24,14 @@ export default function LocaleError({
     if (typeof console !== 'undefined') {
       console.error('[locale/error]', error)
     }
-    Sentry.captureException(error, {
-      tags: { boundary: 'locale/error' },
-      extra: error.digest ? { digest: error.digest } : undefined,
-    })
   }, [error])
 
   return (
-    <main className="mx-auto max-w-xl px-6 py-16 text-center">
+    <main
+      className="mx-auto max-w-xl px-6 py-16 text-center"
+      data-testid="locale-error-boundary"
+      data-error-message={error.message || 'unknown'}
+    >
       <h1 className="text-2xl font-semibold text-white">Nešto je pošlo po zlu</h1>
       <p className="mt-3 text-sm text-white/70">
         Stranicu nije bilo moguće prikazati. Pokušaj ponovo za koji trenutak.

@@ -67,8 +67,8 @@ export const metadata: Metadata = {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || GOOGLE_SITE_VERIFICATION,
   },
   icons: {
-    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
-    shortcut: '/favicon.svg',
+    icon: [{ url: '/favicon.svg?v=20260722b', type: 'image/svg+xml' }],
+    shortcut: '/favicon.svg?v=20260722b',
   },
 }
 

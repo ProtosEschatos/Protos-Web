@@ -51,7 +51,7 @@ export default function ImLogo({
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/brand/im-logo.svg"
+        src="/brand/im-logo.svg?v=20260722b"
         alt="I'M"
         width={width}
         height={size}

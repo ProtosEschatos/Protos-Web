@@ -27,7 +27,7 @@
 | Put | Sadržaj |
 |-----|---------|
 | `/admin` | Dashboard — statistike, inboxi, sigurnost, marketing |
-| `/admin/inbox` | Zoho + Gmail studio + Martina IMAP + kontakt forma |
+| `/admin/inbox` | Zoho (+ Martina IMAP kad je live) + kontakt forma |
 | `/admin/donacije` | Stripe donacije (`donations` tablica) |
 | `/admin/blog`, `/admin/portfolio` | CMS CRUD |
 | `/admin/stranice/*` | Statičke stranice (i18n u `messages/`) |
@@ -58,7 +58,6 @@ Zavisi o env varijablama: `NEXT_PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY
 | Mailbox | Env prefix |
 |---------|------------|
 | Zoho admin | `ZOHO_IMAP_*` |
-| Gmail studio | `GMAIL_STUDIO_IMAP_*` |
 | Martina (placeholder) | `MARTINA_IMAP_*` |
 
 Detalji: `docs/security.md`, `docs/email-setup.md`

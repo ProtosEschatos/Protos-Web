@@ -32,7 +32,7 @@ export default function AdminMailboxPanel({
   initialError,
   configured,
   mailbox,
-  provider,
+  provider: _provider,
 }: Props) {
   const [messages, setMessages] = useState(initialMessages)
   const [error, setError] = useState(initialError)
@@ -73,12 +73,6 @@ export default function AdminMailboxPanel({
         </p>
         <p className="text-amber-100/90 leading-relaxed">
           {mailboxSetupHint(mailboxId)}
-          {provider === 'gmail' ? (
-            <>
-              {' '}
-              Za <strong>{mailbox}</strong> kreiraj App Password u Google Account → Security.
-            </>
-          ) : null}
         </p>
       </div>
     )

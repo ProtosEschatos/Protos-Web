@@ -5,7 +5,6 @@ import type { AdminInsight, AdminInsightsSnapshot } from '@/lib/admin-insight-ty
 import type { IntegrationStatus } from '@/lib/integrations/types'
 import { getGithubStatus } from '@/lib/integrations/github'
 import { getCloudflareStatus } from '@/lib/integrations/cloudflare'
-import { getSentryStatus } from '@/lib/integrations/sentry'
 import { getVercelStatus } from '@/lib/integrations/vercel'
 
 function toInsight(
@@ -36,21 +35,19 @@ function toInsight(
   }
 }
 
-/** Live status cards for GitHub, Cloudflare, Sentry and Vercel — real API data where configured. */
+/** Live status cards for GitHub, Cloudflare, and Vercel — real API data where configured. */
 export async function adminGetLiveServiceStatus(): Promise<AdminInsightsSnapshot> {
   await requireAdmin()
 
-  const [github, cloudflare, sentry, vercel] = await Promise.all([
+  const [github, cloudflare, vercel] = await Promise.all([
     getGithubStatus(),
     getCloudflareStatus(),
-    getSentryStatus(),
     getVercelStatus(),
   ])
 
   const insights: AdminInsight[] = [
     toInsight('github', 'GitHub aktivnost', 'https://github.com/ProtosEschatos/Protos-Web', github),
     toInsight('cloudflare', 'Cloudflare zona', 'https://dash.cloudflare.com', cloudflare),
-    toInsight('sentry', 'Sentry greške', 'https://sentry.io/', sentry),
     toInsight('vercel', 'Vercel deploy', 'https://vercel.com/dashboard', vercel),
   ]
 

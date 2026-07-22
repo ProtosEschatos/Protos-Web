@@ -1,14 +1,25 @@
 'use client'
 
 import { useEffect } from 'react'
-import * as Sentry from '@sentry/nextjs'
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react'
-import AdminLink from '@/components/features/admin/AdminLink'
 
 /**
  * Route-segment error boundary for every admin page. Prevents the blank
  * screen when a Server Component / RSC render or a client tree above the
  * page throws — user always sees a real UI with a "Pokušaj ponovo" button.
+ *
+ * Kept fully self-contained on purpose:
+ *   - No `AdminLink` (which uses `useLocale()` from `next-intl` — if the
+ *     parent tree already died, the locale context may not be mounted,
+ *     causing this boundary to itself throw and cascade to
+ *     `[locale]/error.tsx` or all the way to `global-error.tsx`).
+ *   - No Sentry import (Sentry init failure in the client bundle would
+ *     turn every admin error into a full blank screen).
+ *   - No context-dependent hooks (`useTranslations`, `useRouter`, etc.).
+ *
+ * Rule of thumb: error boundaries must render with only plain React +
+ * `lucide-react` icon primitives + tailwind classes. Nothing that assumes
+ * the parent app is healthy.
  */
 export default function AdminError({
   error,
@@ -21,14 +32,15 @@ export default function AdminError({
     if (typeof console !== 'undefined') {
       console.error('[admin/error]', error)
     }
-    Sentry.captureException(error, {
-      tags: { boundary: 'admin/error' },
-      extra: error.digest ? { digest: error.digest } : undefined,
-    })
   }, [error])
 
   return (
-    <div className="mx-auto max-w-2xl space-y-4 py-10">
+    <div
+      className="mx-auto max-w-2xl space-y-4 py-10"
+      data-testid="admin-error-boundary"
+      data-error-message={error.message || 'unknown'}
+      data-error-digest={error.digest ?? ''}
+    >
       <div className="admin-card space-y-3 p-5">
         <div className="flex items-start gap-3">
           <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-amber-400" />
@@ -50,13 +62,14 @@ export default function AdminError({
         </div>
 
         <div className="flex flex-wrap items-center justify-end gap-2 border-t border-slate-800 pt-3">
-          <AdminLink
+          {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- error boundary must NOT use AdminLink / Link — those call context-dependent hooks (useLocale) that can throw here */}
+          <a
             href="/admin"
             className="inline-flex items-center gap-1.5 rounded-md border border-slate-800 bg-slate-950 px-3 py-1.5 text-xs text-slate-300 hover:border-slate-600 hover:text-slate-100"
           >
             <Home className="h-3.5 w-3.5" />
             Admin početna
-          </AdminLink>
+          </a>
           <button
             type="button"
             onClick={reset}

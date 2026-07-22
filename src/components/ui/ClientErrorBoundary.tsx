@@ -1,7 +1,6 @@
 'use client'
 
 import { Component, type ErrorInfo, type ReactNode } from 'react'
-import * as Sentry from '@sentry/nextjs'
 import { AlertTriangle, RefreshCw } from 'lucide-react'
 
 /**
@@ -43,15 +42,6 @@ export default class ClientErrorBoundary extends Component<Props, State> {
     if (typeof console !== 'undefined') {
       console.error('[ClientErrorBoundary]', this.props.label ?? '', error, info)
     }
-    Sentry.captureException(error, {
-      tags: {
-        boundary: 'ClientErrorBoundary',
-        label: this.props.label ?? 'unknown',
-      },
-      contexts: {
-        react: { componentStack: info.componentStack ?? null },
-      },
-    })
     this.props.onError?.(error, info)
   }
 
@@ -70,7 +60,11 @@ export default class ClientErrorBoundary extends Component<Props, State> {
     const label = this.props.label ?? 'Ovaj panel'
 
     return (
-      <div className="admin-card space-y-3 p-4">
+      <div
+        className="admin-card space-y-3 p-4"
+        data-testid={`client-error-boundary-${label}`}
+        data-error-message={error.message || 'unknown'}
+      >
         <div className="flex items-start gap-3">
           <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
           <div className="min-w-0 flex-1 space-y-1">

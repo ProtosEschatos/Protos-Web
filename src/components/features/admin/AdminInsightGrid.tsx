@@ -1,7 +1,6 @@
 import {
   ArrowUpRight,
   BarChart3,
-  Bug,
   Cloud,
   Database,
   FileSearch,
@@ -34,7 +33,6 @@ const iconById: Record<string, LucideIcon> = {
   'email-dns': Mail,
   'dns-all': Globe,
   https: Lock,
-  sentry: Bug,
   github: Github,
   cloudflare: Cloud,
   vercel: Server,

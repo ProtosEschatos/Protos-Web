@@ -1,12 +1,15 @@
 'use client'
 
 import { useEffect } from 'react'
-import * as Sentry from '@sentry/nextjs'
 
 /**
  * Absolute last-resort fallback. Rendered by Next.js when even the locale /
  * admin `error.tsx` boundaries fail (e.g. an error during the root layout
  * itself). Must include its own <html>/<body> — no other layout runs.
+ *
+ * Kept fully self-contained: no external imports beyond React itself.
+ * Any import that can fail (`@sentry/nextjs`, `next-intl` hooks, custom
+ * components) would turn a recoverable error into a permanent blank screen.
  */
 export default function GlobalError({
   error,
@@ -19,15 +22,14 @@ export default function GlobalError({
     if (typeof console !== 'undefined') {
       console.error('[global-error]', error)
     }
-    Sentry.captureException(error, {
-      tags: { boundary: 'global-error' },
-      extra: error.digest ? { digest: error.digest } : undefined,
-    })
   }, [error])
 
   return (
     <html lang="hr">
       <body
+        data-testid="global-error-boundary"
+        data-error-message={error.message || 'unknown'}
+        data-error-digest={error.digest ?? ''}
         style={{
           margin: 0,
           minHeight: '100vh',

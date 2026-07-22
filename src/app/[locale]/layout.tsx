@@ -133,7 +133,7 @@ export default async function LocaleLayout(
         <div id="boot-ssr-veil" aria-hidden suppressHydrationWarning>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/brand/im-logo.svg"
+            src="/brand/im-logo.png"
             alt=""
             width={180}
             height={96}

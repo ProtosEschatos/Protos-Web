@@ -164,7 +164,7 @@ export function blogPostingJsonLd(post: {
       name: 'Protos Web',
       logo: {
         '@type': 'ImageObject',
-        url: `${SITE_URL}/favicon.svg`,
+        url: `${SITE_URL}/favicon-48.png`,
       },
     },
   }

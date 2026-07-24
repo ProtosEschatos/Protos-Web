@@ -37,12 +37,12 @@ type CarLane = {
 const HALF_SPAN = 22
 
 const DESKTOP_LANES: CarLane[] = [
-  { yBase: -2.6, z: -8, speed: 3.2, colorHex: '#00e5ff', scale: 1.0, phase: 0.0 },
-  { yBase: 0.5, z: -12, speed: 2.4, colorHex: '#ff2bd6', scale: 1.35, phase: 1.6 },
-  { yBase: 2.1, z: -6, speed: 4.0, colorHex: '#f9ff2b', scale: 0.85, phase: 2.9 },
-  { yBase: -1.1, z: -14, speed: -2.1, colorHex: '#ff2b6b', scale: 1.55, phase: 4.1 },
-  { yBase: 1.6, z: -10, speed: -3.4, colorHex: '#2bff9d', scale: 1.1, phase: 0.9 },
-  { yBase: -0.4, z: -7, speed: -2.8, colorHex: '#ff8a2b', scale: 0.95, phase: 4.6 },
+  { yBase: -2.6, z: -8, speed: 3.2, colorHex: '#00e5ff', scale: 2.6, phase: 0.0 },
+  { yBase: 0.5, z: -12, speed: 2.4, colorHex: '#ff2bd6', scale: 3.4, phase: 1.6 },
+  { yBase: 2.1, z: -6, speed: 4.0, colorHex: '#f9ff2b', scale: 2.2, phase: 2.9 },
+  { yBase: -1.1, z: -14, speed: -2.1, colorHex: '#ff2b6b', scale: 3.9, phase: 4.1 },
+  { yBase: 1.6, z: -10, speed: -3.4, colorHex: '#2bff9d', scale: 2.8, phase: 0.9 },
+  { yBase: -0.4, z: -7, speed: -2.8, colorHex: '#ff8a2b', scale: 2.4, phase: 4.6 },
 ]
 
 const MOBILE_LANES: CarLane[] = [DESKTOP_LANES[1], DESKTOP_LANES[3], DESKTOP_LANES[4]]

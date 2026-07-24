@@ -37,12 +37,12 @@ type CarLane = {
 const HALF_SPAN = 22
 
 const DESKTOP_LANES: CarLane[] = [
-  { yBase: -2.6, z: -8, speed: 3.2, colorHex: '#00e5ff', scale: 2.6, phase: 0.0 },
-  { yBase: 0.5, z: -12, speed: 2.4, colorHex: '#ff2bd6', scale: 3.4, phase: 1.6 },
-  { yBase: 2.1, z: -6, speed: 4.0, colorHex: '#f9ff2b', scale: 2.2, phase: 2.9 },
-  { yBase: -1.1, z: -14, speed: -2.1, colorHex: '#ff2b6b', scale: 3.9, phase: 4.1 },
-  { yBase: 1.6, z: -10, speed: -3.4, colorHex: '#2bff9d', scale: 2.8, phase: 0.9 },
-  { yBase: -0.4, z: -7, speed: -2.8, colorHex: '#ff8a2b', scale: 2.4, phase: 4.6 },
+  { yBase: -2.6, z: -8, speed: 3.2, colorHex: '#00e5ff', scale: 2.1, phase: 0.0 },
+  { yBase: 0.5, z: -12, speed: 2.4, colorHex: '#ff2bd6', scale: 2.5, phase: 1.6 },
+  { yBase: 2.1, z: -6, speed: 4.0, colorHex: '#f9ff2b', scale: 1.9, phase: 2.9 },
+  { yBase: -1.1, z: -14, speed: -2.1, colorHex: '#ff2b6b', scale: 2.7, phase: 4.1 },
+  { yBase: 1.6, z: -10, speed: -3.4, colorHex: '#2bff9d', scale: 2.2, phase: 0.9 },
+  { yBase: -0.4, z: -7, speed: -2.8, colorHex: '#ff8a2b', scale: 2.0, phase: 4.6 },
 ]
 
 const MOBILE_LANES: CarLane[] = [DESKTOP_LANES[1], DESKTOP_LANES[3], DESKTOP_LANES[4]]
@@ -109,9 +109,11 @@ function Car({ lane }: { lane: CarLane }) {
       <mesh position={[-0.08, 0.19, 0]} material={mats.cabin}>
         <boxGeometry args={[0.7, 0.2, 0.42]} />
       </mesh>
-      {/* Underglow — horizontal neon pad below the chassis */}
+      {/* Underglow — horizontal neon pad below the chassis. Kept small so
+          it stays a soft halo under the chassis rather than a dominant plane
+          when scaled up in the outer group. */}
       <mesh position={[0, -0.16, 0]} rotation={[-Math.PI / 2, 0, 0]} material={mats.neon}>
-        <planeGeometry args={[1.65, 0.75]} />
+        <planeGeometry args={[1.55, 0.55]} />
       </mesh>
       {/* Headlights — twin dots at the front */}
       <mesh position={[0.72, 0.02, 0.16]} material={mats.headlight}>
@@ -120,9 +122,10 @@ function Car({ lane }: { lane: CarLane }) {
       <mesh position={[0.72, 0.02, -0.16]} material={mats.headlight}>
         <sphereGeometry args={[0.055, 10, 10]} />
       </mesh>
-      {/* Light trail — long additive plane trailing behind */}
-      <mesh position={[-1.6, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} material={mats.neonSoft}>
-        <planeGeometry args={[2.6, 0.32]} />
+      {/* Light trail — long additive plane trailing behind. Slim so it
+          reads as a streak, not a slab, even after outer scale is applied. */}
+      <mesh position={[-1.55, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} material={mats.neonSoft}>
+        <planeGeometry args={[2.2, 0.16]} />
       </mesh>
       {/* Roof strip — thin neon accent so cars remain visible against dark fog */}
       <mesh position={[-0.08, 0.31, 0]} material={mats.neon}>
